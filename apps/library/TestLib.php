@@ -8,7 +8,7 @@ class TestLib{
         $connection = $di->get('db');
 
         var_dump($connection);
-        var_dump('lib function done');
+
 
 
     }
