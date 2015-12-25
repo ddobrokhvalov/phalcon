@@ -6,6 +6,7 @@ use Phalcon\Mvc\View;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\DiInterface;
 use Phalcon\Db\Adapter\Pdo\Mysql as Database;
+use Phalcon\Config\Adapter\Ini as ConfigIni;
 
 class Module
 {
@@ -19,7 +20,7 @@ class Module
 			'Multiple\Backend\Controllers' => '../apps/backend/controllers/',
 			'Multiple\Backend\Models'      => '../apps/backend/models/',
 			'Multiple\Backend\Plugins'     => '../apps/backend/plugins/',
-			'Multiple\Library'     => '../apps/library/',
+			'Multiple\Library'             => '../apps/library/',
 		));
 
 
@@ -48,12 +49,9 @@ class Module
 
 		//Set a different connection in each module
 		$di->set('db', function() {
-			return new Database(array(
-				"host" => "localhost",
-				"username" => "root",
-				"password" => "",
-				"dbname" => "test"
-			));
+			$config = new ConfigIni("config/config.ini");
+			return new Database($config->database->toArray());
 		});
+
 	}
 }

@@ -6,6 +6,7 @@ use Phalcon\Loader;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Db\Adapter\Pdo\Mysql as Database;
+use Phalcon\Config\Adapter\Ini as ConfigIni;
 
 class Module
 {
@@ -50,13 +51,9 @@ class Module
 			return $view;
 		});
 
-		$di->set('db', function () {
-			return new Database(array(
-				"host" => "localhost",
-				"username" => "root",
-				"password" => "secret",
-				"dbname" => "invo"
-			));
+		$di->set('db', function() {
+			$config = new ConfigIni("config/config.ini");
+			return new Database($config->database->toArray());
 		});
 	}
 }
