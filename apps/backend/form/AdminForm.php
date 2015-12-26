@@ -20,7 +20,7 @@ class AdminForm extends Form
             $this->add($element->setLabel("Id"));
 
         } else {
-            //$this->add(new Hidden("id"));
+            $this->add(new Hidden("id"));
         }
 
         $email = new Text("email");
@@ -37,7 +37,7 @@ class AdminForm extends Form
         );
         $this->add($email);
         if (isset($options['edit'])) {
-            $password = new Text('Password');
+            $password = new Text('password');
             $password->setLabel("Пароль");
             $password->setFilters(array('striptags', 'string'));
             $password->addValidators(

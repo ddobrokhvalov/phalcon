@@ -6,6 +6,7 @@ class Admin extends Model
 {
     public $id;
     public $email;
+    public $password;
     public $role;
 
     public function initialize()
@@ -27,5 +28,9 @@ class Admin extends Model
     public function getRole()
     {
         return $this->role;
+    }
+    public function getPassword()
+    {
+        return $this->password;
     }
 }

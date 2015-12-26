@@ -55,10 +55,11 @@ class Application extends BaseApplication
 				'controller' => 'login',
 				'action' => 'index',
 			));
-			$router->add("/admin/:controller/:action", array(
+			$router->add("/admin/:controller/:action/:params", array(
 				'module' => 'backend',
 				'controller' => 1,
 				'action' => 2,
+				'params'=>3
 			));
 		/*	$router->add("/admin/products/:action", array(
 				'module' => 'backend',

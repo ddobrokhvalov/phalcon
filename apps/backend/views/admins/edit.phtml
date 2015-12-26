@@ -1,0 +1,18 @@
+<form action="/admin/admins/save" method="post">
+    <fieldset>
+
+        <fieldset>
+
+            {% for element in form %}
+            <div class="control-group">
+                {{ element.label(['class': 'control-label']) }}
+                <div class="controls">{{ element }}</div>
+            </div>
+            {% endfor %}
+
+            <div class="control-group">
+                {{ submit_button("Сохранить", "class": "btn btn-primary") }}
+            </div>
+
+        </fieldset>
+</form>

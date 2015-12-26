@@ -6,6 +6,8 @@
         <th>Id</th>
         <th>email</th>
         <th>Role</th>
+        <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -14,6 +16,8 @@
         <td><?php echo $admin->id; ?></td>
         <td><?php echo $admin->email; ?></td>
         <td><?php echo $admin->role; ?></td>
+        <td><a href="/admin/admins/edit/<?php echo $admin->id; ?>">Редактировать</a></td>
+        <td><a href="/admin/admins/del/<?php echo $admin->id; ?>">Удалить</a></td>
     </tr>
     <?php if ($v4619004751loop->last) { ?>
     </tbody>
