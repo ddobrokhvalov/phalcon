@@ -21,7 +21,6 @@ class AdminsController extends ControllerBase
         $this->view->form               = new AdminForm;
     }
     public function searchAction(){
-
         $numberPage = 1;
         if ($this->request->isPost()) {
             $query = Criteria::fromInput($this->di, "Multiple\Backend\Models\Admin", $this->request->getPost());
@@ -37,7 +36,7 @@ class AdminsController extends ControllerBase
 
         $admins = Admin::find($parameters);
         if (count($admins) == 0) {
-            $this->flash->notice("The search did not find any products");
+            $this->flash->notice("The search did not find any admins");
             return $this->forward("admins/index");
         }
 

@@ -42,18 +42,18 @@ class Module
 
 		//Registering a dispatcher
 		$di->set('dispatcher', function() {
-			// Ïîëó÷àåì ñòàíäàðòíûé ìåíåäæåð ñîáûòèé ñ ïîìîùüþ DI
+			// ÐŸÐ¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ ÑÑ‚Ð°Ð½Ð´Ð°Ñ€Ñ‚Ð½Ñ‹Ð¹ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ€ ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ð¹ Ñ Ð¿Ð¾Ð¼Ð¾Ñ‰ÑŒÑŽ DI
 			$eventsManager = new EventsManager();
 
-			// Ïëàãèí áåçîïàñíîñòè ñëóøàåò ñîáûòèÿ, èíèöèèðîâàííûå äèñïåò÷åðîì
+			// ÐŸÐ»Ð°Ð³Ð¸Ð½ Ð±ÐµÐ·Ð¾Ð¿Ð°ÑÐ½Ð¾ÑÑ‚Ð¸ ÑÐ»ÑƒÑˆÐ°ÐµÑ‚ ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ñ, Ð¸Ð½Ð¸Ñ†Ð¸Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð½Ñ‹Ðµ Ð´Ð¸ÑÐ¿ÐµÑ‚Ñ‡ÐµÑ€Ð¾Ð¼
 			$eventsManager->attach('dispatch:beforeDispatch', new SecurityPlugin);
 
-			// Îòëàâëèâàåì èñêëþ÷åíèÿ è not-found èñêëþ÷åíèÿ, èñïîëüçóÿ NotFoundPlugin
+			// ÐžÑ‚Ð»Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ Ð¸ÑÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ñ Ð¸ not-found Ð¸ÑÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ñ, Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÑ NotFoundPlugin
 			//$eventsManager->attach('dispatch:beforeException', new NotFoundPlugin);
 
 			$dispatcher = new Dispatcher();
 
-			// Ñâÿçûâàåì ìåíåäæåð ñîáûòèé ñ äèñïåò÷åðîì
+			// Ð¡Ð²ÑÐ·Ñ‹Ð²Ð°ÐµÐ¼ Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ€ ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ð¹ Ñ Ð´Ð¸ÑÐ¿ÐµÑ‚Ñ‡ÐµÑ€Ð¾Ð¼
 			$dispatcher->setEventsManager($eventsManager);
 
 			$dispatcher->setDefaultNamespace("Multiple\Backend\Controllers\\");
