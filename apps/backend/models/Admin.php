@@ -2,25 +2,30 @@
 namespace Multiple\Backend\Models;
 use Phalcon\Mvc\Model;
 
-class Index extends Model
+class Admin extends Model
 {
     public $id;
-    public $name;
+    public $email;
+    public $role;
 
     public function initialize()
     {
-        $this->setSource("product_types");
+        $this->setSource("admin");
     }
     public function getSource()
     {
-        return "product_types";
+        return "admin";
     }
     public function getId()
     {
         return $this->id;
     }
-    public function getName()
+    public function getEmail()
     {
-        return $this->name;
+        return $this->email;
+    }
+    public function getRole()
+    {
+        return $this->role;
     }
 }

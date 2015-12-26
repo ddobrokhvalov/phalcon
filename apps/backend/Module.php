@@ -7,7 +7,13 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\DiInterface;
 use Phalcon\Db\Adapter\Pdo\Mysql as Database;
 use Phalcon\Config\Adapter\Ini as ConfigIni;
+use Phalcon\Session\Adapter\Files as SessionAdapter;
+use Phalcon\Events\Manager as EventsManager;
 
+require('../apps/plugins/SecurityPlugin.php');
+require('../apps/plugins/NotFoundPlugin.php');
+use Multiple\Plugin\SecurityPlugin as SecurityPlugin;
+use Multiple\Plugin\NotFoundPlugin as NotFoundPlugin;
 class Module
 {
 
@@ -21,6 +27,7 @@ class Module
 			'Multiple\Backend\Models'      => '../apps/backend/models/',
 			'Multiple\Backend\Plugins'     => '../apps/backend/plugins/',
 			'Multiple\Library'             => '../apps/library/',
+			'Multiple\Form'                => '../apps/backend/form/',
 		));
 
 
@@ -35,7 +42,20 @@ class Module
 
 		//Registering a dispatcher
 		$di->set('dispatcher', function() {
+			// Получаем стандартный менеджер событий с помощью DI
+			$eventsManager = new EventsManager();
+
+			// Плагин безопасности слушает события, инициированные диспетчером
+			$eventsManager->attach('dispatch:beforeDispatch', new SecurityPlugin);
+
+			// Отлавливаем исключения и not-found исключения, используя NotFoundPlugin
+			//$eventsManager->attach('dispatch:beforeException', new NotFoundPlugin);
+
 			$dispatcher = new Dispatcher();
+
+			// Связываем менеджер событий с диспетчером
+			$dispatcher->setEventsManager($eventsManager);
+
 			$dispatcher->setDefaultNamespace("Multiple\Backend\Controllers\\");
 			return $dispatcher;
 		});
@@ -44,6 +64,11 @@ class Module
 		$di->set('view', function() {
 			$view = new View();
 			$view->setViewsDir('../apps/backend/views/');
+			$view->registerEngines(
+				array(
+					".phtml" => 'Phalcon\Mvc\View\Engine\Volt'
+				)
+			);
 			return $view;
 		});
 
@@ -51,6 +76,11 @@ class Module
 		$di->set('db', function() {
 			$config = new ConfigIni("config/config.ini");
 			return new Database($config->database->toArray());
+		});
+		$di->set('session', function () {
+			$session = new SessionAdapter();
+			$session->start();
+			return $session;
 		});
 
 	}

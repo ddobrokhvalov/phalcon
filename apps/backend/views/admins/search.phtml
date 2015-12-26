@@ -1,0 +1,37 @@
+{% for admin in page.items %}
+{% if loop.first %}
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>email</th>
+        <th>Role</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% endif %}
+    <tr>
+        <td>{{ admin.id }}</td>
+        <td>{{ admin.email}}</td>
+        <td>{{ admin.role }}</td>
+    </tr>
+    {% if loop.last %}
+    </tbody>
+    <tbody>
+    <tr>
+        <td colspan="7">
+            <div>
+                {{ link_to("products/search", 'Первая') }}
+                {{ link_to("products/search?page=" ~ page.before, 'Предыдущая') }}
+                {{ link_to("products/search?page=" ~ page.next, 'Следующая') }}
+                {{ link_to("products/search?page=" ~ page.last, 'Последняя') }}
+                <span class="help-inline">{{ page.current }} из {{ page.total_pages }}</span>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endif %}
+{% else %}
+В базе нет админов
+{% endfor %}

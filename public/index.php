@@ -26,9 +26,12 @@ class Application extends BaseApplication
 		 */
 		$loader->registerDirs(
 			array(
-				__DIR__ . '/../apps/library/'
+				__DIR__ . '/../apps/library/',
+				__DIR__ . '/../apps/plugins/'
 			)
 		)->register();
+
+
 
 		//Registering a router
 		$di->set('router', function(){
