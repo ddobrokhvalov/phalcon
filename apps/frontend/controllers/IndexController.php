@@ -10,9 +10,9 @@ class IndexController extends Controller
 
 	public function indexAction()
 	{
-		$obj = new TestLib();
-		$obj->f();
-
+		//$obj = new TestLib();
+		//$obj->f();
+       echo 'done';
 		exit;
 	}
 }
