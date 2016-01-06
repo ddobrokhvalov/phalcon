@@ -1,5 +1,5 @@
 <?php
-namespace Multiple\Plugin;
+namespace Multiple\Backend\Plugins;
 
 use Phalcon\Acl;
 use Phalcon\Acl\Role;
@@ -35,7 +35,7 @@ class SecurityPlugin extends Plugin
 
             //Private area resources
             $privateResources = array(
-                'index'    => array('test'),
+                'dashboard'    => array('index'),
 
             );
             foreach ($privateResources as $resource => $actions) {
@@ -44,7 +44,7 @@ class SecurityPlugin extends Plugin
 
             //Public area resources
             $publicResources = array(
-                'index'      => array('testprivate'),
+                'login'      => array('index'),
             );
             foreach ($publicResources as $resource => $actions) {
                 $acl->addResource(new Resource($resource), $actions);
@@ -99,14 +99,14 @@ class SecurityPlugin extends Plugin
         $allowed = $acl->isAllowed($role, $controller, $action);
 
 
-    /*    if ($allowed != Acl::ALLOW) {
+       /* if ($allowed != Acl::ALLOW) {
             $dispatcher->forward(array(
-                'controller' => 'index',
-                'action'     => 'testprivate'
+                'controller' => 'dashboard',
+                'action'     => 'index'
             ));
             if($auth)
              $this->session->destroy();
             return false;
-        }*/
+        } */
     }
 }

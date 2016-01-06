@@ -10,10 +10,9 @@ use Phalcon\Config\Adapter\Ini as ConfigIni;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Events\Manager as EventsManager;
 
-require('../apps/plugins/SecurityPlugin.php');
-require('../apps/plugins/NotFoundPlugin.php');
-use Multiple\Plugin\SecurityPlugin as SecurityPlugin;
-use Multiple\Plugin\NotFoundPlugin as NotFoundPlugin;
+
+use Multiple\Backend\Plugins\SecurityPlugin as SecurityPlugin;
+use Multiple\Backend\Plugins\NotFoundPlugin as NotFoundPlugin;
 class Module
 {
 
@@ -27,7 +26,7 @@ class Module
 			'Multiple\Backend\Models'      => '../apps/backend/models/',
 			'Multiple\Backend\Plugins'     => '../apps/backend/plugins/',
 			'Multiple\Library'             => '../apps/library/',
-			'Multiple\Form'                => '../apps/backend/form/',
+			'Multiple\Backend\Form'                => '../apps/backend/form/',
 		));
 
 
@@ -49,7 +48,7 @@ class Module
 			$eventsManager->attach('dispatch:beforeDispatch', new SecurityPlugin);
 
 			// Отлавливаем исключения и not-found исключения, используя NotFoundPlugin
-			//$eventsManager->attach('dispatch:beforeException', new NotFoundPlugin);
+			$eventsManager->attach('dispatch:beforeException', new NotFoundPlugin);
 
 			$dispatcher = new Dispatcher();
 

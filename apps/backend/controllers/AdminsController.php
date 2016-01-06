@@ -5,18 +5,14 @@ use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Backend\Models\Admin as Admin;
-use Multiple\Form\AdminForm as AdminForm;
+use Multiple\Backend\Form\AdminForm as AdminForm;
 
 class AdminsController extends ControllerBase
 {
 
     public function indexAction()
     {
-      /*  $admins = Admin::find(array(
-            "order" => "email"
-        ));
-        var_dump($admins->toArray()); exit; */
-       // $this->view->admins = $admins->toArray();
+
         $this->persistent->searchParams = null;
         $this->view->form               = new AdminForm;
     }
@@ -109,7 +105,7 @@ class AdminsController extends ControllerBase
         $data = $this->request->getPost();
         if (!$form->isValid($data, $admin)) {
             foreach ($form->getMessages() as $message) {
-              ;
+
                 var_dump($message); exit;
                // $this->flash->error($message);
             }
