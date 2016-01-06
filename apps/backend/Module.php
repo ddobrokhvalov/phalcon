@@ -11,8 +11,8 @@ use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Events\Manager as EventsManager;
 
 
-use Multiple\Backend\Plugins\SecurityPlugin as SecurityPlugin;
-use Multiple\Backend\Plugins\NotFoundPlugin as NotFoundPlugin;
+use Multiple\Backend\Plugins\SecurityPlugin;
+use Multiple\Backend\Plugins\NotFoundPlugin;
 class Module
 {
 

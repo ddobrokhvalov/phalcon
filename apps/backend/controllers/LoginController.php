@@ -3,7 +3,7 @@
 namespace Multiple\Backend\Controllers;
 
 use Phalcon\Mvc\Controller;
-use Multiple\Backend\Models\Admin as Admin;
+use Multiple\Backend\Models\Admin;
 
 class LoginController extends ControllerBase
 {
