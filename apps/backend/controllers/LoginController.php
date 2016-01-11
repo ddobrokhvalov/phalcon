@@ -14,12 +14,12 @@ class LoginController extends ControllerBase
 			array(
 				'id'    => $admin->id,
 				'email' => $admin->email,
-				'role'  => $admin->role
 			)
 		);
 	}
 	public function startAction()
 	{
+
 		if ($this->request->isPost()) {
 
 

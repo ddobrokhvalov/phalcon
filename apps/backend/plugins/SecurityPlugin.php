@@ -1,13 +1,12 @@
 <?php
 namespace Multiple\Backend\Plugins;
 
-use Phalcon\Acl;
-use Phalcon\Acl\Role;
-use Phalcon\Acl\Resource;
+
 use Phalcon\Events\Event;
 use Phalcon\Mvc\User\Plugin;
 use Phalcon\Mvc\Dispatcher;
-use Phalcon\Acl\Adapter\Memory as AclList;
+use Multiple\Backend\Models\Permission;
+
 
 class SecurityPlugin extends Plugin
 {
@@ -16,7 +15,7 @@ class SecurityPlugin extends Plugin
      *
      * @returns AclList
      */
-    public function getAcl()
+   /* public function getAcl()
     {
         if (!isset($this->persistent->acl)) {
 
@@ -71,8 +70,30 @@ class SecurityPlugin extends Plugin
         }
 
         return $this->persistent->acl;
-    }
+    }*/
 
+
+    private function isAllowed($admin_id,$controller,$action){
+
+        $perm = new Permission();
+        $pa =$perm->getAdminPermission($admin_id);
+
+        foreach($pa as $v){
+            if($v['name'] == $controller){
+               if($action == 'index' || $action == 'search'){
+                   if($v['pa']['read'] || $v['pa']['edit']){
+                       return true;
+                   }
+               }else{
+                   if($v['pa']['edit']){
+                       return true;
+                   }
+               }
+            }
+
+        }
+        return false;
+    }
     /**
      * This action is executed before execute any action in the application
      *
@@ -83,30 +104,35 @@ class SecurityPlugin extends Plugin
     public function beforeDispatch(Event $event, Dispatcher $dispatcher)
     {
 
-        $auth = $this->session->get('auth');
 
+
+        $auth = $this->session->get('auth');
         if (!$auth){
-            $role = 'Guests';
+            $admin_id = false;
         } else {
-            $role = $auth['role'];
+            $admin_id = $auth['id'];
         }
 
         $controller = $dispatcher->getControllerName();
         $action = $dispatcher->getActionName();
+        if( $admin_id != false && $controller != 'dashboard' )
+         if($controller != 'login'){
+     //   $acl = $this->getAcl();
+       // $allowed = $acl->isAllowed($role, $controller, $action);
 
-        $acl = $this->getAcl();
+        if($admin_id)
+            $allowed = $this->isAllowed($admin_id, $controller, $action);
 
-        $allowed = $acl->isAllowed($role, $controller, $action);
+            if (!$allowed) {
+                $dispatcher->forward(array(
+                    'controller' => 'login',
+                    'action' => 'index'
+                ));
+                if ($auth)
+                    $this->session->destroy();
+                return false;
+            }
+       }
 
-
-       /* if ($allowed != Acl::ALLOW) {
-            $dispatcher->forward(array(
-                'controller' => 'dashboard',
-                'action'     => 'index'
-            ));
-            if($auth)
-             $this->session->destroy();
-            return false;
-        } */
     }
 }

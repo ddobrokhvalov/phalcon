@@ -99,7 +99,7 @@ class AdminsController extends ControllerBase
         if (!$this->request->isPost()) {
             return $this->forward("admins/index");
         }
-        $form    = new AdminForm;
+        $form  = new AdminForm;
         $admin = new Admin();
 
         $data = $this->request->getPost();
@@ -134,8 +134,8 @@ class AdminsController extends ControllerBase
 
             $admin = Admin::findFirstById($id);
             if (!$admin) {
-                $this->flash->error("Product was not found");
-                return $this->forward("products/index");
+                $this->flash->error("Admin was not found");
+                return $this->forward("admins/index");
             }
 
             $this->view->form = new AdminForm($admin, array('edit' => true));

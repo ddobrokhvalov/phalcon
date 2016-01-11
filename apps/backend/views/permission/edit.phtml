@@ -1,0 +1,22 @@
+<form action="/admin/permission/save/{{ admin.id }}" method="post">
+    <fieldset>
+<table>
+    <tr>
+    <td>Название</td>
+    <td>Только Чтение</td>
+    <td>Редактирование</td>
+    </tr>
+{% for perm in permission %}
+    <tr>
+      <td>{{ perm['name_ru'] }}</td>
+        <td> <input type="checkbox" name="{{ perm['id'] }}_read" value="1" {% if perm['pa']['read'] == 1 %} checked {% endif %}></td>
+        <td> <input type="checkbox" name="{{ perm['id'] }}_edit" value="1" {% if perm['pa']['edit'] == 1 %} checked {% endif %}></td>
+    </tr>
+{% endfor %}
+ </table>
+        <div class="control-group">
+            {{ submit_button("Сохранить", "class": "btn btn-primary") }}
+        </div>
+
+    </fieldset>
+</form>

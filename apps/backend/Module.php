@@ -74,6 +74,7 @@ class Module
 		//Set a different connection in each module
 		$di->set('db', function() {
 			$config = new ConfigIni("config/config.ini");
+
 			return new Database($config->database->toArray());
 		});
 		$di->set('session', function () {
