@@ -74,8 +74,9 @@ class AdminsController extends ControllerBase
             return $this->forward('admins/edit/' . $id);
         }
         $admin->email = $data['email'];
-        $admin->password = sha1($data['password']);
-        $admin->role = $data['role'];
+        if(strlen($data['emptypassword'])>0)
+         $admin->password = sha1($data['emptypassword']);
+
         if ($admin->save() == false) {
             foreach ($admin->getMessages() as $message) {
                 var_dump($message); exit;
@@ -93,7 +94,7 @@ class AdminsController extends ControllerBase
 
     public function addAction()
     {
-        $this->view->form = new AdminForm(null, array('edit' => true));
+        $this->view->form = new AdminForm(null, array('add' => true));
     }
     public function createAction(){
         if (!$this->request->isPost()) {
@@ -113,7 +114,6 @@ class AdminsController extends ControllerBase
         }
         $admin->email = $data['email'];
         $admin->password = sha1($data['password']);
-        $admin->role = $data['role'];
         if ($admin->save() == false) {
             foreach ($admin->getMessages() as $message) {
 

@@ -5,7 +5,6 @@
     <tr>
         <th>Id</th>
         <th>email</th>
-        <th>Role</th>
         <th></th>
         <th></th>
         <th></th>
@@ -16,7 +15,6 @@
     <tr>
         <td>{{ admin.id }}</td>
         <td>{{ admin.email}}</td>
-        <td>{{ admin.role }}</td>
         <td><a href="/admin/admins/edit/{{ admin.id }}">Редактировать</a></td>
         <td><a href="/admin/permission/edit/{{ admin.id }}">Права</a></td>
         <td><a href="/admin/admins/del/{{ admin.id }}">Удалить</a></td>

@@ -15,85 +15,87 @@ class SecurityPlugin extends Plugin
      *
      * @returns AclList
      */
-   /* public function getAcl()
+    /* public function getAcl()
+     {
+         if (!isset($this->persistent->acl)) {
+
+             $acl = new AclList();
+
+             $acl->setDefaultAction(Acl::DENY);
+
+             //Register roles
+             $roles = array(
+                 'admin'  => new Role('admin'),
+                 'guests' => new Role('Guests')
+             );
+             foreach ($roles as $role) {
+                 $acl->addRole($role);
+             }
+
+             //Private area resources
+             $privateResources = array(
+                 'dashboard'    => array('index'),
+
+             );
+             foreach ($privateResources as $resource => $actions) {
+                 $acl->addResource(new Resource($resource), $actions);
+             }
+
+             //Public area resources
+             $publicResources = array(
+                 'login'      => array('index'),
+             );
+             foreach ($publicResources as $resource => $actions) {
+                 $acl->addResource(new Resource($resource), $actions);
+             }
+
+             //Grant access to public areas to both users and guests
+             foreach ($roles as $role) {
+                 foreach ($publicResources as $resource => $actions) {
+                     foreach ($actions as $action){
+                         $acl->allow($role->getName(), $resource, $action);
+                     }
+                 }
+             }
+
+             //Grant access to private area to role Users
+             foreach ($privateResources as $resource => $actions) {
+                 foreach ($actions as $action){
+                     $acl->allow('admin', $resource, $action);
+                 }
+             }
+
+             //The acl is stored in session, APC would be useful here too
+             $this->persistent->acl = $acl;
+         }
+
+         return $this->persistent->acl;
+     }*/
+
+
+    private function isAllowed($admin_id, $controller, $action)
     {
-        if (!isset($this->persistent->acl)) {
-
-            $acl = new AclList();
-
-            $acl->setDefaultAction(Acl::DENY);
-
-            //Register roles
-            $roles = array(
-                'admin'  => new Role('admin'),
-                'guests' => new Role('Guests')
-            );
-            foreach ($roles as $role) {
-                $acl->addRole($role);
-            }
-
-            //Private area resources
-            $privateResources = array(
-                'dashboard'    => array('index'),
-
-            );
-            foreach ($privateResources as $resource => $actions) {
-                $acl->addResource(new Resource($resource), $actions);
-            }
-
-            //Public area resources
-            $publicResources = array(
-                'login'      => array('index'),
-            );
-            foreach ($publicResources as $resource => $actions) {
-                $acl->addResource(new Resource($resource), $actions);
-            }
-
-            //Grant access to public areas to both users and guests
-            foreach ($roles as $role) {
-                foreach ($publicResources as $resource => $actions) {
-                    foreach ($actions as $action){
-                        $acl->allow($role->getName(), $resource, $action);
-                    }
-                }
-            }
-
-            //Grant access to private area to role Users
-            foreach ($privateResources as $resource => $actions) {
-                foreach ($actions as $action){
-                    $acl->allow('admin', $resource, $action);
-                }
-            }
-
-            //The acl is stored in session, APC would be useful here too
-            $this->persistent->acl = $acl;
-        }
-
-        return $this->persistent->acl;
-    }*/
-
-
-    private function isAllowed($admin_id,$controller,$action){
 
         $perm = new Permission();
-        $pa =$perm->getAdminPermission($admin_id);
+        $pa = $perm->getAdminPermission($admin_id);
 
-        foreach($pa as $v){
-            if($v['name'] == $controller){
-               if($action == 'index' || $action == 'search'){
-                   if($v['pa']['read'] || $v['pa']['edit']){
-                       return true;
-                   }
-               }else{
-                   if($v['pa']['edit']){
-                       return true;
-                   }
-               }
+        foreach ($pa as $v) {
+            if ($v['name'] == $controller) {
+                if ($action == 'index' || $action == 'search') {
+                    if ($v['pa']['read'] || $v['pa']['edit']) {
+                        return true;
+                    }
+                } else {
+                    if ($v['pa']['edit']) {
+                        return true;
+                    }
+                }
             }
 
         }
         return false;
     }
+
     /**
      * This action is executed before execute any action in the application
      *
@@ -105,9 +107,8 @@ class SecurityPlugin extends Plugin
     {
 
 
-
         $auth = $this->session->get('auth');
-        if (!$auth){
+        if (!$auth) {
             $admin_id = false;
         } else {
             $admin_id = $auth['id'];
@@ -115,24 +116,24 @@ class SecurityPlugin extends Plugin
 
         $controller = $dispatcher->getControllerName();
         $action = $dispatcher->getActionName();
-        if( $admin_id != false && $controller != 'dashboard' )
-         if($controller != 'login'){
-     //   $acl = $this->getAcl();
-       // $allowed = $acl->isAllowed($role, $controller, $action);
+        if ($admin_id != false && $controller != 'dashboard')
+            if ($controller != 'login') {
+                //   $acl = $this->getAcl();
+                // $allowed = $acl->isAllowed($role, $controller, $action);
 
-        if($admin_id)
-            $allowed = $this->isAllowed($admin_id, $controller, $action);
+                if ($admin_id)
+                    $allowed = $this->isAllowed($admin_id, $controller, $action);
 
-            if (!$allowed) {
-                $dispatcher->forward(array(
-                    'controller' => 'login',
-                    'action' => 'index'
-                ));
-                if ($auth)
-                    $this->session->destroy();
-                return false;
+                if (!$allowed) {
+                    $dispatcher->forward(array(
+                        'controller' => 'login',
+                        'action' => 'index'
+                    ));
+                    if ($auth)
+                        $this->session->destroy();
+                    return false;
+                }
             }
-       }
 
     }
 }

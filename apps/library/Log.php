@@ -8,7 +8,7 @@ class Log{
              $log->target = $target;
              $log->log_type = $log_type;
              $log->user_id = $user_id;
-             $log->date =date("Y-m-d H:i:s");
+             $log->date = date("Y-m-d H:i:s");
 
              $log->save();
 

@@ -7,6 +7,7 @@ use Phalcon\Forms\Element\Select;
 use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\Numericality;
+use Phalcon\Validation\Validator\StringLength;
 
 class AdminForm extends Form
 {
@@ -36,7 +37,50 @@ class AdminForm extends Form
             )
         );
         $this->add($email);
-        if (isset($options['edit'])) {
+        //
+        $surname = new Text("surname");
+        $surname->setLabel("Фамилия");
+        $surname->setFilters(array('striptags', 'string'));
+        $surname->addValidators(
+            array(
+                new PresenceOf(
+                    array(
+                        'message' => 'Фамилия обязательно'
+                    )
+                )
+            )
+        );
+        $this->add($surname);
+        //
+        $name = new Text("name");
+        $name->setLabel("Имя");
+        $name->setFilters(array('striptags', 'string'));
+        $name->addValidators(
+            array(
+                new PresenceOf(
+                    array(
+                        'message' => 'Имя обязательно'
+                    )
+                )
+            )
+        );
+        $this->add($name);
+        //
+        $patronymic = new Text("patronymic");
+        $patronymic->setLabel("Отчество");
+        $patronymic->setFilters(array('striptags', 'string'));
+        $patronymic->addValidators(
+            array(
+                new PresenceOf(
+                    array(
+                        'message' => 'Отчество обязательно'
+                    )
+                )
+            )
+        );
+        $this->add($patronymic);
+        if (isset($options['add'])) {
+
             $password = new Text('password');
             $password->setLabel("Пароль");
             $password->setFilters(array('striptags', 'string'));
@@ -51,17 +95,12 @@ class AdminForm extends Form
             );
             $this->add($password);
         }
-        $role = new Select(
-            'role',
-           array('admin'=>'Admin','manager'=>'Manager'),
-            array(
-                'using' => array('id', 'name'),
-                'useEmpty' => true,
-                'emptyText' => '...',
-                'emptyValue' => ''
-            )
-        );
-        $this->add($role);
+        if (isset($options['edit'])) {
+            $emptypassword= new Text('emptypassword');
+            $emptypassword->setLabel("Пароль");
+            $this->add($emptypassword);
+        }
+
 
 
     }
