@@ -1,0 +1,87 @@
+<div class="filter">
+    <form id="filter_form" action="/admin/log/index" method="post">
+        админ\пользователь
+           <select id="au" name="au">
+                <option value="all" {% if postdata['au'] == "all" %} selected {% endif %} >Все</option>
+                <option value="администратор" {% if postdata['au'] == "администратор" %} selected {% endif %} >Администратор</option>
+                <option value="пользователь" {% if postdata['au'] == "пользователь" %} selected {% endif %} >Пользователь</option>
+            </select>
+        тип
+        <select id="type" name="type">
+            <option value="all" {% if postdata['type'] == "all" %} selected {% endif %} >Все</option>
+            {% for type in typelist %}
+            <option value="{{ type['type'] }}" {% if postdata['type'] == type['type'] %} selected {% endif %}>{{ type['type'] }}</option>
+            {% endfor %}
+        </select>
+        дополнительно(номер жалобы)
+
+        <input type="text" name="additionally" id="additionally" value="{{ postdata['additionally'] }}">
+
+        поиск по тексту
+
+
+        <input type="text" name="textsearch" id="textsearch" value="{{ postdata['textsearch'] }}">
+
+
+    </form>
+    <script>
+        $( document ).ready(function() {
+            $('#au').change(function(){
+                $('#filter_form').submit();
+            });
+            $('#type').change(function(){
+                $('#filter_form').submit();
+            });
+            $('#additionally').change(function(){
+                $('#filter_form').submit();
+            });
+            $('#textsearch').change(function(){
+                $('#filter_form').submit();
+            });
+        });
+
+    </script>
+</div>
+{% for log in page.items %}
+{% if loop.first %}
+<table>
+    <thead>
+    <tr>
+        <th>Администратор\Пользователь</th>
+        <th>Тип</th>
+        <th>Сообщение</th>
+        <th>Дополнительно</th>
+        <th>Дата</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% endif %}
+    <tr>
+        <td>{{ log.au }}</td>
+        <td>{{ log.type }}</td>
+        <td>{{ log.text }}</td>
+        <td>{{ log.additionally }}</td>
+        <td>{{ log.date }}</td>
+
+    </tr>
+    {% if loop.last %}
+    </tbody>
+    <tbody>
+    <tr>
+        <td colspan="7">
+            <div>
+                {{ link_to("products/search", 'Первая') }}
+                {{ link_to("products/search?page=" ~ page.before, 'Предыдущая') }}
+                {{ link_to("products/search?page=" ~ page.next, 'Следующая') }}
+                {{ link_to("products/search?page=" ~ page.last, 'Последняя') }}
+                <span class="help-inline">{{ page.current }} из {{ page.total_pages }}</span>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endif %}
+{% else %}
+В базе нет логов с такими параметрами
+{% endfor %}

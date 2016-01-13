@@ -48,7 +48,7 @@ class Module
 			$eventsManager->attach('dispatch:beforeDispatch', new SecurityPlugin);
 
 			// Отлавливаем исключения и not-found исключения, используя NotFoundPlugin
-			$eventsManager->attach('dispatch:beforeException', new NotFoundPlugin);
+		//	$eventsManager->attach('dispatch:beforeException', new NotFoundPlugin);
 
 			$dispatcher = new Dispatcher();
 
