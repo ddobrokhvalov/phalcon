@@ -34,4 +34,7 @@ class Admin extends Model
     public function getFullName(){
         return $this->surname.' '.$this->name.' '.$this->patronymic;
     }
+    public function getSurnameAndInitials(){
+        return $this->surname.' '.substr($this->name,0,1).'.'.substr($this->patronymic,0,1).'.';
+    }
 }

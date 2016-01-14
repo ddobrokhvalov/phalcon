@@ -2,16 +2,24 @@
 namespace Multiple\Library;
 use Multiple\Backend\Models\Log as LogModel;
 class Log{
-    public static function addLog($admin_id = false,$user_id = false, $target,$log_type){
-          $log = new LogModel();
-             $log->admin_id = $admin_id;
-             $log->target = $target;
-             $log->log_type = $log_type;
-             $log->user_id = $user_id;
+    public static $typeAdminAuth = 'Aвторизация админа';
+    public static $textAdminLogin = 'Администратор вход в систему.';
+    public static $textAdminLogout = 'Администратор выход из системы.';
+
+    public static function addAdminLog($type,$text,$admin,$additionally = false){
+             $log = new LogModel();
+             $log->au = 'администратор';
+             $log->type = $type;
+             $log->text = $text.' '.$admin->getSurnameAndInitials().' '.$admin->getEmail();
+             $log->customer_email = $admin->getEmail();
+             if($additionally)
+                 $log->additionally = $additionally;
+
              $log->date = date("Y-m-d H:i:s");
 
-             $log->save();
+             $log->saveLog();
 
+             
     }
 
 }

@@ -9,7 +9,7 @@ class Log extends Model
     public $au;
     public $type;
     public $text;
-    public $customer_id;
+    public $customer_email;
     public $additionally;
     public $date;
 
@@ -22,7 +22,12 @@ class Log extends Model
     {
         return "log";
     }
-
+    public function saveLog(){
+        $sql = "INSERT INTO log (`au`,`type`,`text`,`customer_email`,`additionally`,`date`)
+                  VALUES('$this->au','$this->type', '$this->text','$this->customer_email','$this->additionally','$this->date')";
+        $this->db=$this->getDi()->getShared('db');
+        $result=$this->db->query($sql);
+    }
     public function getTypeList()
     {
         $this->db = $this->getDi()->getShared('db');

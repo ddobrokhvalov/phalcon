@@ -75,7 +75,8 @@ class SecurityPlugin extends Plugin
 
     private function isAllowed($admin_id, $controller, $action)
     {
-
+        if($controller == 'dashboard')
+            return true;
         $perm = new Permission();
         $pa = $perm->getAdminPermission($admin_id);
 
@@ -116,7 +117,7 @@ class SecurityPlugin extends Plugin
 
         $controller = $dispatcher->getControllerName();
         $action = $dispatcher->getActionName();
-        if ($admin_id != false && $controller != 'dashboard')
+
             if ($controller != 'login') {
                 //   $acl = $this->getAcl();
                 // $allowed = $acl->isAllowed($role, $controller, $action);
