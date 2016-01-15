@@ -14,18 +14,24 @@
             {% endfor %}
         </select>
         дополнительно(номер жалобы)
-
         <input type="text" name="additionally" id="additionally" value="{{ postdata['additionally'] }}">
-
         поиск по тексту
-
-
         <input type="text" name="textsearch" id="textsearch" value="{{ postdata['textsearch'] }}">
+        <br>
+        дата от
+        <input type="text" name="datefrom" id="datepicker1" value="{{ postdata['datefrom'] }}">
+        до
+        <input type="text" name="dateto" id="datepicker2" value="{{ postdata['dateto'] }}">
 
-
+        <input type="submit" value="Поиск">
     </form>
     <script>
         $( document ).ready(function() {
+
+            var picker1 = new Pikaday({ field: document.getElementById('datepicker1'),  format: 'YYYY-MM-DD' });
+
+            var picker2 = new Pikaday({ field: document.getElementById('datepicker2'),  format: 'YYYY-MM-DD' });
+
             $('#au').change(function(){
                 $('#filter_form').submit();
             });

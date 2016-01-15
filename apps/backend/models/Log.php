@@ -22,12 +22,15 @@ class Log extends Model
     {
         return "log";
     }
-    public function saveLog(){
+
+    public function saveLog()
+    {
         $sql = "INSERT INTO log (`au`,`type`,`text`,`customer_email`,`additionally`,`date`)
                   VALUES('$this->au','$this->type', '$this->text','$this->customer_email','$this->additionally','$this->date')";
-        $this->db=$this->getDi()->getShared('db');
-        $result=$this->db->query($sql);
+        $this->db = $this->getDi()->getShared('db');
+        $result = $this->db->query($sql);
     }
+
     public function getTypeList()
     {
         $this->db = $this->getDi()->getShared('db');
@@ -37,6 +40,7 @@ class Log extends Model
 
     public function filterLog($data)
     {
+
         if (!$data) {
             return Log::find();
         }
@@ -66,6 +70,15 @@ class Log extends Model
             else
                 $where = ' text  LIKE  :textsearch: ';
             $bind['textsearch'] = '%' . $data['textsearch'] . '%';
+        }
+
+        if (isset($data['datefrom']) && isset($data['dateto']) && $data['datefrom'] !='' && $data['dateto'] !='' ) {
+            if ($where)
+                $where .= ' AND date BETWEEN  :datefrom: AND :dateto:  ';
+            else
+                $where = ' date BETWEEN  :datefrom: AND :dateto: ';
+            $bind['datefrom'] = $data['datefrom'];
+            $bind['dateto'] = $data['dateto'];
         }
 
         return Log::find(array(

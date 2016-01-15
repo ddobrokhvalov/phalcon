@@ -31,6 +31,11 @@ class LogController extends ControllerBase
             $data['additionally'] = '';
         if(!isset($data['textsearch']))
             $data['textsearch'] = '';
+        if(!isset($data['datefrom']))
+            $data['datefrom'] = '';
+        if(!isset($data['dateto']))
+            $data['dateto'] = '';
+
 
         $this->view->postdata = $data;
         $this->view->typelist = $typeList;

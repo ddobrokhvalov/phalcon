@@ -19,7 +19,7 @@ class Log{
 
              $log->saveLog();
 
-             
+
     }
 
 }
