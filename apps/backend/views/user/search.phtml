@@ -1,0 +1,44 @@
+{% for user in page.items %}
+{% if loop.first %}
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>email</th>
+        <th>Статус</th>
+        <th>Дата регистрации</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% endif %}
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.email}}</td>
+        <td>{{ user.status}}</td>
+        <td>{{ user.date_registration}}</td>
+        <td><a href="/admin/user/edit/{{ user.id }}">Редактировать</a></td>
+
+        <td><a href="/admin/user/del/{{ user.id }}">Удалить</a></td>
+    </tr>
+    {% if loop.last %}
+    </tbody>
+    <tbody>
+    <tr>
+        <td colspan="7">
+            <div>
+                {{ link_to("products/search", 'Первая') }}
+                {{ link_to("products/search?page=" ~ page.before, 'Предыдущая') }}
+                {{ link_to("products/search?page=" ~ page.next, 'Следующая') }}
+                {{ link_to("products/search?page=" ~ page.last, 'Последняя') }}
+                <span class="help-inline">{{ page.current }} из {{ page.total_pages }}</span>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endif %}
+{% else %}
+В базе нет user
+{% endfor %}

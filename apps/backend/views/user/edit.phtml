@@ -1,7 +1,7 @@
-<form action="/admin/user/create" method="post">
+<form action="/admin/user/save" method="post">
     <fieldset>
 
-
+        <fieldset>
 
             {% for element in form %}
             <div class="control-group">
@@ -11,8 +11,13 @@
             {% endfor %}
 
             <div class="control-group">
-                {{ submit_button("Создать", "class": "btn btn-primary") }}
+                {{ submit_button("Сохранить", "class": "btn btn-primary") }}
             </div>
 
         </fieldset>
 </form>
+<script>
+    $( document ).ready(function() {
+        $( "#password" ).val('');
+    });
+</script>

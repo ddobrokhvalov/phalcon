@@ -26,7 +26,7 @@ class Module
 			'Multiple\Backend\Models'      => '../apps/backend/models/',
 			'Multiple\Backend\Plugins'     => '../apps/backend/plugins/',
 			'Multiple\Library'             => '../apps/library/',
-			'Multiple\Backend\Form'                => '../apps/backend/form/',
+			'Multiple\Backend\Form'        => '../apps/backend/form/',
 		));
 
 

@@ -1,5 +1,6 @@
 <?php
 namespace Multiple\Backend\Form;
+
 use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\Hidden;
@@ -9,14 +10,12 @@ use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\Numericality;
 use Phalcon\Validation\Validator\StringLength;
 
-class AdminForm extends Form
+class UserForm extends Form
 {
-    /**
-     * Инициализация формы
-     */
+
     public function initialize($entity = null, $options = array())
     {
-        if (!isset($options['edit']) && !isset($options['add'])) {
+        if (!isset($options['edit']) && !isset($options['add'])){
             $element = new Text("id");
             $this->add($element->setLabel("Id"));
 
@@ -37,48 +36,7 @@ class AdminForm extends Form
             )
         );
         $this->add($email);
-        //
-        $surname = new Text("surname");
-        $surname->setLabel("Фамилия");
-        $surname->setFilters(array('striptags', 'string'));
-        $surname->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Фамилия обязательно'
-                    )
-                )
-            )
-        );
-        $this->add($surname);
-        //
-        $name = new Text("name");
-        $name->setLabel("Имя");
-        $name->setFilters(array('striptags', 'string'));
-        $name->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Имя обязательно'
-                    )
-                )
-            )
-        );
-        $this->add($name);
-        //
-        $patronymic = new Text("patronymic");
-        $patronymic->setLabel("Отчество");
-        $patronymic->setFilters(array('striptags', 'string'));
-        $patronymic->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Отчество обязательно'
-                    )
-                )
-            )
-        );
-        $this->add($patronymic);
+
         if (isset($options['add'])) {
 
             $password = new Text('password');
@@ -96,11 +54,21 @@ class AdminForm extends Form
             $this->add($password);
         }
         if (isset($options['edit'])) {
-            $emptypassword= new Text('emptypassword');
+            $emptypassword = new Text('emptypassword');
             $emptypassword->setLabel("Пароль");
             $this->add($emptypassword);
         }
 
+
+        $this->add(
+            new Select(
+                "status",
+                array(
+                    '1' => 'Активный',
+                    '0' => 'Заблокированый'
+                )
+            )
+        );
 
 
     }

@@ -1,0 +1,66 @@
+<h2>Поиск User</h2>
+<form action="/admin/user/search" method="post">
+    <fieldset>
+
+        <fieldset>
+
+            {% for element in form %}
+            <div class="control-group">
+                {{ element.label(['class': 'control-label']) }}
+                <div class="controls">{{ element }}</div>
+            </div>
+            {% endfor %}
+
+            <div class="control-group">
+                {{ submit_button("Search", "class": "btn btn-primary") }}
+            </div>
+
+        </fieldset>
+</form>
+<div><a href="/admin/user/add">Add user</a></div>
+
+<br>
+{% for user in page.items %}
+{% if loop.first %}
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>email</th>
+        <th>Статус</th>
+        <th>Дата регистрации</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% endif %}
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.email}}</td>
+        <td>{{ user.status}}</td>
+        <td>{{ user.date_registration}}</td>
+        <td><a href="/admin/user/edit/{{ user.id }}">Редактировать</a></td>
+
+        <td><a href="/admin/user/del/{{ user.id }}">Удалить</a></td>
+    </tr>
+    {% if loop.last %}
+    </tbody>
+    <tbody>
+    <tr>
+        <td colspan="7">
+            <div>
+              <a href="/admin/user/index">Первая</a>
+                <a href="/admin/user/index?page={{ page.before }}">Предыдущая</a>
+                <a href="/admin/user/index?page={{ page.next }}">Следующая</a>
+                <a href="/admin/user/index?page={{ page.last }}">Последняя</a>
+                <span class="help-inline">{{ page.current }} из {{ page.total_pages }}</span>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endif %}
+{% else %}
+В базе нет user
+{% endfor %}
