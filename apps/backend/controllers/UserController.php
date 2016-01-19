@@ -16,7 +16,7 @@ class UserController extends ControllerBase
         $this->persistent->searchParams = null;
         $this->view->form = new UserForm;
 
-       
+
         $users = User::find();
         $paginator = new Paginator(array(
             "data" => $users,
