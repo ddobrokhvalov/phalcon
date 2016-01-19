@@ -1,0 +1,16 @@
+<div>Категории</div>
+ {% for category in categorys %}
+<a href="/admin/template/index?cat_id={{ category.id }}">{{ category.name }}</a> <br>
+
+{% endfor %}
+<br><hr> <br>
+{% if currentCategory %}
+   {{ currentCategory.name }}
+{% endif %}
+<br>
+
+{% if templates != false %}
+    {% for template in templates %}
+          {{  template.name }} <br>
+    {% endfor %}
+{% endif %}
