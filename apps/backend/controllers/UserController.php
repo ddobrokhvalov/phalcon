@@ -23,7 +23,7 @@ class UserController extends ControllerBase
         $paginator = new Paginator(array(
             "data" => $users,
             "limit" => 3,
-            "page" => isset($_GET['page'])?$_GET['page']:1
+            "page" => isset($_GET['page']) ? $_GET['page'] : 1
         ));
 
         $this->view->page = $paginator->getPaginate();
@@ -191,18 +191,21 @@ class UserController extends ControllerBase
         $this->flash->success("user was deleted");
         return $this->forward("user/index");
     }
-    public function editapplicantAction($id){
 
-            $applicant = Applicant::findFirstById($id);
-            if (!$applicant) {
-                $this->flash->error("Applicant was not found");
-                return $this->forward("user/index");
-            }
+    public function editapplicantAction($id)
+    {
 
-               $this->view->form = new ApplicantForm($applicant, array('edit' => true));
+        $applicant = Applicant::findFirstById($id);
+        if (!$applicant) {
+            $this->flash->error("Applicant was not found");
+            return $this->forward("user/index");
+        }
+
+        $this->view->form = new ApplicantForm($applicant, array('edit' => true));
 
 
     }
+
     public function saveapplicantAction()
     {
         if (!$this->request->isPost()) {
@@ -249,6 +252,7 @@ class UserController extends ControllerBase
         return $this->forward("user/index");
 
     }
+
     public function delapplicantAction($id)
     {
         $applicant = Applicant::findFirstById($id);
