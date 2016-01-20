@@ -1,4 +1,4 @@
-<form action="/admin/user/save" method="post">
+<form action="/admin/user/saveapplicant" method="post">
     <fieldset>
 
         <fieldset>
@@ -16,20 +16,3 @@
 
         </fieldset>
 </form>
-
-<div>
-    {% for applicant in applicants %}
-      {{ applicant.name_full }}
-    <a href="/admin/user/editapplicant/{{ applicant.id }}">Редактировать</a>
-    <a href="/admin/user/delapplicant/{{ applicant.id }}">Удалить</a>
-
-    {% endfor %}
-
-</div>
-
-
-<script>
-    $( document ).ready(function() {
-        $( "#password" ).val('');
-    });
-</script>
