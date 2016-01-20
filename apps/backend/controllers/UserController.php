@@ -249,6 +249,24 @@ class UserController extends ControllerBase
         return $this->forward("user/index");
 
     }
+    public function delapplicantAction($id)
+    {
+        $applicant = Applicant::findFirstById($id);
+        if (!$applicant) {
+            // $this->flash->error("admin was not found");
+            return $this->forward("user/index");
+        }
+
+        if (!$applicant->delete()) {
+            foreach ($applicant->getMessages() as $message) {
+                // $this->flash->error($message);
+            }
+            return $this->forward("applicant/search");
+        }
+
+        $this->flash->success("applicant was deleted");
+        return $this->forward("user/index");
+    }
 
 
 }
