@@ -59,9 +59,9 @@ class Parser {
         $name = trim(preg_replace('/\s+/ui', ' ', $name));
         $data = $this->getUrl('http://new.zakupki.gov.ru/epz/organization/quicksearch/search.html?searchString=' . urlencode($name) . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&sortBy=PO_NAZVANIYU&fz94=on&fz223=on&regions=');
         libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
+        $doc = new \DOMDocument();
         $doc->loadHTML($data);
-        $xpath = new DOMXpath($doc);
+        $xpath = new \DOMXpath($doc);
 
         $url = trim($xpath->evaluate('string(//div[@id="exceedSphinxPageSizeDiv"]/div[1]//tr/td[@class="descriptTenderTd"]//a/@href)'));
         if(strlen($url) > 0) {
