@@ -99,7 +99,7 @@ class SecurityPlugin extends Plugin
         $acl = $this->getAcl();
         $allowed = $acl->isAllowed($role, $controller, $action);
 
-        if (!$allowed) {
+     /*   if (!$allowed) {
             $dispatcher->forward(array(
                 'controller' => 'login',
                 'action' => 'index'
@@ -107,6 +107,6 @@ class SecurityPlugin extends Plugin
             if ($auth)
                 $this->session->destroy();
             return false;
-        }
+        } */
     }
 }

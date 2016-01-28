@@ -1,0 +1,86 @@
+<div class="conteiner">
+
+<label>Номер закупки:</label>
+     <input type="text" size="15" id="auction_id">
+        <button id="auction_button">Запрос</button>
+
+<br>
+    <br>
+<div>Должностное лицо<span id="dolg_lico"></span></div>
+<div>Емайл<span id="email"></span></div>
+<div>Факс<span id="fax"></span></div>
+<div>Место нахождения<span id="mesto_nahogdeniya"></span></div>
+<div>Имя<span id="name"></span></div>
+<div>Почтовый адрес<span id="pochtovy_adres"></span></div>
+<div>тел<span id="tel"></span></div>
+<div>Объект закупки<span id="object_zakupki"></span></div>
+<div>Платформа<span id="platform"></span></div>
+<div>Тип<span id="type"></span></div>
+<div>Закупку осуществляет<span id="zakupku_osushestvlyaet"></span></div>
+
+<div>Дата проведения<span id="data_provedeniya"></span></div>
+<div>Дата рассмотрения<span id="data_rassmotreniya"></span></div>
+<div>Начало подачи<span id="nachalo_podachi"></span></div>
+<div>Окончание подачи<span id="okonchanie_podachi"></span></div>
+<div>Окончание рассмотрения<span id="okonchanie_rassmotreniya"></span></div>
+<div>Время проведения<span id="vremya_provedeniya"></span></div>
+<div>Вскрытие конвертов<span id="vskrytie_konvertov"></span></div>
+</div>
+<script>
+    function showAuction(d){
+        console.log(d);
+        s('dolg_lico',d.contact.dolg_lico);
+        s('email',d.contact.email);
+        s('mesto_nahogdeniya',d.contact.mesto_nahogdeniya);
+        s('name',d.contact.name);
+        s('pochtovy_adres',d.contact.pochtovy_adres);
+        s('tel',d.contact.tel);
+
+        s('object_zakupki',d.info.object_zakupki);
+        s('platform',d.info.platform);
+        s('type',d.info.type);
+        s('zakupku_osushestvlyaet',d.info.zakupku_osushestvlyaet);
+
+        s('data_provedeniya',d.procedura.data_provedeniya);
+        s('data_rassmotreniya',d.procedura.data_rassmotreniya);
+        s('nachalo_podachi',d.procedura.nachalo_podachi);
+        s('okonchanie_podachi',d.procedura.okonchanie_podachi);
+        s('okonchanie_rassmotreniya',d.procedura.okonchanie_rassmotreniya);
+        s('vremya_provedeniya',d.procedura.avremya_provedeniya);
+        s('vskrytie_konvertov',d.procedura.vskrytie_konvertov);
+
+        $('#auction_button').show();
+    }
+    function s(id,data){
+        $('#'+id).html(data);
+    }
+    $( document ).ready(function() {
+       $('#auction_button').click(function(){
+          var auction_id = $('#auction_id').val();
+           if(auction_id.length > 5){
+               $('#auction_button').hide();
+               $.ajax({
+                   type: 'POST',
+                   url: '/purchase/get',
+                   data: 'auction_id='+auction_id,
+                   success: function(msg){
+                     //  alert(msg);
+                       var data = $.parseJSON(msg);
+                       showAuction(data);
+
+                   },
+                   error:function(msg){
+                       alert(msg);
+                   }
+
+               });
+
+
+          }else{
+             alert('неверный номер');
+           }
+
+       });
+    });
+
+</script>
