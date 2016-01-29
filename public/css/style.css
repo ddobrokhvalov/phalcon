@@ -1,3 +1,814 @@
-.conteiner span{
-    padding-left: 20px;
+﻿/* CSS Reset */
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -webkit-text-size-adjust: 100%;
+}
+strong{
+	font-weight: bolder;
+}
+b {
+    font-weight: bold;
+}
+em {
+	font-style: italic;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+    height: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+body {
+	width: 100%;
+    min-width: 120px;
+    float: left;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+	color: #34383e;
+    position: relative;
+    background: #fff;
+    -webkit-text-size-adjust: 100%;
+}
+::selection {
+	background: #9de2ff;
+}
+::-moz-selection {
+	background: #9de2ff;
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #848484;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #848484;
+    opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #848484;
+    opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #848484;
+}
+input, textarea, button {
+    outline: none;
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+}
+input[type=submit], button {
+    cursor: pointer;
+}
+div {
+    box-sizing: border-box;
+}
+table {
+	border: 0 none;
+	padding: 0;
+    border-spacing: 0;
+}
+td {
+    vertical-align: top;
+}
+img {
+	border: none;
+}
+b {
+    font-weight: bold;
+}
+a {
+    box-sizing: border-box;
+    color: #1e88e5;
+	text-decoration: none;
+	font-weight: normal;
+}
+a:hover {
+	text-decoration: underline;
+	font-weight: normal;
+}
+a:visited {
+	text-decoration: none;
+	font-weight: normal;
+}
+.wrapper {
+	width: 1000px;
+    min-height: calc(100%);
+	margin: 0 auto;
+    position: relative;
+}
+.mheader {
+    float: left;
+    width: 100%;
+    height: 190px;
+    padding: 82px 0 0 0;
+    position: relative;
+}
+.mheader:before {
+    display: block;
+    content: "";
+    width: 85%;
+    height: 75px;
+    background: #222427;
+    transform: rotate(-2.5deg);
+    position: absolute;
+    bottom: 100%;
+    left: -10px;
+    margin: 0 0 -30px 0;
+}
+.mheader a:hover {
+    text-decoration: none;
+}
+.mhlogo {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 184px;
+    height: 27px;
+    background: url(../images/hlogo.png) no-repeat center;
+    margin: 0 0 0 -92px;
+}
+.mhlogo a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.mh-phone {
+    float: left;
+    padding: 0 0 0 22px;
+    background: url(../images/icon-phone.png) no-repeat left center;
+    color: #34383e;
+    margin: 6px 0 0 0;
+    font-weight: 100 !important;
+}
+.mh-mail {
+    float: left;
+    padding: 0 0 0 20px;
+    background: url(../images/icon-mail.png) no-repeat left center;
+    color: #34383e;
+    margin: 6px 0 0 35px;
+    font-weight: 100 !important;
+}
+.mh-login {
+    float: right;
+    line-height: 48px;
+    padding: 0 20px;
+    background: #00aeef;
+    border-radius: 5px;
+    font-weight: 600 !important;
+    color: #fff;
+    font-size: 15px;
+    text-transform: uppercase;
+    margin: -7px 0 0 0;
+}
+.mstripe-1 {
+    float: left;
+    width: 100%;
+    padding: 0 0 75px 0;
+}
+.mstripe-1 h1 {
+    float: left;
+    width: 100%;
+    font-weight: 100;
+    font-size: 56px;
+    text-align: center;
+    line-height: 55px;
+}
+.mstripe-1 h1 span {
+    font-size: 18px;
+}
+.ms1-str {
+    float: left;
+    width: 100%;
+    margin: 60px 0 0 0;
+}
+.ms1-s-b {
+    float: left;
+    width: 25%;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 100;
+}
+.ms1-s-b-i {
+    float: left;
+    width: 100%;
+    height: 165px;
+}
+.mstripe-2 {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 870px;
+    background: url(../images/ms2-bg.jpg) no-repeat bottom center #fcf6f0;
+    background-size: cover;
+    overflow: hidden;
+}
+.mstripe-2:before {
+    display: block;
+    content: "";
+    width: 130%;
+    height: 125px;
+    background: #fff;
+    transform: rotate(-2.5deg);
+    position: absolute;
+    bottom: 100%;
+    left: -10px;
+    margin: 0 0 -45px -15%;
+}
+.mstripe-2:after {
+    display: block;
+    content: "";
+    width: 130%;
+    height: 125px;
+    background: #fff;
+    transform: rotate(-2.5deg);
+    position: absolute;
+    top: 100%;
+    left: -10px;
+    margin: -45px 0 0 -15%;
+}
+.mstripe-2 h2 {
+    float: left;
+    width: 100%;
+    font-weight: 100;
+    font-size: 40px;
+    text-align: center;
+    margin: 100px 0 0 0;
+}
+.ms2-str {
+    float: left;
+    width: 100%;
+    text-align: center;
+    margin: 25px 0 0 0;
+    font-size: 18px;
+}
+.ms2-str a {
+    color: #00aeef;
+    font-weight: bold !important;
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+.ms2-str a:hover {
+    text-decoration: none;
+}
+.ms2-s-btn {
+    display: inline-block;
+    line-height: 66px;
+    padding: 0 50px;
+    background: #00aeef;
+    border-radius: 5px;
+    font-weight: 600 !important;
+    color: #fff !important;
+    font-size: 18px;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    margin: 0 0 25px 0;
+}
+.mstripe-3 {
+    position: relative;
+    float: left;
+    width: 100%;
+}
+.mstripe-3 h2 {
+    float: left;
+    width: 100%;
+    font-weight: 100;
+    font-size: 40px;
+    text-align: center;
+    margin: 0 0 55px 0;
+}
+.ms3-macbook {
+    float: left;
+    width: 940px;
+    height: 542px;
+    background: url(../images/macbook.png) no-repeat center;
+    margin: -470px 0 60px 30px;
+}
+.ms3-macbook div {
+    float: left;
+    width: 715px;
+    height: 447px;
+    background: #e4e4e4;
+    margin: 33px 0 0 113px;
+}
+.ms3-list {
+    float: left;
+    list-style: none;
+    width: 850px;
+    margin: 0 0 0 75px;
+}
+.ms3-list li {
+    float: left;
+    width: 100%;
+    min-height: 350px;
+    margin: 0 0 50px 0;
+}
+.ms3-list li:nth-child(even) .ms3-l-text {
+    float: right;
+    width: 365px;
+}
+.ms3-list li:nth-child(odd) .ms3-l-text {
+    float: left;
+    width: 430px;
+}
+.ms3-list li:nth-child(1) {
+    background: url(../images/bg-ms3-i1.png) no-repeat right top;
+}
+.ms3-list li:nth-child(2) {
+    background: url(../images/bg-ms3-i2.png) no-repeat left top;
+}
+.ms3-list li:nth-child(3) {
+    background: url(../images/bg-ms3-i3.png) no-repeat right top;
+}
+.ms3-list li:nth-child(4) {
+    background: url(../images/bg-ms3-i4.png) no-repeat left top;
+}
+.ms3-list li:nth-child(5) {
+    background: url(../images/bg-ms3-i5.png) no-repeat right top;
+}
+.ms3-l-text {
+    margin: 20px 0 0 0;
+    font-weight: 100;
+    font-size: 18px;
+    line-height: 30px;
+}
+.ms3-l-text span {
+    float: left;
+    width: 100%;
+    margin: 0 0 15px 0;
+    font-size: 36px;
+    color: #0fbbfc;
+    line-height: normal;
+    font-family: 'seguili';
+    font-style: italic;
+    font-weight: 100;
+}
+.mstripe-4 {
+    position: relative;
+    float: left;
+    width: 100%;
+    background: url(../images/ms4-bg.jpg) no-repeat bottom center #fefcf6;
+    background-size: 100% auto;
+    overflow: hidden;
+    padding: 130px 0 355px 0;
+}
+.ms4-btm-tar {
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 352px;
+    background: url(../images/bg-m-price.png) no-repeat bottom center;
+}
+.ms4-btm-shd {
+    z-index: 2;
+    position: absolute;
+    bottom: -70px;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    opacity: 0.2;
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%);
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
+    background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 );
+}
+.mstripe-4:before {
+    z-index: 10;
+    display: block;
+    content: "";
+    width: 130%;
+    height: 125px;
+    background: #fff;
+    transform: rotate(-2.5deg);
+    position: absolute;
+    bottom: 100%;
+    left: -10px;
+    margin: 0 0 -45px -15%;
+}
+.mstripe-4:after {
+    z-index: 10;
+    display: block;
+    content: "";
+    width: 130%;
+    height: 125px;
+    background: #fff;
+    transform: rotate(2.5deg);
+    position: absolute;
+    top: 100%;
+    left: -10px;
+    margin: -45px 0 0 -15%;
+}
+.mstripe-4 h2 {
+    float: left;
+    width: 100%;
+    font-weight: 100;
+    font-size: 40px;
+    text-align: center;
+    margin: 0 0 45px 0;
+}
+.mstripe-4 h2 span {
+    float: left;
+    width: 100%;
+    margin: 10px 0 0 0;
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: normal;
+}
+.mstripe-4 h2 a {
+    display: inline-block;
+    line-height: 72px;
+    padding: 0 75px;
+    background: #00aeef;
+    border-radius: 5px;
+    font-weight: 600 !important;
+    color: #fff !important;
+    font-size: 18px;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    margin: 40px 0 0 0;
+}
+.ms4-str {
+    float: left;
+    width: 100%;
+    margin: 25px 0 0 0;
+}
+.ms4-s-b {
+    float: left;
+    width: 20%;
+    height: 260px;
+    text-align: center;
+    line-height: 22px;
+}
+.ms4-s-b-i {
+    float: left;
+    width: 100%;
+    height: 100px;
+}
+.mstripe-5 {
+    float: left;
+    width: 100%;
+    padding: 65px 0 70px 0;
+}
+.mstripe-5 h2 {
+    float: left;
+    width: 100%;
+    font-weight: 100;
+    font-size: 40px;
+    text-align: center;
+    margin: 0 0 45px 0;
+}
+.mstripe-5 h2 a {
+    display: inline-block;
+    line-height: 65px;
+    padding: 0 40px;
+    background: #00aeef;
+    border-radius: 5px;
+    font-weight: 600 !important;
+    color: #fff !important;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    margin: 30px 0 0 0;
+}
+.ms5-text {
+    float: left;
+    width: 850px;
+    min-height: 386px;
+    background: url(../images/bg-ms5-t.png) no-repeat left top;
+    margin: 0 0 0 75px;
+    padding: 0 0 0 420px;
+    font-size: 16px;
+    line-height: 28px;
+}
+.ms5-text span {
+    float: left;
+    width: 100%;
+    margin: 0 0 15px 0;
+    font-size: 26px;
+    color: #0fbbfc;
+    line-height: 38px;
+    font-family: 'seguili';
+    font-style: italic;
+    font-weight: 100;
+}
+.mfooter {
+    position: relative;
+    float: left;
+    width: 100%;
+    padding: 85px 0 70px 0;
+    overflow: hidden;
+}
+.mfooter:before {
+    display: block;
+    content: "";
+    width: 130%;
+    height: 125px;
+    background: #d5d9e0;
+    transform: rotate(2.5deg);
+    position: absolute;
+    bottom: 100%;
+    left: -10px;
+    margin: 0 0 -46px -15%;
+}
+.mfooter:after {
+    display: block;
+    content: "";
+    width: 130%;
+    height: 125px;
+    background: #fff;
+    transform: rotate(2.5deg);
+    position: absolute;
+    bottom: 100%;
+    left: -10px;
+    margin: 0 0 -45px -15%;
+}
+.mflogo {
+    float: left;
+    width: 184px;
+    height: 27px;
+    background: url(../images/hlogo.png) no-repeat center;
+}
+.mflogo a {
+    float: left;
+    width: 100%;
+    height: 100%;
+}
+.mf-str {
+    float: left;
+    width: 100%;
+    margin: 20px 0 0 0;
+    font-size: 16px;
+}
+.mf-str a {
+    display: inline-block;
+    margin: 0 0 0 55px;
+    text-decoration: none;
+    color: #34383e;
+}
+.mf-str a:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* popups */
+.modal_div {
+	position: fixed;
+	top: 45%;
+	left: 50%;
+	margin-top: -300px;
+	margin-left: -350px;
+	display: none;
+    width: 700px;
+    z-index: 9999;
+    background: #fff;
+}
+#overlay {
+	z-index: 9995;
+	position: fixed;
+	background-color: #34383e;
+	opacity: 0.4;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	cursor: pointer;
+	display: none;
+}
+.modal_div h2 {
+    position: relative;
+    float: left;
+    width: 100%;
+    text-align: center;
+    background: #00aeef;
+    color: #fff;
+    font-size: 56px;
+    font-weight: 100;
+    line-height: 145px;
+    padding: 0 0 30px 0;
+    overflow: hidden;
+}
+.modal_div h2:after {
+    display: block;
+    content: "";
+    width: 130%;
+    height: 125px;
+    background: #fff;
+    transform: rotate(-2.5deg);
+    position: absolute;
+    top: 100%;
+    left: -10px;
+    margin: -45px 0 0 -15%;
+}
+.modal_div form {
+    float: left;
+    width: 410px;
+    margin: 20px 0 45px 145px;
+}
+.modal_div form ::-webkit-input-placeholder {
+    color:    #34383e;
+}
+.modal_div form :-moz-placeholder {
+    color:    #34383e;
+    opacity:  1;
+}
+.modal_div form ::-moz-placeholder {
+    color:    #34383e;
+    opacity:  1;
+}
+.modal_div form :-ms-input-placeholder {
+    color:    #34383e;
+}
+.modal_div form input[type=text] {
+    float: left;
+    width: 100%;
+    height: 60px;
+    border: 1px solid #34383e;
+    margin: 5px 0 25px 0;
+    font-size: 18px;
+    padding: 0 10px;
+}
+.modal_div form label {
+    float: left;
+    width: 100%;
+    font-size: 18px;
+}
+.modal_div form input[type=submit] {
+    float: left;
+    width: 250px;
+    height: 66px;
+    padding: 0 50px;
+    background: #00aeef;
+    border-radius: 5px;
+    font-weight: 600 !important;
+    color: #fff !important;
+    font-size: 18px;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    margin: 10px 80px 0 80px;
+    border: 0;
+}
+.modal-close {
+    background: url(../images/icon-mod-close.png) no-repeat center;
+    width: 21px;
+    height: 21px;
+    cursor: pointer;
+    position: absolute;
+    top: 19px;
+    right: 21px;
+}
+.pop-str1 {
+    float: left;
+    width: 100%;
+    margin: 0 0 25px 0;
+}
+.pop-str1 a {
+    float: right;
+    color: #00aeef;
+    margin: 4px -60px 0 0;
+    text-decoration: underline;
+}
+.pop-str1 a:hover {
+    text-decoration: none;
+}
+.pop-str1 label {
+    float: none !important;
+    width: auto !important;
+    display: inline-block;
+}
+.pop-done-txt {
+    float: left;
+    width: 100%;
+    text-align: center;
+    padding: 30px 0 80px 0;
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: 100;
 }
