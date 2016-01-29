@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'seguili';
+    src: url('seguili.eot');
+    src: url('seguili.eot') format('embedded-opentype'),
+         url('seguili.woff2') format('woff2'),
+         url('seguili.woff') format('woff'),
+         url('seguili.ttf') format('truetype'),
+         url('seguili.svg#seguili') format('svg');
+}
