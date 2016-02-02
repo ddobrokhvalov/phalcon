@@ -1,6 +1,7 @@
 <?php
 namespace Multiple\Backend\Form;
 use Phalcon\Forms\Form;
+use Phalcon\Forms\Element\File;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\Hidden;
 use Phalcon\Forms\Element\Select;
@@ -100,7 +101,12 @@ class AdminForm extends Form
             $emptypassword->setLabel("Пароль");
             $this->add($emptypassword);
         }
-
+       //
+        if (isset($options['edit'])) {
+            $avatar = new File("avatar");
+            $avatar->setLabel("Avatar");
+            $this->add($avatar);
+        }
 
 
     }

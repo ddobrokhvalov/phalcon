@@ -1,6 +1,7 @@
 <?php
 namespace Multiple\Backend\Models;
 use Phalcon\Mvc\Model;
+use  Multiple\Library\PHPImageWorkshop\ImageWorkshop;
 
 class Admin extends Model
 {
@@ -10,6 +11,7 @@ class Admin extends Model
     public $surname;
     public $name;
     public $patronymic;
+    public $avatar;
 
     public function initialize()
     {
@@ -36,5 +38,11 @@ class Admin extends Model
     }
     public function getSurnameAndInitials(){
         return $this->surname.' '.substr($this->name,0,1).'.'.substr($this->patronymic,0,1).'.';
+    }
+    public function saveAvatar($avatar){
+
+
+        $layer = ImageWorkshop::initFromPath($avatar['tmp_name']);
+        var_dump($layer); exit;
     }
 }

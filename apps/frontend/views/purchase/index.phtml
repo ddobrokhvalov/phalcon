@@ -1,5 +1,5 @@
 <div class="conteiner">
-
+    №1 Закупки <br>
 <label>Номер закупки:</label>
      <input type="text" size="15" id="auction_id">
         <button id="auction_button">Запрос</button>
@@ -26,6 +26,22 @@
 <div>Время проведения<span id="vremya_provedeniya"></span></div>
 <div>Вскрытие конвертов<span id="vskrytie_konvertov"></span></div>
 </div>
+<br>
+<hr>
+
+№2 Сатусы <br><br>
+    <label>Номер закупки</label>
+    <input type="text" id="auctionid">
+    <label>Заявитель</label>
+    <input type="text" id="zayavitel">
+    <label>Дата</label>
+    <input type="text" id="date">
+    <label>Номер закупки полный (необязательно)</label>
+    <input type="text" id="complaintnum">
+<br>
+<button id="complain_button">Запрос</button>
+<br>
+<div class="complaints-container" style="width: 1000px; height: 500px; margin-left: 50px;"></div>
 <script>
     function showAuction(d){
         console.log(d);
@@ -55,6 +71,33 @@
         $('#'+id).html(data);
     }
     $( document ).ready(function() {
+        $('#complain_button').click(function(){
+            var auction_id = $('#auctionid').val();
+            var zayavitel = $('#zayavitel').val();
+            var date = $('#date').val();
+            var complaintnum = $('#complaintnum').val();
+
+                $('#complain_button').hide();
+                $.ajax({
+                    type: 'POST',
+                    url: '/purchase/getcomplaint',
+                    data: 'auction_id='+auction_id+'&zayavitel='+zayavitel+'&date='+date+'&complaintnum='+complaintnum,
+                    success: function(msg){
+                        $('.complaints-container').html(msg);
+
+                        $('#complain_button').show();
+
+                    },
+                    error:function(msg){
+                        alert(msg);
+                    }
+
+                });
+
+
+
+
+        })
        $('#auction_button').click(function(){
           var auction_id = $('#auction_id').val();
            if(auction_id.length > 5){

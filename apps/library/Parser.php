@@ -66,9 +66,9 @@ class Parser {
         $url = trim($xpath->evaluate('string(//div[@id="exceedSphinxPageSizeDiv"]/div[1]//tr/td[@class="descriptTenderTd"]//a/@href)'));
         if(strlen($url) > 0) {
             $data = $this->getUrl($url);
-            $doc = new DOMDocument();
+            $doc = new \DOMDocument();
             $doc->loadHTML('<?xml encoding="UTF-8">' . $data);
-            $xpath = new DOMXpath($doc);
+            $xpath = new \DOMXpath($doc);
             $zakazchik['tel'] = trim($xpath->evaluate('string(//h2/span[text()="Контактная информация"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Телефон")]/../following-sibling::td[1]//text())'));
             $zakazchik['fax'] = trim($xpath->evaluate('string(//h2[span[text()="Контактная информация"]]/following-sibling::div[1]/table[1]//tr/td[contains(span/text(),"Факс")]/following-sibling::td[1]//text())'));
             $zakazchik['pochtovy_adres'] = trim($xpath->evaluate('string(//h2[span[text()="Контактная информация"]]/following-sibling::div[1]/table[1]//tr/td[contains(span/text(),"Почтовый адрес")]/following-sibling::td[1]//text())'));
@@ -76,6 +76,119 @@ class Parser {
             $zakazchik['kontaktnoe_lico'] = trim($xpath->evaluate('string(//h2[span[text()="Контактная информация"]]/following-sibling::div[1]/table[1]//tr/td[contains(span/text(),"Контактное лицо")]/following-sibling::td[1]//text())'));
         }
         return $zakazchik;
+    }
+
+    function getComplaint($auctionId, $zayavitel ,$date, $complaintNum = false) {
+        if($complaintNum) {
+            $complaintNum = trim(preg_replace('/№/ui', '', $complaintNum));
+            $data = $this->getUrl('http://new.zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $complaintNum . '&strictEqual=on&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
+        }
+        else {
+            $data = $this->getUrl('http://new.zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $auctionId . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
+        }
+        libxml_use_internal_errors(true);
+        $doc = new \DOMDocument();
+        $doc->loadHTML($data);
+        $xpath = new \DOMXpath($doc);
+
+        $response = array();
+
+        $complaints = array();
+
+
+        foreach($xpath->query('//div[contains(@class,"registerBox")]') as $tender) {
+            $complaint = array();
+            $complaint['lico'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]//tr/td[contains(text(),"Лицо, подавшее жалобу:")]/following-sibling::td[1]//text())', $tender));
+            if($complaint['lico'] != $zayavitel) {
+                continue;
+            }
+            $complaint['complaint_id'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]/table[1]//tr[1]/td[1]//a/@href)', $tender));
+            preg_match('/complaintId=(\d+)/ui', $complaint['complaint_id'], $matches);
+            $complaint['complaint_id'] = $matches[1];
+            $complaint['complaintNum'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]/table[1]//tr[1]/td[1]//a/span/text())', $tender));
+            $complaint['date'] = trim($xpath->query('.//td[contains(@class,"amountTenderTd")]//label[contains(text(),"Дата поступления:")]', $tender)->item(0)->nextSibling->nodeValue);
+            $complaint['status'] = array();
+            foreach($xpath->query('.//td[@class="tenderTd"]//dd', $tender) as $dd) {
+                $complaint['status'][] = trim(preg_replace('/\s+/ui', ' ', $dd->nodeValue));
+            }
+            $complaints[] = $complaint;
+        }
+       // print_r($complaints);
+        if(count($complaints) == 0) {
+            if($this->reglamentTime($date) > time()) {
+                $response['error'] = 'Ничего не найдено. Вышел регламентированный срок принятия к рассмотрению.';
+            }
+            else {
+                $response['error'] = 'Ничего не найдено';
+            }
+            return $response;
+        }
+        elseif(count($complaints) == 1) {
+            $response['complaint'] = $complaints[0];
+            $response['complaint']['info'] = $this->getComplaintInfo($complaints[0]['complaint_id']);
+            $nbd = $this->nextBusinessDay($date);
+            if($complaints[0]['date'] != $nbd) {
+                $response['error'] = 'Дата не совпадает с требуемой!';
+            }
+            return $response;
+        }
+        else {
+            $nbd = $this->nextBusinessDay($date);
+            $complaints['index'] = array();
+            foreach($complaints as $k => &$c) {
+                if($c['date'] == $nbd) {
+                    $complaints['index'][] = $k;
+                    $c['info'] = $this->getComplaintInfo($complaint['complaint_id']);
+                }
+            }
+            if(count($complaints['index']) == 0) {
+                $response['error'] = 'С нужной датой ничего нет';
+            }
+            elseif(count($complaints['index']) == 1) {
+                $response['complaint'] = $complaints[$complaints['index'][0]];
+                return $response;
+            }
+            else {
+                $response['error'] = 'Много данных с нужной датой';
+            }
+            return $response;
+        }
+    }
+
+    function getComplaintInfo($id) {
+        $data = $this->getUrl('http://new.zakupki.gov.ru/controls/public/action/complaint/info?source=epz&complaintId='.$id);
+        libxml_use_internal_errors(true);
+        $doc = new \DOMDocument();
+        $doc->loadHTML('<?xml encoding="UTF-8">' . $data);
+        $xpath = new \DOMXpath($doc);
+
+        $complaint = array();
+        $complaint['number'] = trim($xpath->evaluate('string(//h1/span/text())'));
+        $complaint['date'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[text()="Дата поступления жалобы"]/../following-sibling::td[1]//text())'));
+        $complaint['date_organ'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата поступления жалобы в уполномоченный орган")]/../following-sibling::td[1]//text())'));
+        $complaint['date_svedeniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время размещения сведений о жалобе")]/../following-sibling::td[1]//text())'));
+        $complaint['date_resheniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время размещения решения по жалобе")]/../following-sibling::td[1]//text())'));
+        $complaint['date_rassmotreniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время рассмотрения жалобы")]/../following-sibling::td[1]//text())'));
+        $complaint['date_obnovleniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время последнего обновления")]/../following-sibling::td[1]//text())'));
+        return $complaint;
+    }
+
+    function nextBusinessDay($date) {
+        preg_match('/(\d+)\.(\d+)\.(\d+)/ui', $date, $matches);
+        $date = "{$matches[3]}-{$matches[2]}-{$matches[1]}";
+        $add_day = 0;
+        do {
+            $add_day++;
+            $new_date = date('d.m.Y', strtotime("$date +$add_day Days"));
+            $new_day_of_week = date('w', strtotime("$date +$add_day Days"));
+        } while($new_day_of_week == 6 || $new_day_of_week == 0);
+
+        return $new_date;
+    }
+    function reglamentTime($date, $add_day = 4) {
+        preg_match('/(\d+)\.(\d+)\.(\d+)/ui', $date, $matches);
+        $date = "{$matches[3]}-{$matches[2]}-{$matches[1]}";
+        return strtotime("$date +$add_day Days");
     }
 
     function getUrl($url, $ref = null, $save_cookie = false, $post = false, $add = array())
