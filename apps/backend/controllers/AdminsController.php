@@ -47,6 +47,7 @@ class AdminsController extends ControllerBase
     }
     public function saveAction()
     {
+
         if (!$this->request->isPost()) {
             return $this->forward("admins/index");
         }
@@ -65,6 +66,9 @@ class AdminsController extends ControllerBase
         $this->view->form = $form;
 
         $data = $this->request->getPost();
+
+       if($_FILES['avatar']['tmp_name'])
+        $admin->saveAvatar($_FILES['avatar']);
 
         if (!$form->isValid($data, $admin)) {
             foreach ($form->getMessages() as $message) {
