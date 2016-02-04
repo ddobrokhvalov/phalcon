@@ -77,7 +77,7 @@ class LoginController extends ControllerBase
 
                 return $this->dispatcher->forward(
                     array(
-                        'controller' => 'index',
+                        'controller' => 'complaint',
                         'action' => 'index'
                     )
                 );

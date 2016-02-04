@@ -113,7 +113,7 @@ class Parser {
             }
             $complaints[] = $complaint;
         }
-       // print_r($complaints);
+        //print_r($complaints);
         if(count($complaints) == 0) {
             if($this->reglamentTime($date) > time()) {
                 $response['error'] = 'Ничего не найдено. Вышел регламентированный срок принятия к рассмотрению.';
@@ -170,6 +170,22 @@ class Parser {
         $complaint['date_resheniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время размещения решения по жалобе")]/../following-sibling::td[1]//text())'));
         $complaint['date_rassmotreniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время рассмотрения жалобы")]/../following-sibling::td[1]//text())'));
         $complaint['date_obnovleniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время последнего обновления")]/../following-sibling::td[1]//text())'));
+        $complaint['dop_docs'] = array();
+        foreach($xpath->query('//h2/span[text()="Содержание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дополнительные документы")]/../following-sibling::td[1]//table//tr/td[position()=last()]/a') as $a) {
+            $complaint['dop_docs'][] = array(
+                'name' => trim($xpath->evaluate('string(./text())', $a)),
+                'url' => trim($xpath->evaluate('string(./@href)', $a))
+            );
+        }
+        $complaint['reshenie_po_galobe'] = trim($xpath->evaluate('string(//h2/span[text()="Сведения о решении по жалобе"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Решение по жалобе")]/../following-sibling::td[1]//text())'));
+        $complaint['date_prinyatiya_resheniya'] = trim($xpath->evaluate('string(//h2/span[text()="Сведения о решении по жалобе"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата принятия решения")]/../following-sibling::td[1]//text())'));
+        $complaint['predpisanie'] = trim($xpath->evaluate('string(//h2/span[text()="Сведения о решении по жалобе"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Предписание")]/../following-sibling::td[1]//text()[1])'));
+        $complaint['reshenie'] = array(
+            'name' => trim($xpath->evaluate('string(//h2/span[text()="Сведения о решении по жалобе"]/../following-sibling::div[1]/table[1]//tr/td/span[text()="Решение"]/../following-sibling::td[1]//table//tr/td[position()=last()]/a/text())')),
+            'url' => trim($xpath->evaluate('string(//h2/span[text()="Сведения о решении по жалобе"]/../following-sibling::div[1]/table[1]//tr/td/span[text()="Решение"]/../following-sibling::td[1]//table//tr/td[position()=last()]/a/@href)')));
+        $complaint['predpisanie'] = array(
+            'name' => trim($xpath->evaluate('string(//h2/span[text()="Сведения о решении по жалобе"]/../following-sibling::div[1]/table[1]//tr/td/span[text()="Предписание"]/../following-sibling::td[1]//table//tr/td[position()=last()]/a/text())')),
+            'url' => trim($xpath->evaluate('string(//h2/span[text()="Сведения о решении по жалобе"]/../following-sibling::div[1]/table[1]//tr/td/span[text()="Предписание"]/../following-sibling::td[1]//table//tr/td[position()=last()]/a/@href)')));
         return $complaint;
     }
 

@@ -1,0 +1,21 @@
+.sidr {
+  display: none;
+  position: absolute;
+  position: fixed;
+  top: 0;
+  height: 100%;
+  z-index: 999999;
+  width: 300px;
+  overflow-x: none;
+  overflow-y: auto;
+  background: #222427;
+    color: #fff;
+}
+.sidr.right {
+  left: auto;
+  right: -300px;
+}
+.sidr.left {
+  left: -300px;
+  right: auto;
+}

@@ -61,6 +61,12 @@ class Application extends BaseApplication
 				'action' => 2,
 				'params'=>3
 			));
+			$router->add("/:controller/:action/:params", array(
+				'module' => 'frontend',
+				'controller' => 1,
+				'action' => 2,
+				'params'=>3
+			));
 		/*	$router->add("/admin/products/:action", array(
 				'module' => 'backend',
 				'controller' => 'products',
