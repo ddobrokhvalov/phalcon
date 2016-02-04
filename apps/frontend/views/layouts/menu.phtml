@@ -74,15 +74,18 @@
                     <a href="/applicant/add">добавить заявителя</a>
                 </div>
                 <ul>
+                   {% for applicant in applicants  %}
                     <li>
-                        <input id="cl1" type="checkbox" name="cl1" hidden>
-                        <label for="cl1">ООО «Ромашка»</label>
+                        <input id="cl{{ applicant.id}}" type="checkbox" name="cl{{ applicant.id}}" hidden>
+                        <label for="cl{{ applicant.id}}">{{ applicant.name_short}}</label>
                         <div class="ch-l-i-edit">
                             <a href="#">редактировать</a>
                             <a href="#">удалить</a>
                         </div>
                     </li>
-                    <li>
+
+                   {% endfor %}
+                 <!--   <li>
                         <input id="cl2" type="checkbox" name="cl2" hidden>
                         <label for="cl2">Степашин С.В.</label>
                         <div class="ch-l-i-edit">
@@ -98,6 +101,7 @@
                             <a href="#">удалить</a>
                         </div>
                     </li>
+                    -->
                 </ul>
             </div>
         </div>
