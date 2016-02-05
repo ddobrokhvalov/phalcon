@@ -16,20 +16,23 @@ class ApplicantController extends ControllerBase
         if(!$applicant || $applicant->user_id != $this->user->id)
             return $this->forward('complaint/index');
 
-
+        $userApplicants = $applicant->findByUserId($this->user->id);
         $applicantFiles =  $applicant->getApplicantFiles($applicant->id);
         $this->view->setTemplateAfter('menu');
         $this->view->applicant = $applicant;
         $this->view->afiles = $applicantFiles;
+        $this->view->applicants = $userApplicants;
 
     }
     public function addAction()
     {
+        $applicant = new Applicant();
+        $userApplicants = $applicant->findByUserId($this->user->id);
         $this->view->setTemplateAfter('menu');
+        $this->view->applicants = $userApplicants;
     }
     public function createAction()
     {
-
         if (!$this->request->isPost()) {
             return $this->forward('applicant/add');
         }
