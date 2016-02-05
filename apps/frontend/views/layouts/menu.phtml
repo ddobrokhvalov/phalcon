@@ -79,8 +79,8 @@
                         <input id="cl{{ applicant.id}}" type="checkbox" name="cl{{ applicant.id}}" hidden>
                         <label for="cl{{ applicant.id}}">{{ applicant.name_short}}</label>
                         <div class="ch-l-i-edit">
-                            <a href="#">редактировать</a>
-                            <a href="#">удалить</a>
+                            <a href="/applicant/edit/{{ applicant.id}}">редактировать</a>
+                            <a href="/applicant/delete/{{ applicant.id}}">удалить</a>
                         </div>
                     </li>
 
