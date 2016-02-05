@@ -15,10 +15,18 @@ class ComplaintController extends ControllerBase
         $this->view->setTemplateAfter('menu');
         $this->view->applicants = $userApplicants;
 
+
     }
     public function editAction()
     {
 
+    }
+    public function addAction(){
+        $applicant = new Applicant();
+        $userApplicants = $applicant->findByUserId($this->user->id);
+
+        $this->view->setTemplateAfter('menu');
+        $this->view->applicants = $userApplicants;
     }
 
 }
