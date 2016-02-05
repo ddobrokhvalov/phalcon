@@ -59,7 +59,6 @@ class ApplicantController extends ControllerBase
     public function delfileAction($id){
         $applicant = new Applicant();
         $applicantFile = $applicant->checkFileOwner($this->user->id, $id);
-       // var_dump($applicantFile); exit;
         if($applicantFile){
             $applicant->deleteFile($applicantFile);
             return $this->forward('applicant/edit/'.$applicantFile['app_id']);
