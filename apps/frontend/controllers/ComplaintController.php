@@ -2,6 +2,7 @@
 
 namespace Multiple\Frontend\Controllers;
 use Multiple\Frontend\Models\Applicant;
+use Multiple\Frontend\Models\Category;
 use Phalcon\Mvc\Controller;
 
 

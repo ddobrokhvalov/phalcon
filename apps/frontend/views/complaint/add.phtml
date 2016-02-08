@@ -10,37 +10,34 @@
                     <span>Номер извещения</span><br>
                     <i>После ввода номера извещения, все данные о закупке заполняться автоматически</i>
                 </div>
-                <div class="c-jadd1-f">
-                    №<input type="text" value="0173100003412000102" class="c-inp-done">
-                    <b>данные Получены!</b>
+                <div class="c-jadd1-f" id="result_container">
+                    №<input id="auction_id" type="text" value="" >
+
                 </div>
+                <button id="notice_button" >Done</button>
             </div>
 
             <div class="c-jadd-sp">
                 <div class="c-jadd-text">
                     <div class="c-jadd1-z">
-                        <span>Данные о закупке</span>
+                        <span >Данные о закупке</span>
                     </div>
                     <div class="c-jadd-l">
                         <div class="c-jadd-lr-row">
                             <span>Способ проведения закупки</span>
-                            Открытый конкурс
+                            <span class="auction-data" id="type"></span>
                         </div>
                         <div class="c-jadd-lr-row">
                             <span>Закупку осуществляет</span>
-                            Федеральное казначейство
+                            <span class="auction-data" id="purchases_made"></span>
                         </div>
                         <div class="c-jadd-lr-row">
                             <span>Наименование закупки</span>
-                            Оказание услуг по эксплуатации Единой информационной системы в сфере закупок
+                            <span class="auction-data" id="purchases_name"></span>
                         </div>
                         <div class="c-jadd-lr-row">
                             <span>Контакты</span>
-                            Федеральное казначейство<br>
-                            РФ, 109097, Москва, ул. Ильинка, 7<br>
-                            Шадрин Евгений Игоревич<br>
-                            E-mail: zakupki_uis@roskazna.ru<br>
-                            Телефон: 7-495-2147529
+                            <span class="auction-data" id="contact"></span>
                         </div>
                     </div>
                     <div class="c-jadd-r">
@@ -56,19 +53,19 @@
                         </div>
                         <div class="c-jadd-lr-row">
                             <span>Дата и время начала подачи заявок</span>
-                            20.11.2015 19:30
+                            <span class="auction-data" id="date_start"></span>
                         </div>
                         <div class="c-jadd-lr-row">
                             <span>Дата и время окончания подачи заявок</span>
-                            11.12.2015 10:00
+                            <span class="auction-data" id="date_end"></span>
                         </div>
                         <div class="c-jadd-lr-row">
                             <span>Дата и время вскрытия конвертов с заявками </span>
-                            11.12.2015 10:00
+                            <span class="auction-data" id="date_date_opening"></span>
                         </div>
                         <div class="c-jadd-lr-row">
                             <span>Дата рассмотрения и оценки заявок на участие в конкурсе</span>
-                            14.12.2015
+                            <span class="auction-data" id="date_review"></span>
                         </div>
                     </div>
                 </div>
