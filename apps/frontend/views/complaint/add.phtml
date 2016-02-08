@@ -97,50 +97,15 @@
                             </div>
                             <div class="c-jd2-f-dov-dd-pick mCustomScrollbar">
                                 <div class="c-jd2-f-dov-dd-pick-b">
+                                    {% for argument in arguments  %}
                                     <div class="c-jd2-cb-b">
-                                        <span>Несоответствие ГОСТам</span>
-                                        <input id="jd2cbb1" type="checkbox" checked hidden>
-                                        <label for="jd2cbb1">Установление требований к составным частям</label>
-                                        <input id="jd2cbb2" type="checkbox" checked disabled hidden>
-                                        <label for="jd2cbb2">Установление требований к составным частям</label>
-                                        <input id="jd2cbb3" type="checkbox" disabled hidden>
-                                        <label for="jd2cbb3">Установление требований к составным частям</label>
-                                        <input id="jd2cbb4" type="checkbox" hidden>
-                                        <label for="jd2cbb4">Установление требований к составным частям</label>
+                                        <span>{{ argument['category'].name }}</span>
+                                        {% for template in argument['templates']  %}
+                                          <input id="jd2cbb{{ template.id }}" type="checkbox"  hidden>
+                                          <label for="jd2cbb{{ template.id }}">{{ template.name }}</label>
+                                        {% endfor %}
                                     </div>
-                                    <div class="c-jd2-cb-b">
-                                        <span>Несоответствие ГОСТам</span>
-                                        <input id="jd2cbb1" type="checkbox" checked hidden>
-                                        <label for="jd2cbb1">Установление требований к составным частям</label>
-                                        <input id="jd2cbb2" type="checkbox" checked disabled hidden>
-                                        <label for="jd2cbb2">Установление требований к составным частям</label>
-                                        <input id="jd2cbb3" type="checkbox" disabled hidden>
-                                        <label for="jd2cbb3">Установление требований к составным частям</label>
-                                        <input id="jd2cbb4" type="checkbox" hidden>
-                                        <label for="jd2cbb4">Установление требований к составным частям</label>
-                                    </div>
-                                    <div class="c-jd2-cb-b">
-                                        <span>Несоответствие ГОСТам</span>
-                                        <input id="jd2cbb1" type="checkbox" checked hidden>
-                                        <label for="jd2cbb1">Установление требований к составным частям</label>
-                                        <input id="jd2cbb2" type="checkbox" checked disabled hidden>
-                                        <label for="jd2cbb2">Установление требований к составным частям</label>
-                                        <input id="jd2cbb3" type="checkbox" disabled hidden>
-                                        <label for="jd2cbb3">Установление требований к составным частям</label>
-                                        <input id="jd2cbb4" type="checkbox" hidden>
-                                        <label for="jd2cbb4">Установление требований к составным частям</label>
-                                    </div>
-                                    <div class="c-jd2-cb-b">
-                                        <span>Несоответствие ГОСТам</span>
-                                        <input id="jd2cbb1" type="checkbox" checked hidden>
-                                        <label for="jd2cbb1">Установление требований к составным частям</label>
-                                        <input id="jd2cbb2" type="checkbox" checked disabled hidden>
-                                        <label for="jd2cbb2">Установление требований к составным частям</label>
-                                        <input id="jd2cbb3" type="checkbox" disabled hidden>
-                                        <label for="jd2cbb3">Установление требований к составным частям</label>
-                                        <input id="jd2cbb4" type="checkbox" hidden>
-                                        <label for="jd2cbb4">Установление требований к составным частям</label>
-                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>

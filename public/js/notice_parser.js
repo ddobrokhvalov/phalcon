@@ -61,49 +61,39 @@ var auctionObj = {
         }
 
         if (validator.text(data.info.type, 3, 200))
-            this.type = data.info.type;
+            this.data.type = data.info.type;
         else
             this.validation = false;
 
         if (validator.text(data.zakazchik[0].name), 3, 300)
-            this.purchases_made = data.zakazchik[0].name;
+            this.data.purchases_made = data.zakazchik[0].name;
         else
             this.validation = false;
 
         if (validator.text(data.info.object_zakupki), 3, 500)
-            this.purchases_name = data.info.object_zakupki;
+            this.data.purchases_name = data.info.object_zakupki;
         else
             this.validation = false;
 
-        this.contact = data.zakazchik[0].name + '<br>' +
+        this.data.contact = data.zakazchik[0].name + '<br>' +
             data.zakazchik[0].pochtovy_adres + '<br>' +
             data.zakazchik[0].kontaktnoe_lico + '<br>' +
             'E-mail: ' + data.zakazchik[0].email + '<br>' +
             'Телефон: ' + data.zakazchik[0].tel + '<br>';
-        this.date_start = data.procedura.nachalo_podachi;
-        this.date_end = data.procedura.okonchanie_podachi;
-        this.date_opening = data.procedura.vskrytie_konvertov;
-        this.date_review = data.procedura.vremya_provedeniya;
+        this.data.date_start = data.procedura.nachalo_podachi;
+        this.data.date_end = data.procedura.okonchanie_podachi;
+        this.data.date_opening = data.procedura.vskrytie_konvertov;
+        this.data.date_review = data.procedura.vremya_provedeniya;
     },
     setData: function () {
-        $('#type').html(this.type);
-        $('#purchases_made').html(this.purchases_made);
-        $('#purchases_name').html(this.purchases_name);
-        $('#contact').html(this.contact);
-        $('#date_start').html(this.date_start);
-        $('#date_end').html(this.date_end);
-        $('#date_opening').html(this.date_opening);
-        $('#date_review').html(this.date_review);
+        for(var key in this.data){
+            $('#'+key).html(this.data[key]);
+        }
     },
     clearData: function () {
-        this.type = '',
-            this.purchases_made = '',
-            this.purchases_name = '',
-            this.contact = '',
-            this.date_start = '',
-            this.date_end = '',
-            this.date_opening = '',
-            this.date_review = ''
+        for(var key in this.data){
+            this.data[key] ='';
+        }
     }
 
 
