@@ -35,7 +35,8 @@ class SecurityPlugin extends Plugin
                 $acl->addRole($role);
             }
             $privateResources = array(
-                'dashboard' => array('index'),
+                'complaint' => array('index','edit','add','save','delete'),
+                'applicant' => array('index','edit','add','save','delete')
 
             );
             foreach ($privateResources as $resource => $actions) {

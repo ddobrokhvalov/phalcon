@@ -1,0 +1,89 @@
+
+<div class="content">
+    <div class="wrapper">
+        <div class="c-content">
+            <div class="c-cnt-pagename">
+                Добавления заявителя
+            </div>
+       <form id="applicant_form" action='/applicant/create' method='post' enctype='multipart/form-data' >
+            <div class="c-zayavitel">
+                <input id="czv1" name="type" type="radio" value="urlico"  checked hidden>
+                <label for="czv1" class="c-zv-lb1">юридическое лицо</label>
+                <input id="czv2" name="type" type="radio" value="ip" hidden>
+                <label for="czv2" class="c-zv-lb2">индивидуальный предприниматель</label>
+                <input id="czv3" name="type" type="radio" value="fizlico" hidden>
+                <label for="czv3" class="c-zv-lb3">физическое лицо</label>
+            </div>
+
+            <div class="c-zv-frmb">
+                <div class="c-zv-f-str">
+                    <label for="czvr1">Полное наименование</label>
+                    <textarea id="czvr1" name="name_full" ></textarea>
+                </div>
+                <div class="c-zv-f-str">
+                    <label for="czvr2">Краткое наименование</label>
+                    <input type="text" id="czvr2" name="name_short">
+                </div>
+                <div class="c-zv-f-str">
+                    <label for="czvr3">ИНН</label>
+                    <input type="text" id="czvr3" name="inn" class="c-zv-frmb-in1" >
+                </div>
+                <div class="c-zv-f-str">
+                    <label for="czvr4">КПП</label>
+                    <input type="text" id="czvr4" name="kpp" class="c-zv-frmb-in1">
+                </div>
+                <div class="c-zv-f-str">
+                    <label for="czvr5">Адрес местонахождения</label>
+                    <input type="text" id="czvr5" name="address" class="c-zv-frmb-in2">
+                </div>
+                <div class="c-zv-f-str">
+                    <label for="czvr6">Должность заявителя</label>
+                    <input type="text" name="position" id="czvr6">
+                </div>
+                <div class="c-zv-f-str">
+                    <label for="czvr7">ФИО заявителя</label>
+                    <input type="text" id="czvr7" name="fio_applicant">
+                </div>
+                <div class="c-zv-f-str">
+                    <label for="czvr8">ФИО контактного лица</label>
+                    <input type="text" id="czvr8" name="fio_contact_person">
+                </div>
+                <div class="c-zv-f-str">
+                    <label for="czvr9">Контактный факс, телефон</label>
+                    <input type="text" id="czvr9" name="telefone" class="c-zv-frmb-in1">
+                </div>
+                <div class="c-zv-f-str">
+                    <label for="czvr10">E-mail</label>
+                    <input type="text" name="email" id="czvr10">
+                </div>
+                <div class="c-zv-f-str2">
+                    <label for="czvr11">Прикрепить файлы</label>
+                    <input  id="czvr11" name='file[]' type='file' multiple min='1' max='9999' hidden>
+                    <div class="c-zv-f-q">
+                        ?
+                        <div class="c-zv-f-q-t">
+                            Полномочия заявителя — это либо решение об избрании руководителя (если руководитель является заявителем), либо доверенность от организации на осуществление действий по подаче жалоб в УФАС (если ЭП выпущена не на единолично исполняющее лицо)
+                        </div>
+                    </div>
+                </div>
+                <div class="c-zv-f-str3">
+                    <input id="add_applicant" type="submit" value="Сохранить">
+                </div>
+            </div>
+
+            <div class="cfooter">
+                <div class="wrapper">
+                    <div class="cflogo">
+                        <a href="#"></a>
+                    </div>
+                    <div class="cf-str">
+                        &copy; ФАС-Онлайн, 2016, при поддержке «Госпартнер»
+                        <a href="#">Контакты</a>
+                        <a href="#">Помощь</a>
+                        <a href="#">О проекте</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

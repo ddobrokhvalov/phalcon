@@ -270,11 +270,11 @@
 <!-- popup login -->
 <div id="pop-login" class="modal_div">
     <h2>Вход в систему</h2>
-    <form>
+    <form action="/login/start" method="post">
         <label for="poplog-inp1">E-mail</label>
-        <input type="text" id="poplog-inp1" required="required">
+        <input type="text" id="poplog-inp1" required="required" name="email">
         <label for="poplog-inp2">Пароль</label>
-        <input type="text" id="poplog-inp2" required="required">
+        <input type="text" id="poplog-inp2" required="required" name="password">
         <input type="submit" value="Войти">
     </form>
     <div class="modal-close"></div>

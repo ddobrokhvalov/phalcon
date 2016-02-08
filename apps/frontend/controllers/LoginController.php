@@ -6,7 +6,7 @@ use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\User;
 use Multiple\Library\Log;
 
-class LoginController extends ControllerBase
+class LoginController extends Controller
 {
     private function _registerSession($user)
     {
@@ -77,7 +77,7 @@ class LoginController extends ControllerBase
 
                 return $this->dispatcher->forward(
                     array(
-                        'controller' => 'index',
+                        'controller' => 'complaint',
                         'action' => 'index'
                     )
                 );
