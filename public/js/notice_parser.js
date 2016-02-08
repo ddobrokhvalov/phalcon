@@ -17,8 +17,7 @@ $(document).ready(function () {
                     var data = $.parseJSON(msg);
                     console.log(data);
                     var auction = auctionObj;
-                    auction.processData(data);
-                    if (auction.validation) {
+                    if (auction.processData(data)) {
                         $('#auction_id').addClass('c-inp-done');
                         $('#result_container').append('<b id="msg_status_parser">Данные Получены!</b>');
                         auction.setData();
@@ -51,29 +50,25 @@ var auctionObj = {
         date_opening: '',
         date_review: ''
     },
-    validation: true,
     processData: function (data) {
-        this.validation = true;
 
-        if (data.info.type == undefined || data.zakazchik.length == 0) {
-            this.validation = false;
+        if (data.info.type == undefined || data.zakazchik.length == 0)
             return false;
-        }
 
         if (validator.text(data.info.type, 3, 200))
             this.data.type = data.info.type;
         else
-            this.validation = false;
+            return false;
 
         if (validator.text(data.zakazchik[0].name), 3, 300)
             this.data.purchases_made = data.zakazchik[0].name;
         else
-            this.validation = false;
+            return false;
 
         if (validator.text(data.info.object_zakupki), 3, 500)
             this.data.purchases_name = data.info.object_zakupki;
         else
-            this.validation = false;
+            return false;
 
         this.data.contact = data.zakazchik[0].name + '<br>' +
             data.zakazchik[0].pochtovy_adres + '<br>' +
@@ -84,15 +79,17 @@ var auctionObj = {
         this.data.date_end = data.procedura.okonchanie_podachi;
         this.data.date_opening = data.procedura.vskrytie_konvertov;
         this.data.date_review = data.procedura.vremya_provedeniya;
+        
+        return true;
     },
     setData: function () {
-        for(var key in this.data){
-            $('#'+key).html(this.data[key]);
+        for (var key in this.data) {
+            $('#' + key).html(this.data[key]);
         }
     },
     clearData: function () {
-        for(var key in this.data){
-            this.data[key] ='';
+        for (var key in this.data) {
+            this.data[key] = '';
         }
     }
 
