@@ -38,7 +38,37 @@ $(document).ready(function () {
             $('#auction_id').addClass('c-inp-error');
         }
     });
+
+    $(".template_checkbox").click(function () {
+        if ($(this).is(':checked')) {
+
+            argument.addArgument($(this).val());
+        } else {
+            argument.removeArgument($(this).val());
+        }
+
+    });
 });
+var argument = {
+    argumentList: [],
+
+    addArgument: function (id) {
+        this.argumentList.push(id);
+        var templateName = $('#template_' + id).html();
+        $('.argument_text_container').append('<span class="argument_text_container_' + id + '">' + templateName + ' <a></a></span>');
+
+
+    },
+
+    removeArgument: function (id) {
+        var index = this.argumentList.indexOf(id);
+        if (index > -1) {
+            this.argumentList.splice(index, 1);
+        }
+        $('.argument_text_container_'+id).remove();
+    }
+
+};
 var auctionObj = {
     data: {
         type: '',
@@ -79,7 +109,7 @@ var auctionObj = {
         this.data.date_end = data.procedura.okonchanie_podachi;
         this.data.date_opening = data.procedura.vskrytie_konvertov;
         this.data.date_review = data.procedura.vremya_provedeniya;
-        
+
         return true;
     },
     setData: function () {

@@ -85,15 +85,21 @@
                         <div class="c-jd2-f-dov">
                             Доводы жалобы
                         </div>
+                        <div class="argument_text_container c-jd2-f-dov-dd-t2" >
+                         <!--  <span>Объединение различных районов <a></a></span>
+                            <span>Многократное повторение товаров <a></a></span>
+                            <span>Старые ГОСТ <a></a></span>
+                            <span>Отсутствие требования опыта в соответствии с ПП №99 <a></a></span> -->
+                        </div>
                         <div class="c-jd2-f-dov-dd">
                             <div class="c-jd2-f-dov-dd-z">
                                 Доводы жалобы
                             </div>
-                            <div class="c-jd2-f-dov-dd-t">
-                                <span>Объединение различных районов <a></a></span>
+                            <div class="argument_text_container c-jd2-f-dov-dd-t" >
+                              <!--  <span>Объединение различных районов <a></a></span>
                                 <span>Многократное повторение товаров <a></a></span>
                                 <span>Старые ГОСТ <a></a></span>
-                                <span>Отсутствие требования опыта в соответствии с ПП №99 <a></a></span>
+                                <span>Отсутствие требования опыта в соответствии с ПП №99 <a></a></span> -->
                             </div>
                             <div class="c-jd2-f-dov-dd-pick mCustomScrollbar">
                                 <div class="c-jd2-f-dov-dd-pick-b">
@@ -101,8 +107,8 @@
                                     <div class="c-jd2-cb-b">
                                         <span>{{ argument['category'].name }}</span>
                                         {% for template in argument['templates']  %}
-                                          <input id="jd2cbb{{ template.id }}" type="checkbox"  hidden>
-                                          <label for="jd2cbb{{ template.id }}">{{ template.name }}</label>
+                                          <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" type="checkbox"  hidden>
+                                          <label id="template_{{ template.id }}" for="jd2cbb{{ template.id }}">{{ template.name }}</label>
                                         {% endfor %}
                                     </div>
                                     {% endfor %}

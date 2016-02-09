@@ -28,14 +28,7 @@ class ComplaintController extends ControllerBase
 
         $category = new Category();
         $arguments = $category->getArguments();
-     /*   echo '<pre>';
-         foreach ($arguments as $v){
-             var_dump($v['category']->name);
-             foreach($v['templates'] as $v){
-                 var_dump($v->name);
-             }
-         }
-        echo '</pre>'; exit; */
+     
         $this->view->setTemplateAfter('menu');
         $this->view->applicants = $userApplicants;
         $this->view->arguments = $arguments;
