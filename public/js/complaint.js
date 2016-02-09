@@ -48,6 +48,10 @@ $(document).ready(function () {
         }
 
     });
+    $(".argument_text_container").on("click","a",function () {
+        argument.removeArgument($(this).attr("value"));
+        $('#jd2cbb'+$(this).attr("value")).prop('checked', false);
+    });
 });
 var argument = {
     argumentList: [],
@@ -55,7 +59,7 @@ var argument = {
     addArgument: function (id) {
         this.argumentList.push(id);
         var templateName = $('#template_' + id).html();
-        $('.argument_text_container').append('<span class="argument_text_container_' + id + '">' + templateName + ' <a></a></span>');
+        $('.argument_text_container').append('<span class="atx argument_text_container_' + id + '">' + templateName + ' <a class="remove-argument" value="'+id+'"  ></a></span>');
 
 
     },
@@ -65,7 +69,7 @@ var argument = {
         if (index > -1) {
             this.argumentList.splice(index, 1);
         }
-        $('.argument_text_container_'+id).remove();
+        $('.argument_text_container_' + id).remove();
     }
 
 };

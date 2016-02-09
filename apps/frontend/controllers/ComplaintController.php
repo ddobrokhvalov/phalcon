@@ -28,7 +28,7 @@ class ComplaintController extends ControllerBase
 
         $category = new Category();
         $arguments = $category->getArguments();
-     
+
         $this->view->setTemplateAfter('menu');
         $this->view->applicants = $userApplicants;
         $this->view->arguments = $arguments;
