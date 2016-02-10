@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
-    applicant.selectFirst(applicantFirstId);
+    if (typeof applicantFirstId !== 'undefined')
+        applicant.selectFirst(applicantFirstId);
 
     $("#add_applicant").click(function (event) {
         event.preventDefault();
@@ -9,22 +10,22 @@ $(document).ready(function () {
             $('#applicant_form').submit();
     });
 
-    $('.select_applicant').click(function(){
-        if(applicant.id){
-            $('#cl'+applicant.id).prop('checked', false);
+    $('.select_applicant').click(function () {
+        if (applicant.id) {
+            $('#cl' + applicant.id).prop('checked', false);
         }
-        applicant.selectApplicant($(this).attr("value"),$(this).html());
+        applicant.selectApplicant($(this).attr("value"), $(this).html());
     });
 });
 var applicant = {
-    id:false,
-    selectApplicant: function(id,name){
+    id: false,
+    selectApplicant: function (id, name) {
         this.id = id;
-      $('.applicant-name-container').html(name);
+        $('.applicant-name-container').html(name);
     },
-    selectFirst:function(id){
-       this.selectApplicant(id,$('#name_applicant_'+id).html());
-        $('#cl'+id).prop('checked', true);
+    selectFirst: function (id) {
+        this.selectApplicant(id, $('#name_applicant_' + id).html());
+        $('#cl' + id).prop('checked', true);
     }
 
 };
