@@ -123,8 +123,8 @@
                             <input type="file"   id="cjd2file" hidden />
                         </div>
                         <div class="c-jd2-f-edit-text mCustomScrollbar">
-                            <div class="c-jd2-f-edit-t">
-                             <textarea>text</textarea>
+                            <div id="edit_container" class="c-jd2-f-edit-t">
+                             <textarea placeholder="Заголовок" rows="5" cols="115"></textarea>
                             </div>
                         </div>
                     </div>
@@ -169,3 +169,11 @@
         </div>
     </div>
 </div>
+<script>
+    var templates = {};
+{% for argument in arguments  %}
+    {% for template in argument['templates']  %}
+       templates[{{template.id}}] = '{{template.text}}';
+    {% endfor %}
+{% endfor %}
+</script>

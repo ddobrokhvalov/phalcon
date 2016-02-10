@@ -50,8 +50,22 @@ $(document).ready(function () {
     });
     $(".argument_text_container").on("click","a",function () {
         argument.removeArgument($(this).attr("value"));
-        $('#jd2cbb'+$(this).attr("value")).prop('checked', false);
     });
+    $("#edit_container").on("click",".remove_template_from_edit",function () {
+        argument.removeArgument($(this).attr("value"));
+    });
+
+    $("#edit_container").on("click",".down",function (){
+        var pdiv = $(this).parent('div').parent('div').parent('div');
+        pdiv.insertAfter(pdiv.next());
+        return false
+    });
+    $("#edit_container").on("click",".up",function (){
+        var pdiv = $(this).parent('div').parent('div').parent('div');
+        pdiv.insertBefore(pdiv.prev());
+        return false
+    });
+
 });
 var argument = {
     argumentList: [],
@@ -61,6 +75,17 @@ var argument = {
         var templateName = $('#template_' + id).html();
         $('.argument_text_container').append('<span class="atx argument_text_container_' + id + '">' + templateName + ' <a class="remove-argument" value="'+id+'"  ></a></span>');
 
+         var html ='<div class="template_edit" id="template_edit_'+id+'"><div class="c-edit-j-h">'+
+             '<span>'+ templateName +'</span>'+
+        '<div class="c-edit-j-h-ctr">'+
+            '<a  class="down c-edit-j-h-ctr1">Переместить ниже</a> <a class="up c-edit-j-h-ctr2">Переместить выше</a>'+
+        '<a class="remove_template_from_edit" value="'+id+'" >Удалить</a>'+
+           '</div>'+
+           '</div>'+
+             '<div class="c-edit-j-t"><textarea>'+
+             templates[id]+
+           '</textarea></div></div>';
+        $('#edit_container').append(html);
 
     },
 
@@ -70,6 +95,8 @@ var argument = {
             this.argumentList.splice(index, 1);
         }
         $('.argument_text_container_' + id).remove();
+        $('#template_edit_'+id).remove();
+        $('#jd2cbb'+id).prop('checked', false);
     }
 
 };
