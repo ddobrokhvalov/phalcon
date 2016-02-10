@@ -18,6 +18,10 @@ class ComplaintController extends ControllerBase
         $this->view->setTemplateAfter('menu');
         $this->view->applicants = $userApplicants;
 
+        $complaint = new Complaint();
+        $complaints = $complaint->findUserComplaints($this->user->id);
+
+        $this->view->complaints = $complaints;
 
     }
 

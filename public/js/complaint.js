@@ -17,7 +17,7 @@ $(document).ready(function () {
                     var data = $.parseJSON(msg);
                     console.log(data);
 
-                    if (auction.processData(data)) {
+                    if (auction.processData(data,auction_id)) {
                         $('#auction_id').addClass('c-inp-done');
                         $('#result_container').append('<b id="msg_status_parser">Данные Получены!</b>');
                         auction.setData();
@@ -146,6 +146,7 @@ var argument = {
 };
 var auction = {
     data: {
+        auction_id:'',
         type: '',
         purchases_made: '',
         purchases_name: '',
@@ -155,7 +156,7 @@ var auction = {
         date_opening: '',
         date_review: ''
     },
-    processData: function (data) {
+    processData: function (data,auction_id) {
 
         if (data.info.type == undefined || data.zakazchik.length == 0)
             return false;
@@ -174,7 +175,7 @@ var auction = {
             this.data.purchases_name = data.info.object_zakupki;
         else
             return false;
-
+        this.data.auction_id = auction_id;
         this.data.contact = data.zakazchik[0].name + '<br>' +
             data.zakazchik[0].pochtovy_adres + '<br>' +
             data.zakazchik[0].kontaktnoe_lico + '<br>' +

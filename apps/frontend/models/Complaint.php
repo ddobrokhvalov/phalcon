@@ -30,7 +30,18 @@ class Complaint extends Model
         return 'complaint';
     }
 
-    public function addComplaint($data,$status = 'draft')
+    public function findUserComplaints($user_id)
+    {
+        $db = $this->getDi()->getShared('db');
+        $result = $db->query("SELECT c.*, ap.name_short as apname FROM complaint as c
+         LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
+         LEFT JOIN user u ON(ap.user_id = u.id )
+         WHERE u.id =$user_id ");
+        return $result->fetchAll();
+
+    }
+
+    public function addComplaint($data, $status = 'draft')
     {
 
         $this->status = $status;

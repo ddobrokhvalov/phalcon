@@ -39,7 +39,48 @@
             </div>
 
             <ul class="c-c-jlist">
-                <li class="done">
+           {% for complaint in complaints %}
+                <li >
+                    <div class="c-c-jl-z">
+                        <div class="c-c-jl-z-l">
+                            <input id="jlist1" type="checkbox" name="jlist1" hidden>
+                            <label for="jlist1">{{ complaint['complaint_name'] }}</label>
+                        </div>
+                        <div class="c-c-jl-z-r">
+
+                            {% if complaint['status'] == 'draft' %}
+                              <span class="jl-status jl-chernov">Черновик</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="c-c-jl-info">
+                        <table>
+                            <tr>
+                                <td>
+                                    <span>Жалоба от</span>
+                                    {{ complaint['date'] }}<br>
+                                    {{ complaint['apname'] }}
+                                </td>
+                                <td>
+                                    <span>На</span>
+                                    {{ complaint['purchases_made'] }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Закупка №</span>
+                                    {{ complaint['auction_id'] }}
+                                </td>
+                                <td>
+                                    <span>Наименование закупки</span>
+                                    {{ complaint['purchases_name'] }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+           {% endfor %}
+              <!--  <li class="done">
                     <div class="c-c-jl-z">
                         <div class="c-c-jl-z-l">
                             <input id="jlist1" type="checkbox" name="jlist1" hidden>
@@ -296,7 +337,7 @@
                             </tr>
                         </table>
                     </div>
-                </li>
+                </li> -->
             </ul>
 
             <div class="cfooter">
