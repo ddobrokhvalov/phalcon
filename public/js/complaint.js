@@ -67,15 +67,19 @@ $(document).ready(function () {
     });
 
     $('#complaint_save').click(function(){
+        complaint.prepareData();
         complaint.saveAsDraft();
     });
 
 });
 var complaint = {
+    complainName:'',
     complainText:'',
     auctionData:'',
     prepareData: function(){
-        this.complainText = ''
+
+        this.complainName = $('#complaint_name').val();
+        this.complainText = $('#complain_header').val();
         for (var key in argument.argumentList) {
             this.complainText += $('#edit_textarea_'+argument.argumentList[key]).val();
         }
@@ -96,7 +100,7 @@ var complaint = {
         $.ajax({
             type: 'POST',
             url: '/complaint/create',
-            data: this.auctionData+'&complaint_text'+this.complainText+'&aplicant_id'+applicant.id,
+            data: this.auctionData+'&complaint_text='+this.complainText+'&complaint_name='+this.complainName+'&applicant_id='+applicant.id,
             success: function (msg) {
                 console.log(msg);
             },
