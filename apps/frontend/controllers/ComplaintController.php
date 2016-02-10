@@ -22,6 +22,9 @@ class ComplaintController extends ControllerBase
     {
 
     }
+    public function createAction(){
+
+    }
     public function addAction(){
         $applicant = new Applicant();
         $userApplicants = $applicant->findByUserId($this->user->id);

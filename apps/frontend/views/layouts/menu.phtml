@@ -60,13 +60,13 @@
 <div class="c-header">
     <div class="wrapper">
         <div class="ch-left">
-            <b>ООО «ПАРУС»</b>
+            <b class="applicant-name-container"></b>
             <span>Изменить Заявителя</span>
         </div>
 
         <div class="ch-l-dd">
-            <div class="ch-left-cl">
-                <b>ООО «ПАРУС»</b>
+            <div  class="ch-left-cl">
+                <b class="applicant-name-container"></b>
                 <span>Закрыть и сохранить</span>
             </div>
             <div class="ch-l-info">
@@ -75,9 +75,14 @@
                 </div>
                 <ul>
                    {% for applicant in applicants  %}
+                    {% if loop.first %}
+                    <script>
+                        var applicantFirstId = {{ applicant.id}};
+                    </script>
+                    {% endif %}
                     <li>
                         <input id="cl{{ applicant.id}}" type="checkbox" name="cl{{ applicant.id}}" hidden>
-                        <label for="cl{{ applicant.id}}">{{ applicant.name_short}}</label>
+                        <label class="select_applicant" id="name_applicant_{{applicant.id}}" value="{{ applicant.id}}" for="cl{{ applicant.id}}">{{ applicant.name_short}}</label>
                         <div class="ch-l-i-edit">
                             <a href="/applicant/edit/{{ applicant.id}}">редактировать</a>
                             <a href="/applicant/delete/{{ applicant.id}}">удалить</a>

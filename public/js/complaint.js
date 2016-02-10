@@ -16,7 +16,7 @@ $(document).ready(function () {
 
                     var data = $.parseJSON(msg);
                     console.log(data);
-                    var auction = auctionObj;
+
                     if (auction.processData(data)) {
                         $('#auction_id').addClass('c-inp-done');
                         $('#result_container').append('<b id="msg_status_parser">Данные Получены!</b>');
@@ -66,10 +66,50 @@ $(document).ready(function () {
         return false
     });
 
+    $('#complaint_save').click(function(){
+        complaint.saveAsDraft();
+    });
+
 });
+var complaint = {
+    complainText:'',
+    auctionData:'',
+    prepareData: function(){
+        this.complainText = ''
+        for (var key in argument.argumentList) {
+            this.complainText += $('#edit_textarea_'+argument.argumentList[key]).val();
+        }
+
+        this.auctionData = '';
+        var k = 0;
+        for ( var i in auction.data) {
+            if (k == 0) {
+                this.auctionData +=  i + '=' + auction.data[i];
+                k += 1;
+            } else {
+                this.auctionData +=  '&' + i + '=' + auction.data[i];
+            }
+        }
+
+    },
+    saveAsDraft:function (){
+        $.ajax({
+            type: 'POST',
+            url: '/complaint/create',
+            data: this.auctionData+'&complaint_text'+this.complainText+'&aplicant_id'+applicant.id,
+            success: function (msg) {
+                console.log(msg);
+            },
+            error: function (msg) {
+                alert(msg);
+            }
+
+        });
+
+    }
+};
 var argument = {
     argumentList: [],
-
     addArgument: function (id) {
         this.argumentList.push(id);
         var templateName = $('#template_' + id).html();
@@ -82,7 +122,7 @@ var argument = {
         '<a class="remove_template_from_edit" value="'+id+'" >Удалить</a>'+
            '</div>'+
            '</div>'+
-             '<div class="c-edit-j-t"><textarea>'+
+             '<div class="c-edit-j-t"><textarea id="edit_textarea_'+id+'">'+
              templates[id]+
            '</textarea></div></div>';
         $('#edit_container').append(html);
@@ -100,7 +140,7 @@ var argument = {
     }
 
 };
-var auctionObj = {
+var auction = {
     data: {
         type: '',
         purchases_made: '',
