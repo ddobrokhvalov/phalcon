@@ -15,8 +15,10 @@ class ComplaintController extends ControllerBase
 
         $this->setMenu();
         $complaint = new Complaint();
-        $complaints = $complaint->findUserComplaints($this->user->id);
-
+        $status = false;
+        if(isset($_GET['status']))
+            $status = $_GET['status'];
+        $complaints = $complaint->findUserComplaints($this->user->id,$status);
         $this->view->complaints = $complaints;
 
     }
@@ -46,7 +48,6 @@ class ComplaintController extends ControllerBase
     public function addAction()
     {
         $this->setMenu();
-
         $category = new Category();
         $arguments = $category->getArguments();
         $this->view->arguments = $arguments;

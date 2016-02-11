@@ -5,47 +5,65 @@
     </div>
     <ul class="lm-nav">
         <li>
-            <a href="#">
+            <a href="/complaint/index">
                 ВСЕ
-                <span>34</span>
+                <span>{{ total }}</span>
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/complaint/index?status=draft">
                 Черновики
+                {% if complaints_num['draft'] is defined %}
+                <span>{{ complaints_num['draft'] }}</span>
+                {% endif %}
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/complaint/index?status=submitted">
                 Поданные
-                <span>1</span>
+                {% if complaints_num['submitted'] is defined %}
+                <span>{{ complaints_num['submitted'] }}</span>
+                {% endif %}
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/complaint/index?status=under_consideration">
                 На рассмотрении
+                {% if complaints_num['under_consideration'] is defined %}
+                <span>{{ complaints_num['under_consideration'] }}</span>
+                {% endif %}
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/complaint/index?status=justified">
                 Обоснованные
-                <span>2</span>
+                {% if complaints_num['justified'] is defined %}
+                <span>{{ complaints_num['justified'] }}</span>
+                {% endif %}
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/complaint/index?status=unfounded">
                 Необоснованные
+                {% if complaints_num['unfounded'] is defined %}
+                <span>{{ complaints_num['unfounded'] }}</span>
+                {% endif %}
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/complaint/index?status=recalled">
                 Отозванные
-                <span>1</span>
+                {% if complaints_num['recalled'] is defined %}
+                <span>{{ complaints_num['recalled'] }}</span>
+                {% endif %}
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="/complaint/index?status=archive">
                 Архив
+                {% if complaints_num['archive'] is defined %}
+                <span>{{ complaints_num['archive'] }}</span>
+                {% endif %}
             </a>
         </li>
     </ul>

@@ -30,13 +30,17 @@ class Complaint extends Model
         return 'complaint';
     }
 
-    public function findUserComplaints($user_id)
+    public function findUserComplaints($user_id, $status)
     {
         $db = $this->getDi()->getShared('db');
-        $result = $db->query("SELECT c.*, ap.name_short as apname FROM complaint as c
+        $sql = "SELECT c.*, ap.name_short as apname FROM complaint as c
          LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
          LEFT JOIN user u ON(ap.user_id = u.id )
-         WHERE u.id =$user_id ");
+         WHERE u.id =$user_id ";
+         if($status){
+             $sql .= " AND c.status = '$status'";
+         }
+        $result = $db->query($sql);
         return $result->fetchAll();
 
     }
@@ -49,6 +53,25 @@ class Complaint extends Model
         foreach ($data as $k => $v) {
             $this->$k = $v;
         }
+    }
+    public function findCountUserComplaints($user_id){
+        $db = $this->getDi()->getShared('db');
+        $result = $db->query("SELECT COUNT(c.id) as num, c.status  FROM complaint as c
+         LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
+         LEFT JOIN user u ON(ap.user_id = u.id )
+         WHERE u.id =$user_id GROUP BY c.status ");
+
+        $result = $result->fetchAll();
+        $total = 0;
+        $complaints_num = array();
+        foreach($result as $v){
+            $total += $v['num'];
+            $complaints_num[$v['status']] = $v['num'];
+        }
+        return array(
+            'total' => $total,
+            'complaints_num'=> $complaints_num
+        );
     }
 
 }

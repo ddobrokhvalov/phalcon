@@ -3,6 +3,7 @@ namespace Multiple\Frontend\Controllers;
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\User;
 use Multiple\Frontend\Models\Applicant;
+use Multiple\Frontend\Models\Complaint;
 
 class ControllerBase extends Controller
 {
@@ -57,5 +58,11 @@ class ControllerBase extends Controller
         $userApplicants = $applicant->findByUserId($this->user->id);
         $this->view->setTemplateAfter('menu');
         $this->view->applicants = $userApplicants;
+        $complaint = new Complaint();
+        $result = $complaint->findCountUserComplaints($this->user->id);
+
+        $this->view->complaints_num = $result['complaints_num'];
+        $this->view->total = $result['total'];
+
     }
 }
