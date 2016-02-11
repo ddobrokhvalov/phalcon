@@ -1,4 +1,3 @@
-
 <div id="chsort">
     <div class="wrapper">
         <div class="c-content">
@@ -39,8 +38,8 @@
             </div>
 
             <ul class="c-c-jlist">
-           {% for complaint in complaints %}
-                <li >
+                {% for complaint in complaints %}
+                <li>
                     <div class="c-c-jl-z">
                         <div class="c-c-jl-z-l">
                             <input id="jlist1" type="checkbox" name="jlist1" hidden>
@@ -49,8 +48,27 @@
                         <div class="c-c-jl-z-r">
 
                             {% if complaint['status'] == 'draft' %}
-                              <span class="jl-status jl-chernov">Черновик</span>
+                            <span class="jl-status jl-chernov">Черновик</span>
                             {% endif %}
+                            {% if complaint['status'] == 'justified' %}
+                            <span class="jl-status jl-done">Обоснована</span>
+                            {% endif %}
+                            {% if complaint['status'] == 'unfounded' %}
+                            <span class="jl-status jl-notdone">Необоснована</span>
+                            {% endif %}
+                            {% if complaint['status'] == 'under_consideration' %}
+                            <span class="jl-status jl-rassmotr">На рассмотрении</span>
+                            {% endif %}
+                            {% if complaint['status'] == 'submitted' %}
+                            <span class="jl-status jl-podana">Подана</span>
+                            {% endif %}
+                            {% if complaint['status'] == 'recalled' %}
+                            <span class="jl-status jl-fail">Отозвана</span>
+                            {% endif %}
+                            {% if complaint['status'] == 'archive' %}
+                            <span class="jl-status jl-archive">Архив</span>
+                            {% endif %}
+
                         </div>
                     </div>
                     <div class="c-c-jl-info">
@@ -79,265 +97,265 @@
                         </table>
                     </div>
                 </li>
-           {% endfor %}
-              <!--  <li class="done">
-                    <div class="c-c-jl-z">
-                        <div class="c-c-jl-z-l">
-                            <input id="jlist1" type="checkbox" name="jlist1" hidden>
-                            <label for="jlist1">Взятка со стороны конкурентов на лицо! Требую справедливости!</label>
-                        </div>
-                        <div class="c-c-jl-z-r">
-                            <span class="jl-status jl-done">Обоснована</span>
-                        </div>
-                    </div>
-                    <div class="c-c-jl-info">
-                        <table>
-                            <tr>
-                                <td>
-                                    <span>Жалоба от</span>
-                                    23.11.2015<br>
-                                    ОАО «Сибмост»
-                                </td>
-                                <td>
-                                    <span>На</span>
-                                    Муниципальное казенное учреждение города Красноярска "Управление капитального строительства" агентство государственного заказа Красноярского края
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Закупка №</span>
-                                    0173200001415000370
-                                </td>
-                                <td>
-                                    <span>Наименование закупки</span>
-                                    Выполнение работ по строительству объекта «Путепровод через железную дорогу с транспортной развязкой в мкр. Северный на улице от Северного шоссе до ул. Авиаторов» в г. Красноярске (I этап)
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
+                {% endfor %}
+                <!--  <li class="done">
+                      <div class="c-c-jl-z">
+                          <div class="c-c-jl-z-l">
+                              <input id="jlist1" type="checkbox" name="jlist1" hidden>
+                              <label for="jlist1">Взятка со стороны конкурентов на лицо! Требую справедливости!</label>
+                          </div>
+                          <div class="c-c-jl-z-r">
+                              <span class="jl-status jl-done">Обоснована</span>
+                          </div>
+                      </div>
+                      <div class="c-c-jl-info">
+                          <table>
+                              <tr>
+                                  <td>
+                                      <span>Жалоба от</span>
+                                      23.11.2015<br>
+                                      ОАО «Сибмост»
+                                  </td>
+                                  <td>
+                                      <span>На</span>
+                                      Муниципальное казенное учреждение города Красноярска "Управление капитального строительства" агентство государственного заказа Красноярского края
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>
+                                      <span>Закупка №</span>
+                                      0173200001415000370
+                                  </td>
+                                  <td>
+                                      <span>Наименование закупки</span>
+                                      Выполнение работ по строительству объекта «Путепровод через железную дорогу с транспортной развязкой в мкр. Северный на улице от Северного шоссе до ул. Авиаторов» в г. Красноярске (I этап)
+                                  </td>
+                              </tr>
+                          </table>
+                      </div>
+                  </li>
 
-                <li class="notdone">
-                    <div class="c-c-jl-z">
-                        <div class="c-c-jl-z-l">
-                            <input id="jlist1" type="checkbox" name="jlist1" hidden>
-                            <label for="jlist1">Взятка со стороны конкурентов на лицо! Требую справедливости!</label>
-                        </div>
-                        <div class="c-c-jl-z-r">
-                            <span class="jl-status jl-notdone">Необоснована</span>
-                        </div>
-                    </div>
-                    <div class="c-c-jl-info">
-                        <table>
-                            <tr>
-                                <td>
-                                    <span>Жалоба от</span>
-                                    23.11.2015<br>
-                                    ОАО «Сибмост»
-                                </td>
-                                <td>
-                                    <span>На</span>
-                                    Муниципальное казенное учреждение города Красноярска "Управление капитального строительства" агентство государственного заказа Красноярского края
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Закупка №</span>
-                                    0173200001415000370
-                                </td>
-                                <td>
-                                    <span>Наименование закупки</span>
-                                    Выполнение работ по строительству объекта «Путепровод через железную дорогу с транспортной развязкой в мкр. Северный на улице от Северного шоссе до ул. Авиаторов» в г. Красноярске (I этап)
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
+                  <li class="notdone">
+                      <div class="c-c-jl-z">
+                          <div class="c-c-jl-z-l">
+                              <input id="jlist1" type="checkbox" name="jlist1" hidden>
+                              <label for="jlist1">Взятка со стороны конкурентов на лицо! Требую справедливости!</label>
+                          </div>
+                          <div class="c-c-jl-z-r">
+                              <span class="jl-status jl-notdone">Необоснована</span>
+                          </div>
+                      </div>
+                      <div class="c-c-jl-info">
+                          <table>
+                              <tr>
+                                  <td>
+                                      <span>Жалоба от</span>
+                                      23.11.2015<br>
+                                      ОАО «Сибмост»
+                                  </td>
+                                  <td>
+                                      <span>На</span>
+                                      Муниципальное казенное учреждение города Красноярска "Управление капитального строительства" агентство государственного заказа Красноярского края
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>
+                                      <span>Закупка №</span>
+                                      0173200001415000370
+                                  </td>
+                                  <td>
+                                      <span>Наименование закупки</span>
+                                      Выполнение работ по строительству объекта «Путепровод через железную дорогу с транспортной развязкой в мкр. Северный на улице от Северного шоссе до ул. Авиаторов» в г. Красноярске (I этап)
+                                  </td>
+                              </tr>
+                          </table>
+                      </div>
+                  </li>
 
-                <li class="rassmotr">
-                    <div class="c-c-jl-z">
-                        <div class="c-c-jl-z-l">
-                            <input id="jlist1" type="checkbox" name="jlist1" hidden>
-                            <label for="jlist1">Взятка со стороны конкурентов на лицо! Требую справедливости!</label>
-                        </div>
-                        <div class="c-c-jl-z-r">
-                            <span class="jl-status jl-rassmotr">На рассмотрении</span>
-                        </div>
-                    </div>
-                    <div class="c-c-jl-info">
-                        <table>
-                            <tr>
-                                <td>
-                                    <span>Жалоба от</span>
-                                    23.11.2015<br>
-                                    ОАО «Сибмост»
-                                </td>
-                                <td>
-                                    <span>На</span>
-                                    Муниципальное казенное учреждение города Красноярска "Управление капитального строительства" агентство государственного заказа Красноярского края
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Закупка №</span>
-                                    0173200001415000370
-                                </td>
-                                <td>
-                                    <span>Наименование закупки</span>
-                                    Выполнение работ по строительству объекта «Путепровод через железную дорогу с транспортной развязкой в мкр. Северный на улице от Северного шоссе до ул. Авиаторов» в г. Красноярске (I этап)
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
+                  <li class="rassmotr">
+                      <div class="c-c-jl-z">
+                          <div class="c-c-jl-z-l">
+                              <input id="jlist1" type="checkbox" name="jlist1" hidden>
+                              <label for="jlist1">Взятка со стороны конкурентов на лицо! Требую справедливости!</label>
+                          </div>
+                          <div class="c-c-jl-z-r">
+                              <span class="jl-status jl-rassmotr">На рассмотрении</span>
+                          </div>
+                      </div>
+                      <div class="c-c-jl-info">
+                          <table>
+                              <tr>
+                                  <td>
+                                      <span>Жалоба от</span>
+                                      23.11.2015<br>
+                                      ОАО «Сибмост»
+                                  </td>
+                                  <td>
+                                      <span>На</span>
+                                      Муниципальное казенное учреждение города Красноярска "Управление капитального строительства" агентство государственного заказа Красноярского края
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>
+                                      <span>Закупка №</span>
+                                      0173200001415000370
+                                  </td>
+                                  <td>
+                                      <span>Наименование закупки</span>
+                                      Выполнение работ по строительству объекта «Путепровод через железную дорогу с транспортной развязкой в мкр. Северный на улице от Северного шоссе до ул. Авиаторов» в г. Красноярске (I этап)
+                                  </td>
+                              </tr>
+                          </table>
+                      </div>
+                  </li>
 
-                <li>
-                    <div class="c-c-jl-z">
-                        <div class="c-c-jl-z-l">
-                            <input id="jlist1" type="checkbox" name="jlist1" hidden>
-                            <label for="jlist1">Взятка со стороны конкурентов на лицо! Требую справедливости!</label>
-                        </div>
-                        <div class="c-c-jl-z-r">
-                            <span class="jl-status jl-chernov">Черновик</span>
-                        </div>
-                    </div>
-                    <div class="c-c-jl-info">
-                        <table>
-                            <tr>
-                                <td>
-                                    <span>Жалоба от</span>
-                                    23.11.2015<br>
-                                    ОАО «Сибмост»
-                                </td>
-                                <td>
-                                    <span>На</span>
-                                    Муниципальное казенное учреждение города Красноярска "Управление капитального строительства" агентство государственного заказа Красноярского края
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Закупка №</span>
-                                    0173200001415000370
-                                </td>
-                                <td>
-                                    <span>Наименование закупки</span>
-                                    Выполнение работ по строительству объекта «Путепровод через железную дорогу с транспортной развязкой в мкр. Северный на улице от Северного шоссе до ул. Авиаторов» в г. Красноярске (I этап)
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
+                  <li>
+                      <div class="c-c-jl-z">
+                          <div class="c-c-jl-z-l">
+                              <input id="jlist1" type="checkbox" name="jlist1" hidden>
+                              <label for="jlist1">Взятка со стороны конкурентов на лицо! Требую справедливости!</label>
+                          </div>
+                          <div class="c-c-jl-z-r">
+                              <span class="jl-status jl-chernov">Черновик</span>
+                          </div>
+                      </div>
+                      <div class="c-c-jl-info">
+                          <table>
+                              <tr>
+                                  <td>
+                                      <span>Жалоба от</span>
+                                      23.11.2015<br>
+                                      ОАО «Сибмост»
+                                  </td>
+                                  <td>
+                                      <span>На</span>
+                                      Муниципальное казенное учреждение города Красноярска "Управление капитального строительства" агентство государственного заказа Красноярского края
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>
+                                      <span>Закупка №</span>
+                                      0173200001415000370
+                                  </td>
+                                  <td>
+                                      <span>Наименование закупки</span>
+                                      Выполнение работ по строительству объекта «Путепровод через железную дорогу с транспортной развязкой в мкр. Северный на улице от Северного шоссе до ул. Авиаторов» в г. Красноярске (I этап)
+                                  </td>
+                              </tr>
+                          </table>
+                      </div>
+                  </li>
 
-                <li>
-                    <div class="c-c-jl-z">
-                        <div class="c-c-jl-z-l">
-                            <input id="jlist1" type="checkbox" name="jlist1" hidden>
-                            <label for="jlist1">Взятка со стороны конкурентов на лицо! Требую справедливости!</label>
-                        </div>
-                        <div class="c-c-jl-z-r">
-                            <span class="jl-status jl-podana">Подана</span>
-                        </div>
-                    </div>
-                    <div class="c-c-jl-info">
-                        <table>
-                            <tr>
-                                <td>
-                                    <span>Жалоба от</span>
-                                    23.11.2015<br>
-                                    ОАО «Сибмост»
-                                </td>
-                                <td>
-                                    <span>На</span>
-                                    Муниципальное казенное учреждение города Красноярска "Управление капитального строительства" агентство государственного заказа Красноярского края
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Закупка №</span>
-                                    0173200001415000370
-                                </td>
-                                <td>
-                                    <span>Наименование закупки</span>
-                                    Выполнение работ по строительству объекта «Путепровод через железную дорогу с транспортной развязкой в мкр. Северный на улице от Северного шоссе до ул. Авиаторов» в г. Красноярске (I этап)
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
+                  <li>
+                      <div class="c-c-jl-z">
+                          <div class="c-c-jl-z-l">
+                              <input id="jlist1" type="checkbox" name="jlist1" hidden>
+                              <label for="jlist1">Взятка со стороны конкурентов на лицо! Требую справедливости!</label>
+                          </div>
+                          <div class="c-c-jl-z-r">
+                              <span class="jl-status jl-podana">Подана</span>
+                          </div>
+                      </div>
+                      <div class="c-c-jl-info">
+                          <table>
+                              <tr>
+                                  <td>
+                                      <span>Жалоба от</span>
+                                      23.11.2015<br>
+                                      ОАО «Сибмост»
+                                  </td>
+                                  <td>
+                                      <span>На</span>
+                                      Муниципальное казенное учреждение города Красноярска "Управление капитального строительства" агентство государственного заказа Красноярского края
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>
+                                      <span>Закупка №</span>
+                                      0173200001415000370
+                                  </td>
+                                  <td>
+                                      <span>Наименование закупки</span>
+                                      Выполнение работ по строительству объекта «Путепровод через железную дорогу с транспортной развязкой в мкр. Северный на улице от Северного шоссе до ул. Авиаторов» в г. Красноярске (I этап)
+                                  </td>
+                              </tr>
+                          </table>
+                      </div>
+                  </li>
 
-                <li>
-                    <div class="c-c-jl-z">
-                        <div class="c-c-jl-z-l">
-                            <input id="jlist1" type="checkbox" name="jlist1" hidden>
-                            <label for="jlist1">Взятка со стороны конкурентов на лицо! Требую справедливости!</label>
-                        </div>
-                        <div class="c-c-jl-z-r">
-                            <span class="jl-status jl-fail">отозвана</span>
-                        </div>
-                    </div>
-                    <div class="c-c-jl-info">
-                        <table>
-                            <tr>
-                                <td>
-                                    <span>Жалоба от</span>
-                                    23.11.2015<br>
-                                    ОАО «Сибмост»
-                                </td>
-                                <td>
-                                    <span>На</span>
-                                    Муниципальное казенное учреждение города Красноярска "Управление капитального строительства" агентство государственного заказа Красноярского края
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Закупка №</span>
-                                    0173200001415000370
-                                </td>
-                                <td>
-                                    <span>Наименование закупки</span>
-                                    Выполнение работ по строительству объекта «Путепровод через железную дорогу с транспортной развязкой в мкр. Северный на улице от Северного шоссе до ул. Авиаторов» в г. Красноярске (I этап)
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
+                  <li>
+                      <div class="c-c-jl-z">
+                          <div class="c-c-jl-z-l">
+                              <input id="jlist1" type="checkbox" name="jlist1" hidden>
+                              <label for="jlist1">Взятка со стороны конкурентов на лицо! Требую справедливости!</label>
+                          </div>
+                          <div class="c-c-jl-z-r">
+                              <span class="jl-status jl-fail">отозвана</span>
+                          </div>
+                      </div>
+                      <div class="c-c-jl-info">
+                          <table>
+                              <tr>
+                                  <td>
+                                      <span>Жалоба от</span>
+                                      23.11.2015<br>
+                                      ОАО «Сибмост»
+                                  </td>
+                                  <td>
+                                      <span>На</span>
+                                      Муниципальное казенное учреждение города Красноярска "Управление капитального строительства" агентство государственного заказа Красноярского края
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>
+                                      <span>Закупка №</span>
+                                      0173200001415000370
+                                  </td>
+                                  <td>
+                                      <span>Наименование закупки</span>
+                                      Выполнение работ по строительству объекта «Путепровод через железную дорогу с транспортной развязкой в мкр. Северный на улице от Северного шоссе до ул. Авиаторов» в г. Красноярске (I этап)
+                                  </td>
+                              </tr>
+                          </table>
+                      </div>
+                  </li>
 
-                <li>
-                    <div class="c-c-jl-z">
-                        <div class="c-c-jl-z-l">
-                            <input id="jlist1" type="checkbox" name="jlist1" hidden>
-                            <label for="jlist1">Взятка со стороны конкурентов на лицо! Требую справедливости!</label>
-                        </div>
-                        <div class="c-c-jl-z-r">
-                            <span class="jl-status jl-archive">архив</span>
-                        </div>
-                    </div>
-                    <div class="c-c-jl-info">
-                        <table>
-                            <tr>
-                                <td>
-                                    <span>Жалоба от</span>
-                                    23.11.2015<br>
-                                    ОАО «Сибмост»
-                                </td>
-                                <td>
-                                    <span>На</span>
-                                    Муниципальное казенное учреждение города Красноярска "Управление капитального строительства" агентство государственного заказа Красноярского края
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Закупка №</span>
-                                    0173200001415000370
-                                </td>
-                                <td>
-                                    <span>Наименование закупки</span>
-                                    Выполнение работ по строительству объекта «Путепровод через железную дорогу с транспортной развязкой в мкр. Северный на улице от Северного шоссе до ул. Авиаторов» в г. Красноярске (I этап)
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li> -->
+                  <li>
+                      <div class="c-c-jl-z">
+                          <div class="c-c-jl-z-l">
+                              <input id="jlist1" type="checkbox" name="jlist1" hidden>
+                              <label for="jlist1">Взятка со стороны конкурентов на лицо! Требую справедливости!</label>
+                          </div>
+                          <div class="c-c-jl-z-r">
+                              <span class="jl-status jl-archive">архив</span>
+                          </div>
+                      </div>
+                      <div class="c-c-jl-info">
+                          <table>
+                              <tr>
+                                  <td>
+                                      <span>Жалоба от</span>
+                                      23.11.2015<br>
+                                      ОАО «Сибмост»
+                                  </td>
+                                  <td>
+                                      <span>На</span>
+                                      Муниципальное казенное учреждение города Красноярска "Управление капитального строительства" агентство государственного заказа Красноярского края
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>
+                                      <span>Закупка №</span>
+                                      0173200001415000370
+                                  </td>
+                                  <td>
+                                      <span>Наименование закупки</span>
+                                      Выполнение работ по строительству объекта «Путепровод через железную дорогу с транспортной развязкой в мкр. Северный на улице от Северного шоссе до ул. Авиаторов» в г. Красноярске (I этап)
+                                  </td>
+                              </tr>
+                          </table>
+                      </div>
+                  </li> -->
             </ul>
 
             <div class="cfooter">
