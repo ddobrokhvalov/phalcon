@@ -63,6 +63,8 @@ class ControllerBase extends Controller
 
         $this->view->complaints_num = $result['complaints_num'];
         $this->view->total = $result['total'];
+        $this->view->user = $this->user;
+
 
     }
 

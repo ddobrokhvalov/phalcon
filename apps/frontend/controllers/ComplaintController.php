@@ -12,13 +12,12 @@ class ComplaintController extends ControllerBase
 {
     public function indexAction()
     {
-
         $this->setMenu();
         $complaint = new Complaint();
         $status = false;
-        if(isset($_GET['status']))
+        if (isset($_GET['status']))
             $status = $_GET['status'];
-        $complaints = $complaint->findUserComplaints($this->user->id,$status);
+        $complaints = $complaint->findUserComplaints($this->user->id, $status);
         $this->view->complaints = $complaints;
 
     }
