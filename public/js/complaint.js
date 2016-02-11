@@ -103,6 +103,7 @@ var complaint = {
             data: this.auctionData+'&complaint_text='+this.complainText+'&complaint_name='+this.complainName+'&applicant_id='+applicant.id,
             success: function (msg) {
                 console.log(msg);
+                document.location.href = '/complaint/index';
             },
             error: function (msg) {
                 alert(msg);
@@ -126,7 +127,7 @@ var argument = {
         '<a class="remove_template_from_edit" value="'+id+'" >Удалить</a>'+
            '</div>'+
            '</div>'+
-             '<div class="c-edit-j-t"><textarea id="edit_textarea_'+id+'">'+
+             '<div class="c-edit-j-t"><textarea id="edit_textarea_'+id+'" rows="5" cols="115">'+
              templates[id]+
            '</textarea></div></div>';
         $('#edit_container').append(html);
