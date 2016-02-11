@@ -6,7 +6,7 @@ $(document).ready(function () {
         if (validator.numeric(auction_id, 5, 25)) {
             $('#auction_id').removeClass('c-inp-error');
             $('#auction_id').removeClass('c-inp-done');
-            $('#msg_status_parser').remove();
+            $('.msg_status_parser').remove();
 
             $.ajax({
                 type: 'POST',
@@ -19,11 +19,11 @@ $(document).ready(function () {
 
                     if (auction.processData(data,auction_id)) {
                         $('#auction_id').addClass('c-inp-done');
-                        $('#result_container').append('<b id="msg_status_parser">Данные Получены!</b>');
+                        $('#result_container').append('<b class="msg_status_parser">Данные Получены!</b>');
                         auction.setData();
                     } else {
                         $('#auction_id').addClass('c-inp-error');
-                        $('#result_container').append('<b style="color:red!important;" id="msg_status_parser">Ошибка!</b>');
+                        $('#result_container').append('<b style="color:red!important;" class="msg_status_parser">Ошибка!</b>');
                         auction.clearData();
                         auction.setData();
                     }

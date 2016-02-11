@@ -2866,6 +2866,10 @@ input[type="radio"]:checked + label {
     border-radius: 5px;
     background: #bfc3ce;
 }
+/* custom */
+.msg_status_parser{
+    margin-left: 4.5%;
+}
 .auction-data{
     color: #000000!important;
     text-transform: none!important;
