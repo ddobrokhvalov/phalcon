@@ -12,12 +12,8 @@ class ComplaintController extends ControllerBase
 {
     public function indexAction()
     {
-        $applicant = new Applicant();
-        $userApplicants = $applicant->findByUserId($this->user->id);
 
-        $this->view->setTemplateAfter('menu');
-        $this->view->applicants = $userApplicants;
-
+        $this->setMenu();
         $complaint = new Complaint();
         $complaints = $complaint->findUserComplaints($this->user->id);
 
@@ -49,14 +45,10 @@ class ComplaintController extends ControllerBase
 
     public function addAction()
     {
-        $applicant = new Applicant();
-        $userApplicants = $applicant->findByUserId($this->user->id);
+        $this->setMenu();
 
         $category = new Category();
         $arguments = $category->getArguments();
-
-        $this->view->setTemplateAfter('menu');
-        $this->view->applicants = $userApplicants;
         $this->view->arguments = $arguments;
     }
 

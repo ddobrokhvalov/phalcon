@@ -2,6 +2,7 @@
 namespace Multiple\Frontend\Controllers;
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\User;
+use Multiple\Frontend\Models\Applicant;
 
 class ControllerBase extends Controller
 {
@@ -50,5 +51,11 @@ class ControllerBase extends Controller
                 'params' => $params
             )
         );
+    }
+    public function setMenu(){
+        $applicant = new Applicant();
+        $userApplicants = $applicant->findByUserId($this->user->id);
+        $this->view->setTemplateAfter('menu');
+        $this->view->applicants = $userApplicants;
     }
 }
