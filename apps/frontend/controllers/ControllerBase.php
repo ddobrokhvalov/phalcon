@@ -65,4 +65,5 @@ class ControllerBase extends Controller
         $this->view->total = $result['total'];
 
     }
+
 }
