@@ -37,9 +37,9 @@ class Complaint extends Model
          LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
          LEFT JOIN user u ON(ap.user_id = u.id )
          WHERE u.id =$user_id ";
-         if($status){
-             $sql .= " AND c.status = '$status'";
-         }
+        if ($status) {
+            $sql .= " AND c.status = '$status'";
+        }
         $result = $db->query($sql);
         return $result->fetchAll();
 
@@ -54,7 +54,9 @@ class Complaint extends Model
             $this->$k = $v;
         }
     }
-    public function findCountUserComplaints($user_id){
+
+    public function findCountUserComplaints($user_id)
+    {
         $db = $this->getDi()->getShared('db');
         $result = $db->query("SELECT COUNT(c.id) as num, c.status  FROM complaint as c
          LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
@@ -64,14 +66,45 @@ class Complaint extends Model
         $result = $result->fetchAll();
         $total = 0;
         $complaints_num = array();
-        foreach($result as $v){
+        foreach ($result as $v) {
             $total += $v['num'];
             $complaints_num[$v['status']] = $v['num'];
         }
         return array(
             'total' => $total,
-            'complaints_num'=> $complaints_num
+            'complaints_num' => $complaints_num
         );
+    }
+
+    public function checkComplaintOwner($id, $user_id)
+    {
+        $db = $this->getDi()->getShared('db');
+        $result = $db->query("SELECT c.id, u.id as user_id FROM complaint as c
+         LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
+         LEFT JOIN user u ON(ap.user_id = u.id )
+         WHERE c.id =$id");
+        $result = $result->fetch();
+        if ($result && $result['user_id'] == $user_id)
+            return true;
+        return false;
+    }
+
+    public function changeStatus($status, $data, $user_id)
+    {
+        foreach ($data as $id) {
+
+            if ($this->checkComplaintOwner($id, $user_id)) {
+
+                $complaint = Complaint::findFirstById($id);
+                $complaint->status = $status;
+                if ($status == 'delete')
+                    $complaint->delete();
+                else
+                    $complaint->save();
+            } else {
+                continue;
+            }
+        }
     }
 
 }

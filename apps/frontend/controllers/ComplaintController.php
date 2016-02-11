@@ -27,10 +27,18 @@ class ComplaintController extends ControllerBase
 
     }
 
+
+    public function addAction()
+    {
+        $this->setMenu();
+        $category = new Category();
+        $arguments = $category->getArguments();
+        $this->view->arguments = $arguments;
+    }
     public function createAction()
     {
         if (!$this->request->isPost()) {
-            return $this->forward('complaint/add');
+            echo 'error'; exit;
         }
         $data = $this->request->getPost();
         $complaint = new Complaint();
@@ -44,12 +52,22 @@ class ComplaintController extends ControllerBase
 
     }
 
-    public function addAction()
+    public function statusAction()
     {
-        $this->setMenu();
-        $category = new Category();
-        $arguments = $category->getArguments();
-        $this->view->arguments = $arguments;
+
+        if (!$this->request->isPost()) {
+            echo 'error'; exit;
+        }
+        $data = $this->request->getPost();
+        $complaint = new Complaint();
+        $complaint->changeStatus($data['status'],json_decode($data['complaints']),$this->user->id);
+        echo 'done'; exit;
+        /*if ($complaint->save())
+            echo 'done';
+        else
+            echo 'error';
+        exit;*/
+
     }
 
 }

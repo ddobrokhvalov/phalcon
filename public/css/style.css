@@ -2875,6 +2875,9 @@ input[type="radio"]:checked + label {
     text-transform: none!important;
 
 }
+.c-cs-btns a{
+    cursor: pointer;
+}
 .up{
     cursor: pointer;
 }
