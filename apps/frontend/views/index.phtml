@@ -13,12 +13,16 @@
     <script type="text/javascript" src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript" src="/js/init.js"></script>
     <script type="text/javascript" src="/js/validator.js"></script>
-    <script type="text/javascript" src="/js/notice_parser.js"></script>
+    <script type="text/javascript" src="/js/complaint.js"></script>
+    <script type="text/javascript" src="/js/applicant.js"></script>
+    <script type="text/javascript" src="/js/index_complaint.js"></script>
+
 </head>
 <body>
 
 
-<?php echo $this->getContent(); ?>
+<?php echo $this->getContent();
+$this->partial('layouts/footer');?>
 
 </body>
 </html>

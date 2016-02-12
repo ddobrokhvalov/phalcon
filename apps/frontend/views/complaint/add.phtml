@@ -12,9 +12,10 @@
                 </div>
                 <div class="c-jadd1-f" id="result_container">
                     №<input id="auction_id" type="text" value="" >
-
+                    <input id="notice_button" type="submit" value="Получить данные">
                 </div>
-                <button id="notice_button" >Done</button>
+
+
             </div>
 
             <div class="c-jadd-sp">
@@ -80,67 +81,32 @@
                 </div>
                 <div class="c-jadd2-f">
                     <span class="c-jadd2-f-z">Сокращенное имя жалобы (для идинтификации внутри системы)</span>
-                    <input type="text">
+                    <input id="complaint_name" type="text">
                     <div class="c-jd2-f-dov-b">
                         <div class="c-jd2-f-dov">
                             Доводы жалобы
+                        </div>
+                        <div class="argument_text_container c-jd2-f-dov-dd-t2" >
+
                         </div>
                         <div class="c-jd2-f-dov-dd">
                             <div class="c-jd2-f-dov-dd-z">
                                 Доводы жалобы
                             </div>
-                            <div class="c-jd2-f-dov-dd-t">
-                                <span>Объединение различных районов <a></a></span>
-                                <span>Многократное повторение товаров <a></a></span>
-                                <span>Старые ГОСТ <a></a></span>
-                                <span>Отсутствие требования опыта в соответствии с ПП №99 <a></a></span>
+                            <div class="argument_text_container c-jd2-f-dov-dd-t" >
+
                             </div>
                             <div class="c-jd2-f-dov-dd-pick mCustomScrollbar">
                                 <div class="c-jd2-f-dov-dd-pick-b">
+                                    {% for argument in arguments  %}
                                     <div class="c-jd2-cb-b">
-                                        <span>Несоответствие ГОСТам</span>
-                                        <input id="jd2cbb1" type="checkbox" checked hidden>
-                                        <label for="jd2cbb1">Установление требований к составным частям</label>
-                                        <input id="jd2cbb2" type="checkbox" checked disabled hidden>
-                                        <label for="jd2cbb2">Установление требований к составным частям</label>
-                                        <input id="jd2cbb3" type="checkbox" disabled hidden>
-                                        <label for="jd2cbb3">Установление требований к составным частям</label>
-                                        <input id="jd2cbb4" type="checkbox" hidden>
-                                        <label for="jd2cbb4">Установление требований к составным частям</label>
+                                        <span>{{ argument['category'].name }}</span>
+                                        {% for template in argument['templates']  %}
+                                          <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" type="checkbox"  hidden>
+                                          <label id="template_{{ template.id }}" for="jd2cbb{{ template.id }}">{{ template.name }}</label>
+                                        {% endfor %}
                                     </div>
-                                    <div class="c-jd2-cb-b">
-                                        <span>Несоответствие ГОСТам</span>
-                                        <input id="jd2cbb1" type="checkbox" checked hidden>
-                                        <label for="jd2cbb1">Установление требований к составным частям</label>
-                                        <input id="jd2cbb2" type="checkbox" checked disabled hidden>
-                                        <label for="jd2cbb2">Установление требований к составным частям</label>
-                                        <input id="jd2cbb3" type="checkbox" disabled hidden>
-                                        <label for="jd2cbb3">Установление требований к составным частям</label>
-                                        <input id="jd2cbb4" type="checkbox" hidden>
-                                        <label for="jd2cbb4">Установление требований к составным частям</label>
-                                    </div>
-                                    <div class="c-jd2-cb-b">
-                                        <span>Несоответствие ГОСТам</span>
-                                        <input id="jd2cbb1" type="checkbox" checked hidden>
-                                        <label for="jd2cbb1">Установление требований к составным частям</label>
-                                        <input id="jd2cbb2" type="checkbox" checked disabled hidden>
-                                        <label for="jd2cbb2">Установление требований к составным частям</label>
-                                        <input id="jd2cbb3" type="checkbox" disabled hidden>
-                                        <label for="jd2cbb3">Установление требований к составным частям</label>
-                                        <input id="jd2cbb4" type="checkbox" hidden>
-                                        <label for="jd2cbb4">Установление требований к составным частям</label>
-                                    </div>
-                                    <div class="c-jd2-cb-b">
-                                        <span>Несоответствие ГОСТам</span>
-                                        <input id="jd2cbb1" type="checkbox" checked hidden>
-                                        <label for="jd2cbb1">Установление требований к составным частям</label>
-                                        <input id="jd2cbb2" type="checkbox" checked disabled hidden>
-                                        <label for="jd2cbb2">Установление требований к составным частям</label>
-                                        <input id="jd2cbb3" type="checkbox" disabled hidden>
-                                        <label for="jd2cbb3">Установление требований к составным частям</label>
-                                        <input id="jd2cbb4" type="checkbox" hidden>
-                                        <label for="jd2cbb4">Установление требований к составным частям</label>
-                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
@@ -155,17 +121,17 @@
                             <span class="c-jd2-e-btn4">Aa</span>
                             <span class="c-jd2-e-btn5"></span>
                             <label for="cjd2file" class="c-jd2-e-btn6">Прикрепить файлы</label>
-                            <input type="file" id="cjd2file" hidden>
+                            <input type="file"   id="cjd2file" hidden />
                         </div>
                         <div class="c-jd2-f-edit-text mCustomScrollbar">
-                            <div class="c-jd2-f-edit-t">
-                             <textarea>text</textarea>
+                            <div id="edit_container" class="c-jd2-f-edit-t">
+                             <textarea id="complain_header" placeholder="Заголовок" rows="5" cols="115"></textarea>
                             </div>
                         </div>
                     </div>
 
                     <div class="c-jd2-f-save">
-                        <input type="submit" value="Сохранить черновик">
+                        <input id="complaint_save" type="submit" value="Сохранить черновик">
                     </div>
 
                     <div class="c-jd2-f-cat">
@@ -188,19 +154,15 @@
                 </div>
             </div>
 
-            <div class="cfooter">
-                <div class="wrapper">
-                    <div class="cflogo">
-                        <a href="#"></a>
-                    </div>
-                    <div class="cf-str">
-                        &copy; ФАС-Онлайн, 2016, при поддержке «Госпартнер»
-                        <a href="#">Контакты</a>
-                        <a href="#">Помощь</a>
-                        <a href="#">О проекте</a>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>
+<script>
+    var templates = {};
+{% for argument in arguments  %}
+    {% for template in argument['templates']  %}
+       templates[{{template.id}}] = '{{template.text}}';
+    {% endfor %}
+{% endfor %}
+</script>

@@ -2349,6 +2349,7 @@ input[type="radio"]:checked + label {
     background: url(../images/icon-ed-arr1.png) no-repeat left center;
 }
 .c-edit-j-h-ctr2 {
+    margin: 0 50px 0 0;
     float: left;
     padding: 0 0 0 18px;
     background: url(../images/icon-ed-arr2.png) no-repeat left center;
@@ -2678,19 +2679,19 @@ input[type="radio"]:checked + label {
     content: "5";
 }
 .c-faq-sp li:nth-child(1) {
-    background: url(../images/faq-s1.png) no-repeat left center;
+    background: url(/images/faq-s1.png) no-repeat left center;
 }
 .c-faq-sp li:nth-child(2) {
-    background: url(../images/faq-s2.png) no-repeat right center;
+    background: url(/images/faq-s2.png) no-repeat right center;
 }
 .c-faq-sp li:nth-child(3) {
-    background: url(../images/faq-s3.png) no-repeat left center;
+    background: url(/images/faq-s3.png) no-repeat left center;
 }
 .c-faq-sp li:nth-child(4) {
-    background: url(../images/faq-s4.png) no-repeat right center;
+    background: url(/images/faq-s4.png) no-repeat right center;
 }
 .c-faq-sp li:nth-child(5) {
-    background: url(../images/faq-s5.png) no-repeat left center;
+    background: url(/images/faq-s5.png) no-repeat left center;
 }
 
 /* popups */
@@ -2865,8 +2866,24 @@ input[type="radio"]:checked + label {
     border-radius: 5px;
     background: #bfc3ce;
 }
+/* custom */
+.msg_status_parser{
+    margin-left: 4.5%;
+}
 .auction-data{
     color: #000000!important;
     text-transform: none!important;
 
+}
+.c-cs-btns a{
+    cursor: pointer;
+}
+.up{
+    cursor: pointer;
+}
+.down{
+    cursor: pointer;
+}
+.remove_template_from_edit{
+    cursor: pointer;
 }

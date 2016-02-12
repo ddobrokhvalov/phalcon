@@ -12,24 +12,19 @@ class ApplicantController extends ControllerBase
     }
     public function editAction($id)
     {
+        $this->setMenu();
         $applicant = Applicant::findFirstById($id);
         if(!$applicant || $applicant->user_id != $this->user->id)
             return $this->forward('complaint/index');
-
-        $userApplicants = $applicant->findByUserId($this->user->id);
         $applicantFiles =  $applicant->getApplicantFiles($applicant->id);
-        $this->view->setTemplateAfter('menu');
         $this->view->applicant = $applicant;
         $this->view->afiles = $applicantFiles;
-        $this->view->applicants = $userApplicants;
+
 
     }
     public function addAction()
     {
-        $applicant = new Applicant();
-        $userApplicants = $applicant->findByUserId($this->user->id);
-        $this->view->setTemplateAfter('menu');
-        $this->view->applicants = $userApplicants;
+        $this->setMenu();
     }
     public function createAction()
     {
