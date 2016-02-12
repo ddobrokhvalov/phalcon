@@ -104,7 +104,7 @@ class Parser {
             $complaint['lico'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]//tr/td[contains(text(),"Лицо, подавшее жалобу:")]/following-sibling::td[1]//text())', $tender));
             $lico = trim(preg_replace(array('/ООО/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $complaint['lico']));
             $lico = trim(preg_replace('/\s+/ui', ' ', $lico));
-            if($lico != $zayavitel2) {
+            if(!mb_stristr($lico, $zayavitel2, false, "utf-8")) {
                 continue;
             }
             $complaint['complaint_id'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]/table[1]//tr[1]/td[1]//a/@href)', $tender));
