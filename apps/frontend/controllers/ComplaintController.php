@@ -24,7 +24,7 @@ class ComplaintController extends ControllerBase
 
     public function editAction()
     {
-
+        $this->setMenu();
     }
 
 
