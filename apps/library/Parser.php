@@ -94,12 +94,17 @@ class Parser {
         $response = array();
 
         $complaints = array();
+        $reglamentTime = $this->reglamentTime($date);
 
-        $zayavitel2 = trim(preg_replace(array('/ООО/ui', '/«|»|\"/ui'), array('', ''), $zayavitel));
+//        $zayavitel2 = trim(preg_replace(array('/ООО/ui', '/«|»|\"/ui'), array('', ''), $zayavitel));
+        $zayavitel2 = trim(preg_replace(array('/ООО/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $zayavitel));
+        $zayavitel2 = trim(preg_replace('/\s+/ui', ' ', $zayavitel2));
         foreach($xpath->query('//div[contains(@class,"registerBox")]') as $tender) {
             $complaint = array();
             $complaint['lico'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]//tr/td[contains(text(),"Лицо, подавшее жалобу:")]/following-sibling::td[1]//text())', $tender));
-            if(trim(preg_replace(array('/ООО/ui', '/«|»|\"/ui'), array('', ''), $complaint['lico'])) != $zayavitel2) {
+            $lico = trim(preg_replace(array('/ООО/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $complaint['lico']));
+            $lico = trim(preg_replace('/\s+/ui', ' ', $lico));
+            if($lico != $zayavitel2) {
                 continue;
             }
             $complaint['complaint_id'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]/table[1]//tr[1]/td[1]//a/@href)', $tender));
@@ -113,8 +118,9 @@ class Parser {
             }
             $complaints[] = $complaint;
         }
+        //print_r($complaints);
         if(count($complaints) == 0) {
-            if($this->reglamentTime($date) > time()) {
+            if($reglamentTime <= time()) {
                 $response['error'] = 'Ничего не найдено. Вышел регламентированный срок принятия к рассмотрению.';
             }
             else {
@@ -125,9 +131,8 @@ class Parser {
         elseif(count($complaints) == 1) {
             $response['complaint'] = $complaints[0];
             $response['complaint']['info'] = $this->getComplaintInfo($complaints[0]['complaint_id']);
-            $nbd = $this->nextBusinessDay($date);
-            if($complaints[0]['date'] != $nbd) {
-                $response['error'] = 'Дата не совпадает с требуемой!';
+            if($reglamentTime <= $this->getTime($complaints[0]['date'])) {
+                $response['error'] = 'Нарушение регламентного срока!';
             }
             return $response;
         }
@@ -135,7 +140,8 @@ class Parser {
             $nbd = $this->nextBusinessDay($date);
             $indexes = array();
             foreach($complaints as $k => &$c) {
-                if($c['date'] == $nbd) {
+                //echo date('d.m.Y', $reglamentTime) . " " . $c['date'] . " " . $date . "\n";
+                if($reglamentTime > $this->getTime($c['date']) && $this->getTime($c['date']) > $this->getTime($date)) {
                     $indexes[] = $k;
                     $c['info'] = $this->getComplaintInfo($complaint['complaint_id']);
                 }
@@ -201,10 +207,18 @@ class Parser {
 
         return $new_date;
     }
-    function reglamentTime($date, $add_day = 4) {
+    function reglamentTime($date, $add_day = 5) {
+        for($i = 1; $i <= $add_day; $i++) {
+            $date = $this->nextBusinessDay($date);
+        }
         preg_match('/(\d+)\.(\d+)\.(\d+)/ui', $date, $matches);
         $date = "{$matches[3]}-{$matches[2]}-{$matches[1]}";
-        return strtotime("$date +$add_day Days");
+        return strtotime($date);
+    }
+    function getTime($date) {
+        preg_match('/(\d+)\.(\d+)\.(\d+)/ui', $date, $matches);
+        $date = "{$matches[3]}-{$matches[2]}-{$matches[1]}";
+        return strtotime($date);
     }
 
     function getUrl($url, $ref = null, $save_cookie = false, $post = false, $add = array())

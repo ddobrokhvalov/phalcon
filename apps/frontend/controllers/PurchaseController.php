@@ -74,7 +74,7 @@ class PurchaseController extends Controller
            <td>дата обновления</td><td>".$d['complaint']['info']['date_obnovleniya']."</td>
            </tr>
            </table>
-           <br> Ошибки:".$d['error'];
+         //  <br> Ошибки:".$d['error'];
         echo $html; exit;
     }
    public function indexAction(){
