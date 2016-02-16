@@ -32,9 +32,18 @@ class ComplaintController extends ControllerBase
 
     }
 
-    public function editAction()
+    public function editAction($id)
     {
+        $complaint = Complaint::findFirstById($id);
+        if(!$complaint)
+            return $this->forward('complaint/index');
+        if(!$complaint->checkComplaintOwner($id, $this->user->id))
+            return $this->forward('complaint/index');
+
         $this->setMenu();
+
+        $this->view->complaint = $complaint;
+
     }
 
 

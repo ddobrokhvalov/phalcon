@@ -2887,3 +2887,18 @@ input[type="radio"]:checked + label {
 .remove_template_from_edit{
     cursor: pointer;
 }
+.complaint-name{
+    position: relative;
+   /* padding: 0 0 0 30px; */
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 100;
+    cursor: pointer;
+}
+.complaint-name:hover{
+    color: #00aeef!important;
+    text-decoration: none!important;
+    font-size: 18px!important;
+    line-height: 28px!important;
+    font-weight: 100!important;
+}
