@@ -31,12 +31,8 @@ class ControllerBase extends Controller
             );
 
         }else{
-            return $this->dispatcher->forward(
-                array(
-                    'controller' => 'index',
-                    'action' => 'index'
-                )
-            );
+            header( 'Location: http://'.$_SERVER['HTTP_HOST'] );
+            exit;
         }
 
     }

@@ -2902,3 +2902,11 @@ input[type="radio"]:checked + label {
     line-height: 28px!important;
     font-weight: 100!important;
 }
+.edit-textarea{
+    border: none;
+    border-color: #f7f8fa;
+    background-color:#f7f8fa;
+    outline: none!important;
+    -moz-appearance: none!important;
+}
+

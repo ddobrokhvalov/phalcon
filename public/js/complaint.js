@@ -79,7 +79,7 @@ var complaint = {
     prepareData: function(){
 
         this.complainName = $('#complaint_name').val();
-        this.complainText = $('#complain_header').val();
+        this.complainText = '';
         for (var key in argument.argumentList) {
             this.complainText += $('#edit_textarea_'+argument.argumentList[key]).val();
         }
@@ -140,13 +140,12 @@ var argument = {
         '<a class="remove_template_from_edit" value="'+id+'" >Удалить</a>'+
            '</div>'+
            '</div>'+
-             '<div class="c-edit-j-t"><textarea id="edit_textarea_'+id+'" rows="5" cols="115">'+
+             '<div class="c-edit-j-t"><textarea class="edit-textarea" id="edit_textarea_'+id+'" rows="5" cols="115">'+
              templates[id]+
            '</textarea></div></div>';
         $('#edit_container').append(html);
 
     },
-
     removeArgument: function (id) {
         var index = this.argumentList.indexOf(id);
         if (index > -1) {

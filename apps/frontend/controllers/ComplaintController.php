@@ -73,7 +73,6 @@ class ComplaintController extends ControllerBase
 
     public function statusAction()
     {
-
         if (!$this->request->isPost()) {
             echo 'error'; exit;
         }
