@@ -111,6 +111,19 @@ var complaint = {
 
         });
 
+    },
+    filterComplaintByApplicant: function(applicant_id){
+        var url      = window.location.href;
+
+        if(url.indexOf('applicant_id='+applicant_id) == -1){
+
+            if(currentStatus !='0'){
+                document.location.href = '/complaint/index?status='+currentStatus+'&applicant_id=' + applicant_id;
+            }else {
+                document.location.href = '/complaint/index?applicant_id=' + applicant_id;
+            }
+        }
+
     }
 };
 var argument = {

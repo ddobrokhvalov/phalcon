@@ -30,7 +30,7 @@ class Complaint extends Model
         return 'complaint';
     }
 
-    public function findUserComplaints($user_id, $status)
+    public function findUserComplaints($user_id, $status,$applicant_id =false)
     {
         $db = $this->getDi()->getShared('db');
         $sql = "SELECT c.*, ap.name_short as apname FROM complaint as c
@@ -39,6 +39,9 @@ class Complaint extends Model
          WHERE u.id =$user_id ";
         if ($status) {
             $sql .= " AND c.status = '$status'";
+        }
+        if($applicant_id && $applicant_id != 'All'){
+            $sql .= " AND ap.id = $applicant_id";
         }
         $result = $db->query($sql);
         return $result->fetchAll();

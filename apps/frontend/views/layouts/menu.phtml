@@ -95,8 +95,16 @@
                    {% for applicant in applicants  %}
                     {% if loop.first %}
                     <script>
-                        var applicantFirstId = {{ applicant.id}};
+                        {% if selected_applicant_id is defined %}
+                         var applicantSelectedId = '{{selected_applicant_id}}';
+                        {% else %}
+                          var applicantFirstId = {{ applicant.id}};
+                        {% endif %}
                     </script>
+                     {% if index_action is defined %}
+                        <input id="clAll" type="checkbox" name="clAll" hidden>
+                        <label class="select_applicant" id="name_applicant_All" value="All" for="clAll">Все</label>
+                     {% endif %}
                     {% endif %}
                     <li>
                         <input id="cl{{ applicant.id}}" type="checkbox" name="cl{{ applicant.id}}" hidden>
@@ -108,23 +116,7 @@
                     </li>
 
                    {% endfor %}
-                 <!--   <li>
-                        <input id="cl2" type="checkbox" name="cl2" hidden>
-                        <label for="cl2">Степашин С.В.</label>
-                        <div class="ch-l-i-edit">
-                            <a href="#">редактировать</a>
-                            <a href="#">удалить</a>
-                        </div>
-                    </li>
-                    <li>
-                        <input id="cl3" type="checkbox" name="cl3" checked hidden>
-                        <label for="cl3">ООО «Проектирование автоматизированных регулируемых управляющих систем»</label>
-                        <div class="ch-l-i-edit">
-                            <a href="#">редактировать</a>
-                            <a href="#">удалить</a>
-                        </div>
-                    </li>
-                    -->
+
                 </ul>
             </div>
         </div>

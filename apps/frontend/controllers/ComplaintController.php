@@ -14,11 +14,21 @@ class ComplaintController extends ControllerBase
     {
         $this->setMenu();
         $complaint = new Complaint();
-        $status = false;
+        $status = 0;
+        $applicant_id = 0;
+        if(isset($_GET['applicant_id']))
+            $applicant_id = $_GET['applicant_id'];
+
         if (isset($_GET['status']))
             $status = $_GET['status'];
-        $complaints = $complaint->findUserComplaints($this->user->id, $status);
+        $complaints = $complaint->findUserComplaints($this->user->id, $status,$applicant_id);
         $this->view->complaints = $complaints;
+        $this->view->status = $status;
+
+        if($applicant_id){
+            $this->view->selected_applicant_id = $applicant_id;
+        }
+        $this->view->index_action = true;
 
     }
 
