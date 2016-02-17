@@ -14,17 +14,36 @@ class ComplaintController extends ControllerBase
     {
         $this->setMenu();
         $complaint = new Complaint();
-        $status = false;
+        $status = 0;
+        $applicant_id = 0;
+        if(isset($_GET['applicant_id']))
+            $applicant_id = $_GET['applicant_id'];
+
         if (isset($_GET['status']))
             $status = $_GET['status'];
-        $complaints = $complaint->findUserComplaints($this->user->id, $status);
+        $complaints = $complaint->findUserComplaints($this->user->id, $status,$applicant_id);
         $this->view->complaints = $complaints;
+        $this->view->status = $status;
+
+        if($applicant_id){
+            $this->view->selected_applicant_id = $applicant_id;
+        }
+        $this->view->index_action = true;
 
     }
 
-    public function editAction()
+    public function editAction($id)
     {
+        $complaint = Complaint::findFirstById($id);
+        if(!$complaint)
+            return $this->forward('complaint/index');
+        if(!$complaint->checkComplaintOwner($id, $this->user->id))
+            return $this->forward('complaint/index');
+
         $this->setMenu();
+
+        $this->view->complaint = $complaint;
+
     }
 
 
@@ -54,7 +73,6 @@ class ComplaintController extends ControllerBase
 
     public function statusAction()
     {
-
         if (!$this->request->isPost()) {
             echo 'error'; exit;
         }

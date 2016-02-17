@@ -43,7 +43,7 @@
                     <div class="c-c-jl-z">
                         <div class="c-c-jl-z-l">
                             <input id="jlist{{ complaint['id'] }}" class="complaint-checkbox" type="checkbox" value="{{ complaint['id'] }}" name="jlist{{ complaint['id'] }}" hidden>
-                            <label for="jlist{{ complaint['id'] }}">{{ complaint['complaint_name'] }}</label>
+                            <label for="jlist{{ complaint['id'] }}"></label><a href="/complaint/edit/{{ complaint['id'] }}" class="complaint-name">{{ complaint['complaint_name'] }}</a>
                         </div>
                         <div class="c-c-jl-z-r">
 
@@ -105,3 +105,7 @@
         </div>
     </div>
 </div>
+<script>
+var currentPage = 'complaint/index';
+var currentStatus ='{{ status }}';
+</script>

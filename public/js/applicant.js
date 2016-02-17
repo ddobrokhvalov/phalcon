@@ -1,7 +1,11 @@
 $(document).ready(function () {
+    var url      = window.location.href;
+    if (typeof applicantFirstId !== 'undefined' && url.indexOf('applicant_id=') == -1)
+        applicant.selectFirst(applicantFirstId,true);
 
-    if (typeof applicantFirstId !== 'undefined')
-        applicant.selectFirst(applicantFirstId);
+
+   if(typeof applicantSelectedId !== 'undefined')
+       applicant.selectFirst(applicantSelectedId,false);
 
     $("#add_applicant").click(function (event) {
         event.preventDefault();
@@ -14,17 +18,20 @@ $(document).ready(function () {
         if (applicant.id) {
             $('#cl' + applicant.id).prop('checked', false);
         }
-        applicant.selectApplicant($(this).attr("value"), $(this).html());
+        applicant.selectApplicant($(this).attr("value"), $(this).html(),true);
     });
 });
 var applicant = {
     id: false,
-    selectApplicant: function (id, name) {
+    selectApplicant: function (id, name,redirect) {
         this.id = id;
         $('.applicant-name-container').html(name);
+        if(typeof currentPage !== 'undefined' && currentPage == 'complaint/index' && redirect ){
+            complaint.filterComplaintByApplicant(id);
+        }
     },
-    selectFirst: function (id) {
-        this.selectApplicant(id, $('#name_applicant_' + id).html());
+    selectFirst: function (id,redirect) {
+        this.selectApplicant(id, $('#name_applicant_' + id).html(),redirect);
         $('#cl' + id).prop('checked', true);
     }
 

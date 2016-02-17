@@ -17,7 +17,9 @@ class PurchaseController extends Controller
         $auction_id = $postData['auction_id'];
         $purchase = new Parser();
         $data = $purchase->parseAuction($auction_id);
-        echo json_encode($data);
+
+      echo json_encode($data);
+
         exit;
     }
     public function getcomplaintAction(){
