@@ -2909,4 +2909,6 @@ input[type="radio"]:checked + label {
     outline: none!important;
     -moz-appearance: none!important;
 }
-
+.template_edit{
+  
+}
