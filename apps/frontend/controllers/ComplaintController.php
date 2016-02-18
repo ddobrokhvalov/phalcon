@@ -78,13 +78,9 @@ class ComplaintController extends ControllerBase
         }
         $data = $this->request->getPost();
         $complaint = new Complaint();
-        $complaint->changeStatus($data['status'],json_decode($data['complaints']),$this->user->id);
-        echo 'done'; exit;
-        /*if ($complaint->save())
-            echo 'done';
-        else
-            echo 'error';
-        exit;*/
+        $result = $complaint->changeStatus($data['status'],json_decode($data['complaints']),$this->user->id);
+        echo $result; exit;
+
 
     }
 

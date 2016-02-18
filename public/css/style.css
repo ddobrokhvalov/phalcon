@@ -2875,14 +2875,11 @@ input[type="radio"]:checked + label {
     text-transform: none!important;
 
 }
-.c-cs-btns a{
+.template-edit-control{
     cursor: pointer;
 }
-.up{
-    cursor: pointer;
-}
-.down{
-    cursor: pointer;
+.template-edit-control:hover{
+    color: #00aeef!important;
 }
 .remove_template_from_edit{
     cursor: pointer;
@@ -2910,5 +2907,23 @@ input[type="radio"]:checked + label {
     -moz-appearance: none!important;
 }
 .template_edit{
-  
+  height: 200px;
+}
+.button_copy_active{
+    color: #00aeef!important;
+}
+.button_copy_deactive{
+    color: #bcbcbd!important;
+}
+.c-cs-btns a{
+    cursor: pointer!important;
+}
+.complaint-main-container{
+    display: none;
+}
+.loading-gif{
+    display: none;
+    width: 10%;
+    height: 10%;
+    font-size: 12pt;
 }

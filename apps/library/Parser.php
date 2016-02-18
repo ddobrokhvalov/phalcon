@@ -16,6 +16,7 @@ class Parser {
     function parseAuction($auctionId) {
         $auction = array('info' => array(), 'contact' => array(), 'procedura' => array(), 'zakazchik' => array());
         $data = $this->getUrl('http://new.zakupki.gov.ru/epz/order/notice/ea44/view/common-info.html?regNumber='.$auctionId);
+       // file_put_contents('data.html', $data);
         libxml_use_internal_errors(true);
         $doc = new \DOMDocument();
         $doc->loadHTML($data);
@@ -35,15 +36,41 @@ class Parser {
         $auction['contact']['tel'] = trim($xpath->evaluate('string(//h2[text()="Контактная информация" or contains(text(),"Информация об организации")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"контактного телефона")]/following-sibling::td[1]/text())'));
         $auction['contact']['fax'] = trim($xpath->evaluate('string(//h2[text()="Контактная информация" or contains(text(),"Информация об организации")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Факс")]/following-sibling::td[1]/text())'));
 
+        /*$etap = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/text())'));
+        if(preg_match('/Информация о процедуре закупки\s*\(([^\)])+\)/ui', $etap, $matches)) {
+            $auction['procedura']['nachalo_podachi'] = trim($matches[1]);
+        }*/
         $auction['procedura']['nachalo_podachi'] = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Дата и время начала подачи")]/following-sibling::td[1]/text())'));
         $auction['procedura']['okonchanie_podachi'] = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Дата и время окончания подачи")]/following-sibling::td[1]/text())'));
-        //?
-        $auction['procedura']['vskrytie_konvertov'] = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Дата и время вскрытия конвертов")]/following-sibling::td[1]/text()[1])'));
-        //?
-        $auction['procedura']['data_rassmotreniya'] = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"рассмотрения и оценки заявок")]/following-sibling::td[1]/text()[1])'));
+
+        $auction['procedura']['poryadok_podachi'] = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Порядок подачи заявок")]/following-sibling::td[1]/text())'));
+
+        $url2 = trim($xpath->evaluate('string(//div[@class="mainBox"]/div[contains(@class,"contentHeadingWrapper")]/a/@href)'));
+        //echo $url2."\n";
+        $data2 = $this->getUrl('http://new.zakupki.gov.ru' . $url2);
+      //  file_put_contents('data2.html', $data2);
+        $doc2 = new \DOMDocument();
+        $doc2->loadHTML($data2);
+        $xpath2 = new \DOMXpath($doc2);
+
+        $auction['procedura']['vskrytie_konvertov'] = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Дата и время вскрытия конвертов")]/following-sibling::td[1]/text())'));
+        if(strlen($auction['procedura']['vskrytie_konvertov']) < 1)
+            $auction['procedura']['vskrytie_konvertov'] = trim($xpath2->evaluate('string(//td/p[contains(text(),"Дата вскрытия конвертов") or contains(text(),"время вскрытия конвертов") or contains(text(),"Дата проведения вскрытия конвертов") or contains(text(),"время проведения вскрытия конвертов")]/../following-sibling::td[1]/p/text())'));
+
+        $auction['procedura']['data_rassmotreniya'] = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"рассмотрения и оценки заявок") or contains(text(),"Дата и время рассмотрения заявок")]/following-sibling::td[1]//text()[1])'));
+        if(strlen($auction['procedura']['data_rassmotreniya']) < 1)
+            $auction['procedura']['data_rassmotreniya'] = trim($xpath2->evaluate('string(//td/p[contains(text(),"Дата рассмотрения и оценки заявок") or contains(text(),"время рассмотрения и оценки заявок") or contains(text(),"Дата и время рассмотрения заявок")]/../following-sibling::td[1]/p/text())'));
+
         $auction['procedura']['okonchanie_rassmotreniya'] = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Дата окончания срока рассмотрения первых частей заявок участников")]/following-sibling::td[1]/text())'));
-        $auction['procedura']['data_provedeniya'] = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Дата проведения аукциона в электронной форме")]/following-sibling::td[1]/text())'));
+
+        $auction['procedura']['data_provedeniya'] = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Дата проведения аукциона в электронной форме") or contains(text(),"Дата проведения предквалификационного отбора") or contains(text(),"Дата проведения предварительного отбора")]/following-sibling::td[1]/text())'));
+        if(strlen($auction['procedura']['data_provedeniya']) < 1)
+            $auction['procedura']['data_provedeniya'] = trim($xpath2->evaluate('string(//td/p[contains(text(),"Дата проведения аукциона в электронной форме") or contains(text(),"Дата проведения предквалификационного отбора") or contains(text(),"Дата проведения предварительного отбора") or contains(text(),"время проведения предварительного отбора")]/../following-sibling::td[1]/p/text())'));
+
         $auction['procedura']['vremya_provedeniya'] = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Время проведения аукциона")]/following-sibling::td[1]/text())'));
+        if(strlen($auction['procedura']['vremya_provedeniya']) < 1)
+            $auction['procedura']['data_rassmotreniya'] = trim($xpath2->evaluate('string(//td/p[contains(text(),"Дата рассмотрения и оценки заявок на участие в конкурсе") or contains(text(),"время рассмотрения и оценки заявок на участие в конкурсе")]/../following-sibling::td[1]/p/text())'));
+
         foreach($xpath->query('//h3[contains(text(),"Требования")]') as $zakazchik) {
             $zakazchik_name = trim($xpath->evaluate('string(./text())', $zakazchik));
             $zakazchik_name = trim(preg_replace('/Требования заказчика/ui', '', $zakazchik_name));
@@ -58,6 +85,7 @@ class Parser {
         $name = trim(preg_replace('/«|»|"/ui', '', $name));
         $name = trim(preg_replace('/\s+/ui', ' ', $name));
         $data = $this->getUrl('http://new.zakupki.gov.ru/epz/organization/quicksearch/search.html?searchString=' . urlencode($name) . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&sortBy=PO_NAZVANIYU&fz94=on&fz223=on&regions=');
+        //echo 'http://new.zakupki.gov.ru/epz/organization/quicksearch/search.html?searchString=' . urlencode($name) . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&sortBy=PO_NAZVANIYU&fz94=on&fz223=on&regions='."\n";
         libxml_use_internal_errors(true);
         $doc = new \DOMDocument();
         $doc->loadHTML($data);
@@ -220,6 +248,22 @@ class Parser {
         $date = "{$matches[3]}-{$matches[2]}-{$matches[1]}";
         return strtotime($date);
     }
+    function DOMinnerHTML(DOMNode $element)
+    {
+        $innerHTML = "";
+        $children  = $element->childNodes;
+
+       // print_r($element);
+        foreach ($children as $child)
+        {
+           // print_r($child);
+            //echo $child->tagName."\n";
+            $innerHTML .= $element->ownerDocument->saveHTML($child);
+        }
+
+        return $innerHTML;
+    }
+
 
     function getUrl($url, $ref = null, $save_cookie = false, $post = false, $add = array())
     {
@@ -244,7 +288,7 @@ class Parser {
             //curl_setopt($ch, CURLOPT_COOKIESESSION, true);
             if($ref)
                 curl_setopt($ch, CURLOPT_REFERER, $ref);
-            else
+            if($ref !== null)
                 curl_setopt($ch, CURLOPT_REFERER, $url);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_COOKIEFILE, dirname(__FILE__) . '/cookie');
@@ -253,7 +297,7 @@ class Parser {
 
             curl_setopt($ch, CURLOPT_ENCODING, 'gzip,deflate');
             //$ua = 'Mozilla/5.0 (Windows NT 6.1; rv:30.0) Gecko/20100101 Firefox/30.0 AlexaToolbar/alxf-2.20';
-            $ua = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:42.0) Gecko/20100101 Firefox/42.0";
+            $ua = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:44.0) Gecko/20100101 Firefox/44.0";
 
             curl_setopt($ch, CURLOPT_USERAGENT, $ua);
 

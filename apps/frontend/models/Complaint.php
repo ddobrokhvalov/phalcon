@@ -99,11 +99,23 @@ class Complaint extends Model
             if ($this->checkComplaintOwner($id, $user_id)) {
 
                 $complaint = Complaint::findFirstById($id);
-                $complaint->status = $status;
-                if ($status == 'delete')
+
+                if ($status == 'delete') {
                     $complaint->delete();
-                else
+                }elseif ($status == 'copy') {
+                    $newComplaint = new Complaint();
+                    foreach($complaint as $k=>$v)
+                        $newComplaint->$k = $v;
+                    $newComplaint->id = NULL;
+                    $newComplaint->complaint_name .= ' (Копия)';
+                    $newComplaint->status = 'draft';
+                    $newComplaint->save();
+                    return $newComplaint->id;
+
+                }else {
+                    $complaint->status = $status;
                     $complaint->save();
+                }
             } else {
                 continue;
             }
