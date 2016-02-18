@@ -7,6 +7,10 @@ $(document).ready(function () {
             $('#auction_id').removeClass('c-inp-error');
             $('#auction_id').removeClass('c-inp-done');
             $('.msg_status_parser').remove();
+            $('.complaint-main-container').hide();
+
+            $('#notice_button').hide();
+            $('.loading-gif').show();
 
             $.ajax({
                 type: 'POST',
@@ -21,11 +25,17 @@ $(document).ready(function () {
                         $('#auction_id').addClass('c-inp-done');
                         $('#result_container').append('<b class="msg_status_parser">Данные Получены!</b>');
                         auction.setData();
+                        $('.complaint-main-container').show();
+                        complaint.setHeader();
+                        $('#notice_button').show();
+                        $('.loading-gif').hide();
                     } else {
                         $('#auction_id').addClass('c-inp-error');
                         $('#result_container').append('<b style="color:red!important;" class="msg_status_parser">Ошибка!</b>');
                         auction.clearData();
                         auction.setData();
+                        $('#notice_button').show();
+                        $('.loading-gif').hide();
                     }
                 },
                 error: function (msg) {
@@ -71,11 +81,60 @@ $(document).ready(function () {
         complaint.saveAsDraft();
     });
 
+    //bold_button
+ //   $("#edit_container").on("mousedown", ".edit-textarea", function () {
+  //      currentTextArea = $(this).attr("id");
+  //  });
+   /* $("#edit_container").on("mouseup", ".edit-textarea", function () {
+
+        currentTextArea = $(this).attr("id");
+        selectPosition = $(this).getcaretinfo(this);
+    }); */
+
+ /*   $('#bold_button').click(function(){
+
+     if(currentTextArea !== false)
+      complaint.setTag('#'+currentTextArea,'<strong>','</strong>');
+     //$('#'+currentTextArea).selection('insert', {text: '<strong>', mode: 'before'}).selection('insert', {text: '</strong>', mode: 'after'});
+     });
+  */
+
+
 });
+//var currentTextArea = false;
+////var selectPosition = false;
 var complaint = {
     complainName: '',
     complainText: '',
     auctionData: '',
+
+  /*  setTag:function(element,tag1,tag2){
+        var tmp = selectPosition,
+            orig = $(element).html();
+        var res = orig.substr(0, tmp.start) + tag1 + orig.substr(tmp.start);
+        console.log(res);
+        $(element).html(res);
+        selectPosition.start += tag1.length;
+        selectPosition.end += tag1.length;
+        //
+
+
+        console.log(res);
+        res =res.substr(0, tmp.end) + tag2 + res.substr(tmp.end);
+        console.log(res);
+        $(element).html(res);
+    }, */
+    setHeader:function(){
+        var now = new Date();
+        var auction_end = new Date(auction.data.date_end.replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
+
+        if(now > auction_end){
+             $('.complaint-header').html('Жалоба на действия комиссии');
+        }else{
+             $('.complaint-header').html('Жалоба на документацию или действия/бездействия заказчика');
+        }
+
+    },
     prepareData: function () {
 
         this.complainName = $('#complaint_name').val();
@@ -137,20 +196,20 @@ var argument = {
         var html = '<div class="template_edit" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
             '<span>' + templateName + '</span>' +
             '<div class="c-edit-j-h-ctr">' +
-            '<a  class="down c-edit-j-h-ctr1">Переместить ниже</a> <a class="up c-edit-j-h-ctr2">Переместить выше</a>' +
-            '<a class="remove_template_from_edit" value="' + id + '" >Удалить</a>' +
+            '<a  class="template-edit-control down c-edit-j-h-ctr1">Переместить ниже</a> <a class="template-edit-control up c-edit-j-h-ctr2">Переместить выше</a>' +
+            '<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' +
             '</div>' +
             '</div>' +
-            '<div class="c-edit-j-t"><textarea class="edit-textarea" id="edit_textarea_' + id + '" rows="5" cols="115">' +
+            '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" >' +
             templates[id] +
-            '</textarea></div></div>';
+            '</div></div></div>';
         $('#edit_container').append(html);
 
         setTimeout(function () {
-          if (drake !== false) {
-              drake.destroy();
-              console.log('destroy');
-          }
+            if (drake !== false) {
+                drake.destroy();
+
+            }
             drake = dragula([document.getElementById('edit_container')]);
 
 
