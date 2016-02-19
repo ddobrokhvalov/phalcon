@@ -107,6 +107,7 @@ var complaint = {
     complainName: '',
     complainText: '',
     auctionData: '',
+    saveDraft: false,
 
   /*  setTag:function(element,tag1,tag2){
         var tmp = selectPosition,
@@ -162,7 +163,9 @@ var complaint = {
             data: this.auctionData + '&complaint_text=' + this.complainText + '&complaint_name=' + this.complainName + '&applicant_id=' + applicant.id,
             success: function (msg) {
                 console.log(msg);
-                document.location.href = '/complaint/index';
+                //document.location.href = '/complaint/index';
+                alert('Сохранено успешно');
+                this.saveDraft = true;
             },
             error: function (msg) {
                 alert(msg);
