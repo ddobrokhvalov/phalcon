@@ -2,9 +2,11 @@
 
 namespace Multiple\Frontend\Controllers;
 
+
 use Multiple\Frontend\Models\Applicant;
 use Multiple\Frontend\Models\Category;
 use Multiple\Frontend\Models\Complaint;
+use Multiple\Frontend\Models\Question;
 use Phalcon\Mvc\Controller;
 
 
@@ -40,9 +42,28 @@ class ComplaintController extends ControllerBase
         if(!$complaint->checkComplaintOwner($id, $this->user->id))
             return $this->forward('complaint/index');
 
-        $this->setMenu();
 
+        $question = new Question();
+        $complaintQuestion = $question->getComplainQuestionAndAnswer($id);
+
+
+      /*  echo '<pre>';
+
+        foreach($complaintQuestion as $v){
+            echo $v['question']->id;
+            if(isset($v['answer']['id']))
+                echo $v['answer']['id'];
+
+            if(isset($v['admin']->id))
+                echo $v['admin']->id;
+
+            echo '<br>';
+        }
+
+        echo '</pre>';
+        exit; */
         $this->view->complaint = $complaint;
+        $this->view->complaint_question = $complaintQuestion;
 
     }
 
@@ -63,10 +84,11 @@ class ComplaintController extends ControllerBase
         $complaint = new Complaint();
 
         $complaint->addComplaint($data);
+
         if ($complaint->save())
-            echo 'done';
+           echo $complaint->id;
         else
-            echo 'error';
+            echo 'error save';
         exit;
 
     }

@@ -52,6 +52,7 @@ class ControllerBase extends Controller
     public function setMenu(){
         $applicant = new Applicant();
         $userApplicants = $applicant->findByUserId($this->user->id);
+
         $this->view->setTemplateAfter('menu');
         $this->view->applicants = $userApplicants;
         $complaint = new Complaint();

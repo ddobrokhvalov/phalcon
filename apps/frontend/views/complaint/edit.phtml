@@ -11,27 +11,27 @@
                         Номер извещения №{{complaint.auction_id}}
                     </div>
                     <div class="c-jadd1-1-h-r">
-                    {% if complaint.status == 'draft' %}
-                    <span class="jl-status jl-chernov">Черновик</span>
-                    {% endif %}
-                    {% if complaint.status == 'justified' %}
-                    <span class="jl-status jl-done">Обоснована</span>
-                    {% endif %}
-                    {% if complaint.status == 'unfounded' %}
-                    <span class="jl-status jl-notdone">Необоснована</span>
-                    {% endif %}
-                    {% if complaint.status == 'under_consideration' %}
-                    <span class="jl-status jl-rassmotr">На рассмотрении</span>
-                    {% endif %}
-                    {% if complaint.status == 'submitted' %}
-                    <span class="jl-status jl-podana">Подана</span>
-                    {% endif %}
-                    {% if complaint.status == 'recalled' %}
-                    <span class="jl-status jl-fail">Отозвана</span>
-                    {% endif %}
-                    {% if complaint.status == 'archive' %}
-                    <span class="jl-status jl-archive">Архив</span>
-                    {% endif %}
+                        {% if complaint.status == 'draft' %}
+                        <span class="jl-status jl-chernov">Черновик</span>
+                        {% endif %}
+                        {% if complaint.status == 'justified' %}
+                        <span class="jl-status jl-done">Обоснована</span>
+                        {% endif %}
+                        {% if complaint.status == 'unfounded' %}
+                        <span class="jl-status jl-notdone">Необоснована</span>
+                        {% endif %}
+                        {% if complaint.status == 'under_consideration' %}
+                        <span class="jl-status jl-rassmotr">На рассмотрении</span>
+                        {% endif %}
+                        {% if complaint.status == 'submitted' %}
+                        <span class="jl-status jl-podana">Подана</span>
+                        {% endif %}
+                        {% if complaint.status == 'recalled' %}
+                        <span class="jl-status jl-fail">Отозвана</span>
+                        {% endif %}
+                        {% if complaint.status == 'archive' %}
+                        <span class="jl-status jl-archive">Архив</span>
+                        {% endif %}
                     </div>
 
                 </div>
@@ -41,7 +41,8 @@
                     <a href="#">Отозвать</a>
                     <a href="#">В архив</a>
                     <a href="#">Удалить</a>
-                    {% if complaint.status == 'draft' %} <a href="#" class="c-jadd1-1-b-btn">Отправить в УФАС</a> {% endif %}
+                    {% if complaint.status == 'draft' %} <a href="#" class="c-jadd1-1-b-btn">Отправить в УФАС</a> {%
+                    endif %}
                 </div>
             </div>
 
@@ -71,6 +72,7 @@
                     <div class="c-jadd-r">
                         <div class="c-jadd-lr-row">
                             <span>Наименование закупки</span>
+
                             <div class="c-jadd-lr-sel">
                                 <select>
                                     <option>УФАС по г. Санкт-Петербургу</option>
@@ -109,10 +111,12 @@
                 <div class="c-jadd2-f">
                     <div class="c-jd2-f-flist">
                         <div class="c-zv-f-doc">
-                            Решение по извещению 127563728493872.doc (125 Кб) <div class="c-zv-f-del"></div>
+                            Решение по извещению 127563728493872.doc (125 Кб)
+                            <div class="c-zv-f-del"></div>
                         </div>
                         <div class="c-zv-f-pdf">
-                            Доказательства.pdf (34 Кб) <div class="c-zv-f-del"></div>
+                            Доказательства.pdf (34 Кб)
+                            <div class="c-zv-f-del"></div>
                         </div>
                     </div>
                     <div class="c-jd2-f-edit">
@@ -137,50 +141,39 @@
                     <span>Помощь юриста</span>
                     <i>Не знаете как оформить жалобу, есть вопросы? Обратитесь к нашему юристу.</i>
                 </div>
+
+                {% for item in complaint_question %}
                 <div class="c-jd3-commb">
                     <div class="c-jd3-cb-usr">
-                        — Согласно п.1 ст.58 гл.7 ТК ТС «Страной происхождения товаров считается страна, в которой товары были полностью произведены или подвергнуты достаточной обработке (переработке) в соответствии с критериями, установленными таможенным законодательством таможенного союза.
+                        {{ item['question'].text}}
                     </div>
                     <div class="c-jd3-cb-answ">
+                        {% if item['admin'].id is defined %}
                         <div class="c-jd3-cb-answ-a">
                             <img src="images/img-urist.png" alt="">
                             <b>
-                                Катерина<br>
-                                Ларина
+                                {{ item['admin'].name }}
                             </b>
                             <i>
                                 Ваш юридический<br>
                                 консультант
                             </i>
                         </div>
+                        {% endif %}
                         <div class="c-jd3-cb-answ-t">
-                            При этом под страной происхождения товаров может пониматься группа стран, либо таможенные союзы стран, либо регион или часть страны, если имеется необходимость их выделения для целей определения страны происхождения товаров».<br><br>
-                            При этом под страной происхождения товаров может пониматься группа стран, либо таможенные союзы стран, либо регион или часть страны, если имеется необходимость их выделения для целей определения страны происхождения товаров».<br><br>
-                            При этом под страной происхождения товаров может пониматься группа стран, либо таможенные союзы стран, либо регион или часть страны, если имеется необходимость их выделения для целей определения страны происхождения товаров».
+
+                            {% if item['answer']['id'] is defined %}
+                            {{ item['answer']['text'] }}
+                            {% else %}
+                            Когда наш консультант ответит Вам прийдет уведомление.
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-                <div class="c-jd3-commb">
-                    <div class="c-jd3-cb-usr">
-                        — Таким образом документом, подтверждающим страну происхождения товара?
-                    </div>
-                    <div class="c-jd3-cb-answ">
-                        <div class="c-jd3-cb-answ-a">
-                            <img src="images/img-urist.png" alt="">
-                            <b>
-                                Катерина<br>
-                                Ларина
-                            </b>
-                            <i>
-                                Ваш юридический<br>
-                                консультант
-                            </i>
-                        </div>
-                        <div class="c-jd3-cb-answ-t">
-                            Ч.2 ст.58 гл.7 ТК ТС «Документами, подтверждающими страну происхождения товаров, являются декларация о происхождении товара или сертификат о происхождении товара».
-                        </div>
-                    </div>
-                </div>
+
+                {% endfor %}
+
+
                 <div class="c-jd3-f">
                     <textarea></textarea>
                     <input type="submit" value="начать консультацию">

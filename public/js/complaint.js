@@ -29,6 +29,7 @@ $(document).ready(function () {
                         complaint.setHeader();
                         $('#notice_button').show();
                         $('.loading-gif').hide();
+                        auction.auctionReady = true;
                     } else {
                         $('#auction_id').addClass('c-inp-error');
                         $('#result_container').append('<b style="color:red!important;" class="msg_status_parser">Ошибка!</b>');
@@ -36,10 +37,11 @@ $(document).ready(function () {
                         auction.setData();
                         $('#notice_button').show();
                         $('.loading-gif').hide();
+                        auction.auctionReady = false;
                     }
                 },
                 error: function (msg) {
-                    alert(msg);
+                    console.log(msg);
                 }
 
             });
@@ -77,27 +79,27 @@ $(document).ready(function () {
     });
 
     $('#complaint_save').click(function () {
-        complaint.prepareData();
-        complaint.saveAsDraft();
+        if (complaint.prepareData())
+            complaint.saveAsDraft();
     });
 
     //bold_button
- //   $("#edit_container").on("mousedown", ".edit-textarea", function () {
-  //      currentTextArea = $(this).attr("id");
-  //  });
-   /* $("#edit_container").on("mouseup", ".edit-textarea", function () {
+    //   $("#edit_container").on("mousedown", ".edit-textarea", function () {
+    //      currentTextArea = $(this).attr("id");
+    //  });
+    /* $("#edit_container").on("mouseup", ".edit-textarea", function () {
 
-        currentTextArea = $(this).attr("id");
-        selectPosition = $(this).getcaretinfo(this);
-    }); */
+     currentTextArea = $(this).attr("id");
+     selectPosition = $(this).getcaretinfo(this);
+     }); */
 
- /*   $('#bold_button').click(function(){
+    /*   $('#bold_button').click(function(){
 
      if(currentTextArea !== false)
-      complaint.setTag('#'+currentTextArea,'<strong>','</strong>');
+     complaint.setTag('#'+currentTextArea,'<strong>','</strong>');
      //$('#'+currentTextArea).selection('insert', {text: '<strong>', mode: 'before'}).selection('insert', {text: '</strong>', mode: 'after'});
      });
-  */
+     */
 
 
 });
@@ -107,41 +109,56 @@ var complaint = {
     complainName: '',
     complainText: '',
     auctionData: '',
-    saveDraft: false,
+    complaint_id: false,
 
-  /*  setTag:function(element,tag1,tag2){
-        var tmp = selectPosition,
-            orig = $(element).html();
-        var res = orig.substr(0, tmp.start) + tag1 + orig.substr(tmp.start);
-        console.log(res);
-        $(element).html(res);
-        selectPosition.start += tag1.length;
-        selectPosition.end += tag1.length;
-        //
+    /*  setTag:function(element,tag1,tag2){
+     var tmp = selectPosition,
+     orig = $(element).html();
+     var res = orig.substr(0, tmp.start) + tag1 + orig.substr(tmp.start);
+     console.log(res);
+     $(element).html(res);
+     selectPosition.start += tag1.length;
+     selectPosition.end += tag1.length;
+     //
 
 
-        console.log(res);
-        res =res.substr(0, tmp.end) + tag2 + res.substr(tmp.end);
-        console.log(res);
-        $(element).html(res);
-    }, */
-    setHeader:function(){
+     console.log(res);
+     res =res.substr(0, tmp.end) + tag2 + res.substr(tmp.end);
+     console.log(res);
+     $(element).html(res);
+     }, */
+    setHeader: function () {
         var now = new Date();
         var auction_end = new Date(auction.data.date_end.replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
 
-        if(now > auction_end){
-             $('.complaint-header').html('Жалоба на действия комиссии');
-        }else{
-             $('.complaint-header').html('Жалоба на документацию или действия/бездействия заказчика');
+        if (now > auction_end) {
+            $('.complaint-header').html('Жалоба на действия комиссии');
+        } else {
+            $('.complaint-header').html('Жалоба на документацию или действия/бездействия заказчика');
         }
 
     },
     prepareData: function () {
 
+        if (!auction.auctionReady)
+            return false;
+
+        $('#complaint_name').removeClass('c-inp-done');
+        $('#complaint_name').removeClass('c-inp-error');
         this.complainName = $('#complaint_name').val();
+        if (!validator.text(this.complainName, 3, 200)) {
+            $('#complaint_name').addClass('c-inp-error');
+            return false;
+        }
+        $('#complaint_name').addClass('c-inp-done');
         this.complainText = '';
         for (var key in argument.argumentList) {
-            this.complainText += $('#edit_textarea_' + argument.argumentList[key]).val();
+            this.complainText += $('#edit_textarea_' + argument.argumentList[key]).html();
+        }
+
+        if (!validator.text(this.complainText, 2, 20000)) {
+            alert('текст жалобы должен быть');
+            return false;
         }
 
         this.auctionData = '';
@@ -154,7 +171,7 @@ var complaint = {
                 this.auctionData += '&' + i + '=' + auction.data[i];
             }
         }
-
+     return true;
     },
     saveAsDraft: function () {
         $.ajax({
@@ -165,12 +182,11 @@ var complaint = {
                 console.log(msg);
                 //document.location.href = '/complaint/index';
                 alert('Сохранено успешно');
-                this.saveDraft = true;
+                complaint.complaint_id = msg;
             },
             error: function (msg) {
-                alert(msg);
+                console.log(msg);
             }
-
         });
 
     },
@@ -211,11 +227,8 @@ var argument = {
         setTimeout(function () {
             if (drake !== false) {
                 drake.destroy();
-
             }
             drake = dragula([document.getElementById('edit_container')]);
-
-
         }, 100);
 
     },
@@ -231,6 +244,7 @@ var argument = {
 
 };
 var auction = {
+    auctionReady: false,
     data: {
         auction_id: '',
         type: '',
@@ -270,7 +284,7 @@ var auction = {
         this.data.date_start = data.procedura.nachalo_podachi;
         this.data.date_end = data.procedura.okonchanie_podachi;
         this.data.date_opening = data.procedura.vskrytie_konvertov;
-        this.data.date_review = data.procedura.data_provedeniya  + ' ' + data.procedura.vremya_provedeniya;
+        this.data.date_review = data.procedura.data_provedeniya + ' ' + data.procedura.vremya_provedeniya;
 
         return true;
     },
