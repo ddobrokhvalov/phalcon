@@ -270,7 +270,7 @@ var auction = {
         this.data.date_start = data.procedura.nachalo_podachi;
         this.data.date_end = data.procedura.okonchanie_podachi;
         this.data.date_opening = data.procedura.vskrytie_konvertov;
-        this.data.date_review = data.procedura.vremya_provedeniya;
+        this.data.date_review = data.procedura.data_provedeniya  + ' ' + data.procedura.vremya_provedeniya;
 
         return true;
     },
