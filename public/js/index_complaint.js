@@ -26,6 +26,13 @@ $(document).ready(function () {
         }
     });
 
+    $('.button-copy-edit-page').click(function(){
+
+            indexComplaint.selectedComplaint.push( $(this).attr("value"));
+            indexComplaint.changeStatus('copy');
+
+    });
+
 });
 
 var indexComplaint = {

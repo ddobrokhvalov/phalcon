@@ -2965,6 +2965,9 @@ input[type="radio"]:checked + label {
 .c-cs-btns a{
     cursor: pointer!important;
 }
+.c-jadd1-1-b a{
+    cursor: pointer!important;
+}
 .complaint-main-container{
     display: none;
 }
