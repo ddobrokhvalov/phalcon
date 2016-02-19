@@ -1,7 +1,27 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: knubisoft
- * Date: 19.02.2016
- * Time: 10:50
- */
+
+namespace Multiple\Frontend\Controllers;
+
+
+use Phalcon\Mvc\Controller;
+
+
+class ConsultationsController extends ControllerBase
+{
+    public function indexAction()
+    {
+
+    }
+
+    public function addquestionAction()
+    {
+        if (!$this->request->isPost()) {
+            echo 'error';
+            exit;
+        }
+
+
+    }
+
+}
+

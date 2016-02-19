@@ -47,9 +47,9 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-    $('#leftmenu').sidr({
-        displace: false
-    });
+  //  $('#leftmenu').sidr({
+   //     displace: false
+   // });
 });
 
 $(document).ready(function() {
@@ -83,6 +83,19 @@ $(document).ready(function() {
     });
     $(".c-jd2-f-dov-dd-z").click(function(){
         $(".c-jd2-f-dov-dd").slideToggle(300);
+    });
+
+
+
+    $(".lm-opcl-btn1").click(function(){
+        $(".lm-opcl-btn1").css("display","none");
+        $(".lm-opcl-btn2").css("display","block");
+        $(".left-menu-block").css("left","0")
+    });
+    $(".lm-opcl-btn2").click(function(){
+        $(".lm-opcl-btn2").css("display","none");
+        $(".lm-opcl-btn1").css("display","block");
+        $(".left-menu-block").css("left","-235px")
     });
 });
 

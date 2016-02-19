@@ -1,3 +1,4 @@
-/**
- * Created by knubisoft on 19.02.2016.
- */
+$(document).ready(function () {
+
+
+});
