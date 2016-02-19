@@ -63,10 +63,11 @@ class ComplaintController extends ControllerBase
         $complaint = new Complaint();
 
         $complaint->addComplaint($data);
+
         if ($complaint->save())
-            echo 'done';
+           echo $complaint->id;
         else
-            echo 'error';
+            echo 'error save';
         exit;
 
     }

@@ -58,7 +58,7 @@ var indexComplaint = {
                  document.location.href = '/complaint/index';
             },
             error: function (msg) {
-                alert(msg);
+                console.log(msg);
             }
 
         });

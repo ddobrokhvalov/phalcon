@@ -95,7 +95,7 @@ $(document).ready(function() {
     $(".lm-opcl-btn2").click(function(){
         $(".lm-opcl-btn2").css("display","none");
         $(".lm-opcl-btn1").css("display","block");
-        $(".left-menu-block").css("left","-235px")
+        $(".left-menu-block").css("left","-242px")
     });
 });
 

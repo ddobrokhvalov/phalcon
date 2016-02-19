@@ -2907,7 +2907,7 @@ input[type="radio"]:checked + label {
 }
 @media (max-width: 1579px) {
     .left-menu-block {
-        left: -235px;
+        left: -242px;
     }
     .lm-opcl-btn2 {
         display: none;
@@ -2973,4 +2973,7 @@ input[type="radio"]:checked + label {
     width: 10%;
     height: 10%;
     font-size: 12pt;
+}
+.q-container{
+    display: none;
 }
