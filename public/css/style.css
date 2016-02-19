@@ -2342,7 +2342,8 @@ input[type="radio"]:checked + label {
     margin: 0 50px 0 0;
 }
 .c-edit-j-h-ctr a:nth-child(2) {
-    float: left;
+  /*  float: left; */
+    margin: 0 50px 0 0;
 }
 .c-edit-j-h-ctr1 {
     float: left;
