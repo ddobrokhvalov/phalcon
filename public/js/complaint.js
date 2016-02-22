@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $("#notice_button").click(function (event) {
         event.preventDefault();
 
@@ -211,6 +212,7 @@ var complaint = {
     }
 };
 var drake = false;
+var currTextArea = 0;
 var argument = {
     argumentList: [],
     addArgument: function (id) {
@@ -229,12 +231,14 @@ var argument = {
             templates[id] +
             '</div></div></div>';
         $('#edit_container').append(html);
-
+        currTextArea = 'edit_textarea_'+id;
         setTimeout(function () {
             if (drake !== false) {
                 drake.destroy();
             }
             drake = dragula([document.getElementById('edit_container')]);
+
+            initEditor(currTextArea);
         }, 100);
 
     },
@@ -309,6 +313,33 @@ var auction = {
 };
 
 
+function initEditor(id){
+    var editor = CKEDITOR.inline( document.getElementById( id),{
+        toolbarGroups: [
+            { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+            { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+            { name: 'links', groups: [ 'links' ] },
+            { name: 'insert', groups: [ 'insert' ] },
+            { name: 'forms', groups: [ 'forms' ] },
+            { name: 'tools', groups: [ 'tools' ] },
+            { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+            { name: 'others', groups: [ 'others' ] },
+            '/',
+            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+            { name: 'styles', groups: [ 'styles' ] },
+            { name: 'colors', groups: [ 'colors' ] },
+            { name: 'about', groups: [ 'about' ] }
+        ],
+        removeButtons: 'Underline,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source',
+       });
+   // };
+    editor.disableAutoInline = true;
+
+
+}
+
+
 function showSomePopupMessage(type, message) {
     $('.alert-wrap').fadeIn(400);
     setTimeout(function() {
@@ -319,3 +350,4 @@ function showSomePopupMessage(type, message) {
         $('.alert-box').addClass('alert-info');
     } 
 }
+
