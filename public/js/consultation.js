@@ -30,11 +30,24 @@ $(document).ready(function () {
                 });
 
             }else{
-                alert('Мало много текста');
+                showMessagePopup('warning', 'Текст жалобы должен состоять максимум из 5000, минимум из 5 символов');
             }
 
         }else{
-            alert('Сначала сохраните жалобу в черновик');
+            showMessagePopup('warning', 'Сначала, сохраните жалобу в черновик');
         }
     });
+
+    $('.alert-box').on('click', 'div', function() {
+        $('.alert-wrap, .alert-box').fadeOut(400);
+    }); 
+
 });
+
+function showMessagePopup(type, message) {
+    $('.alert-wrap').fadeIn(400);
+    setTimeout(function(){
+        $('.alert-box').fadeIn(200).text(message);
+        $('.alert-box').append('<div></div>');
+    },400);
+}
