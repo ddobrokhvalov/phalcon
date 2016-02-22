@@ -2216,6 +2216,9 @@ input[type="radio"]:checked + label {
     transform: translate(-50%, -50%);
     background: #fff url(../images/alert-mesage.png) 25px 54px no-repeat;
 }
+.alert-box.alert-info {
+    background-image: url(../images/message-Info.png);
+}
 .alert-box:before {
     position: absolute;
     content: '';
