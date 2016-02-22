@@ -314,9 +314,8 @@ var auction = {
 
 
 function initEditor(id){
-    var editor = CKEDITOR.inline( document.getElementById( id) );
-    editor.editorConfig = function( config ) {
-        config.toolbarGroups = [
+    var editor = CKEDITOR.inline( document.getElementById( id),{
+        toolbarGroups: [
             { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
             { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
             { name: 'links', groups: [ 'links' ] },
@@ -331,11 +330,10 @@ function initEditor(id){
             { name: 'styles', groups: [ 'styles' ] },
             { name: 'colors', groups: [ 'colors' ] },
             { name: 'about', groups: [ 'about' ] }
-        ];
-
-        config.removeButtons = 'Underline,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source';
-
-    };
+        ],
+        removeButtons: 'Underline,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source',
+       });
+   // };
     editor.disableAutoInline = true;
 
 
