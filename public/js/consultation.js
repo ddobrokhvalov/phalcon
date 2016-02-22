@@ -30,11 +30,17 @@ $(document).ready(function () {
                 });
 
             }else{
-                alert('Мало много текста');
+                $('.alert-box').text('Мало много текста');
             }
 
         }else{
-            alert('Сначала сохраните жалобу в черновик');
+            $('.alert-wrap').fadeIn(400);
+            setTimeout($('.alert-box').fadeIn(200).text('Сначала, сохраните жалобу в черновик'),400);
+            $('.alert-box').append('<div></div>');
+            $('.alert-box div').click(function() {
+                $('.alert-wrap, .alert-box').fadeOut(400);
+            });         
+
         }
     });
 });
