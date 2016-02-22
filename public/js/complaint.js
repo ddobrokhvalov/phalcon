@@ -101,8 +101,12 @@ $(document).ready(function () {
      });
      */
 
+     $('.alert-box').on('click', 'div', function() {
+        $('.alert-wrap, .alert-box').fadeOut(400);
+    });
 
 });
+
 //var currentTextArea = false;
 ////var selectPosition = false;
 var complaint = {
@@ -157,7 +161,8 @@ var complaint = {
         }
 
         if (!validator.text(this.complainText, 2, 20000)) {
-            alert('текст жалобы должен быть');
+            // alert('текст жалобы должен быть');
+            showSomePopupMessage('warning', 'текст жалобы должен быть');
             return false;
         }
 
@@ -181,7 +186,8 @@ var complaint = {
             success: function (msg) {
                 console.log(msg);
                 //document.location.href = '/complaint/index';
-                alert('Сохранено успешно');
+                // alert('Сохранено успешно');
+                showSomePopupMessage('info', 'Сохранено успешно');
                 complaint.complaint_id = msg;
             },
             error: function (msg) {
@@ -301,3 +307,15 @@ var auction = {
 
 
 };
+
+
+function showSomePopupMessage(type, message) {
+    $('.alert-wrap').fadeIn(400);
+    setTimeout(function(){
+        $('.alert-box').fadeIn(200).text(message);
+        $('.alert-box').append('<div></div>');
+    },400);
+    if (type == 'info') {
+        $('.alert-box').addClass('alert-info');
+    } 
+}

@@ -30,17 +30,24 @@ $(document).ready(function () {
                 });
 
             }else{
-                $('.alert-box').text('Мало много текста');
+                showMessagePopup('warning', 'Текст жалобы должен состоять максимум из 5000, минимум из 5 символов');
             }
 
         }else{
-            $('.alert-wrap').fadeIn(400);
-            setTimeout($('.alert-box').fadeIn(200).text('Сначала, сохраните жалобу в черновик'),400);
-            $('.alert-box').append('<div></div>');
-            $('.alert-box div').click(function() {
-                $('.alert-wrap, .alert-box').fadeOut(400);
-            });         
-
+            showMessagePopup('warning', 'Сначала, сохраните жалобу в черновик');
         }
     });
+
+    $('.alert-box').on('click', 'div', function() {
+        $('.alert-wrap, .alert-box').fadeOut(400);
+    }); 
+
 });
+
+function showMessagePopup(type, message) {
+    $('.alert-wrap').fadeIn(400);
+    setTimeout(function(){
+        $('.alert-box').fadeIn(200).text(message);
+        $('.alert-box').append('<div></div>');
+    },400);
+}
