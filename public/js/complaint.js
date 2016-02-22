@@ -311,7 +311,7 @@ var auction = {
 
 function showSomePopupMessage(type, message) {
     $('.alert-wrap').fadeIn(400);
-    setTimeout(function(){
+    setTimeout(function() {
         $('.alert-box').fadeIn(200).text(message);
         $('.alert-box').append('<div></div>');
     },400);
