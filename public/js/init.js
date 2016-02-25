@@ -25,6 +25,22 @@
      });
 });
 
+jQuery(document).ready(function($) {
+    var windowWidth = $(window).width() + 17,
+        objCont = $('.content .wrap-with-menuPanel'),
+        objHead = $('.c-header .wrapper');
+
+    if (windowWidth > 1300) {
+        var off = objCont.offset().left - 284,
+            rounding = Math.round(off / 2);
+
+        if (off > 1) {
+            objCont.css({marginRight: rounding}); 
+            objHead.css({marginRight: rounding}); 
+        }   
+    }
+});
+
 jQuery(document).ready(function(){
 	jQuery('.spoiler-text').hide()
 	jQuery('.spoiler').click(function(){
