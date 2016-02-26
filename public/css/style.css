@@ -2949,7 +2949,25 @@ input[type="radio"]:checked + label {
         display: none;
     }
 }
-@media (max-width: 1579px) {
+/*@media (max-width: 1579px) {
+    .left-menu-block {
+        left: -242px;
+    }
+    .lm-opcl-btn2 {
+        display: none;
+    }
+}*/
+@media (min-width: 1300px) {
+    .wrapper.wrap-with-menuPanel,
+    .c-header .wrapper {
+        float: right;
+    }
+    .lm-opcl-btn1,
+    .lm-opcl-btn2 {
+        display: none;
+    }
+}
+@media (max-width: 1300px) {
     .left-menu-block {
         left: -242px;
     }
