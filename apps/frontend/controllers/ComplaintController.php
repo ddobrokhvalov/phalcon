@@ -47,21 +47,9 @@ class ComplaintController extends ControllerBase
         $complaintQuestion = $question->getComplainQuestionAndAnswer($id);
 
 
-      /*  echo '<pre>';
+        $this->setMenu();
 
-        foreach($complaintQuestion as $v){
-            echo $v['question']->id;
-            if(isset($v['answer']['id']))
-                echo $v['answer']['id'];
-
-            if(isset($v['admin']->id))
-                echo $v['admin']->id;
-
-            echo '<br>';
-        }
-
-        echo '</pre>';
-        exit; */
+        
         $this->view->complaint = $complaint;
         $this->view->complaint_question = $complaintQuestion;
 
