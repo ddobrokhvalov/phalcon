@@ -3034,6 +3034,12 @@ input[type="radio"]:checked + label {
 .q-container{
     display: none;
 }
+.cfooter .wrap-with-menuPanel {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 20px;
+}
 
 /* <~> scroll pane
 ------------------------------ */
