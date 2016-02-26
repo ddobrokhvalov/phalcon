@@ -48,6 +48,8 @@ class ComplaintController extends ControllerBase
 
 
         $this->setMenu();
+
+        
         $this->view->complaint = $complaint;
         $this->view->complaint_question = $complaintQuestion;
 
