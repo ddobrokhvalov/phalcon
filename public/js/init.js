@@ -26,6 +26,7 @@
 });
 
 jQuery(document).ready(function($) {
+    // the correct location of the sidebar
     var windowWidth = $(window).width() + 17,
         objCont = $('.content .wrap-with-menuPanel'),
         objHead = $('.c-header .wrapper');
@@ -39,6 +40,13 @@ jQuery(document).ready(function($) {
             objHead.css({marginRight: rounding}); 
         }   
     }
+
+    // adding stylized scrolling ыidebar
+    if ($(window).height() <= 860) {
+        $('.left-menu-holder').addClass('scroll-pane');
+        $('.scroll-pane').jScrollPane();
+    }
+
 });
 
 jQuery(document).ready(function(){
