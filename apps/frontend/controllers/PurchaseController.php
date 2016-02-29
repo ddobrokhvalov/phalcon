@@ -3,9 +3,16 @@ namespace Multiple\Frontend\Controllers;
 
 use Phalcon\Mvc\Controller;
 use Multiple\Library\Parser;
+use Multiple\Frontend\Models\Complaint;
 
 class PurchaseController extends Controller
 {
+    public function parsestatusAction(){
+
+        $complaints = Complaint::find(
+            ''
+        );
+    }
 
     public function getAction()
     {
@@ -24,10 +31,12 @@ class PurchaseController extends Controller
     }
     public function getcomplaintAction(){
         $p = new Parser();
-     /*   echo '<pre>';
-        var_dump($p->getComplaint('0373200099715000611', 'ООО «Агат»', '30.11.2015', '01731000090/02.12.2015/29155'));
+        echo '<pre>';
+      //  var_dump($p->getComplaint('0373200099715000611', 'ООО «Агат»', '30.11.2015', '01731000090/02.12.2015/29155'));
+        var_dump($p->getComplaint('01201000072/26.02.2016/2690', 'ООО «Прайд-А»', '26.02.2016', '01201000072/26.02.2016/2690'));
+
         echo '</pre>';
-        exit;  */
+        exit;
          if(strlen($_POST['complaintnum'])>5)
              $cn = $_POST['complaintnum'];
         else
