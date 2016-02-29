@@ -54,7 +54,7 @@ class PurchaseController extends Controller
             }
         }
 
-        echo  "Готово. Жалоб обработано ".count($result);
+        echo  "Готово. Жалоб обработано ".count($complaints);
         exit;
     }
 
