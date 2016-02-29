@@ -91,12 +91,18 @@ class Complaint extends Model
             return true;
         return false;
     }
-
-    public function changeStatus($status, $data, $user_id)
+    public function findForParser(){
+        $db = $this->getDi()->getShared('db');
+        $result = $db->query("SELECT c.id, c.auction_id, c.date, ap.name_full, c.status FROM complaint as c
+         LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
+         WHERE c.status = 'under_consideration' OR c.status = 'submitted'");
+         return $result->fetchAll();
+    }
+    public function changeStatus($status, $data, $user_id = false)
     {
         foreach ($data as $id) {
 
-            if ($this->checkComplaintOwner($id, $user_id)) {
+         //   if ($this->checkComplaintOwner($id, $user_id)) {
 
                 $complaint = Complaint::findFirstById($id);
 
@@ -116,9 +122,9 @@ class Complaint extends Model
                     $complaint->status = $status;
                     $complaint->save();
                 }
-            } else {
-                continue;
-            }
+          //  } else {
+         //       continue;
+          //  }
         }
     }
 

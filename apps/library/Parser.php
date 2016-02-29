@@ -150,9 +150,11 @@ class Parser {
         if(count($complaints) == 0) {
             if($reglamentTime <= time()) {
                 $response['error'] = 'Ничего не найдено. Вышел регламентированный срок принятия к рассмотрению.';
+                $response['status'] = false;
             }
             else {
                 $response['error'] = 'Ничего не найдено';
+                $response['status'] = false;
             }
             return $response;
         }
