@@ -799,6 +799,7 @@ a:visited {
 }
 .ch-l-dd {
     position: absolute;
+    display:none;
     top: 0;
     left: 0;
     z-index: 5;
