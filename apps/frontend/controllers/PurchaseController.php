@@ -65,7 +65,7 @@ class PurchaseController extends Controller
             exit;
         }
         $postData = $this->request->getPost();
-        $auction_id = $postData['auction_id'];
+        $auction_id = trim($postData['auction_id']);
         $purchase = new Parser();
         $data = $purchase->parseAuction($auction_id);
        // var_dump($data); exit;
