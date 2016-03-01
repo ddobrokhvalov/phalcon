@@ -25,10 +25,44 @@ $(document).ready(function () {
     $('#ip').click(function(){ applicant.setIp(); });
     $('#fizlico').click(function(){ applicant.setFizlico(); });
     applicant.setUrlico();
+
+
+
+    $(".apllicant-field-container").on("focusout", "#czvr3", function () {
+
+        applicant.checkInn($('#czvr3').val());
+    });
 });
 var applicant = {
     id: false,
     type:false,
+    save:false,
+    checkInn: function(inn){
+        if (!validator.numeric($('#czvr3').val(), 10, 10)) {
+            applicantValidator.showError('#czvr3', 'Ошибка! ИНН состоит из 10 цифр');
+            return false;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/applicant/checkinn',
+            data: 'inn=' + inn,
+            success: function (msg) {
+
+              if(msg == 'true'){
+                  applicant.save = false;
+                  showMessagePopup('error','Заявитель с таким ИНН уже зарегистрирован в системе. ');
+                  applicantValidator.showError('#czvr3', 'Ошибка! Заявитель с таким ИНН уже зарегистрирован в системе.');
+              }else{
+                  applicantValidator.done('#czvr3');
+                  applicant.save = true;
+              }
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+
+        });
+    },
     setUrlico: function(){
        this.type = 'urlico';
         $('.apllicant-field-container').html(applicantField.urlico);
@@ -59,6 +93,13 @@ var applicant = {
 var applicantValidator = {
     result: true,
     start: function () {
+
+        if(applicant.save === false){
+            showMessagePopup('error','Заполните все поля корректно');
+            this.result = false;
+            return false;
+        }
+
         this.result = true;
        if(applicant.type == 'urlico' || applicant.type =='ip')
         if (!validator.text($('#czvr1').val(), 3, 200) )

@@ -98,6 +98,17 @@ class Applicant extends Model
         unlink('./'.$applicantFile['path']);
         $db = $this->getDi()->getShared('db');
         return $db->query("DELETE FROM applicant_file  WHERE id=".$applicantFile['id']);
+    }
+    public function checkInn($inn){
+        $result = Applicant::find(
+            array(
+                "inn = :inn: ",
+                'bind' => array(
+                    'inn' => $inn
+                )
+            )
+        );
 
+        return $result->count();
     }
 }
