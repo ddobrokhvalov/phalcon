@@ -114,7 +114,17 @@
                     {% endif %}
                     <li>
                         <input id="cl{{ applicant.id}}" type="checkbox" name="cl{{ applicant.id}}" hidden>
-                        <label class="select_applicant" id="name_applicant_{{applicant.id}}" value="{{ applicant.id}}" for="cl{{ applicant.id}}">{{ applicant.name_short}}</label>
+                        <label class="select_applicant" id="name_applicant_{{applicant.id}}" value="{{ applicant.id}}" for="cl{{ applicant.id}}">
+                           {% if applicant.type == 'urlico' %}
+                            {{ applicant.name_short}}
+                           {% endif %}
+                            {% if applicant.type == 'ip' %}
+                            {{ applicant.name_full}}
+                            {% endif %}
+                            {% if applicant.type == 'fizlico' %}
+                            {{ applicant.fio_applicant}}
+                            {% endif %}
+                        </label>
                         <div class="ch-l-i-edit">
                             <a href="/applicant/edit/{{ applicant.id}}">редактировать</a>
                             <a href="/applicant/delete/{{ applicant.id}}">удалить</a>

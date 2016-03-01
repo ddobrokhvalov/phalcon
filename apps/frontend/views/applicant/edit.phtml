@@ -3,45 +3,62 @@
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
             <div class="c-cnt-pagename">
-                Добавления заявителя
+                Редактирование заявителя
             </div>
             <form id="applicant_form" action='/applicant/create' method='post' enctype='multipart/form-data' >
 
                 <input type="hidden" name="id" value="{{applicant.id}}">
                 <div class="c-zayavitel">
-                    <input id="czv1" name="type" type="radio" value="urlico" {% if applicant.type == 'urlico'  %} checked {% endif %}   hidden>
+                    {% if applicant.type == 'urlico'  %}
+                    <input id="czv1" name="type" type="radio" value="urlico"  checked   hidden>
                     <label for="czv1" class="c-zv-lb1"  >юридическое лицо</label>
-                    <input id="czv2" name="type" type="radio" value="ip" {% if applicant.type == 'ip'  %} checked {% endif %} hidden>
+                    {% endif %}
+                    {% if applicant.type == 'ip'  %}
+                    <input id="czv2" name="type" type="radio" value="ip" checked  hidden>
                     <label for="czv2" class="c-zv-lb2">индивидуальный предприниматель</label>
-                    <input id="czv3" name="type" type="radio" value="fizlico" {% if applicant.type == 'fizlico'  %} checked {% endif %} hidden>
-                    <label for="czv3" class="c-zv-lb3">физическое лицо</label>
+                    {% endif %}
+                    {% if applicant.type == 'fizlico'  %}
+                    <input id="czv3" name="type" type="radio" value="fizlico"  checked hidden>
+                    <label for="czv3" class="c-zv-lb1">физическое лицо</label>
+                    {% endif %}
                 </div>
 
                 <div class="c-zv-frmb">
+                    {% if applicant.name_full != '-' %}
                     <div class="c-zv-f-str">
                         <label for="czvr1">Полное наименование</label>
                         <textarea id="czvr1" name="name_full" >{{ applicant.name_full }}</textarea>
                     </div>
+                    {% endif %}
+
+                    {% if applicant.name_short != '-' %}
                     <div class="c-zv-f-str">
                         <label for="czvr2">Краткое наименование</label>
                         <input type="text" id="czvr2" name="name_short" value="{{ applicant.name_short }}">
                     </div>
+                    {% endif %}
+                    {% if applicant.inn != '-' %}
                     <div class="c-zv-f-str">
                         <label for="czvr3">ИНН</label>
                         <input type="text" id="czvr3" name="inn" value="{{ applicant.inn }}" class="c-zv-frmb-in1" >
                     </div>
+                    {% endif %}
+                    {% if applicant.kpp != '-' %}
                     <div class="c-zv-f-str">
                         <label for="czvr4">КПП</label>
                         <input type="text" id="czvr4" name="kpp" value="{{ applicant.kpp }}" class="c-zv-frmb-in1">
                     </div>
+                    {% endif %}
                     <div class="c-zv-f-str">
                         <label for="czvr5">Адрес местонахождения</label>
                         <input type="text" id="czvr5" name="address" value="{{ applicant.address }}" class="c-zv-frmb-in2">
                     </div>
+                    {% if applicant.position != '-' %}
                     <div class="c-zv-f-str">
                         <label for="czvr6">Должность заявителя</label>
                         <input type="text" name="position" id="czvr6" value="{{ applicant.position }}" >
                     </div>
+                    {% endif %}
                     <div class="c-zv-f-str">
                         <label for="czvr7">ФИО заявителя</label>
                         <input type="text" id="czvr7" name="fio_applicant" value="{{ applicant.fio_applicant }}" >

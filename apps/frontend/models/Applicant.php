@@ -31,6 +31,11 @@ class Applicant extends Model
 
     public function addApplicant($user_id, $data)
     {
+        $this->name_short = '-';
+        $this->name_full = '-';
+        $this->position = '-';
+        $this->inn = '-';
+        $this->kpp = '-';
         $this->user_id = $user_id;
         foreach ($data as $k => $v) {
             $this->$k = $v;
@@ -40,13 +45,13 @@ class Applicant extends Model
     public function findByUserId($user_id)
     {
         $result = Applicant::find(
-            array(
-                "user_id = :user_id: ",
-                'bind' => array(
-                    'user_id' => $user_id
-                )
+        array(
+            "user_id = :user_id: ",
+            'bind' => array(
+                'user_id' => $user_id
             )
-        );
+        )
+    );
 
         return $result;
     }
