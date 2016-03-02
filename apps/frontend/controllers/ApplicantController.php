@@ -75,5 +75,23 @@ class ApplicantController extends ControllerBase
         $applicant->delete();
         return $this->forward('complaint/index');
     }
+    public function checkinnAction(){
+        if (!$this->request->isPost()) {
+            echo 'false'; exit;
+        }
+        $data = $this->request->getPost();
+        if(!isset($data['inn'])){
+            echo 'false'; exit;
+        }
+
+        $app = new Applicant();
+
+        if($app->checkInn($data['inn']))
+            echo 'true';
+        else
+            echo 'false';
+
+        exit;
+    }
 
 }

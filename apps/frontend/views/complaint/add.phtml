@@ -18,8 +18,6 @@
 
                      </span>
                 </div>
-
-
             </div>
 
             <div class="c-jadd-sp">
@@ -101,12 +99,12 @@
 
                             </div>
                             <div class="c-jd2-f-dov-dd-pick mCustomScrollbar">
-                                <div class="c-jd2-f-dov-dd-pick-b">
+                                <div class="c-jd2-f-dov-dd-pick-b category-container">
                                     {% for argument in arguments  %}
-                                    <div class="c-jd2-cb-b">
+                                    <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}">
                                         <span>{{ argument['category'].name }}</span>
                                         {% for template in argument['templates']  %}
-                                          <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" type="checkbox"  hidden>
+                                          <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>
                                           <label id="template_{{ template.id }}" for="jd2cbb{{ template.id }}">{{ template.name }}</label>
                                         {% endfor %}
                                     </div>
@@ -164,9 +162,7 @@
         </div>
     </div>
 </div>
-<div class="alert-wrap">
-    <div class="alert-box"></div>
-</div>
+
 <script>
     var templates = {};
 {% for argument in arguments  %}

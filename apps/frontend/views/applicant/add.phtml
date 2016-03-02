@@ -7,54 +7,16 @@
             </div>
        <form id="applicant_form" action='/applicant/create' method='post' enctype='multipart/form-data' >
             <div class="c-zayavitel">
-                <input id="czv1" name="type" type="radio" value="urlico"  checked hidden>
-                <label for="czv1" class="c-zv-lb1">юридическое лицо</label>
-                <input id="czv2" name="type" type="radio" value="ip" hidden>
-                <label for="czv2" class="c-zv-lb2">индивидуальный предприниматель</label>
-                <input id="czv3" name="type" type="radio" value="fizlico" hidden>
-                <label for="czv3" class="c-zv-lb3">физическое лицо</label>
+                <input id="czv1"  name="type" type="radio" value="urlico"  checked hidden>
+                <label for="czv1" id="urlico" class="c-zv-lb1">юридическое лицо</label>
+                <input id="czv2" name="type"  type="radio" value="ip" hidden>
+                <label for="czv2" id="ip" class="c-zv-lb2">индивидуальный предприниматель</label>
+                <input id="czv3" name="type"  type="radio" value="fizlico" hidden>
+                <label for="czv3" id="fizlico" class="c-zv-lb3">физическое лицо</label>
             </div>
 
-            <div class="c-zv-frmb">
-                <div class="c-zv-f-str">
-                    <label for="czvr1">Полное наименование</label>
-                    <textarea id="czvr1" name="name_full" ></textarea>
-                </div>
-                <div class="c-zv-f-str">
-                    <label for="czvr2">Краткое наименование</label>
-                    <input type="text" id="czvr2" name="name_short">
-                </div>
-                <div class="c-zv-f-str">
-                    <label for="czvr3">ИНН</label>
-                    <input type="text" id="czvr3" name="inn" class="c-zv-frmb-in1" >
-                </div>
-                <div class="c-zv-f-str">
-                    <label for="czvr4">КПП</label>
-                    <input type="text" id="czvr4" name="kpp" class="c-zv-frmb-in1">
-                </div>
-                <div class="c-zv-f-str">
-                    <label for="czvr5">Адрес местонахождения</label>
-                    <input type="text" id="czvr5" name="address" class="c-zv-frmb-in2">
-                </div>
-                <div class="c-zv-f-str">
-                    <label for="czvr6">Должность заявителя</label>
-                    <input type="text" name="position" id="czvr6">
-                </div>
-                <div class="c-zv-f-str">
-                    <label for="czvr7">ФИО заявителя</label>
-                    <input type="text" id="czvr7" name="fio_applicant">
-                </div>
-                <div class="c-zv-f-str">
-                    <label for="czvr8">ФИО контактного лица</label>
-                    <input type="text" id="czvr8" name="fio_contact_person">
-                </div>
-                <div class="c-zv-f-str">
-                    <label for="czvr9">Контактный факс, телефон</label>
-                    <input type="text" id="czvr9" name="telefone" class="c-zv-frmb-in1">
-                </div>
-                <div class="c-zv-f-str">
-                    <label for="czvr10">E-mail</label>
-                    <input type="text" name="email" id="czvr10">
+            <div class="c-zv-frmb ">
+                <div class="apllicant-field-container">
                 </div>
                 <div class="c-zv-f-str2">
                     <label for="czvr11">Прикрепить файлы</label>

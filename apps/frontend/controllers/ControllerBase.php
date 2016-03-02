@@ -62,6 +62,13 @@ class ControllerBase extends Controller
         $this->view->total = $result['total'];
         $this->view->user = $this->user;
 
+        if(isset($_GET['applicant_id']))
+            $this->session->set('applicant', array('applicant_id' => $_GET['applicant_id']));
+
+        $applicant = $this->session->get('applicant');
+
+        if (!$applicant)
+            $this->view->applicant_session = $applicant['applicant_id'];
 
     }
 

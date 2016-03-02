@@ -52,15 +52,7 @@ $(document).ready(function () {
         }
     });
 
-    $(".template_checkbox").click(function () {
-        if ($(this).is(':checked')) {
 
-            argument.addArgument($(this).val());
-        } else {
-            argument.removeArgument($(this).val());
-        }
-
-    });
     $(".argument_text_container").on("click", "a", function () {
         argument.removeArgument($(this).attr("value"));
     });
@@ -83,67 +75,74 @@ $(document).ready(function () {
         if (complaint.prepareData())
             complaint.saveAsDraft();
     });
-
-    //bold_button
-    //   $("#edit_container").on("mousedown", ".edit-textarea", function () {
-    //      currentTextArea = $(this).attr("id");
-    //  });
-    /* $("#edit_container").on("mouseup", ".edit-textarea", function () {
-
-     currentTextArea = $(this).attr("id");
-     selectPosition = $(this).getcaretinfo(this);
-     }); */
-
-    /*   $('#bold_button').click(function(){
-
-     if(currentTextArea !== false)
-     complaint.setTag('#'+currentTextArea,'<strong>','</strong>');
-     //$('#'+currentTextArea).selection('insert', {text: '<strong>', mode: 'before'}).selection('insert', {text: '</strong>', mode: 'after'});
-     });
-     */
-
      $('.alert-box').on('click', 'div', function() {
         $('.alert-wrap, .alert-box').fadeOut(400);
     });
 
+
+    $('.category-container').on('click','.template_checkbox', function(){
+        if ($(this).is(':checked')) {
+
+            argument.addArgument($(this).val(),$(this).attr("category"));
+        } else {
+            argument.removeArgument($(this).val(),$(this).attr("category"));
+        }
+    });
+
 });
 
-//var currentTextArea = false;
-////var selectPosition = false;
+
 var complaint = {
     complainName: '',
     complainText: '',
     auctionData: '',
     complaint_id: false,
-
-    /*  setTag:function(element,tag1,tag2){
-     var tmp = selectPosition,
-     orig = $(element).html();
-     var res = orig.substr(0, tmp.start) + tag1 + orig.substr(tmp.start);
-     console.log(res);
-     $(element).html(res);
-     selectPosition.start += tag1.length;
-     selectPosition.end += tag1.length;
-     //
+    cat1:false,
+    cat2:false,
+    cat3:false,
+    needCat3:false,
+    selectCat3:false,
 
 
-     console.log(res);
-     res =res.substr(0, tmp.end) + tag2 + res.substr(tmp.end);
-     console.log(res);
-     $(element).html(res);
-     }, */
+
     setHeader: function () {
         var now = new Date();
         var auction_end = new Date(auction.data.date_end.replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
+         if(this.cat1 === false){
+             this.cat1 =  $('.category-1').html();
+             this.cat2 =  $('.category-2').html();
+             this.cat3 =  $('.category-3').html();
+         }
+        var prehtml = ' <div class="c-jd2-cb-b category-tamplate category-';
+        if (now < auction_end) {
+           // $('.complaint-header').html('Жалоба на действия комиссии');
+            //
+            // «на положения документации» и «на действие или бездействия заказчика»
+            //
+            $('.category-container').html(prehtml +'1">'+this.cat1+'</div>'+prehtml+'2">'+this.cat2+'</div>');
+            $('.category-tamplate').show();
+            this.needCat3 = false;
 
-        if (now > auction_end) {
-            $('.complaint-header').html('Жалоба на действия комиссии');
         } else {
-            $('.complaint-header').html('Жалоба на документацию или действия/бездействия заказчика');
+
+
+
+            $('.category-container').html(prehtml +'3">'+this.cat3+'</div>'+prehtml +'1">'+this.cat1+'</div>'+prehtml+'2">'+this.cat2+'</div>');
+            $('.category-tamplate').show();
+            this.needCat3 = true;
+            //$('.complaint-header').html('Жалоба на документацию или действия/бездействия заказчика');
+
+            // «на положения документации», «да действие или бездействия заказчика» «на отклонение заявки»
+          //  Важно, чтобы довод «на отклонение заявки»
         }
 
     },
     prepareData: function () {
+
+        if(this.needCat3 === true && this.selectCat3 !== true){
+            showSomePopupMessage('error','Прием заявок по данной закупке завершен, выберите хотя бы один довод «на отклонение заявки»');
+            return false;
+        }
 
         if (!auction.auctionReady)
             return false;
@@ -215,7 +214,14 @@ var drake = false;
 var currTextArea = 0;
 var argument = {
     argumentList: [],
-    addArgument: function (id) {
+    addArgument: function (id,cat_id) {
+
+        if(complaint.needCat3 === true && cat_id == 3){
+
+            complaint.selectCat3 = true;
+        }
+
+
         this.argumentList.push(id);
         var templateName = $('#template_' + id).html();
         $('.argument_text_container').append('<span class="atx argument_text_container_' + id + '">' + templateName + ' <a class="remove-argument" value="' + id + '"  ></a></span>');
@@ -242,7 +248,11 @@ var argument = {
         }, 100);
 
     },
-    removeArgument: function (id) {
+    removeArgument: function (id,cat_id) {
+        if(complaint.needCat3 === true && cat_id == 3){
+
+            complaint.selectCat3 = false;
+        }
         var index = this.argumentList.indexOf(id);
         if (index > -1) {
             this.argumentList.splice(index, 1);
@@ -266,6 +276,21 @@ var auction = {
         date_opening: '',
         date_review: ''
     },
+    /*
+     type: "Электронный аукцион"
+
+     vskrytie_konvertov: ""   -> data_rassmotreniya: "дата рассмотрения первых частей заявок"
+
+     date_review   -> data_provedeniya:   "ДАТЫ АУКЦИОНА"
+
+
+     type: "Конкурс с ограниченным участием"
+     Дата проведения предквалификационного отбора отображается как ДАТА
+     РАССМОТРЕНИЯ И ОЦЕНКИ ЗАЯВОК НА УЧАСТИЕ В КОНКУРСЕ
+
+
+
+     */
     processData: function (data, auction_id) {
 
         if (data.info.type == undefined || data.contact.name == undefined)
