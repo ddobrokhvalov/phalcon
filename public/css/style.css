@@ -2969,6 +2969,9 @@ input[type="radio"]:checked + label {
     }
 }
 /* custom */
+.category-tamplate{
+    display:none;
+}
 .msg_status_parser{
     margin-left: 4.5%;
 }
