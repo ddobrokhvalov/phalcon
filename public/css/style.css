@@ -858,7 +858,7 @@ a:visited {
     width: 100%;
     list-style: none;
     margin: 35px 0 0 0;
-    max-height: 445px;
+    max-height: 470px;
 }
 .ch-l-info ul li {
     float: left;
@@ -867,6 +867,10 @@ a:visited {
     border-bottom: 1px solid #e1e1e1;
     margin: 0 0 -1px 0;
     padding: 16px 0;
+}
+.ch-l-info ._mCS_1 li {
+    margin: 0 10px -1px 0;
+    width: calc(100% - 10px);
 }
 .ch-l-info ul input[type="checkbox"] + label {
     float: left;
