@@ -276,6 +276,21 @@ var auction = {
         date_opening: '',
         date_review: ''
     },
+    /*
+     type: "Электронный аукцион"
+
+     vskrytie_konvertov: ""   -> data_rassmotreniya: "дата рассмотрения первых частей заявок"
+
+     date_review   -> data_provedeniya:   "ДАТЫ АУКЦИОНА"
+
+
+     type: "Конкурс с ограниченным участием"
+     Дата проведения предквалификационного отбора отображается как ДАТА
+     РАССМОТРЕНИЯ И ОЦЕНКИ ЗАЯВОК НА УЧАСТИЕ В КОНКУРСЕ
+
+
+
+     */
     processData: function (data, auction_id) {
 
         if (data.info.type == undefined || data.contact.name == undefined)

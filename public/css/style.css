@@ -1033,6 +1033,7 @@ input[type="checkbox"]:checked:disabled + label {
     text-decoration: none;
 }
 .ch-r-sett-dd {
+    display: none;
     position: absolute;
     top: 0;
     right: 0;
@@ -1124,6 +1125,7 @@ input[type=text]:focus, textarea:focus {
     text-transform: uppercase;
 }
 .ch-r-mail-dd {
+    display: none;
     position: absolute;
     top: 0;
     right: 0;
