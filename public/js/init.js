@@ -47,6 +47,7 @@ jQuery(document).ready(function($) {
         $('.left-menu-holder').addClass('scroll-pane');
         $('.scroll-pane').jScrollPane();
     }
+    // 
 
 });
 
