@@ -81,25 +81,38 @@ $(document).ready(function() {
     $(".ch-l-dd").hide();
     $(".ch-left").click(function(){
         $(".ch-l-dd").slideToggle(300);
+        $('.opacity-layer').show();
     });
     $(".ch-left-cl").click(function(){
         $(".ch-l-dd").slideToggle(300);
+        $('.opacity-layer').hide();
     });
 
     $(".ch-r-mail-dd").hide();
     $(".ch-r-mail").click(function(){
         $(".ch-r-mail-dd").slideToggle(300);
+        $('.opacity-layer').show();
     });
     $(".ch-r-mail-dd-z").click(function(){
         $(".ch-r-mail-dd").slideToggle(300);
+        $('.opacity-layer').hide();
     });
 
     $(".ch-r-sett-dd").hide();
     $(".ch-r-sett").click(function(){
         $(".ch-r-sett-dd").slideToggle(300);
+        $('.opacity-layer').show();
     });
     $(".ch-r-sett-dd-z").click(function(){
         $(".ch-r-sett-dd").slideToggle(300);
+        $('.opacity-layer').hide();
+    });
+
+    $('.opacity-layer').click(function() {
+        if ($(".ch-l-dd").css('display') == 'block') {$(".ch-l-dd").slideUp(300);}
+        if ($(".ch-r-mail-dd").css('display') == 'block') {$(".ch-r-mail-dd").slideUp(300);}
+        if ($(".ch-r-sett-dd").css('display') == 'block') {$(".ch-r-sett-dd").slideUp(300);}
+        $(this).hide();
     });
 
     $(".c-jd2-f-dov-dd").hide();
