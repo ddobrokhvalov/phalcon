@@ -62,6 +62,11 @@ class ControllerBase extends Controller
         $this->view->total = $result['total'];
         $this->view->user = $this->user;
 
+        if(isset($_GET['status']))
+            $this->view->menu_status = $_GET['status'];
+        else
+            $this->view->menu_status = 'all';
+
         if(isset($_GET['applicant_id']))
             $this->session->set('applicant', array('applicant_id' => $_GET['applicant_id']));
 
