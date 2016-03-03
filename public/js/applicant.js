@@ -94,7 +94,7 @@ var applicantValidator = {
     result: true,
     start: function () {
 
-        if(applicant.save === false){
+        if(applicant.save === false && applicant.type != 'fizlico'){
             showMessagePopup('error','Заполните все поля корректно');
             this.result = false;
             return false;
