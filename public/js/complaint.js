@@ -75,7 +75,10 @@ $(document).ready(function () {
         if (complaint.prepareData())
             complaint.saveAsDraft();
     });
-     $('.alert-box').on('click', 'div', function() {
+    $('.alert-box').on('click', 'div', function() {
+        $('.alert-wrap, .alert-box').fadeOut(400);
+    });
+    $('.alert-substrate').on('click', function() {
         $('.alert-wrap, .alert-box').fadeOut(400);
     });
 
