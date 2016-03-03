@@ -189,6 +189,7 @@ var complaint = {
                 // alert('Сохранено успешно');
                 showSomePopupMessage('info', 'Сохранено успешно');
                 complaint.complaint_id = msg;
+                incrementMenuCount();
             },
             error: function (msg) {
                 console.log(msg);
@@ -337,7 +338,13 @@ var auction = {
 
 };
 
+function incrementMenuCount(){
+    var countAll = $('.menu-status-all').html();
+    $('.menu-status-all').html(parseInt(countAll)+1);
 
+    var countDraft = $('.menu-status-draft').html();
+    $('.menu-status-draft').html(parseInt(countDraft)+1);
+}
 function initEditor(id){
     var editor = CKEDITOR.inline( document.getElementById( id),{
         toolbarGroups: [

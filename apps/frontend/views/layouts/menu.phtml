@@ -10,16 +10,16 @@
         </div>
         <ul class="lm-nav">
             <li>
-                <a class="{% if menu_status == 'all' %} lm-link-active {% endif %}"  href="/complaint/index">
+                <a class="{% if menu_status == 'all' %} lm-link-active {% endif %} "  href="/complaint/index">
                     ВСЕ
-                    <span>{{ total }}</span>
+                    <span class="menu-status-all">{{ total }}</span>
                 </a>
             </li>
             <li>
-                <a class="{% if menu_status == 'draft' %} lm-link-active {% endif %}" href="/complaint/index?status=draft">
+                <a class="{% if menu_status == 'draft' %} lm-link-active {% endif %} " href="/complaint/index?status=draft">
                     Черновики
                     {% if complaints_num['draft'] is defined %}
-                    <span>{{ complaints_num['draft'] }}</span>
+                    <span class="menu-status-draft">{{ complaints_num['draft'] }}</span>
                     {% endif %}
                 </a>
             </li>
