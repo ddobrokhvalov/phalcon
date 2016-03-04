@@ -11,14 +11,17 @@ class Complaint extends Model
     public $purchases_made;
     public $purchases_name;
     public $contact;
-    public $date_start;
-    public $date_end;
-    public $date_opening;
-    public $date_review;
     public $complaint_name;
     public $complaint_text;
     public $status;
     public $date;
+    public $nachalo_podachi;
+    public $okonchanie_podachi;
+    public $vskrytie_konvertov;
+    public $data_rassmotreniya;
+    public $data_provedeniya;
+    public $okonchanie_rassmotreniya;
+    public $vremya_provedeniya;
 
     public function initialize()
     {
@@ -56,6 +59,7 @@ class Complaint extends Model
         $this->status = $status;
         $this->date = date('Y-m-d H:i:s');
         foreach ($data as $k => $v) {
+
             $this->$k = $v;
         }
     }
