@@ -40,7 +40,7 @@
 
             <ul class="c-c-jlist">
                 {% for complaint in complaints %}
-                <li>
+                <li class="{{ complaint['status'] }}">
                     <div class="c-c-jl-z">
                         <div class="c-c-jl-z-l">
                             <input id="jlist{{ complaint['id'] }}" class="complaint-checkbox" type="checkbox" value="{{ complaint['id'] }}" name="jlist{{ complaint['id'] }}" hidden>

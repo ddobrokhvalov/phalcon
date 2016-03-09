@@ -3002,6 +3002,15 @@ input[type="radio"]:checked + label {
     }
 }
 /* custom */
+.justified{
+    border-top: 3px solid #53cab3!important;
+}
+.unfounded{
+    border-top: 3px solid #f26d7d!important;
+}
+.under_consideration{
+    border-top: 3px solid #00aeef!important;
+}
 .category-tamplate{
     display:none;
 }
