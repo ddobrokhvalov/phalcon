@@ -133,5 +133,22 @@ class Complaint extends Model
           //  }
         }
     }
+    public function saveComplaint($data){
+        $this->type = $data['type'];
+        $this->purchases_made = $data['purchases_made'];
+        $this->purchases_name = $data['purchases_name'];
+        $this->contact = $data['contact'];
+        $this->auction_id = $data['auction_id'];
+        $this->nachalo_podachi = $data['nachalo_podachi'];
+        $this->okonchanie_podachi = $data['okonchanie_podachi'];
+        $this->vskrytie_konvertov = $data['vskrytie_konvertov'];
+        $this->data_rassmotreniya = $data['data_rassmotreniya'];
+        $this->data_provedeniya = $data['data_provedeniya'];
+        $this->okonchanie_rassmotreniya = $data['okonchanie_rassmotreniya'];
+        $this->vremya_provedeniya = $data['vremya_provedeniya'];
+        $this->complaint_text = $data['complaint_text'];
+
+        return $this->save();
+    }
 
 }

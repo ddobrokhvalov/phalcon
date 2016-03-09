@@ -3002,6 +3002,15 @@ input[type="radio"]:checked + label {
     }
 }
 /* custom */
+.justified{
+    border-top: 3px solid #53cab3!important;
+}
+.unfounded{
+    border-top: 3px solid #f26d7d!important;
+}
+.under_consideration{
+    border-top: 3px solid #00aeef!important;
+}
 .category-tamplate{
     display:none;
 }
@@ -3053,6 +3062,9 @@ input[type="radio"]:checked + label {
 .button_copy_deactive{
     color: #bcbcbd!important;
 }
+.grey{
+    color: #bcbcbd!important;
+}
 .c-cs-btns a{
     cursor: pointer!important;
 }
@@ -3076,6 +3088,30 @@ input[type="radio"]:checked + label {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding-left: 20px;
+}
+.drawing-complaints {
+    overflow: hidden;
+    background-color: #e5f7fd;
+    padding: 0 12px 0 30px;
+    margin: 20px 0;
+}
+.drawing-complaints span {
+    float: left;
+    font: 100 30px/76px 'Open Sans', sans-serif;
+    color: #00aeef;
+}
+.drawing-complaints a {
+    float: right;
+    width: 144px;
+    height: 50px;
+    border-radius: 6px;
+    background-color: #00aeef;
+    margin-top: 13px;
+    text-transform: uppercase;
+    text-align: center;
+    font: 600 14px/50px 'Open Sans', sans-serif;
+    color: #fff;
+    text-decoration: none;
 }
 
 /* <~> scroll pane

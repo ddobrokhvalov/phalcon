@@ -2,9 +2,10 @@ $(document).ready(function () {
 
     $("#notice_button").click(function (event) {
         event.preventDefault();
-
         var auction_id = $('#auction_id').val();
         if (validator.numeric(auction_id, 5, 25)) {
+
+
             $('#auction_id').removeClass('c-inp-error');
             $('#auction_id').removeClass('c-inp-done');
             $('.msg_status_parser').remove();
@@ -12,41 +13,7 @@ $(document).ready(function () {
 
             $('#notice_button').hide();
             $('.loading-gif').show();
-
-            $.ajax({
-                type: 'POST',
-                url: '/purchase/get',
-                data: 'auction_id=' + auction_id,
-                success: function (msg) {
-
-                    var data = $.parseJSON(msg);
-                    console.log(data);
-
-                    if (auction.processData(data, auction_id)) {
-                        $('#auction_id').addClass('c-inp-done');
-                        $('#result_container').append('<b class="msg_status_parser">Данные Получены!</b>');
-                        auction.setData();
-                        $('.complaint-main-container').show();
-                        complaint.setHeader();
-                        $('#notice_button').show();
-                        $('.loading-gif').hide();
-                        auction.auctionReady = true;
-                    } else {
-                        $('#auction_id').addClass('c-inp-error');
-                        $('#result_container').append('<b style="color:red!important;" class="msg_status_parser">Ошибка!</b>');
-                        auction.clearData();
-                        auction.setData();
-                        $('#notice_button').show();
-                        $('.loading-gif').hide();
-                        auction.auctionReady = false;
-                    }
-                },
-                error: function (msg) {
-                    console.log(msg);
-                }
-
-            });
-
+            auction.sendRequest(auction_id);
         } else {
             $('#auction_id').addClass('c-inp-error');
         }
@@ -75,20 +42,20 @@ $(document).ready(function () {
         if (complaint.prepareData())
             complaint.saveAsDraft();
     });
-    $('.alert-box').on('click', 'div', function() {
+    $('.alert-box').on('click', 'div', function () {
         $('.alert-wrap, .alert-box').fadeOut(400);
     });
-    $('.alert-substrate').on('click', function() {
+    $('.alert-substrate').on('click', function () {
         $('.alert-wrap, .alert-box').fadeOut(400);
     });
 
 
-    $('.category-container').on('click','.template_checkbox', function(){
+    $('.category-container').on('click', '.template_checkbox', function () {
         if ($(this).is(':checked')) {
 
-            argument.addArgument($(this).val(),$(this).attr("category"));
+            argument.addArgument($(this).val(), $(this).attr("category"));
         } else {
-            argument.removeArgument($(this).val(),$(this).attr("category"));
+            argument.removeArgument($(this).val(), $(this).attr("category"));
         }
     });
 
@@ -100,34 +67,32 @@ var complaint = {
     complainText: '',
     auctionData: '',
     complaint_id: false,
-    cat1:false,
-    cat2:false,
-    cat3:false,
-    needCat3:false,
-    selectCat3:false,
-
+    cat1: false,
+    cat2: false,
+    cat3: false,
+    needCat3: false,
+    selectCat3: false,
 
 
     setHeader: function () {
         var now = new Date();
-     //   var auction_end = new Date(auction.data.data_rassmotreniya.replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
-         if(this.cat1 === false){
-             this.cat1 =  $('.category-1').html();
-             this.cat2 =  $('.category-2').html();
-             this.cat3 =  $('.category-3').html();
-         }
+        //   var auction_end = new Date(auction.data.data_rassmotreniya.replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
+        if (this.cat1 === false) {
+            this.cat1 = $('.category-1').html();
+            this.cat2 = $('.category-2').html();
+            this.cat3 = $('.category-3').html();
+        }
         var prehtml = ' <div class="c-jd2-cb-b category-tamplate category-';
-      //  if (now < auction_end) {
-           if(true){
-            $('.category-container').html(prehtml +'1">'+this.cat1+'</div>'+prehtml+'2">'+this.cat2+'</div>');
+        //  if (now < auction_end) {
+        if (true) {
+            $('.category-container').html(prehtml + '1">' + this.cat1 + '</div>' + prehtml + '2">' + this.cat2 + '</div>');
             $('.category-tamplate').show();
             this.needCat3 = false;
 
         } else {
 
 
-
-            $('.category-container').html(prehtml +'3">'+this.cat3+'</div>'+prehtml +'1">'+this.cat1+'</div>'+prehtml+'2">'+this.cat2+'</div>');
+            $('.category-container').html(prehtml + '3">' + this.cat3 + '</div>' + prehtml + '1">' + this.cat1 + '</div>' + prehtml + '2">' + this.cat2 + '</div>');
             $('.category-tamplate').show();
             this.needCat3 = true;
 
@@ -136,8 +101,8 @@ var complaint = {
     },
     prepareData: function () {
 
-        if(this.needCat3 === true && this.selectCat3 !== true){
-            showSomePopupMessage('error','Прием заявок по данной закупке завершен, выберите хотя бы один довод «на отклонение заявки»');
+        if (this.needCat3 === true && this.selectCat3 !== true) {
+            showSomePopupMessage('error', 'Прием заявок по данной закупке завершен, выберите хотя бы один довод «на отклонение заявки»');
             return false;
         }
 
@@ -173,7 +138,7 @@ var complaint = {
                 this.auctionData += '&' + i + '=' + auction.data[i];
             }
         }
-     return true;
+        return true;
     },
     saveAsDraft: function () {
         $.ajax({
@@ -212,9 +177,9 @@ var drake = false;
 var currTextArea = 0;
 var argument = {
     argumentList: [],
-    addArgument: function (id,cat_id) {
+    addArgument: function (id, cat_id) {
 
-        if(complaint.needCat3 === true && cat_id == 3){
+        if (complaint.needCat3 === true && cat_id == 3) {
 
             complaint.selectCat3 = true;
         }
@@ -235,7 +200,7 @@ var argument = {
             templates[id] +
             '</div></div></div>';
         $('#edit_container').append(html);
-        currTextArea = 'edit_textarea_'+id;
+        currTextArea = 'edit_textarea_' + id;
         setTimeout(function () {
             if (drake !== false) {
                 drake.destroy();
@@ -246,8 +211,8 @@ var argument = {
         }, 100);
 
     },
-    removeArgument: function (id,cat_id) {
-        if(complaint.needCat3 === true && cat_id == 3){
+    removeArgument: function (id, cat_id) {
+        if (complaint.needCat3 === true && cat_id == 3) {
 
             complaint.selectCat3 = false;
         }
@@ -262,172 +227,212 @@ var argument = {
 
 };
 var auction = {
-    auctionReady: false,
-   /* data: {
-        auction_id: '',
-        type: '',
-        purchases_made: '',
-        purchases_name: '',
-        contact: '',
-        date_start: '',
-        date_end: '',
-        date_opening: '',
-        date_review: ''
-    }, */
+        auctionReady: false,
+        /* data: {
+         auction_id: '',
+         type: '',
+         purchases_made: '',
+         purchases_name: '',
+         contact: '',
+         date_start: '',
+         date_end: '',
+         date_opening: '',
+         date_review: ''
+         }, */
 
-    data: {},
-    processData: function (data, auction_id) {
+        data: {},
+        sendRequest: function (auction_id) {
+            $.ajax({
+                type: 'POST',
+                url: '/purchase/get',
+                data: 'auction_id=' + auction_id,
+                success: function (msg) {
 
-        if (data.info.type == undefined || data.contact.name == undefined)
-            return false;
+                    var data = $.parseJSON(msg);
+                    console.log(data);
+                    auction.succesRequest(data,auction_id);
 
-        if (validator.text(data.info.type, 3, 200))
-            this.data['type'] = data.info.type;
-        else
-            return false;
+                },
+                error: function (msg) {
+                    console.log(msg);
+                }
 
-        if (validator.text(data.contact.name), 3, 300)
-            this.data['purchases_made'] = data.contact.name;
-        else
-            return false;
+            });
+        },
+        succesRequest: function (data,auction_id) {
+            if (auction.processData(data, auction_id)) {
+                $('#auction_id').addClass('c-inp-done');
+                $('#result_container').append('<b class="msg_status_parser">Данные Получены!</b>');
+                auction.setData();
+                $('.complaint-main-container').show();
+                complaint.setHeader();
+                $('#notice_button').show();
+                $('.loading-gif').hide();
+                auction.auctionReady = true;
+            } else {
+                $('#auction_id').addClass('c-inp-error');
+                $('#result_container').append('<b style="color:red!important;" class="msg_status_parser">Ошибка!</b>');
+                auction.clearData();
+                auction.setData();
+                $('#notice_button').show();
+                $('.loading-gif').hide();
+                auction.auctionReady = false;
+            }
+        },
+        processData: function (data, auction_id) {
 
-        if (validator.text(data.info.object_zakupki), 3, 500)
-            this.data['purchases_name'] = data.info.object_zakupki;
-        else
-            return false;
-        this.data['auction_id'] = auction_id;
-        this.data['contact'] = data.contact.name + '<br>' +
-            data.contact.pochtovy_adres + '<br>' +
-            data.contact.dolg_lico + '<br>' +
-            'E-mail: ' + data.contact.email + '<br>' +
-            'Телефон: ' + data.contact.tel + '<br>';
+            if (data.info.type == undefined || data.contact.name == undefined)
+                return false;
+
+            if (validator.text(data.info.type, 3, 200))
+                this.data['type'] = data.info.type;
+            else
+                return false;
+
+            if (validator.text(data.contact.name), 3, 300)
+                this.data['purchases_made'] = data.contact.name;
+            else
+                return false;
+
+            if (validator.text(data.info.object_zakupki), 3, 500)
+                this.data['purchases_name'] = data.info.object_zakupki;
+            else
+                return false;
+            this.data['auction_id'] = auction_id;
+            this.data['contact'] = data.contact.name + '<br>' +
+                data.contact.pochtovy_adres + '<br>' +
+                data.contact.dolg_lico + '<br>' +
+                'E-mail: ' + data.contact.email + '<br>' +
+                'Телефон: ' + data.contact.tel + '<br>';
 
 
-        for (var key in data.procedura) {
-            this.data[key] = data.procedura[key];
+            for (var key in data.procedura) {
+                this.data[key] = data.procedura[key];
+            }
+
+            return true;
+        }
+        ,
+        setData: function () {
+
+            $('#type').html(this.data.type);
+            $('#purchases_made').html(this.data.purchases_made);
+            $('#purchases_name').html(this.data.purchases_name);
+            $('#contact').html(this.data.contact);
+
+            var html = '<div class="c-jadd-lr-row"><span>Наименование закупки</span><div class="c-jadd-lr-sel"><select><option>УФАС по г. Санкт-Петербургу</option><option>УФАС по г. Санкт-Петербургу</option><option>УФАС по г. Санкт-Петербургу</option></select></div></div>';
+            if (this.data.type == 'Открытый конкурс') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
+                html += this.processHTML('Дата рассмотрения и оценки заявок', this.data.data_rassmotreniya);
+            }
+            if (this.data.type == 'Электронный аукцион') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата проведения электронного аукциона', this.data.data_provedeniya);
+                html += this.processHTML('Дата окончания срока рассмотрения первых частей заявок', this.data.okonchanie_rassmotreniya);
+                html += this.processHTML('Время проведения электронного аукциона', this.data.vremya_provedeniya);
+            }
+            if (this.data.type == 'Конкурс с ограниченным участием') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
+                html += this.processHTML('Дата проведения предквалификационного отбора', this.data.data_provedeniya);
+                html += this.processHTML('Дата рассмотрения и оценки заявок', this.data.data_rassmotreniya);
+            }
+            if (this.data.type == 'Запрос котировок') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время проведения вскрытия конвертов, открытия доступа к электронным документам заявок', this.data.vskrytie_konvertov);
+            }
+            if (this.data.type == 'Повторный конкурс с ограниченным участием') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время проведения вскрытия конвертов, открытия доступа к электронным документам заявок', this.data.vskrytie_konvertov);
+
+                html += this.processHTML('Дата проведения предквалификационного отбора', this.data.data_provedeniya);
+                html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе', this.data.data_rassmotreniya);
+            }
+            if (this.data.type == 'Закрытый конкурс') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
+                html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе', this.data.data_rassmotreniya);
+            }
+            if (this.data.type == 'Закрытый конкурс с ограниченным участием') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
+                html += this.processHTML('Дата проведения предквалификационного отбора', this.data.data_provedeniya);
+                html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе', this.data.data_rassmotreniya);
+            }
+            if (this.data.type == 'Запрос предложений') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время вскрытия конвертов, открытия доступа к электронным документам заявок', this.data.vskrytie_konvertov);
+                html += this.processHTML('Дата и время рассмотрения и оценки заявок участников', this.data.data_rassmotreniya);
+                html += this.processHTML('Дата и время вскрытия конвертов с окончательными предложениями, открытия доступа к электронным документам окончательных документов', this.data.okonchanie_rassmotreniya);
+            }
+            if (this.data.type == 'Предварительный отбор') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время проведения предварительного отбора', this.data.data_provedeniya);
+            }
+
+
+            $('.date-container').html(html);
+
+
+            /* for (var key in this.data) {
+             $('#' + key).html(this.data[key]);
+             } */
+
+        }
+        ,
+        processHTML: function (text, value) {
+            return '<div class="c-jadd-lr-row"><span>' + text + '</span><span class="auction-data" >' + value + '</span></div>';
+
+        }
+        ,
+        clearData: function () {
+            for (var key in this.data) {
+                this.data[key] = '';
+            }
         }
 
-        return true;
-    },
-    setData: function () {
 
-        $('#type').html(this.data.type);
-        $('#purchases_made').html(this.data.purchases_made);
-        $('#purchases_name').html(this.data.purchases_name);
-        $('#contact').html(this.data.contact);
-
-        var html = '<div class="c-jadd-lr-row"><span>Наименование закупки</span><div class="c-jadd-lr-sel"><select><option>УФАС по г. Санкт-Петербургу</option><option>УФАС по г. Санкт-Петербургу</option><option>УФАС по г. Санкт-Петербургу</option></select></div></div>';
-        if(this.data.type == 'Открытый конкурс'){
-            html += this.processHTML('Дата и время начала подачи заявок',this.data.nachalo_podachi);
-            html += this.processHTML('Дата и время окончания подачи заявок',this.data.okonchanie_podachi);
-            html += this.processHTML('Дата и время вскрытия конвертов',this.data.vskrytie_konvertov);
-            html += this.processHTML('Дата рассмотрения и оценки заявок',this.data.data_rassmotreniya);
-        }
-        if(this.data.type == 'Электронный аукцион'){
-            html += this.processHTML('Дата и время начала подачи заявок',this.data.nachalo_podachi);
-            html += this.processHTML('Дата и время окончания подачи заявок',this.data.okonchanie_podachi);
-            html += this.processHTML('Дата проведения электронного аукциона',this.data.data_provedeniya);
-            html += this.processHTML('Дата окончания срока рассмотрения первых частей заявок',this.data.okonchanie_rassmotreniya);
-            html += this.processHTML('Время проведения электронного аукциона',this.data.vremya_provedeniya);
-        }
-        if(this.data.type == 'Конкурс с ограниченным участием'){
-            html += this.processHTML('Дата и время начала подачи заявок',this.data.nachalo_podachi);
-            html += this.processHTML('Дата и время окончания подачи заявок',this.data.okonchanie_podachi);
-            html += this.processHTML('Дата и время вскрытия конвертов',this.data.vskrytie_konvertov);
-            html += this.processHTML('Дата проведения предквалификационного отбора',this.data.data_provedeniya);
-            html += this.processHTML('Дата рассмотрения и оценки заявок',this.data.data_rassmotreniya);
-        }
-        if(this.data.type == 'Запрос котировок'){
-            html += this.processHTML('Дата и время начала подачи заявок',this.data.nachalo_podachi);
-            html += this.processHTML('Дата и время окончания подачи заявок',this.data.okonchanie_podachi);
-            html += this.processHTML('Дата и время проведения вскрытия конвертов, открытия доступа к электронным документам заявок',this.data.vskrytie_konvertov);
-        }
-        if(this.data.type == 'Повторный конкурс с ограниченным участием'){
-            html += this.processHTML('Дата и время начала подачи заявок',this.data.nachalo_podachi);
-            html += this.processHTML('Дата и время окончания подачи заявок',this.data.okonchanie_podachi);
-            html += this.processHTML('Дата и время проведения вскрытия конвертов, открытия доступа к электронным документам заявок',this.data.vskrytie_konvertov);
-
-            html += this.processHTML('Дата проведения предквалификационного отбора',this.data.data_provedeniya);
-            html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе',this.data.data_rassmotreniya);
-        }
-        if(this.data.type == 'Закрытый конкурс' ){
-            html += this.processHTML('Дата и время начала подачи заявок',this.data.nachalo_podachi);
-            html += this.processHTML('Дата и время окончания подачи заявок',this.data.okonchanie_podachi);
-            html += this.processHTML('Дата и время вскрытия конвертов',this.data.vskrytie_konvertov);
-            html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе',this.data.data_rassmotreniya);
-        }
-        if(this.data.type == 'Закрытый конкурс с ограниченным участием'){
-            html += this.processHTML('Дата и время начала подачи заявок',this.data.nachalo_podachi);
-            html += this.processHTML('Дата и время окончания подачи заявок',this.data.okonchanie_podachi);
-            html += this.processHTML('Дата и время вскрытия конвертов',this.data.vskrytie_konvertov);
-            html += this.processHTML('Дата проведения предквалификационного отбора',this.data.data_provedeniya);
-            html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе',this.data.data_rassmotreniya);
-        }
-        if(this.data.type == 'Запрос предложений'){
-            html += this.processHTML('Дата и время начала подачи заявок',this.data.nachalo_podachi);
-            html += this.processHTML('Дата и время окончания подачи заявок',this.data.okonchanie_podachi);
-            html += this.processHTML('Дата и время вскрытия конвертов, открытия доступа к электронным документам заявок',this.data.vskrytie_konvertov);
-            html += this.processHTML('Дата и время рассмотрения и оценки заявок участников',this.data.data_rassmotreniya);
-            html += this.processHTML('Дата и время вскрытия конвертов с окончательными предложениями, открытия доступа к электронным документам окончательных документов',this.data.okonchanie_rassmotreniya);
-        }
-        if(this.data.type == 'Предварительный отбор'){
-            html += this.processHTML('Дата и время начала подачи заявок',this.data.nachalo_podachi);
-            html += this.processHTML('Дата и время окончания подачи заявок',this.data.okonchanie_podachi);
-            html += this.processHTML('Дата и время проведения предварительного отбора',this.data.data_provedeniya);
-        }
-
-
-
-
-        $('.date-container').html(html);
-
-
-       /* for (var key in this.data) {
-            $('#' + key).html(this.data[key]);
-        } */
-
-    },
-    processHTML:function(text,value){
-      return  '<div class="c-jadd-lr-row"><span>'+text+'</span><span class="auction-data" >'+value+'</span></div>';
-
-    },
-    clearData: function () {
-        for (var key in this.data) {
-            this.data[key] = '';
-        }
     }
+    ;
 
-
-};
-
-function incrementMenuCount(){
+function incrementMenuCount() {
     var countAll = $('.menu-status-all').html();
-    $('.menu-status-all').html(parseInt(countAll)+1);
+    $('.menu-status-all').html(parseInt(countAll) + 1);
 
     var countDraft = $('.menu-status-draft').html();
-    $('.menu-status-draft').html(parseInt(countDraft)+1);
+    $('.menu-status-draft').html(parseInt(countDraft) + 1);
 }
-function initEditor(id){
-    var editor = CKEDITOR.inline( document.getElementById( id),{
+function initEditor(id) {
+    var editor = CKEDITOR.inline(document.getElementById(id), {
         toolbarGroups: [
-            { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
-            { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
-            { name: 'links', groups: [ 'links' ] },
-            { name: 'insert', groups: [ 'insert' ] },
-            { name: 'forms', groups: [ 'forms' ] },
-            { name: 'tools', groups: [ 'tools' ] },
-            { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
-            { name: 'others', groups: [ 'others' ] },
+            {name: 'clipboard', groups: ['clipboard', 'undo']},
+            {name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing']},
+            {name: 'links', groups: ['links']},
+            {name: 'insert', groups: ['insert']},
+            {name: 'forms', groups: ['forms']},
+            {name: 'tools', groups: ['tools']},
+            {name: 'document', groups: ['mode', 'document', 'doctools']},
+            {name: 'others', groups: ['others']},
             '/',
-            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
-            { name: 'styles', groups: [ 'styles' ] },
-            { name: 'colors', groups: [ 'colors' ] },
-            { name: 'about', groups: [ 'about' ] }
+            {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
+            {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
+            {name: 'styles', groups: ['styles']},
+            {name: 'colors', groups: ['colors']},
+            {name: 'about', groups: ['about']}
         ],
         removeButtons: 'Underline,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source',
-       });
-   // };
+    });
+    // };
     editor.disableAutoInline = true;
 
 
@@ -436,12 +441,12 @@ function initEditor(id){
 
 function showSomePopupMessage(type, message) {
     $('.alert-wrap').fadeIn(400);
-    setTimeout(function() {
+    setTimeout(function () {
         $('.alert-box').fadeIn(200).text(message);
         $('.alert-box').append('<div></div>');
-    },400);
+    }, 400);
     if (type == 'info') {
         $('.alert-box').addClass('alert-info');
-    } 
+    }
 }
 

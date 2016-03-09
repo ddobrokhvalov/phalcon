@@ -41,12 +41,7 @@ class LoginController extends Controller
         }
         if ($auth)
             $this->session->destroy();
-        return $this->dispatcher->forward(
-            array(
-                'controller' => 'login',
-                'action' => 'index'
-            )
-        );
+        header( 'Location: http://'.$_SERVER['HTTP_HOST'] );
 
     }
 

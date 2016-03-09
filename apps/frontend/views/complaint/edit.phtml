@@ -36,16 +36,24 @@
 
                 </div>
                 <div class="c-jadd1-1-b">
-                    <a href="#">Редактировать</a>
+                    {% if complaint.status == 'draft' %}
+                      <a href="/complaint/edit/{{ complaint.id }}?action=edit">Редактировать</a>
+                    {% else %}
+                    <a class="grey" href="#">Редактировать</a>
+                    {% endif %}
                     <a class="button-copy-edit-page" value="{{ complaint.id }}" >Копировать</a>
-                    <a href="#">Отозвать</a>
+                    {% if complaint.status == 'submitted' %}
+                      <a  href="/complaint/recall/{{ complaint.id }}">Отозвать</a>
+                    {% else %}
+                        <a class="grey" href="#">Отозвать</a>
+                    {% endif %}
                     <a href="#">В архив</a>
                     <a href="#">Удалить</a>
                     {% if complaint.status == 'draft' %} <a href="#" class="c-jadd1-1-b-btn">Отправить в УФАС</a> {%
                     endif %}
                 </div>
             </div>
-            {% if complaint.status == 'draft' %}
+            {% if complaint.status == 'draft' and action_edit === true %}
             <div class="c-jadd1">
                 <div class="c-jadd1-z">
                     <span>Номер извещения</span><br>
@@ -67,51 +75,25 @@
                         <span>Данные о закупке</span>
                     </div>
                     <div class="c-jadd-l">
-                        <div class="c-jadd-lr-row">
+                       <div class="c-jadd-lr-row">
                             <span>Способ проведения закупки</span>
-                            {{ complaint.type }}
+                            <span class="auction-data" id="type">{{ complaint.type }}</span>
                         </div>
                         <div class="c-jadd-lr-row">
                             <span>Закупку осуществляет</span>
-                            {{ complaint.purchases_made }}
+                            <span class="auction-data" id="purchases_made">{{ complaint.purchases_made }}</span>
                         </div>
                         <div class="c-jadd-lr-row">
                             <span>Наименование закупки</span>
-                            {{ complaint.purchases_name }}
+                           <span class="auction-data" id="purchases_name"> {{ complaint.purchases_name }}</span>
                         </div>
                         <div class="c-jadd-lr-row">
                             <span>Контакты</span>
-                            {{ complaint.contact }}
+                           <span class="auction-data" id="contact"> {{ complaint.contact }}</span>
                         </div>
                     </div>
-                    <div class="c-jadd-r">
-                        <div class="c-jadd-lr-row">
-                            <span>Наименование закупки</span>
+                    <div class="c-jadd-r date-container">
 
-                            <div class="c-jadd-lr-sel">
-                                <select>
-                                    <option>УФАС по г. Санкт-Петербургу</option>
-                                    <option>УФАС по г. Санкт-Петербургу</option>
-                                    <option>УФАС по г. Санкт-Петербургу</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="c-jadd-lr-row">
-                            <span>Дата и время начала подачи заявок</span>
-                            {{ complaint.date_start }}
-                        </div>
-                        <div class="c-jadd-lr-row">
-                            <span>Дата и время окончания подачи заявок</span>
-                            {{ complaint.date_end }}
-                        </div>
-                        <div class="c-jadd-lr-row">
-                            <span>Дата и время вскрытия конвертов с заявками </span>
-                            {{ complaint.date_opening }}
-                        </div>
-                        <div class="c-jadd-lr-row">
-                            <span>Дата рассмотрения и оценки заявок на участие в конкурсе</span>
-                            {{ complaint.date_review }}
-                        </div>
                     </div>
                 </div>
                 <div class="c-jadd-spoiler folded">
@@ -136,11 +118,22 @@
                     </div>
                     <div class="c-jd2-f-edit">
                         <div class="c-jd2-f-edit-text mCustomScrollbar">
-                            <div class="c-jd2-f-edit-t">
-                                {{ complaint.complaint_text }}
-                            </div>
+                            {% if complaint.status == 'draft' and action_edit === true %}
+                                <div contenteditable class="c-jd2-f-edit-t complaint-text">
+                                    {{ complaint.complaint_text }}
+                                </div>
+                            {% else %}
+                                <div class="c-jd2-f-edit-t">
+                                    {{ complaint.complaint_text }}
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
+                    {% if complaint.status == 'draft' and action_edit === true %}
+                    <div class="c-jd2-f-save">
+                        <input id="complaint_edit_save" class="complaint_save-blue" type="submit" value="Сохранить черновик">
+                    </div>
+                    {% endif %}
 
                     <div class="c-jd2-f-cat">
                         <input type="radio" name="jd2cat" id="jd2cat1" checked hidden>
@@ -196,3 +189,20 @@
         </div>
     </div>
 </div>
+<script>
+    auction.data['complaint_id'] = '{{complaint.id }}';
+
+    auction.data['type'] = '{{complaint.type }}';
+    auction.data['purchases_made'] = '{{complaint.purchases_made }}';
+    auction.data['purchases_name'] = '{{complaint.purchases_name }}';
+    auction.data['contact'] = '{{complaint.contact }}';
+    auction.data['nachalo_podachi'] = '{{complaint.nachalo_podachi }}';
+    auction.data['okonchanie_podachi'] = '{{complaint.okonchanie_podachi }}';
+    auction.data['vskrytie_konvertov'] = '{{complaint.vskrytie_konvertov }}';
+    auction.data['data_rassmotreniya'] = '{{complaint.data_rassmotreniya }}';
+    auction.data['data_provedeniya'] = '{{complaint.data_provedeniya }}';
+    auction.data['okonchanie_rassmotreniya'] = '{{complaint.okonchanie_rassmotreniya }}';
+    auction.data['vremya_provedeniya'] = '{{complaint.vremya_provedeniya }}';
+    auction.setData();
+
+</script>
