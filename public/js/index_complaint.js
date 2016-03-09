@@ -33,6 +33,13 @@ $(document).ready(function () {
 
     });
 
+    $('.button-recall').click(function(){
+        if(currentStatus == 'submitted'){
+
+            indexComplaint.recall();
+        }
+    });
+
 });
 
 var indexComplaint = {
@@ -41,15 +48,35 @@ var indexComplaint = {
     returnButton:false,
     inArchivButton:false,
     deleteButton:false,
-    activeButtonCopy: function () {
-        this.copyButton = true;
-        $('.button-copy').removeClass('button_copy_deactive');
-        $('.button-copy').addClass('button_copy_active');
+    recall: function(){
+        var data = JSON.stringify(this.selectedComplaint);
+        $.ajax({
+            type: 'POST',
+            url: '/complaint/recall/0',
+            data: 'status=' + status + '&complaints=' + data,
+            success: function (msg) {
+                console.log(msg);
+             /*   if(status == 'copy')
+                    document.location.href = '/complaint/edit/'+msg;
+                else
+                    document.location.href = '/complaint/index?status=recalled'; */
+                document.location.href = '/complaint/index?status=recalled';
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+
+        });
     },
-    deActivButtonCopy: function () {
+    activeButton: function (button) {
+        this.copyButton = true;
+        $(button).removeClass('button_copy_deactive');
+        $(button).addClass('button_copy_active');
+    },
+    deActiveButton: function (button) {
         this.copyButton = false;
-        $('.button-copy').removeClass('button_copy_active');
-        $('.button-copy').addClass('button_copy_deactive');
+        $(button).removeClass('button_copy_active');
+        $(button).addClass('button_copy_deactive');
     },
     changeStatus: function (status) {
         var data = JSON.stringify(this.selectedComplaint);
@@ -72,10 +99,16 @@ var indexComplaint = {
     },
     addComplain: function (id) {
         this.selectedComplaint.push(id);
-        if (this.selectedComplaint.length == 1)
-            this.activeButtonCopy();
-        else
-            this.deActivButtonCopy();
+        if (this.selectedComplaint.length == 1) {
+            this.activeButton('.button-copy');
+            if(currentStatus == 'submitted')
+              this.activeButton('.button-recall');
+
+        }else {
+            this.deActiveButton('.button-copy');
+            //if(currentStatus == 'submitted')
+               // this.deActiveButton('.button-recall');
+        }
     },
     removeComplain: function (id) {
         var index = this.selectedComplaint.indexOf(id);
@@ -83,13 +116,18 @@ var indexComplaint = {
             this.selectedComplaint.splice(index, 1);
         }
         if (this.selectedComplaint.length == 1)
-            this.activeButtonCopy();
+            this.activeButton('.button-copy');
         else
-            this.deActivButtonCopy();
+            this.deActiveButton('.button-copy');
+
+        if(this.selectedComplaint.length < 1)
+            this.deActiveButton('.button-recall');
 
     },
     selectAll: function () {
-        this.deActivButtonCopy();
+        this.deActiveButton('.button-copy');
+        if(currentStatus == 'submitted')
+            this.activeButton('.button-recall');
         $('.complaint-checkbox').each(function () {
             indexComplaint.selectedComplaint.push($(this).val());
             $(this).prop('checked', true);
@@ -97,6 +135,8 @@ var indexComplaint = {
     },
     deSelectAll: function () {
         console.log(this.selectedComplaint);
+        if(currentStatus == 'submitted')
+          this.deActiveButton('.button-recall');
         this.selectedComplaint = [];
         $('.complaint-checkbox').each(function () {
             $(this).prop('checked', false);

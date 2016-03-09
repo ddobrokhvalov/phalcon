@@ -43,15 +43,16 @@ class ComplaintController extends ControllerBase
             return $this->forward('complaint/index');
 
 
+        $complaint->purchases_name = str_replace("\r\n", " ", $complaint->purchases_name);
         $question = new Question();
         $complaintQuestion = $question->getComplainQuestionAndAnswer($id);
-
-
         $this->setMenu();
-
-
         $this->view->complaint = $complaint;
         $this->view->complaint_question = $complaintQuestion;
+
+        $this->view->action_edit = false;
+        if (isset($_GET['action']) && $_GET['action'] == 'edit')
+            $this->view->action_edit = true;
 
     }
 
@@ -80,7 +81,6 @@ class ComplaintController extends ControllerBase
         else
             echo 'error save';
         exit;
-
     }
 
     public function statusAction()
@@ -94,7 +94,54 @@ class ComplaintController extends ControllerBase
         $result = $complaint->changeStatus($data['status'], json_decode($data['complaints']), $this->user->id);
         echo $result;
         exit;
+    }
 
+    public function recallAction($id)
+    {
+
+        if ($id == '0') {
+            $data = $this->request->getPost();
+            $data = json_decode($data['complaints']);
+        } else {
+            $data = array($id);
+        }
+
+
+
+        foreach ($data as $v) {
+            $complaint = Complaint::findFirstById($v);
+            if (!$complaint)
+                return $this->forward('complaint/index');
+            if (!$complaint->checkComplaintOwner($v, $this->user->id))
+                return $this->forward('complaint/index');
+
+            $complaint->status = 'recalled';
+            $complaint->save();
+        }
+        if ($id == '0') {
+            echo 'true';
+            exit;
+        }else
+            header('Location: http://' . $_SERVER['HTTP_HOST'] . '/complaint/edit/' . $id);
+
+
+    }
+
+    public function saveAction()
+    {
+        $data = $this->request->getPost();
+        $complaint = Complaint::findFirstById($data['complaint_id']);
+        if (!$complaint) {
+            echo 'error';
+            exit;
+        }
+        if (!$complaint->checkComplaintOwner($data['complaint_id'], $this->user->id)) {
+            echo 'error';
+            exit;
+        }
+
+        echo $complaint->saveComplaint($data);
+        exit;
 
     }
 

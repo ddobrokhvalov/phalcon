@@ -3053,6 +3053,9 @@ input[type="radio"]:checked + label {
 .button_copy_deactive{
     color: #bcbcbd!important;
 }
+.grey{
+    color: #bcbcbd!important;
+}
 .c-cs-btns a{
     cursor: pointer!important;
 }
