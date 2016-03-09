@@ -3089,6 +3089,30 @@ input[type="radio"]:checked + label {
     box-sizing: border-box;
     padding-left: 20px;
 }
+.drawing-complaints {
+    overflow: hidden;
+    background-color: #e5f7fd;
+    padding: 0 12px 0 30px;
+    margin: 20px 0;
+}
+.drawing-complaints span {
+    float: left;
+    font: 100 30px/76px 'Open Sans', sans-serif;
+    color: #00aeef;
+}
+.drawing-complaints a {
+    float: right;
+    width: 144px;
+    height: 50px;
+    border-radius: 6px;
+    background-color: #00aeef;
+    margin-top: 13px;
+    text-transform: uppercase;
+    text-align: center;
+    font: 600 14px/50px 'Open Sans', sans-serif;
+    color: #fff;
+    text-decoration: none;
+}
 
 /* <~> scroll pane
 ------------------------------ */
