@@ -43,10 +43,10 @@ jQuery(document).ready(function($) {
         }
     }
     // adding stylized scrolling ыidebar
-    if ($(window).height() <= 860) {
+   /* if ($(window).height() <= 860) {
         $('.left-menu-holder').addClass('scroll-pane');
         $('.scroll-pane').jScrollPane();
-    }
+    }  */
 
 });
 

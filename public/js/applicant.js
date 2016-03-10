@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var url      = window.location.href;
     if (typeof applicantFirstId !== 'undefined' && url.indexOf('applicant_id=') == -1)
-        applicant.selectFirst(applicantFirstId,true);
+        applicant.selectFirst(applicantFirstId,false);
 
 
    if(typeof applicantSelectedId !== 'undefined')

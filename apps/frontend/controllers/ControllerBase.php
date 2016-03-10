@@ -8,6 +8,7 @@ use Multiple\Frontend\Models\Complaint;
 class ControllerBase extends Controller
 {
     public $user;
+    public $applicant_id;
 
     protected function initialize()
     {
@@ -72,8 +73,13 @@ class ControllerBase extends Controller
 
         $applicant = $this->session->get('applicant');
 
-        if (!$applicant)
+        if ($applicant) {
             $this->view->applicant_session = $applicant['applicant_id'];
+            $this->applicant_id = $applicant['applicant_id'];
+        }else {
+            $this->view->applicant_session = 'All';
+            $this->applicant_id = 'All';
+        }
 
     }
 
