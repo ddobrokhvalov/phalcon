@@ -1,5 +1,5 @@
 <div class="left-menu-block">
-    <div class="left-menu-holder">
+    <div class="left-menu-holder scroll-pane">
         <div class="lm-opcl-btnb">
             <div class="lm-opcl-btn1"></div>
             <div class="lm-opcl-btn2"></div>
@@ -79,7 +79,12 @@
         <div class="lm-gospart"></div>
     </div>
 </div>
-
+<script>
+    //  if ($(window).height() <= 860) {
+    // $('.left-menu-holder').addClass('scroll-pane');
+    $('.scroll-pane').jScrollPane();
+    // }
+</script>
 <div class="opacity-layer"></div>
 
 <div class="c-header">
@@ -102,10 +107,10 @@
                    {% for applicant in applicants  %}
                     {% if loop.first %}
                     <script>
-                        {% if selected_applicant_id is defined %}
-                         var applicantSelectedId = '{{selected_applicant_id}}';
+                        {% if applicant_session is defined %}
+                         var applicantSelectedId = '{{applicant_session}}';
                         {% else %}
-                          var applicantFirstId = {{ applicant.id}};
+                          var applicantFirstId = 'All';
                         {% endif %}
                     </script>
                      {% if index_action is defined %}
@@ -225,3 +230,4 @@
 </div>
 
 <?php echo $this->getContent(); ?>
+

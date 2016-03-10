@@ -59,6 +59,10 @@ $(document).ready(function () {
         }
     });
 
+    $('.argument_text_container').on('mouseup', '.atx', function () {
+        alert('done');
+    });
+
 });
 
 
@@ -187,7 +191,7 @@ var argument = {
 
         this.argumentList.push(id);
         var templateName = $('#template_' + id).html();
-        $('.argument_text_container').append('<span class="atx argument_text_container_' + id + '">' + templateName + ' <a class="remove-argument" value="' + id + '"  ></a></span>');
+        $('.argument_text_container').append('<span id="argument_text_container_' + id + '" class="atx argument_text_container_' + id + '">' + templateName + ' <a class="remove-argument" value="' + id + '"  ></a></span>');
 
         var html = '<div class="template_edit" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
             '<span>' + templateName + '</span>' +
@@ -205,7 +209,9 @@ var argument = {
             if (drake !== false) {
                 drake.destroy();
             }
-            drake = dragula([document.getElementById('edit_container')]);
+          //  drake = dragula([document.getElementById('edit_container')]);
+            drake = dragula([document.getElementById('argument_text_container')]);
+
 
             initEditor(currTextArea);
         }, 100);
