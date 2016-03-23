@@ -32,9 +32,8 @@ class ComplaintController extends ControllerBase
             "page"  => $numberPage
         ));
         $pages = $paginator->getPaginate();
-        $paginator_builder = new PaginatorBuilder($numberPage, $pages->total_pages);
         $this->view->page = $pages;
-        $this->view->paginator_builder = $paginator_builder->buildPaginationArray();
+        $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->view->index_action = true;
 
     }

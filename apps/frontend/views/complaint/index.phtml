@@ -104,21 +104,25 @@
                 {% endfor %}
 
             </ul>
-            <div>
+            <div class="admin-pagination-box">
                 {% if page.current>1 %}
-                {{ link_to("complaint/index?page=" ~ page.before ~ "&status="~status, 'Предыдущая') }}
+                {{ link_to("complaint/index?page=" ~ page.before ~ "&status="~status, 'Предыдущая', 'id' : 'admin-pag-prev') }}
                 {% endif %}
+                <ul>
                 {% for page_item in paginator_builder %}
+                <li>
                 {% if page_item['type'] == 'page' %}
                 {{ link_to("complaint/index?page=" ~ page_item['num'] ~ "&status="~status, page_item['num']) }}
                 {% elseif page_item['type'] == 'delimer' %}
                 <span>...</span>
                 {% elseif page_item['type'] == 'current' %}
-                <span>{{page_item['num']}}</span>
+                <span class="active-pag-page">{{page_item['num']}}</span>
                 {% endif %}
+                </li>
                 {% endfor %}
+                </ul>
                 {% if page.total_pages > page.current %}
-                {{ link_to("complaint/index?page=" ~ page.next ~ "&status="~status, 'Следующая') }}
+                {{ link_to("complaint/index?page=" ~ page.next ~ "&status="~status, 'Следующая', 'id' : 'admin-pag-next') }}
                 {% endif %}
             </div>
 
