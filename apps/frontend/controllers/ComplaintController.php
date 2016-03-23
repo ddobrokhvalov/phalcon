@@ -9,6 +9,7 @@ use Multiple\Frontend\Models\Complaint;
 use Multiple\Frontend\Models\Question;
 use Phalcon\Mvc\Controller;
 use \Phalcon\Paginator\Adapter\NativeArray as Paginator;
+use Multiple\Library\PaginatorBuilder;
 
 class ComplaintController extends ControllerBase
 {
@@ -30,7 +31,10 @@ class ComplaintController extends ControllerBase
             "limit" => 10,
             "page"  => $numberPage
         ));
-        $this->view->page = $paginator->getPaginate();
+        $pages = $paginator->getPaginate();
+        $paginator_builder = new PaginatorBuilder($numberPage, $pages->total_pages);
+        $this->view->page = $pages;
+        $this->view->paginator_builder = $paginator_builder->buildPaginationArray();
         $this->view->index_action = true;
 
     }

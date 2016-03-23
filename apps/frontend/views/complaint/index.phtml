@@ -105,11 +105,21 @@
 
             </ul>
             <div>
-                {{ link_to("complaint/index?status="~status, 'Первая') }}
+                {% if page.current>1 %}
                 {{ link_to("complaint/index?page=" ~ page.before ~ "&status="~status, 'Предыдущая') }}
+                {% endif %}
+                {% for page_item in paginator_builder %}
+                {% if page_item['type'] == 'page' %}
+                {{ link_to("complaint/index?page=" ~ page_item['num'] ~ "&status="~status, page_item['num']) }}
+                {% elseif page_item['type'] == 'delimer' %}
+                <span>...</span>
+                {% elseif page_item['type'] == 'current' %}
+                <span>{{page_item['num']}}</span>
+                {% endif %}
+                {% endfor %}
+                {% if page.total_pages > page.current %}
                 {{ link_to("complaint/index?page=" ~ page.next ~ "&status="~status, 'Следующая') }}
-                {{ link_to("complaint/index?page=" ~ page.last ~ "&status="~status, 'Последняя') }}
-                <span class="help-inline">{{ page.current }} из {{ page.total_pages }}</span>
+                {% endif %}
             </div>
 
 
