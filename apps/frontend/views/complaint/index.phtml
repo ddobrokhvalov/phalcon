@@ -42,7 +42,7 @@
             </div>
 
             <ul class="c-c-jlist">
-                {% for complaint in complaints %}
+                {% for complaint in page.items %}
                 <li class="{{ complaint['status'] }}">
                     <div class="c-c-jl-z">
                         <div class="c-c-jl-z-l">
@@ -104,6 +104,27 @@
                 {% endfor %}
 
             </ul>
+            <div class="user-pagination-box">
+                {% if page.current>1 %}
+                {{ link_to("complaint/index?page=" ~ page.before ~ "&status="~status, 'Предыдущая', 'id' : 'user-pag-prev') }}
+                {% endif %}
+                <ul>
+                {% for page_item in paginator_builder %}
+                <li>
+                {% if page_item['type'] == 'page' %}
+                {{ link_to("complaint/index?page=" ~ page_item['num'] ~ "&status="~status, page_item['num']) }}
+                {% elseif page_item['type'] == 'delimer' %}
+                <span>...</span>
+                {% elseif page_item['type'] == 'current' %}
+                <span class="active-user-pag-page">{{page_item['num']}}</span>
+                {% endif %}
+                </li>
+                {% endfor %}
+                </ul>
+                {% if page.total_pages > page.current %}
+                {{ link_to("complaint/index?page=" ~ page.next ~ "&status="~status, 'Следующая', 'id' : 'user-pag-next') }}
+                {% endif %}
+            </div>
 
 
         </div>

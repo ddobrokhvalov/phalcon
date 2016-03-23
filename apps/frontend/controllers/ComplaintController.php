@@ -8,7 +8,8 @@ use Multiple\Frontend\Models\Category;
 use Multiple\Frontend\Models\Complaint;
 use Multiple\Frontend\Models\Question;
 use Phalcon\Mvc\Controller;
-
+use \Phalcon\Paginator\Adapter\NativeArray as Paginator;
+use Multiple\Library\PaginatorBuilder;
 
 class ComplaintController extends ControllerBase
 {
@@ -17,16 +18,22 @@ class ComplaintController extends ControllerBase
         $this->setMenu();
         $complaint = new Complaint();
         $status = 0;
-
-
+        $numberPage = $this->request->getQuery("page", "int");
+        if($numberPage===null) $numberPage = 1;
         if (isset($_GET['status']))
             $status = $_GET['status'];
       
         $complaints = $complaint->findUserComplaints($this->user->id, $status, $this->applicant_id);
         $this->view->complaints = $complaints;
         $this->view->status = $status;
-
-
+        $paginator = new Paginator(array(
+            "data"  => $complaints,
+            "limit" => 10,
+            "page"  => $numberPage
+        ));
+        $pages = $paginator->getPaginate();
+        $this->view->page = $pages;
+        $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->view->index_action = true;
 
     }

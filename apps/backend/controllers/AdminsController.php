@@ -22,7 +22,7 @@ class AdminsController extends ControllerBase
             $query = Criteria::fromInput($this->di, "Multiple\Backend\Models\Admin", $this->request->getPost());
             $this->persistent->searchParams = $query->getParams();
         } else {
-            $numberPage = $this->request->getQuery("page", "int");
+            $numberPage = $this->request->getQuery("page", "int");//todo: init if null
         }
 
         $parameters = array();
