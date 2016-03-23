@@ -104,9 +104,9 @@
                 {% endfor %}
 
             </ul>
-            <div class="admin-pagination-box">
+            <div class="user-pagination-box">
                 {% if page.current>1 %}
-                {{ link_to("complaint/index?page=" ~ page.before ~ "&status="~status, 'Предыдущая', 'id' : 'admin-pag-prev') }}
+                {{ link_to("complaint/index?page=" ~ page.before ~ "&status="~status, 'Предыдущая', 'id' : 'user-pag-prev') }}
                 {% endif %}
                 <ul>
                 {% for page_item in paginator_builder %}
@@ -116,13 +116,13 @@
                 {% elseif page_item['type'] == 'delimer' %}
                 <span>...</span>
                 {% elseif page_item['type'] == 'current' %}
-                <span class="active-pag-page">{{page_item['num']}}</span>
+                <span class="active-user-pag-page">{{page_item['num']}}</span>
                 {% endif %}
                 </li>
                 {% endfor %}
                 </ul>
                 {% if page.total_pages > page.current %}
-                {{ link_to("complaint/index?page=" ~ page.next ~ "&status="~status, 'Следующая', 'id' : 'admin-pag-next') }}
+                {{ link_to("complaint/index?page=" ~ page.next ~ "&status="~status, 'Следующая', 'id' : 'user-pag-next') }}
                 {% endif %}
             </div>
 

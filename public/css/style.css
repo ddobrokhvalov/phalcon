@@ -3114,6 +3114,70 @@ input[type="radio"]:checked + label {
     text-decoration: none;
 }
 
+.user-pagination-box {
+    clear: both;
+    height: 108px;
+    position: relative;
+    border-top: 1px solid #e0e3ea;
+    border-bottom: 1px solid #e0e3ea;
+}
+.user-pagination-box ul {
+    list-style: none;
+    display: table;
+    margin: 37px auto 0;
+}
+.user-pagination-box li {
+    float: left;
+}
+.user-pagination-box li a {
+    margin: 0 4px;
+    padding: 0 13px;
+    color: #34383e;
+    font-size: 16px;
+    line-height: 36px;
+    border-radius: 2px;
+    display: inline-block;
+    text-decoration: none;
+}
+.user-pagination-box li a:hover {
+    background-color: #00aeef;
+    color: #fff;
+    font-weight: 600;
+}
+.user-pagination-box li span {
+    margin: 0 4px;
+    padding: 0 13px;
+    line-height: 36px;
+}
+.user-pagination-box li .active-user-pag-page {
+    display: inline-block;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 2px;
+    background-color: #00aeef;
+}
+.user-pagination-box > a {
+    position: absolute;
+    top: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #34383e;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 14px;
+}
+#user-pag-prev {
+    left: 0;
+    padding-left: 20px;
+    background: url(../images/icon-pag-arr1.png) 0 0 no-repeat;
+}
+#user-pag-next {
+    right: 0;
+    padding-right: 20px;
+    background: url(../images/icon-pag-arr2.png) 100% 0 no-repeat;
+}
+
 /* <~> scroll pane
 ------------------------------ */
 .left-menu-holder.scroll-pane {
