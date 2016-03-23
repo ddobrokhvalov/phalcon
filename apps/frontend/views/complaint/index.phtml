@@ -42,7 +42,7 @@
             </div>
 
             <ul class="c-c-jlist">
-                {% for complaint in complaints %}
+                {% for complaint in page.items %}
                 <li class="{{ complaint['status'] }}">
                     <div class="c-c-jl-z">
                         <div class="c-c-jl-z-l">
@@ -104,6 +104,13 @@
                 {% endfor %}
 
             </ul>
+            <div>
+                {{ link_to("complaint/index?status="~status, 'Первая') }}
+                {{ link_to("complaint/index?page=" ~ page.before ~ "&status="~status, 'Предыдущая') }}
+                {{ link_to("complaint/index?page=" ~ page.next ~ "&status="~status, 'Следующая') }}
+                {{ link_to("complaint/index?page=" ~ page.last ~ "&status="~status, 'Последняя') }}
+                <span class="help-inline">{{ page.current }} из {{ page.total_pages }}</span>
+            </div>
 
 
         </div>
