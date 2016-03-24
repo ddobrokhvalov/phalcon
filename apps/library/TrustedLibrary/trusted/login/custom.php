@@ -11,6 +11,7 @@ function checkUserExistence($user, $user_array){
     else
         return createNewUser($user_array);
 
+
 }
 
 function createNewUser($user_array){
@@ -49,7 +50,7 @@ function onBeforeUserInsert(&$user, $user_array = null) {
  */
 function onUserAuthorized($user, $user_array = null) {
     if($user_array!==null) {
-        $userid = checkUserExistence($user);
+        $userid = checkUserExistence($user, $user_array);
         if ($userid) {
             $user->setUserId($userid);
             $user->save();
