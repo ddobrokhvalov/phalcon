@@ -1,6 +1,6 @@
 <?php
 
-require_once (__DIR__ . '/config.php');
+require_once(__DIR__ . '/config.php');
 require_once(TRUSTED_MODULE_AUTH);
 if (TRUSTED_DEBUG) {
     header("Content-Type: text/plain; charset=utf-8");

@@ -5,6 +5,7 @@ namespace Multiple\Frontend\Controllers;
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\User;
 use Multiple\Library\Log;
+use Multiple\Library\TrustedLibrary;
 
 class LoginController extends Controller
 {
@@ -85,6 +86,54 @@ class LoginController extends Controller
         return $this->dispatcher->forward(
             array(
                 'controller' => 'login',
+                'action' => 'index'
+            )
+        );
+    }
+
+    public function authorizeAction()
+    {
+        require(__DIR__."../../../library/TrustedLibrary/trusted/settings.php");
+        global $DB;
+        require(__DIR__."../../../library/TrustedLibrary/trusted/login/authorize.php");
+        die('12312');
+        if ($this->request->isPost()) {
+
+
+            $email = $this->request->getPost('email');
+            $password = $this->request->getPost('password');
+
+
+            $user = User::findFirst(
+                array(
+                    "email = :email:  AND password = :password:",
+                    'bind' => array(
+                        'email' => $email,
+                        'password' => sha1($password)
+                    )
+                )
+            );
+
+            if ($user != false) {
+
+                $this->_registerSession($user);
+
+
+                return $this->dispatcher->forward(
+                    array(
+                        'controller' => 'complaint',
+                        'action' => 'index'
+                    )
+                );
+            }
+
+
+        }
+
+
+        return $this->dispatcher->forward(
+            array(
+                'controller' => 'index',
                 'action' => 'index'
             )
         );

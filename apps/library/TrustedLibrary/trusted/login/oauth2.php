@@ -1,18 +1,19 @@
 <?php
 
-require_once (__DIR__ . '/config.php');
+require_once(__DIR__ . '/config.php');
 require_once TRUSTED_MODULE_DATA;
 require_once TRUSTED_MODULE_AUTH_ROOT . "/custom.php";
 
 //session_start();
-
 $DB = null;
-
+var_dump(TRUSTED_DB);
 if (TRUSTED_DB) {
+    echo "35435345";
     $DB = new TDataBase();
     $r = $DB->Connect(TRUSTED_DB_HOST, TRUSTED_DB_NAME, TRUSTED_DB_LOGIN, TRUSTED_DB_PASSWORD);
 }
 
+var_dump($DB);
 /**
  * Description of oath2
  *

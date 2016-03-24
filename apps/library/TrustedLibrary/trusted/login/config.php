@@ -1,6 +1,6 @@
 <?php
 
-require_once (__DIR__ . '/../config.php');
+require_once(__DIR__ . '/../config.php');
 
 //TrustedNet URI
 define('TRUSTED_COMMAND_URI_OAUTH', TRUSTED_COMMAND_URI_HOST . '/idp/sso/oauth');
@@ -13,8 +13,8 @@ define('TRUSTED_COMMAND_URI_USERPROFILE', TRUSTED_COMMAND_URI_HOST . '/trustedap
 define('TRUSTED_URI_MODULE_AUTH', TRUSTED_URI_MODULE . TRUSTED_MODULE_AUTH_PATH);
 
 //OAuth params
-define("TRUSTED_AUTH_REDIRECT_URI", TRUSTED_URI_MODULE_AUTH . "/authorize.php");
-define("TRUSTED_AUTH_WIDGET_REDIRECT_URI", TRUSTED_URI_MODULE_AUTH . "/wauth.php");
+define("TRUSTED_AUTH_REDIRECT_URI", TRUSTED_URI_MODULE_AUTH . "/authorize");
+define("TRUSTED_AUTH_WIDGET_REDIRECT_URI", TRUSTED_URI_MODULE_AUTH . "/wauth");
 
 //Token status
 define("TRUSTEDNET_AUTH_TOKEN_STATUS_ERROR", 0);

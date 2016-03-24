@@ -1,6 +1,6 @@
 <?php
 
-require_once (__DIR__ . '/../config.php');
+require_once(__DIR__ . '/../config.php');
 
 //data base
 define("TRUSTEDNET_DB_TABLE_USER", "trn_user");

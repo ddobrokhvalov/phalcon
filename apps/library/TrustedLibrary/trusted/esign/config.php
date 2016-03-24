@@ -1,6 +1,6 @@
 <?php
 
-require_once (__DIR__ . '/../config.php');
+require_once(__DIR__ . '/../config.php');
 
 //path
 define('TRUSTED_MODULE_SIGN_PATH', '/esign');
