@@ -3,14 +3,14 @@
 namespace Multiple\Frontend\Controllers;
 
 use Phalcon\Mvc\Controller;
+use Multiple\Library\TrustedLibrary;
 
 class IndexController extends Controller
 {
 
 	public function indexAction()
 	{
-		require(__DIR__."../../../library/TrustedLibrary/trusted/login/common.php");
-		define("TRUSTED_LOGIN_PLUGIN_PATH", "https://net.trusted.ru/static/");
+		TrustedLibrary::trusted_library_init();
 		$this->view->TRUSTED_LOGIN_PLUGIN_PATH = TRUSTED_LOGIN_PLUGIN_PATH;
 		$this->view->TRUSTED_AUTH_REDIRECT_URI = TRUSTED_AUTH_REDIRECT_URI;
 		$this->view->TRUSTED_LOGIN_CLIENT_ID = TRUSTED_LOGIN_CLIENT_ID;

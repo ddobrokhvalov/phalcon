@@ -93,10 +93,7 @@ class LoginController extends Controller
 
     public function authorizeAction()
     {
-        require(__DIR__."../../../library/TrustedLibrary/trusted/settings.php");
-        global $DB;
-        require(__DIR__."../../../library/TrustedLibrary/trusted/login/authorize.php");
-        exit();
+        TrustedLibrary::trusted_library_authorize();
     }
 
     public function indexAction()
