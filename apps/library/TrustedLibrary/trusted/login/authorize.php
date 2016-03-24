@@ -60,7 +60,7 @@ try {
             debug('Token', $token);
             if (onUserAuthorized) {
                 debug('Event onUserAuthorized');
-                onUserAuthorized($user);
+                onUserAuthorized($user, $user_array);
             }
             header("Location: " . TRUSTED_AUTHORIZED_REDIRECT);
         } else {

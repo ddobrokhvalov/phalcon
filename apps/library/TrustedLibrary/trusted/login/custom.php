@@ -5,7 +5,11 @@ use Multiple\Frontend\Models\User;
  * @param \TUser $user Пользователе
  */
 
-function checkUserExistence($user){
+function checkUserExistence($user, $user_array){
+    if($user->getUserId())
+        return false;
+    else
+        return createNewUser($user_array);
 
 }
 
@@ -16,7 +20,10 @@ function createNewUser($user_array){
     $user_new->password = hash('md5',time());
     $user_new->status = 1;
     $user_new->date_registration = date("Y-m-d H:i:s");
-    return $user_new->id;
+    if($user_new->save()!==false)
+        return $user_new->id;
+    else
+        return false;
 }
 
 function onRegUserFound($user) {
@@ -29,20 +36,25 @@ function onRegUserFound($user) {
  * @throws OAuth2Exception
  */
 function onBeforeUserInsert(&$user, $user_array = null) {
-    $userid = createNewUser($user_array);
-    var_dump($userid);
-    if($userid)$user->setUserId($userid);
-
-    //Ваш код здесь
+    if($user_array!==null) {
+        $userid = createNewUser($user_array);
+        if ($userid)
+            $user->setUserId($userid);
+    }
 }
 
 /**
  * Событие происходит после успешной авторизации пользователя
  * @param \TUser $user
  */
-function onUserAuthorized($user) {
-    //checkUserExistence($user);
-    die('657567');
+function onUserAuthorized($user, $user_array = null) {
+    if($user_array!==null) {
+        $userid = checkUserExistence($user);
+        if ($userid) {
+            $user->setUserId($userid);
+            $user->save();
+        }
+    }
 }
 
 /**
