@@ -2,7 +2,7 @@
 
 // error_reporting(E_ALL);
 
-define("TRUSTED_DEBUG", true);
+define("TRUSTED_DEBUG", false);
 
 define("TRUSTED_SSL_VERSION", 0);
 
