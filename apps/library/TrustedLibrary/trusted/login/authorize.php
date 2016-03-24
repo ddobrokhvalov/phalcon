@@ -51,7 +51,7 @@ try {
                     $user = TUser::fromArray($user_array);
                     if (onBeforeUserInsert) {
                         debug('Event onBeforeUserInsert');
-                        onBeforeUserInsert($user);
+                        onBeforeUserInsert($user, $user_array);
                     }
                     $user->save();
                 }

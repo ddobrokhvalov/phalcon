@@ -1,11 +1,26 @@
 <?php
-
+use Multiple\Frontend\Models\User;
 /**
  * Событие происходит если пользователь уже зарегистрирован в системе
  * @param \TUser $user Пользователе
  */
+
+function checkUserExistence($user){
+
+}
+
+function createNewUser($user_array){
+    $user_new = new User();
+    $user_new->username = $user_array['username'];
+    $user_new->email = $user_array['email'];
+    $user_new->password = hash('md5',time());
+    $user_new->status = 1;
+    $user_new->date_registration = date("Y-m-d H:i:s");
+    return $user_new->id;
+}
+
 function onRegUserFound($user) {
-    //Ваш код здесь
+
 }
 
 /**
@@ -13,7 +28,11 @@ function onRegUserFound($user) {
  * @param \TUser $user Пользователь
  * @throws OAuth2Exception
  */
-function onBeforeUserInsert(&$user) {
+function onBeforeUserInsert(&$user, $user_array = null) {
+    $userid = createNewUser($user_array);
+    var_dump($userid);
+    if($userid)$user->setUserId($userid);
+
     //Ваш код здесь
 }
 
@@ -22,7 +41,8 @@ function onBeforeUserInsert(&$user) {
  * @param \TUser $user
  */
 function onUserAuthorized($user) {
-    //Ваш код здесь
+    //checkUserExistence($user);
+    die('657567');
 }
 
 /**
@@ -42,7 +62,7 @@ function onException($e) {
     //Ваш код здесь
     unset($_SESSION['TRUSTEDNET']);
     $tpl = file_get_contents(TRUSTED_MODULE_ROOT. "/../error.php");
-    $message = "onOAuth2Exception" . PHP_EOL . $e . PHP_EOL;    
+    $message = "onOAuth2Exception" . PHP_EOL . $e->getMessage() . PHP_EOL;
     $tpl2 = str_replace('${message}', $message, $tpl);
     echo($tpl2);
     die();

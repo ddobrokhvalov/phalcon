@@ -10,7 +10,7 @@
         <h1>Ошибка</h1>
         <div class='view-contaier'>
             <pre class="message">${message}</pre>
-            <a href="/login/index.php" class='view-login'>На главную</a>
+            <a href="/" class='view-login'>На главную</a>
         <div class='view-contaier'>
     </div>
 </body>

@@ -6,14 +6,11 @@ require_once TRUSTED_MODULE_AUTH_ROOT . "/custom.php";
 
 //session_start();
 $DB = null;
-var_dump(TRUSTED_DB);
 if (TRUSTED_DB) {
-    echo "35435345";
     $DB = new TDataBase();
     $r = $DB->Connect(TRUSTED_DB_HOST, TRUSTED_DB_NAME, TRUSTED_DB_LOGIN, TRUSTED_DB_PASSWORD);
 }
 
-var_dump($DB);
 /**
  * Description of oath2
  *
@@ -622,7 +619,7 @@ class TAuthCommand {
                 throw new OAuth2Exception(TRUSTEDNET_ERROR_MSG_CURL, TRUSTEDNET_ERROR_CODE_CURL, null);
             }
             curl_close($curl);
-            // TODO: wrong $result
+
             $response = json_decode($result, true);
         }
         $res = null;
