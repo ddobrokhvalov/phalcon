@@ -70,7 +70,10 @@ class Module
 			);
 			return $view;
 		});
-
+         $di->set('config',function(){
+			 $config = new ConfigIni("config/config.ini");
+			 return $config->database->toArray();
+		 });
 		$di->set('db', function() {
 			$config = new ConfigIni("config/config.ini");
 			return new Database($config->database->toArray());

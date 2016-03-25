@@ -5,6 +5,7 @@ namespace Multiple\Frontend\Controllers;
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\User;
 use Multiple\Library\Log;
+use Multiple\Library\TrustedLibrary;
 
 class LoginController extends Controller
 {
@@ -88,6 +89,11 @@ class LoginController extends Controller
                 'action' => 'index'
             )
         );
+    }
+
+    public function authorizeAction()
+    {
+        TrustedLibrary::trusted_library_authorize();
     }
 
     public function indexAction()
