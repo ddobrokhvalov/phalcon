@@ -8,7 +8,7 @@ define("TRUSTED_SSL_VERSION", 0);
 
 /* ===== Database ===== */
 // Использовать базу данных
-define("TRUSTED_DB", true);
+/*define("TRUSTED_DB", true);
 // Хост базы данных
 define("TRUSTED_DB_HOST", "localhost");
 // Имя базы данных
@@ -16,7 +16,7 @@ define("TRUSTED_DB_NAME", "fas");
 // Логин для доступа к базе данных
 define("TRUSTED_DB_LOGIN", "root");
 // Пароль для доступа к базе данных
-define("TRUSTED_DB_PASSWORD", "");
+define("TRUSTED_DB_PASSWORD", "");*/
 
 
 /* ===== Module trustednet ===== */
