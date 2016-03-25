@@ -57,14 +57,18 @@ function onUserAuthorized($user, $user_array = null) {
             $user->save();
         }
     }
-    $session = new SessionAdapter();
-    $session->set(
-        'auth',
-        array(
-            'id' => $user->getUserId(),
-            'email' => $user_array!==null?$user_array['email']:null,
-        )
-    );
+    $userid = $user->getUserId();
+    if($userid) {
+        $session = new SessionAdapter();
+        $session->set(
+            'auth',
+            array(
+                'id' => $user->getUserId(),
+                'email' => $user_array !== null ? $user_array['email'] : null,
+            )
+        );
+    } else
+        throw new OAuth2Exception('error trying to login', 0, null);
 }
 
 /**
