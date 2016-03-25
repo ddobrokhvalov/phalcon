@@ -1,6 +1,7 @@
 <?php
 namespace Multiple\Library;
 use Phalcon\Di;
+use Multiple\Frontend\Models\Configurations;
 class TrustedLibrary{
 
     static function get_settings(){
@@ -13,6 +14,17 @@ class TrustedLibrary{
         define("TRUSTED_DB_NAME", $config['dbname']);
         define("TRUSTED_DB_LOGIN", $config['username']);
         define("TRUSTED_DB_PASSWORD", $config['password']);
+        $configurations_arr = Configurations::find(
+            array(
+                "group_name = :group_name:",
+                'bind' => array(
+                    'group_name' => 'trustedlogin',
+                )
+            )
+        );
+        if(count($configurations_arr))
+            foreach($configurations_arr as $conf_item)
+                define($conf_item->name, $conf_item->value);
     }
 
     static function trusted_library_init(){
