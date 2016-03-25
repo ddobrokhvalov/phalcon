@@ -1,5 +1,6 @@
 <?php
 use Multiple\Frontend\Models\User;
+use Phalcon\Session\Adapter\Files as SessionAdapter;
 /**
  * Событие происходит если пользователь уже зарегистрирован в системе
  * @param \TUser $user Пользователе
@@ -17,7 +18,7 @@ function checkUserExistence($user, $user_array){
 function createNewUser($user_array){
     $user_new = new User();
     $user_new->username = $user_array['username'];
-    $user_new->email = $user_array['email'];
+    $user_new->email = $user_array['email']!==null?$user_array['email']:'test@test.test';
     $user_new->password = hash('md5',time());
     $user_new->status = 1;
     $user_new->date_registration = date("Y-m-d H:i:s");
@@ -56,6 +57,14 @@ function onUserAuthorized($user, $user_array = null) {
             $user->save();
         }
     }
+    $session = new SessionAdapter();
+    $session->set(
+        'auth',
+        array(
+            'id' => $user->getUserId(),
+            'email' => $user_array!==null?$user_array['email']:null,
+        )
+    );
 }
 
 /**
