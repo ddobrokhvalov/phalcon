@@ -39,7 +39,7 @@ class Complaint extends Model
         $sql = "SELECT c.*, ap.name_short as apname FROM complaint as c
          LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
          LEFT JOIN user u ON(ap.user_id = u.id )
-         WHERE u.id =$user_id ";
+         WHERE u.id =$user_id "; //todo: do we really need LEFT JOIN if the filter by the last RIGHT table?
         if ($status) {
             $sql .= " AND c.status = '$status'";
         }
