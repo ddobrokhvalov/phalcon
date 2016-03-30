@@ -104,15 +104,21 @@ class Complaint extends Model
          WHERE c.status = 'under_consideration' OR c.status = 'submitted'");
          return $result->fetchAll();
     }
-    public function changeStatus($status, $data, $user_id = false)
+    public function changeStatus($status, $data, $user_id = false)//todo: do we need user_id
     {
-        foreach ($data as $id) {
+        foreach ($data as $id) { //todo: make through db query this. 'id IN ()' is faster then ORM
 
          //   if ($this->checkComplaintOwner($id, $user_id)) {
-
                 $complaint = Complaint::findFirstById($id);
-
-                if ($status == 'delete') {
+                if(!$complaint || $complaint->status==$status)
+                    continue;
+                elseif ($status == 'delete') {
+                    $complaintmovinghistory_arr = ComplaintMovingHistory::find(array(
+                        "complaint_id = :complaint_id:",
+                        "bind" => array("complaint_id" => $id)
+                        )
+                    );
+                    foreach ($complaintmovinghistory_arr as $item) $item->delete(); //todo: make through db query this
                     $complaint->delete();
                 }elseif ($status == 'copy') {
                     $newComplaint = new Complaint();
@@ -123,8 +129,9 @@ class Complaint extends Model
                     $newComplaint->status = 'draft';
                     $newComplaint->save();
                     return $newComplaint->id;
-
                 }else {
+                    $complaintmovinghistory = new ComplaintMovingHistory();
+                    $complaintmovinghistory->save(['complaint_id'=>$id, 'old_status'=>$complaint->status, 'new_status'=>$status]);
                     $complaint->status = $status;
                     $complaint->save();
                 }
