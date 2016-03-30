@@ -1,4 +1,4 @@
-﻿/* CSS Reset */
+/* CSS Reset */
 
 html,
 body,
@@ -1314,6 +1314,19 @@ input[type=text]:focus, textarea:focus {
 }
 .c-cs-btns {
     float: right;
+    position: relative;
+}
+.c-cs-btns:after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+.c-cs-btns.c-cs-btns-after:after {
+    z-index: -1;
 }
 .c-cs-btns a {
     float: left;
@@ -3182,4 +3195,11 @@ input[type="radio"]:checked + label {
 ------------------------------ */
 .left-menu-holder.scroll-pane {
     height: 766px;
+    padding-right: 12px !important;
+}
+/* editor.css */
+body .cke_float {
+    border: 0;
+    margin-top: -104px;
+    margin-left: -38px;
 }
