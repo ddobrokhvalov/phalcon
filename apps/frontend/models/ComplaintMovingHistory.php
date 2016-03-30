@@ -10,7 +10,7 @@ class ComplaintMovingHistory extends Model
     public $old_status;
     public $new_status;
     public $date;
-
+    //todo: make connection to Complaint
     public function initialize()
     {
         $this->setSource('complaint_moving_history');
