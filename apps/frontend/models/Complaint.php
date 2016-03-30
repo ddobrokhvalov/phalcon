@@ -70,8 +70,7 @@ class Complaint extends Model
         $result = $db->query("SELECT COUNT(c.id) as num, c.status  FROM complaint as c
          LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
          LEFT JOIN user u ON(ap.user_id = u.id )
-         WHERE u.id =$user_id GROUP BY c.status ");
-
+         WHERE u.id =$user_id GROUP BY c.status ");  //todo: do we really need LEFT JOIN if the filter on the last RIGHT table? It will return something ONLY if u.id is not NULL!
         $result = $result->fetchAll();
         $total = 0;
         $complaints_num = array();
