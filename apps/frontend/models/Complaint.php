@@ -54,7 +54,7 @@ class Complaint extends Model
     public function addComplaint($data, $status = 'draft')
     {
         // test mode
-        $status = 'submitted';
+        //$status = 'submitted';
             //
         $this->status = $status;
         $this->date = date('Y-m-d H:i:s');
