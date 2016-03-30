@@ -80,10 +80,15 @@ class ComplaintController extends ControllerBase
 
         $complaint->addComplaint($data);
 
-        if ($complaint->save())
+        if ($complaint->save()) //todo: if the error it still say that everything is ok. JS ERROR
             echo $complaint->id;
-        else
+        else {
             echo 'error save';
+            /*foreach ($complaint->getMessages() as $message)
+            {
+                echo $message->getMessage(), "<br/>";
+            }*/
+        }
         exit;
     }
 
