@@ -41,7 +41,7 @@ class ComplaintController extends ControllerBase
     public function editAction($id)
     {
         $complaint = Complaint::findFirstById($id);
-        if (!$complaint || $complaint->status !='draft' || !$complaint->checkComplaintOwner($id, $this->user->id))
+        if (!$complaint || !$complaint->checkComplaintOwner($id, $this->user->id))
             return $this->forward('complaint/index');
 
         $complaint->purchases_name = str_replace("\r\n", " ", $complaint->purchases_name);
@@ -52,7 +52,7 @@ class ComplaintController extends ControllerBase
         $this->view->complaint_question = $complaintQuestion;
 
         $this->view->action_edit = false;
-        if (isset($_GET['action']) && $_GET['action'] == 'edit')
+        if (isset($_GET['action']) && $_GET['action'] == 'edit' && $complaint->status !='draft')
             $this->view->action_edit = true;
 
     }
@@ -134,15 +134,10 @@ class ComplaintController extends ControllerBase
     {
         $data = $this->request->getPost();
         $complaint = Complaint::findFirstById($data['complaint_id']);
-        if (!$complaint) {
+        if (!$complaint || $complaint->status!='draft' || !$complaint->checkComplaintOwner($data['complaint_id'], $this->user->id)) {
             echo 'error';
             exit;
         }
-        if (!$complaint->checkComplaintOwner($data['complaint_id'], $this->user->id)) {
-            echo 'error';
-            exit;
-        }
-
         echo $complaint->saveComplaint($data);
         exit;
 
