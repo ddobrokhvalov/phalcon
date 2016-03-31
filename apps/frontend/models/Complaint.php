@@ -113,7 +113,7 @@ class Complaint extends Model
                     continue;
                 elseif ($status == 'activate') {  //This return from arhive. We need to check history and set last status.
                     $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
-                    if ($complainthistory) $this->changeStatus([$id], $complainthistory->old_status);
+                    $this->changeStatus($complainthistory?$complainthistory->old_status:'draft', [$id] );
                 }
                 elseif ($status == 'delete') {
                     ComplaintMovingHistory::delete_history($id);                      
