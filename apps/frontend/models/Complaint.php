@@ -39,7 +39,7 @@ class Complaint extends Model
         $sql = "SELECT c.*, ap.name_short as apname FROM complaint as c
          LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
          LEFT JOIN user u ON(ap.user_id = u.id )
-         WHERE u.id =$user_id ";
+         WHERE u.id =$user_id "; //todo: do we really need LEFT JOIN if the filter on the last RIGHT table? It will return something ONLY if u.id is not NULL!
         if ($status) {
             $sql .= " AND c.status = '$status'";
         }
@@ -54,7 +54,7 @@ class Complaint extends Model
     public function addComplaint($data, $status = 'draft')
     {
         // test mode
-        $status = 'submitted';
+        //$status = 'submitted';
             //
         $this->status = $status;
         $this->date = date('Y-m-d H:i:s');
@@ -70,8 +70,7 @@ class Complaint extends Model
         $result = $db->query("SELECT COUNT(c.id) as num, c.status  FROM complaint as c
          LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
          LEFT JOIN user u ON(ap.user_id = u.id )
-         WHERE u.id =$user_id GROUP BY c.status ");
-
+         WHERE u.id =$user_id GROUP BY c.status ");  //todo: do we really need LEFT JOIN if the filter on the last RIGHT table? It will return something ONLY if u.id is not NULL!
         $result = $result->fetchAll();
         $total = 0;
         $complaints_num = array();
@@ -104,15 +103,20 @@ class Complaint extends Model
          WHERE c.status = 'under_consideration' OR c.status = 'submitted'");
          return $result->fetchAll();
     }
-    public function changeStatus($status, $data, $user_id = false)
+
+    public function changeStatus($status, $data, $user_id = false)//todo: do we need user_id
     {
-        foreach ($data as $id) {
-
+        foreach ($data as $id) { //todo: make through db query this. 'id IN ()' is faster then ORM
          //   if ($this->checkComplaintOwner($id, $user_id)) {
-
                 $complaint = Complaint::findFirstById($id);
-
-                if ($status == 'delete') {
+                if(!$complaint || $complaint->status==$status || ($complaint->status!='submited' && $status=='recall'))
+                    continue;
+                elseif ($status == 'activate') {  //This return from arhive. We need to check history and set last status.
+                    $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
+                    $this->changeStatus($complainthistory?$complainthistory->old_status:'draft', [$id] );
+                }
+                elseif ($status == 'delete') {
+                    ComplaintMovingHistory::delete_history($id);                      
                     $complaint->delete();
                 }elseif ($status == 'copy') {
                     $newComplaint = new Complaint();
@@ -123,8 +127,9 @@ class Complaint extends Model
                     $newComplaint->status = 'draft';
                     $newComplaint->save();
                     return $newComplaint->id;
-
-                }else {
+                } else {
+                    $complaintmovinghistory = new ComplaintMovingHistory();
+                    $complaintmovinghistory->save(['complaint_id'=>$id, 'old_status'=>$complaint->status, 'new_status'=>$status]);
                     $complaint->status = $status;
                     $complaint->save();
                 }
@@ -133,6 +138,7 @@ class Complaint extends Model
           //  }
         }
     }
+
     public function saveComplaint($data){
         $this->type = $data['type'];
         $this->purchases_made = $data['purchases_made'];

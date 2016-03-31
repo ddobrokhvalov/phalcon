@@ -26,7 +26,7 @@ define('TRUSTED_MODULE_PATH', '/apps/library/TrustedLibrary/trusted');
 
 /* ===== Login ===== */
 // Учетные данные приложения trusted.login
-define("TRUSTED_LOGIN_CLIENT_ID", "07805581299303de4b97b3fa6143d39e");
-define("TRUSTED_LOGIN_CLIENT_SECRET", "secret");
+//define("TRUSTED_LOGIN_CLIENT_ID", "07805581299303de4b97b3fa6143d39e");
+//define("TRUSTED_LOGIN_CLIENT_SECRET", "secret");
 // Путь перехода после успешной аутентификации
 define("TRUSTED_AUTHORIZED_REDIRECT", "/complaint/index");

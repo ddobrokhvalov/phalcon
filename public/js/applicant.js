@@ -32,6 +32,14 @@ $(document).ready(function () {
 
         applicant.checkInn($('#czvr3').val());
     });
+
+    $('.c-content input[type="checkbox"]').click(function() {
+        if ($(this).prop('checked')) {
+            $('.c-cs-btns').addClass('c-cs-btns-after');
+        } else {
+            $('.c-cs-btns').removeClass('c-cs-btns-after');
+        }
+    });
 });
 var applicant = {
     id: false,

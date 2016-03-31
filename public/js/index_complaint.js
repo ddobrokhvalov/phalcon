@@ -34,10 +34,9 @@ $(document).ready(function () {
     });
 
     $('.button-recall').click(function(){
-        if(currentStatus == 'submitted'){
-
+        //if(currentStatus == 'submitted'){
             indexComplaint.recall();
-        }
+        //}
     });
 
 });
