@@ -41,11 +41,8 @@ class ComplaintController extends ControllerBase
     public function editAction($id)
     {
         $complaint = Complaint::findFirstById($id);
-        if (!$complaint)
+        if (!$complaint || !$complaint->checkComplaintOwner($id, $this->user->id))
             return $this->forward('complaint/index');
-        if (!$complaint->checkComplaintOwner($id, $this->user->id))
-            return $this->forward('complaint/index');
-
 
         $complaint->purchases_name = str_replace("\r\n", " ", $complaint->purchases_name);
         $question = new Question();
@@ -55,7 +52,7 @@ class ComplaintController extends ControllerBase
         $this->view->complaint_question = $complaintQuestion;
 
         $this->view->action_edit = false;
-        if (isset($_GET['action']) && $_GET['action'] == 'edit')
+        if (isset($_GET['action']) && $_GET['action'] == 'edit' && $complaint->status !='draft')
             $this->view->action_edit = true;
 
     }
@@ -111,22 +108,20 @@ class ComplaintController extends ControllerBase
             $data = array($id);
         }
 
-
-
-        foreach ($data as $v) {
+        //$complaint = new Complaint();
+        //$complaint->changeStatus('recalled', $data, $this->user->id); //todo: refactor to this later
+        foreach ($data as $v) { //todo: whole array can be passed in $complaint->changeStatus
             $complaint = Complaint::findFirstById($v);
             if (!$complaint)
                 return $this->forward('complaint/index');
             if (!$complaint->checkComplaintOwner($v, $this->user->id))
                 return $this->forward('complaint/index');
-            if($complaint->status=='submited') {
-                $complaintmovinghistory = new ComplaintMovingHistory();
-                $complaintmovinghistory->save(['complaint_id'=>$v, 'old_status'=>'submited', 'new_status'=>'recalled']);
-                $complaint->status = 'recalled';
-                $complaint->save();
+            if($complaint->status=='submitted') {
+                $complaint = new Complaint();
+                $complaint->changeStatus('recalled', [$v], $this->user->id);
             }
         }
-        if ($id == '0') {
+        if ($id == '0') { //todo: maby we need json response
             echo 'true';
             exit;
         }else
@@ -139,15 +134,10 @@ class ComplaintController extends ControllerBase
     {
         $data = $this->request->getPost();
         $complaint = Complaint::findFirstById($data['complaint_id']);
-        if (!$complaint) {
+        if (!$complaint || $complaint->status!='draft' || !$complaint->checkComplaintOwner($data['complaint_id'], $this->user->id)) {
             echo 'error';
             exit;
         }
-        if (!$complaint->checkComplaintOwner($data['complaint_id'], $this->user->id)) {
-            echo 'error';
-            exit;
-        }
-
         echo $complaint->saveComplaint($data);
         exit;
 
