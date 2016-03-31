@@ -107,13 +107,17 @@ class Complaint extends Model
     public function changeStatus($status, $data, $user_id = false)//todo: do we need user_id
     {
         foreach ($data as $id) { //todo: make through db query this. 'id IN ()' is faster then ORM
+                                 //todo: $complaint->checkComplaintOwner($v, $this->user->id) add this
          //   if ($this->checkComplaintOwner($id, $user_id)) {
                 $complaint = Complaint::findFirstById($id);
-                if(!$complaint || $complaint->status==$status || ($complaint->status!='submited' && $status=='recall')) 
+                if(!$complaint || $complaint->status==$status || ($complaint->status!='submitted' && $status=='recall'))
                     continue;
                 elseif ($status == 'activate') {  //This return from arhive. We need to check history and set last status.
                     $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
-                    $this->changeStatus($complainthistory?$complainthistory->old_status:'draft', [$id] );
+                    if($complainthistory)
+                        $this->changeStatus($complainthistory->old_status, [$id]);
+                    else
+                        $this->changeStatus('draft', [$id]);
                 }
                 elseif ($status == 'delete') {
                     ComplaintMovingHistory::delete_history($id);                      

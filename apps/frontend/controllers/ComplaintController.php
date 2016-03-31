@@ -108,18 +108,18 @@ class ComplaintController extends ControllerBase
             $data = array($id);
         }
 
-
-
-        foreach ($data as $v) {
+        //$complaint = new Complaint();
+        //$complaint->changeStatus('recalled', $data, $this->user->id); //todo: refactor to this later
+        foreach ($data as $v) { //todo: whole array can be passed in $complaint->changeStatus
             $complaint = Complaint::findFirstById($v);
             if (!$complaint)
                 return $this->forward('complaint/index');
             if (!$complaint->checkComplaintOwner($v, $this->user->id))
                 return $this->forward('complaint/index');
-            if($complaint->status=='submited') {
+            if($complaint->status=='submitted') {
                 $complaint = new Complaint();
-                $complaint->changeStatus('recalled', [$id], $this->user->id);
-              }
+                $complaint->changeStatus('recalled', [$v], $this->user->id);
+            }
         }
         if ($id == '0') { //todo: maby we need json response
             echo 'true';

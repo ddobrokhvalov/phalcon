@@ -47,7 +47,7 @@ var indexComplaint = {
     returnButton:false,
     inArchivButton:false,
     deleteButton:false,
-    recall: function(){
+    recall: function(){//todo: mabe we need to use changeStatus
         var data = JSON.stringify(this.selectedComplaint);
         $.ajax({
             type: 'POST',
@@ -59,7 +59,7 @@ var indexComplaint = {
                     document.location.href = '/complaint/edit/'+msg;
                 else
                     document.location.href = '/complaint/index?status=recalled'; */
-                document.location.href = '/complaint/index?status=recalled';
+                //document.location.href = '/complaint/index?status=recalled';
             },
             error: function (msg) {
                 console.log(msg);
