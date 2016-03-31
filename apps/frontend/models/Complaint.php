@@ -103,32 +103,20 @@ class Complaint extends Model
          WHERE c.status = 'under_consideration' OR c.status = 'submitted'");
          return $result->fetchAll();
     }
+
     public function changeStatus($status, $data, $user_id = false)//todo: do we need user_id
     {
         foreach ($data as $id) { //todo: make through db query this. 'id IN ()' is faster then ORM
          //   if ($this->checkComplaintOwner($id, $user_id)) {
                 $complaint = Complaint::findFirstById($id);
-                if ($status == 'activate') { //This return from arhive. We need to check history and set last status.
-                    $complainthistory = ComplaintMovingHistory::findFirst(array(
-                        "complaint_id = :complaint_id:",
-                        "bind" => array("complaint_id" => $id),
-                        "order" => "date desc"
-                    ));
-                    if($complainthistory)
-                        $status = $complainthistory->old_status;
-                    else
-                        continue;
-                }
-
-                if(!$complaint || $complaint->status==$status)
+                if(!$complaint || $complaint->status==$status || ($complaint->status!='submited' && $status=='recall'))
                     continue;
+                elseif ($status == 'activate') {  //This return from arhive. We need to check history and set last status.
+                    $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
+                    if ($complainthistory) $this->changeStatus([$id], $complainthistory->old_status);
+                }
                 elseif ($status == 'delete') {
-                    $complaintmovinghistory_arr = ComplaintMovingHistory::find(array(
-                        "complaint_id = :complaint_id:",
-                        "bind" => array("complaint_id" => $id)
-                        )
-                    );
-                    foreach ($complaintmovinghistory_arr as $item) $item->delete(); //todo: make through db query this
+                    ComplaintMovingHistory::delete_history($id);                      
                     $complaint->delete();
                 }elseif ($status == 'copy') {
                     $newComplaint = new Complaint();
@@ -139,7 +127,7 @@ class Complaint extends Model
                     $newComplaint->status = 'draft';
                     $newComplaint->save();
                     return $newComplaint->id;
-                }else {
+                } else {
                     $complaintmovinghistory = new ComplaintMovingHistory();
                     $complaintmovinghistory->save(['complaint_id'=>$id, 'old_status'=>$complaint->status, 'new_status'=>$status]);
                     $complaint->status = $status;
@@ -150,6 +138,7 @@ class Complaint extends Model
           //  }
         }
     }
+
     public function saveComplaint($data){
         $this->type = $data['type'];
         $this->purchases_made = $data['purchases_made'];

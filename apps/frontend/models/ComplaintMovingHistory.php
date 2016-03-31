@@ -20,4 +20,13 @@ class ComplaintMovingHistory extends Model
     {
         return 'complaint_moving_history';
     }
+
+    public static function delete_history($complaint_id){
+        $complaintmovinghistory_arr = self::find(array(
+                "complaint_id = :complaint_id:",
+                "bind" => array("complaint_id" => $complaint_id)
+            )
+        );
+        foreach ($complaintmovinghistory_arr as $item) $item->delete(); //todo: make through db query this
+    }
 }
