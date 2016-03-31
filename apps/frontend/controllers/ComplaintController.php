@@ -41,11 +41,8 @@ class ComplaintController extends ControllerBase
     public function editAction($id)
     {
         $complaint = Complaint::findFirstById($id);
-        if (!$complaint)
+        if (!$complaint || $complaint->status !='draft' || !$complaint->checkComplaintOwner($id, $this->user->id))
             return $this->forward('complaint/index');
-        if (!$complaint->checkComplaintOwner($id, $this->user->id))
-            return $this->forward('complaint/index');
-
 
         $complaint->purchases_name = str_replace("\r\n", " ", $complaint->purchases_name);
         $question = new Question();
