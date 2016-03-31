@@ -117,8 +117,8 @@ class ComplaintController extends ControllerBase
             if (!$complaint->checkComplaintOwner($v, $this->user->id))
                 return $this->forward('complaint/index');
             if($complaint->status=='submited') {
-                $complaintmovinghistory = new ComplaintMovingHistory();
-                $complaintmovinghistory->save(['complaint_id'=>$v, 'old_status'=>'submited', 'new_status'=>'recalled']);
+                $complaint = new Complaint();
+                $result = $complaint->changeStatus('recalled', [$id], $this->user->id);
                 $complaint->status = 'recalled';
                 $complaint->save();
             }
