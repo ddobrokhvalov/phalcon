@@ -52,7 +52,7 @@ class ComplaintController extends ControllerBase
         $this->view->complaint_question = $complaintQuestion;
 
         $this->view->action_edit = false;
-        if (isset($_GET['action']) && $_GET['action'] == 'edit' && $complaint->status !='draft')
+        if (isset($_GET['action']) && $_GET['action'] == 'edit' && $complaint->status =='draft')
             $this->view->action_edit = true;
 
     }
