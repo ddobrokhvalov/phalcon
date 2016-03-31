@@ -81,9 +81,9 @@ class ComplaintController extends ControllerBase
         $complaint->addComplaint($data);
 
         if ($complaint->save())
-            $response = array('result' => 'success', 'id'=>$complaint->id);
+            $response = array('result' => 'success', 'id' => $complaint->id);
         else
-            $response = array('result' => 'error', 'message'=>'Ошибка при попытке сохранения жалобы');
+            $response = array('result' => 'error', 'message' => 'Ошибка при попытке сохранения жалобы');
         echo json_encode($response);
         exit;
     }
