@@ -88,7 +88,7 @@ var indexComplaint = {
                 if(status == 'copy')
                     document.location.href = '/complaint/edit/'+msg;
                 else
-                 document.location.href = '/complaint/index';
+                    document.location.href = '/complaint/index';
             },
             error: function (msg) {
                 console.log(msg);

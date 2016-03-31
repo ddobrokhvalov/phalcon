@@ -80,15 +80,11 @@ class ComplaintController extends ControllerBase
 
         $complaint->addComplaint($data);
 
-        if ($complaint->save()) //todo: if the error it still say that everything is ok. JS ERROR
-            echo $complaint->id;
-        else {
-            echo 'error save';
-            /*foreach ($complaint->getMessages() as $message)
-            {
-                echo $message->getMessage(), "<br/>";
-            }*/
-        }
+        if ($complaint->save())
+            $response = array('result' => 'success', 'id'=>$complaint->id);
+        else
+            $response = array('result' => 'error', 'message'=>'Ошибка при попытке сохранения жалобы');
+        echo json_encode($response);
         exit;
     }
 

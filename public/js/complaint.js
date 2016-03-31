@@ -132,6 +132,11 @@ var complaint = {
             return false;
         }
 
+        if (applicant.id == "All") {
+            showSomePopupMessage('warning', 'пожалуйста, выберите заявителя');
+            return false;
+        }
+
         this.auctionData = '';
         var k = 0;
         for (var i in auction.data) {
@@ -148,14 +153,19 @@ var complaint = {
         $.ajax({
             type: 'POST',
             url: '/complaint/create',
+            dataType:'json',
             data: this.auctionData + '&complaint_text=' + this.complainText + '&complaint_name=' + this.complainName + '&applicant_id=' + applicant.id,
-            success: function (msg) {
-                console.log(msg);
-                //document.location.href = '/complaint/index';
-                // alert('Сохранено успешно');
-                showSomePopupMessage('info', 'Сохранено успешно');
-                complaint.complaint_id = msg;
-                incrementMenuCount();
+            success: function (data) {
+                console.log(data);
+                if(data.result == 'success') {
+                    //document.location.href = '/complaint/index';
+                    // alert('Сохранено успешно');
+                    showSomePopupMessage('info', 'Сохранено успешно');
+                    complaint.complaint_id = data.id;
+                    incrementMenuCount();
+                } else {
+                    showSomePopupMessage('info', data.message);
+                }
             },
             error: function (msg) {
                 console.log(msg);
