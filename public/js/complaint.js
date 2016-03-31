@@ -132,6 +132,12 @@ var complaint = {
             return false;
         }
 
+        if (applicant.id = "All") {
+            // alert('текст жалобы должен быть');
+            showSomePopupMessage('warning', 'пожалуйста, выберите заявителя');
+            return false;
+        }
+
         this.auctionData = '';
         var k = 0;
         for (var i in auction.data) {
@@ -148,6 +154,7 @@ var complaint = {
         $.ajax({
             type: 'POST',
             url: '/complaint/create',
+            dataType:'json',
             data: this.auctionData + '&complaint_text=' + this.complainText + '&complaint_name=' + this.complainName + '&applicant_id=' + applicant.id,
             success: function (msg) {
                 console.log(msg);
