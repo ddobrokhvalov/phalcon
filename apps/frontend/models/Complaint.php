@@ -109,7 +109,7 @@ class Complaint extends Model
         foreach ($data as $id) { //todo: make through db query this. 'id IN ()' is faster then ORM
          //   if ($this->checkComplaintOwner($id, $user_id)) {
                 $complaint = Complaint::findFirstById($id);
-                if(!$complaint || $complaint->status==$status || ($complaint->status!='submited' && $status=='recall'))
+                if(!$complaint || $complaint->status==$status || ($complaint->status!='submited' && $status=='recall')) 
                     continue;
                 elseif ($status == 'activate') {  //This return from arhive. We need to check history and set last status.
                     $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
