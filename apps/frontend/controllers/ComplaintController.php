@@ -118,12 +118,10 @@ class ComplaintController extends ControllerBase
                 return $this->forward('complaint/index');
             if($complaint->status=='submited') {
                 $complaint = new Complaint();
-                $result = $complaint->changeStatus('recalled', [$id], $this->user->id);
-                $complaint->status = 'recalled';
-                $complaint->save();
-            }
+                $complaint->changeStatus('recalled', [$id], $this->user->id);
+              }
         }
-        if ($id == '0') {
+        if ($id == '0') { //todo: maby we need json response
             echo 'true';
             exit;
         }else
