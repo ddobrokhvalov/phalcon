@@ -52,7 +52,7 @@
                         <div class="c-c-jl-z-l">
                             <input id="jlist{{ complaint['id'] }}" class="complaint-checkbox" type="checkbox" value="{{ complaint['id'] }}" name="jlist{{ complaint['id'] }}" hidden>
                             <label for="jlist{{ complaint['id'] }}"></label>
-                            <a {% if complaint['status'] != 'archive' %}href="/complaint/edit/{{ complaint['id'] }}" {% endif %}class="complaint-name">{{ complaint['complaint_name'] }}</a>
+                            <a {% if complaint['status'] != 'archive'  %}href="/complaint/edit/{{ complaint['id'] }}" {% endif %}class="complaint-name">{{ complaint['complaint_name'] }}</a>
                         </div>
                         <div class="c-c-jl-z-r">
 
