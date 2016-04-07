@@ -41,4 +41,12 @@ class TrustedLibrary{
         exit();
     }
 
+    static function trusted_esign(){
+        self::get_settings();
+        require_once(__DIR__."/TrustedLibrary/trusted/esign/config.php");
+        require_once TRUSTED_MODULE_SIGN;
+        header('Content-Type: application/json; charset=' . LANG_CHARSET);
+        exit();
+    }
+
 }
