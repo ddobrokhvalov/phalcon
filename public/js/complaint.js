@@ -454,15 +454,47 @@ function initEditor(id) {
 
 }
 
-
-function showSomePopupMessage(type, message) {
-    $('.alert-wrap').fadeIn(400);
-    setTimeout(function () {
-        $('.alert-box').fadeIn(200).text(message);
-        $('.alert-box').append('<div></div>');
-    }, 400);
-    if (type == 'info') {
-        $('.alert-box').addClass('alert-info');
+function getOffsetSum(elem) {
+    var object = document.getElementById('j-jd2-f-edit');
+    var top=0, left=0
+    while(elem) {
+        top = top + parseFloat(elem.offsetTop)
+        left = left + parseFloat(elem.offsetLeft)
+        elem = elem.offsetParent
     }
+
+    return {top: Math.round(top), left: Math.round(left)}
 }
 
+function getOffsetRect(elem) {
+    // (1)
+    var box = elem.getBoundingClientRect()
+
+    // (2)
+    var body = document.body
+    var docElem = document.documentElement
+
+    // (3)
+    var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop
+    var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft
+
+    // (4)
+    var clientTop = docElem.clientTop || body.clientTop || 0
+    var clientLeft = docElem.clientLeft || body.clientLeft || 0
+
+    // (5)
+    var top  = box.top +  scrollTop - clientTop
+    var left = box.left + scrollLeft - clientLeft
+
+    return { top: Math.round(top), left: Math.round(left) }
+}
+
+function getOffset(elem) {
+    if (elem.getBoundingClientRect) {
+        // "правильный" вариант
+        return getOffsetRect(elem)
+    } else {
+        // пусть работает хоть как-то
+        return getOffsetSum(elem)
+    }
+}
