@@ -47,7 +47,11 @@ class ComplaintController extends ControllerBase
             return $this->forward('complaint/index');
         if (isset($_SESSION['TRUSTEDNET']['OAUTH'])){
             $OAuth2 = unserialize($_SESSION['TRUSTEDNET']['OAUTH']);
+            $token = $OAuth2->getAccessToken();
+            if(!$OAuth2->checkToken())
+                if($OAuth2->refresh()) $token = $OAuth2->getAccessToken();
             $this->view->token  = $OAuth2->getAccessToken();
+
         }
         $complaint->purchases_name = str_replace("\r\n", " ", $complaint->purchases_name);
         $question = new Question();
@@ -55,7 +59,6 @@ class ComplaintController extends ControllerBase
         $this->setMenu();
         $this->view->complaint = $complaint;
         $this->view->complaint_question = $complaintQuestion;
-
         $this->view->action_edit = false;
         if (isset($_GET['action']) && $_GET['action'] == 'edit' && $complaint->status =='draft')
             $this->view->action_edit = true;
