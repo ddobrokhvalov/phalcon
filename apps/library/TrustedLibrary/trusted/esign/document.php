@@ -1409,7 +1409,7 @@ class AjaxSignCommand {
             $accessToken = TAuthCommand::getAccessTokenByRefreshToken($params['token']);
             $accessToken = $accessToken["access_token"];
         } catch (OAuth2Exception $ex) {
-            $res["message"] = $ex->message;
+            $res["message"] = $ex->getMessage();
             AjaxSign::sendSetStatus($params["operationId"], SIGN_STATUS_CANCELED);
             return $res;
         }
@@ -1513,7 +1513,7 @@ class AjaxSignCommand {
             $res["message"] = $accessToken;
         } catch (OAuth2Exception $ex) {
             header("HTTP/1.1 500 Internal Server Error");
-            $res["message"] = $ex->message;
+            $res["message"] = $ex->getMessage();
             echo json_encode($res);
             die();
         }
