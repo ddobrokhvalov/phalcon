@@ -135,13 +135,14 @@
                     </div>
                     {% endif %}
                     <script type="text/javascript">
+                        var token = '{{token}}';
                         $(document).on('click', '.trusted-ep', function(){
 
                             /*id[]    Коллекция `id` документов
                             logo    URI на картинку логотипа
                             css     URI на CSS для мастера подписи
                             extra   Дополнительные параметры*/
-                            var postdata = {'id':['cl4'],'logo':'https://net.trusted.ru/static/images/svg/bitrix.svg'}
+                            var postdata = {'id':[1], 'logo':'https://net.trusted.ru/static/images/svg/bitrix.svg', 'token':token}
                             $.ajax({
                                 type: "POST",
                                 url: '/ajax/trusted?command=sign',

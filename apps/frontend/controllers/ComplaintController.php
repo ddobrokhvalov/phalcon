@@ -10,6 +10,7 @@ use Multiple\Frontend\Models\Question;
 use Phalcon\Mvc\Controller;
 use \Phalcon\Paginator\Adapter\NativeArray as Paginator;
 use Multiple\Library\PaginatorBuilder;
+use Multiple\Library\TrustedLibrary;
 
 class ComplaintController extends ControllerBase
 {
@@ -40,10 +41,14 @@ class ComplaintController extends ControllerBase
 
     public function editAction($id)
     {
+        TrustedLibrary::trusted_library_init();
         $complaint = Complaint::findFirstById($id);
         if (!$complaint || !$complaint->checkComplaintOwner($id, $this->user->id))
             return $this->forward('complaint/index');
-
+        if (isset($_SESSION['TRUSTEDNET']['OAUTH'])){
+            $OAuth2 = unserialize($_SESSION['TRUSTEDNET']['OAUTH']);
+            $this->view->token  = $OAuth2->getAccessToken();
+        }
         $complaint->purchases_name = str_replace("\r\n", " ", $complaint->purchases_name);
         $question = new Question();
         $complaintQuestion = $question->getComplainQuestionAndAnswer($id);
@@ -54,7 +59,6 @@ class ComplaintController extends ControllerBase
         $this->view->action_edit = false;
         if (isset($_GET['action']) && $_GET['action'] == 'edit' && $complaint->status =='draft')
             $this->view->action_edit = true;
-
     }
 
 
