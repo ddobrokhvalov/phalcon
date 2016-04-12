@@ -79,8 +79,8 @@ class ComplaintController extends ControllerBase
             /*$token = $OAuth2->getAccessToken();
             if(!$OAuth2->checkToken())
                 if($OAuth2->refresh())*/
-            $token = $OAuth2->getRefreshToken();
-            $this->view->token  = $token;
+            //$token = $OAuth2->getRefreshToken();
+            $this->view->token  = 223322;
 
         } else {
             $this->session->destroy();
