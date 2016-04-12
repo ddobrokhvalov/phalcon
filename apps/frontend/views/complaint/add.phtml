@@ -99,6 +99,29 @@
                             <span class="c-jd2-e-btn3">Aa</span>
                             <span class="c-jd2-e-btn4">Aa</span>
                             <span class="c-jd2-e-btn5"></span>
+                            <script type="text/javascript">
+                                var token = '{{token}}';
+                                $(document).on('change', '#cjd2file', function(){
+                                    console.log($('#upload_proofs').val());
+                                    var signature = $('#upload_proofs').files;
+                                    console.log(signature);
+                                    var postdata = {id:1, 'token':token, 'signature':signature}
+                                    /*$.ajax({
+                                        type: "POST",
+                                        url: '/ajax/trusted?command=upload',
+                                        dataType: 'json',
+                                        cache: false,
+                                        data: postdata,
+                                        error: function(data){
+                                            console.log(data);
+                                        },
+                                        success: function(data) {
+                                            console.log(data);
+                                        },
+                                        timeout: 120000 // sets timeout to 2 minutes
+                                    });*/
+                                });
+                            </script>
                             <label for="cjd2file" class="c-jd2-e-btn6">Прикрепить файлы</label>
                             <input type="file"   id="cjd2file" hidden />
                         </div>
@@ -141,7 +164,7 @@
 </div>
 
 <script>
-    var templates = {};
+var templates = {};
 {% for argument in arguments  %}
     {% for template in argument['templates']  %}
        templates[{{template.id}}] = '{{template.text}}';
