@@ -41,4 +41,10 @@ class TrustedLibrary{
         exit();
     }
 
+    static function trusted_esign(){
+        global $DB;
+        self::get_settings();
+        require_once(__DIR__."/TrustedLibrary/trusted/esign/ajax.php");
+        exit();
+    }
 }

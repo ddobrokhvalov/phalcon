@@ -12,7 +12,7 @@ class PaginatorBuilder{
                 else
                     $paginator_array[] = array('type' => 'page', 'num' => $index);
             }
-            elseif($index<$current_page - $page_strike_length){
+            elseif($index<=$current_page - $page_strike_length){
                 $paginator_array[] = array('type'=>'delimer');
                 $index= $current_page - $page_strike_length;
             } else {

@@ -1409,7 +1409,7 @@ class AjaxSignCommand {
             $accessToken = TAuthCommand::getAccessTokenByRefreshToken($params['token']);
             $accessToken = $accessToken["access_token"];
         } catch (OAuth2Exception $ex) {
-            $res["message"] = $ex->message;
+            $res["message"] = $ex->getMessage();
             AjaxSign::sendSetStatus($params["operationId"], SIGN_STATUS_CANCELED);
             return $res;
         }
@@ -1421,15 +1421,19 @@ class AjaxSignCommand {
                 $newDoc->setType(DOCUMENT_TYPE_SIGNATURE);
                 $newDoc->setParent($doc);
                 $signature = $_FILES["signature"];
+
                 if ($cb) {
                     $cb($newDoc, $signature, $params['extra']);
                 }
                 $newDoc->save();
-                $doc->getStatus()->setValue(DOCUMENT_STATUS_DONE);
-                $doc->getStatus()->save();
-                AjaxSign::sendSetStatus($params["operationId"]);
-                $res["success"] = true;
-                $res["message"] = "File uploaded";
+                $doc = $doc->getStatus();
+                if($doc!==null) {
+                    $doc->setValue(DOCUMENT_STATUS_DONE);
+                    $doc->save();
+                    AjaxSign::sendSetStatus($params["operationId"]);
+                    $res["success"] = true;
+                    $res["message"] = "File uploaded";
+                }
             } else {
                 $res["message"] = "Document is not found";
             }
@@ -1513,7 +1517,7 @@ class AjaxSignCommand {
             $res["message"] = $accessToken;
         } catch (OAuth2Exception $ex) {
             header("HTTP/1.1 500 Internal Server Error");
-            $res["message"] = $ex->message;
+            $res["message"] = $ex->getMessage();
             echo json_encode($res);
             die();
         }
