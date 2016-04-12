@@ -15,7 +15,7 @@ class Parser {
     // передавать строку, не число!
     function parseAuction($auctionId) {
         $auction = array('info' => array(), 'contact' => array(), 'procedura' => array(), 'zakazchik' => array());
-        $data = $this->getUrl('http://new.zakupki.gov.ru/epz/order/notice/ea44/view/common-info.html?regNumber='.$auctionId);
+        $data = $this->getUrl('http://www.zakupki.gov.ru/epz/order/notice/ea44/view/common-info.html?regNumber='.$auctionId);
        // file_put_contents('data.html', $data);
         libxml_use_internal_errors(true);
         $doc = new \DOMDocument();
@@ -47,7 +47,7 @@ class Parser {
 
         $url2 = trim($xpath->evaluate('string(//div[@class="mainBox"]/div[contains(@class,"contentHeadingWrapper")]/a/@href)'));
         //echo $url2."\n";
-        $data2 = $this->getUrl('http://new.zakupki.gov.ru' . $url2);
+        $data2 = $this->getUrl('http://www.zakupki.gov.ru' . $url2);
       //  file_put_contents('data2.html', $data2);
         $doc2 = new \DOMDocument();
         $doc2->loadHTML($data2);
@@ -84,8 +84,8 @@ class Parser {
         $zakazchik['name'] = $name;
         $name = trim(preg_replace('/«|»|"/ui', '', $name));
         $name = trim(preg_replace('/\s+/ui', ' ', $name));
-        $data = $this->getUrl('http://new.zakupki.gov.ru/epz/organization/quicksearch/search.html?searchString=' . urlencode($name) . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&sortBy=PO_NAZVANIYU&fz94=on&fz223=on&regions=');
-        //echo 'http://new.zakupki.gov.ru/epz/organization/quicksearch/search.html?searchString=' . urlencode($name) . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&sortBy=PO_NAZVANIYU&fz94=on&fz223=on&regions='."\n";
+        $data = $this->getUrl('http://www.zakupki.gov.ru/epz/organization/quicksearch/search.html?searchString=' . urlencode($name) . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&sortBy=PO_NAZVANIYU&fz94=on&fz223=on&regions=');
+        //echo 'http://www.zakupki.gov.ru/epz/organization/quicksearch/search.html?searchString=' . urlencode($name) . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&sortBy=PO_NAZVANIYU&fz94=on&fz223=on&regions='."\n";
         libxml_use_internal_errors(true);
         $doc = new \DOMDocument();
         $doc->loadHTML($data);
@@ -109,10 +109,10 @@ class Parser {
     function getComplaint($auctionId, $zayavitel ,$date, $complaintNum = false) {
         if($complaintNum) {
             $complaintNum = trim(preg_replace('/№/ui', '', $complaintNum));
-            $data = $this->getUrl('http://new.zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $complaintNum . '&strictEqual=on&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
+            $data = $this->getUrl('http://www.zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $complaintNum . '&strictEqual=on&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
         }
         else {
-            $data = $this->getUrl('http://new.zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $auctionId . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
+            $data = $this->getUrl('http://www.zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $auctionId . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
         }
         libxml_use_internal_errors(true);
         $doc = new \DOMDocument();
@@ -192,7 +192,7 @@ class Parser {
     }
 
     function getComplaintInfo($id) {
-        $data = $this->getUrl('http://new.zakupki.gov.ru/controls/public/action/complaint/info?source=epz&complaintId='.$id);
+        $data = $this->getUrl('http://www.zakupki.gov.ru/controls/public/action/complaint/info?source=epz&complaintId='.$id);
         libxml_use_internal_errors(true);
         $doc = new \DOMDocument();
         $doc->loadHTML('<?xml encoding="UTF-8">' . $data);
@@ -320,7 +320,7 @@ class Parser {
             if($res !== FALSE)
                 return $res;
         }
-        echo "many try!!!";
+        echo "many try!!!";#todo:json error here
         return FALSE;
     }
 }
