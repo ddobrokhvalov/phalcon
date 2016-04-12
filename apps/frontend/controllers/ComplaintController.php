@@ -45,13 +45,16 @@ class ComplaintController extends ControllerBase
         $complaint = Complaint::findFirstById($id);
         if (!$complaint || !$complaint->checkComplaintOwner($id, $this->user->id))
             return $this->forward('complaint/index');
-        if (isset($_SESSION['TRUSTEDNET']['OAUTH'])){
-            $OAuth2 = unserialize($_SESSION['TRUSTEDNET']['OAUTH']);
-            $token = $OAuth2->getAccessToken();
+        if (isset($_SESSION['TRUSTEDNET']['OAUTH'])) $OAuth2 = unserialize($_SESSION['TRUSTEDNET']['OAUTH']);
+        if (isset($OAuth2)){
+            /*$token = $OAuth2->getAccessToken();
             if(!$OAuth2->checkToken())
-                if($OAuth2->refresh()) $token = $OAuth2->getAccessToken();
-            $this->view->token  = $OAuth2->getAccessToken();
+                if($OAuth2->refresh())*/ $token = $OAuth2->getRefreshToken();
+            $this->view->token  = $token;
 
+        } else {
+            $this->session->destroy();
+            return $this->forward('/');
         }
         $complaint->purchases_name = str_replace("\r\n", " ", $complaint->purchases_name);
         $question = new Question();
