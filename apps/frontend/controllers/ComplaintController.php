@@ -73,7 +73,7 @@ class ComplaintController extends ControllerBase
         $this->setMenu();
         $category = new Category();
         $arguments = $category->getArguments();
-
+        TrustedLibrary::trusted_library_init();
         if (isset($_SESSION['TRUSTEDNET']['OAUTH'])) $OAuth2 = unserialize($_SESSION['TRUSTEDNET']['OAUTH']);
         if (isset($OAuth2)){
             /*$token = $OAuth2->getAccessToken();
