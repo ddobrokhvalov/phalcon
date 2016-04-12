@@ -70,15 +70,16 @@ class ComplaintController extends ControllerBase
 
     public function addAction()
     {
+        TrustedLibrary::trusted_library_init();
         $this->setMenu();
         $category = new Category();
         $arguments = $category->getArguments();
-        TrustedLibrary::trusted_library_init();
         if (isset($_SESSION['TRUSTEDNET']['OAUTH'])) $OAuth2 = unserialize($_SESSION['TRUSTEDNET']['OAUTH']);
         if (isset($OAuth2)){
             /*$token = $OAuth2->getAccessToken();
             if(!$OAuth2->checkToken())
-                if($OAuth2->refresh())*/ $token = $OAuth2->getRefreshToken();
+                if($OAuth2->refresh())*/
+            $token = $OAuth2->getRefreshToken();
             $this->view->token  = $token;
 
         } else {
