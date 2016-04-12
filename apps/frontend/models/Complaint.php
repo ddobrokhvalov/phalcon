@@ -110,7 +110,7 @@ class Complaint extends Model
                                  //todo: $complaint->checkComplaintOwner($v, $this->user->id) add this
          //   if ($this->checkComplaintOwner($id, $user_id)) {
                 $complaint = Complaint::findFirstById($id);
-                if(!$complaint || $complaint->status==$status || ($complaint->status!='submitted' && $status=='recall'))
+                if(!$complaint || $complaint->status==$status || ($complaint->status!='submitted' && $status=='recall' && $user_id!='parser'))
                     continue;
                 elseif ($status == 'activate') {  //This return from arhive. We need to check history and set last status.
                     $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
@@ -148,7 +148,7 @@ class Complaint extends Model
         $this->purchases_made = $data['purchases_made'];
         $this->purchases_name = $data['purchases_name'];
         $this->contact = $data['contact'];
-        $this->auction_id = $data['auction_id'];
+        if(isset($data['auction_id'])) $this->auction_id = $data['auction_id'];
         $this->nachalo_podachi = $data['nachalo_podachi'];
         $this->okonchanie_podachi = $data['okonchanie_podachi'];
         $this->vskrytie_konvertov = $data['vskrytie_konvertov'];

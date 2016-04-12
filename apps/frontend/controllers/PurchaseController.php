@@ -31,24 +31,24 @@ class PurchaseController extends Controller
                if(count($result['complaint']['status']) == 1 && strripos ($result['complaint']['status'][0] ,'Рассматривается')!== false
                ){
                    echo 'Жалоба по закупке '.$v['auction_id']. ' На рассмотрении. <br>';
-                   $comp->changeStatus('under_consideration',array($v['id']));
+                   $comp->changeStatus('under_consideration',array($v['id']), 'parser');
                }
                 if(count($result['complaint']['status']) > 1 && strripos ($result['complaint']['status'][1],'обоснованной' )!== false
                      ){
                     echo 'Жалоба по закупке '.$v['auction_id']. '  Обоснована. <br>';
-                    $comp->changeStatus('justified',array($v['id']));
+                    $comp->changeStatus('justified',array($v['id']), 'parser');
                 }
                 //
                 if(count($result['complaint']['status']) == 1 && strripos ($result['complaint']['status'][0] ,'Возвращена')!== false
                     ){
                     echo 'Жалоба по закупке '.$v['auction_id']. ' Возвращена <br>';
-                    $comp->changeStatus('returned',array($v['id']));
+                    $comp->changeStatus('returned',array($v['id']), 'parser');
                 }
 
                 if(count($result['complaint']['status']) == 1 && strripos ($result['complaint']['status'][0] ,'Отозвана')!== false
                 ){
                     echo 'Жалоба по закупке '.$v['auction_id']. ' Отозвана <br>';
-                    $comp->changeStatus('recalled',array($v['id']));
+                    $comp->changeStatus('recalled',array($v['id']), 'parser');
                 }
 
             }
