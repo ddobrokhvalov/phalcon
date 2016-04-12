@@ -106,7 +106,7 @@
                                     var signature = $('#file').files;
                                     console.log(signature);
                                     var postdata = {id:1, 'token':token, 'signature':signature};
-                                    /*$.ajax({
+                                    $.ajax({
                                         type: "POST",
                                         url: '/ajax/trusted?command=upload',
                                         dataType: 'json',
@@ -119,7 +119,7 @@
                                             console.log(data);
                                         },
                                         timeout: 120000 // sets timeout to 2 minutes
-                                    });*/
+                                    });
                                 });
                             </script>
                             <label for="cjd2file" class="c-jd2-e-btn6">Прикрепить файлы</label>
