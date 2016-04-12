@@ -132,11 +132,6 @@ var complaint = {
             return false;
         }
 
-        if (applicant.id == "All") {
-            showSomePopupMessage('warning', 'пожалуйста, выберите заявителя');
-            return false;
-        }
-
         this.auctionData = '';
         var k = 0;
         for (var i in auction.data) {
@@ -153,19 +148,14 @@ var complaint = {
         $.ajax({
             type: 'POST',
             url: '/complaint/create',
-            dataType:'json',
             data: this.auctionData + '&complaint_text=' + this.complainText + '&complaint_name=' + this.complainName + '&applicant_id=' + applicant.id,
-            success: function (data) {
-                console.log(data);
-                if(data.result == 'success') {
-                    //document.location.href = '/complaint/index';
-                    // alert('Сохранено успешно');
-                    showSomePopupMessage('info', 'Сохранено успешно');
-                    complaint.complaint_id = data.id;
-                    incrementMenuCount();
-                } else {
-                    showSomePopupMessage('info', data.message);
-                }
+            success: function (msg) {
+                console.log(msg);
+                //document.location.href = '/complaint/index';
+                // alert('Сохранено успешно');
+                showSomePopupMessage('info', 'Сохранено успешно');
+                complaint.complaint_id = msg;
+                incrementMenuCount();
             },
             error: function (msg) {
                 console.log(msg);
@@ -496,5 +486,16 @@ function getOffset(elem) {
     } else {
         // пусть работает хоть как-то
         return getOffsetSum(elem)
+    }
+}
+
+function showSomePopupMessage(type, message) {
+    $('.alert-wrap').fadeIn(400);
+    setTimeout(function () {
+        $('.alert-box').fadeIn(200).text(message);
+        $('.alert-box').append('<div></div>');
+    }, 400);
+    if (type == 'info') {
+        $('.alert-box').addClass('alert-info');
     }
 }
