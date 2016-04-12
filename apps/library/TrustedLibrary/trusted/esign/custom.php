@@ -6,7 +6,10 @@
  * @param \AjaxParams $params
  */
 function signDocuments(&$docs, $params) {
-    
+    $docs->ORIGINAL_NAME = 'test';
+    var_dump($docs, $params);
+    $docs->save();
+    die('---');
 }
 
 /**

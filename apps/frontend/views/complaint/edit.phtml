@@ -110,9 +110,32 @@
                         <script type="text/javascript">
                             var token = '{{token}}';
                             $(document).on('click', '#upload', function(){
-                                console.log($('#upload_proofs').val());
-                                var signature = $('#upload_proofs').files;
-                                console.log(signature);
+                                var signature = $('#upload_proofs');
+                                var file = document.getElementById("upload_proofs").files[0];
+                                var reader = new FileReader();
+                                reader.onload = function (evt) {
+                                    console.log(evt.target.result);
+                                    var postdata = {id:1, 'token':token, 'signature':evt.target.result}
+                                    $.ajax({
+                                        type: "POST",
+                                        url: '/ajax/trusted?command=upload',
+                                        dataType: 'json',
+                                        cache: false,
+                                        data: postdata,
+                                        error: function(data){
+                                            console.log(data);
+                                        },
+                                        success: function(data) {
+                                            console.log(data);
+                                        },
+                                        timeout: 120000 // sets timeout to 2 minutes
+                                    });
+                                };
+                                reader.onerror = function (evt) {
+                                    console.log("error reading file");
+                                };
+                                reader.readAsText(file, "UTF-8");
+                                /*
                                 var postdata = {id:1, 'token':token, 'signature':signature}
                                 $.ajax({
                                     type: "POST",
@@ -127,11 +150,11 @@
                                         console.log(data);
                                     },
                                     timeout: 120000 // sets timeout to 2 minutes
-                                });
+                                });*/
                             });
                         </script>
 
-                        <input type="file" id="upload_proofs"><input type="button" id="upload">
+                        <input type="file" name="files[]" multiple id="upload_proofs"><input type="button" id="upload">
                         <div class="c-zv-f-doc">
                             Решение по извещению 127563728493872.doc (125 Кб)
                             <div class="c-zv-f-del"></div>
