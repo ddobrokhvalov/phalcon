@@ -136,6 +136,31 @@
                     </div>
 
                     <div class="c-jd2-f-cat">
+                        <script type="text/javascript">
+                            var token = '{{token}}';
+                            $(document).on('click', '.trusted-ep', function(){
+
+                                /*id[]    Коллекция `id` документов
+                                 logo    URI на картинку логотипа
+                                 css     URI на CSS для мастера подписи
+                                 extra   Дополнительные параметры*/
+                                var postdata = {'id':[1], 'logo':'https://net.trusted.ru/static/images/svg/bitrix.svg', 'token':token}
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/ajax/trusted?command=sign',
+                                    dataType: 'json',
+                                    cache: false,
+                                    data: postdata,
+                                    error: function(data){
+                                        console.log(data);
+                                    },
+                                    success: function(data) {
+                                        console.log(data);
+                                    },
+                                    timeout: 120000 // sets timeout to 2 minutes
+                                });
+                            });
+                        </script>
                         <input type="radio" name="jd2cat" id="jd2cat1" checked hidden>
                         <label for="jd2cat1">Подписать ЭП</label>
                         <input type="radio" name="jd2cat" id="jd2cat2" hidden>
