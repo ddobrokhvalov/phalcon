@@ -1361,6 +1361,7 @@ class AjaxSignCommand {
         if (isset($docsId)) {
             $docs = new DocumentCollection();
             foreach ($docsId as &$id) {
+                die('456546');
                 $doc = TDataBaseDocument::getDocumentById($id);
                 $lastDoc = $doc->getLastDocument();
                 //Проверка статуса Документа. Если Документ имеет статус "В процессе", то вернуть пользователю ошибку
