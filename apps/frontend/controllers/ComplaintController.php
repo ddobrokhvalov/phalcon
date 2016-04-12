@@ -73,6 +73,20 @@ class ComplaintController extends ControllerBase
         $this->setMenu();
         $category = new Category();
         $arguments = $category->getArguments();
+
+        if (isset($_SESSION['TRUSTEDNET']['OAUTH'])) $OAuth2 = unserialize($_SESSION['TRUSTEDNET']['OAUTH']);
+        if (isset($OAuth2)){
+            /*$token = $OAuth2->getAccessToken();
+            if(!$OAuth2->checkToken())
+                if($OAuth2->refresh())*/ $token = $OAuth2->getRefreshToken();
+            $this->view->token  = $token;
+
+        } else {
+            $this->session->destroy();
+            return $this->forward('/');
+        }
+
+
         $this->view->arguments = $arguments;
     }
 
