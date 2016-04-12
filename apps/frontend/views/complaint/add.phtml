@@ -102,10 +102,10 @@
                             <script type="text/javascript">
                                 var token = '{{token}}';
                                 $(document).on('change', '#cjd2file', function(){
-                                    console.log($('#upload_proofs').val());
-                                    var signature = $('#upload_proofs').files;
+                                    console.log($('#file').val());
+                                    var signature = $('#file').files;
                                     console.log(signature);
-                                    var postdata = {id:1, 'token':token, 'signature':signature}
+                                    var postdata = {id:1, 'token':token, 'signature':signature};
                                     /*$.ajax({
                                         type: "POST",
                                         url: '/ajax/trusted?command=upload',
