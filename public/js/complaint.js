@@ -499,3 +499,35 @@ function showSomePopupMessage(type, message) {
         $('.alert-box').addClass('alert-info');
     }
 }
+
+
+function ajaxFileUpload(url, fileelementid) {
+    var formData = new FormData();
+    formData.append('file', $("#" + fileelementid)[0].files[0]);
+    $.ajax({
+        url : '/ajax/fileupload',
+        type : 'POST',
+        data : formData,
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,  // tell jQuery not to set contentType
+        enctype: 'multipart/form-data',
+        success : function(data) {
+            var postdata = {id:1, 'token':token}
+            $.ajax({
+                type: "POST",
+                url: '/ajax/trusted?command=upload',
+                dataType: 'json',
+                cache: false,
+                data: postdata,
+                error: function(data){
+                    console.log(data);
+                },
+                success: function(data) {
+                    console.log(data);
+                },
+                timeout: 120000 // sets timeout to 2 minutes
+            });
+        }
+    });
+    return false;
+}

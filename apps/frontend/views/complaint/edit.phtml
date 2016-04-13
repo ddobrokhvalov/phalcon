@@ -110,7 +110,9 @@
                         <script type="text/javascript">
                             var token = '{{token}}';
                             $(document).on('click', '#upload', function(){
-                                var signature = $('#upload_proofs');
+                                ajaxFileUpload('/ajax/fileupload', 'upload_proofs');
+                                
+                                /*var signature = $('#upload_proofs');
                                 var file = document.getElementById("upload_proofs").files[0];
                                 var reader = new FileReader();
                                 reader.onload = function (evt) {
@@ -129,9 +131,9 @@
                                             console.log(data);
                                         },
                                         timeout: 120000 // sets timeout to 2 minutes
-                                    });
-                                };
-                                reader.onerror = function (evt) {
+                                    });*/
+                                });
+                                /*reader.onerror = function (evt) {
                                     console.log("error reading file");
                                 };
                                 reader.readAsText(file, "UTF-8");
@@ -151,7 +153,7 @@
                                     },
                                     timeout: 120000 // sets timeout to 2 minutes
                                 });*/
-                            });
+                            /*});*/
                         </script>
 
                         <input type="file" name="files[]" multiple id="upload_proofs"><input type="button" id="upload">
@@ -190,18 +192,29 @@
                             logo    URI на картинку логотипа
                             css     URI на CSS для мастера подписи
                             extra   Дополнительные параметры*/
-                            var postdata = {'id':[1], 'logo':'https://net.trusted.ru/static/images/svg/bitrix.svg', 'token':token}
+                            var id = 1;
                             $.ajax({
                                 type: "POST",
-                                url: '/ajax/trusted?command=sign',
-                                dataType: 'json',
-                                cache: false,
-                                data: postdata,
+                                url: '/ajax/getlast',
                                 error: function(data){
                                     console.log(data);
                                 },
                                 success: function(data) {
-                                    console.log(data);
+                                    var postdata = {'id[]':parseInt(data), 'logo':'https://net.trusted.ru/static/images/svg/bitrix.svg', 'token':token}
+                                    $.ajax({
+                                        type: "POST",
+                                        url: '/ajax/trusted?command=sign',
+                                        dataType: 'json',
+                                        cache: false,
+                                        data: postdata,
+                                        error: function(data){
+                                            console.log(data);
+                                        },
+                                        success: function(data) {
+                                            console.log(data);
+                                        },
+                                        timeout: 120000 // sets timeout to 2 minutes
+                                    });
                                 },
                                 timeout: 120000 // sets timeout to 2 minutes
                             });

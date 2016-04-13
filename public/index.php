@@ -55,6 +55,18 @@ class Application extends BaseApplication
 				'controller' => 'login',
 				'action' => 'index',
 			));
+			$router->add("/esign/ajax.php", array(
+				'module' => 'frontend',
+				'controller' => 'ajax',
+				'action' => 'trusted',
+			));
+			
+			$router->add("/ajax/getlast", array(
+				'module' => 'frontend',
+				'controller' => 'ajax',
+				'action' => 'getlast',
+			));
+
 			$router->add("/admin/:controller/:action/:params", array(
 				'module' => 'backend',
 				'controller' => 1,
@@ -102,8 +114,11 @@ class Application extends BaseApplication
 				'path' => '../apps/backend/Module.php'
 			)
 		));
-
-		echo $this->handle()->getContent();
+		try {
+			echo $this->handle()->getContent();
+		} catch (Exception $e){
+			var_dump( $e);
+		}
 	}
 
 }

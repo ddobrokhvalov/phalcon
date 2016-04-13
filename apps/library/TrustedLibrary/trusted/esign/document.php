@@ -241,6 +241,7 @@ class TDataBaseDocument {
         $rows = $DB->Query($sql);
         $array = $rows->Fetch();
         $res = Document::fromArray($array);
+        //var_dump($res);
         return $res;
     }
 
@@ -1365,7 +1366,7 @@ class AjaxSignCommand {
                 if($doc!==null) {
                     $lastDoc = $doc->getLastDocument();
                     //Проверка статуса Документа. Если Документ имеет статус "В процессе", то вернуть пользователю ошибку
-                    if ($lastDoc->getStatus() && $lastDoc->getStatus()->getValue() == DOCUMENT_STATUS_PROCESSING) {
+                    if (false&&($lastDoc->getStatus() && $lastDoc->getStatus()->getValue() == DOCUMENT_STATUS_PROCESSING)) {
                         $res["message"] = "Один из документов был отправлен на подпись. Повторите попытку позже.";
                         return $res;
                     }
@@ -1482,30 +1483,41 @@ class AjaxSignCommand {
     }
 
     static function content($params, $cb = getContent) {
-        $res = array("success" => false, "message" => "Unknown error in Ajax.content");
-
+        global $DB;
+        $res = array("success" => false, "message" => "Unknown error in Ajax.content");        
         $doc = TDataBaseDocument::getDocumentById($params['id']);
+        $sql = 'SELECT * FROM ' . TRUSTED_DB_TABLE_DOCUMENTS . ' WHERE TYPE<>1 ORDER BY ID DESC LIMIT 1';
+        $rows = $DB->Query($sql);
+        $array = $rows->Fetch();
         if ($doc) {
-            $last = $doc->getLastDocument();
-            getContent($last, $params['token']);
-            $file = urldecode($last->getPath());
+            /*$last = $doc->getLastDocument();
+            getContent($last, $params['token']);*/
+//            $file = urldecode($last->getPath());
+
+            $file = urldecode($array['PATH']); 
+            try{
             if (file_exists($file)) {
+                
                 header('Content-Description: File Transfer');
                 header('Content-Type: application/octet-stream');
-                header('Content-Disposition: attachment; filename=' . $last->getName());
+                
+                //header('Content-Disposition: attachment; filename=' . $last->getName());
+                header('Content-Disposition: attachment; filename=' . $array['NAME']);
                 header('Expires: 0');
                 header('Cache-Control: must-revalidate');
-                header('Pragma: public');
+                header('Pragma: public');                
                 header('Content-Length: ' . filesize($file));
                 readfile($file);
+            }
+            } catch (Exception $e){
+                var_dump($e);
             }
         } else {
             header("HTTP/1.1 500 Internal Server Error");
             $res["message"] = "Document is not found";
             echo json_encode($res);
             die();
-        }
-
+        }        
         die();
     }
 

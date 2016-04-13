@@ -8,7 +8,6 @@ header('Content-Type: application/json; charset=' . LANG_CHARSET);
 // ============================== AJAX Controller
 
 $command = $_GET['command'];
-
 $res = array("success" => false, "message" => "Param 'command' is needed");
 if (isset($command)) {
     $params = $_POST;
@@ -29,7 +28,7 @@ if (isset($command)) {
             $res = AjaxSignCommand::view($params, viewSignature);
             break;
         case "content":
-            $res = AjaxSignCommand::content($_GET);
+             $res = AjaxSignCommand::content($_GET);
             break;
         case "token":
             $res = AjaxSignCommand::token($_GET);

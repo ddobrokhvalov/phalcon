@@ -102,28 +102,11 @@
                             <script type="text/javascript">
                                 var token = '{{token}}';
                                 $(document).on('change', '#cjd2file', function(){
-                                    console.log($('#file').val());
-                                    var signature = $('#file').files;
-                                    console.log(signature);
-                                    var postdata = {id:1, 'token':token, 'signature':signature};
-                                    $.ajax({
-                                        type: "POST",
-                                        url: '/ajax/trusted?command=upload',
-                                        dataType: 'json',
-                                        cache: false,
-                                        data: postdata,
-                                        error: function(data){
-                                            console.log(data);
-                                        },
-                                        success: function(data) {
-                                            console.log(data);
-                                        },
-                                        timeout: 120000 // sets timeout to 2 minutes
-                                    });
+                                    setTimeout(ajaxFileUpload('/ajax/fileupload', 'cjd2file'), 6000); // sets timeout to 2 minutes
                                 });
                             </script>
                             <label for="cjd2file" class="c-jd2-e-btn6">Прикрепить файлы</label>
-                            <input type="file"   id="cjd2file" hidden />
+                            <input type="file" id="cjd2file" hidden />
                         </div>
                         <div class="c-jd2-f-edit-text mCustomScrollbar">
                             <div id="edit_container" class="c-jd2-f-edit-t">
@@ -140,29 +123,36 @@
                             var token = '{{token}}';
                             $(document).on('click', '.trusted-ep', function(){
 
-                                /*id[]    Коллекция `id` документов
-                                 logo    URI на картинку логотипа
-                                 css     URI на CSS для мастера подписи
-                                 extra   Дополнительные параметры*/
-                                var postdata = {'id':[1], 'logo':'https://net.trusted.ru/static/images/svg/bitrix.svg', 'token':token}
+                                var id = 1;
                                 $.ajax({
                                     type: "POST",
-                                    url: '/ajax/trusted?command=sign',
-                                    dataType: 'json',
-                                    cache: false,
-                                    data: postdata,
+                                    url: '/ajax/getlast',
                                     error: function(data){
                                         console.log(data);
                                     },
                                     success: function(data) {
-                                        console.log(data);
+                                        var postdata = {'id[]':parseInt(data), 'logo':'https://net.trusted.ru/static/images/svg/bitrix.svg', 'token':token}
+                                        $.ajax({
+                                            type: "POST",
+                                            url: '/ajax/trusted?command=sign',
+                                            dataType: 'json',
+                                            cache: false,
+                                            data: postdata,
+                                            error: function(data){
+                                                console.log(data);
+                                            },
+                                            success: function(data) {
+                                                console.log(data);
+                                            },
+                                            timeout: 120000 // sets timeout to 2 minutes
+                                        });
                                     },
                                     timeout: 120000 // sets timeout to 2 minutes
                                 });
                             });
                         </script>
                         <input type="radio" name="jd2cat" id="jd2cat1" checked hidden>
-                        <label for="jd2cat1">Подписать ЭП</label>
+                        <label class = "trusted-ep" for="jd2cat1">Подписать ЭП</label>
                         <input type="radio" name="jd2cat" id="jd2cat2" hidden>
                         <label for="jd2cat2">Отправить в УФАС</label>
                     </div>
