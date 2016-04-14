@@ -114,11 +114,7 @@ class Application extends BaseApplication
 				'path' => '../apps/backend/Module.php'
 			)
 		));
-		try {
-			echo $this->handle()->getContent();
-		} catch (Exception $e){
-			var_dump( $e);
-		}
+		echo $this->handle()->getContent();
 	}
 
 }
