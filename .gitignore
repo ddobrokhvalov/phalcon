@@ -1,2 +1,3 @@
 *.ini
 *.phtml.php
+/public/files/documents
