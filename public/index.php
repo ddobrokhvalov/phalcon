@@ -114,6 +114,7 @@ class Application extends BaseApplication
 				'path' => '../apps/backend/Module.php'
 			)
 		));
+<<<<<<< HEAD
 		/*include "phpMailer/PHPMailerAutoload.php";
 
 		$mail = new PHPMailer();
@@ -143,6 +144,8 @@ class Application extends BaseApplication
 		}
 
 		die('');*/
+=======
+>>>>>>> dd04a6e757cec51eeb995741aed37dd7b2643b87
 		echo $this->handle()->getContent();
 	}
 
