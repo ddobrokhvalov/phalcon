@@ -1,0 +1,162 @@
+@import "variables_etc/variables";
+@import "variables_etc/mixins";
+
+.admin-lm-wrap {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 300px;
+	height: 100%;
+	z-index: 1000;
+	background-color: #222427;
+}
+.lm-logo {
+	padding: 62px 0 40px 0;
+	color: $blue;
+	font-size: 11px; 
+	position: relative;
+	text-align: center;
+	text-transform: uppercase;
+	background: url(../images/lmlogo.png) 50% 26px no-repeat;
+}
+.lm-burger {
+    position: absolute;
+    top: 37px;
+    right: 29px;
+    width: 13px;
+    height: 12px;
+    display: none;
+    cursor: pointer;
+    &-open {
+    	width: 13px;
+    	height: 12px;
+    	background: url(../images/icon-lm-opcl.png) 0 0 no-repeat;
+    }
+    &-close {
+    	@extend .lm-burger-open;
+    	display: none;
+    	background-position: 0 bottom;
+    }
+}
+.lm-menu {
+	padding: 0 34px 0 32px;
+	li {
+		line-height: 58px;
+		position: relative;
+		padding-left: 27px;
+		border-bottom: 1px solid #38383a;
+		&:hover:before {
+			position: absolute;
+			content: '';
+			top: 0;
+			left: -32px;
+			width: 3px;
+			height: 100%;
+			background-color: $blue;
+		}
+	}
+	li:first-child {
+		border-top: 1px solid #38383a;
+	}
+	& &-active {
+		&:after {
+			position: absolute;
+			content: '';
+			top: 22px;
+			right: -24px;
+			width: 9px;
+			height: 15px;
+			background: url(../images/icon-lmarr.png) 0 0 no-repeat;
+		}
+		a {
+			color: #10b8f7;
+			font-weight: 900;
+		}	
+	}
+	label {
+		position: absolute;
+		top: 20px;
+		left: 0;
+		z-index: 1;
+		width: 14px;
+		height: 14px;
+		border: 1px solid #575758;
+		border-radius: 2px;
+	}
+	.lm-active-checkbox {
+		border-color: $blue;
+		background: url(../images/admin-checkbox-icon.png) 50% 50% no-repeat;
+	}
+	input {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 2;
+		width: 15px;
+		height: 15px;
+		margin: 0;
+		opacity: 0;
+		cursor: pointer;
+	}
+	a {
+		color: #fff;
+		display: block;
+		font-size: 14px;
+		text-transform: uppercase;
+		span {
+			float: right;
+			margin-top: 18px;
+			min-width: 18px;
+			height: 18px;
+			color: $blue;
+			font-size: 10px;
+			font-weight: normal;
+			line-height: 17px;
+			text-align: center;
+			border: 1px solid $blue;
+			border-radius: 50%;
+		}
+	}
+}
+.lm-search-title {
+	font-size: 14px;
+	padding: 24px 0 20px 34px;
+	p {
+		color: #fff;
+		text-transform: uppercase;
+	}
+	span {
+		color: #959596;
+		font-style: italic;
+		font-weight: 100;
+		line-height: 1.6;
+	}
+}
+.lm-search-box {
+	position: relative;
+	width: 232px;
+	margin-left: 32px;
+	@include box-s;
+}
+#lm-search-field {
+	width: 100%;
+	padding: 0 44px 0 12px;
+	font-size: 14px;
+	line-height: 57px;
+	color: #fff;
+	border: 1px solid #777;
+	border-radius: 2px;
+	text-transform: uppercase;
+	background-color: transparent;
+	@include box-s;
+}
+#lm-search-btn {
+	position: absolute;
+	top: 18px;
+	right: 11px;
+	width: 23px;
+	height: 22px;
+	border: none;
+	cursor: pointer;
+	background: transparent url(../images/admin-lm-search.png) 0 0 no-repeat;
+}

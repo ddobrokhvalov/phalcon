@@ -1,0 +1,73 @@
+@import "variables_etc/variables";
+@import "variables_etc/mixins";
+
+.user-list {
+	h1 {
+		display: inline-block;
+		margin-bottom: 32px;
+	}
+}
+.admin-add.userAdd {
+	width: 244px;
+}
+.user-list .lt-content-top {
+	text-transform: uppercase;
+	li {
+		&:nth-child(3) span,
+		&:nth-child(4) span {
+			background: none;
+		}
+		&:nth-child(1) span,
+		&:nth-child(2) span,
+		&:nth-child(5) span,
+		&:nth-child(6) {
+			padding-right: 16px;
+			background: #fff url(../images/arrow-to-down.png) 100% 50% no-repeat;
+		}
+	}
+}
+.user-list .admin-lt-content {
+	ul {
+		&:hover {
+			li:nth-child(5) {
+				font-weight: normal;
+			}
+		}
+	}
+	li {
+		&:first-child {
+			padding-left: 32px !important;
+			width: 374px;
+		}
+		&:nth-child(2) {
+			width: 196px;
+		}
+		&:nth-child(3) {
+			width: 89px;
+		}
+		&:nth-child(4) {
+			width: 84px;
+		}
+		&:nth-child(5) {
+			width: 141px;
+		}
+	}
+}
+.good-bad {
+	margin: 36px 0 0 27px;
+	width: 11px;
+	height: 10px;
+	background: url('../images/good-bad-icons.png') no-repeat -16px 0;
+	&.must {
+		background-position: -32px 0;
+	}
+	&.extended {
+		background-position: 0 0;
+	}
+}
+.lt-content-main.red-bg {
+	background-color: $bg-red;
+	&:hover {
+		background-color: $bg-red !important;
+	}
+}

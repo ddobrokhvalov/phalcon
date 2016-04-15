@@ -1,0 +1,128 @@
+@import "variables_etc/variables";
+@import "variables_etc/mixins";
+
+.aplicant-tabs-label {
+	position: relative;
+	padding-bottom: 27px;
+	margin-top: 24px;
+	border-bottom: 3px solid $blue;
+	div {
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: 0 50px;
+		font-size: 14px;
+		line-height: 50px;
+		text-transform: uppercase;
+		border-radius: 6px;
+		cursor: pointer;
+		&:nth-child(2) {
+			position: static;
+			margin: 0 auto;
+			display: table;
+		}
+		&:last-child {
+			right: 0;
+			left: auto
+		}
+		&:hover {
+			color: #fff;
+			font-weight: 600;
+			background-color: $blue;
+		}
+	}
+}
+.active-tabs-label {
+	font-weight: 600;
+	color: #fff;
+	background-color: $blue;
+}
+.tabs-content {
+	display: none;
+	margin-left: 40px;
+	padding-top: 36px;
+	width: 814px;
+	&.active-tabs-content {
+		display: block;
+	}
+	label {
+		margin-bottom: 36px;
+		display: block;
+		div {
+			margin-bottom: 16px;
+			font-size: 16px;
+		}
+		input:focus, textarea:focus {
+			border-color: $blue;
+			-webkit-box-shadow: 0px 0px 3px 0px rgba(0, 174, 239, 0.5);
+			-moz-box-shadow: 0px 0px 3px 0px rgba(0, 174, 239, 0.5);
+			box-shadow: 0px 0px 3px 0px rgba(0, 174, 239, 0.5);
+		}
+		textarea {
+			padding: 7px 17px 0;
+			width: 100%;
+			height: 120px;
+			resize: none;
+			font: 100 18px/30px 'Open Sans', sans-serif;
+			color: #34383e;
+			border: 1px solid $border-grey;
+			border-radius: 2px;
+			@include box-s;
+		}
+		input {
+			padding: 0 17px;
+			font: 100 18px/55px 'Open Sans', sans-serif;
+			color: #34383e;
+			border: 1px solid $border-grey;
+			border-radius: 2px;
+			@include box-s;
+			-moz-appearance: textfield;
+			&[type="number"]::-webkit-inner-spin-button {
+				-webkit-appearance: none; 
+  				margin: 0;
+			}
+			&[type="number"]::-webkit-outer-spin-button {
+				-webkit-appearance: none; 
+  				margin: 0;
+			}
+			&[data-name="kratkoe-name"] {
+				width: 479px;
+			}
+			&[data-name="number"] {
+				width: 256px;
+			}
+			&[data-name="address"] {
+				width: 100%;
+			}
+			&[data-name="position-fio"] {
+				width: 479px;
+			}
+		} 
+	}
+}
+.upper-text {
+	text-transform: uppercase;
+}
+.file-attachment {
+	margin-bottom: 32px;
+	padding: 22px 0 30px;
+	border-top: 1px solid $border-grey;
+	border-bottom: 1px solid $border-grey;
+}
+.save-tab-form {
+	margin-bottom: 20px;
+	width: 482px;
+	font-size: 22px;
+	font-weight: 900;
+	line-height: 73px;
+	color: #fff;
+	text-transform: uppercase;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	outline: none;
+	background-color: $blue;
+	&:hover {
+		background-color: $h-blue;
+	}
+}

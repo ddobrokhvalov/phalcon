@@ -1,0 +1,118 @@
+@import "variables_etc/variables";
+@import "variables_etc/mixins";
+
+.reason-container {
+	margin: 45px 0;
+	padding: 30px 42px 0 38px;
+	border-top: 3px solid $blue;	
+	form {
+		overflow: hidden;
+		button {
+			float: right;
+			margin-top: 22px;
+			width: 182px;
+			line-height: 50px;
+			font-size: 14px;
+			font-weight: 600;
+			color: #fff;
+			text-transform: uppercase;
+			border: none;
+			border-radius: 6px;	
+			background-color: $blue;
+			cursor: pointer;
+			&:hover {
+				background-color: #10b8f7;
+			}
+		}
+		label {
+			margin-top: 20px;
+			display: block;
+			p {
+				font-size: 20px;
+				line-height: 2.5;
+				font-weight: 100;
+			}
+			input {
+				padding: 0 15px;
+				width: 100%;
+				font: 100 16px/55px 'Open Sans', sans-serif;
+				color: #34383e;
+				border: 1px solid $border-grey;
+				@include box-s;
+			}
+		}
+	}
+}
+.editreason-contant {
+	border: 1px solid $border-grey;
+	border-bottom: none;
+	border-radius: 2px 2px 0 0;
+}
+.editreason-title {
+	margin-top: 20px;
+	font-size: 20px;
+	line-height: 2.5;
+	font-weight: 100;
+}
+/* Select styling */
+.hidden-select {
+    display: none;
+}
+.current-option span {
+    position: relative;
+    display: block;
+    padding: 0 15px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 100;
+    line-height: 57px;
+    cursor: pointer;
+    border: 1px solid $border-grey;
+    border-radius: 2px;
+    @include box-s;
+    &:after {
+    	position: absolute;
+    	content: '';
+    	top: 12px;
+    	right: 12px;
+    	width: 31px;
+    	height: 31px;
+    	transition: all 0.5s ease-out;
+    	background: url(../images/select-icon.png) 0 0 no-repeat;
+    }
+    &.rotate-icon:after {
+    	transform: rotate(180deg);
+    }
+}
+.custom_select {
+	position: relative;
+}
+.title-info-box {
+	font-size: 20px;
+	line-height: 2.5;
+	font-weight: 100;
+}
+.custom-options {
+    position: absolute;
+    display: none;
+    z-index: 2;
+    left: 0;
+    top: 58px;
+    width: 100%;
+    border: 1px solid $border-grey;
+    border-radius: 2px;
+    background-color: #fff;
+    @include box-s;
+	li {
+		padding: 0 15px;
+	    width: 100%;
+	    font-size: 16px;
+	    font-weight: 100;
+	    line-height: 57px;
+	    cursor: pointer;
+	    @include box-s;
+	    &:hover {
+	    	background-color: $bg-blue;
+	    }
+	}
+}

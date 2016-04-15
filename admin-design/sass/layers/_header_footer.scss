@@ -1,0 +1,194 @@
+@import "variables_etc/variables";
+@import "variables_etc/mixins";
+
+#admin-header {
+	position: relative;
+	padding: 25px 0 72px 0;
+	&:after {
+		@include hasla;
+	}
+}
+.admin-name {
+	float: left;
+	div {
+		float: left;
+		width: 39px;
+		height: 39px;
+		overflow: hidden;
+		border-radius: 50%;
+		img {
+			width: 100%;
+		}
+	}	
+	span {
+		float: left;
+		margin-left: 20px;
+		color: #222427;
+		font-size: 14px;
+		line-height: 39px;
+		text-transform: uppercase;
+	}
+}
+.admin-settings-logout {
+	float: right;
+	line-height: 39px;
+}
+.admin-settings {
+	float: left;
+	margin-right: 26px;
+	width: 22px;
+	height: 39px;
+	cursor: pointer;
+	background: url(../images/icon-ch-sett.png) 0 50% no-repeat;
+	&:hover {
+    	animation: rotate-set 4s infinite;
+	}
+}
+@keyframes rotate-set {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+@-webkit-keyframes rotate-set {
+    0% {-webkit-transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(360deg);}
+}
+#admin-logout {
+	float: left;
+	width: 21px;
+	height: 39px;
+	cursor: pointer;
+	background: url(../images/icon-ch-logout.png) 0 50% no-repeat;
+}
+#footer {
+	padding: 59px 0 63px 11px;
+	a {
+		margin-bottom: 25px;
+		width: 184px;
+		height: 27px;
+		display: block;
+		background: url(../images/hlogo.png) 0 0 no-repeat;
+	}
+	p {
+		font-size: 16px;
+	}
+}
+.admin-settings-modal {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1;
+	width: 335px;
+	background-color: #fff;
+	-webkit-box-shadow: 0px 0px 5px 1px rgba(50, 50, 50, 0.5);
+	-moz-box-shadow: 0px 0px 5px 1px rgba(50, 50, 50, 0.5);
+	box-shadow: 0px 0px 5px 1px rgba(50, 50, 50, 0.5);
+}
+.admin-set-bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+}
+.admin-set-top {
+	position: relative;
+	@include box-s;
+	z-index: 2;
+	padding-left: 28px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 89px;
+	color: #222427;
+	text-transform: uppercase;
+	cursor: pointer;
+	border-bottom: 1px solid $border-grey;
+	background: url(../images/icon-lm-ddcl.png) 282px 50% no-repeat;
+	&:hover {
+		-webkit-box-shadow: 0px 0px 7px 1px rgba(50, 50, 50, 0.2);
+		-moz-box-shadow: 0px 0px 7px 1px rgba(50, 50, 50, 0.2);
+		box-shadow: 0px 0px 7px 1px rgba(50, 50, 50, 0.2);
+	}
+}
+.admin-set-cont {
+	position: relative;
+	z-index: 3;
+	padding: 0 34px 0 28px;
+	background-color: #fff;
+	form > p {
+		font-size: 22px;
+		font-weight: 100;
+		line-height: 65px;
+		&:nth-child(5) {
+			padding-top: 2px;
+			line-height: 56px;	
+			margin-top: 36px;
+			border-top: 1px solid $border-grey;
+		} 
+	}
+	label[for="download-avatar"] {
+		position: relative;
+		display: block;
+		margin-bottom: 18px;
+		cursor: pointer;
+		img {
+			overflow: hidden;
+			margin-left: 92px;
+			width: 96px;
+			height: 96px;
+			border-radius: 50%;
+		}
+		p {
+			padding-left: 81px;
+			font-size: 14px;
+			line-height: 34px;
+			text-decoration: underline;
+		}
+		input {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			opacity: 0;
+		}
+	}
+	.set-same-lable {
+		margin-bottom: 12px;
+		display: block;
+		&[for="set-newPass-agane"] {
+			margin-bottom: 24px;
+		}
+		span {
+			display: block;
+			font-size: 14px;
+			line-height: 34px;
+		}
+		input {
+			padding: 0 11px;
+			@include box-s;
+			width: 100%;
+			font: 14px/48px 'Open Sans', sans-serif;
+			color: #222427;
+			border: 1px solid #d4d7df;
+			border-radius: 2px;
+		}
+	}
+	button {
+		margin-bottom: 29px;
+		width: 100%;
+		outline: none;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 50px;
+		letter-spacing: 1px;
+		color: #fff;
+		text-transform: uppercase;
+		border: none;
+		border-radius: 6px;
+		background-color: $blue;
+		&:hover {
+			background-color: $h-blue;
+		}
+	}
+}

@@ -1,0 +1,157 @@
+@import "variables_etc/variables";
+@import "variables_etc/mixins";
+
+.admin-page {
+	margin-bottom: 30px;
+	h1 {
+		margin-bottom: 42px;
+	}
+}
+.admin-change-access {
+	overflow: hidden;
+	padding: 13px 15px 11px 31px;
+	border-bottom: 3px solid $blue;
+	background-color: $bg-blue;
+	span {
+		font-size: 30px;
+		font-weight: 100;
+		line-height: 50px;
+		color: $blue;
+	}
+}
+.change-access {
+	float: right;
+	padding: 0 22px;
+	line-height: 50px;
+	text-align: center;
+	font-size: 14px;
+	font-weight: 600;
+	color: #fff;
+	text-transform: uppercase;
+	background-color: $blue;
+	border-radius: 6px;
+	cursor: pointer;
+	&:hover {
+		background-color: $h-blue;
+	}
+}
+.block-user-editing {
+	overflow: hidden;
+	padding: 0 34px 0 25px;
+	form {
+		> div {
+			> span {
+				font-size: 30px;
+				font-weight: 100;
+				line-height: 83px;
+			}
+		}
+	}
+	label {
+		position: relative;
+		display: block;
+		margin-bottom: 22px;
+		background-color: #fff;
+		p {
+			line-height: 38px;
+		}
+		&[for="adminAvatar"] {
+			overflow: hidden;
+			cursor: pointer;
+			width: 165px;
+			.changeAvatar {
+				width: 100%;
+				font-size: 14px;
+				line-height: 1;
+				text-align: center;
+				text-decoration: underline;
+			}
+		}
+	}
+	input {
+		padding: 0 16px;
+		width: 100%;
+		font: 16px/55px 'Open Sans', sans-serif;
+		color: #34383e;
+		border: 1px solid #d5d9e0;
+		border-radius: 2px;
+		@include box-s;
+		-moz-appearance: textfield;
+		&:focus {
+			color: $blue;
+			border-color: $blue;
+			-webkit-box-shadow: 0px 0px 3px 0px rgba(0, 174, 239, 0.5);
+  			-moz-box-shadow: 0px 0px 3px 0px rgba(0, 174, 239, 0.5);
+  			box-shadow: 0px 0px 3px 0px rgba(0, 174, 239, 0.5);
+		}
+		&[type="file"] {
+			position: absolute;
+			z-index: -1;
+			top: 0;
+			left: 0;
+		}
+		&::-webkit-inner-spin-button {
+  			-webkit-appearance: none;
+  			margin: 0;
+		}
+		&::-webkit-outer-spin-button {
+  			-webkit-appearance: none;
+  			margin: 0;
+		}
+	}
+}
+.left-block-editing {
+	width: 387px;
+	float: left;
+	label:last-child {
+		margin-bottom: 0;
+	}
+}
+.right-block-editing {
+	width: 381px;
+	float: right;
+}
+.avatar-wrapper {
+	overflow: hidden;
+	margin-bottom: 18px;
+	width: 165px;
+	height: 165px;
+	border-radius: 50%;
+	img {
+		width: 100%;
+		height: 100%;
+	}
+}
+.delete-or-save {
+	float: left;
+	margin-top: 29px;
+	padding-top: 21px;
+	width: 100%;
+	border-top: 1px solid #d5d9e0;
+	button {
+		float: left;
+		padding: 0 34px;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 62px;
+		text-transform: uppercase;
+		border: none;
+		border-radius: 6px;
+		background-color: #fff;
+		cursor: pointer;
+		outline: none;
+		&:hover {
+			background-color: $bg-red;
+		}
+		&:last-child {
+			float: right;
+			font-size: 17px;
+			letter-spacing: 1px;
+			color: #fff;
+			background-color: $blue;
+			&:hover {
+				background-color: $h-blue;
+			}
+		}
+	}
+}

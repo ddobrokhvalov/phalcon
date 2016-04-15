@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>FAS admin</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="js/main_script.js"></script>
+</head>
+<body>
+	<!-- Left menu block -->
+	<article class="admin-lm-wrap">
+		<div class="lm-logo">
+			<span>Административная консоль</span>
+			<div class="lm-burger">
+				<div class="lm-burger-open"></div>
+				<div class="lm-burger-close"></div>
+			</div>
+		</div>
+		<form action="#" method="POST">
+			<ul class="lm-menu">
+				<li>
+					<label for="lm-user"><input type="checkbox" id="lm-user"></label>
+					<a href="#">Пользователи</a>
+				</li>
+				<li>
+					<label for="lm-complaints"><input type="checkbox" id="lm-complaints"></label>
+					<a href="#">Жалобы</a>
+				</li>
+				<li>
+					<label for="lm-arguments"><input type="checkbox" id="lm-arguments"></label>
+					<a href="#">Доводы</a>
+				</li>
+				<li>
+					<label for="lm-applicants"><input type="checkbox" id="lm-applicants"></label>
+					<a href="#">Заявители</a>
+				</li>
+				<li class="lm-menu-active">
+					<label for="lm-ask-lawyer"><input type="checkbox" id="lm-ask-lawyer"></label>
+					<a href="#">Вопросы юристу<span>34</span></a>
+				</li>
+				<li>
+					<label for="lm-administrators"><input type="checkbox" id="lm-administrators"></label>
+					<a href="#">Администраторы</a>
+				</li>
+				<li>
+					<label for="lm-logs"><input type="checkbox" id="lm-logs"></label>
+					<a href="#">Логи</a>
+				</li>
+			</ul>
+			<div class="lm-search-title">
+				<p>Поиск по выбранному</p>
+				<span>Выберите категории выше и ищите</span>
+			</div>
+			<div class="lm-search-box">	
+				<input type="text" id="lm-search-field">
+				<input type="submit" id="lm-search-btn" value="">
+			</div>
+		</form>
+	</article>
+	<!-- end Left menu block -->
+	<section class="page-wrap">
+		<header id="admin-header">
+			<div class="admin-name">
+				<div><img src="images/admin-picture.png" alt="avatar admin"></div>
+				<span>FAC-Admin@gmail.com</span>
+			</div>
+			<div class="admin-settings-logout">
+				<div class="admin-settings"></div>
+				<a href="/login/logout" id="admin-logout"></a>
+			</div>
+			<article class="admin-settings-modal">
+				<div class="admin-set-bg"></div>
+				<div class="admin-set-top">
+					<p>Настройки администратора</p>
+				</div>
+				<div class="admin-set-cont">
+					<form action="#" method="POST">
+						<p>Личные данные</p>
+						<label for="download-avatar">
+							<img src="images/admin-picture2.png" alt="">
+							<p>Изменить аватар</p>
+							<input type="file" id="download-avatar">
+						</label>
+						<label for="adm-set-email" class="set-same-lable">
+							<span>E-mail</span>
+							<input type="email" id="adm-set-email">
+						</label>
+						<label for="adm-set-fio" class="set-same-lable">
+							<span>ФИО</span>
+							<input type="text" id="adm-set-fio">
+						</label>
+						<p>Сменить пароль</p>
+						<label for="set-oldPas" class="set-same-lable">
+							<span>Старый пароль</span>
+							<input type="password" id="set-oldPass">
+						</label>
+						<label for="set-newPass" class="set-same-lable">
+							<span>Новый пароль</span>
+							<input type="password" id="set-newPass">
+						</label>
+						<label for="set-newPass-agane" class="set-same-lable">
+							<span>Новый пароль еще раз</span>
+							<input type="password" id="set-newPass-agane">
+						</label>
+						<button>Сохранить</button>
+					</form>
+				</div>
+			</article>
+		</header>
+		<!-- Main -->
+		<main id="main">
+		<!-- ****************** admin page ***************** -->
+			<div class="admin-main-wrap admin-page">
+				<div class="bread-crumbs-holder">
+					<a href="#">Вернуться к списку администраторов</a>
+				</div>
+				<h1>Ларина Екатерина Прокоповна</h1>
+				<div class="admin-change-access">
+					<span>Редактирование пользователей</span>
+					<div class="change-access">Изменить доступ</div>
+				</div>
+				<div class="block-user-editing">
+					<form action="#" method="POST">
+						<div class="left-block-editing">
+							<span>Данные администратора</span>
+							<label for="fioAdmin">
+								<p>ФИО</p>
+								<input type="text" id="fioAdmin">
+							</label>
+							<label for="telFaxAdmin">
+								<p>Контактный факс, телефон</p>
+								<input type="number" id="telFaxAdmin">
+							</label>
+							<label for="adminEmail">
+								<p>E-mail</p>
+								<input type="email" id="adminEmail">
+							</label>
+						</div>
+						<div class="right-block-editing">
+							<span>Сменить пароль</span>
+							<label for="adminPass">
+								<p>Задайте новый пароль</p>
+								<input type="password" id="adminPass">
+							</label>
+							<label for="adminAvatar">
+								<div class="avatar-wrapper">
+									<img src="images/admin-picture3.png" alt="">
+								</div>
+								<p class="changeAvatar">Изменить аватар</p>
+								<input type="file" id="adminAvatar">
+							</label>
+						</div>
+						<div class="delete-or-save">
+							<button>Удалить администратора</button>
+							<button>Сохранить изменения</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		<!-- ***************************************************** -->
+		</main>
+		<footer id="footer">
+			<a href="/"></a>
+			<p>&copy; ФАС-Онлайн, 2015, при поддержке «Госпартнер»</p>
+		</footer>
+	</section>
+</body>
+</html>

@@ -1,0 +1,109 @@
+@import "variables_etc/variables";
+@import "variables_etc/mixins";
+
+.admin-popup-wrap {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.admin-popup-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9998;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	background-color: rgba(52,56,62,0.4);
+}
+.admin-popup-close {
+    position: absolute;
+    top: 19px;
+    right: 21px;
+    z-index: 10;
+    width: 21px;
+    height: 21px;
+    cursor: pointer;
+    background: url(../images/icon-mod-close.png) no-repeat center;
+}
+.admin-popup-content {
+	position: absolute;
+	top: calc(50% - 356px);
+	left: calc(50% - 350px);
+	z-index: 9999;
+	width: 700px;
+	height: 713px;
+	background-color: #fff;
+	-webkit-box-shadow: 0px 0px 20px 2px rgba(52, 56, 62, 0.3);
+	-moz-box-shadow: 0px 0px 20px 2px rgba(52, 56, 62, 0.3);
+	box-shadow: 0px 0px 20px 2px rgba(52, 56, 62, 0.3);
+	@include box-s;
+	h6 {
+		position: relative;
+		overflow: hidden;
+		padding-bottom: 30px;
+		font-size: 56px;
+		line-height: 140px;
+		font-weight: 100;
+		color: #fff;
+		text-align: center;
+		&:before {
+			position: absolute;
+			content: '';
+	    	z-index: -1;
+    		top: -19px;
+    		left: -6px;
+    		width: 102%;
+			height: 100%;
+			background-color: $blue;
+			transform: rotate(-3deg);
+		}
+	}
+	ul {
+		margin-top: 30px;
+	}
+	label {
+		position: relative;
+		margin-left:  102px;
+		padding-left: 27px;
+		font-size: 22px;
+		line-height: 54px;
+		font-weight: 100;
+		cursor: pointer;
+		div {
+			position: absolute;
+			content: '';
+			top: calc(50% - 8px);
+			left: 0;
+		    width: 16px;
+    		height: 16px;
+    		background: url(../images/checkbx1.png) 0 0 no-repeat;
+		}
+		input {
+			position: absolute;
+			top: calc(50% - 8px);
+			left: 0;
+			z-index: 1;
+		    width: 16px;
+    		height: 16px;
+    		margin: 0;
+    		opacity: 0;
+    		cursor: pointer;
+		}
+	}
+	button {
+		margin: 25px 0 0 102px;
+		width: 202px;
+		font-size: 16px;
+		line-height: 50px;
+		font-weight: 600;
+		letter-spacing: 1px;
+		color: #fff;
+		text-transform: uppercase;
+		border: none;
+		border-radius: 6px;
+		background-color: $blue;
+	}
+}

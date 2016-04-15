@@ -1,0 +1,260 @@
+@import "variables_etc/variables";
+@import "variables_etc/mixins";
+
+.user-page {
+	h1 {
+		margin-bottom: 40px;
+	}
+	label[for="userPass"] {
+		margin-bottom: 28px;
+	}
+	label[for="sendEmailNotice"] {
+		position: relative;
+		margin: 0 0 29px 2px;
+		cursor: pointer;
+		p {
+		    position: absolute;
+    		top: 0;
+    		left: 0;
+    		padding-left: 34px;
+    		width: 320px;
+    		font-size: 16px;
+    		line-height: 16px;
+		}
+	}
+	label[for="userComment"] {
+		margin-bottom: 0;
+		textarea {
+			@include box-s;
+			padding: 16px;
+			width: 100%;
+			height: 123px;
+			font: 16px/28px 'Open Sans', sans-serif;
+			border: 1px solid #d5d9e0;
+    		border-radius: 2px;
+    		resize: none;
+			&:focus {
+				color: #00aeef;
+  				border-color: #00aeef;
+  				-webkit-box-shadow: 0px 0px 3px 0px rgba(0, 174, 239, 0.5);
+  				-moz-box-shadow: 0px 0px 3px 0px rgba(0, 174, 239, 0.5);
+  				box-shadow: 0px 0px 3px 0px rgba(0, 174, 239, 0.5);
+			}
+		}
+	}
+}
+.block-user-editing {
+	margin-bottom: 58px;
+}
+.appllicant-page .user-top-lt {
+	margin-top: 30px;
+	border-top: none;	
+}
+.user-top-lt {
+	overflow: hidden;
+	padding: 11px 21px 0 26px;
+	border-top: 3px solid $blue;
+	span {
+		font-size: 30px;
+		font-weight: 100;
+		line-height: 50px;
+	}
+	div {
+		float: right;
+		padding: 0 18px;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 50px;
+		color: #fff;
+		text-transform: uppercase;
+		border-radius: 6px;
+		background-color: $blue;
+		cursor: pointer;
+		&:hover {
+			background-color: $h-blue;
+		}
+	}
+}
+.user-page .admin-lt-head {
+	border-top: none;
+}
+.user-page .lt-content-top {
+	li {
+		span {
+			padding-right: 0;
+	    	line-height: 75px;
+			background: none;
+		}
+	}
+}
+.user-page .lt-psevdo-check {
+	top: 18px;
+}
+.user-page .appllicant-page .lt-psevdo-check {
+	top: 28px;
+}
+.user-page .admin-lt-content .lt-content-top {
+	li {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+}
+.user-page .admin-lt-content {
+	ul {
+		&:not(:first-child) {
+			li:first-child {
+				padding-left: 34px;
+			}
+			li:nth-child(2) {
+				text-transform: uppercase;
+			}
+			li:nth-child(4),
+			li:nth-child(5) {
+				padding-right: 14px;
+			}
+		}
+	}
+	li {
+		height: auto;
+		padding: 15px 0 20px 14px;
+		line-height: 22px;
+		&:first-child {
+			width: 355px;
+		}
+		&:nth-child(2) {
+			width: 58px;
+		}
+		&:nth-child(3) {
+			width: 110px;
+		}
+		&:nth-child(4) {
+			width: 165px;
+		}
+		&:nth-child(5) {
+			width: 210px;
+		}
+		&:nth-child(6) {
+			width: 67px;
+		}
+	}
+}
+.user-page .lt-content-main {
+	&:hover {
+		li:not(:last-child) {
+			font-weight: normal;
+		}
+	}
+}
+.user-page .appllicant-page .lt-content-top {
+	li {
+		span {
+			padding-right: 16px;
+			background: #fff url(../images/arrow-to-down.png) 100% 50% no-repeat;
+		}
+	}
+}
+.user-page .appllicant-page .admin-lt-content {
+	.lt-content-main li:last-child {
+		padding-right: 0;
+		height: 72px;
+	}
+	li {
+		padding-top: 0;
+		padding-bottom: 0;
+		padding-left: 12px;
+		&:first-child {
+			width: 338px;
+		}
+		&:nth-child(2) {
+			width: 146px;
+		}
+		&:nth-child(3) {
+			width: 296px;
+		}
+		&:nth-child(4) {
+			width: 113px;
+		}
+		&:nth-child(5) {
+			width: 72px;
+		}
+	}
+}
+.close-status-list {
+	display: none;
+	position: absolute;
+	top: 1px;
+    right: 0;
+	z-index: 11;
+	@include box-s;
+	padding-left: 13px;
+	width: 181px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 72px;
+	color: #222427;
+	text-transform: uppercase;
+	cursor: pointer;
+	background-color: #fff;
+	border: 1px solid $border-grey;
+	border-bottom: none;
+	&:before {
+		position: absolute;
+		content: '';
+		top: 32px;
+		right: 31px;
+		width: 10px;
+		height: 7px;
+		transform: rotate(180deg);
+		background: url(../images/arrow-to-down.png) 0 0 no-repeat;
+	}
+}
+.status-list-holder {
+	position: absolute;
+	top: 72px;
+    right: 0;
+	z-index: 11;
+	@include box-s;
+	width: 181px;
+	background-color: #fff;
+	border: 1px solid $border-grey;
+	li {
+		padding-left: 43px !important;
+		width: 100% !important;
+		font-size: 12px;
+		height: 40px !important;
+		line-height: 40px !important;
+		text-transform: uppercase;
+		border-left: none !important;
+		background-position: 11px 50%;
+		background-repeat: no-repeat;
+		cursor: pointer;
+		&:hover {
+			background-color: $bg-blue;
+		}
+		&:first-child {
+			margin-top: 5px;
+			background-image: url(../images/icon-jl-chernov.png);
+		}
+		&:nth-child(2) {
+			background-image: url(../images/icon-jl-podana.png);
+		}
+		&:nth-child(3) {
+			color: $blue;	
+			background-image: url(../images/icon-jl-rassmotr.png);
+		}
+		&:nth-child(4) {
+			color: $f-green;
+			background-image: url(../images/icon-jl-done.png);
+		}
+		&:nth-child(5) {
+			color: #f26d7d;
+			background-image: url(../images/icon-jl-notdone.png);
+		}
+		&:nth-child(6) {
+			background-image: url(../images/icon-jl-fail.png);
+		}
+		&:nth-child(7) {
+			background-image: url(../images/icon-jl-archive.png);
+		}
+	}
+}

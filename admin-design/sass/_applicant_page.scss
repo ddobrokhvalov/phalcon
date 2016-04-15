@@ -1,0 +1,143 @@
+@import "variables_etc/variables";
+@import "variables_etc/mixins";
+
+.appllicant-page {
+	h1 {
+		margin-bottom: 32px;
+	}
+	h2 {
+		font-size: 30px;
+		line-height: 89px;
+	}
+}
+.appllicant-page .admin-table-footer a:first-child {
+	width: 192px;
+	margin: 29px 0 34px calc(50% - 96px);
+}
+.del-oredit-appll {
+	overflow: hidden;
+	padding: 14px 0 17px;
+	border-top: 1px solid $border-grey;
+	border-bottom: 1px solid $border-grey;	
+	a {
+		float: left;
+		display: inline-block;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 50px;
+		color: #222427;
+		text-transform: uppercase;
+		border-radius: 6px;
+		&:last-child {
+			float: right;
+			padding: 0 28px;
+			color: #fff;
+			background-color: $blue;
+			&:hover {
+				background-color: $h-blue;
+			}
+		}
+	}
+}
+.appllicant-page .lt-content-top {
+	li {
+		&:nth-child(1) span,
+		&:nth-child(2) span {
+			padding-right: 16px;
+			background: #fff url(../images/arrow-to-down.png) 100% 50% no-repeat;
+		}
+	}
+}
+.appllicant-page .admin-lt-content {
+	.lt-content-main li:last-child {
+		padding-left: 0;
+		width: 72px;
+	}
+	li {
+		padding-left: 12px;
+		&:first-child {
+			padding-left: 34px;
+			width: 626px;
+		}
+		&:nth-child(2) {
+			width: 155px;
+		}
+		&:nth-child(3) {
+			width: 112px;
+		}
+		&:nth-child(4) {
+			width: 72px;
+		}
+	}
+}
+.appllicant-page .admin-lt-content .lt-content-main {
+	border-bottom: none;
+	border-top: 3px solid #211d1e;
+	&.top-bd-blue {
+		border-top: 3px solid $blue;
+	}
+	&.top-bd-green {
+		border-top: 3px solid $green;
+	}
+	&.top-bd-red {
+		border-top: 3px solid $red;
+	}
+	li {
+		line-height: 72px;
+		&:first-child {
+			padding-left: 34px;
+		}
+	}
+	&:last-child {
+		border-bottom: 1px solid $border-grey;
+	}
+}
+.appllicant-page .lt-head-btns div {
+	color: #bcbcbd;
+	padding: 0 18px;
+	&:hover {
+		font-weight: normal;
+		color: #bcbcbd;
+		background-color: #fff;
+	}
+}
+.appll-status-icon {
+	margin: 26px auto 0;
+	width: 22px;
+	height: 22px;
+	background: url(../images/icon-jl-chernov.png) 0 0 no-repeat;
+}
+.top-bd-blue .appll-status-icon {
+	background-image: url(../images/icon-jl-rassmotr.png);
+}
+.top-bd-green .appll-status-icon {
+	background-image: url(../images/icon-jl-done.png);
+}
+.top-bd-red .appll-status-icon {
+	background-image: url(../images/icon-jl-notdone.png);
+}
+.appllicant-page .lt-head-btns {
+	div {
+		cursor: default;
+	}
+}
+.appllicant-page .lt-head-btns.active-lt-head-btns {
+	div {
+		cursor: pointer;
+		&:not(:last-child):hover {
+			font-weight: 600;
+			color: #fff;
+			background-color: $h-blue;
+		}
+		&:last-child {
+			color: $blue;
+		}
+	}
+}
+.appllicant-page .lt-content-main {
+	position: relative;
+	li {
+		position: relative;
+		z-index: 9;
+	}
+}

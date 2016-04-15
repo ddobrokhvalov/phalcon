@@ -1,0 +1,228 @@
+@import "variables_etc/variables";
+@import "variables_etc/mixins";
+
+.admin-table-head {
+	height: 67px;
+	padding-left: 33px;
+	@include box-s;
+	&:after {
+		@include hasla;
+	}
+}
+.lawyer-wrap .admin-table-head {
+	padding-top: 24px;
+	border-top: 1px solid $border-grey;
+}
+.table-head-left {
+	float: left;
+	label {
+		float: left;
+		margin-right: 14px;
+	}
+	span {
+		float: left;
+		font-size: 14px;
+		line-height: 16px;
+		color: $blue;
+		text-transform: uppercase;
+	}
+}
+.admin-table-title {
+	border-top: 1px solid $border-grey;
+	border-bottom: 1px solid $border-grey; 
+	li {
+		@include box-s;
+		line-height: 75px;
+		font-size: 11px;
+		text-transform: uppercase;
+	}
+	li:not(:last-child) {
+		border-right: 1px solid $border-grey;
+	}
+}
+.lawyer-wrap .admin-table-title {
+	li:first-child {
+		width: 245px;
+		padding-left: 23px;
+	}
+	li:nth-child(2) {
+		padding-left: 12px;
+		width: 104px;
+	}
+	li:nth-child(3) {
+		padding-left: 15px;
+	}
+	span {
+		position: relative;
+		&:after {
+			position: absolute;
+			content: '';
+			top: 4px;
+			right: -18px;
+			width: 10px;
+			height: 7px;
+			background: url(../images/arrow-to-down.png) 0 0 no-repeat;
+		}
+	}
+}
+.admin-table-box {
+	.admin-table-body li ul {
+		border-left: 1px solid $border-grey;
+		border-bottom: 1px solid $border-grey; 
+	}
+	.admin-table-body li ul:last-child {
+		border-bottom: none;
+	}
+	ul:after {
+		@include hasla;
+	}
+	li {
+		float: left;
+		a {
+			position: relative;
+			padding-left: 25px;
+			display: inline-block;
+			color: #a7a8a8;
+			background: url(../images/previous-question.png) 0 6px no-repeat;
+			&.active-ques {
+				color: #34383e;
+				padding-left: 0;
+				background: none;
+				&:hover {
+					font-weight: 600;
+					color: #0fbbfc;
+				}
+			}
+		}
+	}
+	.admin-table-body > li {
+		border-right: none;
+		border-bottom: 1px solid $border-grey;
+		&:hover {
+			background-color: $bg-blue;
+		}
+	}
+}
+.lawyer-wrap .admin-table-body {
+	li {
+		min-height: 75px;
+		@include box-s;
+		ul {
+			float: left;
+		    margin-left: 244px;
+			li {
+				padding: 33px 0;
+			}
+			li:first-child {
+				padding-left: 12px;
+				width: 103px;
+				font-size: 14px;
+			}
+			li:nth-child(2) {
+				padding: 30px 15px;
+				width: 617px;
+				font-size: 14px;
+				line-height: 20px;
+				border-left: 1px solid $border-grey;
+			}
+		}
+	}
+	> li {
+		position: relative;
+		p {
+			position: absolute;
+			top: 0;
+			left: 0;
+			padding: 26px 0 0 23px;
+			max-width: 244px;
+			font-size: 18px;
+			font-weight: 100;
+			line-height: 26px;
+			@include box-s;
+		}
+	}
+}
+.admin-table-footer {
+	overflow: hidden;
+	a:first-child {
+		float: left;
+		margin: 29px 0 34px calc(50% - 137px);
+		width: 274px;
+		line-height: 53px;
+		font-weight: 600;
+		font-size: 16px;
+		color: #fff;
+		border-radius: 2px;
+		text-align: center;
+		text-transform: uppercase;
+		background-color: $blue;
+		&:hover {
+			background-color: #10b8f7;
+		}
+	}
+	a:last-child {
+		float: right;
+		color: $blue;
+		text-decoration: underline;
+		font-size: 16px;
+		margin-top: 46px;
+	}
+}
+.admin-pagination-box {
+	height: 108px;
+	position: relative;
+	border-top: 1px solid $border-grey;
+	border-bottom: 1px solid $border-grey;
+	ul {
+		display: table;
+		margin: 37px auto 0;
+	}
+	li {
+		float: left;
+		span {
+			margin: 0 4px;
+			padding: 0 13px;
+			line-height: 36px;
+		}
+		a {
+			margin: 0 4px;
+			padding: 0 13px;
+			color: #34383e;
+			font-size: 16px;
+			line-height: 36px;
+			border-radius: 2px;
+			display: inline-block;
+			&:hover {
+				background-color: $blue;
+				color: #fff;
+				font-weight: 600;
+			}
+		}
+		.active-pag-page {
+			display: inline-block;
+			color: #fff;
+			font-weight: 600;
+			border-radius: 2px;
+			background-color: $blue;
+		}
+	}
+	> a {
+		position: absolute;
+		top: 50px;
+		font-size: 14px;
+		font-weight: 700;
+		color: #34383e;
+		text-transform: uppercase;
+		cursor: pointer;
+	}
+}
+#admin-pag-prev {
+	left: 0;
+	padding-left: 20px;
+	background: url(../images/icon-pag-arr1.png) 0 0 no-repeat;
+}
+#admin-pag-next {
+	right: 0;
+	padding-right: 20px;
+	background: url(../images/icon-pag-arr2.png) 100% 0 no-repeat;
+}

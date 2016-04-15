@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>FAS admin</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="js/main_script.js"></script>
+</head>
+<body>
+	<!-- Left menu block -->
+	<article class="admin-lm-wrap">
+		<div class="lm-logo">
+			<span>Административная консоль</span>
+			<div class="lm-burger">
+				<div class="lm-burger-open"></div>
+				<div class="lm-burger-close"></div>
+			</div>
+		</div>
+		<form action="#" method="POST">
+			<ul class="lm-menu">
+				<li>
+					<label for="lm-user"><input type="checkbox" id="lm-user"></label>
+					<a href="#">Пользователи</a>
+				</li>
+				<li>
+					<label for="lm-complaints"><input type="checkbox" id="lm-complaints"></label>
+					<a href="#">Жалобы</a>
+				</li>
+				<li>
+					<label for="lm-arguments"><input type="checkbox" id="lm-arguments"></label>
+					<a href="#">Доводы</a>
+				</li>
+				<li>
+					<label for="lm-applicants"><input type="checkbox" id="lm-applicants"></label>
+					<a href="#">Заявители</a>
+				</li>
+				<li class="lm-menu-active">
+					<label for="lm-ask-lawyer"><input type="checkbox" id="lm-ask-lawyer"></label>
+					<a href="#">Вопросы юристу<span>34</span></a>
+				</li>
+				<li>
+					<label for="lm-administrators"><input type="checkbox" id="lm-administrators"></label>
+					<a href="#">Администраторы</a>
+				</li>
+				<li>
+					<label for="lm-logs"><input type="checkbox" id="lm-logs"></label>
+					<a href="#">Логи</a>
+				</li>
+			</ul>
+			<div class="lm-search-title">
+				<p>Поиск по выбранному</p>
+				<span>Выберите категории выше и ищите</span>
+			</div>
+			<div class="lm-search-box">	
+				<input type="text" id="lm-search-field">
+				<input type="submit" id="lm-search-btn" value="">
+			</div>
+		</form>
+	</article>
+	<!-- end Left menu block -->
+	<section class="page-wrap">
+		<header id="admin-header">
+			<div class="admin-name">
+				<div><img src="images/admin-picture.png" alt="avatar admin"></div>
+				<span>FAC-Admin@gmail.com</span>
+			</div>
+			<div class="admin-settings-logout">
+				<div class="admin-settings"></div>
+				<a href="/login/logout" id="admin-logout"></a>
+			</div>
+		</header>
+		<!-- Main -->
+		<main id="main">
+		<!-- ****************** appllicant page ***************** -->
+			<div class="admin-main-wrap appllicant-page">
+				<div class="bread-crumbs-holder">
+					<a href="#">Вернуться на страницу пользователя</a>
+				</div>
+				<h1>Государственное бюджетное профессиональное образовательное учреждение воронежской области «Борисоглебский дорожный техникум»</h1>
+				<div class="del-oredit-appll">
+					<a href="#">Удалить заявителя</a>
+					<a href="#">Редактировать</a>
+				</div>
+				<h2>Жалобы заявителя</h2>
+				<div class="admin-lt-holder">
+					<div class="admin-lt-head">
+						<div class="select-all">
+							<div></div>Выбрать все
+						</div>
+						<div class="lt-head-btns">
+							<div>Копировать</div>
+							<div>Создать</div>
+							<div>В архив</div>
+							<div>Удалить</div>
+						</div>
+					</div>
+					<div class="admin-lt-content">
+						<ul class="lt-content-top">
+							<li><span>Имя жалобы</span></li>
+							<li><span>Номер закупки</span></li>
+							<li><span>Дата подачи</span></li>
+							<li><span>Статус</span></li>
+						</ul>
+						<ul class="lt-content-main top-bd-blue">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								Нарушение в КД по срокам, не соответстветствует ГОСТ
+							</li>
+							<li>201603322000548</li>
+							<li>22.01.2016</li>
+							<li>
+								<div class="appll-status-icon"></div>
+								<div class="close-status-list">Сменить статус</div>
+							</li>
+						</ul>
+						<ul class="lt-content-main"> <!-- add the required class -->
+							<li>
+								<div class="lt-psevdo-check"></div>
+								Нарушение ГОСТ
+							</li>
+							<li>201603322000548</li>
+							<li>22.01.2016</li>
+							<li>
+								<div class="appll-status-icon"></div>
+								<div class="close-status-list">Сменить статус</div>
+							</li>
+						</ul>
+						<ul class="lt-content-main top-bd-green">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								Нарушение в КД по срокам
+							</li>
+							<li>201603322000548</li>
+							<li>22.01.2016</li>
+							<li>
+								<div class="appll-status-icon"></div>
+								<div class="close-status-list">Сменить статус</div>
+							</li>
+						</ul>
+						<ul class="lt-content-main top-bd-red">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								Нарушение в КД, не соответстветствует ГОСТ
+							</li>
+							<li>201603322000548</li>
+							<li>22.01.2016</li>
+							<li><div class="appll-status-icon"></div></li>
+						</ul>
+						<ul class="lt-content-main top-bd-blue">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								Нарушение по срокам, не соответстветствует ГОСТ
+							</li>
+							<li>201603322000548</li>
+							<li>22.01.2016</li>
+							<li>
+								<div class="appll-status-icon"></div>
+								<div class="close-status-list">Сменить статус</div>
+							</li>
+						</ul>
+						<ul class="lt-content-main top-bd-green">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								Нарушение в КД по срокам и ГОСТу
+							</li>
+							<li>201603322000548</li>
+							<li>22.01.2016</li>
+							<li>
+								<div class="appll-status-icon"></div>
+								<div class="close-status-list">Сменить статус</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="admin-table-footer">
+					<a href="#">Еще <span>20 жалоб</span></a>
+					<a href="#">Показать все жалобы (<span>345 678</span>)</a>
+				</div>
+				<div class="admin-pagination-box">
+					<a href="#" id="admin-pag-prev">Предыдущие</a>
+					<ul>
+						<li><a href="#">1</a></li>
+						<li><span class="active-pag-page">2</span></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><span>...</span></li>
+						<li><a href="#">23</a></li>
+					</ul>
+					<a href="#" id="admin-pag-next">Следующие</a>
+				</div>
+			</div>
+		<!-- ***************************************************** -->
+		</main>
+		<footer id="footer">
+			<a href="/"></a>
+			<p>&copy; ФАС-Онлайн, 2015, при поддержке «Госпартнер»</p>
+		</footer>
+	</section>
+</body>
+</html>

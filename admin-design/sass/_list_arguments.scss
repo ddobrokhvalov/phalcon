@@ -1,0 +1,99 @@
+@import "variables_etc/variables";
+@import "variables_etc/mixins";
+
+.list-arguments {
+	h1 {
+		display: inline-block;
+		margin-bottom: 32px;
+	}
+	.second-lt-h1 {
+		margin-top: 45px;
+	}
+}
+.admin-add.add-arg {
+	width: 182px;
+}
+.lt-arg .lt-content-top {
+	li {
+		&:nth-child(1) span,
+		&:nth-child(2) span,
+		&:nth-child(3) span {
+			padding-right: 16px;
+			background: #fff url(../images/arrow-to-down.png) 100% 50% no-repeat;
+		}
+	}
+}
+.lt-arg .admin-lt-content {
+	ul {
+		&:not(:first-child) {
+			li:first-child {
+				padding-left: 34px;
+			}
+		}
+	}
+	li {
+		padding-left: 18px;
+		&:first-child {
+			padding-left: 34px;
+			width: 553px;
+		}
+		&:nth-child(2) {
+			width: 293px;
+		}
+		&:nth-child(3) {
+			width: auto;
+		}
+	}
+}
+.lt-arg .lt-content-main {
+	&:hover {
+		li:not(:last-child) {
+			font-weight: normal;
+		}
+	}
+}
+.lt-arg-second .lt-psevdo-check {
+	left: 4px;
+}
+.lt-arg-second .admin-lt-content {
+	ul:first-child li {
+		position: relative;
+	}
+	li {
+		padding-left: 34px !important;
+		width: 100%;
+		input {
+			display: none;
+			position: absolute;
+			top: 18px;
+			left: 28px;
+			padding: 0 6px;
+			width: 792px;
+			font: 14px/38px 'Open Sans', sans-serif;
+			color: #34383e;
+			text-align: left;
+			border: 1px solid $border-grey;
+			border-radius: 2px;
+			background-color: #fff;
+			@include box-s;
+		} 
+		span {
+			display: none;
+			position: absolute;
+			top: 18px;
+			right: 11px;
+			width: 121px;
+			font-size: 14px;
+			line-height: 38px;
+			font-weight: 600;
+			color: #fff;
+			text-align: center;
+			text-transform: uppercase;
+			border-radius: 2px;
+			background-color: $blue;
+			&:hover {
+				background-color: $h-blue;
+			}
+		}
+	}
+}

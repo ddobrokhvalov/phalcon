@@ -1,0 +1,109 @@
+// @import "layers/fonts";
+@import "compass/reset";
+@import "variables_etc/variables";
+@import "variables_etc/mixins";
+
+html, body {
+	height: 100%
+}
+body {
+	position: relative;
+	font-family: 'Open Sans', sans-serif;
+}
+input, textarea {
+	outline: none; 
+}
+a {
+	text-decoration: none;
+}
+b {
+	font-weight: 900;
+}
+i {
+	font-style: italic;
+}
+img {
+	display: block;
+}
+.page-wrap {
+    height: 100%;
+    display: table;
+    width: 965px; 
+	color: #34383e;
+    margin: 0 auto;
+    button {
+    	color: #34383e;
+    }
+}
+#main {
+    display: table-row;
+    height: 100%;
+}
+h1 {
+	font-size: 46px;
+	line-height: 1.1;
+	font-weight: 100;
+	margin: 0 0 16px 1px;
+}
+h2, h3 {
+	font-size: 32px;
+	line-height: 1.1;
+	font-weight: 100;
+}
+h4 {
+	font-size: 18px;
+	line-height: 1.1;
+	font-weight: 900;
+}
+.lebel-checkbox {
+	position: relative;
+	width: 16px;
+	height: 16px;
+	background: url(../images/checkbx1.png) 0 0 no-repeat;
+	input {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 16px;
+		height: 16px;
+		margin: 0;
+		opacity: 0;
+		cursor: pointer;
+	}
+	&.main-active-checkbox {
+		background-position: 0 bottom;
+	}
+}
+
+@import "layers/left_menu";
+@import "layers/header_footer";
+@import "lawyer_questions";
+@import "complaints_preview";
+@import "edit_applicant";
+@import "status_change";
+@import "creating_reasons";
+@import "admin_list";
+@import "list_arguments";
+@import "user_list";
+@import "admin_page";
+@import "applicant_page";
+@import "user_page";
+
+@media (max-width: 1640px) {
+	.page-wrap {
+		margin-left: 330px;
+		margin-right: 0;
+	}
+}
+@media (max-width: 1325px) {
+	.page-wrap {
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.admin-lm-wrap {
+		left: -242px;
+	}
+	.lm-burger {
+		display: block;
+	}
+}
