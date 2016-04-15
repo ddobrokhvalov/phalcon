@@ -1,0 +1,7 @@
+[0321/122028:ERROR:crash_report_database_win.cc(549)] CreateDirectory C:\Users\knubisoft-1\AppData\Local\Google\Chrome\User Data\Crashpad: Системе не удается найти указанный путь. (0x3)
+[0321/122028:ERROR:registration_protocol_win.cc(82)] TransactNamedPipe: Канал был закрыт. (0x6D)
+[0321/122028:ERROR:crash_report_database_win.cc(549)] CreateDirectory C:\Users\knubisoft-1\AppData\Local\Google\Chrome\User Data\Crashpad: Системе не удается найти указанный путь. (0x3)
+[0321/122036:ERROR:registration_protocol_win.cc(53)] CreateFile: Не удается найти указанный файл. (0x2)
+[0321/122036:ERROR:main_dll_loader_win.cc(274)] Could not find exported function RelaunchChromeBrowserWithNewCommandLineIfNeeded
+[0321/122102:ERROR:registration_protocol_win.cc(53)] CreateFile: Не удается найти указанный файл. (0x2)
+[0321/122104:ERROR:main_dll_loader_win.cc(274)] Could not find exported function RelaunchChromeBrowserWithNewCommandLineIfNeeded
