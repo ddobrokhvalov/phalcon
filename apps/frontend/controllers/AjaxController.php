@@ -47,12 +47,9 @@ class AjaxController extends Controller{
         $fileType = $_FILES['file']['type'];
         $fileError = $_FILES['file']['error'];
         $fileTmpName = $_FILES['file']['tmp_name'];
-        echo "13";
         if($fileError == UPLOAD_ERR_OK){
-            echo "2";
             if(is_uploaded_file($fileTmpName)) {
                 #todo: если имена совпадают, то нужно генерить случайное
-                echo "1";
                 move_uploaded_file($fileTmpName, $_SERVER['DOCUMENT_ROOT'] . "/public/files/documents/" . $fileName);
                 $db = DI::getDefault()->get('db');
                 $db->query('INSERT INTO trn_documents (TIMESTAMP_X, ORIGINAL_NAME, SYS_NAME, PATH, SIGNERS, TYPE)
