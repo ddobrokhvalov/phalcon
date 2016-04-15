@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>FAS admin</title>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/style.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="js/main_script.js"></script>
+</head>
+<body>
+	<!-- Left menu block -->
+	<article class="admin-lm-wrap">
+		<div class="lm-logo">
+			<span>Административная консоль</span>
+			<div class="lm-burger">
+				<div class="lm-burger-open"></div>
+				<div class="lm-burger-close"></div>
+			</div>
+		</div>
+		<form action="#" method="POST">
+			<ul class="lm-menu">
+				<li>
+					<label for="lm-user"><input type="checkbox" id="lm-user"></label>
+					<a href="#">Пользователи</a>
+				</li>
+				<li>
+					<label for="lm-complaints"><input type="checkbox" id="lm-complaints"></label>
+					<a href="#">Жалобы</a>
+				</li>
+				<li>
+					<label for="lm-arguments"><input type="checkbox" id="lm-arguments"></label>
+					<a href="#">Доводы</a>
+				</li>
+				<li>
+					<label for="lm-applicants"><input type="checkbox" id="lm-applicants"></label>
+					<a href="#">Заявители</a>
+				</li>
+				<li class="lm-menu-active">
+					<label for="lm-ask-lawyer"><input type="checkbox" id="lm-ask-lawyer"></label>
+					<a href="#">Вопросы юристу<span>34</span></a>
+				</li>
+				<li>
+					<label for="lm-administrators"><input type="checkbox" id="lm-administrators"></label>
+					<a href="#">Администраторы</a>
+				</li>
+				<li>
+					<label for="lm-logs"><input type="checkbox" id="lm-logs"></label>
+					<a href="#">Логи</a>
+				</li>
+			</ul>
+			<div class="lm-search-title">
+				<p>Поиск по выбранному</p>
+				<span>Выберите категории выше и ищите</span>
+			</div>
+			<div class="lm-search-box">	
+				<input type="text" id="lm-search-field">
+				<input type="submit" id="lm-search-btn" value="">
+			</div>
+		</form>
+	</article>
+	<!-- end Left menu block -->
+	<section class="page-wrap">
+		<header id="admin-header">
+			<div class="admin-name">
+				<div><img src="images/admin-picture.png" alt="avatar admin"></div>
+				<span>FAC-Admin@gmail.com</span>
+			</div>
+			<div class="admin-settings-logout">
+				<div class="admin-settings"></div>
+				<a href="/login/logout" id="admin-logout"></a>
+			</div>
+		</header>
+		<!-- Main -->
+		<main id="main">
+		<!-- ****************** list arguments ***************** -->
+			<div class="admin-main-wrap list-arguments">
+				<h1>Доводы</h1>
+				<a href="#" class="admin-add add-arg">Добавить довод</a>
+				<div class="admin-lt-holder lt-arg">
+					<div class="admin-lt-head">
+						<div class="select-all">
+							<div></div>Выбрать все
+						</div>
+						<div class="lt-head-btns">
+							<div>Скрыть</div>
+							<div>Удалить</div>
+						</div>
+					</div>
+					<div class="admin-lt-content">
+						<ul class="lt-content-top">
+							<li><span>Название довода</span></li>
+							<li><span>Категория довода</span></li>
+							<li><span>Добавлен</span></li>
+						</ul>
+						<ul class="lt-content-main">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								Многократное повторение товаров
+							</li>
+							<li>Многократное повторение товаров</li>
+							<li>22.01.2016</li>
+						</ul>
+						<ul class="lt-content-main">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								Цифры прописью
+							</li>
+							<li>Цифры прописью</li>
+							<li>20.01.2016</li>
+						</ul>
+						<ul class="lt-content-main">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								Установление требований к сопутствующим материалам (ацетилен...
+							</li>
+							<li>Установление требований</li>
+							<li>16.01.2016</li>
+						</ul>
+						<ul class="lt-content-main">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								Корявая инструкция или её отсутствие
+							</li>
+							<li>Корявая инструкция или её отсутствие</li>
+							<li>01.01.2016</li>
+						</ul>
+						<ul class="lt-content-main">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								Запрос меняет суть
+							</li>
+							<li>Запрос меняет суть</li>
+							<li>27.12.2015</li>
+						</ul>
+						<ul class="lt-content-main">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								Не совпадает с планом-графиком
+							</li>
+							<li>Не совпадает с планом-графиком</li>
+							<li>20.12.2015</li>
+						</ul>
+					</div>
+				</div>
+				<h1 class="second-lt-h1">Категории доводов</h1>
+				<div class="admin-lt-holder lt-arg-second">
+					<div class="admin-lt-head">
+						<div class="select-all">
+							<div></div>Выбрать все
+						</div>
+						<div class="lt-head-btns">
+							<div>Создать</div>
+							<div>Удалить</div>
+						</div>
+					</div>
+					<div class="admin-lt-content">
+						<ul class="lt-content-main">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								<p>Многократное повторение товаров</p>
+								<input type="text"> 
+								<span>Сохранить</span>
+							</li>
+						</ul>
+						<ul class="lt-content-main">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								<p>Цифры прописью</p>
+								<input type="text">
+								<span>Сохранить</span>
+							</li>
+						</ul>
+						<ul class="lt-content-main">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								<p>Установление требований</p>
+								<input type="text">
+								<span>Сохранить</span>
+							</li>
+						</ul>
+						<ul class="lt-content-main">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								<p>Корявая инструкция или её отсутствие</p>
+								<input type="text">
+								<span>Сохранить</span>
+							</li>
+						</ul>
+						<ul class="lt-content-main">
+							<li>
+								<div class="lt-psevdo-check"></div>
+								<p>Запрос меняет суть</p>
+								<input type="text">
+								<span>Сохранить</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		<!-- ******************************************************* -->
+		</main>
+		<footer id="footer">
+			<a href="/"></a>
+			<p>&copy; ФАС-Онлайн, 2015, при поддержке «Госпартнер»</p>
+		</footer>
+	</section>
+</body>
+</html>

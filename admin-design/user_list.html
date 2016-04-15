@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>FAS admin</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="js/main_script.js"></script>
+</head>
+<body>
+	<!-- Left menu block -->
+	<article class="admin-lm-wrap">
+		<div class="lm-logo">
+			<span>Административная консоль</span>
+			<div class="lm-burger">
+				<div class="lm-burger-open"></div>
+				<div class="lm-burger-close"></div>
+			</div>
+		</div>
+		<form action="#" method="POST">
+			<ul class="lm-menu">
+				<li>
+					<label for="lm-user"><input type="checkbox" id="lm-user"></label>
+					<a href="#">Пользователи</a>
+				</li>
+				<li>
+					<label for="lm-complaints"><input type="checkbox" id="lm-complaints"></label>
+					<a href="#">Жалобы</a>
+				</li>
+				<li>
+					<label for="lm-arguments"><input type="checkbox" id="lm-arguments"></label>
+					<a href="#">Доводы</a>
+				</li>
+				<li>
+					<label for="lm-applicants"><input type="checkbox" id="lm-applicants"></label>
+					<a href="#">Заявители</a>
+				</li>
+				<li class="lm-menu-active">
+					<label for="lm-ask-lawyer"><input type="checkbox" id="lm-ask-lawyer"></label>
+					<a href="#">Вопросы юристу<span>34</span></a>
+				</li>
+				<li>
+					<label for="lm-administrators"><input type="checkbox" id="lm-administrators"></label>
+					<a href="#">Администраторы</a>
+				</li>
+				<li>
+					<label for="lm-logs"><input type="checkbox" id="lm-logs"></label>
+					<a href="#">Логи</a>
+				</li>
+			</ul>
+			<div class="lm-search-title">
+				<p>Поиск по выбранному</p>
+				<span>Выберите категории выше и ищите</span>
+			</div>
+			<div class="lm-search-box">	
+				<input type="text" id="lm-search-field">
+				<input type="submit" id="lm-search-btn" value="">
+			</div>
+		</form>
+	</article>
+	<!-- end Left menu block -->
+	<section class="page-wrap">
+		<header id="admin-header">
+			<div class="admin-name">
+				<div><img src="images/admin-picture.png" alt="avatar admin"></div>
+				<span>FAC-Admin@gmail.com</span>
+			</div>
+			<div class="admin-settings-logout">
+				<div class="admin-settings"></div>
+				<a href="/login/logout" id="admin-logout"></a>
+			</div>
+			<article class="admin-settings-modal">
+				<div class="admin-set-bg"></div>
+				<div class="admin-set-top">
+					<p>Настройки администратора</p>
+				</div>
+				<div class="admin-set-cont">
+					<form action="#" method="POST">
+						<p>Личные данные</p>
+						<label for="download-avatar">
+							<img src="images/admin-picture2.png" alt="">
+							<p>Изменить аватар</p>
+							<input type="file" id="download-avatar">
+						</label>
+						<label for="adm-set-email" class="set-same-lable">
+							<span>E-mail</span>
+							<input type="email" id="adm-set-email">
+						</label>
+						<label for="adm-set-fio" class="set-same-lable">
+							<span>ФИО</span>
+							<input type="text" id="adm-set-fio">
+						</label>
+						<p>Сменить пароль</p>
+						<label for="set-oldPas" class="set-same-lable">
+							<span>Старый пароль</span>
+							<input type="password" id="set-oldPass">
+						</label>
+						<label for="set-newPass" class="set-same-lable">
+							<span>Новый пароль</span>
+							<input type="password" id="set-newPass">
+						</label>
+						<label for="set-newPass-agane" class="set-same-lable">
+							<span>Новый пароль еще раз</span>
+							<input type="password" id="set-newPass-agane">
+						</label>
+						<button>Сохранить</button>
+					</form>
+				</div>
+			</article>
+		</header>
+		<!-- Main -->
+		<main id="main">
+		<!-- ****************** user list ***************** -->
+			<div class="admin-main-wrap user-list">
+				<h1>Список пользователей</h1>
+				<a href="#" class="admin-add userAdd">Добавить пользователя</a>
+				<div class="admin-lt-holder">
+					<div class="admin-lt-head">
+						<div class="select-all">
+							<div></div>Выбрать все
+						</div>
+						<div class="lt-head-btns">
+							<div>Отправить сообщение</div>
+							<div>Заблокировать</div>
+							<div>Удалить</div>
+						</div>
+					</div>
+					<div class="admin-lt-content">
+						<ul class="lt-content-top">
+							<li><span>Фио</span></li>
+							<li><span>Телефон</span></li>
+							<li><span>Заявители</span></li>
+							<li><span>Жалобы</span></li>
+							<li><span>Подписка до</span></li>
+							<li><span>Тариф</span></li>
+						</ul>
+						<ul class="lt-content-main">
+							<li><div class="lt-psevdo-check"></div>Андреев Александр Александрович</li>
+							<li>456-900-90-00</li>
+							<li>35</li>
+							<li>29</li>
+							<li>22.01.2016</li>
+							<li><div class="good-bad extended"></div></li>
+						</ul>
+						<ul class="lt-content-main red-bg">
+							<li><div class="lt-psevdo-check"></div>Аседова Елизавета Виталиевна</li>
+							<li>456-900-90-00</li>
+							<li>1</li>
+							<li>34</li>
+							<li>22.01.2016</li>
+							<li><div class="good-bad"></div></li>
+						</ul>
+						<ul class="lt-content-main">
+							<li><div class="lt-psevdo-check"></div>Гаранян Ованес Суренович</li>
+							<li>456-900-90-00</li>
+							<li>2</li>
+							<li>22</li>
+							<li>22.01.2016</li>
+							<li><div class="good-bad must"></div></li>
+						</ul>
+						<ul class="lt-content-main red-bg">
+							<li><div class="lt-psevdo-check"></div>Валинуров Денис Юрьевич</li>
+							<li>456-900-90-00</li>
+							<li>4</li>
+							<li>55</li>
+							<li>22.01.2016</li>
+							<li><div class="good-bad extended"></div></li>
+						</ul>
+						<ul class="lt-content-main">
+							<li><div class="lt-psevdo-check"></div>Горинова Юлия Юрьевна</li>
+							<li>456-900-90-00</li>
+							<li>2</li>
+							<li>44</li>
+							<li>22.01.2016</li>
+							<li><div class="good-bad extended"></div></li>
+						</ul>
+						<ul class="lt-content-main">
+							<li><div class="lt-psevdo-check"></div>Иванов Павел Александрович</li>
+							<li>456-900-90-00</li>
+							<li>3</li>
+							<li>23</li>
+							<li>22.01.2016</li>
+							<li><div class="good-bad"></div></li>
+						</ul>
+						<ul class="lt-content-main">
+							<li><div class="lt-psevdo-check"></div>Ермохин Макар Андреевич</li>
+							<li>456-900-90-00</li>
+							<li>1</li>
+							<li>47</li>
+							<li>22.01.2016</li>
+							<li><div class="good-bad must"></div></li>
+						</ul>
+					</div>
+				</div>
+				<div class="admin-table-footer">
+					<a href="#">Еще <span>20 пользователей</span></a>
+					<a href="#">Показать всех пользователей (<span>34 456</span>)</a>
+				</div>
+				<div class="admin-pagination-box">
+					<a href="#" id="admin-pag-prev">Предыдущие</a>
+					<ul>
+						<li><a href="#">1</a></li>
+						<li><span class="active-pag-page">2</span></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><span>...</span></li>
+						<li><a href="#">23</a></li>
+					</ul>
+					<a href="#" id="admin-pag-next">Следующие</a>
+				</div>
+			</div>
+		<!-- ***************************************************** -->
+		</main>
+		<footer id="footer">
+			<a href="/"></a>
+			<p>&copy; ФАС-Онлайн, 2015, при поддержке «Госпартнер»</p>
+		</footer>
+	</section>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>FAS admin</title>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/style.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="js/main_script.js"></script>
+</head>
+<body>
+	<!-- Left menu block -->
+	<article class="admin-lm-wrap">
+		<div class="lm-logo">
+			<span>Административная консоль</span>
+			<div class="lm-burger">
+				<div class="lm-burger-open"></div>
+				<div class="lm-burger-close"></div>
+			</div>
+		</div>
+		<form action="#" method="POST">
+			<ul class="lm-menu">
+				<li>
+					<label for="lm-user"><input type="checkbox" id="lm-user"></label>
+					<a href="#">Пользователи</a>
+				</li>
+				<li>
+					<label for="lm-complaints"><input type="checkbox" id="lm-complaints"></label>
+					<a href="#">Жалобы</a>
+				</li>
+				<li>
+					<label for="lm-arguments"><input type="checkbox" id="lm-arguments"></label>
+					<a href="#">Доводы</a>
+				</li>
+				<li>
+					<label for="lm-applicants"><input type="checkbox" id="lm-applicants"></label>
+					<a href="#">Заявители</a>
+				</li>
+				<li class="lm-menu-active">
+					<label for="lm-ask-lawyer"><input type="checkbox" id="lm-ask-lawyer"></label>
+					<a href="#">Вопросы юристу<span>34</span></a>
+				</li>
+				<li>
+					<label for="lm-administrators"><input type="checkbox" id="lm-administrators"></label>
+					<a href="#">Администраторы</a>
+				</li>
+				<li>
+					<label for="lm-logs"><input type="checkbox" id="lm-logs"></label>
+					<a href="#">Логи</a>
+				</li>
+			</ul>
+			<div class="lm-search-title">
+				<p>Поиск по выбранному</p>
+				<span>Выберите категории выше и ищите</span>
+			</div>
+			<div class="lm-search-box">	
+				<input type="text" id="lm-search-field">
+				<input type="submit" id="lm-search-btn" value="">
+			</div>
+		</form>
+	</article>
+	<!-- end Left menu block -->
+	<section class="page-wrap">
+		<header id="admin-header">
+			<div class="admin-name">
+				<div><img src="images/admin-picture.png" alt="avatar admin"></div>
+				<span>FAC-Admin@gmail.com</span>
+			</div>
+			<div class="admin-settings-logout">
+				<div class="admin-settings"></div>
+				<a href="/login/logout" id="admin-logout"></a>
+			</div>
+		</header>
+		<!-- Main -->
+		<main id="main">
+		<!-- ****************** edit applicant ***************** -->
+			<div class="admin-main-wrap edit-aplicant">
+				<div class="bread-crumbs-holder">
+					<a href="#">Вернуться на страницу пользователя</a>
+				</div>
+				<h1>Редактировать заявителя</h1>
+				<div class="tabs-block">
+					<div class="aplicant-tabs-label">
+						<div data-tabsLabel="legal-entity" class="active-tabs-label">Юридическое лицо</div>
+						<div data-tabsLabel="individual-entrepreneur">Индивидуальный предприниматель</div>
+						<div data-tabsLabel="physical-face">Физическое лицо</div>
+					</div>
+					<div data-tabs="legal-entity" class="tabs-content active-tabs-content">
+						<form action="#" method="POST">
+							<label for="entity-textarea">
+								<div>Полное наименование</div>
+								<textarea name="" id="entity-textarea"></textarea>
+							</label>
+							<label for="entity-short">
+								<div>Краткое наименование</div>
+								<input type="text" data-name="kratkoe-name" class="upper-text" id="entity-short"> 
+							</label>
+							<label for="entity-inn">
+								<div>ИНН</div>
+								<input type="number" data-name="number" id="entity-inn">
+							</label>
+							<label for="entity-kpp">
+								<div>КПП</div>
+								<input type="number" data-name="number" id="entity-kpp">
+							</label>
+							<label for="entity-address">
+								<div>Адрес местонахождения</div>
+								<input type="text" data-name="address" id="entity-address">
+							</label>
+							<label for="entity-position">
+								<div>Должность заявителя</div>
+								<input type="text" data-name="position-fio" id="entity-position">
+							</label>
+							<label for="entity-fio-z">
+								<div>ФИО заявителя</div>
+								<input type="text" data-name="position-fio" id="entity-fio-z">
+							</label>
+							<label for="entity-position-k">
+								<div>ФИО контактного лица</div>
+								<input type="text" data-name="position-fio" id="entity-fio-k">
+							</label>
+							<label for="entity-phone">
+								<div>Контактный факс, телефон</div>
+								<input type="text" data-name="number" id="entity-phone">
+							</label>
+							<label for="entity-email">
+								<div>E-mail</div>
+								<input type="text" data-name="position-fio" id="entity-email">
+							</label>
+							<div class="file-attachment">
+								<img src="images/zaglushka.png" alt="">
+							</div>
+							<button class="save-tab-form">Сохранить изменения</button>
+						</form>
+					</div>
+					<div data-tabs="individual-entrepreneur" class="tabs-content">
+						<form action="#" method="POST">
+							<label for="entity-textarea">
+								<div>Полное наименование</div>
+								<textarea name="" id="entity-textarea"></textarea>
+							</label>
+							<div class="file-attachment">
+								<img src="images/zaglushka.png" alt="">
+							</div>
+							<button class="save-tab-form">Сохранить изменения</button>
+						</form>
+					</div>
+					<div data-tabs="physical-face" class="tabs-content"></div>
+				</div>
+			</div>
+		<!-- ******************************************************* -->
+		</main>
+		<footer id="footer">
+			<a href="/"></a>
+			<p>&copy; ФАС-Онлайн, 2015, при поддержке «Госпартнер»</p>
+		</footer>
+	</section>
+</body>
+</html>

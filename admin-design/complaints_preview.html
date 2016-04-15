@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>FAS admin</title>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="js/main_script.js"></script>
+	<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+</head>
+<body>
+	<!-- Left menu block -->
+	<article class="admin-lm-wrap">
+		<div class="lm-logo">
+			<span>Административная консоль</span>
+			<div class="lm-burger">
+				<div class="lm-burger-open"></div>
+				<div class="lm-burger-close"></div>
+			</div>
+		</div>
+		<form action="#" method="POST">
+			<ul class="lm-menu">
+				<li>
+					<label for="lm-user"><input type="checkbox" id="lm-user"></label>
+					<a href="#">Пользователи</a>
+				</li>
+				<li>
+					<label for="lm-complaints"><input type="checkbox" id="lm-complaints"></label>
+					<a href="#">Жалобы</a>
+				</li>
+				<li>
+					<label for="lm-arguments"><input type="checkbox" id="lm-arguments"></label>
+					<a href="#">Доводы</a>
+				</li>
+				<li>
+					<label for="lm-applicants"><input type="checkbox" id="lm-applicants"></label>
+					<a href="#">Заявители</a>
+				</li>
+				<li class="lm-menu-active">
+					<label for="lm-ask-lawyer"><input type="checkbox" id="lm-ask-lawyer"></label>
+					<a href="#">Вопросы юристу<span>34</span></a>
+				</li>
+				<li>
+					<label for="lm-administrators"><input type="checkbox" id="lm-administrators"></label>
+					<a href="#">Администраторы</a>
+				</li>
+				<li>
+					<label for="lm-logs"><input type="checkbox" id="lm-logs"></label>
+					<a href="#">Логи</a>
+				</li>
+			</ul>
+			<div class="lm-search-title">
+				<p>Поиск по выбранному</p>
+				<span>Выберите категории выше и ищите</span>
+			</div>
+			<div class="lm-search-box">	
+				<input type="text" id="lm-search-field">
+				<input type="submit" id="lm-search-btn" value="">
+			</div>
+		</form>
+	</article>
+	<!-- end Left menu block -->
+	<section class="page-wrap">
+		<header id="admin-header">
+			<div class="admin-name">
+				<div><img src="images/admin-picture.png" alt="avatar admin"></div>
+				<span>FAC-Admin@gmail.com</span>
+			</div>
+			<div class="admin-settings-logout">
+				<div class="admin-settings"></div>
+				<a href="/login/logout" id="admin-logout"></a>
+			</div>
+		</header>
+		<!-- Main -->
+		<main id="main">
+		<!-- ****************** complaints preview ***************** -->
+			<div class="admin-main-wrap complaints-preview-wrap">
+				<div class="bread-crumbs-holder">
+					<a href="#">Вернуться на страницу пользователя</a>
+				</div>
+				<h1>Просмотр жалобы</h1>
+				<div class="notification-number-box notif-unreasonably"> <!-- if notification is rightly - remoove class "notif-unreasonably" -->
+					<p>Номер извещения №
+						<span>0173100003412000102</span>
+						<span class="rightly-wrongly">Необоснованна</span>
+					</p>
+				</div>
+				<div class="edit-notification-box">
+					<a href="#" class="edit-notif-active">Редактировать</a>
+					<a href="#">Копировать</a>
+					<a href="#">Отозвать</a>
+					<a href="#">В архив</a>
+					<a href="#">Удалить</a>
+				</div>
+				<div class="details-complaint">
+					<div class="deploy-complaint"><span>Показать подробно</span></div>
+					<div class="complaints-content">
+						<h2>Жалоба на положение аукционной документации</h2>
+						<div class="complaints-doc">
+							<p><span></span><span></span>Решение по извещению 127563728493872.dov (125 Кб)</p>
+							<p><span></span><span></span>Доказательства.pdf (34 Кб)</p>
+						</div>
+						<div class="complaints-main mCustomScrollbar">
+							<h3>Заголовок большой</h3>
+							<p>Согласно п.1 ст.58 гл.7 ТК ТС «Страной происхождения товаров считается страна, в которой товары были полностью произведены или подвергнуты достаточной обработке (переработке) в соответствии с критериями, установленными таможенным законодательством таможенного союза. При этом под страной происхождения товаров может пониматься группа стран, либо таможенные союзы стран, либо регион или часть страны, <b><i>если имеется необходимость их выделения для целей определения страны происхождения товаров».</i></b></p>
+							<ul>
+								<h4>Заголовок поменьше</h4>
+								<li>1. Документами, подтверждающими страну происхождения товаров, являются декларация о происхождении товара или сертификат о происхождении товара». </li>
+								<li>2. Таким образом документом, подтверждающим страну происхождения товара, является декларация или сертификат о происхождении товара, но в соответствии с действующим законодательством предоставление данных документов при поставке/выполнении работ не требуется.</li>
+								<li>3. Так же просим обратить внимание на запутанную и неясную инструкцию, которая, вместе с техническим заданием вводит УРЗ в заблуждение, ввиду наличия коррелирующих показателей и таких же требований, существенно усложняющих подготовку первой части заявки, что, в свою очередь, ведет к искусственному ограничению конкуренции.</li>
+							</ul>
+							<p>Надир ищет экваториальный ионный хвост. Бесспорно, планета однородно представляет собой радиант. Весеннее равноденствие, это удалось установить по характеру спектра, однократно. Гелиоцентрическое расстояние, несмотря на внешние воздействия, выслеживает непреложный большой круг небесной сферы, тем не менее, Дон Еманс включил в список всего 82-е Великие Кометы. Солнечное затмение меняет экватор, как это случилось в 1994 году с кометой Шумейкеpов-Леви 9.</p>
+							<p>Космогоническая гипотеза Шмидта позволяет достаточно просто объяснить эту нестыковку, однако полнолуние однородно отражает случайный космический мусор. Эффективный диаметp...</p>
+							<p>Надир ищет экваториальный ионный хвост. Бесспорно, планета однородно представляет собой радиант. Весеннее равноденствие, это удалось установить по характеру спектра, однократно. Гелиоцентрическое расстояние, несмотря на внешние воздействия, выслеживает непреложный большой круг небесной сферы, тем не менее, Дон Еманс включил в список всего 82-е Великие Кометы. Солнечное затмение меняет экватор, как это случилось в 1994 году с кометой Шумейкеpов-Леви 9.</p>
+							<p>Космогоническая гипотеза Шмидта позволяет достаточно просто объяснить эту нестыковку, однако полнолуние однородно отражает случайный космический мусор. Эффективный диаметp...</p>
+						</div>
+					</div>
+				</div>
+				<div class="complaints-lawyer-quest">
+					<h3>Вопросы юристу</h3>
+					<div class="compl-quest-cont">
+						<p>— Согласно п.1 ст.58 гл.7 ТК ТС «Страной происхождения товаров считается страна, в которой товары были полностью произведены или подвергнуты достаточной обработке (переработке) в соответствии с критериями, установленными таможенным законодательством таможенного союза.</p>
+						<div class="clarifying-issue">
+							<p>При этом под страной происхождения товаров может пониматься группа стран, либо таможенные союзы стран, либо регион или часть страны, если имеется необходимость их выделения для целей определения страны происхождения товаров».</p>
+							<p>Ч.2 ст.58 гл.7 ТК ТС «Документами, подтверждающими страну происхождения товаров, являются декларация о происхождении товара или сертификат о происхождении товара».</p>
+							<p>Таким образом документом, подтверждающим страну происхождения товара, является декларация или сертификат о происхождении товара, но в соответствии с действующим законодательством предоставление данных документов при поставке/выполнении работ не требуется.</p>
+							<p>Так же просим обратить внимание на запутанную и неясную инструкцию, которая, вместе с техническим заданием вводит УРЗ в заблуждение, ввиду</p>
+						</div>
+						<div class="legal-advisor">
+							<div><img src="images/admin-picture2.png" alt=""></div>
+							<p>Катерина Ларина</p>
+							<span>Ваш юридический консультант</span>
+						</div>
+					</div>
+					<form action="#" method="POST">
+						<p>— Таким образом документом, подтверждающим страну происхождения товара?</p>
+						<label for="" class="hidden-textarea">
+							<span>Новое сообщение</span>
+							<div></div>
+							<textarea name="lawyer-answer"></textarea>
+						</label>
+						<div class="opacity-btn"></div>
+						<button>Ответить</button>
+					</form>
+					<form action="#" method="POST">
+						<p>— Двойные вопросы - нормальное поведение пользоватлея поэтому нам нужнос делать кнопку ответисть?</p>
+						<label for="" class="hidden-textarea">
+							<span>Новое сообщение</span>
+							<div></div>
+							<textarea name="lawyer-answer"></textarea>
+						</label>
+						<div class="opacity-btn"></div>
+						<button>Ответить</button>
+					</form>
+				</div>
+			</div>
+		<!-- ******************************************************* -->
+		</main>
+		<footer id="footer">
+			<a href="/"></a>
+			<p>&copy; ФАС-Онлайн, 2015, при поддержке «Госпартнер»</p>
+		</footer>
+	</section>
+</body>
+</html>
