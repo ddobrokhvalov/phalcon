@@ -114,11 +114,36 @@ class Application extends BaseApplication
 				'path' => '../apps/backend/Module.php'
 			)
 		));
-		try {
-			echo $this->handle()->getContent();
-		} catch (Exception $e){
-			var_dump( $e);
+		/*include "phpMailer/PHPMailerAutoload.php";
+
+		$mail = new PHPMailer();
+
+//$mail->SMTPDebug = 3;                               // Enable verbose debug output
+
+		//$mail->isSMTP();                                      // Set mailer to use SMTP
+		//$mail->Host = 'smtp1.example.com;smtp2.example.com';  // Specify main and backup SMTP servers
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = 'vadim-job-hg@yandex.ru';                 // SMTP username
+		$mail->Password = 'batosan86()!';                           // SMTP password
+                                // TCP port to connect to
+
+		$mail->setFrom('vadim-job-hg@yandex.ru', 'Mailer');
+		$mail->addAddress('vadim-job-hg@yandex.ru', 'vadim-job-hg@yandex.ru');     // Add a recipient
+		$mail->isHTML(true);                                  // Set email format to HTML
+
+		$mail->Subject = 'Here is the subject';
+		$mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+		$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+		if(!$mail->send()) {
+			echo 'Message could not be sent.';
+			echo 'Mailer Error: ' . $mail->ErrorInfo;
+		} else {
+			echo 'Message has been sent';
 		}
+
+		die('');*/
+		echo $this->handle()->getContent();
 	}
 
 }
