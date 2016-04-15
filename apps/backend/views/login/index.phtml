@@ -1,5 +1,7 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - ЛОГИН{% endblock %}
+{% block body %}
 <form action="/admin/login/start" method="post"><fieldset>
-
 <fieldset>
     <div>
         <label for="email">Логин/Email</label>
@@ -18,3 +20,6 @@
     </div>
 </fieldset>
 </form>
+{% endblock %}
+{% block sidemenu %}
+{% endblock %}

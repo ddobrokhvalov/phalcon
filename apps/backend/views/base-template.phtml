@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>{% block title %}ФАС ОНЛАЙН{% endblock %}</title>
+    {% block styles %}
+    <link rel="stylesheet" href="style.css" />
+    <link href="/css/pikaday.css" rel="stylesheet">
+    {% endblock %}
+    {% block script %}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/js/pikaday.js"></script>
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+{% endblock %}
+{% block footer %}
+{% include "layouts/footer.phtml" %}
+{% endblock%}
+{% block sidemenu %}
+<div class="alert-wrap">
+    <div class="alert-substrate"></div>
+    <div class="alert-box"></div>
+</div>
+{% endblock %}
+</body>
+</html>

@@ -1,3 +1,4 @@
 *.ini
 *.phtml.php
+*.phtml%%e%%.php
 /public/files/documents
