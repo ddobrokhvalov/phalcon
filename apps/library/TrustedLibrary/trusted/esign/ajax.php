@@ -17,6 +17,11 @@ if (isset($command)) {
             break;
         case "upload":
             $res = AjaxSignCommand::upload($params, uploadSignature);
+            error_log ('TEST: SOMEBODY CALL THIS METHOD');
+            error_log ('id'.$params['id']);
+            error_log ('id'.$params['token']);
+            error_log ('id'.$params['signer']);
+            error_log ('id'.$params['signature']);
             break;
         case "status":
             $res = AjaxSignCommand::status($params);

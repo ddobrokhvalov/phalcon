@@ -513,7 +513,7 @@ function ajaxFileUpload(url, fileelementid) {
         enctype: 'multipart/form-data',
         success : function(data) {
             var postdata = {id:1, 'token':token}
-            $.ajax({
+            /*$.ajax({
                 type: "POST",
                 url: '/ajax/trusted?command=upload',
                 dataType: 'json',
@@ -526,7 +526,7 @@ function ajaxFileUpload(url, fileelementid) {
                     console.log(data);
                 },
                 timeout: 120000 // sets timeout to 2 minutes
-            });
+            });*/
         }
     });
     return false;
