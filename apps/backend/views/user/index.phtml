@@ -17,8 +17,106 @@
         </fieldset>
 </form>
 <div><a href="/admin/user/add">Add user</a></div>
-
-<br>
+<div class="admin-main-wrap user-list">
+    <h1>Список пользователей</h1>
+    <a href="#" class="admin-add userAdd">Добавить пользователя</a>
+    <div class="admin-lt-holder">
+        <div class="admin-lt-head">
+            <div class="select-all">
+                <div></div>Выбрать все
+            </div>
+            <div class="lt-head-btns">
+                <div>Отправить сообщение</div>
+                <div>Заблокировать</div>
+                <div>Удалить</div>
+            </div>
+        </div>
+        <div class="admin-lt-content">
+            <ul class="lt-content-top">
+                <li><span>Фио</span></li>
+                <li><span>Телефон</span></li>
+                <li><span>Заявители</span></li>
+                <li><span>Жалобы</span></li>
+                <li><span>Подписка до</span></li>
+                <li><span>Тариф</span></li>
+            </ul>
+            {% for user in page.items %}
+            <ul class="lt-content-main">
+                <li><div class="lt-psevdo-check"></div>Андреев Александр Александрович</li>
+                <li>456-900-90-00</li>
+                <li>35</li>
+                <li>29</li>
+                <li>22.01.2016</li>
+                <li><div class="good-bad extended"></div></li>
+            </ul>
+            <ul class="lt-content-main red-bg">
+                <li><div class="lt-psevdo-check"></div>Аседова Елизавета Виталиевна</li>
+                <li>456-900-90-00</li>
+                <li>1</li>
+                <li>34</li>
+                <li>22.01.2016</li>
+                <li><div class="good-bad"></div></li>
+            </ul>
+            <ul class="lt-content-main">
+                <li><div class="lt-psevdo-check"></div>Гаранян Ованес Суренович</li>
+                <li>456-900-90-00</li>
+                <li>2</li>
+                <li>22</li>
+                <li>22.01.2016</li>
+                <li><div class="good-bad must"></div></li>
+            </ul>
+            <ul class="lt-content-main red-bg">
+                <li><div class="lt-psevdo-check"></div>Валинуров Денис Юрьевич</li>
+                <li>456-900-90-00</li>
+                <li>4</li>
+                <li>55</li>
+                <li>22.01.2016</li>
+                <li><div class="good-bad extended"></div></li>
+            </ul>
+            <ul class="lt-content-main">
+                <li><div class="lt-psevdo-check"></div>Горинова Юлия Юрьевна</li>
+                <li>456-900-90-00</li>
+                <li>2</li>
+                <li>44</li>
+                <li>22.01.2016</li>
+                <li><div class="good-bad extended"></div></li>
+            </ul>
+            <ul class="lt-content-main">
+                <li><div class="lt-psevdo-check"></div>Иванов Павел Александрович</li>
+                <li>456-900-90-00</li>
+                <li>3</li>
+                <li>23</li>
+                <li>22.01.2016</li>
+                <li><div class="good-bad"></div></li>
+            </ul>
+            <ul class="lt-content-main">
+                <li><div class="lt-psevdo-check"></div>Ермохин Макар Андреевич</li>
+                <li>456-900-90-00</li>
+                <li>1</li>
+                <li>47</li>
+                <li>22.01.2016</li>
+                <li><div class="good-bad must"></div></li>
+            </ul>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="admin-table-footer">
+        <a href="#">Еще <span>20 пользователей</span></a>
+        <a href="#">Показать всех пользователей (<span>34 456</span>)</a>
+    </div>
+    <div class="admin-pagination-box">
+        <a href="#" id="admin-pag-prev">Предыдущие</a>
+        <ul>
+            <li><a href="#">1</a></li>
+            <li><span class="active-pag-page">2</span></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><span>...</span></li>
+            <li><a href="#">23</a></li>
+        </ul>
+        <a href="#" id="admin-pag-next">Следующие</a>
+    </div>
+</div>
 {% for user in page.items %}
 {% if loop.first %}
 <table>
