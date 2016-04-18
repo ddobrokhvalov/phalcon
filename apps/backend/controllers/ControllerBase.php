@@ -25,10 +25,7 @@ class ControllerBase extends Controller
             );
             $this->view->user = $this->user;
         }
-        else {
-            header('Location: http://'.$_SERVER['HTTP_HOST']);
-            exit;
-        }
+
     }
 
     protected function forward($uri)

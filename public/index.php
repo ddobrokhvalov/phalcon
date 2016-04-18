@@ -50,11 +50,6 @@ class Application extends BaseApplication
 				'controller' => 'index',
 				'action' => 'index',
 			)); */
-			$router->add("/admin", array(
-				'module' => 'backend',
-				'controller' => 'login',
-				'action' => 'index',
-			));
 			$router->add("/esign/ajax.php", array(
 				'module' => 'frontend',
 				'controller' => 'ajax',
@@ -79,6 +74,12 @@ class Application extends BaseApplication
 				'controller' => 1,
 				'action' => 2,
 				'params'=>3
+			));
+
+			$router->add("/admin", array(
+				'module' => 'backend',
+				'controller' => 'login',
+				'action' => 'index',
 			));
 
 			return $router;
