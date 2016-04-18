@@ -39,17 +39,8 @@ class Application extends BaseApplication
 			$router = new Router();
 
 			$router->setDefaultModule("frontend");
-
-			/*$router->add('/:controller/:action', array(
-				'module' => 'frontend',
-				'controller' => 1,
-				'action' => 2,
-			));*/
-			/*$router->setDefaults(array(
-				'module' => 'frontend',
-				'controller' => 'index',
-				'action' => 'index',
-			)); */
+			$router->setDefaultController("index");
+			$router->setDefaultAction("index");
 			$router->add("/esign/ajax.php", array(
 				'module' => 'frontend',
 				'controller' => 'ajax',
