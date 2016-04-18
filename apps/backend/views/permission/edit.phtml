@@ -1,3 +1,6 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - РЕДАКТИРОВАНИЕ ПРАВ ДОСТУПА{% endblock %}
+{% block body %}
 <form action="/admin/permission/save/{{ admin.id }}" method="post">
     <fieldset>
 <table>
@@ -20,3 +23,4 @@
 
     </fieldset>
 </form>
+{% endblock %}

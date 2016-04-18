@@ -1,3 +1,6 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - ПОЛЬЗОВАТЕЛИ{% endblock %}
+{% block body %}
 {% for user in page.items %}
 {% if loop.first %}
 <table>
@@ -42,3 +45,4 @@
 {% else %}
 В базе нет user
 {% endfor %}
+{% endblock %}

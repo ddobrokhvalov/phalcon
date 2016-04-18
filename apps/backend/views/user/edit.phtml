@@ -1,3 +1,6 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - ПОЛЬЗОВАТЕЛИ РЕДАКТИРОВАТЬ{% endblock %}
+{% block body %}
 <form action="/admin/user/save" method="post">
     <fieldset>
 
@@ -33,3 +36,4 @@
         $( "#password" ).val('');
     });
 </script>
+{% endblock %}

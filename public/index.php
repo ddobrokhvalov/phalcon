@@ -66,6 +66,13 @@ class Application extends BaseApplication
 				'controller' => 'ajax',
 				'action' => 'getlast',
 			));
+			
+			$router->add("/:controller/:action/:params", array(
+				'module' => 'frontend',
+				'controller' => 1,
+				'action' => 2,
+				'params'=>3
+			));
 
 			$router->add("/admin/:controller/:action/:params", array(
 				'module' => 'backend',
@@ -73,23 +80,6 @@ class Application extends BaseApplication
 				'action' => 2,
 				'params'=>3
 			));
-			$router->add("/:controller/:action/:params", array(
-				'module' => 'frontend',
-				'controller' => 1,
-				'action' => 2,
-				'params'=>3
-			));
-		/*	$router->add("/admin/products/:action", array(
-				'module' => 'backend',
-				'controller' => 'products',
-				'action' => 1,
-			));
-
-			$router->add("/products/:action", array(
-				'module' => 'frontend',
-				'controller' => 'products',
-				'action' => 1,
-			)); */
 
 			return $router;
 
@@ -113,7 +103,7 @@ class Application extends BaseApplication
 				'className' => 'Multiple\Backend\Module',
 				'path' => '../apps/backend/Module.php'
 			)
-		));		
+		));
 		echo $this->handle()->getContent();
 	}
 
