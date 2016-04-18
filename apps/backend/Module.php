@@ -66,7 +66,16 @@ class Module
 			$view->setViewsDir('../apps/backend/views/');
 			$view->registerEngines(
 				array(
-					".phtml" => 'Phalcon\Mvc\View\Engine\Volt'
+					".phtml" => //'Phalcon\Mvc\View\Engine\Volt'
+					function($view, $di) {
+						$volt = new \Phalcon\Mvc\View\Engine\Volt($view, $di);
+						$volt->setOptions(array(
+							'compileAlways' => true
+							//"true" if you need to renew children templates after base template changed
+							//or remove or compiled files or make changes in children
+						));
+						return $volt;
+					}
 				)
 			);
 			return $view;

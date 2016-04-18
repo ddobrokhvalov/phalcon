@@ -1,3 +1,5 @@
+{% set cur_controller = dispatcher.getControllerName() %}
+{% set cur_action = dispatcher.getActionName() %}
 <article class="admin-lm-wrap">
     <div class="lm-logo">
         <span>Административная консоль</span>
@@ -8,31 +10,31 @@
     </div>
     <form action="#" method="POST">
         <ul class="lm-menu">
-            <li>
+            <li{% if cur_controller == 'user' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-user"><input type="checkbox" id="lm-user"></label>
                 <a href="/admin/user/index">Пользователи</a>
             </li>
-            <li>
+            <li{% if cur_controller == '???' and cur_action == '???' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-complaints"><input type="checkbox" id="lm-complaints"></label>
                 <a href="#">Жалобы</a>
             </li>
-            <li>
+            <li{% if cur_controller == '????' and cur_action == '????' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-arguments"><input type="checkbox" id="lm-arguments"></label>
                 <a href="#">Доводы</a>
             </li>
-            <li>
+            <li{% if cur_controller == '????' and cur_action == '????' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-applicants"><input type="checkbox" id="lm-applicants"></label>
                 <a href="#">Заявители</a>
             </li>
-            <li class="lm-menu-active">
+            <li{% if cur_controller == '?????' and cur_action == '??????' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-ask-lawyer"><input type="checkbox" id="lm-ask-lawyer"></label>
                 <a href="#">Вопросы юристу<span>34</span></a>
             </li>
-            <li>
+            <li{% if cur_controller == 'admins' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-administrators"><input type="checkbox" id="lm-administrators"></label>
                 <a href="/admin/admins/index">Администраторы</a>
             </li>
-            <li>
+            <li{% if cur_controller == 'log' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-logs"><input type="checkbox" id="lm-logs"></label>
                 <a href="/admin/log/index">Логи</a>
             </li>

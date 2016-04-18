@@ -1,0 +1,48 @@
+<header id="admin-header">
+    <div class="admin-name">
+        <div><img src="/images/{%if user.avatar=='' %}admin-picture.png{%else%}{{user.avatar}}{%endif%}" alt="avatar admin"></div>
+        <span>{{user.email}}</span>
+    </div>
+    <div class="admin-settings-logout">
+        <a href="/login/logout" class="admin-settings"></a>
+        <a href="/login/logout" id="admin-logout"></a>
+    </div>
+    <article class="admin-settings-modal">
+        <div class="admin-set-bg"></div>
+        <div class="admin-set-top">
+            <p>Настройки администратора</p>
+        </div>
+        <div class="admin-set-cont">
+            <form action="#" method="POST">
+                <p>Личные данные</p>
+                <label for="download-avatar">
+                    <img src="images/admin-picture2.png" alt="">
+                    <p>Изменить аватар</p>
+                    <input type="file" id="download-avatar">
+                </label>
+                <label for="adm-set-email" class="set-same-lable">
+                    <span>E-mail</span>
+                    <input type="email" id="adm-set-email">
+                </label>
+                <label for="adm-set-fio" class="set-same-lable">
+                    <span>ФИО</span>
+                    <input type="text" id="adm-set-fio">
+                </label>
+                <p>Сменить пароль</p>
+                <label for="set-oldPas" class="set-same-lable">
+                    <span>Старый пароль</span>
+                    <input type="password" id="set-oldPass">
+                </label>
+                <label for="set-newPass" class="set-same-lable">
+                    <span>Новый пароль</span>
+                    <input type="password" id="set-newPass">
+                </label>
+                <label for="set-newPass-agane" class="set-same-lable">
+                    <span>Новый пароль еще раз</span>
+                    <input type="password" id="set-newPass-agane">
+                </label>
+                <button>Сохранить</button>
+            </form>
+        </div>
+    </article>
+</header>
