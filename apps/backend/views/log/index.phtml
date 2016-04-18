@@ -1,3 +1,6 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - АДМИНИСТРАТОРЫ{% endblock %}
+{% block body %}
 <div class="filter">
     <form id="filter_form" action="/admin/log/index" method="post">
         админ\пользователь
@@ -91,3 +94,4 @@
 {% else %}
 В базе нет логов с такими параметрами
 {% endfor %}
+{% endblock %}

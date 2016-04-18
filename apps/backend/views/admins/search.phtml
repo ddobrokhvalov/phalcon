@@ -1,3 +1,6 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - ПОИСК{% endblock %}
+{% block body %}
 {% for admin in page.items %}
 {% if loop.first %}
 <table>
@@ -39,3 +42,4 @@
 {% else %}
 В базе нет админов
 {% endfor %}
+{% endblock %}

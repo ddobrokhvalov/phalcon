@@ -1,3 +1,6 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН{% endblock %}
+{% block body %}
 <div>Категории</div>
  {% for category in categorys %}
 <a href="/admin/template/index?cat_id={{ category.id }}">{{ category.name }}</a> <br>
@@ -11,6 +14,7 @@
 
 {% if templates != false %}
     {% for template in templates %}
-          {{  template.name }} <br>
+          {{  template.name }} <br> 
     {% endfor %}
 {% endif %}
+{% endblock %}

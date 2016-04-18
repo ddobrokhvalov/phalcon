@@ -2,21 +2,26 @@
 <head>
     <title>{% block title %}ФАС ОНЛАЙН{% endblock %}</title>
     {% block styles %}
-    <link rel="stylesheet" href="style.css" />
-    <link href="/css/pikaday.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css" />
     {% endblock %}
     {% block script %}
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="/js/pikaday.js"></script>
     {% endblock %}
 </head>
 <body>
+{% block menu %}
+{{ partial("layouts/menu") }}
+{% endblock %}
+<section class="page-wrap">
+<main id="main">
 {% block body %}
 {% endblock %}
+</main>
 {% block footer %}
-{% include "layouts/footer.phtml" %}
+{{ partial("layouts/footer")}}
 {% endblock%}
-{% block sidemenu %}
+</section>
+{% block side %}
 <div class="alert-wrap">
     <div class="alert-substrate"></div>
     <div class="alert-box"></div>

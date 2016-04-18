@@ -1,9 +1,10 @@
-<h2>Поиск User</h2>
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - ПОЛЬЗОВАТЕЛИ{% endblock %}
+{% block body %}
+<h2>Поиск User</h2> 
 <form action="/admin/user/search" method="post">
     <fieldset>
-
         <fieldset>
-
             {% for element in form %}
             <div class="control-group">
                 {{ element.label(['class': 'control-label']) }}
@@ -14,7 +15,6 @@
             <div class="control-group">
                 {{ submit_button("Search", "class": "btn btn-primary") }}
             </div>
-
         </fieldset>
 </form>
 <div><a href="/admin/user/add">Add user</a></div>
@@ -47,7 +47,7 @@
     {% if loop.last %}
     </tbody>
     <tbody>
-    <tr>
+    <tr> 
         <td colspan="7">
             <div>
               <a href="/admin/user/index">Первая</a>
@@ -64,3 +64,4 @@
 {% else %}
 В базе нет user
 {% endfor %}
+{% endblock %}

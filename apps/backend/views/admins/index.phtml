@@ -1,3 +1,6 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - АДМИНИСТРАТОРЫ{% endblock %}
+{% block body %}
 <h2>Поиск admins</h2>
 <form action="/admin/admins/search" method="post">
     <fieldset>
@@ -22,3 +25,4 @@
 
 
 <div><a href="/admin/admins/add">Add admin</a></div>
+{% endblock %}
