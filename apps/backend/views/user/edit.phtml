@@ -1,6 +1,225 @@
 {% extends "base-template.phtml" %}
 {% block title %}ФАС ОНЛАЙН - ПОЛЬЗОВАТЕЛИ РЕДАКТИРОВАТЬ{% endblock %}
 {% block body %}
+
+<!-- ****************** user page ***************** -->
+<div class="admin-main-wrap user-page">
+    <div class="bread-crumbs-holder">
+        <a href="#">Вернуться к списку пользователей</a>
+    </div>
+    <h1>acropolis_mari@mail.ru</h1>
+    <div class="admin-change-access">
+        <span>Тариф пробный до 12.02.2016</span>
+        <div class="change-access">Изменить тариф</div>
+    </div>
+    <div class="block-user-editing">
+        <form action="#" method="POST">
+            <div class="left-block-editing">
+                <span>Данные пользователя</span>
+                <label for="fioUser">
+                    <p>ФИО</p>
+                    <input type="text" id="fioUser">
+                </label>
+                <label for="telFaxUser">
+                    <p>Контактный факс, телефон</p>
+                    <input type="number" id="telFaxUser">
+                </label>
+                <label for="userEmail">
+                    <p>E-mail</p>
+                    <input type="email" id="userEmail">
+                </label>
+            </div>
+            <div class="right-block-editing">
+                <span>Сменить пароль</span>
+                <label for="userPass">
+                    <p>Задайте новый пароль</p>
+                    <input type="password" id="userPass">
+                </label>
+                <label for="sendEmailNotice" class="lebel-checkbox">
+                    <input type="checkbox" id="sendEmailNotice">
+                    <p>Отправлять уведомления на e-mail</p>
+                </label>
+                <label for="userComment">
+                    <p>Комментарий админа (только для админа!)</p>
+                    <textarea id="" cols="30" rows="10" id="userComment"></textarea>
+                </label>
+            </div>
+            <div class="delete-or-save">
+                <button>Удалить пользователя</button>
+                <button>Сохранить изменения</button>
+            </div>
+        </form>
+    </div>
+    <div class="user-top-lt">
+        <span>Заявители пользователя acropolis_mari@mail.ru</span>
+        <div>Создать заявителя</div>
+    </div>
+    <div class="admin-lt-head">
+        <div class="select-all">
+            <div></div>Выбрать все
+        </div>
+        <div class="lt-head-btns">
+            <div>Изменить</div>
+            <div>Заблокировать</div>
+            <div>Удалить</div>
+        </div>
+    </div>
+    <div class="admin-lt-content userPageLtContent">
+        <ul class="lt-content-top">
+            <li><span>Наименование</span></li>
+            <li><span>тип</span></li>
+            <li><span>инн</span></li>
+            <li><span>фио</span></li>
+            <li><span>Контактные данные</span></li>
+            <li><span>Жалобы</span></li>
+        </ul>
+        <ul class="lt-content-main">
+            <li>
+                <div class="lt-psevdo-check"></div>
+                Государственное бюджетное профессиональное образовательное учреждение воронежской области "борисоглебский дорожный техникум"
+            </li>
+            <li>юл</li>
+            <li>4723659376</li>
+            <li>Андреев Александр Александрович</li>
+            <li>02345, Москва, ул.Кульман 2, оф. 415 456-900-90-00 deckcrew@email.ua</li>
+            <li>1</li>
+        </ul>
+        <ul class="lt-content-main">
+            <li>
+                <div class="lt-psevdo-check"></div>
+                Контрольно-счетная палата Песчанокопского района
+            </li>
+            <li>ип</li>
+            <li>4723659376</li>
+            <li>Аседова Елизавета Виталиевна</li>
+            <li>03456, Санкт-Петербург, ул. Логойский тракт 22А, 345-456-97-89</li>
+            <li>34</li>
+        </ul>
+        <ul class="lt-content-main">
+            <li>
+                <div class="lt-psevdo-check"></div>
+                Валинуров Д.Ю.
+            </li>
+            <li>фл</li>
+            <li>4723659376</li>
+            <li>Валинуров Денис Юрьевич</li>
+            <li>86745, Москва, ул. Богдановича-ча-ча 143 497-456-98-09 deckcrew@email.ua</li>
+            <li>12</li>
+        </ul>
+    </div>
+    <div class="appllicant-page">
+        <div class="user-top-lt">
+            <span>Жалобы пользователя acropolis_mari@mail.ru</span>
+        </div>
+        <div class="admin-lt-holder">
+            <div class="admin-lt-head">
+                <div class="select-all">
+                    <div></div>Выбрать все
+                </div>
+                <div class="lt-head-btns">
+                    <div>Копировать</div>
+                    <div>Создать</div>
+                    <div>В архив</div>
+                    <div>Удалить</div>
+                </div>
+            </div>
+            <div class="admin-lt-content">
+                <ul class="lt-content-top">
+                    <li><span>Имя жалобы</span></li>
+                    <li><span>Номер закупки</span></li>
+                    <li><span>Заявитель</span></li>
+                    <li><span>Дата подачи</span></li>
+                    <li><span>Статус</span></li>
+                </ul>
+                <ul class="lt-content-main top-bd-blue">
+                    <li>
+                        <div class="lt-psevdo-check"></div>
+                        Нарушение в КД по срокам, не соответств...
+                    </li>
+                    <li>201603322000548</li>
+                    <li>ООО “Ромашка”</li>
+                    <li>22.01.2016</li>
+                    <li>
+                        <div class="appll-status-icon">
+                        </div>
+                        <div class="close-status-list">Сменить статус</div>
+                    </li>
+                </ul>
+                <ul class="lt-content-main"> <!-- add the required class -->
+                    <li>
+                        <div class="lt-psevdo-check"></div>
+                        Нарушение в КД по срокам, не соответств...
+                    </li>
+                    <li>201603322000548</li>
+                    <li>ООО “Ромашка”</li>
+                    <li>22.01.2016</li>
+                    <li>
+                        <div class="appll-status-icon">
+                        </div>
+                        <div class="close-status-list">Сменить статус</div>
+                    </li>
+                </ul>
+                <ul class="lt-content-main top-bd-green">
+                    <li>
+                        <div class="lt-psevdo-check"></div>
+                        Нарушение в КД по срокам, не соответств...
+                    </li>
+                    <li>201603322000548</li>
+                    <li>ООО “Ромашка”</li>
+                    <li>22.01.2016</li>
+                    <li>
+                        <div class="appll-status-icon">
+                        </div>
+                        <div class="close-status-list">Сменить статус</div>
+                    </li>
+                </ul>
+                <ul class="lt-content-main top-bd-red">
+                    <li>
+                        <div class="lt-psevdo-check"></div>
+                        Нарушение в КД по срокам, не соответств...
+                    </li>
+                    <li>201603322000548</li>
+                    <li>ООО “Ромашка”</li>
+                    <li>22.01.2016</li>
+                    <li>
+                        <div class="appll-status-icon">
+                        </div>
+                        <div class="close-status-list">Сменить статус</div>
+                    </li>
+                </ul>
+                <ul class="lt-content-main top-bd-blue">
+                    <li>
+                        <div class="lt-psevdo-check"></div>
+                        Нарушение в КД по срокам, не соответств...
+                    </li>
+                    <li>201603322000548</li>
+                    <li>ООО “Ромашка”</li>
+                    <li>22.01.2016</li>
+                    <li>
+                        <div class="appll-status-icon">
+                        </div>
+                        <div class="close-status-list">Сменить статус</div>
+                    </li>
+                </ul>
+                <ul class="lt-content-main top-bd-green">
+                    <li>
+                        <div class="lt-psevdo-check"></div>
+                        Нарушение в КД по срокам, не соответств...
+                    </li>
+                    <li>201603322000548</li>
+                    <li>ООО “Ромашка”</li>
+                    <li>22.01.2016</li>
+                    <li>
+                        <div class="appll-status-icon">
+                        </div>
+                        <div class="close-status-list">Сменить статус</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
 <form action="/admin/user/save" method="post">
     <fieldset>
 
