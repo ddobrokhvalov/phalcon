@@ -23,11 +23,12 @@ class UserController extends ControllerBase
         $users = User::find();
         $paginator = new Paginator(array(
             "data" => $users,
-            "limit" => 3,
+            "limit" => 20,
             "page" => $numberPage
         ));
         $pages = $paginator->getPaginate();
         $this->view->page = $pages;
+        //todo: цветовую дифференциацию, галочки
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
     }
 

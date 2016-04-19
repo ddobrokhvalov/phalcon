@@ -53,8 +53,8 @@
         </div>
     </div>
     <div class="admin-table-footer">
-        <a href="#">Еще <span>20 пользователей</span></a>
-        <a href="#">Показать всех пользователей (<span>34 456</span>)</a>
+        <a href="#">Еще <span>20 пользователей</span></a><!--todo: -->
+        <a href="#">Показать всех пользователей (<span>34 456</span>)</a><!--todo: -->
     </div>
     <div class="admin-pagination-box">
         {% if page.current>1 %}{{ link_to("admin/user/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
