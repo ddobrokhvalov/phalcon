@@ -57,7 +57,18 @@
         <a href="#">Показать всех пользователей (<span>34 456</span>)</a>
     </div>
     <div class="admin-pagination-box">
-        <a href="#" id="admin-pag-prev">Предыдущие</a>
+        {% if page.current>1 %}{{ link_to("complaint/index?page=" ~ page.before ~ "&status="~status, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
+        {% for page_item in paginator_builder %}
+        <li>
+            {% if page_item['type'] == 'page' %}
+            {{ link_to("complaint/index?page=" ~ page_item['num'] ~ "&status="~status, page_item['num']) }}
+            {% elseif page_item['type'] == 'delimer' %}
+            <span>...</span>
+            {% elseif page_item['type'] == 'current' %}
+            <span class="active-user-pag-page">{{page_item['num']}}</span>
+            {% endif %}
+        </li>
+        {% endfor %}
         <ul>
             <li><a href="#">1</a></li>
             <li><span class="active-pag-page">2</span></li>
@@ -66,7 +77,7 @@
             <li><span>...</span></li>
             <li><a href="#">23</a></li>
         </ul>
-        <a href="#" id="admin-pag-next">Следующие</a>
+        {% if page.total_pages > page.current %}{{ link_to("complaint/index?page=" ~ page.next ~ "&status="~status, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
     </div>
 </div>
 {% endblock %}
