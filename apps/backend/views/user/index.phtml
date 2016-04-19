@@ -61,7 +61,7 @@
         {% for page_item in paginator_builder %}
         <li>
             {% if page_item['type'] == 'page' %}
-            {{ link_to("admin/user/index?page=" ~ page_item['num'] ~ "&status="~status, page_item['num']) }}
+            {{ link_to("admin/user/index?page=" ~ page_item['num'], page_item['num']) }}
             {% elseif page_item['type'] == 'delimer' %}
             <span>...</span>
             {% elseif page_item['type'] == 'current' %}
