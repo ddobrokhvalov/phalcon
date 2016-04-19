@@ -8,6 +8,7 @@ use Multiple\Backend\Models\User;
 use Multiple\Backend\Form\UserForm;
 use Multiple\Backend\Models\Applicant;
 use Multiple\Backend\Form\ApplicantForm;
+use Multiple\Library\PaginatorBuilder;
 
 class UserController extends ControllerBase
 {
