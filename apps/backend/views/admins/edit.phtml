@@ -1,6 +1,55 @@
 {% extends "base-template.phtml" %}
 {% block title %}ФАС ОНЛАЙН - РЕДАКТИРОВАТЬ АДМИНА{% endblock %}
 {% block body %}
+<div class="admin-main-wrap admin-page">
+    <div class="bread-crumbs-holder">
+        <a href="#">Вернуться к списку администраторов</a>
+    </div>
+    <h1>Ларина Екатерина Прокоповна</h1>
+    <div class="admin-change-access">
+        <span>Редактирование пользователей</span>
+        <div class="change-access">Изменить доступ</div>
+    </div>
+    <div class="block-user-editing">
+        <form action="#" method="POST">
+            <div class="left-block-editing">
+                <span>Данные администратора</span>
+                <label for="fioAdmin">
+                    <p>ФИО</p>
+                    <input type="text" id="fioAdmin">
+                </label>
+                <label for="telFaxAdmin">
+                    <p>Контактный факс, телефон</p>
+                    <input type="number" id="telFaxAdmin">
+                </label>
+                <label for="adminEmail">
+                    <p>E-mail</p>
+                    <input type="email" id="adminEmail">
+                </label>
+            </div>
+            <div class="right-block-editing">
+                <span>Сменить пароль</span>
+                <label for="adminPass">
+                    <p>Задайте новый пароль</p>
+                    <input type="password" id="adminPass">
+                </label>
+                <label for="adminAvatar">
+                    <div class="avatar-wrapper">
+                        <img src="images/admin-picture3.png" alt="">
+                    </div>
+                    <p class="changeAvatar">Изменить аватар</p>
+                    <input type="file" id="adminAvatar">
+                </label>
+            </div>
+            <div class="delete-or-save">
+                <button>Удалить администратора</button>
+                <button>Сохранить изменения</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 <form enctype="multipart/form-data" action="/admin/admins/save" method="post">
     <fieldset>
 
