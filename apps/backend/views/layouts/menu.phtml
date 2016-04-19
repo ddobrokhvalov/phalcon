@@ -14,21 +14,21 @@
                 <label for="lm-user"><input type="checkbox" id="lm-user"></label>
                 <a href="/admin/user/index">Пользователи</a>
             </li>
-            <li{% if cur_controller == '???' and cur_action == '???' %} class="lm-menu-active"{% endif %}>
+            <li{% if cur_controller == 'complaints' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-complaints"><input type="checkbox" id="lm-complaints"></label>
-                <a href="#">Жалобы</a>
+                <a href="/admin/complaints/index">Жалобы</a>
             </li>
-            <li{% if cur_controller == '????' and cur_action == '????' %} class="lm-menu-active"{% endif %}>
+            <li{% if cur_controller == 'arguments' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-arguments"><input type="checkbox" id="lm-arguments"></label>
-                <a href="#">Доводы</a>
+                <a href="/admin/arguments/index">Доводы</a>
             </li>
-            <li{% if cur_controller == '????' and cur_action == '????' %} class="lm-menu-active"{% endif %}>
+            <li{% if cur_controller == 'applicants' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-applicants"><input type="checkbox" id="lm-applicants"></label>
-                <a href="#">Заявители</a>
+                <a href="/admin/applicants/index">Заявители</a>
             </li>
-            <li{% if cur_controller == '?????' and cur_action == '??????' %} class="lm-menu-active"{% endif %}>
+            <li{% if cur_controller == 'lawyer' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-ask-lawyer"><input type="checkbox" id="lm-ask-lawyer"></label>
-                <a href="#">Вопросы юристу<span>34</span></a>
+                <a href="/admin/lawyer/index">Вопросы юристу<span>34</span></a>
             </li>
             <li{% if cur_controller == 'admins' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-administrators"><input type="checkbox" id="lm-administrators"></label>
