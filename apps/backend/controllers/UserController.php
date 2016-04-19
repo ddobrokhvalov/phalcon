@@ -18,15 +18,16 @@ class UserController extends ControllerBase
         $this->persistent->searchParams = null;
         $this->view->form = new UserForm;
 
-
+        $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
         $users = User::find();
         $paginator = new Paginator(array(
             "data" => $users,
             "limit" => 3,
-            "page" => isset($_GET['page']) ? $_GET['page'] : 1
+            "page" => $numberPage
         ));
-
-        $this->view->page = $paginator->getPaginate();
+        $pages = $paginator->getPaginate();
+        $this->view->page = $pages;
+        $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
     }
 
     public function searchAction()
