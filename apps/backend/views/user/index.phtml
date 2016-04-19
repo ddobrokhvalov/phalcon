@@ -33,7 +33,7 @@
         </div>
         <div class="admin-lt-content">
             <ul class="lt-content-top">
-                <li><span>{{user.firstname}} {{user.middlename}} {{user.lastname}}</span></li>
+                <li><span>ФИО</span></li>
                 <li><span>Телефон</span></li>
                 <li><span>Заявители</span></li>
                 <li><span>Жалобы</span></li>
@@ -42,7 +42,7 @@
             </ul>
             {% for user in page.items %}
             <ul class="lt-content-main">
-                <li><div class="lt-psevdo-check"></div>Андреев Александр Александрович</li>
+                <li><div class="lt-psevdo-check"></div>{{user.firstname}} {{user.middlename}} {{user.lastname}}</li>
                 <li>456-900-90-00</li>
                 <li>35</li>
                 <li>29</li>
