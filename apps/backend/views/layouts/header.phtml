@@ -4,8 +4,8 @@
         <span>{{user.email}}</span>
     </div>
     <div class="admin-settings-logout">
-        <a href="/login/logout" class="admin-settings"></a>
-        <a href="/login/logout" id="admin-logout"></a>
+        <div class="admin-settings"></div>
+        <a href="/admin/login/logout" id="admin-logout"></a>
     </div>
     <article class="admin-settings-modal">
         <div class="admin-set-bg"></div>
@@ -16,17 +16,17 @@
             <form action="#" method="POST">
                 <p>Личные данные</p>
                 <label for="download-avatar">
-                    <img src="images/admin-picture2.png" alt="">
+                    <img src="/images/admin-picture2.png" alt="">
                     <p>Изменить аватар</p>
                     <input type="file" id="download-avatar">
                 </label>
                 <label for="adm-set-email" class="set-same-lable">
                     <span>E-mail</span>
-                    <input type="email" id="adm-set-email">
+                    <input type="email" id="adm-set-email" value="{{user.email}}">
                 </label>
                 <label for="adm-set-fio" class="set-same-lable">
                     <span>ФИО</span>
-                    <input type="text" id="adm-set-fio">
+                    <input type="text" id="adm-set-fio" value="{{user.surname}} {{user.name}}">
                 </label>
                 <p>Сменить пароль</p>
                 <label for="set-oldPas" class="set-same-lable">

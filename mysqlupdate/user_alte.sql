@@ -1,0 +1,1 @@
+ALTER TABLE `user` ADD `firstname` VARCHAR(255) NOT NULL , ADD `lastname` VARCHAR(255) NOT NULL , ADD `middlename` VARCHAR(255) NOT NULL , ADD `phone` VARCHAR(20) NOT NULL ;
