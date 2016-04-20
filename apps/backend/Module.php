@@ -67,13 +67,20 @@ class Module
 			$view->registerEngines(
 				array(
 					".phtml" => //'Phalcon\Mvc\View\Engine\Volt'
-					function($view, $di) {
+					function($view, $di){
 						$volt = new \Phalcon\Mvc\View\Engine\Volt($view, $di);
 						$volt->setOptions(array(
 							'compileAlways' => true
 							//"true" if you need to renew children templates after base template changed
 							//or remove or compiled files or make changes in children
 						));
+						$compiler = $volt->getCompiler();
+						$compiler->addFunction(
+							'truncate',
+							function ($str) {
+								return 'substr(' .$str . ')."..."';
+							}
+						);
 						return $volt;
 					}
 				)

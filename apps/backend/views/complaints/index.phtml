@@ -27,16 +27,11 @@
             {% for complaint in page.items %}
             <ul class="lt-content-main">
                 <li><div class="lt-psevdo-check"></div></li>
-                <li>{{ complaint.complaint_name }}</li>
-                <li>{{ complaint.purchases_name }}</li>
+                <li>{{ truncate(complaint.complaint_name, 0, 5) }}</li>
+                <li>{{ truncate(complaint.purchases_name,0,35) }}</li>
                 <li>{{ complaint.auction_id }}</li>
-                <li><span>Жалоба от</span>
-                    {{ complaint.date }}
-                </li>
-                <li>
-                    <span>На</span>
-                    {{ complaint.purchases_made }}
-                </li>
+                <li>{{ truncate(complaint.date, 0, 25) }}</li>
+                <li>{{ truncate(complaint.purchases_made, 0, 25) }}</li>
                 <li>
                     {% if complaint.status == 'draft' %}
                     <span class="jl-status jl-chernov">Черновик</span>
