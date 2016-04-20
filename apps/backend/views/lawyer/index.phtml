@@ -19,9 +19,11 @@
                 <li><span>Вопрос</span></li>
             </ul>
             <ul class="admin-table-body">
-                {% for question in page.items %}
+                {% for compliant in page.items %}
                 <li>
-                    <p>Нарушения по ГОСТ</p>
+                    <p>{{compliant.complaint_name}}Нарушения по ГОСТ</p>
+                    {% for question in compliant.getComplainQuestion() %}
+                    {% endfor %}
                     <ul>
                         <li>22.01.2016</li>
                         <li><a href="#">Почему они не дали ссылку на документ?</a></li>

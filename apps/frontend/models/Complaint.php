@@ -33,6 +33,7 @@ class Complaint extends Model
         return 'complaint';
     }
 
+
     public function findUserComplaints($user_id, $status,$applicant_id =false)
     {
         $db = $this->getDi()->getShared('db');
