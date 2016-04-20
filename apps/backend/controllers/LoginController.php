@@ -78,7 +78,7 @@ class LoginController extends ControllerBase
                 Log::addAdminLog(Log::$typeAdminAuth, Log::$textAdminLogin, $admin);
                 return $this->dispatcher->forward(
                     array(
-                        'controller' => 'dashboard',
+                        'controller' => 'user',
                         'action' => 'index'
                     )
                 );

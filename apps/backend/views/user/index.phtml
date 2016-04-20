@@ -54,10 +54,12 @@
     </div>
     <div class="admin-table-footer">
         <a href="#">Еще <span>20 пользователей</span></a><!--todo: -->
-        <a href="#">Показать всех пользователей (<span>34 456</span>)</a><!--todo: -->
+        <a href="#">Показать всех пользователей (<span>{{page.total_items}}</span>)</a><!--todo: -->
+
     </div>
     <div class="admin-pagination-box">
         {% if page.current>1 %}{{ link_to("admin/user/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
+        <ul>
         {% for page_item in paginator_builder %}
         <li>
             {% if page_item['type'] == 'page' %}
@@ -69,6 +71,7 @@
             {% endif %}
         </li>
         {% endfor %}
+        </ul>
         {% if page.total_pages > page.current %}{{ link_to("admin/user/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
     </div>
 </div>
