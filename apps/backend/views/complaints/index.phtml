@@ -3,7 +3,6 @@
 {% block body %}
 <div class="admin-main-wrap complaints-list">
     <h1>Список жалоб</h1>
-    <a href="#" class="admin-add">Добавить администратора</a>
     <div class="admin-lt-holder">
         <!--div class="admin-lt-head">
             <div class="select-all">
@@ -18,18 +17,43 @@
         <div class="admin-lt-content">
             <ul class="lt-content-top">
                 <li></li>
-                <li><span>Аватар</span></li>
-                <li><span>Фио</span></li>
-                <li><span>E-mail</span></li>
-                <li><span>Доступ</span></li>
+                <li><span>Тайтл</span></li>
+                <li><span>Наименование закупки</span></li>
+                <li><span>Закупка №</span></li>
+                <li><span>Дата</span></li>
+                <li><span>На</span></li>
+                <li><span>Статус</span></li>
             </ul>
-            {% for user in page.items %}
+            {% for complaint in page.items %}
             <ul class="lt-content-main">
                 <li><div class="lt-psevdo-check"></div></li>
-                <li>{% if user.avatar!='' %}<img src="images/admin/{{user.avatar}}.png" alt="">{% endif %}</li>
-                <li>{{user.surname}} {{user.name}}</li>
-                <li>{{user.email}}</li>
-                <li><!--Редактирование пользователей<br/>Чтение пользователей<br/>Чтение жалоб<br/>Редактирование жалоб<br/>Юрист<br/>Редактирование данных УФАС<br/>Редактирование доводов<br/--></li>
+                <li>{{ complaint.complaint_name }}</li>
+                <li>{{ complaint.purchases_name }}</li>
+                <li>{{ complaint.auction_id }}</li>
+                <li><span>Жалоба от</span>
+                    {{ complaint.date }}
+                </li>
+                <li>
+                    <span>На</span>
+                    {{ complaint.purchases_made }}
+                </li>
+                <li>
+                    {% if complaint.status == 'draft' %}
+                    <span class="jl-status jl-chernov">Черновик</span>
+                    {% elseif complaint.status == 'justified' %}
+                    <span class="jl-status jl-done">Обоснована</span>
+                    {% elseif complaint.status == 'unfounded' %}
+                    <span class="jl-status jl-notdone">Необоснована</span>
+                    {% elseif complaint.status == 'under_consideration' %}
+                    <span class="jl-status jl-rassmotr">На рассмотрении</span>
+                    {% elseif complaint.status == 'submitted' %}
+                    <span class="jl-status jl-podana">Подана</span>
+                    {% elseif complaint.status == 'recalled' %}
+                    <span class="jl-status jl-fail">Отозвана</span>
+                    {% elseif complaint.status == 'archive' %}
+                    <span class="jl-status jl-archive">Архив</span>
+                    {% endif %}
+                </li>
             </ul>
             {% endfor %}
         </div>
@@ -39,12 +63,12 @@
         <a href="#">Показать всех администраторов (<span>{{page.total_items}}</span>)</a>
     </div>
     <div class="admin-pagination-box">
-        {% if page.current>1 %}{{ link_to("admin/admins/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
+        {% if page.current>1 %}{{ link_to("admin/complaints/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
         <ul>
             {% for page_item in paginator_builder %}
             <li>
                 {% if page_item['type'] == 'page' %}
-                {{ link_to("admin/admins/index?page=" ~ page_item['num'], page_item['num']) }}
+                {{ link_to("admin/complaints/index?page=" ~ page_item['num'], page_item['num']) }}
                 {% elseif page_item['type'] == 'delimer' %}
                 <span>...</span>
                 {% elseif page_item['type'] == 'current' %}
@@ -53,7 +77,7 @@
             </li>
             {% endfor %}
         </ul>
-        {% if page.total_pages > page.current %}{{ link_to("admin/admins/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
+        {% if page.total_pages > page.current %}{{ link_to("admin/complaints/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
     </div>
 </div>
 {% endblock %}
