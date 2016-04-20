@@ -1,4 +1,59 @@
 {% extends "base-template.phtml" %}
 {% block title %}ФАС ОНЛАЙН - Жалобы{% endblock %}
 {% block body %}
+<div class="admin-main-wrap complaints-list">
+    <h1>Список жалоб</h1>
+    <a href="#" class="admin-add">Добавить администратора</a>
+    <div class="admin-lt-holder">
+        <!--div class="admin-lt-head">
+            <div class="select-all">
+                <div></div>Выбрать все
+            </div>
+            <div class="lt-head-btns">
+                <div>Отправить сообщение</div>
+                <div>Заблокировать</div>
+                <div>Удалить</div>
+            </div>
+        </div-->
+        <div class="admin-lt-content">
+            <ul class="lt-content-top">
+                <li></li>
+                <li><span>Аватар</span></li>
+                <li><span>Фио</span></li>
+                <li><span>E-mail</span></li>
+                <li><span>Доступ</span></li>
+            </ul>
+            {% for user in page.items %}
+            <ul class="lt-content-main">
+                <li><div class="lt-psevdo-check"></div></li>
+                <li>{% if user.avatar!='' %}<img src="images/admin/{{user.avatar}}.png" alt="">{% endif %}</li>
+                <li>{{user.surname}} {{user.name}}</li>
+                <li>{{user.email}}</li>
+                <li><!--Редактирование пользователей<br/>Чтение пользователей<br/>Чтение жалоб<br/>Редактирование жалоб<br/>Юрист<br/>Редактирование данных УФАС<br/>Редактирование доводов<br/--></li>
+            </ul>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="admin-table-footer">
+        <a href="#">Еще <span>20 администраторов</span></a>
+        <a href="#">Показать всех администраторов (<span>{{page.total_items}}</span>)</a>
+    </div>
+    <div class="admin-pagination-box">
+        {% if page.current>1 %}{{ link_to("admin/admins/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
+        <ul>
+            {% for page_item in paginator_builder %}
+            <li>
+                {% if page_item['type'] == 'page' %}
+                {{ link_to("admin/admins/index?page=" ~ page_item['num'], page_item['num']) }}
+                {% elseif page_item['type'] == 'delimer' %}
+                <span>...</span>
+                {% elseif page_item['type'] == 'current' %}
+                <span class="active-pag-page">{{page_item['num']}}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% if page.total_pages > page.current %}{{ link_to("admin/admins/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
+    </div>
+</div>
 {% endblock %}

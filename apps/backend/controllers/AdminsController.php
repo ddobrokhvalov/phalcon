@@ -6,13 +6,27 @@ use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Backend\Models\Admin;
 use Multiple\Backend\Form\AdminForm;
+use Multiple\Library\PaginatorBuilder;
 
 class AdminsController extends ControllerBase
 {
 
     public function indexAction()
     {
+        $this->persistent->searchParams = null;
+        $this->view->form = new AdminForm;
 
+        $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $users = Admin::find();
+        $paginator = new Paginator(array(
+            "data" => $users,
+            "limit" => 20,
+            "page" => $numberPage
+        ));
+        $pages = $paginator->getPaginate();
+        $this->view->page = $pages;
+        //todo: цветовую дифференциацию, галочки
+        $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->persistent->searchParams = null;
         $this->view->form               = new AdminForm;
     }

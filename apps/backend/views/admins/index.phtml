@@ -23,72 +23,37 @@
                 <li><span>E-mail</span></li>
                 <li><span>Доступ</span></li>
             </ul>
+            {% for user in page.items %}
             <ul class="lt-content-main">
                 <li><div class="lt-psevdo-check"></div></li>
-                <li><img src="images/admin-picture.png" alt=""></li>
-                <li>Андреев Александр Александрович</li>
-                <li>deckcrew@email.ua</li>
-                <li>Редактирование пользователей</li>
+                <li>{% if user.avatar!='' %}<img src="images/admin/{{user.avatar}}.png" alt="">{% endif %}</li>
+                <li>{{user.surname}} {{user.name}}</li>
+                <li>{{user.email}}</li>
+                <li><!--Редактирование пользователей<br/>Чтение пользователей<br/>Чтение жалоб<br/>Редактирование жалоб<br/>Юрист<br/>Редактирование данных УФАС<br/>Редактирование доводов<br/--></li>
             </ul>
-            <ul class="lt-content-main">
-                <li><div class="lt-psevdo-check"></div></li>
-                <li><img src="images/admin-picture.png" alt=""></li>
-                <li>Аседова Елизавета Виталиевна</li>
-                <li>engcrew@email.ua</li>
-                <li>Чтение пользователей</li>
-            </ul>
-            <ul class="lt-content-main">
-                <li><div class="lt-psevdo-check"></div></li>
-                <li><img src="images/admin-picture.png" alt=""></li>
-                <li>Гаранян Ованес Суренович</li>
-                <li>admin@moryak.com</li>
-                <li>Чтение жалоб</li>
-            </ul>
-            <ul class="lt-content-main">
-                <li><div class="lt-psevdo-check"></div></li>
-                <li><img src="images/admin-picture.png" alt=""></li>
-                <li>Валинуров Денис Юрьевич</li>
-                <li>sapsan@stream.com.ua</li>
-                <li>Редактирование жалоб</li>
-            </ul>
-            <ul class="lt-content-main">
-                <li><div class="lt-psevdo-check"></div></li>
-                <li><img src="images/admin-picture.png" alt=""></li>
-                <li>Горинова Юлия Юрьевна</li>
-                <li>crewing@mdship.biz</li>
-                <li>Юрист</li>
-            </ul>
-            <ul class="lt-content-main">
-                <li><div class="lt-psevdo-check"></div></li>
-                <li><img src="images/admin-picture.png" alt=""></li>
-                <li>Иванов Павел Александрович</li>
-                <li>crew@akmartransport.c...</li>
-                <li>Редактирование данных УФАС</li>
-            </ul>
-            <ul class="lt-content-main">
-                <li><div class="lt-psevdo-check"></div></li>
-                <li><img src="images/admin-picture.png" alt=""></li>
-                <li>Ермохин Макар Андреевич</li>
-                <li>azulmar@te.net.ua </li>
-                <li>Редактирование доводов</li>
-            </ul>
+            {% endfor %}
         </div>
     </div>
     <div class="admin-table-footer">
         <a href="#">Еще <span>20 администраторов</span></a>
-        <a href="#">Показать всех администраторов (<span>34</span>)</a>
+        <a href="#">Показать всех администраторов (<span>{{page.total_items}}</span>)</a>
     </div>
     <div class="admin-pagination-box">
-        <a href="#" id="admin-pag-prev">Предыдущие</a>
+        {% if page.current>1 %}{{ link_to("admin/admins/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
         <ul>
-            <li><a href="#">1</a></li>
-            <li><span class="active-pag-page">2</span></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><span>...</span></li>
-            <li><a href="#">23</a></li>
+            {% for page_item in paginator_builder %}
+            <li>
+                {% if page_item['type'] == 'page' %}
+                {{ link_to("admin/admins/index?page=" ~ page_item['num'], page_item['num']) }}
+                {% elseif page_item['type'] == 'delimer' %}
+                <span>...</span>
+                {% elseif page_item['type'] == 'current' %}
+                <span class="active-pag-page">{{page_item['num']}}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
         </ul>
-        <a href="#" id="admin-pag-next">Следующие</a>
+        {% if page.total_pages > page.current %}{{ link_to("admin/admins/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
     </div>
 </div>
 
