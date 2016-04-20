@@ -17,7 +17,7 @@ class LawyerController extends ControllerBase
             ->groupby('Multiple\Backend\Models\Complaint.id');
         $paginator = new Paginator(array(
             "builder" => $questions,
-            "limit" => 20,
+            "limit" => 5,
             "page" => $numberPage
         ));
 
