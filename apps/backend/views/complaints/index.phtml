@@ -54,8 +54,8 @@
         </div>
     </div>
     <div class="admin-table-footer">
-        <a href="#">Еще <span>20 администраторов</span></a>
-        <a href="#">Показать всех администраторов (<span>{{page.total_items}}</span>)</a>
+        <a href="#">Еще <span>20 жалоб</span></a>
+        <a href="#">Показать все жалобы(<span>{{page.total_items}}</span>)</a>
     </div>
     <div class="admin-pagination-box">
         {% if page.current>1 %}{{ link_to("admin/complaints/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
