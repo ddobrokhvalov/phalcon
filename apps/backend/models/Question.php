@@ -1,9 +1,9 @@
 <?php
-namespace Multiple\Frontend\Models;
+namespace Multiple\Backend\Models;
 
 use Phalcon\Mvc\Model;
-use Multiple\Frontend\Models\Admin;
-use Multiple\Frontend\Models\Answer;
+use Multiple\Backend\Models\Admin;
+use Multiple\Backend\Models\Answer;
 
 class Question extends Model
 {
