@@ -2,6 +2,7 @@
 namespace Multiple\Backend\Models;
 
 use Phalcon\Mvc\Model;
+use Multiple\Backend\Models\Question;
 
 class Complaint extends Model
 {
@@ -26,6 +27,7 @@ class Complaint extends Model
     public function initialize()
     {
         $this->setSource('complaint');
+        $this->hasMany('id', 'Question', 'complaint_id');
     }
 
     public function getSource()

@@ -4,6 +4,8 @@ namespace Multiple\Backend\Models;
 use Phalcon\Mvc\Model;
 use Multiple\Backend\Models\Admin;
 use Multiple\Backend\Models\Answer;
+use Multiple\Backend\Models\Complaint;
+
 
 class Question extends Model
 {
@@ -16,6 +18,7 @@ class Question extends Model
     public function initialize()
     {
         $this->setSource("question");
+        $this->belongsTo('complaint_id', 'Complaint', 'id');
     }
 
     public function getSource()
