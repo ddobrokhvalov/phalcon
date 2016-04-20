@@ -25,7 +25,7 @@ class ComplaintController extends ControllerBase
             $status = $_GET['status'];
       
         $complaints = $complaint->findUserComplaints($this->user->id, $status, $this->applicant_id);
-        $this->view->complaints = $complaints;
+        #$this->view->complaints = $complaints;
         $this->view->status = $status;
         $paginator = new Paginator(array(
             "data"  => $complaints,
