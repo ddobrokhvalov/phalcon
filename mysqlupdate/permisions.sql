@@ -7,3 +7,4 @@ INSERT INTO `permission_admin` (`id`, `admin_id`, `permission_id`, `read`, `edit
 INSERT INTO `permission_admin` (`id`, `admin_id`, `permission_id`, `read`, `edit`) VALUES (NULL, '1', '10', '1', '1');
 INSERT INTO `permission_admin` (`id`, `admin_id`, `permission_id`, `read`, `edit`) VALUES (NULL, '1', '11', '1', '1');
 INSERT INTO `permission_admin` (`id`, `admin_id`, `permission_id`, `read`, `edit`) VALUES (NULL, '1', '12', '1', '1');
+INSERT INTO `permission_admin` (`id`, `admin_id`, `permission_id`, `read`, `edit`) VALUES (NULL, '1', '13', '1', '1');
