@@ -5,6 +5,7 @@ namespace Multiple\Backend\Controllers;
 use Phalcon\Mvc\Controller;
 use Multiple\Backend\Models\Log;
 use Phalcon\Paginator\Adapter\Model as Paginator;
+use Multiple\Library\PaginatorBuilder;
 
 class LogController extends ControllerBase
 {
@@ -39,7 +40,9 @@ class LogController extends ControllerBase
 
         $this->view->postdata = $data;
         $this->view->typelist = $typeList;
-        $this->view->page = $paginator->getPaginate();
+        $pages = $paginator->getPaginate();
+        $this->view->page = $pages;
+        $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
     }
 
 }
