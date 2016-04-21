@@ -1,0 +1,78 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - Доводы{% endblock %}
+{% block body %}
+<div class="admin-main-wrap edit-aplicant">
+    <div class="bread-crumbs-holder">
+        <a href="#">Вернуться на страницу пользователя</a>
+    </div>
+    <h1>Редактировать заявителя</h1>
+    <div class="tabs-block">
+        <div class="aplicant-tabs-label">
+            <div data-tabsLabel="legal-entity" class="active-tabs-label">Юридическое лицо</div>
+            <div data-tabsLabel="individual-entrepreneur">Индивидуальный предприниматель</div>
+            <div data-tabsLabel="physical-face">Физическое лицо</div>
+        </div>
+        <div data-tabs="legal-entity" class="tabs-content active-tabs-content">
+            <form action="#" method="POST">
+                <label for="entity-textarea">
+                    <div>Полное наименование</div>
+                    <textarea name="" id="entity-textarea"></textarea>
+                </label>
+                <label for="entity-short">
+                    <div>Краткое наименование</div>
+                    <input type="text" data-name="kratkoe-name" class="upper-text" id="entity-short">
+                </label>
+                <label for="entity-inn">
+                    <div>ИНН</div>
+                    <input type="number" data-name="number" id="entity-inn">
+                </label>
+                <label for="entity-kpp">
+                    <div>КПП</div>
+                    <input type="number" data-name="number" id="entity-kpp">
+                </label>
+                <label for="entity-address">
+                    <div>Адрес местонахождения</div>
+                    <input type="text" data-name="address" id="entity-address">
+                </label>
+                <label for="entity-position">
+                    <div>Должность заявителя</div>
+                    <input type="text" data-name="position-fio" id="entity-position">
+                </label>
+                <label for="entity-fio-z">
+                    <div>ФИО заявителя</div>
+                    <input type="text" data-name="position-fio" id="entity-fio-z">
+                </label>
+                <label for="entity-position-k">
+                    <div>ФИО контактного лица</div>
+                    <input type="text" data-name="position-fio" id="entity-fio-k">
+                </label>
+                <label for="entity-phone">
+                    <div>Контактный факс, телефон</div>
+                    <input type="text" data-name="number" id="entity-phone">
+                </label>
+                <label for="entity-email">
+                    <div>E-mail</div>
+                    <input type="text" data-name="position-fio" id="entity-email">
+                </label>
+                <div class="file-attachment">
+                    <img src="images/zaglushka.png" alt="">
+                </div>
+                <button class="save-tab-form">Сохранить изменения</button>
+            </form>
+        </div>
+        <div data-tabs="individual-entrepreneur" class="tabs-content">
+            <form action="#" method="POST">
+                <label for="entity-textarea">
+                    <div>Полное наименование</div>
+                    <textarea name="" id="entity-textarea"></textarea>
+                </label>
+                <div class="file-attachment">
+                    <img src="images/zaglushka.png" alt="">
+                </div>
+                <button class="save-tab-form">Сохранить изменения</button>
+            </form>
+        </div>
+        <div data-tabs="physical-face" class="tabs-content"></div>
+    </div>
+</div>
+{% endblock %}
