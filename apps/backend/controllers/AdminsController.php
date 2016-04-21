@@ -158,12 +158,14 @@ class AdminsController extends ControllerBase
                 $this->flash->error("Admin was not found");
                 return $this->forward("admins/index");
             }
-
+            $this->view->admin = $admin;
             $this->view->form = new AdminForm($admin, array('edit' => true));
         }else{
             return $this->forward("admins/index");
         }
+        $this->setMenu();
     }
+    
     public function delAction($id){
         $admin = Admin::findFirstById($id);
         if (!$admin) {
