@@ -11,31 +11,34 @@
         <div class="change-access">Изменить доступ</div>
     </div>
     <div class="block-user-editing">
-        <form action="#" method="POST">
+        <form action="#" method="POST" enctype="multipart/form-data">
             <div class="left-block-editing">
                 <span>Данные администратора</span>
                 <label for="fioAdmin">
                     <p>ФИО</p>
-                    <input type="text" id="fioAdmin">
+                    <input type="text" id="fioAdmin" name = "surname" value="{{admin.surname}}">
                 </label>
+                    <input type="text" id="fioAdmin" name = "name" value="{{admin.name}}">
+                    <input type="text" id="fioAdmin" name = "patronymic" value="{{admin.patronymic}}">
+
                 <label for="telFaxAdmin">
                     <p>Контактный факс, телефон</p>
-                    <input type="number" id="telFaxAdmin">
+                    <input type="number" id="telFaxAdmin" value="{{admin.phone}}">
                 </label>
                 <label for="adminEmail">
                     <p>E-mail</p>
-                    <input type="email" id="adminEmail">
+                    <input type="email" id="adminEmail" value="{{admin.email}}">
                 </label>
             </div>
             <div class="right-block-editing">
                 <span>Сменить пароль</span>
                 <label for="adminPass">
                     <p>Задайте новый пароль</p>
-                    <input type="password" id="adminPass">
+                    <input type="password" id="adminPass" value="">
                 </label>
                 <label for="adminAvatar">
                     <div class="avatar-wrapper">
-                        <img src="images/admin-picture3.png" alt="">
+                        <img src="/images/{{admin.avatar}}" alt="">
                     </div>
                     <p class="changeAvatar">Изменить аватар</p>
                     <input type="file" id="adminAvatar">
