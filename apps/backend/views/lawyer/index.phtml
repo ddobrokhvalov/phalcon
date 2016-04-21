@@ -18,7 +18,7 @@
                 <li><span>Добавлен</span></li>
                 <li><span>Вопрос</span></li>
             </ul>
-            <ul class="admin-table-body">
+            <ul class="admin-table-body question-list">
                 {% for compliant in page.items %}
                 <li>
                     <p>{{compliant.complaint_name}}Нарушения по ГОСТ</p>
@@ -31,14 +31,14 @@
                     {% endfor %}
                     <ul>
                         <li>16.01.2016</li>
-                        <li><a href="#" class="active-ques">Я хочу пожаловаться на отсутствие документации для тендера в электронном формате, не заданые даты окончания приема заявок, как лучше с этим бороться? Я имею право подать жалобу?</a></li>
+                        <li><a href="#">Я хочу пожаловаться на отсутствие документации для тендера в электронном формате, не заданые даты окончания приема заявок, как лучше с этим бороться? Я имею право подать жалобу?</a></li>
                     </ul>
                 </li>
                 {% endfor %}
             </ul>
             <div class="admin-table-footer">
                 <a href="#">Еще <span>20 вопросов</span></a>
-                <a href="#">Показать все вопросы (<span>34 567</span>)</a>
+                <a href="#">Показать все вопросы (<span>{{page.total_items}}</span>)</a>
             </div>
         </div>
         <div class="admin-pagination-box">

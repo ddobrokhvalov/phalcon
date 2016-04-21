@@ -3769,13 +3769,15 @@ q, blockquote {
 }
 
 /* line 69, ../sass/_lawyer_questions.scss */
-.admin-table-box .admin-table-body li ul {
-    border-left: 1px solid #e0e3ea;
-    border-bottom: 1px solid #e0e3ea;
+.admin-table-box li a.active-ques, ul.question-list li ul:last-child li a{
+    color: #34383e;
+    padding-left: 0;
+    background: none;
 }
-/* line 73, ../sass/_lawyer_questions.scss */
-.admin-table-box .admin-table-body li ul:last-child {
-    border-bottom: none;
+/* line 91, ../sass/_lawyer_questions.scss */
+.admin-table-box li a.active-ques:hover, ul.question-list li ul:last-child li a:hover {
+    font-weight: 600;
+    color: #0fbbfc;
 }
 /* line 76, ../sass/_lawyer_questions.scss */
 .admin-table-box ul:after {
