@@ -15,9 +15,12 @@ class ArgumentsController  extends ControllerBase
             ->join('Multiple\Backend\Models\ArgumentsCategory', 'Multiple\Backend\Models\ArgumentsCategory.id = Multiple\Backend\Models\Arguments.category_id')
             ->getQuery()
             ->execute();
-        $ArgumentsCategory = ArgumentsCategory::find();
         $this->view->Arguments = $Arguments;
-        $this->view->ArgumentsCategory = $ArgumentsCategory;
+        $this->view->ArgumentsCategory = ArgumentsCategory::find();
         $this->setMenu();
+    }
+    public function addAction(){
+        $this->setMenu();
+        $this->view->ArgumentsCategory = ArgumentsCategory::find();
     }
 }

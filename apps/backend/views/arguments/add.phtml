@@ -10,21 +10,19 @@
         <form action="#" method="POST">
             <div class="select-holder">
                 <select class="hidden-select">
-                    <option value="1"></option>
-                    <option value="2"></option>
-                    <option value="3"></option>
-                    <option value="4"></option>
+                    {% for category in ArgumentsCategory %}
+                    <option value="{{category.id}}">{{category.name}}</option>
+                    {% endfor %}
                 </select>
                 <div class="title-info-box">Категория довода</div>
                 <div class="custom_select">
                     <div class="current-option" data-value="">
-                        <span>Нарушение ГОСТ</span>
+                        <span>Выберите категорию</span>
                     </div>
                     <ul class="custom-options">
-                        <li data-value="1">Нарушение ГОСТ</li>
-                        <li data-value="2">Нарушение не ГОСТ</li>
-                        <li data-value="3">Нарушение какого-то ГОСТа</li>
-                        <li data-value="4">Нарушение?</li>
+                        {% for category in ArgumentsCategory %}
+                        <li data-value="{{category.id}}">{{category.name}}</li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
