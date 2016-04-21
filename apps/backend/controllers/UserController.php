@@ -114,6 +114,7 @@ class UserController extends ControllerBase
 
     public function addAction()
     {
+
         $this->view->form = new UserForm(null, array('add' => true));
     }
 
@@ -167,6 +168,7 @@ class UserController extends ControllerBase
             $appl = new Applicant();
             $this->view->applicants = $appl->findByUserId($id);
             $this->view->form = new UserForm($user, array('edit' => true));
+            $this->view->edituser = $user;
 
         } else {
             return $this->forward("user/index");

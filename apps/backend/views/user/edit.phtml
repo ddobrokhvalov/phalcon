@@ -1,5 +1,5 @@
 {% extends "base-template.phtml" %}
-{% block title %}ФАС ОНЛАЙН - ПОЛЬЗОВАТЕЛИ РЕДАКТИРОВАТЬ{% endblock %}
+{% block title %}ФАС ОНЛАЙН - РЕДАКТИРОВАТЬ ПОЛЬЗОВАТЕЛЯ{% endblock %}
 {% block body %}
 
 <!-- ****************** user page ***************** -->
@@ -7,7 +7,7 @@
     <div class="bread-crumbs-holder">
         <a href="#">Вернуться к списку пользователей</a>
     </div>
-    <h1>acropolis_mari@mail.ru</h1>
+    <h1>{{edituser.email}}</h1>
     <div class="admin-change-access">
         <span>Тариф пробный до 12.02.2016</span>
         <div class="change-access">Изменить тариф</div>
@@ -18,40 +18,40 @@
                 <span>Данные пользователя</span>
                 <label for="fioUser">
                     <p>ФИО</p>
-                    <input type="text" id="fioUser">
+                    <input type="text" id="fioUser" value="{{edituser.firstname}} {{edituser.middlename}} {{edituser.lastname}}">
                 </label>
                 <label for="telFaxUser">
                     <p>Контактный факс, телефон</p>
-                    <input type="number" id="telFaxUser">
+                    <input type="number" id="telFaxUser" value="{{edituser.phone}}">
                 </label>
                 <label for="userEmail">
                     <p>E-mail</p>
-                    <input type="email" id="userEmail">
+                    <input type="email" id="userEmail" value="{{edituser.email}}">
                 </label>
             </div>
             <div class="right-block-editing">
                 <span>Сменить пароль</span>
                 <label for="userPass">
                     <p>Задайте новый пароль</p>
-                    <input type="password" id="userPass">
+                    <input type="password" id="userPass" value="">
                 </label>
                 <label for="sendEmailNotice" class="lebel-checkbox">
-                    <input type="checkbox" id="sendEmailNotice">
+                    <input type="checkbox" id="sendEmailNotice" value="{{edituser.emailNotice}}">
                     <p>Отправлять уведомления на e-mail</p>
                 </label>
                 <label for="userComment">
                     <p>Комментарий админа (только для админа!)</p>
-                    <textarea id="" cols="30" rows="10" id="userComment"></textarea>
+                    <textarea id="" cols="30" rows="10" id="userComment" value="{{edituser.userComment}}"></textarea>
                 </label>
             </div>
             <div class="delete-or-save">
-                <button>Удалить пользователя</button>
-                <button>Сохранить изменения</button>
+                <button>Удалить пользователя</button><!--todo-->
+                <button>Сохранить изменения</button><!--todo-->
             </div>
         </form>
     </div>
     <div class="user-top-lt">
-        <span>Заявители пользователя acropolis_mari@mail.ru</span>
+        <span>Заявители пользователя {{edituser.email}}</span>
         <div>Создать заявителя</div>
     </div>
     <div class="admin-lt-head">
@@ -109,7 +109,7 @@
     </div>
     <div class="appllicant-page">
         <div class="user-top-lt">
-            <span>Жалобы пользователя acropolis_mari@mail.ru</span>
+            <span>Жалобы пользователя {{edituser.email}}</span>
         </div>
         <div class="admin-lt-holder">
             <div class="admin-lt-head">
