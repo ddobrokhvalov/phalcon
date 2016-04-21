@@ -22,17 +22,13 @@
                 {% for compliant in page.items %}
                 <li>
                     <p>{{compliant.complaint_name}}Нарушения по ГОСТ</p>
-                    {% for question in compliant.getComplainQuestion() %}
-                       11111111111
-                    {% endfor %}
+                    {% set questions = compliant.getComplainQuestion() %}
+                    {% for question in questions %}
                     <ul>
                         <li>22.01.2016</li>
                         <li><a href="#">Почему они не дали ссылку на документ?</a></li>
                     </ul>
-                    <ul>
-                        <li>20.01.2016</li>
-                        <li><a href="#">Как мне получить тестовый образец продукции?</a></li>
-                    </ul>
+                    {% endfor %}
                     <ul>
                         <li>16.01.2016</li>
                         <li><a href="#" class="active-ques">Я хочу пожаловаться на отсутствие документации для тендера в электронном формате, не заданые даты окончания приема заявок, как лучше с этим бороться? Я имею право подать жалобу?</a></li>
@@ -46,16 +42,21 @@
             </div>
         </div>
         <div class="admin-pagination-box">
-            <a href="#" id="admin-pag-prev">Предыдущие</a>
+            {% if page.current>1 %}{{ link_to("admin/lawyer/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
             <ul>
-                <li><a href="#">1</a></li>
-                <li><span class="active-pag-page">2</span></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><span>...</span></li>
-                <li><a href="#">23</a></li>
+                {% for page_item in paginator_builder %}
+                <li>
+                    {% if page_item['type'] == 'page' %}
+                    {{ link_to("admin/lawyer/index?page=" ~ page_item['num'], page_item['num']) }}
+                    {% elseif page_item['type'] == 'delimer' %}
+                    <span>...</span>
+                    {% elseif page_item['type'] == 'current' %}
+                    <span class="active-pag-page">{{page_item['num']}}</span>
+                    {% endif %}
+                </li>
+                {% endfor %}
             </ul>
-            <a href="#" id="admin-pag-next">Следующие</a>
+            {% if page.total_pages > page.current %}{{ link_to("admin/lawyer/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
         </div>
     </div>
 </div>
