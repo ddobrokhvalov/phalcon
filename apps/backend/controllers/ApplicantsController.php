@@ -9,9 +9,9 @@ class ApplicantsController  extends ControllerBase
 {
     public function indexAction(){
         $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
-        $Applicant = Applicant::find();
+        $applicant = Applicant::find();
         $paginator = new Paginator(array(
-            "data"  => $Applicant,
+            "data"  => $applicant,
             "limit" => 10,
             "page"  => $numberPage
         ));

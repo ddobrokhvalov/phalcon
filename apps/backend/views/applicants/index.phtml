@@ -26,28 +26,28 @@
             </ul>
             {% for user in page.items %}
             <ul class="lt-content-main">
-                <li><div class="lt-psevdo-check"></div>{{user.email}} {{user.firstname}} {{user.middlename}} {{user.lastname}}</li>
-                <li>{{user.phone}}</li>
-                <li>35</li>
-                <li>29</li>
-                <li>22.01.2016</li>
-                <li><div class="good-bad extended"></div></li>
+                <li><div class="lt-psevdo-check"></div></li>
+                <li>{{user.name_full}}</li>
+                <li>{{user.name_short}}</li>
+                <li>{{user.inn}}</li>
+                <li>{{user.fio_applicant}}</li>
+                <li></li>
             </ul>
             {% endfor %}
         </div>
     </div>
     <div class="admin-table-footer">
-        <a href="#">Еще <span>20 пользователей</span></a><!--todo: -->
+        <a href="#">Еще <span>20 заявителей</span></a><!--todo: -->
         <a href="#">Показать всех пользователей (<span>{{page.total_items}}</span>)</a><!--todo: -->
 
     </div>
     <div class="admin-pagination-box">
-        {% if page.current>1 %}{{ link_to("admin/user/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
+        {% if page.current>1 %}{{ link_to("admin/applicants/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
         <ul>
             {% for page_item in paginator_builder %}
             <li>
                 {% if page_item['type'] == 'page' %}
-                {{ link_to("admin/user/index?page=" ~ page_item['num'], page_item['num']) }}
+                {{ link_to("admin/applicants/index?page=" ~ page_item['num'], page_item['num']) }}
                 {% elseif page_item['type'] == 'delimer' %}
                 <span>...</span>
                 {% elseif page_item['type'] == 'current' %}
@@ -56,7 +56,7 @@
             </li>
             {% endfor %}
         </ul>
-        {% if page.total_pages > page.current %}{{ link_to("admin/user/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
+        {% if page.total_pages > page.current %}{{ link_to("admin/applicants/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
     </div>
 </div>
 {% endblock %}
