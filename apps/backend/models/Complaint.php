@@ -36,7 +36,13 @@ class Complaint extends Model
     }
 
     public function getComplainQuestion(){
-        return Question::find();
+        return Question::find(array(
+            "complaint_id = :complaint_id:",
+            'bind' => array(
+                'complaint_id' => $this->id,
+            ),
+            "order" => "id DESC",
+        ));
     }
 
     public function findUserComplaints($user_id, $status,$applicant_id =false)
