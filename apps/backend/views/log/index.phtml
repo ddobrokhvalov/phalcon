@@ -51,47 +51,47 @@
 
     </script>
 </div>
-{% for log in page.items %}
-{% if loop.first %}
-<table>
-    <thead>
-    <tr>
-        <th>Администратор\Пользователь</th>
-        <th>Тип</th>
-        <th>Сообщение</th>
-        <th>Дополнительно</th>
-        <th>Дата</th>
 
-    </tr>
-    </thead>
-    <tbody>
-    {% endif %}
-    <tr>
-        <td>{{ log.au }}</td>
-        <td>{{ log.type }}</td>
-        <td>{{ log.text }}</td>
-        <td>{{ log.additionally }}</td>
-        <td>{{ log.date }}</td>
 
-    </tr>
-    {% if loop.last %}
-    </tbody>
-    <tbody>
-    <tr>
-        <td colspan="7">
-            <div>
-                {{ link_to("products/search", 'Первая') }}
-                {{ link_to("products/search?page=" ~ page.before, 'Предыдущая') }}
-                {{ link_to("products/search?page=" ~ page.next, 'Следующая') }}
-                {{ link_to("products/search?page=" ~ page.last, 'Последняя') }}
-                <span class="help-inline">{{ page.current }} из {{ page.total_pages }}</span>
-            </div>
-        </td>
-    </tr>
-    </tbody>
-</table>
-{% endif %}
-{% else %}
-В базе нет логов с такими параметрами
-{% endfor %}
+<div class="admin-lt-content">
+    <ul class="lt-content-top">
+        <li><span>Администратор\Пользователь</span></li>
+        <li><span>Тип</span></li>
+        <li><span>Сообщение</span></li>
+        <li><span>Дополнительно</span></li>
+        <li><span>Дата</span></li>
+    </ul>
+    {% for log in page.items %}
+    <ul class="lt-content-main">
+        <li>{{ log.au }}</li>
+        <li>{{ log.type }}</li>
+        <li>{{ log.text }}</li>
+        <li>{{ log.text }}</li>
+        <li>{{ log.additionally }}</li>
+        <li>{{ log.date }}</li>
+    </ul>
+    {% endfor %}
+</div>
+
+<div class="admin-table-footer">
+    <a href="#">Еще <span>20 логов</span></a>
+    <a href="#">Показать все логов (<span>{{page.total_items}}</span>)</a>
+</div>
+<div class="admin-pagination-box">
+    {% if page.current>1 %}{{ link_to("admin/log/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
+    <ul>
+        {% for page_item in paginator_builder %}
+        <li>
+            {% if page_item['type'] == 'page' %}
+            {{ link_to("admin/log/index?page=" ~ page_item['num'], page_item['num']) }}
+            {% elseif page_item['type'] == 'delimer' %}
+            <span>...</span>
+            {% elseif page_item['type'] == 'current' %}
+            <span class="active-pag-page">{{page_item['num']}}</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% if page.total_pages > page.current %}{{ link_to("admin/log/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
+</div>
 {% endblock %}
