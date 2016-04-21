@@ -12,31 +12,31 @@
         <ul class="lm-menu">
             <li{% if cur_controller == 'user' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-user"><input type="checkbox" id="lm-user"></label>
-                <a href="/admin/user/index">Пользователи</a>
+                <a href="/admin/user/index">Пользователи<span>{{menuItemsCount['User']}}</span></a>
             </li>
             <li{% if cur_controller == 'complaints' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-complaints"><input type="checkbox" id="lm-complaints"></label>
-                <a href="/admin/complaints/index">Жалобы</a>
+                <a href="/admin/complaints/index">Жалобы<span>{{menuItemsCount['Complaint']}}</span></a>
             </li>
             <li{% if cur_controller == 'arguments' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-arguments"><input type="checkbox" id="lm-arguments"></label>
-                <a href="/admin/arguments/index">Доводы</a>
+                <a href="/admin/arguments/index">Доводы<span>{{menuItemsCount['Arguments']}}</span></a>
             </li>
             <li{% if cur_controller == 'applicants' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-applicants"><input type="checkbox" id="lm-applicants"></label>
-                <a href="/admin/applicants/index">Заявители</a>
+                <a href="/admin/applicants/index">Заявители<span>{{menuItemsCount['Applicant']}}</span></a>
             </li>
             <li{% if cur_controller == 'lawyer' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-ask-lawyer"><input type="checkbox" id="lm-ask-lawyer"></label>
-                <a href="/admin/lawyer/index">Вопросы юристу<span>34</span></a>
+                <a href="/admin/lawyer/index">Вопросы юристу<span>{{menuItemsCount['Question']}}</span></a>
             </li>
             <li{% if cur_controller == 'admins' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-administrators"><input type="checkbox" id="lm-administrators"></label>
-                <a href="/admin/admins/index">Администраторы</a>
+                <a href="/admin/admins/index">Администраторы<span>{{menuItemsCount['Admin']}}</span></a>
             </li>
             <li{% if cur_controller == 'log' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-logs"><input type="checkbox" id="lm-logs"></label>
-                <a href="/admin/log/index">Логи</a>
+                <a href="/admin/log/index">Логи<span>{{menuItemsCount['Log']}}</span></a>
             </li>
         </ul>
         <div class="lm-search-title">

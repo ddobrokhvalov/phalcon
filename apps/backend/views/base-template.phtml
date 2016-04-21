@@ -12,7 +12,7 @@
 </head>
 <body>
 {% block menu %}
-{{ partial("layouts/menu") }}
+{% if showMenu %}{{partial("layouts/menu")}}{% endif %}
 {% endblock %}
 <section class="page-wrap">
 {{ partial("layouts/header")}}

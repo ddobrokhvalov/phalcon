@@ -2,12 +2,12 @@
 namespace Multiple\Backend\Controllers;
 use Phalcon\Mvc\Controller;
 use Multiple\Backend\Models\Admin;
-use Multiple\Frontend\Models\User;
-use Multiple\Frontend\Models\Applicant;
-use Multiple\Frontend\Models\Complaint;
-use Multiple\Frontend\Models\Arguments;
-use Multiple\Frontend\Models\Log;
-use Multiple\Frontend\Models\Question;
+use Multiple\Backend\Models\User;
+use Multiple\Backend\Models\Applicant;
+use Multiple\Backend\Models\Complaint;
+use Multiple\Backend\Models\Arguments;
+use Multiple\Backend\Models\Log;
+use Multiple\Backend\Models\Question;
 
 class ControllerBase extends Controller
 {
@@ -49,5 +49,14 @@ class ControllerBase extends Controller
 
     public function setMenu(){
         $this->view->showMenu = true;
+        $this->view->menuItemsCount = [
+            'User'=>User::count(),
+            'Applicant'=>Applicant::count(),
+            'Complaint'=>Complaint::count(),
+            'Arguments'=>Arguments::count(),
+            'Log'=>Log::count(),
+            'Question'=>Question::count(),
+            'Admin'=>Question::count(),
+        ];
     }
 }
