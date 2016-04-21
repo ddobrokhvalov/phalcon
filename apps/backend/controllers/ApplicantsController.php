@@ -19,4 +19,9 @@ class ApplicantsController  extends ControllerBase
         $this->view->page = $pages;
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
     }
+
+    public function infoAction($id){
+        
+    }
+
 }

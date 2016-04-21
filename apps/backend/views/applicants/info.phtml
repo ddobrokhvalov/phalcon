@@ -1,0 +1,121 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - Заявитель{% endblock %}
+{% block body %}
+<div class="admin-main-wrap appllicant-page">
+    <div class="bread-crumbs-holder">
+        <a href="#">Вернуться на страницу пользователя</a>
+    </div>
+    <h1>Государственное бюджетное профессиональное образовательное учреждение воронежской области «Борисоглебский дорожный техникум»</h1>
+    <div class="del-oredit-appll">
+        <a href="#">Удалить заявителя</a>
+        <a href="#">Редактировать</a>
+    </div>
+    <h2>Жалобы заявителя</h2>
+    <div class="admin-lt-holder">
+        <div class="admin-lt-head">
+            <div class="select-all">
+                <div></div>Выбрать все
+            </div>
+            <div class="lt-head-btns">
+                <div>Копировать</div>
+                <div>Создать</div>
+                <div>В архив</div>
+                <div>Удалить</div>
+            </div>
+        </div>
+        <div class="admin-lt-content">
+            <ul class="lt-content-top">
+                <li><span>Имя жалобы</span></li>
+                <li><span>Номер закупки</span></li>
+                <li><span>Дата подачи</span></li>
+                <li><span>Статус</span></li>
+            </ul>
+            <ul class="lt-content-main top-bd-blue">
+                <li>
+                    <div class="lt-psevdo-check"></div>
+                    Нарушение в КД по срокам, не соответстветствует ГОСТ
+                </li>
+                <li>201603322000548</li>
+                <li>22.01.2016</li>
+                <li>
+                    <div class="appll-status-icon"></div>
+                    <div class="close-status-list">Сменить статус</div>
+                </li>
+            </ul>
+            <ul class="lt-content-main"> <!-- add the required class -->
+                <li>
+                    <div class="lt-psevdo-check"></div>
+                    Нарушение ГОСТ
+                </li>
+                <li>201603322000548</li>
+                <li>22.01.2016</li>
+                <li>
+                    <div class="appll-status-icon"></div>
+                    <div class="close-status-list">Сменить статус</div>
+                </li>
+            </ul>
+            <ul class="lt-content-main top-bd-green">
+                <li>
+                    <div class="lt-psevdo-check"></div>
+                    Нарушение в КД по срокам
+                </li>
+                <li>201603322000548</li>
+                <li>22.01.2016</li>
+                <li>
+                    <div class="appll-status-icon"></div>
+                    <div class="close-status-list">Сменить статус</div>
+                </li>
+            </ul>
+            <ul class="lt-content-main top-bd-red">
+                <li>
+                    <div class="lt-psevdo-check"></div>
+                    Нарушение в КД, не соответстветствует ГОСТ
+                </li>
+                <li>201603322000548</li>
+                <li>22.01.2016</li>
+                <li><div class="appll-status-icon"></div></li>
+            </ul>
+            <ul class="lt-content-main top-bd-blue">
+                <li>
+                    <div class="lt-psevdo-check"></div>
+                    Нарушение по срокам, не соответстветствует ГОСТ
+                </li>
+                <li>201603322000548</li>
+                <li>22.01.2016</li>
+                <li>
+                    <div class="appll-status-icon"></div>
+                    <div class="close-status-list">Сменить статус</div>
+                </li>
+            </ul>
+            <ul class="lt-content-main top-bd-green">
+                <li>
+                    <div class="lt-psevdo-check"></div>
+                    Нарушение в КД по срокам и ГОСТу
+                </li>
+                <li>201603322000548</li>
+                <li>22.01.2016</li>
+                <li>
+                    <div class="appll-status-icon"></div>
+                    <div class="close-status-list">Сменить статус</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="admin-table-footer">
+        <a href="#">Еще <span>20 жалоб</span></a>
+        <a href="#">Показать все жалобы (<span>345 678</span>)</a>
+    </div>
+    <div class="admin-pagination-box">
+        <a href="#" id="admin-pag-prev">Предыдущие</a>
+        <ul>
+            <li><a href="#">1</a></li>
+            <li><span class="active-pag-page">2</span></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><span>...</span></li>
+            <li><a href="#">23</a></li>
+        </ul>
+        <a href="#" id="admin-pag-next">Следующие</a>
+    </div>
+</div>
+{% endblock %}
