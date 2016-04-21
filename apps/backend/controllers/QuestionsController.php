@@ -11,6 +11,6 @@ class QuestionsController extends ControllerBase
 
     public function indexAction()
     {
-
+        $this->setMenu();
     }
 }

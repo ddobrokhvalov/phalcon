@@ -30,6 +30,7 @@ class UserController extends ControllerBase
         $this->view->page = $pages;
         //todo: цветовую дифференциацию, галочки
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
+        $this->setMenu();
     }
 
     public function searchAction()
@@ -60,6 +61,7 @@ class UserController extends ControllerBase
         ));
 
         $this->view->page = $paginator->getPaginate();
+        $this->setMenu();
 
     }
 
@@ -116,6 +118,7 @@ class UserController extends ControllerBase
     {
 
         $this->view->form = new UserForm(null, array('add' => true));
+        $this->setMenu();
     }
 
     public function createAction()
@@ -169,6 +172,7 @@ class UserController extends ControllerBase
             $this->view->applicants = $appl->findByUserId($id);
             $this->view->form = new UserForm($user, array('edit' => true));
             $this->view->edituser = $user;
+            
 
         } else {
             return $this->forward("user/index");

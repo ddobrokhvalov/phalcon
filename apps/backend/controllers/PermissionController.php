@@ -16,6 +16,7 @@ class PermissionController extends ControllerBase
         $perm = new Permission();
         $this->view->admin = $admin;
         $this->view->permission =  $perm->getAdminPermission($id);
+        $this->setMenu();
 
     }
     public function saveAction($id)

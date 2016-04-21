@@ -26,5 +26,6 @@ class TemplateController extends ControllerBase
         $this->view->categorys = $categorys;
         $this->view->templates = $templates;
         $this->view->currentCategory = $currentCategory;
+        $this->setMenu();
     }
 }

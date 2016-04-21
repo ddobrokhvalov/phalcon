@@ -26,5 +26,6 @@ class LawyerController extends ControllerBase
         $pages = $paginator->getPaginate();
         $this->view->page = $pages;
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
+        $this->setMenu();
     }
 }

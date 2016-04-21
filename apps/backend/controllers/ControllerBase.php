@@ -2,6 +2,12 @@
 namespace Multiple\Backend\Controllers;
 use Phalcon\Mvc\Controller;
 use Multiple\Backend\Models\Admin;
+use Multiple\Frontend\Models\User;
+use Multiple\Frontend\Models\Applicant;
+use Multiple\Frontend\Models\Complaint;
+use Multiple\Frontend\Models\Arguments;
+use Multiple\Frontend\Models\Log;
+use Multiple\Frontend\Models\Question;
 
 class ControllerBase extends Controller
 {
@@ -25,7 +31,7 @@ class ControllerBase extends Controller
             );
             $this->view->user = $this->user;
         }
-
+        $this->view->showMenu = false;
     }
 
     protected function forward($uri)
@@ -39,5 +45,9 @@ class ControllerBase extends Controller
                 'params' => $params
             )
         );
+    }
+
+    public function setMenu(){
+        $this->view->showMenu = true;
     }
 }

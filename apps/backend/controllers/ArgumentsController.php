@@ -18,5 +18,6 @@ class ArgumentsController  extends ControllerBase
         $ArgumentsCategory = ArgumentsCategory::find();
         $this->view->Arguments = $Arguments;
         $this->view->ArgumentsCategory = $ArgumentsCategory;
+        $this->setMenu();
     }
 }

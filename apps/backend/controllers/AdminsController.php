@@ -29,6 +29,7 @@ class AdminsController extends ControllerBase
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->persistent->searchParams = null;
         $this->view->form               = new AdminForm;
+        $this->setMenu();
     }
     public function searchAction(){
         $numberPage = 1;
@@ -57,6 +58,7 @@ class AdminsController extends ControllerBase
         ));
 
         $this->view->page = $paginator->getPaginate();
+        $this->setMenu();
 
     }
     public function saveAction()
@@ -113,6 +115,7 @@ class AdminsController extends ControllerBase
     public function addAction()
     {
         $this->view->form = new AdminForm(null, array('add' => true));
+        $this->setMenu();
     }
     public function createAction(){
         if (!$this->request->isPost()) {
