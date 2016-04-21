@@ -92,3 +92,8 @@ INSERT INTO `arguments` (`id`, `name`) VALUES
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
+ALTER TABLE `arguments` ADD `category_id` INT NOT NULL , ADD `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , ADD INDEX (`category_id`) ;
+UPDATE `fas`.`arguments` SET `category_id` = '1' WHERE `arguments`.`id` = 1;
+UPDATE `fas`.`arguments` SET `category_id` = '2' WHERE `arguments`.`id` = 2;
+UPDATE `fas`.`arguments` SET `category_id` = '3' WHERE `arguments`.`id` = 3;
+ALTER TABLE `arguments` CHANGE `data` `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;

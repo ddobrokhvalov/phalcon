@@ -20,54 +20,16 @@
                 <li><span>Категория довода</span></li>
                 <li><span>Добавлен</span></li>
             </ul>
+            {% for argument in Arguments %}
             <ul class="lt-content-main">
                 <li>
                     <div class="lt-psevdo-check"></div>
-                    Многократное повторение товаров
+                    {{argument.name}}
                 </li>
-                <li>Многократное повторение товаров</li>
-                <li>22.01.2016</li>
+                <li>{{argument.catname}}</li>
+                <li>{{date('d.m.Y', argument.date|strtotime)}}</li>
             </ul>
-            <ul class="lt-content-main">
-                <li>
-                    <div class="lt-psevdo-check"></div>
-                    Цифры прописью
-                </li>
-                <li>Цифры прописью</li>
-                <li>20.01.2016</li>
-            </ul>
-            <ul class="lt-content-main">
-                <li>
-                    <div class="lt-psevdo-check"></div>
-                    Установление требований к сопутствующим материалам (ацетилен...
-                </li>
-                <li>Установление требований</li>
-                <li>16.01.2016</li>
-            </ul>
-            <ul class="lt-content-main">
-                <li>
-                    <div class="lt-psevdo-check"></div>
-                    Корявая инструкция или её отсутствие
-                </li>
-                <li>Корявая инструкция или её отсутствие</li>
-                <li>01.01.2016</li>
-            </ul>
-            <ul class="lt-content-main">
-                <li>
-                    <div class="lt-psevdo-check"></div>
-                    Запрос меняет суть
-                </li>
-                <li>Запрос меняет суть</li>
-                <li>27.12.2015</li>
-            </ul>
-            <ul class="lt-content-main">
-                <li>
-                    <div class="lt-psevdo-check"></div>
-                    Не совпадает с планом-графиком
-                </li>
-                <li>Не совпадает с планом-графиком</li>
-                <li>20.12.2015</li>
-            </ul>
+            {% endfor %}
         </div>
     </div>
     <h1 class="second-lt-h1">Категории доводов</h1>
@@ -82,46 +44,16 @@
             </div>
         </div>
         <div class="admin-lt-content">
+            {% for category in ArgumentsCategory %}
             <ul class="lt-content-main">
                 <li>
                     <div class="lt-psevdo-check"></div>
-                    <p>Многократное повторение товаров</p>
+                    <p>{{category.name}}</p>
                     <input type="text">
                     <span>Сохранить</span>
                 </li>
             </ul>
-            <ul class="lt-content-main">
-                <li>
-                    <div class="lt-psevdo-check"></div>
-                    <p>Цифры прописью</p>
-                    <input type="text">
-                    <span>Сохранить</span>
-                </li>
-            </ul>
-            <ul class="lt-content-main">
-                <li>
-                    <div class="lt-psevdo-check"></div>
-                    <p>Установление требований</p>
-                    <input type="text">
-                    <span>Сохранить</span>
-                </li>
-            </ul>
-            <ul class="lt-content-main">
-                <li>
-                    <div class="lt-psevdo-check"></div>
-                    <p>Корявая инструкция или её отсутствие</p>
-                    <input type="text">
-                    <span>Сохранить</span>
-                </li>
-            </ul>
-            <ul class="lt-content-main">
-                <li>
-                    <div class="lt-psevdo-check"></div>
-                    <p>Запрос меняет суть</p>
-                    <input type="text">
-                    <span>Сохранить</span>
-                </li>
-            </ul>
+            {% endfor %}
         </div>
     </div>
 </div>
