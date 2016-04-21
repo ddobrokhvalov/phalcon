@@ -97,3 +97,4 @@ UPDATE `fas`.`arguments` SET `category_id` = '1' WHERE `arguments`.`id` = 1;
 UPDATE `fas`.`arguments` SET `category_id` = '2' WHERE `arguments`.`id` = 2;
 UPDATE `fas`.`arguments` SET `category_id` = '3' WHERE `arguments`.`id` = 3;
 ALTER TABLE `arguments` CHANGE `data` `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE `arguments` ADD `text` TEXT NOT NULL AFTER `name`;
