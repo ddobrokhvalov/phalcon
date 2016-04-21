@@ -25,14 +25,10 @@
                     {% set questions = compliant.getComplainQuestion() %}
                     {% for question in questions %}
                     <ul>
-                        <li>22.01.2016</li>
-                        <li><a href="#">Почему они не дали ссылку на документ?</a></li>
+                        <li>{{date('d.m.Y', question.date|strtotime)}}</li>
+                        <li><a href="#">{{question.text}}</a></li>
                     </ul>
                     {% endfor %}
-                    <ul>
-                        <li>16.01.2016</li>
-                        <li><a href="#">Я хочу пожаловаться на отсутствие документации для тендера в электронном формате, не заданые даты окончания приема заявок, как лучше с этим бороться? Я имею право подать жалобу?</a></li>
-                    </ul>
                 </li>
                 {% endfor %}
             </ul>
