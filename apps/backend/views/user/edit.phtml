@@ -120,7 +120,20 @@
                     <li><span>Статус</span></li>
                 </ul>
                 {% for comliant in complaints %}
-                1
+                <ul class="lt-content-main top-bd-blue">
+                    <li>
+                        <div class="lt-psevdo-check"></div>
+                        {{comliant['complaint_name']}}
+                    </li>
+                    <li>{{comliant['auction_id']}}</li>
+                    <li>{{comliant['apname']}}</li>
+                    <li>{{date('d.m.Y' ,comliant['date']|strtotime)}}</li>
+                    <li>
+                        <div class="appll-status-icon">
+                        </div>
+                        <div class="close-status-list">Сменить статус</div>
+                    </li>
+                </ul>
                 {% endfor %}
                 <ul class="lt-content-main top-bd-blue">
                     <li>
