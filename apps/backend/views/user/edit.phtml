@@ -120,7 +120,7 @@
                     <li><span>Статус</span></li>
                 </ul>
                 {% for comliant in complaints %}
-                <ul class="lt-content-main top-bd-blue">
+                <ul class="lt-content-main {%if comliant['status'] =='submitted' %}top-bd-blue{%elseif comliant['status'] in ['recalled','arhive', 'draft', 'unfounded']%}top-bd-green{%else%}{%endif%}">
                     <li>
                         <div class="lt-psevdo-check"></div>
                         {{comliant['complaint_name']}}
@@ -135,90 +135,6 @@
                     </li>
                 </ul>
                 {% endfor %}
-                <ul class="lt-content-main top-bd-blue">
-                    <li>
-                        <div class="lt-psevdo-check"></div>
-                        Нарушение в КД по срокам, не соответств...
-                    </li>
-                    <li>201603322000548</li>
-                    <li>ООО “Ромашка”</li>
-                    <li>22.01.2016</li>
-                    <li>
-                        <div class="appll-status-icon">
-                        </div>
-                        <div class="close-status-list">Сменить статус</div>
-                    </li>
-                </ul>
-                <ul class="lt-content-main"> <!-- add the required class -->
-                    <li>
-                        <div class="lt-psevdo-check"></div>
-                        Нарушение в КД по срокам, не соответств...
-                    </li>
-                    <li>201603322000548</li>
-                    <li>ООО “Ромашка”</li>
-                    <li>22.01.2016</li>
-                    <li>
-                        <div class="appll-status-icon">
-                        </div>
-                        <div class="close-status-list">Сменить статус</div>
-                    </li>
-                </ul>
-                <ul class="lt-content-main top-bd-green">
-                    <li>
-                        <div class="lt-psevdo-check"></div>
-                        Нарушение в КД по срокам, не соответств...
-                    </li>
-                    <li>201603322000548</li>
-                    <li>ООО “Ромашка”</li>
-                    <li>22.01.2016</li>
-                    <li>
-                        <div class="appll-status-icon">
-                        </div>
-                        <div class="close-status-list">Сменить статус</div>
-                    </li>
-                </ul>
-                <ul class="lt-content-main top-bd-red">
-                    <li>
-                        <div class="lt-psevdo-check"></div>
-                        Нарушение в КД по срокам, не соответств...
-                    </li>
-                    <li>201603322000548</li>
-                    <li>ООО “Ромашка”</li>
-                    <li>22.01.2016</li>
-                    <li>
-                        <div class="appll-status-icon">
-                        </div>
-                        <div class="close-status-list">Сменить статус</div>
-                    </li>
-                </ul>
-                <ul class="lt-content-main top-bd-blue">
-                    <li>
-                        <div class="lt-psevdo-check"></div>
-                        Нарушение в КД по срокам, не соответств...
-                    </li>
-                    <li>201603322000548</li>
-                    <li>ООО “Ромашка”</li>
-                    <li>22.01.2016</li>
-                    <li>
-                        <div class="appll-status-icon">
-                        </div>
-                        <div class="close-status-list">Сменить статус</div>
-                    </li>
-                </ul>
-                <ul class="lt-content-main top-bd-green">
-                    <li>
-                        <div class="lt-psevdo-check"></div>
-                        Нарушение в КД по срокам, не соответств...
-                    </li>
-                    <li>201603322000548</li>
-                    <li>ООО “Ромашка”</li>
-                    <li>22.01.2016</li>
-                    <li>
-                        <div class="appll-status-icon">
-                        </div>
-                        <div class="close-status-list">Сменить статус</div>
-                    </li>
-                </ul>
             </div>
         </div>
     </div>
