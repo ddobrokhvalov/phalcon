@@ -1,4 +1,4 @@
 *.ini
 *.phtml.php
-*.phtml%%e%%.php
+base-template.phtml%*
 /public/files/documents
