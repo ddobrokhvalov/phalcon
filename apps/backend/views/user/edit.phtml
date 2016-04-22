@@ -18,7 +18,7 @@
                 <span>Данные пользователя</span>
                 <label for="fioUser">
                     <p>ФИО</p>
-                    <input type="text" id="fioUser" value="{{edituser.firstname}} {{edituser.patronymic}} {{edituser.lastname}}">
+                    <!--todo--><input type="text" id="fioUser" value="{{edituser.firstname}} {{edituser.patronymic}} {{edituser.lastname}}">
                 </label>
                 <label for="telFaxUser">
                     <p>Контактный факс, телефон</p>
@@ -120,7 +120,7 @@
                     <li><span>Статус</span></li>
                 </ul>
                 {% for comliant in complaints %}
-                <ul class="lt-content-main {%if comliant['status'] =='submitted' %}top-bd-blue{%elseif comliant['status'] in ['recalled','arhive', 'draft', 'unfounded']%}top-bd-green{%else%}{%endif%}">
+                <ul class="lt-content-main {%if comliant['status'] =='submitted' %}top-bd-blue{%elseif comliant['status'] == 'unfounded'%}top-bd-red{%elseif comliant['status'] == 'justified'%}top-bd-green{%endif%}">
                     <li>
                         <div class="lt-psevdo-check"></div>
                         {{comliant['complaint_name']}}
@@ -130,6 +130,21 @@
                     <li>{{date('d.m.Y' ,comliant['date']|strtotime)}}</li>
                     <li>
                         <div class="appll-status-icon">
+                        {%if comliant['status'] != 'draft' %}
+                        <img src="/images/icon-jl-chernov.png">
+                        {%elseif comliant['status'] != 'submitted' %}
+                        <img src="/images/icon-jl-podana.png">
+                        {%elseif comliant['status'] != 'under_consideration' %}
+                        <img src="/images/icon-jl-rassmotr.png">
+                        {%elseif comliant['status'] != 'justified' %}
+                        <img src="/images/icon-jl-done.png">
+                        {%elseif comliant['status'] != 'unfounded' %}
+                        <img src="/images/icon-jl-notdone.png">
+                        {%elseif comliant['status'] != 'recalled' %}
+                        <img src="/images/icon-jl-fail.png">
+                        {%elseif comliant['status'] != 'archive' %}
+                        <img src="/images/icon-jl-archive.png">
+                        {%endif%}
                         </div>
                         <div class="close-status-list">Сменить статус</div>
                     </li>
