@@ -18,10 +18,8 @@ class UserForm extends Form
         if (!isset($options['edit']) && !isset($options['add'])){
             $element = new Text("id");
             $this->add($element->setLabel("Id"));
-
-        } else {
+        } else
             $this->add(new Hidden("id"));
-        }
 
         $email = new Text("email");
         $email->setLabel("Email");

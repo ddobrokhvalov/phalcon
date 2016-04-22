@@ -74,13 +74,8 @@ class UserController extends ControllerBase
         $id = $this->request->getPost("id", "int");
 
         $user = User::findFirstById($id);
-        if (!$user) {
-            //$this->flash->error("Product does not exist");
-            var_dump($id);
-            var_dump($user);
-            die('1');
+        if (!$user)
             return $this->forward("user/index");
-        }
 
         $form = new UserForm(null, array('edit' => true));
         $this->view->form = $form;
@@ -89,44 +84,40 @@ class UserController extends ControllerBase
 
         if (!$form->isValid($data, $user)) {
             foreach ($form->getMessages() as $message) {
-                // $this->flash->error($message);
                 var_dump($message);
                 exit;
             }
             return $this->forward('user/edit/' . $id);
         }
+
         $user->email = $data['email'];
-        if (strlen($data['emptypassword']) > 0)
-            $user->password = sha1($data['emptypassword']);
+        if (strlen($data['password']) > 0)
+            $user->password = sha1($data['password']);
 
         if ($user->save() == false) {
             foreach ($user->getMessages() as $message) {
                 var_dump($message);
                 exit;
-                // $this->flash->error($message);
             }
             return $this->forward('user/edit/' . $id);
         }
 
         $form->clear();
-        die('2');
-        // $this->flash->success("Admins was updated successfully");
         return $this->forward("user/index");
 
     }
 
     public function addAction()
     {
-
         $this->view->form = new UserForm(null, array('add' => true));
         $this->setMenu();
     }
 
     public function createAction()
     {
-        if (!$this->request->isPost()) {
+        if (!$this->request->isPost())
             return $this->forward("user/index");
-        }
+
         $form = new UserForm;
         $user = new User();
 

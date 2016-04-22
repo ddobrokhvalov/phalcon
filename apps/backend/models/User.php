@@ -10,6 +10,11 @@ class User extends Model
     public $password;
     public $status;
     public $date_registration;
+    public $admin_comment;
+    public $firstname;
+    public $lastname;
+    public $patronymic;
+    public $phone;
 
     public function initialize()
     {
