@@ -14,28 +14,27 @@
     </div>
     <div class="block-user-editing">
         <form action="/admin/user/save" method="post">
-            <input id="idUser" type="text" name="id" type="hidden" value="{{edituser.id}}">
+            {{form.render('id')}}
             <div class="left-block-editing">
                 <span>Данные пользователя</span>
                 <label for="fUser">
-                    {{form.render('lastname')}}
-                    <input id="fUser" type="text" name="lastname" value="{{edituser.lastname}}">
+                    {{form.render('lastname')}}                    
                 </label>
                 <label for="iUser">
                     <p>Имя</p>
-                    <input id="iUser" type="text" name="firstname" value="{{edituser.firstname}}">
+                    {{form.render('firstname')}}
                 </label>
                 <label for="oUser">
                     <p>Отчество</p>
-                    <input id="oUser" type="text" name="patronymic" value="{{edituser.patronymic}}">
+                    {{form.render('patronymic')}}
                 </label>
                 <label for="telFaxUser">
                     <p>Контактный факс, телефон</p>
-                    <input type="number" id="telFaxUser" type="text" name="phone" value="{{edituser.phone}}">
+                    {{form.render('phone')}}
                 </label>
                 <label for="userEmail">
                     <p>E-mail</p>
-                    <input type="email" name ="email" id="userEmail" value="{{edituser.email}}">
+                    {{form.render('email')}}
                 </label>
             </div>
             <div class="right-block-editing">
@@ -50,7 +49,7 @@
                 </label>
                 <label for="userComment">
                     <p>Комментарий админа (только для админа!)</p>
-                    <textarea id="userComment" cols="30" rows="10" id="userComment" name="admin_comment" value="{{edituser.admin_comment}}"></textarea>
+                    {{form.render('admin_comment')}}
                 </label>
             </div>
             <div class="delete-or-save">

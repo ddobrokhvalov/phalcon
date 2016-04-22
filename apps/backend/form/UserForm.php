@@ -1,20 +1,27 @@
 <?php
 namespace Multiple\Backend\Form;
 
+use Phalcon\Forms\Element\Password;
 use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\Hidden;
 use Phalcon\Forms\Element\Select;
+use Phalcon\Forms\Element\Numeric;
+use Phalcon\Forms\Element\TextArea;
 use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\Numericality;
 use Phalcon\Validation\Validator\StringLength;
+use Phalcon\Validation\Validator\Confirmation;
+
 
 class UserForm extends Form
 {
 
     public function initialize($entity = null, $options = array())
     {
+        $this->setValidation(array(
+            'notNullValidations' => false ));
         if (!isset($options['edit']) && !isset($options['add'])){
             $element = new Text("id");
             $this->add($element->setLabel("Id"));
@@ -34,14 +41,31 @@ class UserForm extends Form
             )
         );
         $this->add($email);
-        $this->add(new Text('admin_comment'));
+        $this->add(new TextArea('admin_comment', array('id'=>'userComment')));
+        $f = new Text('lastname', array('id'   => 'fUser'));
+        $f->
+        $f->addValidators([
+            new PresenceOf([
+                'message' => 'Password is required',
+                'allowEmpty' => false,
+                'cancelOnFail' => false
+            ]),
+            new StringLength([
+                'min' => 8,
+                'messageMinimum' => 'Password is too short. Minimum 8 characters',
+                'allowEmpty' => false
+            ]),
+            new Confirmation([
+                'message' => 'Password does not match confirmation',
+                'with' => 'confirmPassword',
+                'allowEmpty' => false
+            ])]);
         $this->add(new Text('firstname', array('id'   => 'iUser')));
-        $this->add(new Text('lastname', array('id'   => 'fUser')));
+        $this->add($f);
         $this->add(new Text('patronymic', array('id'   => 'oUser')));
-        $this->add(new Text('phone', array('id'   => 'telFaxUser')));
+        $this->add(new Numeric('phone', array('id'   => 'telFaxUser')));
         if (isset($options['add'])) {
-
-            $password = new Text('password');
+            $password = new Password('password');
             $password->setLabel("Пароль");
             $password->setFilters(array('striptags', 'string'));
             $password->addValidators(
@@ -55,13 +79,6 @@ class UserForm extends Form
             );
             $this->add($password);
         }
-        if (isset($options['edit'])) {
-            $emptypassword = new Text('emptypassword');
-            $emptypassword->setLabel("Пароль");
-            $this->add($emptypassword);
-        }
-
-
         $this->add(
             new Select(
                 "status",

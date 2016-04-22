@@ -161,7 +161,8 @@ class UserController extends ControllerBase
             }
             $appl = new Applicant();
             $this->view->applicants = $appl->findByUserId($id);
-            $this->view->form = new UserForm($user, array('edit' => true));
+            $form = new UserForm($user, array('edit' => true));
+            $this->view->form = $form;
             $complaints = new Complaint();
             $applicants = new Applicant();
             $this->view->complaints = $complaints->findUserComplaints($id, false);
