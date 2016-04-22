@@ -13,16 +13,24 @@
         <div class="change-access">Изменить тариф</div>
     </div>
     <div class="block-user-editing">
-        <form action="#" method="POST">
+        <form action="/admin/user/save" method="post">
             <div class="left-block-editing">
                 <span>Данные пользователя</span>
-                <label for="fioUser">
-                    <p>ФИО</p>
-                    <!--todo--><input type="text" id="fioUser" value="{{edituser.firstname}} {{edituser.patronymic}} {{edituser.lastname}}">
+                <label for="fUser">
+                    <p>Фамилия</p>
+                    <input id="fUser" type="text" value="{{edituser.lastname}}">
+                </label>
+                <label for="iUser">
+                    <p>Имя</p>
+                    <input id="iUser" type="text" value="{{edituser.firstname}}">
+                </label>
+                <label for="oUser">
+                    <p>Отчество</p>
+                    <input id="oUser" type="text" value="{{edituser.patronymic}}">
                 </label>
                 <label for="telFaxUser">
                     <p>Контактный факс, телефон</p>
-                    <input type="number" id="telFaxUser" value="{{edituser.phone}}">
+                    <input type="number" name="phone" value="{{edituser.phone}}">
                 </label>
                 <label for="userEmail">
                     <p>E-mail</p>
