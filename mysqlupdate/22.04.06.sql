@@ -1,0 +1,1 @@
+ALTER TABLE `user` ADD `admin_comment` VARCHAR(255) NOT NULL ;
