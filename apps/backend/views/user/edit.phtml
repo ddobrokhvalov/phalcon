@@ -9,7 +9,7 @@
     </div>
     <h1>{{edituser.email}}</h1>
     <div class="admin-change-access">
-        <span>Тариф пробный до 12.02.2016</span>
+        <span>Тариф пробный до 12.02.2016 ?--WHERE TO GET IT FROM--?</span>
         <div class="change-access">Изменить тариф</div>
     </div>
     <div class="block-user-editing">
@@ -77,21 +77,21 @@
         <ul class="lt-content-main">
             <li>
                 <div class="lt-psevdo-check"></div>
-                {{applicant.name_full}}
+                {{applicant['name_full']}}
             </li>
             <li>
-                {% if applicant.type == 'urlico' %}
+                {% if applicant['type'] == 'urlico' %}
                     юр
-                {% elseif applicant.type == 'fiz' %}
+                {% elseif applicant['type'] == 'fiz' %}
                     физ
                 {% else %}
                     ип
                 {% endif %}
             </li>
-            <li>{{applicant.inn}}</li>
-            <li>{{applicant.fio_applicant}}</li>
-            <li>{{applicant.address}}</li>
-            <li>1???</li>
+            <li>{{applicant['inn']}}</li>
+            <li>{{applicant['fio_applicant']}}</li>
+            <li>{{applicant['address']}}</li>
+            <li>{{applicant['cnt']}}</li>
         </ul>
         {% endfor %}
     </div>

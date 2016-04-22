@@ -175,7 +175,7 @@ class UserController extends ControllerBase
             $complaints = new Complaint();
             $applicants = new Applicant();
             $this->view->complaints = $complaints->findUserComplaints($id, false);
-            $this->view->applicants = $applicants->findByUserId($id);
+            $this->view->applicants = $applicants->findByUserIdWithAdditionalInfo($id);
             $this->view->edituser = $user;
             $this->setMenu();
 

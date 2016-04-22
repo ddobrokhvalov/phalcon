@@ -28,6 +28,7 @@ class Applicant extends Model
     {
         return 'applicant';
     }
+
     public function findByUserId($user_id){
         $result = Applicant::find(
             array(
@@ -39,5 +40,15 @@ class Applicant extends Model
         );
 
         return $result;
+    }
+
+    public function findByUserIdWithAdditionalInfo($user_id){
+        $db = $this->getDi()->getShared('db');
+        $sql = "SELECT ap.*, count(c.id) as cnt FROM complaint as c
+         INNER JOIN applicant ap ON(c.applicant_id = ap.id )         
+         WHERE ap.user_id =$user_id
+         GROUP BY ap.id";
+        $result = $db->query($sql);
+        return $result->fetchAll();
     }
 }
