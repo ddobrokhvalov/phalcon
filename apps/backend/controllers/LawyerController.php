@@ -12,11 +12,11 @@ class LawyerController extends ControllerBase
     public function indexAction(){
 
         $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
-        $questions = $this->modelsManager->createBuilder()
+        $questions = $this->modelsManager->createBuilder()->distinct('Multiple\Backend\Models\Complaint.id')
             ->from('Multiple\Backend\Models\Complaint')
             ->join('Multiple\Backend\Models\Question', 'Multiple\Backend\Models\Complaint.id=Multiple\Backend\Models\Question.complaint_id')
-            ->orderby('Multiple\Backend\Models\Complaint.id')
-            ->groupby('Multiple\Backend\Models\Complaint.id');
+            ->orderby('Multiple\Backend\Models\Complaint.id');
+            //->groupby('Multiple\Backend\Models\Complaint.id');
         $paginator = new Paginator(array(
             "builder" => $questions,
             "limit" => 5,
