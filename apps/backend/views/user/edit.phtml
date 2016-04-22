@@ -130,6 +130,7 @@
                     <li>{{date('d.m.Y' ,comliant['date']|strtotime)}}</li>
                     <li>
                         <div class="appll-status-icon">
+                        <input class="comlient_status" name="status" type="hidden" value="{{comliant['status']}}">
                         {%if comliant['status'] != 'draft' %}
                         <img src="/images/icon-jl-chernov.png">
                         {%elseif comliant['status'] != 'submitted' %}
