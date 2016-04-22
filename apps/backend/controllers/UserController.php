@@ -93,7 +93,6 @@ class UserController extends ControllerBase
         $user->email = $data['email'];
         if (strlen($data['password']) > 0)
             $user->password = sha1($data['password']);
-
         if ($user->save() == false) {
             foreach ($user->getMessages() as $message) {
                 var_dump($message);
@@ -101,7 +100,6 @@ class UserController extends ControllerBase
             }
             return $this->forward('user/edit/' . $id);
         }
-
         $form->clear();
         return $this->forward("user/index");
 
@@ -145,7 +143,8 @@ class UserController extends ControllerBase
         }
 
         $form->clear();
-
+        var_dump($user);
+        die();
         //$this->flash->success("Product was created successfully");
         return $this->forward("user/index");
 

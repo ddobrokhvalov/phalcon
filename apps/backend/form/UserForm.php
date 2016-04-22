@@ -21,7 +21,7 @@ class UserForm extends Form
         } else
             $this->add(new Hidden("id"));
 
-        $email = new Text("email");
+        $email = new Text("email", array('id'   => 'userEmail'));
         $email->setLabel("Email");
         $email->setFilters(array('striptags', 'string'));
         $email->addValidators(
@@ -34,7 +34,11 @@ class UserForm extends Form
             )
         );
         $this->add($email);
-
+        $this->add(new Text('admin_comment'));
+        $this->add(new Text('firstname', array('id'   => 'iUser')));
+        $this->add(new Text('lastname', array('id'   => 'fUser')));
+        $this->add(new Text('patronymic', array('id'   => 'oUser')));
+        $this->add(new Text('phone', array('id'   => 'telFaxUser')));
         if (isset($options['add'])) {
 
             $password = new Text('password');
@@ -67,7 +71,5 @@ class UserForm extends Form
                 )
             )
         );
-
-
     }
 }

@@ -18,7 +18,7 @@
             <div class="left-block-editing">
                 <span>Данные пользователя</span>
                 <label for="fUser">
-                    <p>Фамилия</p>
+                    {{form.render('lastname')}}
                     <input id="fUser" type="text" name="lastname" value="{{edituser.lastname}}">
                 </label>
                 <label for="iUser">
@@ -31,7 +31,7 @@
                 </label>
                 <label for="telFaxUser">
                     <p>Контактный факс, телефон</p>
-                    <input type="number" type="text" name="phone" value="{{edituser.phone}}">
+                    <input type="number" id="telFaxUser" type="text" name="phone" value="{{edituser.phone}}">
                 </label>
                 <label for="userEmail">
                     <p>E-mail</p>
@@ -50,7 +50,7 @@
                 </label>
                 <label for="userComment">
                     <p>Комментарий админа (только для админа!)</p>
-                    <textarea id="userComment" cols="30" rows="10" id="userComment" name="admin_comment" value="{{edituser.userComment}}"></textarea>
+                    <textarea id="userComment" cols="30" rows="10" id="userComment" name="admin_comment" value="{{edituser.admin_comment}}"></textarea>
                 </label>
             </div>
             <div class="delete-or-save">
