@@ -172,7 +172,7 @@ class UserController extends ControllerBase
             $this->view->applicants = $appl->findByUserId($id);
             $this->view->form = new UserForm($user, array('edit' => true));
             $this->view->edituser = $user;
-            
+            $this->setMenu();
 
         } else {
             return $this->forward("user/index");
