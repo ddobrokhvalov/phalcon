@@ -183,6 +183,9 @@ jQuery(document).ready(function($) {
 		$(this).parent().find('.close-status-list').show();
 		$('.close-status-list').css('z-index', 11);
 		$(this).parent().parent().addClass('someClass').append(statModal);
+		$('.status-list-holder li').click(function(){
+			$(this).closest('.j-user-info').find('.j-user-status-info input.j-comlient-status').val($(this).attr('rel'));
+		});
 	});
 	$('.close-status-list').click(function() {
 		$(this).hide();
@@ -192,11 +195,11 @@ jQuery(document).ready(function($) {
 var userPageLtContentLi = 0;
 //status block
 var statModal = '<ul class="status-list-holder">' +
-					'<li>Черновик</li>' +
-					'<li>Подана</li>' +
-					'<li>На рассмотрении</li>' +
-					'<li>Обоснована</li>' +
-					'<li>Необоснована</li>' +
-					'<li>Отозвана</li>' +
-					'<li>Архив</li>' +
+					'<li rel = "draft">Черновик</li>' +
+					'<li rel = "submitted">Подана</li>' +
+					'<li rel = "under_consideration">На рассмотрении</li>' +
+					'<li rel = "justified">Обоснована</li>' +
+					'<li rel = "unfounded">Необоснована</li>' +
+					'<li rel = "recalled">Отозвана</li>' +
+					'<li rel = "archive">Архив</li>' +
 				'</ul>';

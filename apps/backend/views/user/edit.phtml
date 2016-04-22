@@ -120,7 +120,7 @@
                     <li><span>Статус</span></li>
                 </ul>
                 {% for comliant in complaints %}
-                <ul class="lt-content-main {%if comliant['status'] =='submitted' %}top-bd-blue{%elseif comliant['status'] == 'unfounded'%}top-bd-red{%elseif comliant['status'] == 'justified'%}top-bd-green{%endif%}">
+                <ul class="j-user-info lt-content-main {%if comliant['status'] =='submitted' %}top-bd-blue{%elseif comliant['status'] == 'unfounded'%}top-bd-red{%elseif comliant['status'] == 'justified'%}top-bd-green{%endif%}">
                     <li>
                         <div class="lt-psevdo-check"></div>
                         {{comliant['complaint_name']}}
@@ -128,9 +128,9 @@
                     <li>{{comliant['auction_id']}}</li>
                     <li>{{comliant['apname']}}</li>
                     <li>{{date('d.m.Y' ,comliant['date']|strtotime)}}</li>
-                    <li>
+                    <li class="j-user-status-info">
                         <div class="appll-status-icon">
-                        <input class="comlient_status" name="status" type="hidden" value="{{comliant['status']}}">
+                        <input class="j-comlient-status" name="status" type="hidden" value="{{comliant['status']}}">
                         {%if comliant['status'] != 'draft' %}
                         <img src="/images/icon-jl-chernov.png">
                         {%elseif comliant['status'] != 'submitted' %}
