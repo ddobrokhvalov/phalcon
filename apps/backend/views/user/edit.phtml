@@ -73,17 +73,27 @@
             <li><span>Контактные данные</span></li>
             <li><span>Жалобы</span></li>
         </ul>
+        {% for applicant in applicants %}
         <ul class="lt-content-main">
             <li>
                 <div class="lt-psevdo-check"></div>
-                Государственное бюджетное профессиональное образовательное учреждение воронежской области "борисоглебский дорожный техникум"
+                {{applicant.name_full}}
             </li>
-            <li>юл</li>
-            <li>4723659376</li>
-            <li>Андреев Александр Александрович</li>
-            <li>02345, Москва, ул.Кульман 2, оф. 415 456-900-90-00 deckcrew@email.ua</li>
-            <li>1</li>
+            <li>
+                {% if applicant.type == 'urlico' %}
+                    юр
+                {% elseif applicant.type == 'fiz' %}
+                    физ
+                {% else %}
+                    ип
+                {% endif %}
+            </li>
+            <li>{{applicant.inn}}</li>
+            <li>{{applicant.fio_applicant}}</li>
+            <li>{{applicant.address}}</li>
+            <li>1???</li>
         </ul>
+        {% endfor %}
         <ul class="lt-content-main">
             <li>
                 <div class="lt-psevdo-check"></div>
@@ -131,6 +141,9 @@
                     <li><span>Дата подачи</span></li>
                     <li><span>Статус</span></li>
                 </ul>
+                {% for comliant in complaints %}
+                1
+                {% endfor %}
                 <ul class="lt-content-main top-bd-blue">
                     <li>
                         <div class="lt-psevdo-check"></div>

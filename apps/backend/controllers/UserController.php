@@ -7,6 +7,7 @@ use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Backend\Models\User;
 use Multiple\Backend\Form\UserForm;
 use Multiple\Backend\Models\Applicant;
+use Multiple\Backend\Models\Complaint;
 use Multiple\Backend\Form\ApplicantForm;
 use Multiple\Library\PaginatorBuilder;
 
@@ -171,6 +172,10 @@ class UserController extends ControllerBase
             $appl = new Applicant();
             $this->view->applicants = $appl->findByUserId($id);
             $this->view->form = new UserForm($user, array('edit' => true));
+            $complaints = new Complaint();
+            $applicants = new Applicant();
+            $this->view->complaints = $complaints->findUserComplaints($id, false);
+            $this->view->applicants = $applicants->findByUserId($id);
             $this->view->edituser = $user;
             $this->setMenu();
 
