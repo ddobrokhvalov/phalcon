@@ -68,17 +68,17 @@ class UserController extends ControllerBase
 
     public function saveAction()
     {
-        if (!$this->request->isPost()) {
+        if (!$this->request->isPost())
             return $this->forward("user/index");
-        }
-
 
         $id = $this->request->getPost("id", "int");
 
         $user = User::findFirstById($id);
         if (!$user) {
             //$this->flash->error("Product does not exist");
-
+            var_dump($id);
+            var_dump($user);
+            die('1');
             return $this->forward("user/index");
         }
 
@@ -109,7 +109,7 @@ class UserController extends ControllerBase
         }
 
         $form->clear();
-
+        die('2');
         // $this->flash->success("Admins was updated successfully");
         return $this->forward("user/index");
 
