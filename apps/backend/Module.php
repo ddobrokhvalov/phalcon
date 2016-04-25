@@ -28,6 +28,7 @@ class Module
 			'Multiple\Library'             => '../apps/library/',
 			'Multiple\Library\PHPImageWorkshop' => '../apps/library/PHPImageWorkshop/',
 			'Multiple\Backend\Form'        => '../apps/backend/form/',
+			'Multiple\Backend\Validator'        => '../apps/backend/validator/',
 		));
 
 

@@ -11,22 +11,30 @@
         <div class="change-access">Изменить доступ</div>
     </div>
     <div class="block-user-editing">
-        <form action="#" method="POST" enctype="multipart/form-data">
+        <form action="/admin/admins/save" method="POST" enctype="multipart/form-data">
+            {{hidden_field('id', 'value':admin.id)}}
             <div class="left-block-editing">
                 <span>Данные администратора</span>
-                <label for="fioAdmin">
-                    <p>ФИО</p>
-                    <input type="text" id="fioAdmin" name = "surname" value="{{admin.surname}}">
+                <label for="fAdmin">
+                    <p>Фамилия</p>
+                    {{text_field('lastname', 'value':admin.surname, 'id':'fAdmin')}}
                 </label>
-                    <input type="text" id="fioAdmin" name = "name" value="{{admin.name}}">
-                    <input type="text" id="fioAdmin" name = "patronymic" value="{{admin.patronymic}}">
-
+                <label for="iAdmin">
+                    <p>Имя</p>
+                    {{text_field('lastname', 'value':admin.name, 'id':'iAdmin')}}
+                </label>
+                <label for="oAdmin">
+                    <p>Отчество</p>
+                    {{text_field('lastname', 'value':admin.patronymic, 'id':'oAdmin')}}
+                </label>
                 <label for="telFaxAdmin">
                     <p>Контактный факс, телефон</p>
+                    {{ numeric_field('phone', 'value':admin.phone, 'id':'telFaxUser')}}
                     <input type="number" id="telFaxAdmin" value="{{admin.phone}}">
                 </label>
                 <label for="adminEmail">
                     <p>E-mail</p>
+                    {{text_field('email', 'value':admin.email, 'id':'userEmail')}}
                     <input type="email" id="adminEmail" value="{{admin.email}}">
                 </label>
             </div>
@@ -34,6 +42,7 @@
                 <span>Сменить пароль</span>
                 <label for="adminPass">
                     <p>Задайте новый пароль</p>
+                    {{password_field('email', 'value':admin.email, 'id':'userEmail')}}
                     <input type="password" id="adminPass" value="">
                 </label>
                 <label for="adminAvatar">
