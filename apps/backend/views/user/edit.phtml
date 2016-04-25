@@ -14,42 +14,42 @@
     </div>
     <div class="block-user-editing">
         <form action="/admin/user/save" method="post">
-            {{form.render('id')}}
+            {{hidden_field('id', 'value':edituser.id)}}
             <div class="left-block-editing">
                 <span>Данные пользователя</span>
                 <label for="fUser">
-                    {{form.render('lastname')}}                    
+                    {{text_field('lastname', 'value':edituser.lastname, 'id':'fUser')}}
                 </label>
                 <label for="iUser">
                     <p>Имя</p>
-                    {{form.render('firstname')}}
+                    {{text_field('firstname', 'value':edituser.firstname, 'id':'iUser')}}
                 </label>
                 <label for="oUser">
                     <p>Отчество</p>
-                    {{form.render('patronymic')}}
+                    {{text_field('patronymic', 'value':edituser.patronymic, 'id':'oUser')}}
                 </label>
                 <label for="telFaxUser">
                     <p>Контактный факс, телефон</p>
-                    {{form.render('phone')}}
+                    {{ numeric_field('phone', 'value':edituser.phone, 'id':'telFaxUser')}}
                 </label>
                 <label for="userEmail">
                     <p>E-mail</p>
-                    {{form.render('email')}}
+                    {{text_field('email', 'value':edituser.email, 'id':'userEmail')}}
                 </label>
             </div>
             <div class="right-block-editing">
                 <span>Сменить пароль</span>
                 <label for="userPass">
                     <p>Задайте новый пароль</p>
-                    <input type="password" name = "password" id="userPass" value="">
+                    {{password_field('password', 'value':'', 'id':'userPass')}}
                 </label>
                 <label for="sendEmailNotice" class="lebel-checkbox">
-                    <input type="checkbox" id="sendEmailNotice" value="">
+                    {{check_field('password', 'value':'', 'id':'sendEmailNotice')}}
                     <p>Отправлять уведомления на e-mail</p>
                 </label>
                 <label for="userComment">
                     <p>Комментарий админа (только для админа!)</p>
-                    {{form.render('admin_comment')}}
+                    {{text_area('admin_comment', 'value':edituser.admin_comment, 'id':'userComment')}}
                 </label>
             </div>
             <div class="delete-or-save">

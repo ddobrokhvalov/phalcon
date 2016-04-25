@@ -72,8 +72,10 @@ class UserController extends ControllerBase
             return $this->forward("user/index");
 
         $id = $this->request->getPost("id", "int");
-
+        var_dump($id);
         $user = User::findFirstById($id);
+        var_dump($user);
+        die('');
         if (!$user)
             return $this->forward("user/index");
 

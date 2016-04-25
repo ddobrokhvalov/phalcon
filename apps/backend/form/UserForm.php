@@ -20,8 +20,12 @@ class UserForm extends Form
 
     public function initialize($entity = null, $options = array())
     {
+
+
         $this->setValidation(array(
-            'notNullValidations' => false ));
+            'notNullValidations' => false,
+            'notEmptyValidations' => false,
+            'allowEmpty' => true ));
         if (!isset($options['edit']) && !isset($options['add'])){
             $element = new Text("id");
             $this->add($element->setLabel("Id"));
@@ -43,23 +47,6 @@ class UserForm extends Form
         $this->add($email);
         $this->add(new TextArea('admin_comment', array('id'=>'userComment')));
         $f = new Text('lastname', array('id'   => 'fUser'));
-        $f->
-        $f->addValidators([
-            new PresenceOf([
-                'message' => 'Password is required',
-                'allowEmpty' => false,
-                'cancelOnFail' => false
-            ]),
-            new StringLength([
-                'min' => 8,
-                'messageMinimum' => 'Password is too short. Minimum 8 characters',
-                'allowEmpty' => false
-            ]),
-            new Confirmation([
-                'message' => 'Password does not match confirmation',
-                'with' => 'confirmPassword',
-                'allowEmpty' => false
-            ])]);
         $this->add(new Text('firstname', array('id'   => 'iUser')));
         $this->add($f);
         $this->add(new Text('patronymic', array('id'   => 'oUser')));
