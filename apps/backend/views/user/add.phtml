@@ -55,17 +55,6 @@
     </div>
 </div>
 
-<div>
-    {% for applicant in applicants %}
-    {{ applicant.name_full }}
-    <a href="/admin/user/editapplicant/{{ applicant.id }}">Редактировать</a>
-    <a href="/admin/user/delapplicant/{{ applicant.id }}">Удалить</a>
-
-    {% endfor %}
-
-</div>
-
-
 <script>
     $( document ).ready(function() {
         $( "#password" ).val('');
