@@ -114,30 +114,49 @@ class UserController extends ControllerBase
 
     public function createAction()
     {
-        die('');
         if (!$this->request->isPost())
             return $this->forward("user/index");
 
         $user = new User();
+        $post = $this->request->getPost();
+        $data = [
+            'lastname'=>$post['lastname'],
+            'firstname'=>$post['firstname'],
+            'patronymic'=>$post['patronymic'],
+            'phone'=> $post['phone'],
+            'email'=> $post['email'],
+            'admin_comment'=> $post['admin_comment'],
+            'password' => $post['password']
+        ];
 
-        $data = $this->request->getPost();
-        $user->email = $data['email'];
-        $user->password = sha1($data['password']);
-        $user->date_registration = date("Y-m-d H:i:s");
-        if ($user->save() == false) {
-            foreach ($user->getMessages() as $message) {
+        $validation = new UserValidator();
+        $validation->add('password', new PresenceOf((array('message' => 'The password is required'))));
+        $messages = $validation->validate($data);
+        if (count($messages))
+            foreach ($messages as $message)
+                $this->flashSession->error($message);
 
-                var_dump($message);
-                exit;
-                // $this->flash->error($message);
-            }
-            return $this->forward('user/add');
+        if (!count($messages)) {
+            $data['password'] = sha1($data['password']);
+            if ($user->save($data) == false) {
+                foreach ($user->getMessages() as $message)
+                    $this->flashSession->error($message);
+            } else
+                $this->flashSession->success("Your information was stored correctly!");
         }
 
-        var_dump($user);
-        die();
-        return $this->forward("user/index");
-
+        if(count($messages))
+            return $this->dispatcher->forward(array(
+                'module' => 'backend',
+                'controller' => 'user',
+                'action' => 'add'
+            ));
+        else
+            return $this->dispatcher->forward(array(
+                'module' => 'backend',
+                'controller' => 'user',
+                'action' => 'index'
+            ));
     }
 
     public function editAction($id)
