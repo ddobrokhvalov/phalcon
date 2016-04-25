@@ -7,7 +7,6 @@ use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Backend\Models\User;
 use Multiple\Backend\Models\Applicant;
 use Multiple\Backend\Models\Complaint;
-use Multiple\Backend\Form\ApplicantForm;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Validator\UserValidator;
 
@@ -118,19 +117,9 @@ class UserController extends ControllerBase
         if (!$this->request->isPost())
             return $this->forward("user/index");
 
-        //$form = new UserForm;
         $user = new User();
 
         $data = $this->request->getPost();
-        /*if (!$form->isValid($data, $user)) {
-            foreach ($form->getMessages() as $message) {
-
-                var_dump($message);
-                exit;
-                // $this->flash->error($message);
-            }
-            return $this->forward('user/add');
-        }*/
         $user->email = $data['email'];
         $user->password = sha1($data['password']);
         $user->date_registration = date("Y-m-d H:i:s");
@@ -144,10 +133,8 @@ class UserController extends ControllerBase
             return $this->forward('user/add');
         }
 
-        //$form->clear();
         var_dump($user);
         die();
-        //$this->flash->success("Product was created successfully");
         return $this->forward("user/index");
 
     }

@@ -2,14 +2,10 @@
 {% block title %}ФАС ОНЛАЙН - ДОБАВИТЬ ПОЛЬЗОВАТЕЛЯ{% endblock %}
 {% block body %}
 <!-- ****************** user page ***************** -->
+{{flashSession.output()}}
 <div class="admin-main-wrap user-page">
     <div class="bread-crumbs-holder">
         <a href="#">Вернуться к списку пользователей</a>
-    </div>
-    <h1>{{edituser.email}}</h1>
-    <div class="admin-change-access">
-        <span>Тариф пробный до 12.02.2016 ?--WHERE TO GET IT FROM--?</span>
-        <div class="change-access">Изменить тариф</div>
     </div>
     <div class="block-user-editing">
         <form action="/admin/user/save" method="post">
@@ -48,7 +44,7 @@
                 </label>
                 <label for="userComment">
                     <p>Комментарий админа (только для админа!)</p>
-                    {{text_area('admin_comment', 'value':edituser.admin_comment, 'id':'userComment')}}
+                    {{text_area('admin_comment', 'value':'', 'id':'userComment')}}
                 </label>
             </div>
             <div class="delete-or-save">
@@ -57,130 +53,7 @@
             </div>
         </form>
     </div>
-    <div class="user-top-lt">
-        <span>Заявители пользователя {{edituser.email}}</span>
-        <div>Создать заявителя</div>
-    </div>
-    <div class="admin-lt-head">
-        <div class="select-all">
-            <div></div>Выбрать все
-        </div>
-        <div class="lt-head-btns">
-            <div>Изменить</div>
-            <div>Заблокировать</div>
-            <div>Удалить</div>
-        </div>
-    </div>
-    <div class="admin-lt-content userPageLtContent">
-        <ul class="lt-content-top">
-            <li><span>Наименование</span></li>
-            <li><span>тип</span></li>
-            <li><span>инн</span></li>
-            <li><span>фио</span></li>
-            <li><span>Контактные данные</span></li>
-            <li><span>Жалобы</span></li>
-        </ul>
-        {% for applicant in applicants %}
-        <ul class="lt-content-main">
-            <li>
-                <div class="lt-psevdo-check"></div>
-                {{applicant['name_full']}}
-            </li>
-            <li>
-                {% if applicant['type'] == 'urlico' %}
-                юр
-                {% elseif applicant['type'] == 'fiz' %}
-                физ
-                {% else %}
-                ип
-                {% endif %}
-            </li>
-            <li>{{applicant['inn']}}</li>
-            <li>{{applicant['fio_applicant']}}</li>
-            <li>{{applicant['address']}}</li>
-            <li>{{applicant['cnt']}}</li>
-        </ul>
-        {% endfor %}
-    </div>
-    <div class="appllicant-page">
-        <div class="user-top-lt">
-            <span>Жалобы пользователя {{edituser.email}}</span>
-        </div>
-        <div class="admin-lt-holder">
-            <div class="admin-lt-head">
-                <div class="select-all">
-                    <div></div>Выбрать все
-                </div>
-                <div class="lt-head-btns">
-                    <div>Копировать</div>
-                    <div>Создать</div>
-                    <div>В архив</div>
-                    <div>Удалить</div>
-                </div>
-            </div>
-            <div class="admin-lt-content">
-                <ul class="lt-content-top">
-                    <li><span>Имя жалобы</span></li>
-                    <li><span>Номер закупки</span></li>
-                    <li><span>Заявитель</span></li>
-                    <li><span>Дата подачи</span></li>
-                    <li><span>Статус</span></li>
-                </ul>
-                {% for comliant in complaints %}
-                <ul class="j-user-info lt-content-main {%if comliant['status'] =='submitted' %}top-bd-blue{%elseif comliant['status'] == 'unfounded'%}top-bd-red{%elseif comliant['status'] == 'justified'%}top-bd-green{%endif%}">
-                    <li>
-                        <div class="lt-psevdo-check"></div>
-                        {{comliant['complaint_name']}}
-                    </li>
-                    <li>{{comliant['auction_id']}}</li>
-                    <li>{{comliant['apname']}}</li>
-                    <li>{{date('d.m.Y' ,comliant['date']|strtotime)}}</li>
-                    <li class="j-user-status-info">
-                        <div class="appll-status-icon">
-                            <input class="j-comlient-status" name="status" type="hidden" value="{{comliant['status']}}">
-                            {%if comliant['status'] != 'draft' %}
-                            <img src="/images/icon-jl-chernov.png">
-                            {%elseif comliant['status'] != 'submitted' %}
-                            <img src="/images/icon-jl-podana.png">
-                            {%elseif comliant['status'] != 'under_consideration' %}
-                            <img src="/images/icon-jl-rassmotr.png">
-                            {%elseif comliant['status'] != 'justified' %}
-                            <img src="/images/icon-jl-done.png">
-                            {%elseif comliant['status'] != 'unfounded' %}
-                            <img src="/images/icon-jl-notdone.png">
-                            {%elseif comliant['status'] != 'recalled' %}
-                            <img src="/images/icon-jl-fail.png">
-                            {%elseif comliant['status'] != 'archive' %}
-                            <img src="/images/icon-jl-archive.png">
-                            {%endif%}
-                        </div>
-                        <div class="close-status-list">Сменить статус</div>
-                    </li>
-                </ul>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
 </div>
-
-<form action="/admin/user/save" method="post">
-    <fieldset>
-
-        <fieldset>
-
-            {% for element in form %}
-            <div class="control-group">
-                {{ element.label(['class': 'control-label']) }}
-                <div class="controls">{{ element }}</div>
-            </div>
-            {% endfor %}
-
-            <div class="control-group">
-                {{ submit_button("Сохранить", "class": "btn btn-primary") }}
-            </div>
-
-        </fieldset>
-</form>
 
 <div>
     {% for applicant in applicants %}
