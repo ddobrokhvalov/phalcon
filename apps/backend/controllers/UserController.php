@@ -114,6 +114,7 @@ class UserController extends ControllerBase
 
     public function createAction()
     {
+        die('');
         if (!$this->request->isPost())
             return $this->forward("user/index");
 
