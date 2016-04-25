@@ -10,6 +10,7 @@
         <span>Редактирование пользователей</span>
         <div class="change-access">Изменить доступ</div>
     </div>
+    {{flashSession.output()}}
     <div class="block-user-editing">
         <form action="/admin/admins/save" method="POST" enctype="multipart/form-data">
             {{hidden_field('id', 'value':admin.id)}}

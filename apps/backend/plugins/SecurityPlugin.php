@@ -124,7 +124,10 @@ class SecurityPlugin extends Plugin
 
                 if ($admin_id)
                     $allowed = $this->isAllowed($admin_id, $controller, $action);
-
+                if (!$allowed) {
+                    var_dump($allowed, $controller, $action);
+                    die('');
+                }
                 if (!$allowed) {
                     $dispatcher->forward(array(
                         'controller' => 'login',

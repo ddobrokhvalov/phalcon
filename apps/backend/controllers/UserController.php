@@ -90,19 +90,20 @@ class UserController extends ControllerBase
 
         $validation = new UserValidator();
         $messages = $validation->validate($data);
-        if (count($messages)) { //todo: return arrays
-            foreach ($messages as $message) {
-                echo $message, '<br>';
-                exit;
-            }
+        if (count($messages)) {
+            foreach ($messages as $message)
+                $this->flashSession->error($message);
         } elseif ($user->save($data) == false) {
-            foreach ($user->getMessages() as $message) {
-                var_dump($message);//todo: return arrays
-                exit;
-            }
-            return $this->forward('user/edit/' . $id);
-        }
-        return $this->forward("user/index");
+            foreach ($user->getMessages() as $message)
+                $this->flashSession->error($message);
+        } else
+            $this->flashSession->success("Your information was stored correctly!");
+        return $this->dispatcher->forward(array(
+            'module' => 'backend',
+            'controller' => 'user',
+            'action' => 'edit',
+            'params' => ['id' => $id]
+        ));
 
     }
 
@@ -152,25 +153,19 @@ class UserController extends ControllerBase
 
     public function editAction($id)
     {
-        if (!$this->request->isPost()) {
-
-            $user = User::findFirstById($id);
-            if (!$user) {
-                $this->flash->error("User was not found");
-                return $this->forward("user/index");
-            }
-            $appl = new Applicant();
-            $this->view->applicants = $appl->findByUserId($id);
-            $complaints = new Complaint();
-            $applicants = new Applicant();
-            $this->view->complaints = $complaints->findUserComplaints($id, false);
-            $this->view->applicants = $applicants->findByUserIdWithAdditionalInfo($id);
-            $this->view->edituser = $user;
-            $this->setMenu();
-
-        } else
+        $user = User::findFirstById($id);
+        if (!$user) {
+            $this->flash->error("User was not found");
             return $this->forward("user/index");
-
+        }
+        $appl = new Applicant();
+        $this->view->applicants = $appl->findByUserId($id);
+        $complaints = new Complaint();
+        $applicants = new Applicant();
+        $this->view->complaints = $complaints->findUserComplaints($id, false);
+        $this->view->applicants = $applicants->findByUserIdWithAdditionalInfo($id);
+        $this->view->edituser = $user;
+        $this->setMenu();
     }
 
     public function delAction($id)

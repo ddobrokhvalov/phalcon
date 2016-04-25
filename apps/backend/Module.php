@@ -9,7 +9,7 @@ use Phalcon\Db\Adapter\Pdo\Mysql as Database;
 use Phalcon\Config\Adapter\Ini as ConfigIni;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Events\Manager as EventsManager;
-
+use Phalcon\Flash\Direct as FlashDirect;
 
 use Multiple\Backend\Plugins\SecurityPlugin;
 use Multiple\Backend\Plugins\NotFoundPlugin;
@@ -95,6 +95,10 @@ class Module
 			$session = new SessionAdapter();
 			$session->start();
 			return $session;
+		});
+
+		$di->set('flash', function () {
+			return new FlashDirect();
 		});
 
 	}

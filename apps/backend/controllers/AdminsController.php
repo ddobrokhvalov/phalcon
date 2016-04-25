@@ -91,21 +91,20 @@ class AdminsController extends ControllerBase
 
         $validation = new AdminValidator();
         $messages = $validation->validate($data);
-
-        if (count($messages)) { //todo: return arrays
-            foreach ($messages as $message) {
-                echo $message, '<br>';
-                exit;
-            }
+        if (count($messages)) {
+            foreach ($messages as $message)
+                $this->flashSession->error($message);
         } elseif ($admin->save($data) == false) {
-            foreach ($admin->getMessages() as $message) {
-                var_dump($message); exit;
-               // $this->flash->error($message);
-            }
-            return $this->forward('admins/edit/' . $id);
-        }
-       // $this->flash->success("Admins was updated successfully");
-        return $this->forward('admins/edit/' . $id);
+            foreach ($admin->getMessages() as $message)
+                $this->flashSession->error($message);
+        } else
+            $this->flashSession->success("Your information was stored correctly!");
+        return $this->dispatcher->forward(array(
+            'module' => 'backend',
+            'controller' => 'admins',
+            'action' => 'edit',
+            'params' => ['id' => $id]
+        ));
 
     }
 
@@ -148,18 +147,12 @@ class AdminsController extends ControllerBase
 
     }
     public function editAction($id){
-        if (!$this->request->isPost()) {
-
-            $admin = Admin::findFirstById($id);
-            if (!$admin) {
-                $this->flash->error("Admin was not found");
-                return $this->forward("admins/index");
-            }
-            $this->view->admin = $admin;
-            $this->view->form = new AdminForm($admin, array('edit' => true));
-        }else{
+        $admin = Admin::findFirstById($id);
+        if (!$admin) {
+            $this->flash->error("Admin was not found");
             return $this->forward("admins/index");
         }
+        $this->view->admin = $admin;
         $this->setMenu();
     }
     

@@ -40,6 +40,7 @@ class ControllerBase extends Controller
         $params = array_slice($uriParts, 2);
         return $this->dispatcher->forward(
             array(
+                'module' => 'backend',
                 'controller' => $uriParts[0],
                 'action' => $uriParts[1],
                 'params' => $params
