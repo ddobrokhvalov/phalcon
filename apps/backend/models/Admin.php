@@ -16,6 +16,8 @@ class Admin extends Model
     public function initialize()
     {
         $this->setSource("admin");
+        //$this->skipAttributesOnCreate(array('avatar','surname','name','patronymic'));
+        //$this->skipAttributesOnUpdate(array('avatar','surname','name','patronymic'));
     }
     public function getSource()
     {
@@ -40,9 +42,30 @@ class Admin extends Model
         return $this->surname.' '.substr($this->name,0,1).'.'.substr($this->patronymic,0,1).'.';
     }
     public function saveAvatar($avatar){
-
-
-        $layer = ImageWorkshop::initFromPath($avatar['tmp_name']);
-        var_dump($layer); exit;
+        $baseLocation = 'files/avatars/';
+        $allowedFormats = ['image/jpeg', 'image/png', 'image/gif'];
+        if(count($avatar)){
+            if(in_array($avatar[0]->getType(), $allowedFormats)) {
+                $filename = md5(date('Y-m-d H:i:s:u')) . $avatar[0]->getExtension();
+                if ($avatar[0]->moveTo($baseLocation . $filename)) {
+                    $this->avatar = $filename;
+                    return true;
+                }
+            } 
+        }
+        return false;
     }
+
+    /*public function beforeCreate(){
+        parent::beforeCreate();
+        $metaData = $this->getModelsMetaData();
+        $attributes = $metaData->getNotNullAttributes($this);
+        var_dump($attributes);
+        foreach($attributes as $field) {
+            if(!isset($this->{$field}) || is_null($this->{$field})) {
+                $this->{$field} = new RawValue('default');
+            }
+        }
+        die();
+    }*/
 }

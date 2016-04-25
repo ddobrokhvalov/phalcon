@@ -3,11 +3,11 @@ namespace Multiple\Backend\Validator;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\PresenceOf;
-//use Phalcon\Validation\Validator\Regex;
-//use Phalcon\Validation\Validator\StringLength;
 
-class UserValidator extends Validation
+class AdminValidator extends Validation
 {
+    
+    
     public function initialize()
     {
         $this->add('email',new PresenceOf(array('message' => 'The e-mail is required')));

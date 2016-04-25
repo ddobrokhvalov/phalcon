@@ -7,6 +7,8 @@ use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Backend\Models\Admin;
 use Multiple\Backend\Form\AdminForm;
 use Multiple\Library\PaginatorBuilder;
+use Multiple\Backend\Validator\AdminValidator;
+use Phalcon\Db\RawValue;
 
 class AdminsController extends ControllerBase
 {
@@ -64,51 +66,46 @@ class AdminsController extends ControllerBase
     public function saveAction()
     {
 
-        if (!$this->request->isPost()) {
+        if (!$this->request->isPost())
             return $this->forward("admins/index");
-        }
-
 
         $id = $this->request->getPost("id", "int");
-
         $admin = Admin::findFirstById($id);
-        if (!$admin) {
-            //$this->flash->error("Product does not exist");
-
+        if (!$admin)
             return $this->forward("admins/index");
-        }
+        $post = $this->request->getPost();
+        $data = [
+            'name'=>$post['name'],
+            'surname'=>$post['surname'],
+            'patronymic'=>$post['patronymic'],
+            'phone'=> $post['phone'],
+            'email'=> $post['email'],
+            'avatar' => new RawValue('default')
+        ];
+        if (strlen($post['password']) > 0)
+            $data['password'] = sha1($post['password']);
 
-        $form =  new AdminForm(null, array('edit' => true));
-        $this->view->form = $form;
+        if ($this->request->hasFiles() == true)
+            if($admin->saveAvatar($this->request->getUploadedFiles()))
+                $data['avatar'] = $admin->avatar;
 
-        $data = $this->request->getPost();
+        $validation = new AdminValidator();
+        $messages = $validation->validate($data);
 
-       if($_FILES['avatar']['tmp_name'])
-        $admin->saveAvatar($_FILES['avatar']);
-
-        if (!$form->isValid($data, $admin)) {
-            foreach ($form->getMessages() as $message) {
-               // $this->flash->error($message);
-                var_dump($message); exit;
+        if (count($messages)) { //todo: return arrays
+            foreach ($messages as $message) {
+                echo $message, '<br>';
+                exit;
             }
-            return $this->forward('admins/edit/' . $id);
-        }
-        $admin->email = $data['email'];
-        if(strlen($data['emptypassword'])>0)
-         $admin->password = sha1($data['emptypassword']);
-
-        if ($admin->save() == false) {
+        } elseif ($admin->save($data) == false) {
             foreach ($admin->getMessages() as $message) {
                 var_dump($message); exit;
                // $this->flash->error($message);
             }
             return $this->forward('admins/edit/' . $id);
         }
-
-        $form->clear();
-
        // $this->flash->success("Admins was updated successfully");
-        return $this->forward("admins/index");
+        return $this->forward('admins/edit/' . $id);
 
     }
 

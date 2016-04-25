@@ -1,0 +1,1 @@
+ALTER TABLE `admin` ADD `phone` VARCHAR(20) NOT NULL AFTER `patronymic`;
