@@ -5,11 +5,11 @@ use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Backend\Models\User;
-use Multiple\Backend\Form\UserForm;
 use Multiple\Backend\Models\Applicant;
 use Multiple\Backend\Models\Complaint;
 use Multiple\Backend\Form\ApplicantForm;
 use Multiple\Library\PaginatorBuilder;
+use Multiple\Backend\Validator\UserValidator;
 
 class UserController extends ControllerBase
 {
@@ -18,7 +18,6 @@ class UserController extends ControllerBase
     {
 
         $this->persistent->searchParams = null;
-        $this->view->form = new UserForm;
 
         $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
         $users = User::find();
@@ -72,44 +71,42 @@ class UserController extends ControllerBase
             return $this->forward("user/index");
 
         $id = $this->request->getPost("id", "int");
-        var_dump($id);
         $user = User::findFirstById($id);
-        var_dump($user);
-        die('');
         if (!$user)
             return $this->forward("user/index");
 
-        $form = new UserForm(null, array('edit' => true));
-        $this->view->form = $form;
+        $post = $this->request->getPost();
+        $data = [
+            'lastname'=>$post['lastname'],
+            'firstname'=>$post['firstname'],
+            'patronymic'=>$post['patronymic'],
+            'phone'=> $post['phone'],
+            'email'=> $post['email'],
+            'admin_comment'=> $post['admin_comment']
+        ];
+        if (strlen($post['password']) > 0)
+            $data['password'] = sha1($post['password']);
 
-        $data = $this->request->getPost();
-
-        if (!$form->isValid($data, $user)) {
-            foreach ($form->getMessages() as $message) {
-                var_dump($message);
+        $validation = new UserValidator();
+        $messages = $validation->validate($data);
+        if (count($messages)) { //todo: return arrays
+            foreach ($messages as $message) {
+                echo $message, '<br>';
                 exit;
             }
-            return $this->forward('user/edit/' . $id);
-        }
-
-        $user->email = $data['email'];
-        if (strlen($data['password']) > 0)
-            $user->password = sha1($data['password']);
-        if ($user->save() == false) {
+        } elseif ($user->save($data) == false) {
             foreach ($user->getMessages() as $message) {
-                var_dump($message);
+                var_dump($message);//todo: return arrays
                 exit;
             }
             return $this->forward('user/edit/' . $id);
         }
-        $form->clear();
         return $this->forward("user/index");
 
     }
 
     public function addAction()
     {
-        $this->view->form = new UserForm(null, array('add' => true));
         $this->setMenu();
     }
 
@@ -118,11 +115,11 @@ class UserController extends ControllerBase
         if (!$this->request->isPost())
             return $this->forward("user/index");
 
-        $form = new UserForm;
+        //$form = new UserForm;
         $user = new User();
 
         $data = $this->request->getPost();
-        if (!$form->isValid($data, $user)) {
+        /*if (!$form->isValid($data, $user)) {
             foreach ($form->getMessages() as $message) {
 
                 var_dump($message);
@@ -130,7 +127,7 @@ class UserController extends ControllerBase
                 // $this->flash->error($message);
             }
             return $this->forward('user/add');
-        }
+        }*/
         $user->email = $data['email'];
         $user->password = sha1($data['password']);
         $user->date_registration = date("Y-m-d H:i:s");
@@ -144,7 +141,7 @@ class UserController extends ControllerBase
             return $this->forward('user/add');
         }
 
-        $form->clear();
+        //$form->clear();
         var_dump($user);
         die();
         //$this->flash->success("Product was created successfully");
@@ -163,8 +160,6 @@ class UserController extends ControllerBase
             }
             $appl = new Applicant();
             $this->view->applicants = $appl->findByUserId($id);
-            $form = new UserForm($user, array('edit' => true));
-            $this->view->form = $form;
             $complaints = new Complaint();
             $applicants = new Applicant();
             $this->view->complaints = $complaints->findUserComplaints($id, false);
@@ -172,9 +167,9 @@ class UserController extends ControllerBase
             $this->view->edituser = $user;
             $this->setMenu();
 
-        } else {
+        } else
             return $this->forward("user/index");
-        }
+
     }
 
     public function delAction($id)
