@@ -2,6 +2,7 @@
 namespace Multiple\Backend\Models;
 
 use Phalcon\Mvc\Model;
+use Phalcon\Db\RawValue;
 
 class User extends Model
 {

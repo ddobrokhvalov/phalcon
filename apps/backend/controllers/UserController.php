@@ -9,7 +9,7 @@ use Multiple\Backend\Models\Applicant;
 use Multiple\Backend\Models\Complaint;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Validator\UserValidator;
-
+use Phalcon\Validation\Validator\PresenceOf;
 
 class UserController extends ControllerBase
 {
@@ -76,14 +76,11 @@ class UserController extends ControllerBase
             return $this->forward("user/index");
 
         $post = $this->request->getPost();
-        $data = [
-            'lastname'=>$post['lastname'],
-            'firstname'=>$post['firstname'],
-            'patronymic'=>$post['patronymic'],
-            'phone'=> $post['phone'],
-            'email'=> $post['email'],
-            'admin_comment'=> $post['admin_comment']
-        ];
+        $data['email'] = $post['email'];
+        foreach(['lastname', 'firstname', 'patronymic', 'phone', 'admin_comment'] as $key)
+            if($post[$key]!='')
+                $data[$key] = $post[$key];
+
         if (strlen($post['password']) > 0)
             $data['password'] = sha1($post['password']);
 
@@ -92,7 +89,7 @@ class UserController extends ControllerBase
         if (count($messages)) {
             foreach ($messages as $message)
                 $this->flashSession->error($message);
-        } elseif ($user->save($data) == false) {
+        } elseif ($user->save($data, array_keys($data)) == false) {
             foreach ($user->getMessages() as $message)
                 $this->flashSession->error($message);
         } else
@@ -119,16 +116,11 @@ class UserController extends ControllerBase
 
         $user = new User();
         $post = $this->request->getPost();
-        $data = [
-            'lastname'=>$post['lastname'],
-            'firstname'=>$post['firstname'],
-            'patronymic'=>$post['patronymic'],
-            'phone'=> $post['phone'],
-            'email'=> $post['email'],
-            'admin_comment'=> $post['admin_comment'],
-            'password' => $post['password']
-        ];
-
+        $data['email'] = $post['email'];
+        foreach(['lastname', 'firstname', 'patronymic', 'phone', 'admin_comment'] as $key)
+            if($post[$key]!='')
+                $data[$key] = $post[$key];
+        
         $validation = new UserValidator();
         $validation->add('password', new PresenceOf((array('message' => 'The password is required'))));
         $messages = $validation->validate($data);
@@ -138,13 +130,13 @@ class UserController extends ControllerBase
 
         if (!count($messages)) {
             $data['password'] = sha1($data['password']);
-            if ($user->save($data) == false) {
-                foreach ($user->getMessages() as $message)
+            if ($user->save($data, array_keys($data)) == false) {
+                $messages = $user->getMessages();
+                foreach ($messages as $message)
                     $this->flashSession->error($message);
             } else
                 $this->flashSession->success("Your information was stored correctly!");
         }
-
         if(count($messages))
             return $this->dispatcher->forward(array(
                 'module' => 'backend',

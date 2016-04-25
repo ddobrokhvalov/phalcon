@@ -77,24 +77,22 @@ class AdminsController extends ControllerBase
         $post = $this->request->getPost();
         if (strlen($post['password']) > 0)
             $data['password'] = sha1($post['password']);
-
         if ($this->request->hasFiles() == true)
             $admin->saveAvatar($this->request->getUploadedFiles());
-
         $data = [
-            'name'=>$post['name'],
-            'surname'=>$post['surname'],
-            'patronymic'=>$post['patronymic'],
-            'phone'=> $post['phone'],
             'email'=> $post['email'],
             'avatar' => $admin->avatar
         ];
+        foreach(['name', 'surname', 'patronymic', 'phone'] as $key)
+            if($post[$key]!='')
+                $data[$key] = $post[$key];
+
         $validation = new AdminValidator();
         $messages = $validation->validate($data);
         if (count($messages)) {
             foreach ($messages as $message)
                 $this->flashSession->error($message);
-        } elseif ($admin->save($data) == false) {
+        } elseif ($admin->save($data, array_keys($data)) == false) {
             foreach ($admin->getMessages() as $message)
                 $this->flashSession->error($message);
         } else
@@ -118,15 +116,15 @@ class AdminsController extends ControllerBase
 
         $admin = new Admin();
         $post = $this->request->getPost();
-        $data = [
-            'name'=>$post['name'],
-            'surname'=>$post['surname'],
-            'patronymic'=>$post['patronymic'],
-            'phone'=> $post['phone'],
-            'email'=> $post['email'],
-            'avatar' => new RawValue('default'),
-            'password'=>$post['password']
-        ];
+        $data['email'] = $post['email'];
+        foreach(['name', 'surname', 'patronymic', 'phone'] as $key)
+            if($post[$key]!='')
+                $data[$key] = $post[$key];
+
+        if ($this->request->hasFiles() == true)
+            if($admin->saveAvatar($this->request->getUploadedFiles()))
+                $data['avatar'] = $admin->avatar;
+
         $validation = new AdminValidator();
         $validation->add('password', new PresenceOf((array('message' => 'The password is required'))));
         $messages = $validation->validate($data);
@@ -136,15 +134,16 @@ class AdminsController extends ControllerBase
         }
         if (!count($messages) ) {
             $data['password'] = sha1($data['password']);
-            if($admin->save($data) == false)
+            if($admin->save($data, array_keys($data)) == false)
                 foreach ($admin->getMessages() as $message)
                     $this->flashSession->error($message);
         } else
             $this->flashSession->success("Your information was stored correctly!");
         $admin->password = sha1($data['password']);
-        if ($admin->save() == false)
+        if ($admin->save($data, array_keys($data)) == false)
             foreach ($admin->getMessages() as $message)
                 $this->flashSession->error($message);
+        
         if(count($messages))
             return $this->dispatcher->forward(array(
                 'module' => 'backend',

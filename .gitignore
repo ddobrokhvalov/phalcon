@@ -2,3 +2,4 @@
 *.phtml.php
 base-template.phtml%*
 /public/files/documents
+/public/files/avatars
