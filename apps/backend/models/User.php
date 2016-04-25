@@ -20,6 +20,7 @@ class User extends Model
     public function initialize()
     {
         $this->setSource('user');
+        $this->allowEmptyStringValues(['admin_comment', 'firstname', 'lastname', 'patronymic', 'phone']);
     }
 
     public function getSource()

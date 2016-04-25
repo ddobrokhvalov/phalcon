@@ -84,9 +84,7 @@ class AdminsController extends ControllerBase
             'avatar' => $admin->avatar
         ];
         foreach(['name', 'surname', 'patronymic', 'phone'] as $key)
-            if($post[$key]!='')
-                $data[$key] = $post[$key];
-
+            $data[$key] = $post[$key];
         $validation = new AdminValidator();
         $messages = $validation->validate($data);
         if (count($messages)) {
@@ -118,9 +116,7 @@ class AdminsController extends ControllerBase
         $post = $this->request->getPost();
         $data['email'] = $post['email'];
         foreach(['name', 'surname', 'patronymic', 'phone'] as $key)
-            if($post[$key]!='')
                 $data[$key] = $post[$key];
-
         if ($this->request->hasFiles() == true)
             if($admin->saveAvatar($this->request->getUploadedFiles()))
                 $data['avatar'] = $admin->avatar;
@@ -139,11 +135,10 @@ class AdminsController extends ControllerBase
                     $this->flashSession->error($message);
         } else
             $this->flashSession->success("Your information was stored correctly!");
-        $admin->password = sha1($data['password']);
+        $admin->password = sha1($data['password']);        
         if ($admin->save($data, array_keys($data)) == false)
             foreach ($admin->getMessages() as $message)
                 $this->flashSession->error($message);
-        
         if(count($messages))
             return $this->dispatcher->forward(array(
                 'module' => 'backend',

@@ -78,8 +78,7 @@ class UserController extends ControllerBase
         $post = $this->request->getPost();
         $data['email'] = $post['email'];
         foreach(['lastname', 'firstname', 'patronymic', 'phone', 'admin_comment'] as $key)
-            if($post[$key]!='')
-                $data[$key] = $post[$key];
+               $data[$key] = $post[$key];
 
         if (strlen($post['password']) > 0)
             $data['password'] = sha1($post['password']);
@@ -118,9 +117,7 @@ class UserController extends ControllerBase
         $post = $this->request->getPost();
         $data['email'] = $post['email'];
         foreach(['lastname', 'firstname', 'patronymic', 'phone', 'admin_comment'] as $key)
-            if($post[$key]!='')
-                $data[$key] = $post[$key];
-        
+           $data[$key] = $post[$key];
         $validation = new UserValidator();
         $validation->add('password', new PresenceOf((array('message' => 'The password is required'))));
         $messages = $validation->validate($data);
