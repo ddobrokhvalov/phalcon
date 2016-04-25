@@ -1,56 +1,64 @@
 {% extends "base-template.phtml" %}
-{% block title %}ФАС ОНЛАЙН - ДОБАВИТЬ ПОЛЬЗОВАТЕЛЯ {% endblock %}
+{% block title %}ФАС ОНЛАЙН - ДОБАВИТЬ ПОЛЬЗОВАТЕЛЯ{% endblock %}
 {% block body %}
 <!-- ****************** user page ***************** -->
 <div class="admin-main-wrap user-page">
     <div class="bread-crumbs-holder">
         <a href="#">Вернуться к списку пользователей</a>
     </div>
-    <h1>acropolis_mari@mail.ru</h1>
+    <h1>{{edituser.email}}</h1>
     <div class="admin-change-access">
-        <span>Тариф пробный до 12.02.2016</span>
+        <span>Тариф пробный до 12.02.2016 ?--WHERE TO GET IT FROM--?</span>
         <div class="change-access">Изменить тариф</div>
     </div>
     <div class="block-user-editing">
-        <form action="#" method="POST">
+        <form action="/admin/user/save" method="post">
+            {{hidden_field('id', 'value':'')}}
             <div class="left-block-editing">
                 <span>Данные пользователя</span>
-                <label for="fioUser">
-                    <p>ФИО</p>
-                    <input type="text" id="fioUser">
+                <label for="fUser">
+                    {{text_field('lastname', 'value':'', 'id':'fUser')}}
+                </label>
+                <label for="iUser">
+                    <p>Имя</p>
+                    {{text_field('firstname', 'value':'', 'id':'iUser')}}
+                </label>
+                <label for="oUser">
+                    <p>Отчество</p>
+                    {{text_field('patronymic', 'value':'', 'id':'oUser')}}
                 </label>
                 <label for="telFaxUser">
                     <p>Контактный факс, телефон</p>
-                    <input type="number" id="telFaxUser">
+                    {{ numeric_field('phone', 'value':'', 'id':'telFaxUser')}}
                 </label>
                 <label for="userEmail">
                     <p>E-mail</p>
-                    <input type="email" id="userEmail">
+                    {{text_field('email', 'value':'', 'id':'userEmail')}}
                 </label>
             </div>
             <div class="right-block-editing">
                 <span>Сменить пароль</span>
                 <label for="userPass">
                     <p>Задайте новый пароль</p>
-                    <input type="password" id="userPass">
+                    {{password_field('password', 'value':'', 'id':'userPass')}}
                 </label>
                 <label for="sendEmailNotice" class="lebel-checkbox">
-                    <input type="checkbox" id="sendEmailNotice">
+                    {{check_field('password', 'value':'', 'id':'sendEmailNotice')}}
                     <p>Отправлять уведомления на e-mail</p>
                 </label>
                 <label for="userComment">
                     <p>Комментарий админа (только для админа!)</p>
-                    <textarea id="" cols="30" rows="10" id="userComment"></textarea>
+                    {{text_area('admin_comment', 'value':edituser.admin_comment, 'id':'userComment')}}
                 </label>
             </div>
             <div class="delete-or-save">
-                <button>Удалить пользователя</button>
-                <button>Сохранить изменения</button>
+                <button>Удалить пользователя</button><!--todo-->
+                <button>Сохранить изменения</button><!--todo-->
             </div>
         </form>
     </div>
     <div class="user-top-lt">
-        <span>Заявители пользователя acropolis_mari@mail.ru</span>
+        <span>Заявители пользователя {{edituser.email}}</span>
         <div>Создать заявителя</div>
     </div>
     <div class="admin-lt-head">
@@ -72,43 +80,31 @@
             <li><span>Контактные данные</span></li>
             <li><span>Жалобы</span></li>
         </ul>
+        {% for applicant in applicants %}
         <ul class="lt-content-main">
             <li>
                 <div class="lt-psevdo-check"></div>
-                Государственное бюджетное профессиональное образовательное учреждение воронежской области "борисоглебский дорожный техникум"
+                {{applicant['name_full']}}
             </li>
-            <li>юл</li>
-            <li>4723659376</li>
-            <li>Андреев Александр Александрович</li>
-            <li>02345, Москва, ул.Кульман 2, оф. 415 456-900-90-00 deckcrew@email.ua</li>
-            <li>1</li>
-        </ul>
-        <ul class="lt-content-main">
             <li>
-                <div class="lt-psevdo-check"></div>
-                Контрольно-счетная палата Песчанокопского района
+                {% if applicant['type'] == 'urlico' %}
+                юр
+                {% elseif applicant['type'] == 'fiz' %}
+                физ
+                {% else %}
+                ип
+                {% endif %}
             </li>
-            <li>ип</li>
-            <li>4723659376</li>
-            <li>Аседова Елизавета Виталиевна</li>
-            <li>03456, Санкт-Петербург, ул. Логойский тракт 22А, 345-456-97-89</li>
-            <li>34</li>
+            <li>{{applicant['inn']}}</li>
+            <li>{{applicant['fio_applicant']}}</li>
+            <li>{{applicant['address']}}</li>
+            <li>{{applicant['cnt']}}</li>
         </ul>
-        <ul class="lt-content-main">
-            <li>
-                <div class="lt-psevdo-check"></div>
-                Валинуров Д.Ю.
-            </li>
-            <li>фл</li>
-            <li>4723659376</li>
-            <li>Валинуров Денис Юрьевич</li>
-            <li>86745, Москва, ул. Богдановича-ча-ча 143 497-456-98-09 deckcrew@email.ua</li>
-            <li>12</li>
-        </ul>
+        {% endfor %}
     </div>
     <div class="appllicant-page">
         <div class="user-top-lt">
-            <span>Жалобы пользователя acropolis_mari@mail.ru</span>
+            <span>Жалобы пользователя {{edituser.email}}</span>
         </div>
         <div class="admin-lt-holder">
             <div class="admin-lt-head">
@@ -130,99 +126,47 @@
                     <li><span>Дата подачи</span></li>
                     <li><span>Статус</span></li>
                 </ul>
-                <ul class="lt-content-main top-bd-blue">
+                {% for comliant in complaints %}
+                <ul class="j-user-info lt-content-main {%if comliant['status'] =='submitted' %}top-bd-blue{%elseif comliant['status'] == 'unfounded'%}top-bd-red{%elseif comliant['status'] == 'justified'%}top-bd-green{%endif%}">
                     <li>
                         <div class="lt-psevdo-check"></div>
-                        Нарушение в КД по срокам, не соответств...
+                        {{comliant['complaint_name']}}
                     </li>
-                    <li>201603322000548</li>
-                    <li>ООО “Ромашка”</li>
-                    <li>22.01.2016</li>
-                    <li>
+                    <li>{{comliant['auction_id']}}</li>
+                    <li>{{comliant['apname']}}</li>
+                    <li>{{date('d.m.Y' ,comliant['date']|strtotime)}}</li>
+                    <li class="j-user-status-info">
                         <div class="appll-status-icon">
+                            <input class="j-comlient-status" name="status" type="hidden" value="{{comliant['status']}}">
+                            {%if comliant['status'] != 'draft' %}
+                            <img src="/images/icon-jl-chernov.png">
+                            {%elseif comliant['status'] != 'submitted' %}
+                            <img src="/images/icon-jl-podana.png">
+                            {%elseif comliant['status'] != 'under_consideration' %}
+                            <img src="/images/icon-jl-rassmotr.png">
+                            {%elseif comliant['status'] != 'justified' %}
+                            <img src="/images/icon-jl-done.png">
+                            {%elseif comliant['status'] != 'unfounded' %}
+                            <img src="/images/icon-jl-notdone.png">
+                            {%elseif comliant['status'] != 'recalled' %}
+                            <img src="/images/icon-jl-fail.png">
+                            {%elseif comliant['status'] != 'archive' %}
+                            <img src="/images/icon-jl-archive.png">
+                            {%endif%}
                         </div>
                         <div class="close-status-list">Сменить статус</div>
                     </li>
                 </ul>
-                <ul class="lt-content-main"> <!-- add the required class -->
-                    <li>
-                        <div class="lt-psevdo-check"></div>
-                        Нарушение в КД по срокам, не соответств...
-                    </li>
-                    <li>201603322000548</li>
-                    <li>ООО “Ромашка”</li>
-                    <li>22.01.2016</li>
-                    <li>
-                        <div class="appll-status-icon">
-                        </div>
-                        <div class="close-status-list">Сменить статус</div>
-                    </li>
-                </ul>
-                <ul class="lt-content-main top-bd-green">
-                    <li>
-                        <div class="lt-psevdo-check"></div>
-                        Нарушение в КД по срокам, не соответств...
-                    </li>
-                    <li>201603322000548</li>
-                    <li>ООО “Ромашка”</li>
-                    <li>22.01.2016</li>
-                    <li>
-                        <div class="appll-status-icon">
-                        </div>
-                        <div class="close-status-list">Сменить статус</div>
-                    </li>
-                </ul>
-                <ul class="lt-content-main top-bd-red">
-                    <li>
-                        <div class="lt-psevdo-check"></div>
-                        Нарушение в КД по срокам, не соответств...
-                    </li>
-                    <li>201603322000548</li>
-                    <li>ООО “Ромашка”</li>
-                    <li>22.01.2016</li>
-                    <li>
-                        <div class="appll-status-icon">
-                        </div>
-                        <div class="close-status-list">Сменить статус</div>
-                    </li>
-                </ul>
-                <ul class="lt-content-main top-bd-blue">
-                    <li>
-                        <div class="lt-psevdo-check"></div>
-                        Нарушение в КД по срокам, не соответств...
-                    </li>
-                    <li>201603322000548</li>
-                    <li>ООО “Ромашка”</li>
-                    <li>22.01.2016</li>
-                    <li>
-                        <div class="appll-status-icon">
-                        </div>
-                        <div class="close-status-list">Сменить статус</div>
-                    </li>
-                </ul>
-                <ul class="lt-content-main top-bd-green">
-                    <li>
-                        <div class="lt-psevdo-check"></div>
-                        Нарушение в КД по срокам, не соответств...
-                    </li>
-                    <li>201603322000548</li>
-                    <li>ООО “Ромашка”</li>
-                    <li>22.01.2016</li>
-                    <li>
-                        <div class="appll-status-icon">
-                        </div>
-                        <div class="close-status-list">Сменить статус</div>
-                    </li>
-                </ul>
+                {% endfor %}
             </div>
         </div>
     </div>
 </div>
 
-<form action="/admin/user/create" method="post">
+<form action="/admin/user/save" method="post">
     <fieldset>
 
-
+        <fieldset>
 
             {% for element in form %}
             <div class="control-group">
@@ -232,9 +176,26 @@
             {% endfor %}
 
             <div class="control-group">
-                {{ submit_button("Создать", "class": "btn btn-primary") }}
+                {{ submit_button("Сохранить", "class": "btn btn-primary") }}
             </div>
 
         </fieldset>
 </form>
+
+<div>
+    {% for applicant in applicants %}
+    {{ applicant.name_full }}
+    <a href="/admin/user/editapplicant/{{ applicant.id }}">Редактировать</a>
+    <a href="/admin/user/delapplicant/{{ applicant.id }}">Удалить</a>
+
+    {% endfor %}
+
+</div>
+
+
+<script>
+    $( document ).ready(function() {
+        $( "#password" ).val('');
+    });
+</script>
 {% endblock %}
