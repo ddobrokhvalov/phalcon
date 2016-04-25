@@ -8,6 +8,8 @@ use Multiple\Backend\Models\Admin;
 use Multiple\Backend\Form\AdminForm;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Validator\AdminValidator;
+use Phalcon\Db\RawValue;
+use Phalcon\Validation\Validator\PresenceOf;
 
 class AdminsController extends ControllerBase
 {
@@ -108,41 +110,53 @@ class AdminsController extends ControllerBase
 
     public function addAction()
     {
-        $this->view->form = new AdminForm(null, array('add' => true));
         $this->setMenu();
     }
     public function createAction(){
-        if (!$this->request->isPost()) {
+        if (!$this->request->isPost())
             return $this->forward("admins/index");
-        }
-        $form  = new AdminForm;
+
         $admin = new Admin();
-
-        $data = $this->request->getPost();
-        if (!$form->isValid($data, $admin)) {
-            foreach ($form->getMessages() as $message) {
-
-                var_dump($message); exit;
-               // $this->flash->error($message);
-            }
-            return $this->forward('admins/add');
+        $post = $this->request->getPost();
+        $data = [
+            'name'=>$post['name'],
+            'surname'=>$post['surname'],
+            'patronymic'=>$post['patronymic'],
+            'phone'=> $post['phone'],
+            'email'=> $post['email'],
+            'avatar' => new RawValue('default'),
+            'password'=>$post['password']
+        ];
+        $validation = new AdminValidator();
+        $validation->add('password', new PresenceOf((array('message' => 'The password is required'))));
+        $messages = $validation->validate($data);
+        if (count($messages)) {
+            foreach ($messages as $message)
+                $this->flashSession->error($message);
         }
-        $admin->email = $data['email'];
+        if (!count($messages) ) {
+            $data['password'] = sha1($data['password']);
+            if($admin->save($data) == false)
+                foreach ($admin->getMessages() as $message)
+                    $this->flashSession->error($message);
+        } else
+            $this->flashSession->success("Your information was stored correctly!");
         $admin->password = sha1($data['password']);
-        if ($admin->save() == false) {
-            foreach ($admin->getMessages() as $message) {
-
-                var_dump($message); exit;
-               // $this->flash->error($message);
-            }
-            return $this->forward('admins/add');
-        }
-
-        $form->clear();
-
-        //$this->flash->success("Product was created successfully");
-        return $this->forward("admins/index");
-
+        if ($admin->save() == false)
+            foreach ($admin->getMessages() as $message)
+                $this->flashSession->error($message);
+        if(count($messages))
+            return $this->dispatcher->forward(array(
+                'module' => 'backend',
+                'controller' => 'admins',
+                'action' => 'add',
+            ));
+        else
+            return $this->dispatcher->forward(array(
+                'module' => 'backend',
+                'controller' => 'admins',
+                'action' => 'index',
+            ));
     }
     public function editAction($id){
         $admin = Admin::findFirstById($id);

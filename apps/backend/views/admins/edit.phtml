@@ -1,5 +1,5 @@
 {% extends "base-template.phtml" %}
-{% block title %}ФАС ОНЛАЙН - РЕДАКТИРОВАТЬ АДМИНА{% endblock %}
+{% block title %}ФАС ОНЛАЙН - РЕДАКТИРОВАТЬ АДМИНИСТРАТОРА{% endblock %}
 {% block body %}
 <div class="admin-main-wrap admin-page">
     <div class="bread-crumbs-holder">
@@ -45,7 +45,7 @@
                 </label>
                 <label for="adminAvatar">
                     <div class="avatar-wrapper">
-                        <img src="files/avatars/{{admin.avatar}}" alt=""><!--todo: maby we need default image-->
+                        <img src="/files/avatars/{{admin.avatar}}" alt=""><!--todo: maby we need default image-->
                     </div>
                     <p class="changeAvatar">Изменить аватар</p>
                     {{file_field('avatar', 'value':'', 'id':'adminAvatar')}}

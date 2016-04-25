@@ -1,6 +1,6 @@
 <header id="admin-header">
     <div class="admin-name">
-        <div><img src="/images/{%if user.avatar=='' %}admin-picture.png{%else%}{{user.avatar}}{%endif%}" alt="avatar admin"></div>
+        <div><img src="/files/avatars/{{user.avatar}}" alt="avatar admin"></div>
         <span>{{user.email}}</span>
     </div>
     <div class="admin-settings-logout">
@@ -16,7 +16,7 @@
             <form action="#" method="POST">
                 <p>Личные данные</p>
                 <label for="download-avatar">
-                    <img src="/images/admin-picture2.png" alt="">
+                    <img src="/files/avatars/{{user.avatar}}" alt="">
                     <p>Изменить аватар</p>
                     <input type="file" id="download-avatar">
                 </label>
