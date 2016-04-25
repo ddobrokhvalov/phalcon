@@ -8,7 +8,6 @@ use Multiple\Backend\Models\Admin;
 use Multiple\Backend\Form\AdminForm;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Validator\AdminValidator;
-use Phalcon\Db\RawValue;
 
 class AdminsController extends ControllerBase
 {
@@ -74,21 +73,20 @@ class AdminsController extends ControllerBase
         if (!$admin)
             return $this->forward("admins/index");
         $post = $this->request->getPost();
+        if (strlen($post['password']) > 0)
+            $data['password'] = sha1($post['password']);
+
+        if ($this->request->hasFiles() == true)
+            $admin->saveAvatar($this->request->getUploadedFiles());
+
         $data = [
             'name'=>$post['name'],
             'surname'=>$post['surname'],
             'patronymic'=>$post['patronymic'],
             'phone'=> $post['phone'],
             'email'=> $post['email'],
-            'avatar' => new RawValue('default')
+            'avatar' => $admin->avatar
         ];
-        if (strlen($post['password']) > 0)
-            $data['password'] = sha1($post['password']);
-
-        if ($this->request->hasFiles() == true)
-            if($admin->saveAvatar($this->request->getUploadedFiles()))
-                $data['avatar'] = $admin->avatar;
-
         $validation = new AdminValidator();
         $messages = $validation->validate($data);
         if (count($messages)) {

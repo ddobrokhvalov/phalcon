@@ -46,12 +46,12 @@ class Admin extends Model
         $allowedFormats = ['image/jpeg', 'image/png', 'image/gif'];
         if(count($avatar)){
             if(in_array($avatar[0]->getType(), $allowedFormats)) {
-                $filename = md5(date('Y-m-d H:i:s:u')) . $avatar[0]->getExtension();
+                $filename = md5(date('Y-m-d H:i:s:u')) .'.'. $avatar[0]->getExtension();
                 if ($avatar[0]->moveTo($baseLocation . $filename)) {
                     $this->avatar = $filename;
                     return true;
                 }
-            } 
+            }
         }
         return false;
     }

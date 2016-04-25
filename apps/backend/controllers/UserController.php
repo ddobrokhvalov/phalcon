@@ -98,6 +98,7 @@ class UserController extends ControllerBase
                 $this->flashSession->error($message);
         } else
             $this->flashSession->success("Your information was stored correctly!");
+        
         return $this->dispatcher->forward(array(
             'module' => 'backend',
             'controller' => 'user',
