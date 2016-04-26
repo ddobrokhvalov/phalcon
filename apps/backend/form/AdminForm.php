@@ -20,7 +20,6 @@ class AdminForm extends Form
         if (!isset($options['edit']) && !isset($options['add'])) {
             $element = new Text("id");
             $this->add($element->setLabel("Id"));
-
         } else {
             $this->add(new Hidden("id"));
         }
