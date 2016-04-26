@@ -37,17 +37,6 @@ class ApplicantsController  extends ControllerBase
         $this->setMenu();
     }
 
-    public function editapplicantAction($id)
-    {
-        $applicant = Applicant::findFirstById($id);
-        if (!$applicant) {
-            $this->flash->error("Applicant was not found");
-            return $this->forward("user/index");
-        }
-        $this->view->form = new ApplicantForm($applicant, array('edit' => true));
-        $this->setMenu();
-    }
-
     public function saveAction()
     {
         if (!$this->request->isPost()) {
@@ -64,23 +53,33 @@ class ApplicantsController  extends ControllerBase
         $data = $this->request->getPost();
         if (!$form->isValid($data, $applicant)) {
             foreach ($form->getMessages() as $message) {
-                // $this->flash->error($message);
-                var_dump($message);
-                exit;
+                $this->flashSession->error($message);
             }
+            return $this->dispatcher->forward(array(
+                'module' => 'backend',
+                'controller' => 'applicants',
+                'action' => 'edit',
+                'params' => ['id' => $id]
+            ));
             return $this->forward('user/editapplicant/' . $id);
         }
         if ($applicant->save() == false) {
             foreach ($applicant->getMessages() as $message) {
-                var_dump($message);
-                exit;
-                // $this->flash->error($message);
+                $this->flashSession->error($message);
             }
-            return $this->forward('user/editapplicant/' . $id);
+            return $this->dispatcher->forward(array(
+                'module' => 'backend',
+                'controller' => 'applicants',
+                'action' => 'edit',
+                'params' => ['id' => $id]
+            ));
         }
         $form->clear();
-        // $this->flash->success("Admins was updated successfully");
-        return $this->forward("user/index");
+        return $this->dispatcher->forward(array(
+            'module' => 'backend',
+            'controller' => 'applicants',
+            'action' => 'index'
+        ));
 
     }
 
