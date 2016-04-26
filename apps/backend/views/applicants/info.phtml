@@ -37,7 +37,7 @@
                     {{complaint['complaint_name']}}
                 </li>
                 <li>{{complaint['auction_id']}}</li>
-                <li>{{complaint['date']}}</li>
+                <li>{{date('Y.m.d', complaint['date']|strtotime)}}</li>
                 <li>
                     {% if complaint['status'] == 'draft' %}
                     <span class="jl-status jl-chernov">Черновик</span>

@@ -30,7 +30,7 @@
                 <li>{{ truncate(complaint.complaint_name, 0, 5) }}</li>
                 <li>{{ truncate(complaint.purchases_name,0,35) }}</li>
                 <li>{{ complaint.auction_id }}</li>
-                <li>{{ truncate(complaint.date, 0, 25) }}</li>
+                <li>{{ date('Y.m.d', complaint.date|strtotime) }}</li>
                 <li>{{ truncate(complaint.purchases_made, 0, 25) }}</li>
                 <li>
                     {% if complaint.status == 'draft' %}
