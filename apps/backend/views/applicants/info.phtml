@@ -31,7 +31,7 @@
                 <li><span>Статус</span></li>
             </ul>
             {% for complaint in page.items %}
-            <ul class="lt-content-main top-bd-blue">
+            <ul class="lt-content-main {%if comliant['status'] =='submitted' %}top-bd-blue{%elseif comliant['status'] == 'unfounded'%}top-bd-red{%elseif comliant['status'] == 'justified'%}top-bd-green{%endif%}">
                 <li>
                     <div class="lt-psevdo-check"></div>
                     {{complaint['complaint_name']}}
@@ -65,80 +65,32 @@
                 </li>
             </ul>
             {% endfor %}
-            <ul class="lt-content-main"> <!-- add the required class -->
-                <li>
-                    <div class="lt-psevdo-check"></div>
-                    Нарушение ГОСТ
-                </li>
-                <li>201603322000548</li>
-                <li>22.01.2016</li>
-                <li>
-                    <div class="appll-status-icon"></div>
-                    <div class="close-status-list">Сменить статус</div>
-                </li>
-            </ul>
-            <ul class="lt-content-main top-bd-green">
-                <li>
-                    <div class="lt-psevdo-check"></div>
-                    Нарушение в КД по срокам
-                </li>
-                <li>201603322000548</li>
-                <li>22.01.2016</li>
-                <li>
-                    <div class="appll-status-icon"></div>
-                    <div class="close-status-list">Сменить статус</div>
-                </li>
-            </ul>
-            <ul class="lt-content-main top-bd-red">
-                <li>
-                    <div class="lt-psevdo-check"></div>
-                    Нарушение в КД, не соответстветствует ГОСТ
-                </li>
-                <li>201603322000548</li>
-                <li>22.01.2016</li>
-                <li><div class="appll-status-icon"></div></li>
-            </ul>
-            <ul class="lt-content-main top-bd-blue">
-                <li>
-                    <div class="lt-psevdo-check"></div>
-                    Нарушение по срокам, не соответстветствует ГОСТ
-                </li>
-                <li>201603322000548</li>
-                <li>22.01.2016</li>
-                <li>
-                    <div class="appll-status-icon"></div>
-                    <div class="close-status-list">Сменить статус</div>
-                </li>
-            </ul>
-            <ul class="lt-content-main top-bd-green">
-                <li>
-                    <div class="lt-psevdo-check"></div>
-                    Нарушение в КД по срокам и ГОСТу
-                </li>
-                <li>201603322000548</li>
-                <li>22.01.2016</li>
-                <li>
-                    <div class="appll-status-icon"></div>
-                    <div class="close-status-list">Сменить статус</div>
-                </li>
-            </ul>
         </div>
     </div>
     <div class="admin-table-footer">
         <a href="#">Еще <span>20 жалоб</span></a>
-        <a href="#">Показать все жалобы (<span>345 678</span>)</a>
+        <a href="#">Показать все жалобы (<span>{{page.total_items}}</span>)</a>
     </div>
     <div class="admin-pagination-box">
-        <a href="#" id="admin-pag-prev">Предыдущие</a>
+        {% if page.current>1 %}
+        {{ link_to("/admin/applicants/info/"~applicant.id~"?page=" ~ page.before, 'Предыдущая', 'id' : 'admin-pag-prev') }}
+        {% endif %}
         <ul>
-            <li><a href="#">1</a></li>
-            <li><span class="active-pag-page">2</span></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><span>...</span></li>
-            <li><a href="#">23</a></li>
+            {% for page_item in paginator_builder %}
+            <li>
+                {% if page_item['type'] == 'page' %}
+                {{ link_to("complaint/index"~applicant.id~"?page=" ~ page_item['num'], page_item['num']) }}
+                {% elseif page_item['type'] == 'delimer' %}
+                <span>...</span>
+                {% elseif page_item['type'] == 'current' %}
+                <span class="active-pag-page">{{page_item['num']}}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
         </ul>
-        <a href="#" id="admin-pag-next">Следующие</a>
+        {% if page.total_pages > page.current %}
+        {{ link_to("/admin/applicants/info/"~applicant.id~"?page=" ~ page.next, 'Следующая', 'id' : 'admin-pag-next') }}
+        {% endif %}
     </div>
 </div>
 {% endblock %}
