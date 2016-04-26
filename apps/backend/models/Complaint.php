@@ -63,6 +63,17 @@ class Complaint extends Model
 
     }
 
+    public function findApplicantComplaints($applicant_id)
+    {
+        $db = $this->getDi()->getShared('db');
+        $sql = "SELECT c.*, ap.name_short as apname FROM complaint as c
+         INNER JOIN applicant ap ON(c.applicant_id = ap.id )
+         WHERE ap.id = $applicant_id "; 
+        $result = $db->query($sql);
+        return $result->fetchAll();
+
+    }
+
     public function addComplaint($data, $status = 'draft')
     {
         // test mode

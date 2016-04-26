@@ -23,6 +23,16 @@ class ApplicantsController  extends ControllerBase
     }
 
     public function infoAction($id){
+        $applicant = Applicant::findFirstById($id);
+        if (!$applicant) {
+            $this->flash->error("Applicant was not found");
+            return $this->dispatcher->forward(array(
+                'module' => 'backend',
+                'controller' => 'applicants',
+                'action' => 'index'
+            ));
+        }
+        $this->view->applicant = $applicant;
         $this->setMenu();
     }
 
@@ -31,7 +41,11 @@ class ApplicantsController  extends ControllerBase
         $applicant = Applicant::findFirstById($id);
         if (!$applicant) {
             $this->flash->error("Applicant was not found");
-            return $this->forward("user/index");
+            return $this->dispatcher->forward(array(
+                'module' => 'backend',
+                'controller' => 'applicants',
+                'action' => 'index'
+            ));
         }
         $this->view->applicant = $applicant;
         $this->setMenu();
@@ -40,13 +54,21 @@ class ApplicantsController  extends ControllerBase
     public function saveAction()
     {
         if (!$this->request->isPost()) {
-            return $this->forward("user/index");
+            return $this->dispatcher->forward(array(
+                'module' => 'backend',
+                'controller' => 'applicants',
+                'action' => 'index'
+            ));
         }
         $id = $this->request->getPost("id", "int");
         $applicant = Applicant::findFirstById($id);
         if (!$applicant) {
             //$this->flash->error("Product does not exist");
-            return $this->forward("user/index");
+            return $this->dispatcher->forward(array(
+                'module' => 'backend',
+                'controller' => 'applicants',
+                'action' => 'index'
+            ));
         }
         $form = new ApplicantForm(null, array('edit' => true));
         $this->view->form = $form;
