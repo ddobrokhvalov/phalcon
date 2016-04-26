@@ -5,4 +5,4 @@
 # Поимка $_POST на страницах ADD
 # Попробовать применить form с allowEmptyStringValues - может валидацию пропустит
 # $this->date_registration = new RawValue('Now()');//todo: check when edit
-#
+# Файлы у заявителя

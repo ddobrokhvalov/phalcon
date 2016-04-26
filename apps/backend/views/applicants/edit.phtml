@@ -1,5 +1,5 @@
 {% extends "base-template.phtml" %}
-{% block title %}ФАС ОНЛАЙН - Доводы{% endblock %}
+{% block title %}ФАС ОНЛАЙН - РЕДАКТИРОВАНИЕ ЗАЯВИТЕЛЯ{% endblock %}
 {% block body %}
 <div class="admin-main-wrap edit-aplicant">
     <div class="bread-crumbs-holder">
@@ -15,6 +15,7 @@
         <div data-tabs="legal-entity" class="tabs-content active-tabs-content">
             <form action="#" method="POST">
                 {{hidden_field('id', 'value':applicant.id)}}
+                {{hidden_field('type', 'value':'urlico')}}
                 <label for="entity-textarea">
                     <div>Полное наименование</div>
                     {{text_area('name_full', 'value':applicant.name_full, 'id':'entity-textarea')}}
@@ -63,9 +64,39 @@
         </div>
         <div data-tabs="individual-entrepreneur" class="tabs-content">
             <form action="#" method="POST">
+                {{hidden_field('id', 'value':applicant.id)}}
+                {{hidden_field('type', 'value':'ip')}}
                 <label for="entity-textarea">
                     <div>Полное наименование</div>
-                    <textarea name="" id="entity-textarea"></textarea>
+                    {{text_area('name_full', 'value':applicant.name_full, 'id':'entity-textarea')}}
+                </label>
+                <label for="entity-inn">
+                    <div>ИНН</div>
+                    {{numeric_field('inn', 'value':applicant.inn, "id":"entity-inn", "data-name":"number")}}
+                </label>
+                <label for="entity-address">
+                    <div>Адрес местонахождения</div>
+                    {{text_field('address', 'value':applicant.address, "id":"entity-address", "data-name":"address")}}
+                </label>
+                <label for="entity-position">
+                    <div>Должность заявителя</div>
+                    {{text_field('position', 'value':applicant.position, "id":"entity-position", "data-name":"position-fio")}}
+                </label>
+                <label for="entity-fio-z">
+                    <div>ФИО заявителя</div>
+                    {{text_field('fio_applicant', 'value':applicant.fio_applicant, "id":"entity-fio-z", "data-name":"position-fio")}}
+                </label>
+                <label for="entity-position-k">
+                    <div>ФИО контактного лица</div>
+                    {{text_field('fio_contact_person', 'value':applicant.fio_contact_person, "id":"entity-fio-k", "data-name":"position-fio")}}
+                </label>
+                <label for="entity-phone">
+                    <div>Контактный факс, телефон</div>
+                    {{numeric_('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
+                </label>
+                <label for="entity-email">
+                    <div>E-mail</div>
+                    {{text_field('email', 'value':applicant.email, "id":"entity-email", "data-name":"position-fio" )}}
                 </label>
                 <div class="file-attachment">
                     <img src="images/zaglushka.png" alt="">
@@ -73,7 +104,32 @@
                 <button class="save-tab-form">Сохранить изменения</button>
             </form>
         </div>
-        <div data-tabs="physical-face" class="tabs-content"></div>
+        <div data-tabs="physical-face" class="tabs-content">
+            <form action="#" method="POST">
+                {{hidden_field('id', 'value':applicant.id)}}
+                {{hidden_field('type', 'value':'fizlico')}}
+                <label for="entity-fio-z">
+                    <div>ФИО заявителя</div>
+                    {{text_field('fio_applicant', 'value':applicant.fio_applicant, "id":"entity-fio-z", "data-name":"position-fio")}}
+                </label>
+                <label for="entity-position-k">
+                    <div>ФИО контактного лица</div>
+                    {{text_field('fio_contact_person', 'value':applicant.fio_contact_person, "id":"entity-fio-k", "data-name":"position-fio")}}
+                </label>
+                <label for="entity-phone">
+                    <div>Контактный факс, телефон</div>
+                    {{numeric_('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
+                </label>
+                <label for="entity-email">
+                    <div>E-mail</div>
+                    {{text_field('email', 'value':applicant.email, "id":"entity-email", "data-name":"position-fio" )}}
+                </label>
+                <div class="file-attachment">
+                    <img src="images/zaglushka.png" alt="">
+                </div>
+                <button class="save-tab-form">Сохранить изменения</button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}
