@@ -1,6 +1,7 @@
 <?php
 namespace Multiple\Backend\Models;
 use Phalcon\Mvc\Model;
+use Multiple\Backend\Form\ApplicantForm;
 
 class Applicant extends Model
 {

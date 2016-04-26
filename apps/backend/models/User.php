@@ -16,11 +16,15 @@ class User extends Model
     public $lastname;
     public $patronymic;
     public $phone;
+    public $activity;
 
     public function initialize()
     {
         $this->setSource('user');
-        $this->allowEmptyStringValues(['admin_comment', 'firstname', 'lastname', 'patronymic', 'phone']);
+        $this->allowEmptyStringValues(['admin_comment', 'firstname', 'lastname', 'patronymic', 'phone', 'status', 'date_registration', 'activity']);
+        $this->status = new RawValue('default');
+        $this->date_registration = new RawValue('Now()');//todo: check when edit
+        $this->activity = new RawValue('default');
     }
 
     public function getSource()
