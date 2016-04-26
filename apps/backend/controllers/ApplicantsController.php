@@ -33,7 +33,6 @@ class ApplicantsController  extends ControllerBase
             $this->flash->error("Applicant was not found");
             return $this->forward("user/index");
         }
-        $this->view->form = new ApplicantForm($applicant, array('edit' => true));
         $this->view->applicant = $applicant;
         $this->setMenu();
     }

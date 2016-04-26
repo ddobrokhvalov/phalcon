@@ -8,12 +8,12 @@
     <h1>Редактировать заявителя</h1>
     <div class="tabs-block">
         <div class="aplicant-tabs-label">
-            <div data-tabsLabel="legal-entity" class="active-tabs-label">Юридическое лицо</div>
-            <div data-tabsLabel="individual-entrepreneur">Индивидуальный предприниматель</div>
-            <div data-tabsLabel="physical-face">Физическое лицо</div>
+            <div data-tabsLabel="legal-entity" {%if applicant.type=="urlico" %}class="active-tabs-label"{%endif%}>Юридическое лицо</div>
+            <div data-tabsLabel="individual-entrepreneur {%if applicant.type=="ip" %}class="active-tabs-label"{%endif%}">Индивидуальный предприниматель</div>
+            <div data-tabsLabel="physical-face"  {%if applicant.type=="fizlico" %}class="active-tabs-label"{%endif%}>Физическое лицо</div>
         </div>
-        <div data-tabs="legal-entity" class="tabs-content active-tabs-content">
-            <form action="#" method="POST">
+        <div data-tabs="legal-entity" class="tabs-content {%if applicant.type=="urlico" %}active-tabs-content{%endif%}">
+            <form action="/admin/applicants/save" method="POST">
                 {{hidden_field('id', 'value':applicant.id)}}
                 {{hidden_field('type', 'value':'urlico')}}
                 <label for="entity-textarea">
@@ -50,7 +50,7 @@
                 </label>
                 <label for="entity-phone">
                     <div>Контактный факс, телефон</div>
-                    {{numeric_('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
+                    {{numeric_field('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
                 </label>
                 <label for="entity-email">
                     <div>E-mail</div>
@@ -62,8 +62,8 @@
                 <button class="save-tab-form">Сохранить изменения</button>
             </form>
         </div>
-        <div data-tabs="individual-entrepreneur" class="tabs-content">
-            <form action="#" method="POST">
+        <div data-tabs="individual-entrepreneur" class="tabs-content {%if applicant.type=="ip" %}active-tabs-content{%endif%}">
+            <form action="/admin/applicants/save" method="POST">
                 {{hidden_field('id', 'value':applicant.id)}}
                 {{hidden_field('type', 'value':'ip')}}
                 <label for="entity-textarea">
@@ -92,7 +92,7 @@
                 </label>
                 <label for="entity-phone">
                     <div>Контактный факс, телефон</div>
-                    {{numeric_('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
+                    {{numeric_field('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
                 </label>
                 <label for="entity-email">
                     <div>E-mail</div>
@@ -104,8 +104,8 @@
                 <button class="save-tab-form">Сохранить изменения</button>
             </form>
         </div>
-        <div data-tabs="physical-face" class="tabs-content">
-            <form action="#" method="POST">
+        <div data-tabs="physical-face" class="tabs-content {%if applicant.type=="fizlico" %}active-tabs-content{%endif%}">
+            <form action="/admin/applicants/save" method="POST">
                 {{hidden_field('id', 'value':applicant.id)}}
                 {{hidden_field('type', 'value':'fizlico')}}
                 <label for="entity-fio-z">
@@ -118,7 +118,7 @@
                 </label>
                 <label for="entity-phone">
                     <div>Контактный факс, телефон</div>
-                    {{numeric_('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
+                    {{numeric_field('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
                 </label>
                 <label for="entity-email">
                     <div>E-mail</div>
