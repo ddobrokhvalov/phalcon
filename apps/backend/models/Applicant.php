@@ -1,7 +1,6 @@
 <?php
 namespace Multiple\Backend\Models;
 use Phalcon\Mvc\Model;
-use Multiple\Backend\Form\ApplicantForm;
 
 class Applicant extends Model
 {
@@ -23,6 +22,7 @@ class Applicant extends Model
     public function initialize()
     {
         $this->setSource('applicant');
+        $this->allowEmptyStringValues(['fio_applicant', 'name_short', 'name_full', 'position', 'inn', 'kpp']);
     }
 
     public function getSource()

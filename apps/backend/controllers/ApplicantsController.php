@@ -5,6 +5,7 @@ use Phalcon\Mvc\Controller;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Backend\Models\Applicant;
 use Multiple\Library\PaginatorBuilder;
+use Multiple\Backend\Form\ApplicantForm;
 class ApplicantsController  extends ControllerBase
 {
     public function indexAction(){
@@ -33,9 +34,22 @@ class ApplicantsController  extends ControllerBase
             return $this->forward("user/index");
         }
         $this->view->form = new ApplicantForm($applicant, array('edit' => true));
+        $this->view->applicant = $applicant;
+        $this->setMenu();
     }
 
-    public function saveaAction()
+    public function editapplicantAction($id)
+    {
+        $applicant = Applicant::findFirstById($id);
+        if (!$applicant) {
+            $this->flash->error("Applicant was not found");
+            return $this->forward("user/index");
+        }
+        $this->view->form = new ApplicantForm($applicant, array('edit' => true));
+        $this->setMenu();
+    }
+
+    public function saveAction()
     {
         if (!$this->request->isPost()) {
             return $this->forward("user/index");

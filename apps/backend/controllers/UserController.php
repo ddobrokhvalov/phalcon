@@ -10,6 +10,7 @@ use Multiple\Backend\Models\Complaint;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Validator\UserValidator;
 use Phalcon\Validation\Validator\PresenceOf;
+use Multiple\Backend\Form\ApplicantForm;
 
 class UserController extends ControllerBase
 {
@@ -180,6 +181,42 @@ class UserController extends ControllerBase
         }
         $this->flash->success("user was deleted");
         return $this->forward("user/index");
+    }
+
+    public function saveapplicantAction()
+    {
+        if (!$this->request->isPost()) {
+            return $this->forward("user/index");
+        }
+        $id = $this->request->getPost("id", "int");
+        $applicant = Applicant::findFirstById($id);
+        if (!$applicant) {
+            //$this->flash->error("Product does not exist");
+            return $this->forward("user/index");
+        }
+        $form = new ApplicantForm(null, array('edit' => true));
+        $this->view->form = $form;
+        $data = $this->request->getPost();
+        if (!$form->isValid($data, $applicant)) {
+            foreach ($form->getMessages() as $message) {
+                // $this->flash->error($message);
+                var_dump($message);
+                exit;
+            }
+            return $this->forward('user/editapplicant/' . $id);
+        }
+        if ($applicant->save() == false) {
+            foreach ($applicant->getMessages() as $message) {
+                var_dump($message);
+                exit;
+                // $this->flash->error($message);
+            }
+            return $this->forward('user/editapplicant/' . $id);
+        }
+        $form->clear();
+        // $this->flash->success("Admins was updated successfully");
+        return $this->forward("user/index");
+
     }
 
 }
