@@ -129,7 +129,7 @@ class AdminsController extends ControllerBase
                 $this->flashSession->error($message);
         }
         if (!count($messages) ) {
-            $data['password'] = sha1($data['password']);
+            $data['password'] = sha1($post['password']);
             if($admin->save($data, array_keys($data)) == false)
                 foreach ($admin->getMessages() as $message)
                     $this->flashSession->error($message);
@@ -180,5 +180,42 @@ class AdminsController extends ControllerBase
         return $this->forward("admins/index");
     }
 
+    public function profilesaveAction(){
+        $result = array('success'=>true, 'errors'=>array());
+        $messages = [];
+        $admin = Admin::findFirstById($this->user->id);
+        $post = $this->request->getPost();
+        if (strlen($post['password']) > 0 || strlen($post['opassword']) > 0 || strlen($post['rpassword']) > 0) {
+            if(!strlen($post['opassword']))
+                $messages[] = 'Введите старый пароль';
+            elseif(sha1($post['opassword'])==$admin->password)
+                $messages[] = 'Cтарый пароль не верен';
+            elseif(!strlen($post['password']))
+                $messages[] = 'Введите новый пароль';
+            elseif($post['password']!==$post['rpassword'])
+                $messages[] = 'Пароли не совпадают';
+            else
+                $data['password'] = sha1($post['password']);
+        }
+        if (!count($messages)) {
+            if ($this->request->hasFiles() == true)
+                $admin->saveAvatar($this->request->getUploadedFiles());
+            $data = [
+                'email' => $post['email'],
+                'avatar' => $admin->avatar,
+                'name' =>$post['name'],
+                'surname' =>$post['surname'],
+                'patronymic' =>$post['patronymic'],
+            ];
+            $validation = new AdminValidator();
+            $messages = $validation->validate($data);
+            if (count($messages))
+                $result = array('success' => false, 'errors' => $messages);
+            elseif ($admin->save($data, array_keys($data)) == false)
+                $result = array('success' => false, 'errors' => $admin->getMessages());
+        } else $result = array('success' => false, 'errors' => $messages);
+        echo json_encode($result);
+        exit;
+    }
 
 }

@@ -1,7 +1,7 @@
 <header id="admin-header">
     <div class="admin-name">
-        <div><img src="/files/avatars/{{user.avatar}}" alt="avatar admin"></div>
-        <span>{{user.email}}</span>
+        <div><img src="/files/avatars/{{curuser.avatar}}" alt="avatar admin"></div>
+        <span>{{curuser.email}}</span>
     </div>
     <div class="admin-settings-logout">
         <div class="admin-settings"></div>
@@ -16,17 +16,25 @@
             <form action="#" method="POST">
                 <p>Личные данные</p>
                 <label for="download-avatar">
-                    <img src="/files/avatars/{{user.avatar}}" alt="">
+                    <img id="cur-avatar" src="/files/avatars/{{curuser.avatar}}" alt="">
                     <p>Изменить аватар</p>
-                    <input type="file" id="download-avatar">
+                    <input type="file" id="download-avatar" onchange="readAvatarURL(this)">
                 </label>
                 <label for="adm-set-email" class="set-same-lable">
                     <span>E-mail</span>
-                    <input type="email" id="adm-set-email" value="{{user.email}}">
+                    <input type="email" id="adm-set-email" value="{{curuser.email}}">
                 </label>
-                <label for="adm-set-fio" class="set-same-lable">
-                    <span>ФИО</span>
-                    <input type="text" id="adm-set-fio" value="{{user.surname}} {{user.name}}">
+                <label for="adm-set-surname" class="set-same-lable">
+                    <p>Фамилия</p>
+                    {{text_field('surname', 'value':curuser.surname, 'id':'adm-set-surname')}}
+                </label>
+                <label for="adm-set-name" class="set-same-lable">
+                    <p>Имя</p>
+                    {{text_field('name', 'value':curuser.name, 'id':'adm-set-name')}}
+                </label>
+                <label for="adm-set-patronymic" class="set-same-lable">
+                    <p>Отчество</p>
+                    {{text_field('patronymic', 'value':curuser.patronymic, 'id':'adm-set-patronymic')}}
                 </label>
                 <p>Сменить пароль</p>
                 <label for="set-oldPas" class="set-same-lable">
@@ -41,7 +49,7 @@
                     <span>Новый пароль еще раз</span>
                     <input type="password" id="set-newPass-agane">
                 </label>
-                <button>Сохранить</button>
+                <button id="j-profile-save">Сохранить</button>
             </form>
         </div>
     </article>

@@ -191,6 +191,11 @@ jQuery(document).ready(function($) {
 		$(this).hide();
 		$(this).parent().next().remove();
 	});
+
+	$('#j-profile-save').click(function() {
+		ajaxProfileUpdate();
+		return false;
+	});
 });
 var userPageLtContentLi = 0;
 //status block
@@ -203,3 +208,40 @@ var statModal = '<ul class="status-list-holder">' +
 					'<li rel = "recalled">Отозвана</li>' +
 					'<li rel = "archive">Архив</li>' +
 				'</ul>';
+
+function readAvatarURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$('#cur-avatar')
+				.attr('src', e.target.result);
+		};
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
+function ajaxProfileUpdate() {
+	var formData = new FormData();
+	if($("#download-avatar").val()!=='')
+		formData.append('file', $("#download-avatar")[0].files[0]);
+	formData.append('email', $("#adm-set-email").val());
+	formData.append('name', $("#adm-set-name").val());
+	formData.append('surname', $("#adm-set-surname").val());
+	formData.append('patronymic', $("#adm-set-patronymic").val());
+	formData.append('opassword', $("#set-oldPass").val());
+	formData.append('password', $("#set-newPass").val());
+	formData.append('rpassword', $("#set-newPass-agane").val());
+	$.ajax({
+		url : '/admin/admins/profilesave',
+		type : 'POST',
+		data : formData,
+		processData: false,
+		dataType: 'json',
+		contentType: false,
+		enctype: 'multipart/form-data',
+		success : function(data) {
+			console.log(data);
+		}
+	});
+	return false;
+}

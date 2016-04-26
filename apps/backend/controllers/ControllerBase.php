@@ -29,7 +29,7 @@ class ControllerBase extends Controller
                     )
                 )
             );
-            $this->view->user = $this->user;
+            $this->view->curuser = $this->user;
         }
         $this->view->showMenu = false;
     }
