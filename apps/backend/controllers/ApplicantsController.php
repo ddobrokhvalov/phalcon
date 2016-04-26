@@ -3,9 +3,12 @@ namespace Multiple\Backend\Controllers;
 
 use Phalcon\Mvc\Controller;
 use Phalcon\Paginator\Adapter\Model as Paginator;
+use \Phalcon\Paginator\Adapter\NativeArray as PaginatorArray;
 use Multiple\Backend\Models\Applicant;
+use Multiple\Backend\Models\Complaint;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Form\ApplicantForm;
+
 class ApplicantsController  extends ControllerBase
 {
     public function indexAction(){
@@ -32,7 +35,16 @@ class ApplicantsController  extends ControllerBase
                 'action' => 'index'
             ));
         }
+        $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
         $this->view->applicant = $applicant;
+        $paginator = new PaginatorArray(array(
+            "data"  => Complaint::findApplicantComplaints($applicant->id),
+            "limit" => 10,
+            "page"  => $numberPage
+        ));
+        $pages = $paginator->getPaginate();
+        $this->view->page = $pages;
+        $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->setMenu();
     }
 

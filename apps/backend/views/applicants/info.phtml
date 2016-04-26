@@ -30,18 +30,41 @@
                 <li><span>Дата подачи</span></li>
                 <li><span>Статус</span></li>
             </ul>
+            {% for complaint in page.items %}
             <ul class="lt-content-main top-bd-blue">
                 <li>
                     <div class="lt-psevdo-check"></div>
-                    Нарушение в КД по срокам, не соответстветствует ГОСТ
+                    {{complaint['complaint_name']}}
                 </li>
-                <li>201603322000548</li>
-                <li>22.01.2016</li>
+                <li>{{complaint['auction_id']}}</li>
+                <li>{{complaint['date']}}</li>
                 <li>
-                    <div class="appll-status-icon"></div>
+                    {% if complaint['status'] == 'draft' %}
+                    <span class="jl-status jl-chernov">Черновик</span>
+                    {% endif %}
+                    {% if complaint['status'] == 'justified' %}
+                    <span class="jl-status jl-done">Обоснована</span>
+                    {% endif %}
+                    {% if complaint['status'] == 'unfounded' %}
+                    <span class="jl-status jl-notdone">Необоснована</span>
+                    {% endif %}
+                    {% if complaint['status'] == 'under_consideration' %}
+                    <span class="jl-status jl-rassmotr">На рассмотрении</span>
+                    {% endif %}
+                    {% if complaint['status'] == 'submitted' %}
+                    <span class="jl-status jl-podana">Подана</span>
+                    {% endif %}
+                    {% if complaint['status'] == 'recalled' %}
+                    <span class="jl-status jl-fail">Отозвана</span>
+                    {% endif %}
+                    {% if complaint['status'] == 'archive' %}
+                    <span class="jl-status jl-archive">Архив</span>
+                    {% endif %}
+                    <!--div class="appll-status-icon"></div-->
                     <div class="close-status-list">Сменить статус</div>
                 </li>
             </ul>
+            {% endfor %}
             <ul class="lt-content-main"> <!-- add the required class -->
                 <li>
                     <div class="lt-psevdo-check"></div>
