@@ -4,16 +4,6 @@
 <div class="admin-main-wrap complaints-list">
     <h1>Список жалоб</h1>
     <div class="admin-lt-holder">
-        <!--div class="admin-lt-head">
-            <div class="select-all">
-                <div></div>Выбрать все
-            </div>
-            <div class="lt-head-btns">
-                <div>Отправить сообщение</div>
-                <div>Заблокировать</div>
-                <div>Удалить</div>
-            </div>
-        </div-->
         <div class="admin-lt-content">
             <ul class="lt-content-top">
                 <li></li>
@@ -28,10 +18,10 @@
             <ul class="lt-content-main">
                 <li><div class="lt-psevdo-check"></div></li>
                 <li>{{ truncate(complaint.complaint_name, 0, 5) }}</li>
-                <li>{{ truncate(complaint.purchases_name,0,35) }}</li>
+                <li>{{ truncate(complaint.purchases_name,0,10) }}</li>
                 <li>{{ complaint.auction_id }}</li>
                 <li>{{ date('Y.m.d', complaint.date|strtotime) }}</li>
-                <li>{{ truncate(complaint.purchases_made, 0, 25) }}</li>
+                <li>{{ truncate(complaint.purchases_made, 0, 10) }}</li>
                 <li>
                     {% if complaint.status == 'draft' %}
                     <span class="jl-status jl-chernov">Черновик</span>
