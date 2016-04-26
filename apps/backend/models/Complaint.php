@@ -8,6 +8,7 @@ class Complaint extends Model
 {
     public $id;
     public $applicant_id;
+    public $auction_id;
     public $type;
     public $purchases_made;
     public $purchases_name;
@@ -23,6 +24,7 @@ class Complaint extends Model
     public $data_provedeniya;
     public $okonchanie_rassmotreniya;
     public $vremya_provedeniya;
+    public $text;
 
     public function initialize()
     {

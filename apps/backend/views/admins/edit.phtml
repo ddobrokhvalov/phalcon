@@ -5,10 +5,10 @@
     <div class="bread-crumbs-holder">
         <a href="/admin/admins/index">Вернуться к списку администраторов</a>
     </div>
-    <h1>Ларина Екатерина Прокоповна</h1>
+    <h1>{{admin.surname}} {{admin.name}} {{admin.patronymic}}</h1>
     <div class="admin-change-access">
         <span>Редактирование пользователей</span>
-        <div class="change-access">Изменить доступ</div>
+        <div class="change-access j-change-access">Изменить доступ</div>
     </div>
     {{flashSession.output()}}
     <div class="block-user-editing">

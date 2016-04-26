@@ -22,4 +22,13 @@ class ComplaintsController extends ControllerBase
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->setMenu();
     }
+    public function previewAction($id){
+        /*echo "<pre>";
+        $complaint = Complaint::findFirstById($id);
+        var_dump($complaint->auction_id);
+        echo "</pre>";
+        die('');*/
+        $this->view->complaint = Complaint::findFirstById($id);
+        $this->setMenu();
+    }
 }

@@ -57,5 +57,4 @@
         {% if page.total_pages > page.current %}{{ link_to("admin/admins/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
     </div>
 </div>
-<div><a href="/admin/admins/add">Add admin</a></div>
 {% endblock %}
