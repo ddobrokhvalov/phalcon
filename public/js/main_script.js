@@ -205,6 +205,10 @@ jQuery(document).ready(function($) {
 		$('.alert-wrap, .alert-box').fadeOut(400);
 	});
 
+    $('.j-change-access').on('click', function () {
+        $('.admin-popup-wrap').fadeIn(200);
+    });
+
 });
 var userPageLtContentLi = 0;
 //status block
