@@ -209,6 +209,11 @@ jQuery(document).ready(function($) {
         $('.admin-popup-wrap').fadeIn(200);
     });
 
+    $('.j-permisions-save').on('click', function () {
+        submit_form_ajax('admin_permission');
+        //$('.admin-popup-wrap').fadeOut();
+    });
+
 });
 var userPageLtContentLi = 0;
 //status block
@@ -276,4 +281,31 @@ function showSomePopupMessage(type, message) {
 	if (type == 'info') {
 		$('.alert-box').addClass('alert-info');
 	}
+}
+
+function submit_form_ajax(selector) {
+    var formData = $(selector).serializeArray();
+    $.ajax({
+        type: "POST",
+        url: $(selector).attr('action'),
+        dataType: 'json',
+        cache: false,
+        data: formData,
+        error: function(){
+            showSomePopupMessage('info', 'Error while saving permisions');
+        },
+        success: function(data) {
+            var myobjres = data;
+            if(myobjres.status=='success') {
+                showSomePopupMessage('info', 'Success while saving data');
+            } else {
+                var errors_list = '';
+                for(var index in data['errors'] )
+                    errors_list = errors_list + data['errors'][index]+'\n\r';
+                showSomePopupMessage('error', errors_list);
+            }
+        },
+        timeout: 120000 // sets timeout to 2 minutes
+    });
+    return false;
 }
