@@ -209,9 +209,9 @@ jQuery(document).ready(function($) {
         $('.admin-popup-wrap').fadeIn(200);
     });
 
-    $('.j-permisions-save').on('click', function () {
+    $('#j-permisions-save').on('click', function () {
         submit_form_ajax('admin_permission');
-        //$('.admin-popup-wrap').fadeOut();
+        return false;
     });
 
 });
@@ -292,13 +292,13 @@ function submit_form_ajax(selector) {
         cache: false,
         data: formData,
         error: function(){
-            showSomePopupMessage('info', 'Error while saving permisions');
+            showSomePopupMessage('info', 'Error while saving data');
         },
         success: function(data) {
             var myobjres = data;
-            if(myobjres.status=='success') {
+            if(myobjres.status=='success')
                 showSomePopupMessage('info', 'Success while saving data');
-            } else {
+            else {
                 var errors_list = '';
                 for(var index in data['errors'] )
                     errors_list = errors_list + data['errors'][index]+'\n\r';
