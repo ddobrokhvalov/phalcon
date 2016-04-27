@@ -8,7 +8,6 @@ use Multiple\Backend\Models\Admin;
 use Multiple\Backend\Form\AdminForm;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Validator\AdminValidator;
-use Phalcon\Db\RawValue;
 use Phalcon\Validation\Validator\PresenceOf;
 
 class AdminsController extends ControllerBase
