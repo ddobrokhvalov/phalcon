@@ -25,6 +25,24 @@ class Permission extends Model
 
         return $perm;
     }
+
+    public function getAdminPermissionAsKeyArray($id){
+        $this->db=$this->getDi()->getShared('db');
+        $result=$this->db->query("SELECT * FROM permission");
+        $perm = $result->fetchAll();
+        $permtmp = array();
+        foreach($perm as $v){
+            $result=$this->db->query("SELECT * FROM permission_admin WHERE admin_id = $id AND permission_id =".$v['id']);
+            $result =  $result->fetchAll();
+            $permtmp[$v['name']] = $v;
+            if(count($result))
+                $permtmp[$v['name']]['pa'] = $result[0];
+            else  $permtmp[$v['name']]['pa'] = false;
+        }
+
+        return $permtmp;
+    }
+
     private function savePA($admin_id,$insert,$perm_id,$field,$value){
         if (!$insert) {
             if($field == 'read')

@@ -5,6 +5,7 @@ use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Backend\Models\Admin;
+use Multiple\Backend\Models\Permission;
 use Multiple\Backend\Form\AdminForm;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Validator\AdminValidator;
@@ -158,6 +159,8 @@ class AdminsController extends ControllerBase
             return $this->forward("admins/index");
         }
         $this->view->admin = $admin;
+        $permission = new Permission();
+        $this->view->permisions = $permission->getAdminPermissionAsKeyArray($admin->id);
         $this->setMenu();
     }
     
