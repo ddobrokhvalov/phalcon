@@ -6,6 +6,7 @@ use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Backend\Models\Admin;
 use Multiple\Backend\Models\Permission;
+use Multiple\Backend\Models\PermissionAdmin;
 use Multiple\Backend\Form\AdminForm;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Validator\AdminValidator;
@@ -220,4 +221,56 @@ class AdminsController extends ControllerBase
         exit;
     }
 
+    public function permissionssaveAction($id){
+        $post = $this->request->getPost();
+        $result = array('success'=>true);
+        $data = [
+            'user'=>[
+                'edit'=>isset($post['perm']['user']['edit'])?1:0,
+                'read'=>isset($post['perm']['user']['read'])?1:0
+            ],
+            'complaints'=>[
+                'edit'=>isset($post['perm']['complaints']['edit'])?1:0,
+                'read'=>isset($post['perm']['complaints']['read'])?1:0
+            ],
+            'lawyer'=>[
+                'edit'=>isset($post['perm']['lawyer']['edit'])?1:0,
+            ],
+            'arguments'=>[
+                'edit'=>isset($post['perm']['arguments']['edit'])?1:0,
+            ],
+            'template'=>[
+                'edit'=>isset($post['perm']['template']['edit'])?1:0,
+            ]
+        ];
+        $permissions = Permission::find();
+        foreach($permissions as $permission) {
+            if (isset($data[$permission->name])) {
+                $permissionAdmin = PermissionAdmin::findFirst(
+                    array(
+                        "permission_id = :permission_id: and admin_id = :admin_id:",
+                        'bind' => array(
+                            'permission_id' => $permission->id,
+                            'admin_id' => $id,
+                        )
+                    )
+                );
+                if(!$permissionAdmin){
+                    $permissionAdmin = new PermissionAdmin();
+                    $permissionAdmin->admin_id = $id;
+                    $permissionAdmin->permission_id = $permission->id;
+                }
+                if (isset($data[$permission->name]['edit'])) $permissionAdmin->edit = $data[$permission->name]['edit'];
+                if (isset($data[$permission->name]['read'])) $permissionAdmin->read = $data[$permission->name]['read'];
+                if($permissionAdmin->save()==false) {
+                    $result['success'] = false;
+                    foreach ($permissionAdmin->getMessages() as $message)
+                        $result['errors'][] = $message;
+                }
+            }
+        }
+
+        return json_encode(array('success'=>true));
+        exit;
+    }
 }

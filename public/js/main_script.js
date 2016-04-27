@@ -296,11 +296,11 @@ function submit_form_ajax(selector) {
         },
         success: function(data) {
             var myobjres = data;
-            if(myobjres.status=='success')
+            if(myobjres['success']==='true')
                 showSomePopupMessage('info', 'Success while saving data');
             else {
                 var errors_list = '';
-                for(var index in data['errors'] )
+                for(var index in myobjres['errors'] )
                     errors_list = errors_list + data['errors'][index]+'\n\r';
                 showSomePopupMessage('error', errors_list);
             }
