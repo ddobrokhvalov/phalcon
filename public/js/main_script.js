@@ -227,12 +227,11 @@ var statModal = '<ul class="status-list-holder">' +
 					'<li rel = "archive">Архив</li>' +
 				'</ul>';
 
-function readAvatarURL(input) {
+function readAvatarURL(input, imgid) {
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();
 		reader.onload = function (e) {
-			$('#cur-avatar')
-				.attr('src', e.target.result);
+			$(imgid).attr('src', e.target.result);
 		};
 		reader.readAsDataURL(input.files[0]);
 	}

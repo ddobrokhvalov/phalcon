@@ -45,10 +45,10 @@
                 </label>
                 <label for="adminAvatar">
                     <div class="avatar-wrapper">
-                        <img src="/files/avatars/{{admin.avatar}}" alt=""><!--todo: maby we need default image-->
+                        <img id="edit-avatar" src="/files/avatars/{{admin.avatar}}" alt=""><!--todo: maby we need default image-->
                     </div>
                     <p class="changeAvatar">Изменить аватар</p>
-                    {{file_field('avatar', 'value':'', 'id':'adminAvatar')}}
+                    {{file_field('avatar', 'value':'', 'id':'adminAvatar', 'onchange':"readAvatarURL(this, '#edit-avatar')")}}
                 </label>
             </div>
             <div class="delete-or-save">

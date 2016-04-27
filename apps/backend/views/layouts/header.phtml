@@ -18,7 +18,7 @@
                 <label for="download-avatar">
                     <img id="cur-avatar" src="/files/avatars/{{curuser.avatar}}" alt="">
                     <p>Изменить аватар</p>
-                    <input type="file" id="download-avatar" onchange="readAvatarURL(this)">
+                    <input type="file" id="download-avatar" onchange="readAvatarURL(this, '#cur-avatar')">
                 </label>
                 <label for="adm-set-email" class="set-same-lable">
                     <span>E-mail</span>
