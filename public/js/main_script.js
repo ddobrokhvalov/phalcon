@@ -210,7 +210,7 @@ jQuery(document).ready(function($) {
     });
 
     $('#j-permisions-save').on('click', function () {
-        submit_form_ajax('admin_permissions');
+        submit_form_ajax('#admin_permissions');
         return false;
     });
 
