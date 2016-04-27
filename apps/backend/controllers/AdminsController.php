@@ -269,8 +269,7 @@ class AdminsController extends ControllerBase
                 }
             }
         }
-
-        return json_encode(array('success'=>true));
+        return json_encode($result);
         exit;
     }
 }

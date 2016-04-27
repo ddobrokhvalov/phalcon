@@ -296,7 +296,7 @@ function submit_form_ajax(selector) {
         },
         success: function(data) {
             var myobjres = data;
-            if(myobjres['success']==='true')
+            if(myobjres['success']==true)
                 showSomePopupMessage('info', 'Success while saving data');
             else {
                 var errors_list = '';
