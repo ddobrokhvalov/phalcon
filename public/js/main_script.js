@@ -196,6 +196,15 @@ jQuery(document).ready(function($) {
 		ajaxProfileUpdate();
 		return false;
 	});
+
+	$('.alert-box').on('click', 'div', function () {
+		$('.alert-wrap, .alert-box').fadeOut(400);
+	});
+
+	$('.alert-substrate').on('click', function () {
+		$('.alert-wrap, .alert-box').fadeOut(400);
+	});
+
 });
 var userPageLtContentLi = 0;
 //status block
@@ -240,8 +249,27 @@ function ajaxProfileUpdate() {
 		contentType: false,
 		enctype: 'multipart/form-data',
 		success : function(data) {
-			console.log(data);
+			if(data['success']==true)
+				showSomePopupMessage('info', 'Ваш профиль успешно обновлен');
+			else {
+				var errors_list = '';
+				for(var index in data['errors'] ) 
+					errors_list = errors_list + data['errors'][index]+'\n\r';				
+				showSomePopupMessage('error', errors_list);
+			}
+
 		}
 	});
 	return false;
+}
+
+function showSomePopupMessage(type, message) {
+	$('.alert-wrap').fadeIn(400).css('position','static');
+	setTimeout(function () {
+		$('.alert-box').fadeIn(200).text(message);
+		$('.alert-box').append('<div></div>');
+	}, 400);
+	if (type == 'info') {
+		$('.alert-box').addClass('alert-info');
+	}
 }

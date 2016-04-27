@@ -73,6 +73,12 @@ class Application extends BaseApplication
 				'action' => 'index',
 			));
 
+			$router->add("/admin/", array(
+				'module' => 'backend',
+				'controller' => 'login',
+				'action' => 'index',
+			));
+
 			$router->add("/admin/login", array(
 				'module' => 'backend',
 				'controller' => 'login',
