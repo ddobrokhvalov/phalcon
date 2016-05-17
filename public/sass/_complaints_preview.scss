@@ -146,6 +146,79 @@
 		padding-left: 22px;
 	}
 }
+.complaints-preview-wrap {
+    h1 {
+        font-size: 46px;
+        line-height: 1.1;
+        font-weight: 100;
+        margin: 0 0 16px 1px;
+    }
+    .complaints-content h2 {
+        padding: 32px 0 28px;
+        border-bottom: 1px solid #e0e3ea;
+        font-size: 32px;
+        line-height: 1.1;
+        font-weight: 100;
+    }
+    .complaints-main h3, .complaints-lawyer-quest h3 {
+        margin-bottom: 18px;
+        font-size: 32px;
+        line-height: 1.1;
+        font-weight: 100;
+    }
+    .complaints-lawyer-quest h3 {
+        margin-bottom: 10px;
+    }
+    .compl-quest-cont form::before {
+        background-color: #e0e3ea;
+        bottom: 0;
+        content: "";
+        height: 1px;
+        left: -35px;
+        position: absolute;
+        width: 963px;
+    }
+    .compl-quest-cont:last-child form::before {
+        display: none;
+    }
+    .compl-quest-cont form::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+    .compl-quest-cont:last-child form {
+        padding-bottom: 50px;
+    }
+    .complaints-main {
+        padding: 20px 70px 20px 24px;
+    }
+    .bread-crumbs-holder a:hover {
+        text-decoration: none;
+    }
+    .notification-number-box .rightly-wrongly {
+        box-sizing: initial;
+    }
+    .edit-notification-box {
+        a {
+            font-size: 16px;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+    } 
+
+}
+ 
+/*.complaints-lawyer-quest form:last-child::before {
+    display: block;
+}*/
+
+/*.complaints-lawyer-quest form:last-child {
+    padding-bottom: 84px;
+}*/
+
+
+
 .complaints-lawyer-quest {
 	margin-top: 43px;
 	padding: 40px 0 34px 35px;
@@ -172,12 +245,6 @@
 		}
 		&:not(:first-child) {
 			margin-top: 30px;
-		}
-		&:last-child {
-			padding-bottom: 50px;
-		}
-		&:last-child:before {
-			display: none;
 		}
 		p {
 			margin-bottom: 5px;
@@ -308,4 +375,62 @@
 /* Scroll styling */
 .complaints-main .mCSB_inside > .mCSB_container {
     padding: 20px 70px 20px 0;
+}
+
+.complaints-list {
+    .admin-lt-content {
+        li:first-child {
+            border-left: medium none;
+            padding-left: 0;
+            width: 0;
+        }
+        li:nth-child(2) {
+            width: 282px;
+            border-left: none;
+            line-height: 24px;
+        }
+        li:nth-child(3) {
+            width: 175px;
+        }
+        li:nth-child(4) {
+            width: 95px;
+        }
+        li:nth-child(5) {
+            width: 95px;
+            padding-right: 11px;
+        }
+        li:nth-child(6) {
+            width: 150px;
+        }
+    }
+    .lt-content-top li:nth-child(2) {
+        border-left: medium none;
+        line-height: 75px;
+        width: 282px;
+    }
+    .lt-content-main {
+        li:nth-child(7) {
+            text-align: center;
+        }
+        .has-questions {
+            width: 100%;
+            display: inline-block;
+            height: 100%;
+            background: rgba(0, 0, 0, 0) url("../images/icon-lm-dd.png") no-repeat scroll center center;
+        }
+        .no-questions {
+            width: 100%;
+            display: inline-block;
+            height: 100%;
+            background-position: 50% 50%;
+            background: rgba(0, 0, 0, 0) url("../images/icon-lm-ddcl.png") no-repeat scroll center center;
+        }
+    }
+    h1 {
+        display: inline-block;
+        margin-bottom: 32px;
+    }
+    .admin-lt-holder {
+        border-top: 1px solid #e0e3ea;
+    }
 }

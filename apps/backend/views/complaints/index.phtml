@@ -17,8 +17,8 @@
             {% for complaint in page.items %}
             <ul class="lt-content-main">
                 <li></li>
-                {% if complaint.purchases_name | length > 110 %}
-                <li style="padding-top: 15px;">{{ truncate(complaint.purchases_name, 0, 110) }}</li>
+                {% if complaint.purchases_name | length > 100 %}
+                <li style="padding-top: 15px;">{{ truncate(complaint.purchases_name, 0, 100) }}</li>
                 {% else %}
                 <li style="padding-top: 25px;">{{ complaint.purchases_name }}</li>
                 {% endif %}
