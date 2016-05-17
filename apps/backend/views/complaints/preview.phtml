@@ -4,7 +4,7 @@
     <!-- ****************** complaints preview ***************** -->
     <div class="admin-main-wrap complaints-preview-wrap">
         <div class="bread-crumbs-holder">
-            <a href="/admin/compliants/index">Вернуться на страницу жалоб</a>
+            <a href="/admin/complaints/index">Вернуться на страницу жалоб</a>
         </div>
         <h1>Просмотр жалобы</h1>
         <div class="notification-number-box notif-unreasonably"> <!-- if notification is rightly - remoove class "notif-unreasonably" -->
@@ -23,53 +23,53 @@
         <div class="details-complaint">
             <div class="deploy-complaint"><span>Показать подробно</span></div>
             <div class="complaints-content">
-                <h2>Жалоба на положение аукционной документации</h2>
+                <h2>{{complaint.complaint_name}}</h2>
                 <div class="complaints-doc">
                     <p><span></span><span></span>Решение по извещению 127563728493872.dov (125 Кб)</p>
                     <p><span></span><span></span>Доказательства.pdf (34 Кб)</p><!--todo:-->
                 </div>
                 <div class="complaints-main mCustomScrollbar">
-                    <h3>{{complaint.complaint_name}}</h3>
-                    {{complaint.text}}
+                    <h3>{{complaint.purchases_name}}</h3>
+                    {{complaint.complaint_text}}
                 </div>
             </div>
         </div>
         <div class="complaints-lawyer-quest">
             <h3>Вопросы юристу</h3>
+            {% set questions = complaint.getComplaintQuestion() %}
+            {% for question in questions %}
             <div class="compl-quest-cont">
-                <p>— Согласно п.1 ст.58 гл.7 ТК ТС «Страной происхождения товаров считается страна, в которой товары были полностью произведены или подвергнуты достаточной обработке (переработке) в соответствии с критериями, установленными таможенным законодательством таможенного союза.</p>
-                <div class="clarifying-issue">
-                    <p>При этом под страной происхождения товаров может пониматься группа стран, либо таможенные союзы стран, либо регион или часть страны, если имеется необходимость их выделения для целей определения страны происхождения товаров».</p>
-                    <p>Ч.2 ст.58 гл.7 ТК ТС «Документами, подтверждающими страну происхождения товаров, являются декларация о происхождении товара или сертификат о происхождении товара».</p>
-                    <p>Таким образом документом, подтверждающим страну происхождения товара, является декларация или сертификат о происхождении товара, но в соответствии с действующим законодательством предоставление данных документов при поставке/выполнении работ не требуется.</p>
-                    <p>Так же просим обратить внимание на запутанную и неясную инструкцию, которая, вместе с техническим заданием вводит УРЗ в заблуждение, ввиду</p>
-                </div>
-                <div class="legal-advisor">
-                    <div><img src="images/admin-picture2.png" alt=""></div>
-                    <p>Катерина Ларина</p>
-                    <span>Ваш юридический консультант</span>
-                </div>
+                {% set answers = complaint.getComplaintQuestionAnswer(question.id) %}
+                {% if answers.count() == 0 %}
+                    <form action="#" method="POST">
+                        <p>— {{question.text}}</p>
+                        <label for="" class="hidden-textarea">
+                            <span>Новое сообщение</span>
+                            <div></div>
+                            <textarea name="lawyer-answer"></textarea>
+                        </label>
+                        <div class="opacity-btn"></div>
+                        <button>Ответить</button>
+                    </form>
+                {% else %}
+                    <p>— {{question.text}}</p>
+                    {% set answers = complaint.getComplaintQuestionAnswer(question.id) %}
+                    {% for answer in answers %}
+                        <div class="clarifying-issue">
+                        {{answer.text}}
+                        </div>
+                        <div class="legal-advisor">
+                            {% set answer_owner = complaint.getAnswerOwner(answer.admin_id) %}
+                            {% if answer_owner['photo'] %}
+                                <div><img src="/files/avatars/{{answer_owner['photo']}}" alt=""></div>
+                            {% endif %}
+                            <p>{{answer_owner['user']}}</p>
+                            <span>Ваш юридический консультант</span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
-            <form action="#" method="POST">
-                <p>— Таким образом документом, подтверждающим страну происхождения товара?</p>
-                <label for="" class="hidden-textarea">
-                    <span>Новое сообщение</span>
-                    <div></div>
-                    <textarea name="lawyer-answer"></textarea>
-                </label>
-                <div class="opacity-btn"></div>
-                <button>Ответить</button>
-            </form>
-            <form action="#" method="POST">
-                <p>— Двойные вопросы - нормальное поведение пользоватлея поэтому нам нужнос делать кнопку ответисть?</p>
-                <label for="" class="hidden-textarea">
-                    <span>Новое сообщение</span>
-                    <div></div>
-                    <textarea name="lawyer-answer"></textarea>
-                </label>
-                <div class="opacity-btn"></div>
-                <button>Ответить</button>
-            </form>
+            {% endfor %}
         </div>
     </div>
     <!-- ******************************************************* -->

@@ -18,7 +18,7 @@ class Question extends Model
     public function initialize()
     {
         $this->setSource("question");
-        $this->belongsTo('complaint_id', 'Complaint', 'id');
+        $this->belongsTo('complaint_id', 'Multiple\Backend\Models\Complaint', 'id');
     }
 
     public function getSource()

@@ -23,12 +23,8 @@ class ComplaintsController extends ControllerBase
         $this->setMenu();
     }
     public function previewAction($id){
-        /*echo "<pre>";
-        $complaint = Complaint::findFirstById($id);
-        var_dump($complaint->auction_id);
-        echo "</pre>";
-        die('');*/
         $this->view->complaint = Complaint::findFirstById($id);
         $this->setMenu();
     }
+
 }

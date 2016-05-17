@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/settings.php';
-define('TRUSTED_PROJECT_ROOT', $_SERVER['DOCUMENT_ROOT']);
+define('TRUSTED_PROJECT_ROOT', "C:/xampp/htdocs/fas.local");
 define('TRUSTED_MODULE_ROOT', TRUSTED_PROJECT_ROOT . TRUSTED_MODULE_PATH);
 define('TRUSTED_URI_HOST', 'https://' . $_SERVER["HTTP_HOST"]);
 define('TRUSTED_URI_MODULE', TRUSTED_URI_HOST);

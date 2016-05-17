@@ -29,7 +29,7 @@ class Complaint extends Model
     public function initialize()
     {
         $this->setSource('complaint');
-        $this->hasMany('id', 'Question', 'complaint_id');
+        $this->hasMany('id', 'Multiple\Backend\Models\Question', 'complaint_id', array('alias' => 'Question'));
     }
 
     public function getSource()
@@ -37,7 +37,7 @@ class Complaint extends Model
         return 'complaint';
     }
 
-    public function getComplainQuestion(){
+    public function getComplaintQuestion(){
         return Question::find(array(
             "complaint_id = :complaint_id:",
             'bind' => array(
@@ -45,6 +45,33 @@ class Complaint extends Model
             ),
             "order" => "id DESC",
         ));
+    }
+    
+    public function getComplaintQuestionAnswer($question_id){
+        return Answer::find(array(
+            "question_id = :question_id:",
+            'bind' => array(
+                'question_id' => $question_id,
+            ),
+        ));
+    }
+
+    public function getAnswerOwner($admin_id){
+        $db_object = Admin::find(array(
+            "id = :id:",
+            'bind' => array(
+                'id' => $admin_id,
+            ),
+        ))->toArray();
+        $answer_owner = array();
+        $answer_owner['photo'] = $db_object[0]['avatar'];
+        $answer_owner['user'] = "{$db_object[0]['name']} {$db_object[0]['surname']}";
+        return $answer_owner;
+    }
+    
+    public function getCountQuestions($question) {
+        $rows = $question->toArray();
+        return count($rows) ? '<span class="has-questions"></span>' : '<span class="no-questions"></span>';
     }
 
     public function findUserComplaints($user_id, $status,$applicant_id =false)

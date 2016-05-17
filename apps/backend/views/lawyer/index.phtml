@@ -22,7 +22,7 @@
                 {% for compliant in page.items %}
                 <li>
                     <p>{{compliant.complaint_name}}Нарушения по ГОСТ</p>
-                    {% set questions = compliant.getComplainQuestion() %}
+                    {% set questions = compliant.getComplaintQuestion() %}
                     {% for question in questions %}
                     <ul>
                         <li>{{date('d.m.Y', question.date|strtotime)}}</li>

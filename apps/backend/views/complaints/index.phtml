@@ -7,21 +7,24 @@
         <div class="admin-lt-content">
             <ul class="lt-content-top">
                 <li></li>
-                <li><span>Тайтл</span></li>
-                <li><span>Наименование закупки</span></li>
-                <li><span>Закупка №</span></li>
+                <li><span>Название жалобы</span></li>
+                <li><span>№</span></li>
                 <li><span>Дата</span></li>
-                <li><span>На</span></li>
+                <li><span>Вопросы</span></li>
                 <li><span>Статус</span></li>
+                <li></li>
             </ul>
             {% for complaint in page.items %}
             <ul class="lt-content-main">
-                <li><div class="lt-psevdo-check"></div></li>
-                <li>{{ truncate(complaint.complaint_name, 0, 5) }}</li>
-                <li>{{ truncate(complaint.purchases_name,0,10) }}</li>
+                <li></li>
+                {% if complaint.purchases_name | length > 110 %}
+                <li style="padding-top: 15px;">{{ truncate(complaint.purchases_name, 0, 110) }}</li>
+                {% else %}
+                <li style="padding-top: 25px;">{{ complaint.purchases_name }}</li>
+                {% endif %}
                 <li>{{ complaint.auction_id }}</li>
                 <li>{{ date('Y.m.d', complaint.date|strtotime) }}</li>
-                <li>{{ truncate(complaint.purchases_made, 0, 10) }}</li>
+                <li>{{ complaint.getCountQuestions(complaint.Question) }}</li>
                 <li>
                     {% if complaint.status == 'draft' %}
                     <span class="jl-status jl-chernov">Черновик</span>
@@ -39,6 +42,7 @@
                     <span class="jl-status jl-archive">Архив</span>
                     {% endif %}
                 </li>
+                <li>{{ link_to("admin/complaints/preview/" ~ complaint.id, 'Просмотреть') }}</li>
             </ul>
             {% endfor %}
         </div>
