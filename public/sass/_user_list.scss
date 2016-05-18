@@ -23,7 +23,7 @@
 		&:nth-child(5) span,
 		&:nth-child(6) {
 			padding-right: 16px;
-			background: #fff url(../images/arrow-to-down.png) 100% 50% no-repeat;
+			background: $white url(../images/arrow-to-down.png) 100% 50% no-repeat;
 		}
 	}
 }

@@ -79,7 +79,7 @@
 	right: 0;
 	z-index: 1;
 	width: 335px;
-	background-color: #fff;
+	background-color: $white;
 	-webkit-box-shadow: 0px 0px 5px 1px rgba(50, 50, 50, 0.5);
 	-moz-box-shadow: 0px 0px 5px 1px rgba(50, 50, 50, 0.5);
 	box-shadow: 0px 0px 5px 1px rgba(50, 50, 50, 0.5);
@@ -115,7 +115,7 @@
 	position: relative;
 	z-index: 3;
 	padding: 0 34px 0 28px;
-	background-color: #fff;
+	background-color: $white;
 	form > p {
 		font-size: 22px;
 		font-weight: 100;
@@ -182,7 +182,7 @@
 		font-weight: 600;
 		line-height: 50px;
 		letter-spacing: 1px;
-		color: #fff;
+		color: $white;
 		text-transform: uppercase;
 		border: none;
 		border-radius: 6px;

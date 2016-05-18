@@ -58,6 +58,7 @@ jQuery(document).ready(function($) {
 				}
 			});
 		}
+        changeShowHideButtonBackground();
 	});
 	$('.lt-content-main').click(function() {
 		$(this).find('.lt-psevdo-check').toggleClass('psevdo-checked');
@@ -74,6 +75,7 @@ jQuery(document).ready(function($) {
 				$(this).css('background-color', '#fff');
 			}
 		}
+        changeShowHideButtonBackground();
 	});
 	// change text on arguments list category
 	$('.lt-arg-second .lt-content-main li p').click(function() {
@@ -227,6 +229,114 @@ var statModal = '<ul class="status-list-holder">' +
 					'<li rel = "archive">Архив</li>' +
 				'</ul>';
 
+function delete_arguments() {
+    var id_array = [];
+    $('.admin-lt-holder.lt-arg .lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #argument-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "delete",
+            type:'POST',
+            data: { ids: id_array },
+            dataType: 'json',
+            success: function(data){
+                if (data == 'ok') {
+                   window.location.reload();
+                }
+            }
+        });
+    }
+    $('.confirm-modal-argument-lg').modal('hide');
+}
+
+function delete_categories() {
+    var id_array = [];
+    $('.admin-lt-holder.lt-arg-second .lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #argument-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "deleteCategory",
+            type:'POST',
+            data: { ids: id_array },
+            dataType: 'json',
+            success: function(data){
+                $('.confirm-modal-category-lg').modal('hide');
+                if (data == 'ok') {
+                   window.location.reload();
+                } else {
+                    $('.modal-cant-delete-category').modal('show');
+                }
+            }
+        });
+    }
+}
+
+function add_category(name){
+    if (name.length) {
+        $.ajax({
+            url: "addCategory",
+            type:'POST',
+            data: { name: name },
+            dataType: 'json',
+            success: function(data){
+                $('.modal-add-category-lg').modal('hide');
+                window.location.reload();
+            }
+        });
+    }
+}
+
+function show_hide_arguments(hide) {
+    var id_array = [];
+    $('.admin-lt-holder.lt-arg .lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #argument-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "hideShow",
+            type:'POST',
+            data: { ids: id_array, hide: hide },
+            dataType: 'json',
+            success: function(data){
+                if (data == 'ok') {
+                   window.location.reload();
+                }
+            }
+        });
+    }
+    $('.confirm-modal-lg').modal('hide');
+}
+
+function changeShowHideButtonBackground() {
+    var id_array = [];
+    $('.admin-lt-holder.lt-arg .lt-content-main.hidden-arg').each(function(){
+        var id = $(this).find('div.psevdo-checked #argument-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $(".disabled-btn").addClass("enabled-btn").removeClass("disabled-btn");
+    } else {
+        $(".enabled-btn").addClass("disabled-btn").removeClass("enabled-btn");
+    }
+}
+
+function hide_arguments() {
+    console.log("hidden");
+}
+                
 function readAvatarURL(input, imgid) {
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();

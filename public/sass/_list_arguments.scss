@@ -19,7 +19,7 @@
 		&:nth-child(2) span,
 		&:nth-child(3) span {
 			padding-right: 16px;
-			background: #fff url(../images/arrow-to-down.png) 100% 50% no-repeat;
+			background: $white url(../images/arrow-to-down.png) 100% 50% no-repeat;
 		}
 	}
 }
@@ -74,7 +74,7 @@
 			text-align: left;
 			border: 1px solid $border-grey;
 			border-radius: 2px;
-			background-color: #fff;
+			background-color: $white;
 			@include box-s;
 		} 
 		span {
@@ -86,7 +86,7 @@
 			font-size: 14px;
 			line-height: 38px;
 			font-weight: 600;
-			color: #fff;
+			color: $white;
 			text-align: center;
 			text-transform: uppercase;
 			border-radius: 2px;

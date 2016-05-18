@@ -31,7 +31,7 @@
 		&:last-child {
 			float: right;
 			padding: 0 28px;
-			color: #fff;
+			color: $white;
 			background-color: $blue;
 			&:hover {
 				background-color: $h-blue;
@@ -44,7 +44,7 @@
 		&:nth-child(1) span,
 		&:nth-child(2) span {
 			padding-right: 16px;
-			background: #fff url(../images/arrow-to-down.png) 100% 50% no-repeat;
+			background: $white url(../images/arrow-to-down.png) 100% 50% no-repeat;
 		}
 	}
 }
@@ -98,8 +98,18 @@
 	&:hover {
 		font-weight: normal;
 		color: #bcbcbd;
-		background-color: #fff;
+		background-color: $white;
 	}
+}
+.list-arguments .lt-head-btns {
+    div {
+        padding: 0 18px;
+        &:hover {
+            color: $white;
+            font-weight: 600;
+            text-decoration: none;
+        }
+    }
 }
 .appll-status-icon {
 	margin: 26px auto 0;
@@ -126,7 +136,7 @@
 		cursor: pointer;
 		&:not(:last-child):hover {
 			font-weight: 600;
-			color: #fff;
+			color: $white;
 			background-color: $h-blue;
 		}
 		&:last-child {

@@ -65,7 +65,7 @@
 		font-size: 14px;
 		font-weight: 600;
 		line-height: 50px;
-		color: #fff;
+		color: $white;
 		text-transform: uppercase;
 		border-radius: 6px;
 		background-color: $blue;
@@ -149,7 +149,7 @@
 	li {
 		span {
 			padding-right: 16px;
-			background: #fff url(../images/arrow-to-down.png) 100% 50% no-repeat;
+			background: $white url(../images/arrow-to-down.png) 100% 50% no-repeat;
 		}
 	}
 }
@@ -194,7 +194,7 @@
 	color: #222427;
 	text-transform: uppercase;
 	cursor: pointer;
-	background-color: #fff;
+	background-color: $white;
 	border: 1px solid $border-grey;
 	border-bottom: none;
 	&:before {
@@ -215,7 +215,7 @@
 	z-index: 11;
 	@include box-s;
 	width: 181px;
-	background-color: #fff;
+	background-color: $white;
 	border: 1px solid $border-grey;
 	li {
 		padding-left: 43px !important;

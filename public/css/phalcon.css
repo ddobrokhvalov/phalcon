@@ -536,8 +536,6 @@ a:visited {
     text-decoration: underline;
 }
 .lm-logo {
-    background: rgba(0, 0, 0, 0) url("../images/lmlogo.png") no-repeat scroll center center;
-    float: left;
     height: 90px;
     width: 100%;
 }
@@ -3104,4 +3102,7 @@ caption, th, td {
 }
 q, blockquote {
     quotes: none;
+}
+.modal-footer {
+    border-top: none !important;
 }

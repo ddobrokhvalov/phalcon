@@ -9,9 +9,9 @@
 }
 .admin-add {
 	float: right;
-    margin-top: 6px;
+    margin-top: -25px;
 	width: 286px;
-	color: #fff;
+	color: $white;
 	font-size: 14px;
 	font-weight: 600;
 	line-height: 50px;
@@ -21,6 +21,9 @@
 	background-color: $blue;
 	&:hover {
 		background-color: $h-blue;
+        text-decoration: none;
+        color: $white;
+        font-weight: 600;
 	}
 }
 .admin-lt-head {
@@ -54,6 +57,13 @@
 .lt-head-btns {
 	float: right;
 	text-transform: uppercase;
+    .disabled-btn {
+       color: #bfc0c2;
+       &:hover {
+           color: $white;
+           background-color: #bfc0c2;
+       }
+    }
 	div {
 		float: left;
 		margin: 21px 0 0 12px;
@@ -63,13 +73,17 @@
 		color: $blue;
 		cursor: pointer;
 		border-radius: 2px;
+        a, button {
+            display: block;
+        }
 		&:first-child {
 			margin-left: 0;
 		}
 		&:hover{
-			color: #fff;
+			color: $white;
 			font-weight: 600;
 			background-color: $h-blue;
+            margin-left: 10px;
 		}
 	}
 }
@@ -83,7 +97,7 @@
 		&:nth-child(4) span,
 		&:nth-child(5) span {
 			padding-right: 16px;
-			background: #fff url(../images/arrow-to-down.png) 100% 50% no-repeat;
+			background: $white url(../images/arrow-to-down.png) 100% 50% no-repeat;
 		}
 	}
 }
@@ -100,6 +114,7 @@
 }
 .admin-lt-content {
 	ul {
+        margin-bottom: 0;
 		border-bottom: 1px solid $border-grey;
 		&:not(:first-child) {
 			li:first-child {
@@ -111,6 +126,9 @@
 			@include hasla;
 		}
 	}
+    .hidden-arg {
+        color: #bfc0c2 !important;
+    }
 	li {
 		float: left;
 		padding-left: 11px;

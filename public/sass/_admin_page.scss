@@ -26,7 +26,7 @@
 	text-align: center;
 	font-size: 14px;
 	font-weight: 600;
-	color: #fff;
+	color: $white;
 	text-transform: uppercase;
 	background-color: $blue;
 	border-radius: 6px;
@@ -51,7 +51,7 @@
 		position: relative;
 		display: block;
 		margin-bottom: 22px;
-		background-color: #fff;
+		background-color: $white;
 		p {
 			line-height: 38px;
 		}
@@ -137,7 +137,7 @@
 		text-transform: uppercase;
 		border: none;
 		border-radius: 6px;
-		background-color: #fff;
+		background-color: $white;
 		cursor: pointer;
 		outline: none;
 		&:hover {
@@ -147,7 +147,7 @@
 			float: right;
 			font-size: 17px;
 			letter-spacing: 1px;
-			color: #fff;
+			color: $white;
 			background-color: $blue;
 			&:hover {
 				background-color: $h-blue;

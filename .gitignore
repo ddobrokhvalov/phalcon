@@ -3,3 +3,5 @@
 base-template.phtml%*
 /public/files/documents
 /public/files/avatars
+public/.sass-cache/
+public/config.rb

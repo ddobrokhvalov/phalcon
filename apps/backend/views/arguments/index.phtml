@@ -10,9 +10,25 @@
                 <div></div>Выбрать все
             </div>
             <div class="lt-head-btns">
-                <div>Скрыть</div>
-                <div>Удалить</div>
+                <div onclick="show_hide_arguments(1)">Скрыть</div>
+                <div class="disabled-btn" onclick="show_hide_arguments(0)">Показать</div>
+                <div class="btn" data-toggle="modal" data-target=".confirm-modal-argument-lg">Удалить</div>
             </div>
+            <div class="modal fade confirm-modal-argument-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Удалить выбранные доводы?</h4>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <button type="button" onclick="delete_arguments()" class="btn btn-primary">Удалить</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
         </div>
         <div class="admin-lt-content">
             <ul class="lt-content-top">
@@ -21,9 +37,9 @@
                 <li><span>Добавлен</span></li>
             </ul>
             {% for argument in Arguments %}
-            <ul class="lt-content-main">
+            <ul class="lt-content-main {% if argument.argument_status == 0 %} hidden-arg {% endif %}">
                 <li>
-                    <div class="lt-psevdo-check"></div>
+                    <div class="lt-psevdo-check">{{hidden_field('argument-id', 'value':argument.id)}}</div>
                     {{argument.name}}
                 </li>
                 <li>{{argument.catname}}</li>
@@ -39,15 +55,65 @@
                 <div></div>Выбрать все
             </div>
             <div class="lt-head-btns">
-                <div>Создать</div>
-                <div>Удалить</div>
+                <div class="btn" data-toggle="modal" data-target=".modal-add-category-lg">Создать</div>
+                <div class="btn delete-category-btn" data-toggle="modal" data-target=".confirm-modal-category-lg">Удалить</div>
+            </div>
+            <div class="modal fade modal-add-category-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Добавить новую категорию</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
+                        <label for="category-name" class="control-label">Название категории:</label>
+                        <input type="text" class="form-control" id="category-name">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <button type="button" onclick="add_category($('#category-name').val())" class="btn btn-primary">Сохранить</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="modal fade confirm-modal-category-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Удалить выбранные категории?</h4>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <button type="button" onclick="delete_categories()" class="btn btn-primary">Удалить</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade modal-cant-delete-category" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Невозможно удалить категории в которых есть доводы</h4>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
         <div class="admin-lt-content">
             {% for category in ArgumentsCategory %}
             <ul class="lt-content-main">
                 <li>
-                    <div class="lt-psevdo-check"></div>
+                    <div class="lt-psevdo-check">{{hidden_field('argument-id', 'value':category.id)}}</div>
                     <p>{{category.name}}</p>
                     <input type="text">
                     <span>Сохранить</span>
