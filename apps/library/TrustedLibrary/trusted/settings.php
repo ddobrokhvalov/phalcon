@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 
 define("TRUSTED_DEBUG", false);
 
