@@ -10,15 +10,29 @@
         <div class="notification-number-box notif-unreasonably"> <!-- if notification is rightly - remoove class "notif-unreasonably" -->
             <p>Номер извещения №
                 <span>{{complaint.auction_id}}</span>
-                <span class="rightly-wrongly">Необоснованна</span>
+                {{ complaint.getComplaintStatus(complaint.status) }}
             </p>
         </div>
         <div class="edit-notification-box">
             <a href="#" class="edit-notif-active">Редактировать</a>
-            <a href="#">Копировать</a>
-            <a href="#">Отозвать</a>
-            <a href="#">В архив</a>
-            <a href="#">Удалить</a>
+            <a href="#" onclick="change_complaint_status({{complaint.id}}, 'copy')">Копировать</a>
+            <a href="#" onclick="change_complaint_status({{complaint.id}}, 'recalled')">Отозвать</a>
+            <a href="#" onclick="change_complaint_status({{complaint.id}}, 'archive')">В архив</a>
+            <a href="#"><div data-toggle="modal" data-target=".confirm-deletion-complaint-lg">Удалить</div></a>
+        </div>
+        <div class="modal fade confirm-deletion-complaint-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Удалить жалобу?</h4>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="button" onclick="delete_complaint({{complaint.id}})" class="btn btn-primary">Удалить</button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="details-complaint">
             <div class="deploy-complaint"><span>Показать подробно</span></div>

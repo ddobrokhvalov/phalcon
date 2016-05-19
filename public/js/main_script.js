@@ -59,6 +59,7 @@ jQuery(document).ready(function($) {
 			});
 		}
         changeShowHideButtonBackground();
+        changeBlockUnblockButtonBackground();
 	});
 	$('.lt-content-main').click(function() {
 		$(this).find('.lt-psevdo-check').toggleClass('psevdo-checked');
@@ -76,6 +77,7 @@ jQuery(document).ready(function($) {
 			}
 		}
         changeShowHideButtonBackground();
+        changeBlockUnblockButtonBackground();
 	});
 	// change text on arguments list category
 	$('.lt-arg-second .lt-content-main li p').click(function() {
@@ -319,18 +321,141 @@ function show_hide_arguments(hide) {
 }
 
 function changeShowHideButtonBackground() {
+    if($('.admin-main-wrap').hasClass('list-arguments')) {
+        var id_array = [];
+        $('.admin-lt-holder.lt-arg .lt-content-main.hidden-arg').each(function(){
+            var id = $(this).find('div.psevdo-checked #argument-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $(".disabled-btn").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $(".enabled-btn").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+    }
+}
+
+function delete_complaint(complaint_id) {
+    if (complaint_id) {
+        $.ajax({
+            url: "/admin/complaints/deleteComplaint",
+            type:'POST',
+            data: { id: complaint_id },
+            dataType: 'json',
+            success: function(data){
+                if (data == 'ok') {
+                   window.location.href = "/admin/complaints/index";
+                } else {
+                    window.location.reload();
+                }
+            }
+        });
+    }
+    $('.confirm-modal-lg').modal('hide');
+}
+
+function change_complaint_status(complaint_id, status) {
+    if (complaint_id && status.length) {
+        $.ajax({
+            url: "/admin/complaints/changeComplaintStatus",
+            type:'POST',
+            data: { id: complaint_id, status: status },
+            dataType: 'json',
+            success: function(data){
+                if (data == 'ok') {
+                   window.location.reload();
+                }
+            }
+        });
+    }
+}
+
+function delete_users(){
     var id_array = [];
-    $('.admin-lt-holder.lt-arg .lt-content-main.hidden-arg').each(function(){
-        var id = $(this).find('div.psevdo-checked #argument-id').val();
+    $('.admin-lt-holder .lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #user-id').val();
         if (id != undefined) {
             id_array.push(id);
         }
     });
     if (id_array.length) {
-        $(".disabled-btn").addClass("enabled-btn").removeClass("disabled-btn");
-    } else {
-        $(".enabled-btn").addClass("disabled-btn").removeClass("enabled-btn");
+        $.ajax({
+            url: "deleteUsers",
+            type:'POST',
+            data: { ids: id_array },
+            dataType: 'json',
+            success: function(data){
+                $('.confirm-deletion-user-lg').modal('hide');
+                if (data == 'ok') {
+                   window.location.reload();
+                }
+            }
+        });
     }
+}
+
+function block_unblock_users(block) {
+    var id_array = [];
+    $('.admin-lt-holder .lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #user-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "blockUnblock",
+            type:'POST',
+            data: { ids: id_array, block: block },
+            dataType: 'json',
+            success: function(data){
+                if (data == 'ok') {
+                   window.location.reload();
+                }
+            }
+        });
+    }
+}
+
+function changeBlockUnblockButtonBackground() {
+    if($('.admin-main-wrap').hasClass('user-list')){
+        var id_array = [];
+        $('.admin-lt-holder .lt-content-main.hidden-arg').each(function(){
+            var id = $(this).find('div.psevdo-checked #user-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $(".disabled-btn").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $(".enabled-btn").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+    }
+}
+
+function send_message(subject, body){
+    var id_array = [];
+    $('.admin-lt-holder .lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #user-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "sendMessage",
+            type:'POST',
+            data: { toids: id_array, subject: subject, body: body },
+            dataType: 'json',
+            success: function(data){
+                $('.modal-send-message-lg').modal('hide');
+            }
+        });
+    }
+    window.location.reload();
 }
 
 function hide_arguments() {

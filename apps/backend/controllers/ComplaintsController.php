@@ -22,9 +22,43 @@ class ComplaintsController extends ControllerBase
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->setMenu();
     }
+
     public function previewAction($id){
         $this->view->complaint = Complaint::findFirstById($id);
         $this->setMenu();
     }
 
+    public function deleteComplaintAction(){
+        $data = "ok";
+        $complaint_id = $this->request->getPost("id");
+        
+        if($complaint_id){
+            $complaint = Complaint::find(
+                array(
+                    'id = :id:',
+                    'bind' => array(
+                        'id' => $complaint_id
+                    )
+                )
+            )->delete();
+        } else {
+            $data = FALSE;
+        }
+        $this->view->disable();
+        echo json_encode($data);
+    }
+
+    public function changeComplaintStatusAction(){
+        $data = "ok";
+        $status = $this->request->getPost("status");
+        $complaint_id = $this->request->getPost("id");
+        
+        if($status && $complaint_id){
+            @Complaint::changeStatus($status, array($complaint_id));
+        } else {
+            $data = FALSE;
+        }
+        $this->view->disable();
+        echo json_encode($data);
+    }
 }

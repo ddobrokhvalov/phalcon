@@ -5,6 +5,7 @@ use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Backend\Models\User;
+use Multiple\Backend\Models\Messages;
 use Multiple\Backend\Models\Applicant;
 use Multiple\Backend\Models\Complaint;
 use Multiple\Library\PaginatorBuilder;
@@ -182,4 +183,73 @@ class UserController extends ControllerBase
         return $this->forward("user/index");
     }    
 
+    public function deleteUsersAction(){
+        $user_ids = $this->request->getPost("ids");
+        
+        if(count($user_ids)){
+            $users = User::find(
+                array(
+                    'id IN ({ids:array})',
+                    'bind' => array(
+                        'ids' => $user_ids
+                    )
+                )
+            )->delete();
+        }
+        $this->view->disable();
+
+        $data = "ok";
+        echo json_encode($data);
+    }
+
+    public function blockUnblockAction(){
+        $users_ids = $this->request->getPost("ids");
+        $block = $this->request->getPost("block");
+        
+        if(count($users_ids)){
+            $users = User::find(
+                array(
+                    'id IN ({ids:array})',
+                    'bind' => array(
+                        'ids' => $users_ids
+                    )
+                )
+            );
+            foreach ($users as $user) {
+                if ($block) {
+                    $user->status = 0;
+                } else {
+                    $user->status = 1;
+                }
+                $user->update();
+            }
+        }
+        $this->view->disable();
+
+        $data = "ok";
+        echo json_encode($data);
+    }
+
+    public function sendMessageAction(){
+        $from = $this->user->id;
+        $toids = $this->request->getPost("toids");
+        $subject = $this->request->getPost("subject");
+        $body = $this->request->getPost("body");
+        
+        if(count($toids) && $from){
+            foreach ($toids as $to){
+                $message = new Messages();
+                $message->from_uid = $from;
+                $message->to_uid = $to;
+                $message->subject = $subject;
+                $message->body = $body;
+                $message->time = date('Y-m-d H:i:s');
+                $message->save();
+            }
+        }
+        $this->view->disable();
+
+        $data = "ok";
+        echo json_encode($data);
+    }
 }

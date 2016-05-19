@@ -10,10 +10,51 @@
                 <div></div>Выбрать все
             </div>
             <div class="lt-head-btns">
-                <div>Отправить сообщение</div>
-                <div>Заблокировать</div>
-                <div>Удалить</div>
+                <div class="btn" data-toggle="modal" data-target=".modal-send-message-lg">Отправить сообщение</div>
+                <div onclick="block_unblock_users(1)">Заблокировать</div>
+                <div class="disabled-btn" onclick="block_unblock_users(0)">Разблокировать</div>
+                <div data-toggle="modal" data-target=".confirm-deletion-user-lg">Удалить</div>
             </div>
+        </div>
+        <div class="modal fade modal-send-message-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Отправить сообщение</h4>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <label for="message-subject" class="control-label">Тема:</label>
+                    <input type="text" class="form-control" id="message-subject">
+                  </div>
+                  <div class="form-group">
+                    <label for="message-text" class="control-label">Сообщение:</label>
+                    <textarea class="form-control" id="message-text"></textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="button" onclick="send_message($('#message-subject').val(), $('#message-text').val())" class="btn btn-primary">Отправить</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade confirm-deletion-user-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Удалить выбранных пользователей?</h4>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="button" onclick="delete_users()" class="btn btn-primary">Удалить</button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="admin-lt-content">
             <ul class="lt-content-top">
@@ -25,8 +66,8 @@
                 <li><span>Тариф</span></li>
             </ul>
             {% for user in page.items %}
-            <ul class="lt-content-main">
-                <li><div class="lt-psevdo-check"></div>{{user.email}} {{user.firstname}} {{user.patronymic}} {{user.lastname}}</li>
+            <ul class="lt-content-main {% if user.status == 0 %} hidden-arg {% endif %}">
+                <li><div class="lt-psevdo-check">{{hidden_field('user-id', 'value':user.id)}}</div>{{user.lastname}} {{user.firstname}} {{user.patronymic}}</li>
                 <li>{{user.phone}}</li>
                 <li>35</li>
                 <li>29</li>

@@ -25,23 +25,7 @@
                 <li>{{ complaint.auction_id }}</li>
                 <li>{{ date('Y.m.d', complaint.date|strtotime) }}</li>
                 <li>{{ complaint.getCountQuestions(complaint.Question) }}</li>
-                <li>
-                    {% if complaint.status == 'draft' %}
-                    <span class="jl-status jl-chernov">Черновик</span>
-                    {% elseif complaint.status == 'justified' %}
-                    <span class="jl-status jl-done">Обоснована</span>
-                    {% elseif complaint.status == 'unfounded' %}
-                    <span class="jl-status jl-notdone">Необоснована</span>
-                    {% elseif complaint.status == 'under_consideration' %}
-                    <span class="jl-status jl-rassmotr">На рассмотрении</span>
-                    {% elseif complaint.status == 'submitted' %}
-                    <span class="jl-status jl-podana">Подана</span>
-                    {% elseif complaint.status == 'recalled' %}
-                    <span class="jl-status jl-fail">Отозвана</span>
-                    {% elseif complaint.status == 'archive' %}
-                    <span class="jl-status jl-archive">Архив</span>
-                    {% endif %}
-                </li>
+                <li>{{ complaint.getComplaintStatus(complaint.status) }}</li>
                 <li>{{ link_to("admin/complaints/preview/" ~ complaint.id, 'Просмотреть') }}</li>
             </ul>
             {% endfor %}

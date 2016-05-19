@@ -260,8 +260,8 @@ class AdminsController extends ControllerBase
                     $permissionAdmin->admin_id = $id;
                     $permissionAdmin->permission_id = $permission->id;
                 }
-                if (isset($data[$permission->name]['edit'])) $permissionAdmin->edit = $data[$permission->name]['edit'];
-                if (isset($data[$permission->name]['read'])) $permissionAdmin->read = $data[$permission->name]['read'];
+                isset($data[$permission->name]['edit']) ? $permissionAdmin->edit = $data[$permission->name]['edit'] : $permissionAdmin->edit = 0;
+                isset($data[$permission->name]['read']) ? $permissionAdmin->read = $data[$permission->name]['read'] : $permissionAdmin->read = 0;
                 if($permissionAdmin->save()==false) {
                     $result['success'] = false;
                     foreach ($permissionAdmin->getMessages() as $message)
@@ -269,7 +269,7 @@ class AdminsController extends ControllerBase
                 }
             }
         }
-        return json_encode($result);
-        exit;
+        $this->view->disable();
+        echo json_encode($result);
     }
 }

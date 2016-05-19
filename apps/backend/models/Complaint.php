@@ -3,6 +3,7 @@ namespace Multiple\Backend\Models;
 
 use Phalcon\Mvc\Model;
 use Multiple\Backend\Models\Question;
+use Multiple\Backend\Models\ComplaintMovingHistory;
 
 class Complaint extends Model
 {
@@ -113,6 +114,27 @@ class Complaint extends Model
         foreach ($data as $k => $v) {
 
             $this->$k = $v;
+        }
+    }
+
+    public function getComplaintStatus($status){
+        switch ($status) {
+            case 'draft':
+                return '<span class="jl-status jl-chernov">Черновик</span>';
+            case 'justified':
+                return '<span class="jl-status jl-done">Обоснована</span>';
+            case 'unfounded':
+                return '<span class="jl-status jl-notdone">Необоснована</span>';
+            case 'under_consideration':
+                return '<span class="jl-status jl-rassmotr">На рассмотрении</span>';
+            case 'submitted':
+                return '<span class="jl-status jl-podana">Подана</span>';
+            case 'recalled':
+                return '<span class="jl-status jl-fail">Отозвана</span>';
+            case 'archive':
+                return '<span class="jl-status jl-archive">Архив</span>';
+            default:
+                return '';
         }
     }
 
