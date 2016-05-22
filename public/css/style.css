@@ -906,7 +906,7 @@ h4 {
 .complaints-main {
   border: 1px solid #e0e3ea;
   padding-left: 24px;
-  max-height: 841px; }
+  /*max-height: 841px;*/ }
   /* line 135, ../sass/_complaints_preview.scss */
   .complaints-main h3 {
     margin-bottom: 18px; }
@@ -2110,108 +2110,153 @@ h4 {
   padding-right: 16px;
   background: #ffffff url(../images/arrow-to-down.png) 100% 50% no-repeat; }
 
-/* line 52, ../sass/_applicant_page.scss */
+/* line 53, ../sass/_applicant_page.scss */
+.list-logs .admin-lt-content li:first-child {
+  width: 130px; }
+/* line 56, ../sass/_applicant_page.scss */
+.list-logs .admin-lt-content li:nth-child(2) {
+  width: 185px; }
+/* line 59, ../sass/_applicant_page.scss */
+.list-logs .admin-lt-content .lt-content-main li:nth-child(3) {
+  line-height: 24px;
+  width: 480px;
+  padding-top: 25px; }
+/* line 64, ../sass/_applicant_page.scss */
+.list-logs .admin-lt-content li:nth-child(4) {
+  width: 165px; }
+/* line 67, ../sass/_applicant_page.scss */
+.list-logs .admin-lt-content .lt-content-top li:nth-child(3) {
+  width: 480px; }
+/* line 71, ../sass/_applicant_page.scss */
+.list-logs .left-side {
+  float: left;
+  width: 50%; }
+/* line 75, ../sass/_applicant_page.scss */
+.list-logs .right-side {
+  float: right;
+  width: 50%; }
+/* line 79, ../sass/_applicant_page.scss */
+.list-logs a:hover {
+  text-decoration: none; }
+/* line 82, ../sass/_applicant_page.scss */
+.list-logs .submit-button {
+  background-color: #00aeef;
+  border-radius: 2px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 53px;
+  margin-top: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 150px;
+  border: none; }
+  /* line 94, ../sass/_applicant_page.scss */
+  .list-logs .submit-button:hover {
+    background-color: #10b8f7; }
+
+/* line 100, ../sass/_applicant_page.scss */
 .appllicant-page .admin-lt-content .lt-content-main li:last-child {
   padding-left: 0;
   width: 72px; }
-/* line 56, ../sass/_applicant_page.scss */
+/* line 104, ../sass/_applicant_page.scss */
 .appllicant-page .admin-lt-content li {
   padding-left: 12px; }
-  /* line 58, ../sass/_applicant_page.scss */
+  /* line 106, ../sass/_applicant_page.scss */
   .appllicant-page .admin-lt-content li:first-child {
     padding-left: 34px;
     width: 626px; }
-  /* line 62, ../sass/_applicant_page.scss */
+  /* line 110, ../sass/_applicant_page.scss */
   .appllicant-page .admin-lt-content li:nth-child(2) {
     width: 155px; }
-  /* line 65, ../sass/_applicant_page.scss */
+  /* line 113, ../sass/_applicant_page.scss */
   .appllicant-page .admin-lt-content li:nth-child(3) {
     width: 112px; }
-  /* line 68, ../sass/_applicant_page.scss */
+  /* line 116, ../sass/_applicant_page.scss */
   .appllicant-page .admin-lt-content li:nth-child(4) {
     width: 72px; }
 
-/* line 73, ../sass/_applicant_page.scss */
+/* line 121, ../sass/_applicant_page.scss */
 .appllicant-page .admin-lt-content .lt-content-main {
   border-bottom: none;
   border-top: 3px solid #211d1e; }
-  /* line 76, ../sass/_applicant_page.scss */
+  /* line 124, ../sass/_applicant_page.scss */
   .appllicant-page .admin-lt-content .lt-content-main.top-bd-blue {
     border-top: 3px solid #00aeef; }
-  /* line 79, ../sass/_applicant_page.scss */
+  /* line 127, ../sass/_applicant_page.scss */
   .appllicant-page .admin-lt-content .lt-content-main.top-bd-green {
     border-top: 3px solid #29d3b2; }
-  /* line 82, ../sass/_applicant_page.scss */
+  /* line 130, ../sass/_applicant_page.scss */
   .appllicant-page .admin-lt-content .lt-content-main.top-bd-red {
     border-top: 3px solid #f26d7d; }
-  /* line 85, ../sass/_applicant_page.scss */
+  /* line 133, ../sass/_applicant_page.scss */
   .appllicant-page .admin-lt-content .lt-content-main li {
     line-height: 72px; }
-    /* line 87, ../sass/_applicant_page.scss */
+    /* line 135, ../sass/_applicant_page.scss */
     .appllicant-page .admin-lt-content .lt-content-main li:first-child {
       padding-left: 34px; }
-  /* line 91, ../sass/_applicant_page.scss */
+  /* line 139, ../sass/_applicant_page.scss */
   .appllicant-page .admin-lt-content .lt-content-main:last-child {
     border-bottom: 1px solid #e0e3ea; }
 
-/* line 95, ../sass/_applicant_page.scss */
+/* line 143, ../sass/_applicant_page.scss */
 .appllicant-page .lt-head-btns div {
   color: #bcbcbd;
   padding: 0 18px; }
-  /* line 98, ../sass/_applicant_page.scss */
+  /* line 146, ../sass/_applicant_page.scss */
   .appllicant-page .lt-head-btns div:hover {
     font-weight: normal;
     color: #bcbcbd;
     background-color: #ffffff; }
 
-/* line 105, ../sass/_applicant_page.scss */
+/* line 153, ../sass/_applicant_page.scss */
 .list-arguments .lt-head-btns div {
   padding: 0 18px; }
-  /* line 107, ../sass/_applicant_page.scss */
+  /* line 155, ../sass/_applicant_page.scss */
   .list-arguments .lt-head-btns div:hover {
     color: #ffffff;
     font-weight: 600;
     text-decoration: none; }
 
-/* line 114, ../sass/_applicant_page.scss */
+/* line 162, ../sass/_applicant_page.scss */
 .appll-status-icon {
   margin: 26px auto 0;
   width: 22px;
   height: 22px;
   background: url(../images/icon-jl-chernov.png) 0 0 no-repeat; }
 
-/* line 120, ../sass/_applicant_page.scss */
+/* line 168, ../sass/_applicant_page.scss */
 .top-bd-blue .appll-status-icon {
   background-image: url(../images/icon-jl-rassmotr.png); }
 
-/* line 123, ../sass/_applicant_page.scss */
+/* line 171, ../sass/_applicant_page.scss */
 .top-bd-green .appll-status-icon {
   background-image: url(../images/icon-jl-done.png); }
 
-/* line 126, ../sass/_applicant_page.scss */
+/* line 174, ../sass/_applicant_page.scss */
 .top-bd-red .appll-status-icon {
   background-image: url(../images/icon-jl-notdone.png); }
 
-/* line 130, ../sass/_applicant_page.scss */
+/* line 178, ../sass/_applicant_page.scss */
 .appllicant-page .lt-head-btns div {
   cursor: default; }
 
-/* line 135, ../sass/_applicant_page.scss */
+/* line 183, ../sass/_applicant_page.scss */
 .appllicant-page .lt-head-btns.active-lt-head-btns div {
   cursor: pointer; }
-  /* line 137, ../sass/_applicant_page.scss */
+  /* line 185, ../sass/_applicant_page.scss */
   .appllicant-page .lt-head-btns.active-lt-head-btns div:not(:last-child):hover {
     font-weight: 600;
     color: #ffffff;
     background-color: #10b8f7; }
-  /* line 142, ../sass/_applicant_page.scss */
+  /* line 190, ../sass/_applicant_page.scss */
   .appllicant-page .lt-head-btns.active-lt-head-btns div:last-child {
     color: #00aeef; }
 
-/* line 147, ../sass/_applicant_page.scss */
+/* line 195, ../sass/_applicant_page.scss */
 .appllicant-page .lt-content-main {
   position: relative; }
-  /* line 149, ../sass/_applicant_page.scss */
+  /* line 197, ../sass/_applicant_page.scss */
   .appllicant-page .lt-content-main li {
     position: relative;
     z-index: 9; }

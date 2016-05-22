@@ -1,9 +1,42 @@
 {% extends "base-template.phtml" %}
 {% block title %}ФАС ОНЛАЙН - АДМИНИСТРАТОРЫ{% endblock %}
 {% block body %}
+<div class="admin-main-wrap list-logs">
+<h1>Логи</h1>
 <div class="filter">
-    <form id="filter_form" action="/admin/log/index" method="post">
-        админ\пользователь
+    <!--<form id="filter_form" action="/admin/log/index" method="post">
+        <div class="left-side">
+            <div>Роль</div>
+            <div>
+                <select id="au" name="au">
+                    <option value="all" {% if postdata['au'] == "all" %} selected {% endif %} >Все</option>
+                    <option value="администратор" {% if postdata['au'] == "администратор" %} selected {% endif %} >Администратор</option>
+                    <option value="пользователь" {% if postdata['au'] == "пользователь" %} selected {% endif %} >Пользователь</option>
+                </select>
+            </div>
+            <div>Дата от</div>
+            <div>
+                <input type="text" name="datefrom" id="datepicker1" value="{{ postdata['datefrom'] }}">
+            </div>
+            <input class="submit-button" type="submit" value="Поиск">
+        </div>
+        <div class="right-side">
+            <div>Тип</div>
+            <div>
+                <select id="type" name="type">
+                    <option value="all" {% if postdata['type'] == "all" %} selected {% endif %} >Все</option>
+                    {% for type in typelist %}
+                    <option value="{{ type['type'] }}" {% if postdata['type'] == type['type'] %} selected {% endif %}>{{ type['type'] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>До</div>
+            <div>
+                <input type="text" name="dateto" id="datepicker2" value="{{ postdata['dateto'] }}">
+            </div>
+        </div>
+        <div style="clear: both;"></div>-->
+        <!--админ\пользователь
            <select id="au" name="au">
                 <option value="all" {% if postdata['au'] == "all" %} selected {% endif %} >Все</option>
                 <option value="администратор" {% if postdata['au'] == "администратор" %} selected {% endif %} >Администратор</option>
@@ -24,10 +57,10 @@
         дата от
         <input type="text" name="datefrom" id="datepicker1" value="{{ postdata['datefrom'] }}">
         до
-        <input type="text" name="dateto" id="datepicker2" value="{{ postdata['dateto'] }}">
+        <input type="text" name="dateto" id="datepicker2" value="{{ postdata['dateto'] }}">-->
 
-        <input type="submit" value="Поиск">
-    </form>
+        
+    <!--</form>-->
     <script>
         $( document ).ready(function() {
 
@@ -55,10 +88,9 @@
 
 <div class="admin-lt-content">
     <ul class="lt-content-top">
-        <li><span>Администратор\Пользователь</span></li>
+        <li><span>Роль</span></li>
         <li><span>Тип</span></li>
         <li><span>Сообщение</span></li>
-        <li><span>Дополнительно</span></li>
         <li><span>Дата</span></li>
     </ul>
     {% for log in page.items %}
@@ -66,8 +98,6 @@
         <li>{{ log.au }}</li>
         <li>{{ log.type }}</li>
         <li>{{ log.text }}</li>
-        <li>{{ log.text }}</li>
-        <li>{{ log.additionally }}</li>
         <li>{{ log.date }}</li>
     </ul>
     {% endfor %}
@@ -93,5 +123,6 @@
         {% endfor %}
     </ul>
     {% if page.total_pages > page.current %}{{ link_to("admin/log/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
+</div>
 </div>
 {% endblock %}

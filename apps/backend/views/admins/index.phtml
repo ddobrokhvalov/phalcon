@@ -13,8 +13,22 @@
             <div class="lt-head-btns">
                 <div>Отправить сообщение</div>
                 <div>Заблокировать</div>
-                <div>Удалить</div>
+                <a href="#"><div data-toggle="modal" data-target=".confirm-deletion-admin-lg">Удалить</div></a>
             </div>
+        </div>
+        <div class="modal fade confirm-deletion-admin-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Удалить админа?</h4>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="button" onclick="delete_admins()" class="btn btn-primary">Удалить</button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="admin-lt-content">
             <ul class="lt-content-top">
@@ -26,7 +40,7 @@
             </ul>
             {% for user in page.items %}
             <ul class="lt-content-main">
-                <li><div class="lt-psevdo-check"></div></li>
+                <li><div class="lt-psevdo-check">{{hidden_field('admin-id', 'value':user.id)}}</div></li>
                 <li>{% if user.avatar!='' %}<img src="/files/avatars/{{user.avatar}}" alt="">{% endif %}</li>
                 <li>{{user.surname}} {{user.name}}</li>
                 <li>{{user.email}}</li>

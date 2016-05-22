@@ -183,6 +183,26 @@ class AdminsController extends ControllerBase
         return $this->forward("admins/index");
     }
 
+    public function deleteAdminsAction(){
+        $user_ids = $this->request->getPost("ids");
+        
+        if(count($user_ids)){
+            $users = Admin::find(
+                array(
+                    'id IN ({ids:array})',
+                    'bind' => array(
+                        'ids' => $user_ids
+                    )
+                )
+            )->delete();
+            $this->flashSession->success("Администратор успешно удален");
+        }
+        $this->view->disable();
+
+        $data = "ok";
+        echo json_encode($data);
+    }
+
     public function profilesaveAction(){
         $result = array('success'=>true, 'errors'=>array());
         $messages = [];

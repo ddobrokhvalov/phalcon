@@ -3106,3 +3106,43 @@ q, blockquote {
 .modal-footer {
     border-top: none !important;
 }
+.successMessage {
+    color:#3c763d;
+    border: 1px solid;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 10px;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-bottom: 5px;
+}
+.infoMessage {
+    color:#31708f;
+    border: 1px solid;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 10px;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-bottom: 5px;
+}
+.warningMessage {
+    color:#8a6d3b;
+    border: 1px solid;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 10px;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-bottom: 5px;
+}
+.errorMessage {
+    color:#a94442;
+    border: 1px solid;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 10px;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-bottom: 5px;
+}

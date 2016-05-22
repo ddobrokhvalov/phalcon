@@ -20,6 +20,7 @@
 <section class="page-wrap">
 {{ partial("layouts/header")}}
 <main id="main">
+{{flashSession.output()}}
 {% block body %}
 {% endblock %}
 </main>

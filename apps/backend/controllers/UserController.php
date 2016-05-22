@@ -117,6 +117,15 @@ class UserController extends ControllerBase
         $user = new User();
         $post = $this->request->getPost();
         $data['email'] = $post['email'];
+        $user = User::findFirstByEmail($post['email']);
+        if ($user) {
+            $this->flashSession->error("Пользователь с имейлом {$post['email']} уже существует");
+            return $this->dispatcher->forward(array(
+                'module' => 'backend',
+                'controller' => 'user',
+                'action' => 'index'
+            ));
+        }
         foreach(['lastname', 'firstname', 'patronymic', 'phone', 'admin_comment', 'password'] as $key)
            $data[$key] = $post[$key];
         $validation = new UserValidator();
@@ -133,7 +142,7 @@ class UserController extends ControllerBase
                 foreach ($messages as $message)
                     $this->flashSession->error($message);
             } else
-                $this->flashSession->success("Your information was stored correctly!");
+                $this->flashSession->success("Пользователь успешно сохранен");
         }
         if(count($messages))
             return $this->dispatcher->forward(array(

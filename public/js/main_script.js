@@ -458,6 +458,28 @@ function send_message(subject, body){
     window.location.reload();
 }
 
+function delete_admins(){
+    var id_array = [];
+    $('.admin-lt-holder .lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #admin-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "deleteAdmins",
+            type:'POST',
+            data: { ids: id_array },
+            dataType: 'json',
+            success: function(data){
+                $('.confirm-deletion-admin-lg').modal('hide');
+                window.location.reload();
+            }
+        });
+    }
+}
+
 function hide_arguments() {
     console.log("hidden");
 }

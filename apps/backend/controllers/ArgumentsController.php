@@ -29,8 +29,38 @@ class ArgumentsController  extends ControllerBase
     }
 
     public function addAction(){
+        $data = $this->request->getPost("arguments");
+        $errors = FALSE;
+        if ($data) {
+            $argument = new Arguments();
+            foreach ($data as $field => $value) {
+                if ($value) {
+                    $argument->$field = $value;
+                } else {
+                    $this->flashSession->error($this->getFieldName($field) . ' не может быть пустым');
+                    $errors = TRUE;
+                    //return $this->forward("/admin/index");
+                }
+            }
+            if (!$errors) {
+                $argument->argument_status = 1;
+                $argument->date = date('Y-m-d H:i:s');
+                $argument->save();
+                $this->flashSession->success('Довод успешно сохранен');
+            }
+        }
+        
         $this->setMenu();
         $this->view->ArgumentsCategory = ArgumentsCategory::find();
+    }
+
+    public function getFieldName($database_name){
+        $fields = array(
+            'name' => 'Заголовок довода',
+            'text' => 'Текст довода',
+            'category_id' => 'Категория довода',
+        );
+        return $fields[$database_name];
     }
 
     public function deleteAction(){

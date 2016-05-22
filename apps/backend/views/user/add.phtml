@@ -13,6 +13,7 @@
             <div class="left-block-editing">
                 <span>Данные пользователя</span>
                 <label for="fUser">
+                    <p>Фамилия</p>
                     {{text_field('lastname', 'value':'', 'id':'fUser')}}
                 </label>
                 <label for="iUser">
@@ -39,7 +40,7 @@
                     {{password_field('password', 'value':'', 'id':'userPass')}}
                 </label>
                 <label for="sendEmailNotice" class="lebel-checkbox">
-                    {{check_field('password', 'value':'', 'id':'sendEmailNotice')}}
+                    {{check_field('sendEmail', 'value':'', 'id':'sendEmailNotice')}}
                     <p>Отправлять уведомления на e-mail</p>
                 </label>
                 <label for="userComment">
@@ -57,6 +58,7 @@
 <script>
     $( document ).ready(function() {
         $( "#password" ).val('');
+        $( "#userEmail" ).val('');
     });
 </script>
 {% endblock %}

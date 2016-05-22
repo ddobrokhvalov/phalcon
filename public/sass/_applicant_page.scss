@@ -48,6 +48,54 @@
 		}
 	}
 }
+.list-logs {
+    .admin-lt-content{
+        li:first-child {
+        width: 130px;
+    }
+    li:nth-child(2) {
+        width: 185px;
+    }
+    .lt-content-main li:nth-child(3) {
+        line-height: 24px;
+        width: 480px;
+        padding-top: 25px;
+    }
+    li:nth-child(4) {
+        width: 165px;
+    }
+    .lt-content-top li:nth-child(3) {
+        width: 480px;
+    }
+    }
+    .left-side {
+        float: left;
+        width: 50%;
+    }
+    .right-side {
+        float: right;
+        width: 50%;
+    }
+    a:hover{
+        text-decoration: none;
+    }
+    .submit-button {
+        background-color: #00aeef;
+        border-radius: 2px;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 53px;
+        margin-top: 15px;
+        text-align: center;
+        text-transform: uppercase;
+        width: 150px;
+        border: none;
+        &:hover {
+            background-color: #10b8f7;
+        }
+    }
+}
 .appllicant-page .admin-lt-content {
 	.lt-content-main li:last-child {
 		padding-left: 0;
