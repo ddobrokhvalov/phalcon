@@ -3,15 +3,15 @@
 {% block body %}
 <div class="admin-main-wrap edit-aplicant">
     <div class="bread-crumbs-holder">
-        <a href="/admin/applicants/index">Вернуться на страницу заявителей</a>
+        <a href="/admin/applicants/info/{{applicant.id}}">Вернуться на страницу заявителя</a>
     </div>
     {{flashSession.output()}}
     <h1>Редактировать заявителя</h1>
     <div class="tabs-block">
         <div class="aplicant-tabs-label">
-            <div data-tabsLabel="legal-entity" {%if applicant.type=="urlico" %}class="active-tabs-label"{%endif%}>Юридическое лицо</div>
-            <div data-tabsLabel="individual-entrepreneur {%if applicant.type=="ip" %}class="active-tabs-label"{%endif%}">Индивидуальный предприниматель</div>
-            <div data-tabsLabel="physical-face"  {%if applicant.type=="fizlico" %}class="active-tabs-label"{%endif%}>Физическое лицо</div>
+            <div data-tabsLabel="legal-entity" {%if applicant.type=="urlico" %}class="active-tabs-label"{% else%}class="disabled-tab"{%endif%}>Юридическое лицо</div>
+            <div data-tabsLabel="individual-entrepreneur" {%if applicant.type=="ip" %}class="active-tabs-label"{% else %}class="disabled-tab"{%endif%}>Индивидуальный предприниматель</div>
+            <div data-tabsLabel="physical-face"  {%if applicant.type=="fizlico" %}class="active-tabs-label"{% else%} class="disabled-tab"{%endif%}>Физическое лицо</div>
         </div>
         <div data-tabs="legal-entity" class="tabs-content {%if applicant.type=="urlico" %}active-tabs-content{%endif%}">
             <form action="/admin/applicants/save" method="POST">
@@ -70,34 +70,6 @@
                 <label for="entity-textarea">
                     <div>Полное наименование</div>
                     {{text_area('name_full', 'value':applicant.name_full, 'id':'entity-textarea')}}
-                </label>
-                <label for="entity-inn">
-                    <div>ИНН</div>
-                    {{numeric_field('inn', 'value':applicant.inn, "id":"entity-inn", "data-name":"number")}}
-                </label>
-                <label for="entity-address">
-                    <div>Адрес местонахождения</div>
-                    {{text_field('address', 'value':applicant.address, "id":"entity-address", "data-name":"address")}}
-                </label>
-                <label for="entity-position">
-                    <div>Должность заявителя</div>
-                    {{text_field('position', 'value':applicant.position, "id":"entity-position", "data-name":"position-fio")}}
-                </label>
-                <label for="entity-fio-z">
-                    <div>ФИО заявителя</div>
-                    {{text_field('fio_applicant', 'value':applicant.fio_applicant, "id":"entity-fio-z", "data-name":"position-fio")}}
-                </label>
-                <label for="entity-position-k">
-                    <div>ФИО контактного лица</div>
-                    {{text_field('fio_contact_person', 'value':applicant.fio_contact_person, "id":"entity-fio-k", "data-name":"position-fio")}}
-                </label>
-                <label for="entity-phone">
-                    <div>Контактный факс, телефон</div>
-                    {{numeric_field('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
-                </label>
-                <label for="entity-email">
-                    <div>E-mail</div>
-                    {{text_field('email', 'value':applicant.email, "id":"entity-email", "data-name":"position-fio" )}}
                 </label>
                 <div class="file-attachment">
                     <img src="images/zaglushka.png" alt="">

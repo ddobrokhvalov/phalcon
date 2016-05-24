@@ -1,14 +1,41 @@
 {% extends "base-template.phtml" %}
 {% block title %}ФАС ОНЛАЙН - Заявитель{% endblock %}
 {% block body %}
-<div class="admin-main-wrap appllicant-page">
+<div class="admin-main-wrap appllicant-page-detail">
     <div class="bread-crumbs-holder">
-        <a href="#">Вернуться на страницу пользователя</a>
+        <a href="/admin/applicants/index">Вернуться на страницу заявителей</a>
     </div>
     <h1>{{applicant.name_full}}</h1>
     <div class="del-oredit-appll">
-        <a href="#">Удалить заявителя</a>
+        <div data-toggle="modal" data-target=".confirm-deletion-applicant-lg">Удалить заявителя</div>
         <a href="/admin/applicants/edit/{{applicant.id}}">Редактировать</a>
+    </div>
+    <div class="modal fade confirm-deletion-applicant-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Удалить заявителя?</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+            <button type="button" onclick="delete_applicant({{applicant.id}})" class="btn btn-primary">Удалить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade modal-cant-delete-applicant" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Невозможно удалить заявителя у которого есть жалобы</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+          </div>
+        </div>
+      </div>
     </div>
     <h2>Жалобы заявителя</h2>
     <div class="admin-lt-holder">
@@ -17,10 +44,23 @@
                 <div></div>Выбрать все
             </div>
             <div class="lt-head-btns">
-                <div>Копировать</div>
-                <div>Создать</div>
-                <div>В архив</div>
-                <div>Удалить</div>
+                <!--<div>Копировать</div>-->
+                <a href="#"><div>Создать</div></a>
+                <div data-toggle="modal" data-target=".confirm-deletion-complaints-lg">Удалить</div>
+            </div>
+            <div class="modal fade confirm-deletion-complaints-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Удалить жалобы заявителя?</h4>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <button type="button" onclick="delete_all_complaints()" class="btn btn-primary">Удалить</button>
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
         <div class="admin-lt-content">
@@ -31,37 +71,29 @@
                 <li><span>Статус</span></li>
             </ul>
             {% for complaint in page.items %}
-            <ul class="lt-content-main {%if comliant['status'] =='submitted' %}top-bd-blue{%elseif comliant['status'] == 'unfounded'%}top-bd-red{%elseif comliant['status'] == 'justified'%}top-bd-green{%endif%}">
+            <ul class="lt-content-main {{applicant.getComplaintColor(complaint['status'])}}">
                 <li>
-                    <div class="lt-psevdo-check"></div>
+                    <div class="lt-psevdo-check">{{hidden_field('complaint-id', 'value':complaint['id'])}}</div>
                     {{complaint['complaint_name']}}
                 </li>
                 <li>{{complaint['auction_id']}}</li>
                 <li>{{date('Y.m.d', complaint['date']|strtotime)}}</li>
                 <li>
-                    {% if complaint['status'] == 'draft' %}
-                    <span class="jl-status jl-chernov">Черновик</span>
-                    {% endif %}
-                    {% if complaint['status'] == 'justified' %}
-                    <span class="jl-status jl-done">Обоснована</span>
-                    {% endif %}
-                    {% if complaint['status'] == 'unfounded' %}
-                    <span class="jl-status jl-notdone">Необоснована</span>
-                    {% endif %}
-                    {% if complaint['status'] == 'under_consideration' %}
-                    <span class="jl-status jl-rassmotr">На рассмотрении</span>
-                    {% endif %}
-                    {% if complaint['status'] == 'submitted' %}
-                    <span class="jl-status jl-podana">Подана</span>
-                    {% endif %}
-                    {% if complaint['status'] == 'recalled' %}
-                    <span class="jl-status jl-fail">Отозвана</span>
-                    {% endif %}
-                    {% if complaint['status'] == 'archive' %}
-                    <span class="jl-status jl-archive">Архив</span>
-                    {% endif %}
-                    <!--div class="appll-status-icon"></div-->
-                    <div class="close-status-list">Сменить статус</div>
+                    <div class="dropdown">
+                      <div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{applicant.getComplaintStatus(complaint['status'], TRUE)}}
+                      </div>
+                      <ul class="dropdown-menu" aria-labelledby="dLabel">
+                        <li class="header-dropdown">Сменить статус<span class="caret"></span></li>
+                        <li>{{applicant.getAllStatuses(0)}}</li>
+                        <li>{{applicant.getAllStatuses(1)}}</li>
+                        <li>{{applicant.getAllStatuses(2)}}</li>
+                        <li>{{applicant.getAllStatuses(3)}}</li>
+                        <li>{{applicant.getAllStatuses(4)}}</li>
+                        <li>{{applicant.getAllStatuses(5)}}</li>
+                        <li>{{applicant.getAllStatuses(6)}}</li>
+                      </ul>
+                    </div>
                 </li>
             </ul>
             {% endfor %}

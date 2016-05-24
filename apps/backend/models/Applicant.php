@@ -52,4 +52,28 @@ class Applicant extends Model
         $result = $db->query($sql);
         return $result->fetchAll();
     }
+
+    public function getCountComplaints($applicant_id) {
+        if($applicant_id){
+            $Complaint = new Complaint();
+            $complaints = $Complaint->findApplicantComplaints($applicant_id);
+            return count($complaints);
+        }
+        return '';
+    }
+    
+    public function getComplaintStatus($status, $short = FALSE) {
+        $Complaint = new Complaint();
+        return $Complaint->getComplaintStatus($status, $short);
+    }
+    
+    public function getAllStatuses($index) {
+        $Complaint = new Complaint();
+        return $Complaint->getAllStatuses($index);
+    }
+
+    public function getComplaintColor($status) {
+        $Complaint = new Complaint();
+        return $Complaint->getComplaintColor($status);
+    }
 }

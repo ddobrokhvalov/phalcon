@@ -1,44 +1,54 @@
 {% extends "base-template.phtml" %}
 {% block title %}ФАС ОНЛАЙН - Доводы{% endblock %}
 {% block body %}
-<div class="admin-main-wrap user-list">
-    <h1>Список пользователей</h1>
-    <a href="/admin/user/add" class="admin-add userAdd">Добавить пользователя</a>
+<div class="admin-main-wrap applicant-list">
+    <h1>Список заявителей</h1>
+    <a href="/admin/applicants/add" class="admin-add userAdd">Добавить заявителя</a>
     <div class="admin-lt-holder">
         <div class="admin-lt-head">
             <div class="select-all">
                 <div></div>Выбрать все
             </div>
             <div class="lt-head-btns">
-                <div>Отправить сообщение</div>
-                <div>Заблокировать</div>
-                <div>Удалить</div>
+                <a href="#"><div data-toggle="modal" data-target=".confirm-deletion-applicant-lg">Удалить</div></a>
+            </div>
+            <div class="modal fade confirm-deletion-applicant-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Удалить заявителя?</h4>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <button type="button" onclick="delete_applicants()" class="btn btn-primary">Удалить</button>
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
         <div class="admin-lt-content">
             <ul class="lt-content-top">
-                <li><span>ФИО</span></li>
+                <li><span>Краткое наименование</span></li>
                 <li><span>Телефон</span></li>
-                <li><span>Заявители</span></li>
+                <li><span>Имейл</span></li>
                 <li><span>Жалобы</span></li>
-                <li><span>Подписка до</span></li>
-                <li><span>Тариф</span></li>
-            </ul>
-            {% for user in page.items %}
-            <ul class="lt-content-main">
-                <li><div class="lt-psevdo-check"></div></li>
-                <li>{{user.name_full}}</li>
-                <li>{{user.name_short}}</li>
-                <li>{{user.inn}}</li>
-                <li>{{user.fio_applicant}}</li>
                 <li></li>
+            </ul>
+            {% for applicant in page.items %}
+            <ul class="lt-content-main">
+                <li><div class="lt-psevdo-check">{{hidden_field('applicant-id', 'value':applicant.id)}}</div>{{applicant.name_short}}</li>
+                <li>{{applicant.telefone}}</li>
+                <li>{{applicant.email}}</li>
+                <li>{{applicant.getCountComplaints(applicant.id)}}</li>
+                <li>{{ link_to("admin/applicants/info/" ~ applicant.id, 'Просмотр') }}</li>
             </ul>
             {% endfor %}
         </div>
     </div>
     <div class="admin-table-footer">
         <a href="#">Еще <span>20 заявителей</span></a><!--todo: -->
-        <a href="#">Показать всех пользователей (<span>{{page.total_items}}</span>)</a><!--todo: -->
+        <a href="#">Показать всех заявителей (<span>{{page.total_items}}</span>)</a><!--todo: -->
 
     </div>
     <div class="admin-pagination-box">

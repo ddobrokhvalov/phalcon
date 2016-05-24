@@ -30,9 +30,17 @@ class ComplaintsController extends ControllerBase
 
     public function deleteComplaintAction(){
         $data = "ok";
-        $complaint_id = $this->request->getPost("id");
-        
-        if($complaint_id){
+         $complaint_id = $this->request->getPost("id");
+        if (isset($_GET['is_array']) && $complaint_id && count($complaint_id)) {
+            $complaints = Complaint::find(
+                array(
+                    'id IN ({ids:array})',
+                    'bind' => array(
+                        'ids' => $complaint_id
+                    )
+                )
+            )->delete();
+        } elseif($complaint_id){
             $complaint = Complaint::find(
                 array(
                     'id = :id:',

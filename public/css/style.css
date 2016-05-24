@@ -1886,23 +1886,155 @@ h4 {
 .user-list .admin-lt-content li:nth-child(5) {
   width: 141px; }
 
-/* line 57, ../sass/_user_list.scss */
+/* line 59, ../sass/_user_list.scss */
+.applicant-list .admin-lt-content li:first-child {
+  padding-left: 32px !important;
+  width: 405px; }
+/* line 63, ../sass/_user_list.scss */
+.applicant-list .admin-lt-content li:nth-child(2) {
+  width: 155px; }
+/* line 66, ../sass/_user_list.scss */
+.applicant-list .admin-lt-content li:nth-child(3) {
+  width: 230px; }
+/* line 69, ../sass/_user_list.scss */
+.applicant-list .admin-lt-content li:nth-child(4) {
+  width: 85px; }
+/* line 72, ../sass/_user_list.scss */
+.applicant-list .admin-lt-content li:nth-child(5) {
+  width: 90px; }
+
+/* line 79, ../sass/_user_list.scss */
+.appllicant-page-detail .admin-lt-content li:first-child {
+  width: 580px;
+  padding-left: 35px; }
+/* line 83, ../sass/_user_list.scss */
+.appllicant-page-detail .admin-lt-content li:nth-child(2) {
+  width: 190px; }
+/* line 86, ../sass/_user_list.scss */
+.appllicant-page-detail .admin-lt-content li:nth-child(3) {
+  width: 124px; }
+/* line 89, ../sass/_user_list.scss */
+.appllicant-page-detail .admin-lt-content li:nth-child(4) {
+  width: 71px;
+  padding-left: 0; }
+/* line 94, ../sass/_user_list.scss */
+.appllicant-page-detail .lt-content-top li:nth-child(4) {
+  padding-left: 11px; }
+/* line 97, ../sass/_user_list.scss */
+.appllicant-page-detail .lt-content-main li:first-child {
+  padding-left: 35px !important; }
+/* line 100, ../sass/_user_list.scss */
+.appllicant-page-detail ul {
+  border-bottom: none; }
+/* line 103, ../sass/_user_list.scss */
+.appllicant-page-detail ul.status-green {
+  border-top: 3px solid #53cab3; }
+/* line 106, ../sass/_user_list.scss */
+.appllicant-page-detail ul.status-red {
+  border-top: 3px solid #f26d7d; }
+/* line 109, ../sass/_user_list.scss */
+.appllicant-page-detail ul.status-blue {
+  border-top: 3px solid #00aeef; }
+/* line 112, ../sass/_user_list.scss */
+.appllicant-page-detail ul.status-black {
+  border-top: 3px solid #3d3f40; }
+/* line 116, ../sass/_user_list.scss */
+.appllicant-page-detail .del-oredit-appll div {
+  padding: 0 34px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 62px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 6px;
+  background-color: #fff;
+  float: left;
+  cursor: pointer; }
+  /* line 127, ../sass/_user_list.scss */
+  .appllicant-page-detail .del-oredit-appll div:hover {
+    background-color: #fef0f2; }
+/* line 131, ../sass/_user_list.scss */
+.appllicant-page-detail .del-oredit-appll a:hover {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600; }
+/* line 137, ../sass/_user_list.scss */
+.appllicant-page-detail .jl-status-short {
+  width: 22px;
+  min-height: 22px; }
+/* line 141, ../sass/_user_list.scss */
+.appllicant-page-detail .dropdown, .appllicant-page-detail .dropup {
+  text-align: center;
+  height: 100%; }
+  /* line 144, ../sass/_user_list.scss */
+  .appllicant-page-detail .dropdown #dLabel, .appllicant-page-detail .dropup #dLabel {
+    height: 100%; }
+    /* line 146, ../sass/_user_list.scss */
+    .appllicant-page-detail .dropdown #dLabel .jl-status-short, .appllicant-page-detail .dropup #dLabel .jl-status-short {
+      background-position: center center;
+      display: block;
+      height: 100%;
+      width: 100%; }
+/* line 154, ../sass/_user_list.scss */
+.appllicant-page-detail .dropdown-menu {
+  width: 196px;
+  margin-left: -125px;
+  font-weight: 400 !important; }
+  /* line 158, ../sass/_user_list.scss */
+  .appllicant-page-detail .dropdown-menu:hover {
+    font-weight: 400 !important; }
+  /* line 161, ../sass/_user_list.scss */
+  .appllicant-page-detail .dropdown-menu li {
+    width: 100% !important;
+    padding-left: 15px !important;
+    text-transform: uppercase;
+    font-weight: 400 !important;
+    height: 40px !important; }
+    /* line 167, ../sass/_user_list.scss */
+    .appllicant-page-detail .dropdown-menu li span {
+      display: block;
+      line-height: 40px;
+      font-weight: 400 !important; }
+      /* line 171, ../sass/_user_list.scss */
+      .appllicant-page-detail .dropdown-menu li span:hover {
+        font-weight: 400 !important; }
+    /* line 175, ../sass/_user_list.scss */
+    .appllicant-page-detail .dropdown-menu li:hover {
+      font-weight: 400 !important;
+      background-color: #e5f7fd; }
+  /* line 180, ../sass/_user_list.scss */
+  .appllicant-page-detail .dropdown-menu li.header-dropdown {
+    margin-bottom: 20px;
+    padding-left: 15px !important;
+    font-weight: bold; }
+    /* line 184, ../sass/_user_list.scss */
+    .appllicant-page-detail .dropdown-menu li.header-dropdown span {
+      display: inline-block; }
+    /* line 187, ../sass/_user_list.scss */
+    .appllicant-page-detail .dropdown-menu li.header-dropdown:hover {
+      background-color: transparent; }
+
+/* line 193, ../sass/_user_list.scss */
+.applicant-list .admin-add.userAdd {
+  margin-top: -75px; }
+
+/* line 196, ../sass/_user_list.scss */
 .good-bad {
   margin: 36px 0 0 27px;
   width: 11px;
   height: 10px;
   background: url("../images/good-bad-icons.png") no-repeat -16px 0; }
-  /* line 62, ../sass/_user_list.scss */
+  /* line 201, ../sass/_user_list.scss */
   .good-bad.must {
     background-position: -32px 0; }
-  /* line 65, ../sass/_user_list.scss */
+  /* line 204, ../sass/_user_list.scss */
   .good-bad.extended {
     background-position: 0 0; }
 
-/* line 69, ../sass/_user_list.scss */
+/* line 208, ../sass/_user_list.scss */
 .lt-content-main.red-bg {
   background-color: #fef0f2; }
-  /* line 71, ../sass/_user_list.scss */
+  /* line 210, ../sass/_user_list.scss */
   .lt-content-main.red-bg:hover {
     background-color: #fef0f2 !important; }
 

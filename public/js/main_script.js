@@ -155,6 +155,9 @@ jQuery(document).ready(function($) {
 	});
 	// tabs show and hide
 	$('.aplicant-tabs-label div').click(function() {
+        if($(this).hasClass('disabled-tab')){
+            return false;
+        }
 		var tabsLabelBtnClass = $(this).attr('data-tabsLabel');
 		$('.aplicant-tabs-label div').removeClass('active-tabs-label');
 		$(this).addClass('active-tabs-label');
@@ -216,6 +219,17 @@ jQuery(document).ready(function($) {
     $('#j-permisions-save').on('click', function () {
         submit_form_ajax('#admin_permissions');
         return false;
+    });
+
+    $("ul.dropdown-menu li").click(function(){
+        if ($(this).hasClass('header-dropdown')) {
+            return false;
+        }
+        var status = $(this).find('span').attr('data-status');
+        var complaintId = $(this).parent().parent().parent().parent().find('li:first-child #complaint-id').val();
+        if (status.length && complaintId != undefined) {
+            change_complaint_status(complaintId, status);
+        }
     });
 
 });
@@ -477,6 +491,82 @@ function delete_admins(){
                 window.location.reload();
             }
         });
+    }
+}
+
+function delete_applicants(){
+    var id_array = [];
+    $('.admin-lt-holder .lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #applicant-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "deleteApplicants",
+            type:'POST',
+            data: { ids: id_array },
+            dataType: 'json',
+            success: function(data){
+                $('.confirm-deletion-applicant-lg').modal('hide');
+                window.location.reload();
+            }
+        });
+    }
+}
+
+function delete_all_complaints() {
+    var id_array = [];
+    $('.admin-lt-holder .lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #complaint-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "/admin/complaints/deleteComplaint?is_array=true",
+            type:'POST',
+            data: { id: id_array },
+            dataType: 'json',
+            success: function(data){
+                if (data == 'ok') {
+                    window.location.reload();
+                }
+            }
+        });
+    }
+    $('.confirm-deletion-complaints-lg').modal('hide');
+}
+
+function delete_applicant(applicantId){
+    if (applicantId) {
+        var countApplicant = 0;
+        $('.admin-lt-holder .lt-content-main').each(function(){
+            ++countApplicant;
+        });
+        if (countApplicant == 0) {
+            $.ajax({
+                url: "/admin/applicants/deletet/" + applicantId,
+                type:'POST',
+                data: { ids: countApplicant },
+                dataType: 'json',
+                success: function(data){
+                    if(data.success == 'ok'){
+                        $('.confirm-deletion-applicant-lg').modal('hide');
+                        window.location.href = '/admin/applicants/index';
+                    } else if(data.success == 'redirect') {
+                        window.location.href = '/admin/applicants/index';
+                    } else {
+                        window.location.reload();
+                    }
+                }
+            });
+        } else {
+            $('.confirm-deletion-applicant-lg').modal('hide');
+            $('.modal-cant-delete-applicant').modal('show');
+        }
     }
 }
 

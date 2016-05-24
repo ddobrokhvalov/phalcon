@@ -28,31 +28,170 @@
 	}
 }
 .user-list .admin-lt-content {
-	ul {
-		&:hover {
-			li:nth-child(5) {
-				font-weight: normal;
-			}
-		}
-	}
-	li {
+    ul {
+        &:hover {
+            li:nth-child(5) {
+                font-weight: normal;
+            }
+        }
+    }
+    li {
+        &:first-child {
+            padding-left: 32px !important;
+            width: 374px;
+        }
+        &:nth-child(2) {
+            width: 196px;
+        }
+        &:nth-child(3) {
+            width: 89px;
+        }
+        &:nth-child(4) {
+            width: 84px;
+        }
+        &:nth-child(5) {
+            width: 141px;
+        }
+    }
+}
+.applicant-list .admin-lt-content {
+    li {
+        &:first-child {
+            padding-left: 32px !important;
+            width: 405px;
+        }
+        &:nth-child(2) {
+            width: 155px;
+        }
+        &:nth-child(3) {
+            width: 230px;
+        }
+        &:nth-child(4) {
+            width: 85px;
+        }
+        &:nth-child(5) {
+            width: 90px;
+        }
+    }
+}
+.appllicant-page-detail {
+	.admin-lt-content li {
 		&:first-child {
-			padding-left: 32px !important;
-			width: 374px;
+			width: 580px;
+            padding-left: 35px;
 		}
 		&:nth-child(2) {
-			width: 196px;
+			width: 190px;
 		}
 		&:nth-child(3) {
-			width: 89px;
+			width: 124px;
 		}
 		&:nth-child(4) {
-			width: 84px;
-		}
-		&:nth-child(5) {
-			width: 141px;
+			width: 71px;
+            padding-left: 0;
 		}
 	}
+    .lt-content-top li:nth-child(4) {
+        padding-left: 11px;
+    }
+    .lt-content-main li:first-child {
+        padding-left: 35px !important;
+    }
+    ul {
+        border-bottom: none;
+    }
+    ul.status-green {
+        border-top: 3px solid $status-green;
+    }
+    ul.status-red {
+        border-top: 3px solid $status-red;
+    }
+    ul.status-blue {
+        border-top: 3px solid $status-blue;
+    }
+    ul.status-black {
+        border-top: 3px solid $status-black;
+    }
+    .del-oredit-appll {
+        div {
+            padding: 0 34px;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 62px;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 6px;
+            background-color: #fff;
+            float: left;
+            cursor: pointer;
+            &:hover {
+                background-color: #fef0f2;
+            }
+        }
+        a:hover {
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
+    .jl-status-short {
+        width: 22px;
+        min-height: 22px;
+    }
+    .dropdown, .dropup {
+        text-align: center;
+        height: 100%;
+        #dLabel {
+            height: 100%;
+            .jl-status-short {
+                background-position: center center;
+                display: block;
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+    .dropdown-menu {
+        width: 196px;
+        margin-left: -125px;
+        font-weight: 400 !important;
+        &:hover {
+            font-weight: 400 !important;
+        }
+        li {
+            width: 100% !important;
+            padding-left: 15px !important;
+            text-transform: uppercase;
+            font-weight: 400 !important;
+            height: 40px !important;
+            span {
+                display: block;
+                line-height: 40px;
+                font-weight: 400 !important;
+                &:hover {
+                    font-weight: 400 !important;
+                }
+            }
+            &:hover {
+                font-weight: 400 !important;
+                background-color: #e5f7fd;
+            }
+        }
+        li.header-dropdown {
+            margin-bottom: 20px;
+            padding-left: 15px !important;
+            font-weight: bold;
+            span {
+                display: inline-block;
+            }
+            &:hover{
+                background-color: transparent;
+            }
+        }
+    }
+}
+.applicant-list .admin-add.userAdd {
+    margin-top: -75px;
 }
 .good-bad {
 	margin: 36px 0 0 27px;

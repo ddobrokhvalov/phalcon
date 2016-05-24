@@ -117,22 +117,67 @@ class Complaint extends Model
         }
     }
 
-    public function getComplaintStatus($status){
+    public function getComplaintStatus($status, $short = FALSE){
         switch ($status) {
             case 'draft':
-                return '<span class="jl-status jl-chernov">Черновик</span>';
+                if ($short)
+                    return '<span data-status="draft" class="jl-status jl-status-short jl-chernov"></span>';
+                return '<span data-status="draft" class="jl-status jl-chernov">Черновик</span>';
             case 'justified':
-                return '<span class="jl-status jl-done">Обоснована</span>';
+                if ($short)
+                    return '<span data-status="justified" class="jl-status jl-status-short jl-done"></span>';
+                return '<span data-status="justified" class="jl-status jl-done">Обоснована</span>';
             case 'unfounded':
-                return '<span class="jl-status jl-notdone">Необоснована</span>';
+                if ($short)
+                    return '<span data-status="unfounded" class="jl-status jl-status-short jl-notdone"></span>';
+                return '<span data-status="unfounded" class="jl-status jl-notdone">Необоснована</span>';
             case 'under_consideration':
-                return '<span class="jl-status jl-rassmotr">На рассмотрении</span>';
+                if ($short)
+                    return '<span data-status="under_consideration" class="jl-status jl-status-short jl-rassmotr"></span>';
+                return '<span data-status="under_consideration" class="jl-status jl-rassmotr">На рассмотрении</span>';
             case 'submitted':
-                return '<span class="jl-status jl-podana">Подана</span>';
+                if ($short)
+                    return '<span data-status="submitted" class="jl-status jl-status-short jl-podana"></span>';
+                return '<span data-status="submitted" class="jl-status jl-podana">Подана</span>';
             case 'recalled':
-                return '<span class="jl-status jl-fail">Отозвана</span>';
+                if ($short)
+                    return '<span data-status="recalled" class="jl-status jl-status-short jl-fail"></span>';
+                return '<span data-status="recalled" class="jl-status jl-fail">Отозвана</span>';
             case 'archive':
-                return '<span class="jl-status jl-archive">Архив</span>';
+                if ($short)
+                    return '<span data-status="archive" class="jl-status jl-status-short jl-archive"></span>';
+                return '<span data-status="archive" class="jl-status jl-archive">Архив</span>';
+            default:
+                return '';
+        }
+    }
+    
+    public function getAllStatuses($index){
+        $statuses = array(
+            '0' => 'draft',
+            '1' => 'justified',
+            '2' => 'unfounded',
+            '3' => 'under_consideration',
+            '4' => 'submitted',
+            '5' => 'recalled',
+            '6' => 'archive',
+        );
+        return $this->getComplaintStatus($statuses[$index]);
+    }
+
+    public function getComplaintColor($status){
+        switch ($status) {
+            case 'draft':
+            case 'submitted':
+            case 'recalled':
+            case 'archive':
+                return ' status-black ';
+            case 'justified':
+                return ' status-green ';
+            case 'unfounded':
+                return ' status-red ';
+            case 'under_consideration':
+                return ' status-blue ';
             default:
                 return '';
         }
