@@ -21,7 +21,7 @@
 		&:nth-child(1) span,
 		&:nth-child(2) span,
 		&:nth-child(5) span,
-		&:nth-child(6) {
+		&:nth-child(6) span {
 			padding-right: 16px;
 			background: $white url(../images/arrow-to-down.png) 100% 50% no-repeat;
 		}
@@ -41,17 +41,23 @@
             width: 374px;
         }
         &:nth-child(2) {
-            width: 196px;
+            width: 140px;
         }
         &:nth-child(3) {
             width: 89px;
         }
         &:nth-child(4) {
-            width: 84px;
+            width: 80px;
         }
         &:nth-child(5) {
-            width: 141px;
+            width: 120px;
         }
+        &:nth-child(6) {
+            width: 82px;
+        }
+        /*&:nth-child(7) {
+            width: 56px;
+        }*/
     }
 }
 .applicant-list .admin-lt-content {

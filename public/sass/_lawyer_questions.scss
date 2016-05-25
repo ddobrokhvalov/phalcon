@@ -144,6 +144,7 @@
 }
 .admin-table-footer {
 	overflow: hidden;
+    min-height: 120px;
 	a:first-child {
 		float: left;
 		margin: 29px 0 34px calc(50% - 137px);
@@ -158,6 +159,7 @@
 		background-color: $blue;
 		&:hover {
 			background-color: #10b8f7;
+            text-decoration: none;
 		}
 	}
 	a:last-child {

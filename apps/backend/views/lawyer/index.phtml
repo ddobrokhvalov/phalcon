@@ -32,10 +32,20 @@
                 </li>
                 {% endfor %}
             </ul>
-            <div class="admin-table-footer">
-                <a href="#">Еще <span>20 вопросов</span></a>
-                <a href="#">Показать все вопросы (<span>{{page.total_items}}</span>)</a>
-            </div>
+            {% if page.total_items > item_per_page %}
+                <div class="admin-table-footer">
+                    {% if page.current * item_per_page < page.total_items %}
+                        {% set cnt = page.total_items - (page.current * item_per_page) %}
+                        <a href="#" onclick="$('#next_items').submit()">Еще <span>{{ cnt > item_per_page ? 5 : cnt}} вопросов</span></a><!--todo: -->
+                        {% else %}
+                            <div></div>
+                    {% endif %}
+                    <a href="#">Показать все вопросы (<span>{{page.total_items}}</span>)</a><!--todo: -->
+                </div>
+                <form id="next_items" method="post">
+                    {{hidden_field('next-portions-items', 'value':5)}}
+                </form>
+            {% endif %}
         </div>
         <div class="admin-pagination-box">
             {% if page.current>1 %}{{ link_to("admin/lawyer/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}

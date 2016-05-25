@@ -64,6 +64,7 @@
                 <li><span>Жалобы</span></li>
                 <li><span>Подписка до</span></li>
                 <li><span>Тариф</span></li>
+                <li></li>
             </ul>
             {% for user in page.items %}
             <ul class="lt-content-main {% if user.status == 0 %} hidden-arg {% endif %}">
@@ -73,15 +74,25 @@
                 <li>29</li>
                 <li>22.01.2016</li>
                 <li><div class="good-bad extended"></div></li>
+                <li>{{ link_to("admin/user/edit/" ~ user.id, 'Изменить') }}</li>
             </ul>
             {% endfor %}
         </div>
     </div>
+    {% if page.total_items > item_per_page %}
     <div class="admin-table-footer">
-        <a href="#">Еще <span>20 пользователей</span></a><!--todo: -->
+        {% if page.current * item_per_page < page.total_items %}
+            {% set cnt = page.total_items - (page.current * item_per_page) %}
+            <a href="#" onclick="$('#next_items').submit()">Еще <span>{{ cnt > item_per_page ? 20 : cnt}} пользователей</span></a><!--todo: -->
+            {% else %}
+                <div></div>
+        {% endif %}
         <a href="#">Показать всех пользователей (<span>{{page.total_items}}</span>)</a><!--todo: -->
-
     </div>
+    <form id="next_items" method="post">
+        {{hidden_field('next-portions-items', 'value':20)}}
+    </form>
+    {% endif %}
     <div class="admin-pagination-box">
         {% if page.current>1 %}{{ link_to("admin/user/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
         <ul>

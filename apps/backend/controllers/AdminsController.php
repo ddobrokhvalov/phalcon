@@ -17,6 +17,11 @@ class AdminsController extends ControllerBase
 
     public function indexAction()
     {
+        $next_items = $this->request->getPost('next-portions-items');
+        if (!isset($next_items)) {
+            $next_items = 0;
+        }
+        $item_per_page = 15 + $next_items;
         $this->persistent->searchParams = null;
         $this->view->form = new AdminForm;
 
@@ -24,11 +29,12 @@ class AdminsController extends ControllerBase
         $users = Admin::find();
         $paginator = new Paginator(array(
             "data" => $users,
-            "limit" => 20,
+            "limit" => $item_per_page,
             "page" => $numberPage
         ));
         $pages = $paginator->getPaginate();
         $this->view->page = $pages;
+        $this->view->item_per_page = $item_per_page;
         //todo: цветовую дифференциацию, галочки
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->persistent->searchParams = null;
