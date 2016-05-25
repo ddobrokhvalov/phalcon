@@ -62,7 +62,13 @@ class ComplaintsController extends ControllerBase
         $complaint_id = $this->request->getPost("id");
         
         if($status && $complaint_id){
-            @Complaint::changeStatus($status, array($complaint_id));
+            if (is_array($complaint_id)) {
+                foreach ($complaint_id as $id) {
+                    @Complaint::changeStatus($status, array($id));
+                }
+            } else {
+                @Complaint::changeStatus($status, array($complaint_id));
+            }
         } else {
             $data = FALSE;
         }

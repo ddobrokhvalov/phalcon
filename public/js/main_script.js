@@ -386,6 +386,19 @@ function change_complaint_status(complaint_id, status) {
     }
 }
 
+function complaints_to_archive(){
+    var id_array = [];
+    $('.admin-lt-holder .lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #complaint-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        change_complaint_status(id_array, 'archive');
+    }
+}
+
 function delete_users(){
     var id_array = [];
     $('.admin-lt-holder .lt-content-main').each(function(){
