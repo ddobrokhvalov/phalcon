@@ -52,9 +52,10 @@
                 </label>
             </div>
             <div class="delete-or-save">
-                <button>Удалить администратора</button><!--todo:-->
-                <button>Сохранить изменения</button>
+                <button onclick="$('#delete_admin').val('{{admin.id}}');">Удалить администратора</button><!--todo:-->
+                <button>Сохранить изменения</button>                 
             </div>
+            {{hidden_field('delete_admin', 'value':'')}}
         </form>
     </div>
 </div>

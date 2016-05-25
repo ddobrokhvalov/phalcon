@@ -73,7 +73,12 @@ class AdminsController extends ControllerBase
     }
     public function saveAction()
     {
-
+        $delete_admin = $this->request->getPost('delete_admin');
+        if (isset($delete_admin) && $delete_admin) {
+            Admin::findFirstById($delete_admin)->delete();
+            $this->flashSession->success("Администратор успешно удален");
+            return $this->forward("admins/index");
+        }
         if (!$this->request->isPost())
             return $this->forward("admins/index");
 
@@ -101,7 +106,7 @@ class AdminsController extends ControllerBase
             foreach ($admin->getMessages() as $message)
                 $this->flashSession->error($message);
         } else
-            $this->flashSession->success("Your information was stored correctly!");
+            $this->flashSession->success("Изменения сохранены");
         return $this->dispatcher->forward(array(
             'module' => 'backend',
             'controller' => 'admins',
@@ -141,7 +146,7 @@ class AdminsController extends ControllerBase
                 foreach ($admin->getMessages() as $message)
                     $this->flashSession->error($message);
         } else
-            $this->flashSession->success("Your information was stored correctly!");
+            $this->flashSession->success("Изменения сохранены");
         $admin->password = sha1($data['password']);        
         if ($admin->save($data, array_keys($data)) == false)
             foreach ($admin->getMessages() as $message)
@@ -162,7 +167,7 @@ class AdminsController extends ControllerBase
     public function editAction($id){
         $admin = Admin::findFirstById($id);
         if (!$admin) {
-            $this->flash->error("Admin was not found");
+            $this->flashSession->error("Администратор не найден");
             return $this->forward("admins/index");
         }
         $this->view->admin = $admin;

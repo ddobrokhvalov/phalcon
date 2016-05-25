@@ -1592,8 +1592,11 @@ h4 {
 .admin-list h1 {
   display: inline-block;
   margin-bottom: 32px; }
+/* line 9, ../sass/_admin_list.scss */
+.admin-list .admin-lt-content li:nth-child(5) {
+  width: 150px; }
 
-/* line 10, ../sass/_admin_list.scss */
+/* line 13, ../sass/_admin_list.scss */
 .admin-add {
   float: right;
   margin-top: -25px;
@@ -1606,21 +1609,21 @@ h4 {
   text-align: center;
   text-transform: uppercase;
   background-color: #00aeef; }
-  /* line 22, ../sass/_admin_list.scss */
+  /* line 25, ../sass/_admin_list.scss */
   .admin-add:hover {
     background-color: #10b8f7;
     text-decoration: none;
     color: #ffffff;
     font-weight: 600; }
 
-/* line 29, ../sass/_admin_list.scss */
+/* line 32, ../sass/_admin_list.scss */
 .admin-lt-head {
   overflow: hidden;
   height: 82px;
   border-top: 1px solid #e0e3ea;
   border-bottom: 1px solid #e0e3ea; }
 
-/* line 35, ../sass/_admin_list.scss */
+/* line 38, ../sass/_admin_list.scss */
 .select-all {
   float: left;
   position: relative;
@@ -1631,7 +1634,7 @@ h4 {
   color: #00aeef;
   text-transform: uppercase;
   cursor: pointer; }
-  /* line 45, ../sass/_admin_list.scss */
+  /* line 48, ../sass/_admin_list.scss */
   .select-all div {
     position: absolute;
     top: 0;
@@ -1639,22 +1642,22 @@ h4 {
     width: 16px;
     height: 16px;
     background: url(../images/checkbx1.png) 0 0 no-repeat; }
-    /* line 52, ../sass/_admin_list.scss */
+    /* line 55, ../sass/_admin_list.scss */
     .select-all div.select-checked {
       background-position: 0 bottom; }
 
-/* line 57, ../sass/_admin_list.scss */
+/* line 60, ../sass/_admin_list.scss */
 .lt-head-btns {
   float: right;
   text-transform: uppercase; }
-  /* line 60, ../sass/_admin_list.scss */
+  /* line 63, ../sass/_admin_list.scss */
   .lt-head-btns .disabled-btn {
     color: #bfc0c2; }
-    /* line 62, ../sass/_admin_list.scss */
+    /* line 65, ../sass/_admin_list.scss */
     .lt-head-btns .disabled-btn:hover {
       color: #ffffff;
       background-color: #bfc0c2; }
-  /* line 67, ../sass/_admin_list.scss */
+  /* line 70, ../sass/_admin_list.scss */
   .lt-head-btns div {
     float: left;
     margin: 21px 0 0 12px;
@@ -1664,31 +1667,31 @@ h4 {
     color: #00aeef;
     cursor: pointer;
     border-radius: 2px; }
-    /* line 76, ../sass/_admin_list.scss */
+    /* line 79, ../sass/_admin_list.scss */
     .lt-head-btns div a, .lt-head-btns div button {
       display: block; }
-    /* line 79, ../sass/_admin_list.scss */
+    /* line 82, ../sass/_admin_list.scss */
     .lt-head-btns div:first-child {
       margin-left: 0; }
-    /* line 82, ../sass/_admin_list.scss */
+    /* line 85, ../sass/_admin_list.scss */
     .lt-head-btns div:hover {
       color: #ffffff;
       font-weight: 600;
       background-color: #10b8f7;
       margin-left: 10px; }
 
-/* line 90, ../sass/_admin_list.scss */
+/* line 93, ../sass/_admin_list.scss */
 .lt-content-top {
   text-transform: uppercase; }
-  /* line 93, ../sass/_admin_list.scss */
+  /* line 96, ../sass/_admin_list.scss */
   .lt-content-top li span {
     font-size: 11px; }
-  /* line 96, ../sass/_admin_list.scss */
+  /* line 99, ../sass/_admin_list.scss */
   .lt-content-top li:nth-child(3) span, .lt-content-top li:nth-child(4) span, .lt-content-top li:nth-child(5) span {
     padding-right: 16px;
     background: #ffffff url(../images/arrow-to-down.png) 100% 50% no-repeat; }
 
-/* line 104, ../sass/_admin_list.scss */
+/* line 107, ../sass/_admin_list.scss */
 .lt-psevdo-check {
   position: absolute;
   top: 30px;
@@ -1696,27 +1699,27 @@ h4 {
   width: 16px;
   height: 16px;
   background: url(../images/checkbx1.png) 0 0 no-repeat; }
-  /* line 111, ../sass/_admin_list.scss */
+  /* line 114, ../sass/_admin_list.scss */
   .lt-psevdo-check.psevdo-checked {
     background-position: 0 bottom; }
 
-/* line 116, ../sass/_admin_list.scss */
+/* line 119, ../sass/_admin_list.scss */
 .admin-lt-content ul {
   margin-bottom: 0;
   border-bottom: 1px solid #e0e3ea; }
-  /* line 120, ../sass/_admin_list.scss */
+  /* line 123, ../sass/_admin_list.scss */
   .admin-lt-content ul:not(:first-child) li:first-child {
     padding-left: 0;
     position: relative; }
-  /* line 125, ../sass/_admin_list.scss */
+  /* line 128, ../sass/_admin_list.scss */
   .admin-lt-content ul:after {
     content: '';
     display: block;
     clear: both; }
-/* line 129, ../sass/_admin_list.scss */
+/* line 132, ../sass/_admin_list.scss */
 .admin-lt-content .hidden-arg {
   color: #bfc0c2 !important; }
-/* line 132, ../sass/_admin_list.scss */
+/* line 135, ../sass/_admin_list.scss */
 .admin-lt-content li {
   float: left;
   padding-left: 11px;
@@ -1727,20 +1730,20 @@ h4 {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
-  /* line 140, ../sass/_admin_list.scss */
+  /* line 143, ../sass/_admin_list.scss */
   .admin-lt-content li:first-child {
     border-left: none;
     width: 35px; }
-  /* line 144, ../sass/_admin_list.scss */
+  /* line 147, ../sass/_admin_list.scss */
   .admin-lt-content li:nth-child(2) {
     width: 82px; }
-  /* line 147, ../sass/_admin_list.scss */
+  /* line 150, ../sass/_admin_list.scss */
   .admin-lt-content li:nth-child(3) {
     width: 366px; }
-  /* line 150, ../sass/_admin_list.scss */
+  /* line 153, ../sass/_admin_list.scss */
   .admin-lt-content li:nth-child(4) {
     width: 195px; }
-  /* line 153, ../sass/_admin_list.scss */
+  /* line 156, ../sass/_admin_list.scss */
   .admin-lt-content li img {
     overflow: hidden;
     margin: 18px 0 0 10px;
@@ -1748,17 +1751,17 @@ h4 {
     height: 39px;
     border-radius: 50%; }
 
-/* line 163, ../sass/_admin_list.scss */
+/* line 166, ../sass/_admin_list.scss */
 .lt-content-main li {
   cursor: pointer; }
-/* line 166, ../sass/_admin_list.scss */
+/* line 169, ../sass/_admin_list.scss */
 .lt-content-main:hover {
   background-color: #e5f7fd !important; }
-  /* line 168, ../sass/_admin_list.scss */
+  /* line 171, ../sass/_admin_list.scss */
   .lt-content-main:hover li:not(:last-child) {
     font-weight: 900; }
 
-/* line 173, ../sass/_admin_list.scss */
+/* line 176, ../sass/_admin_list.scss */
 .admin-list .admin-table-footer {
   margin-top: 20px; }
 

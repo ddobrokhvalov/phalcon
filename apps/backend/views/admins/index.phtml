@@ -37,6 +37,7 @@
                 <li><span>Фио</span></li>
                 <li><span>E-mail</span></li>
                 <li><span>Доступ</span></li>
+                <li></li>
             </ul>
             {% for user in page.items %}
             <ul class="lt-content-main">
@@ -44,7 +45,8 @@
                 <li>{% if user.avatar!='' %}<img src="/files/avatars/{{user.avatar}}" alt="">{% endif %}</li>
                 <li>{{user.surname}} {{user.name}}</li>
                 <li>{{user.email}}</li>
-                <li><!--Редактирование пользователей<br/>Чтение пользователей<br/>Чтение жалоб<br/>Редактирование жалоб<br/>Юрист<br/>Редактирование данных УФАС<br/>Редактирование доводов<br/--></li>
+                <li></li>
+                <li>{{ link_to("admin/admins/edit/" ~ user.id, 'Изменить') }}</li>
             </ul>
             {% endfor %}
         </div>
