@@ -12,15 +12,21 @@ use Multiple\Backend\Form\ApplicantForm;
 class ApplicantsController  extends ControllerBase
 {
     public function indexAction(){
+        $next_items = $this->request->getPost('next-portions-items');
+        if (!isset($next_items)) {
+            $next_items = 0;
+        }
+        $item_per_page = 15 + $next_items;
         $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
         $applicant = Applicant::find();
         $paginator = new Paginator(array(
             "data"  => $applicant,
-            "limit" => 10,
+            "limit" => $item_per_page,
             "page"  => $numberPage
         ));
         $pages = $paginator->getPaginate();
         $this->view->page = $pages;
+        $this->view->item_per_page = $item_per_page;
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->setMenu();
     }
@@ -30,6 +36,11 @@ class ApplicantsController  extends ControllerBase
     }
 
     public function infoAction($id){
+        $next_items = $this->request->getPost('next-portions-items');
+        if (!isset($next_items)) {
+            $next_items = 0;
+        }
+        $item_per_page = 15 + $next_items;
         $applicant = Applicant::findFirstById($id);
         if (!$applicant) {
             $this->flash->error("Applicant was not found");
@@ -43,11 +54,12 @@ class ApplicantsController  extends ControllerBase
         $this->view->applicant = $applicant;
         $paginator = new PaginatorArray(array(
             "data"  => Complaint::findApplicantComplaints($applicant->id),
-            "limit" => 10,
+            "limit" => $item_per_page,
             "page"  => $numberPage
         ));
         $pages = $paginator->getPaginate();
         $this->view->page = $pages;
+        $this->view->item_per_page = $item_per_page;
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->setMenu();
     }

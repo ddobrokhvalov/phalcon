@@ -685,8 +685,9 @@ h4 {
 
 /* line 145, ../sass/_lawyer_questions.scss */
 .admin-table-footer {
-  overflow: hidden; }
-  /* line 147, ../sass/_lawyer_questions.scss */
+  overflow: hidden;
+  min-height: 120px; }
+  /* line 148, ../sass/_lawyer_questions.scss */
   .admin-table-footer a:first-child {
     float: left;
     margin: 29px 0 34px calc(50% - 137px);
@@ -699,10 +700,11 @@ h4 {
     text-align: center;
     text-transform: uppercase;
     background-color: #00aeef; }
-    /* line 159, ../sass/_lawyer_questions.scss */
+    /* line 160, ../sass/_lawyer_questions.scss */
     .admin-table-footer a:first-child:hover {
-      background-color: #10b8f7; }
-  /* line 163, ../sass/_lawyer_questions.scss */
+      background-color: #10b8f7;
+      text-decoration: none; }
+  /* line 165, ../sass/_lawyer_questions.scss */
   .admin-table-footer a:last-child {
     float: right;
     color: #00aeef;
@@ -710,25 +712,25 @@ h4 {
     font-size: 16px;
     margin-top: 46px; }
 
-/* line 171, ../sass/_lawyer_questions.scss */
+/* line 173, ../sass/_lawyer_questions.scss */
 .admin-pagination-box {
   height: 108px;
   position: relative;
   border-top: 1px solid #e0e3ea;
   border-bottom: 1px solid #e0e3ea; }
-  /* line 176, ../sass/_lawyer_questions.scss */
+  /* line 178, ../sass/_lawyer_questions.scss */
   .admin-pagination-box ul {
     display: table;
     margin: 37px auto 0; }
-  /* line 180, ../sass/_lawyer_questions.scss */
+  /* line 182, ../sass/_lawyer_questions.scss */
   .admin-pagination-box li {
     float: left; }
-    /* line 182, ../sass/_lawyer_questions.scss */
+    /* line 184, ../sass/_lawyer_questions.scss */
     .admin-pagination-box li span {
       margin: 0 4px;
       padding: 0 13px;
       line-height: 36px; }
-    /* line 187, ../sass/_lawyer_questions.scss */
+    /* line 189, ../sass/_lawyer_questions.scss */
     .admin-pagination-box li a {
       margin: 0 4px;
       padding: 0 13px;
@@ -737,19 +739,19 @@ h4 {
       line-height: 36px;
       border-radius: 2px;
       display: inline-block; }
-      /* line 195, ../sass/_lawyer_questions.scss */
+      /* line 197, ../sass/_lawyer_questions.scss */
       .admin-pagination-box li a:hover {
         background-color: #00aeef;
         color: #ffffff;
         font-weight: 600; }
-    /* line 201, ../sass/_lawyer_questions.scss */
+    /* line 203, ../sass/_lawyer_questions.scss */
     .admin-pagination-box li .active-pag-page {
       display: inline-block;
       color: #ffffff;
       font-weight: 600;
       border-radius: 2px;
       background-color: #00aeef; }
-  /* line 209, ../sass/_lawyer_questions.scss */
+  /* line 211, ../sass/_lawyer_questions.scss */
   .admin-pagination-box > a {
     position: absolute;
     top: 50px;
@@ -759,13 +761,13 @@ h4 {
     text-transform: uppercase;
     cursor: pointer; }
 
-/* line 219, ../sass/_lawyer_questions.scss */
+/* line 221, ../sass/_lawyer_questions.scss */
 #admin-pag-prev {
   left: 0;
   padding-left: 20px;
   background: url(../images/icon-pag-arr1.png) 0 0 no-repeat; }
 
-/* line 224, ../sass/_lawyer_questions.scss */
+/* line 226, ../sass/_lawyer_questions.scss */
 #admin-pag-next {
   right: 0;
   padding-right: 20px;
@@ -1178,7 +1180,7 @@ h4 {
   padding-right: 11px; }
 /* line 406, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(6) {
-  width: 150px; }
+  width: 175px; }
 /* line 410, ../sass/_complaints_preview.scss */
 .complaints-list .lt-content-top li:nth-child(2) {
   border-left: medium none;
@@ -1862,83 +1864,91 @@ h4 {
   .user-list .lt-content-top li:nth-child(3) span, .user-list .lt-content-top li:nth-child(4) span {
     background: none; }
   /* line 21, ../sass/_user_list.scss */
-  .user-list .lt-content-top li:nth-child(1) span, .user-list .lt-content-top li:nth-child(2) span, .user-list .lt-content-top li:nth-child(5) span, .user-list .lt-content-top li:nth-child(6) {
+  .user-list .lt-content-top li:nth-child(1) span, .user-list .lt-content-top li:nth-child(2) span, .user-list .lt-content-top li:nth-child(5) span, .user-list .lt-content-top li:nth-child(6) span {
     padding-right: 16px;
     background: #ffffff url(../images/arrow-to-down.png) 100% 50% no-repeat; }
 
 /* line 33, ../sass/_user_list.scss */
 .user-list .admin-lt-content ul:hover li:nth-child(5) {
   font-weight: normal; }
-/* line 39, ../sass/_user_list.scss */
-.user-list .admin-lt-content li:first-child {
-  padding-left: 32px !important;
-  width: 374px; }
-/* line 43, ../sass/_user_list.scss */
-.user-list .admin-lt-content li:nth-child(2) {
-  width: 196px; }
-/* line 46, ../sass/_user_list.scss */
-.user-list .admin-lt-content li:nth-child(3) {
-  width: 89px; }
-/* line 49, ../sass/_user_list.scss */
-.user-list .admin-lt-content li:nth-child(4) {
-  width: 84px; }
-/* line 52, ../sass/_user_list.scss */
-.user-list .admin-lt-content li:nth-child(5) {
-  width: 141px; }
+/* line 38, ../sass/_user_list.scss */
+.user-list .admin-lt-content li {
+  /*&:nth-child(7) {
+      width: 56px;
+  }*/ }
+  /* line 39, ../sass/_user_list.scss */
+  .user-list .admin-lt-content li:first-child {
+    padding-left: 32px !important;
+    width: 374px; }
+  /* line 43, ../sass/_user_list.scss */
+  .user-list .admin-lt-content li:nth-child(2) {
+    width: 140px; }
+  /* line 46, ../sass/_user_list.scss */
+  .user-list .admin-lt-content li:nth-child(3) {
+    width: 89px; }
+  /* line 49, ../sass/_user_list.scss */
+  .user-list .admin-lt-content li:nth-child(4) {
+    width: 80px; }
+  /* line 52, ../sass/_user_list.scss */
+  .user-list .admin-lt-content li:nth-child(5) {
+    width: 120px; }
+  /* line 55, ../sass/_user_list.scss */
+  .user-list .admin-lt-content li:nth-child(6) {
+    width: 82px; }
 
-/* line 59, ../sass/_user_list.scss */
+/* line 65, ../sass/_user_list.scss */
 .applicant-list .admin-lt-content li:first-child {
   padding-left: 32px !important;
   width: 405px; }
-/* line 63, ../sass/_user_list.scss */
+/* line 69, ../sass/_user_list.scss */
 .applicant-list .admin-lt-content li:nth-child(2) {
   width: 155px; }
-/* line 66, ../sass/_user_list.scss */
+/* line 72, ../sass/_user_list.scss */
 .applicant-list .admin-lt-content li:nth-child(3) {
   width: 230px; }
-/* line 69, ../sass/_user_list.scss */
+/* line 75, ../sass/_user_list.scss */
 .applicant-list .admin-lt-content li:nth-child(4) {
   width: 85px; }
-/* line 72, ../sass/_user_list.scss */
+/* line 78, ../sass/_user_list.scss */
 .applicant-list .admin-lt-content li:nth-child(5) {
   width: 90px; }
 
-/* line 79, ../sass/_user_list.scss */
+/* line 85, ../sass/_user_list.scss */
 .appllicant-page-detail .admin-lt-content li:first-child {
   width: 580px;
   padding-left: 35px; }
-/* line 83, ../sass/_user_list.scss */
+/* line 89, ../sass/_user_list.scss */
 .appllicant-page-detail .admin-lt-content li:nth-child(2) {
   width: 190px; }
-/* line 86, ../sass/_user_list.scss */
+/* line 92, ../sass/_user_list.scss */
 .appllicant-page-detail .admin-lt-content li:nth-child(3) {
   width: 124px; }
-/* line 89, ../sass/_user_list.scss */
+/* line 95, ../sass/_user_list.scss */
 .appllicant-page-detail .admin-lt-content li:nth-child(4) {
   width: 71px;
   padding-left: 0; }
-/* line 94, ../sass/_user_list.scss */
+/* line 100, ../sass/_user_list.scss */
 .appllicant-page-detail .lt-content-top li:nth-child(4) {
   padding-left: 11px; }
-/* line 97, ../sass/_user_list.scss */
+/* line 103, ../sass/_user_list.scss */
 .appllicant-page-detail .lt-content-main li:first-child {
   padding-left: 35px !important; }
-/* line 100, ../sass/_user_list.scss */
+/* line 106, ../sass/_user_list.scss */
 .appllicant-page-detail ul {
   border-bottom: none; }
-/* line 103, ../sass/_user_list.scss */
+/* line 109, ../sass/_user_list.scss */
 .appllicant-page-detail ul.status-green {
   border-top: 3px solid #53cab3; }
-/* line 106, ../sass/_user_list.scss */
+/* line 112, ../sass/_user_list.scss */
 .appllicant-page-detail ul.status-red {
   border-top: 3px solid #f26d7d; }
-/* line 109, ../sass/_user_list.scss */
+/* line 115, ../sass/_user_list.scss */
 .appllicant-page-detail ul.status-blue {
   border-top: 3px solid #00aeef; }
-/* line 112, ../sass/_user_list.scss */
+/* line 118, ../sass/_user_list.scss */
 .appllicant-page-detail ul.status-black {
   border-top: 3px solid #3d3f40; }
-/* line 116, ../sass/_user_list.scss */
+/* line 122, ../sass/_user_list.scss */
 .appllicant-page-detail .del-oredit-appll div {
   padding: 0 34px;
   font-size: 14px;
@@ -1950,91 +1960,91 @@ h4 {
   background-color: #fff;
   float: left;
   cursor: pointer; }
-  /* line 127, ../sass/_user_list.scss */
+  /* line 133, ../sass/_user_list.scss */
   .appllicant-page-detail .del-oredit-appll div:hover {
     background-color: #fef0f2; }
-/* line 131, ../sass/_user_list.scss */
+/* line 137, ../sass/_user_list.scss */
 .appllicant-page-detail .del-oredit-appll a:hover {
   text-decoration: none;
   font-size: 14px;
   font-weight: 600; }
-/* line 137, ../sass/_user_list.scss */
+/* line 143, ../sass/_user_list.scss */
 .appllicant-page-detail .jl-status-short {
   width: 22px;
   min-height: 22px; }
-/* line 141, ../sass/_user_list.scss */
+/* line 147, ../sass/_user_list.scss */
 .appllicant-page-detail .dropdown, .appllicant-page-detail .dropup {
   text-align: center;
   height: 100%; }
-  /* line 144, ../sass/_user_list.scss */
+  /* line 150, ../sass/_user_list.scss */
   .appllicant-page-detail .dropdown #dLabel, .appllicant-page-detail .dropup #dLabel {
     height: 100%; }
-    /* line 146, ../sass/_user_list.scss */
+    /* line 152, ../sass/_user_list.scss */
     .appllicant-page-detail .dropdown #dLabel .jl-status-short, .appllicant-page-detail .dropup #dLabel .jl-status-short {
       background-position: center center;
       display: block;
       height: 100%;
       width: 100%; }
-/* line 154, ../sass/_user_list.scss */
+/* line 160, ../sass/_user_list.scss */
 .appllicant-page-detail .dropdown-menu {
   width: 196px;
   margin-left: -125px;
   font-weight: 400 !important; }
-  /* line 158, ../sass/_user_list.scss */
+  /* line 164, ../sass/_user_list.scss */
   .appllicant-page-detail .dropdown-menu:hover {
     font-weight: 400 !important; }
-  /* line 161, ../sass/_user_list.scss */
+  /* line 167, ../sass/_user_list.scss */
   .appllicant-page-detail .dropdown-menu li {
     width: 100% !important;
     padding-left: 15px !important;
     text-transform: uppercase;
     font-weight: 400 !important;
     height: 40px !important; }
-    /* line 167, ../sass/_user_list.scss */
+    /* line 173, ../sass/_user_list.scss */
     .appllicant-page-detail .dropdown-menu li span {
       display: block;
       line-height: 40px;
       font-weight: 400 !important; }
-      /* line 171, ../sass/_user_list.scss */
+      /* line 177, ../sass/_user_list.scss */
       .appllicant-page-detail .dropdown-menu li span:hover {
         font-weight: 400 !important; }
-    /* line 175, ../sass/_user_list.scss */
+    /* line 181, ../sass/_user_list.scss */
     .appllicant-page-detail .dropdown-menu li:hover {
       font-weight: 400 !important;
       background-color: #e5f7fd; }
-  /* line 180, ../sass/_user_list.scss */
+  /* line 186, ../sass/_user_list.scss */
   .appllicant-page-detail .dropdown-menu li.header-dropdown {
     margin-bottom: 20px;
     padding-left: 15px !important;
     font-weight: bold; }
-    /* line 184, ../sass/_user_list.scss */
+    /* line 190, ../sass/_user_list.scss */
     .appllicant-page-detail .dropdown-menu li.header-dropdown span {
       display: inline-block; }
-    /* line 187, ../sass/_user_list.scss */
+    /* line 193, ../sass/_user_list.scss */
     .appllicant-page-detail .dropdown-menu li.header-dropdown:hover {
       background-color: transparent; }
 
-/* line 193, ../sass/_user_list.scss */
+/* line 199, ../sass/_user_list.scss */
 .applicant-list .admin-add.userAdd {
   margin-top: -75px; }
 
-/* line 196, ../sass/_user_list.scss */
+/* line 202, ../sass/_user_list.scss */
 .good-bad {
   margin: 36px 0 0 27px;
   width: 11px;
   height: 10px;
   background: url("../images/good-bad-icons.png") no-repeat -16px 0; }
-  /* line 201, ../sass/_user_list.scss */
+  /* line 207, ../sass/_user_list.scss */
   .good-bad.must {
     background-position: -32px 0; }
-  /* line 204, ../sass/_user_list.scss */
+  /* line 210, ../sass/_user_list.scss */
   .good-bad.extended {
     background-position: 0 0; }
 
-/* line 208, ../sass/_user_list.scss */
+/* line 214, ../sass/_user_list.scss */
 .lt-content-main.red-bg {
   background-color: #fef0f2; }
-  /* line 210, ../sass/_user_list.scss */
+  /* line 216, ../sass/_user_list.scss */
   .lt-content-main.red-bg:hover {
     background-color: #fef0f2 !important; }
 

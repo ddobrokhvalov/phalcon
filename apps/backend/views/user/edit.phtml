@@ -18,6 +18,7 @@
             <div class="left-block-editing">
                 <span>Данные пользователя</span>
                 <label for="fUser">
+                    <p>ФИО</p>
                     {{text_field('lastname', 'value':edituser.lastname, 'id':'fUser')}}
                 </label>
                 <label for="iUser">
@@ -139,21 +140,6 @@
                     <li class="j-user-status-info">
                         <div class="appll-status-icon">
                         <input class="j-comlient-status" name="status" type="hidden" value="{{comliant['status']}}">
-                        {%if comliant['status'] != 'draft' %}
-                        <img src="/images/icon-jl-chernov.png">
-                        {%elseif comliant['status'] != 'submitted' %}
-                        <img src="/images/icon-jl-podana.png">
-                        {%elseif comliant['status'] != 'under_consideration' %}
-                        <img src="/images/icon-jl-rassmotr.png">
-                        {%elseif comliant['status'] != 'justified' %}
-                        <img src="/images/icon-jl-done.png">
-                        {%elseif comliant['status'] != 'unfounded' %}
-                        <img src="/images/icon-jl-notdone.png">
-                        {%elseif comliant['status'] != 'recalled' %}
-                        <img src="/images/icon-jl-fail.png">
-                        {%elseif comliant['status'] != 'archive' %}
-                        <img src="/images/icon-jl-archive.png">
-                        {%endif%}
                         </div>
                         <div class="close-status-list">Сменить статус</div>
                     </li>
@@ -163,36 +149,6 @@
         </div>
     </div>
 </div>
-
-<form action="/admin/user/save" method="post">
-    <fieldset>
-
-        <fieldset>
-
-            {% for element in form %}
-            <div class="control-group">
-                {{ element.label(['class': 'control-label']) }}
-                <div class="controls">{{ element }}</div>
-            </div>
-            {% endfor %}
-
-            <div class="control-group">
-                {{ submit_button("Сохранить", "class": "btn btn-primary") }}
-            </div>
-
-        </fieldset>
-</form>
-
-<div>
-    {% for applicant in applicants %}
-      {{ applicant.name_full }}
-    <a href="/admin/user/editapplicant/{{ applicant.id }}">Редактировать</a>
-    <a href="/admin/user/delapplicant/{{ applicant.id }}">Удалить</a>
-
-    {% endfor %}
-
-</div>
-
 
 <script>
     $( document ).ready(function() {
