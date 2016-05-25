@@ -6,6 +6,9 @@
 		display: inline-block;
 		margin-bottom: 32px;
 	}
+    .admin-lt-content li:nth-child(5) {
+        width: 150px;
+    }
 }
 .admin-add {
 	float: right;

@@ -21,12 +21,12 @@
             <ul class="admin-table-body question-list">
                 {% for compliant in page.items %}
                 <li>
-                    <p>{{compliant.complaint_name}}Нарушения по ГОСТ</p>
+                    <p>{{compliant.complaint_name}}</p>
                     {% set questions = compliant.getComplaintQuestion() %}
                     {% for question in questions %}
                     <ul>
                         <li>{{date('d.m.Y', question.date|strtotime)}}</li>
-                        <li><a href="#">{{question.text}}</a></li>
+                        <li><a href="/admin/complaints/preview/{{question.complaint_id}}">{{question.text}}</a></li>
                     </ul>
                     {% endfor %}
                 </li>
