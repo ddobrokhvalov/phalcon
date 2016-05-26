@@ -1,6 +1,7 @@
 {% extends "base-template.phtml" %}
 {% block title %}ФАС ОНЛАЙН - Доводы{% endblock %}
 {% block body %}
+<script type="text/javascript" src="/js/ckeditor_n/ckeditor.js"></script>
 <div class="admin-main-wrap creating-reasons">
     <div class="bread-crumbs-holder">
         <a href="/admin/arguments/index">Вернуться на страницу пользователя</a>
@@ -34,8 +35,11 @@
             <div class="editreason-contant">
                 <img src="images/zaglushka2.png" alt="">
             </div>
-            <div class="complaints-main ">
-                <textarea name="arguments[text]" style="resize: vertical;" class="mCustomScrollbar" cols="130" rows="20"></textarea>
+            <div class="complaints-main " style="padding-left: 0;">
+                <textarea name="arguments[text]" id="#arguments[text]" style="resize: vertical;" class="mCustomScrollbar" cols="130" rows="20"></textarea>
+            <script>
+                CKEDITOR.replace('arguments[text]');
+            </script>
             </div>
             <button type="submit">Создать довод</button>
         </form>

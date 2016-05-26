@@ -96,6 +96,13 @@
         }
     }
 }
+#cke_1_bottom {
+    background: transparent !important;
+    border-top: none !important;
+}
+#cke_1_top, .cke_toolgroup {
+    background: transparent !important;
+}
 .appllicant-page .admin-lt-content {
 	.lt-content-main li:last-child {
 		padding-left: 0;
