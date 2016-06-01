@@ -14,14 +14,15 @@
 .user-list .lt-content-top {
 	text-transform: uppercase;
 	li {
-		&:nth-child(3) span,
+		/*&:nth-child(3) span,
 		&:nth-child(4) span {
 			background: none;
-		}
+		}*/
 		&:nth-child(1) span,
 		&:nth-child(2) span,
 		&:nth-child(5) span,
 		&:nth-child(6) span {
+            cursor: pointer;
 			padding-right: 16px;
 			background: $white url(../images/arrow-to-down.png) 100% 50% no-repeat;
 		}
@@ -38,22 +39,22 @@
     li {
         &:first-child {
             padding-left: 32px !important;
-            width: 374px;
+            width: 410px;
         }
         &:nth-child(2) {
-            width: 140px;
+            width: 155px;
         }
         &:nth-child(3) {
-            width: 89px;
+            width: 105px;
         }
         &:nth-child(4) {
-            width: 80px;
+            width: 90px;
         }
         &:nth-child(5) {
             width: 120px;
         }
         &:nth-child(6) {
-            width: 82px;
+            width: 85px;
         }
         /*&:nth-child(7) {
             width: 56px;
@@ -64,19 +65,32 @@
     li {
         &:first-child {
             padding-left: 32px !important;
-            width: 405px;
+            width: 450px;
         }
         &:nth-child(2) {
             width: 155px;
         }
         &:nth-child(3) {
-            width: 230px;
+            width: 270px;
         }
         &:nth-child(4) {
-            width: 85px;
-        }
-        &:nth-child(5) {
             width: 90px;
+        }
+    }
+    .lt-content-top {
+        li:first-child span, li:nth-child(2) span {
+            background: #ffffff url("../images/arrow-to-down.png") no-repeat scroll 100% 50%;
+            cursor: pointer;
+            padding-right: 16px;
+        }
+    }
+}
+.list-logs .admin-lt-content {
+    .lt-content-top {
+        li:first-child span, li:nth-child(2) span {
+            background: #ffffff url("../images/arrow-to-down.png") no-repeat scroll 100% 50%;
+            cursor: pointer;
+            padding-right: 16px;
         }
     }
 }

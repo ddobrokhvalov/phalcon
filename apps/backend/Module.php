@@ -77,7 +77,8 @@ class Module
 						));
 						$compiler = $volt->getCompiler();
 						$compiler->addFunction('truncate', function ($str) {return "mb_substr ($str) . '...'";});
-						$compiler->addFilter('strtotime', 'strtotime');
+                        $compiler->addFilter('strtotime', 'strtotime');
+						$compiler->addFilter('count', 'count');
 						return $volt;
 					}
 				)

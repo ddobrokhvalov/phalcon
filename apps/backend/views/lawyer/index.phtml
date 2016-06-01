@@ -6,44 +6,50 @@
     <div class="admin-table">
         <div class="admin-table-head">
             <div class="table-head-left">
-                <label for="table-head-new" class="lebel-checkbox">
+                <label for="table-head-new" class="lebel-checkbox {% if only_new|count == 1 %}main-active-checkbox{% endif %}">
                     <input type="checkbox" id="table-head-new">
                 </label>
                 <span>Показывать только новые</span>
             </div>
         </div>
-        <div class="admin-table-box">
+        <form action="" method="POST" id="only_new_form">
+            <input type="hidden" name="only_new" id="only_new" value="j">
+        </form>
+        <div class="admin-table-box" id="sort-table">
             <ul class="admin-table-title">
-                <li><span>Жалоба</span></li>
-                <li><span>Добавлен</span></li>
-                <li><span>Вопрос</span></li>
+                <li sort-field="sort-name"><span class="sortable-custom">Жалоба</span></li>
+                <li sort-field="sort-date"><span class="sortable-custom">Добавлен</span></li>
+                <li sort-field="sort-questions"><span class="sortable-custom">Вопрос</span></li>
             </ul>
             <ul class="admin-table-body question-list">
                 {% for compliant in page.items %}
-                <li>
+                {% set questions = compliant.getComplaintQuestion(only_new) %}
+                {% if questions.count() %}
+                <li class="lt-content-main" sort-name="" sort-date="" sort-questions="">
                     <p>{{compliant.complaint_name}}</p>
-                    {% set questions = compliant.getComplaintQuestion() %}
+                    
                     {% for question in questions %}
                     <ul>
-                        <li>{{date('d.m.Y', question.date|strtotime)}}</li>
+                        <li class="for-sort-date">{{date('d.m.Y', question.date|strtotime)}}</li>
                         <li><a href="/admin/complaints/preview/{{question.complaint_id}}">{{question.text}}</a></li>
                     </ul>
                     {% endfor %}
                 </li>
+                {% endif %}
                 {% endfor %}
             </ul>
             {% if page.total_items > item_per_page %}
                 <div class="admin-table-footer">
                     {% if page.current * item_per_page < page.total_items %}
                         {% set cnt = page.total_items - (page.current * item_per_page) %}
-                        <a href="#" onclick="$('#next_items').submit()">Еще <span>{{ cnt > item_per_page ? 5 : cnt}} вопросов</span></a><!--todo: -->
+                        <a href="#" onclick="$('#next_items').submit()">Еще <span>{{ cnt > item_per_page ? 20 : cnt}} вопросов</span></a><!--todo: -->
                         {% else %}
                             <div></div>
                     {% endif %}
                     <a href="#">Показать все вопросы (<span>{{page.total_items}}</span>)</a><!--todo: -->
                 </div>
                 <form id="next_items" method="post">
-                    {{hidden_field('next-portions-items', 'value':5)}}
+                    {{hidden_field('next-portions-items', 'value':20)}}
                 </form>
             {% endif %}
         </div>
@@ -65,5 +71,33 @@
             {% if page.total_pages > page.current %}{{ link_to("admin/lawyer/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
         </div>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#sort-table .lt-content-main").each(function(){
+                $(this).attr("sort-name", $(this).find("p").text());
+                $(this).attr("sort-date", $(this).find(".for-sort-date").text());
+                $(this).attr("sort-questions", $(this).find("a").text());
+            });
+            $("span.sortable-custom").click(function(){
+                if ($(this).hasClass("revert-bg")) {
+                    $(this).removeClass("revert-bg");
+                } else {
+                    $(this).addClass("revert-bg");
+                }
+                var sort_order = ["asc", "desc"];
+                var current_sort = 0;
+                var parentObj = $(this).parent();
+                var sort_by = parentObj.attr("sort-field");
+                if (parentObj.attr("sort-order") == undefined) {
+                    parentObj.attr("sort-order", current_sort);
+                } else {
+                    current_sort = !(+parentObj.attr("sort-order"));
+                    current_sort = current_sort ? 1 : 0;
+                    parentObj.attr("sort-order", current_sort);
+                }
+                tinysort('#sort-table li.lt-content-main', {attr: sort_by, order: sort_order[current_sort]});
+            });
+        });
+    </script>
 </div>
 {% endblock %}

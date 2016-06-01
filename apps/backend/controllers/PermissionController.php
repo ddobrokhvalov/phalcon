@@ -23,13 +23,14 @@ class PermissionController extends ControllerBase
     {
         $admin = Admin::findFirstById($id);
         if (!$admin) {
-            $this->flash->error("Admin was not found");
+            $this->flashSession->error("Администратор не найден");
             return $this->forward("admins/index");
         }
         $data = $this->request->getPost();
 
             $perm = new Permission();
             $perm->savePermission($id,$data);
+            $this->flashSession->success('Изменения сохранены');
             return $this->forward("admins/index");
 
     }

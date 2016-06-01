@@ -9,9 +9,9 @@
     <h1>Редактировать заявителя</h1>
     <div class="tabs-block">
         <div class="aplicant-tabs-label">
-            <div data-tabsLabel="legal-entity" {%if applicant.type=="urlico" %}class="active-tabs-label"{% else%}class="disabled-tab"{%endif%}>Юридическое лицо</div>
-            <div data-tabsLabel="individual-entrepreneur" {%if applicant.type=="ip" %}class="active-tabs-label"{% else %}class="disabled-tab"{%endif%}>Индивидуальный предприниматель</div>
-            <div data-tabsLabel="physical-face"  {%if applicant.type=="fizlico" %}class="active-tabs-label"{% else%} class="disabled-tab"{%endif%}>Физическое лицо</div>
+            <div data-tabsLabel="legal-entity" {%if applicant.type=="urlico" %}class="active-tabs-label"{%endif%}>Юридическое лицо</div>
+            <div data-tabsLabel="individual-entrepreneur" {%if applicant.type=="ip" %}class="active-tabs-label"{%endif%}>Индивидуальный предприниматель</div>
+            <div data-tabsLabel="physical-face"  {%if applicant.type=="fizlico" %}class="active-tabs-label"{%endif%}>Физическое лицо</div>
         </div>
         <div data-tabs="legal-entity" class="tabs-content {%if applicant.type=="urlico" %}active-tabs-content{%endif%}">
             <form action="/admin/applicants/save" method="POST">

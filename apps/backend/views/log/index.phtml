@@ -86,15 +86,15 @@
 </div>
 
 
-<div class="admin-lt-content">
+<div class="admin-lt-content" id="sort-table">
     <ul class="lt-content-top">
-        <li><span>Роль</span></li>
-        <li><span>Тип</span></li>
-        <li><span>Сообщение</span></li>
-        <li><span>Дата</span></li>
+        <li sort-field="sort-role"><span class="sortable">Роль</span></li>
+        <li sort-field="sort-type"><span class="sortable">Тип</span></li>
+        <li sort-field="sort-message"><span class="sortable">Сообщение</span></li>
+        <li sort-field="sort-date"><span class="sortable">Дата</span></li>
     </ul>
     {% for log in page.items %}
-    <ul class="lt-content-main">
+    <ul class="lt-content-main" sort-role="{{log.au}}" sort-type="{{log.type}}" sort-message="{{log.text}}" sort-date="{{log.date}}">
         <li>{{ log.au }}</li>
         <li>{{ log.type }}</li>
         <li>{{ log.text }}</li>

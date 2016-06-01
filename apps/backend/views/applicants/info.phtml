@@ -3,7 +3,7 @@
 {% block body %}
 <div class="admin-main-wrap appllicant-page-detail">
     <div class="bread-crumbs-holder">
-        <a href="/admin/applicants/index">Вернуться на страницу заявителей</a>
+        <a href="#" onclick="history.back();return false;">Вернуться на страницу заявителей</a>
     </div>
     <h1>{{applicant.name_full}}</h1>
     <div class="del-oredit-appll">
@@ -70,14 +70,14 @@
                 <li><span>Статус</span></li>
             </ul>
             {% for complaint in page.items %}
-            <ul class="lt-content-main {{applicant.getComplaintColor(complaint['status'])}}">
+            <ul class="lt-content-main {{applicant.getComplaintColor(complaint['status'])}}" detail-url="{{url('admin/complaints/preview/' ~ complaint['id'])}}">
                 <li>
                     <div class="lt-psevdo-check">{{hidden_field('complaint-id', 'value':complaint['id'])}}</div>
                     {{complaint['complaint_name']}}
                 </li>
                 <li>{{complaint['auction_id']}}</li>
                 <li>{{date('Y.m.d', complaint['date']|strtotime)}}</li>
-                <li>
+                <li class='with-dropdown'>
                     <div class="dropdown">
                       <div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{applicant.getComplaintStatus(complaint['status'], TRUE)}}

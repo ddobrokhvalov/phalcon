@@ -16,7 +16,7 @@ class ApplicantsController  extends ControllerBase
         if (!isset($next_items)) {
             $next_items = 0;
         }
-        $item_per_page = 15 + $next_items;
+        $item_per_page = 20 + $next_items;
         $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
         $applicant = Applicant::find();
         $paginator = new Paginator(array(
@@ -40,7 +40,7 @@ class ApplicantsController  extends ControllerBase
         if (!isset($next_items)) {
             $next_items = 0;
         }
-        $item_per_page = 15 + $next_items;
+        $item_per_page = 20 + $next_items;
         $applicant = Applicant::findFirstById($id);
         if (!$applicant) {
             $this->flash->error("Applicant was not found");
@@ -68,7 +68,7 @@ class ApplicantsController  extends ControllerBase
     {
         $applicant = Applicant::findFirstById($id);
         if (!$applicant) {
-            $this->flash->error("Applicant was not found");
+            $this->flashSession->error("Заявитель не найден");
             return $this->dispatcher->forward(array(
                 'module' => 'backend',
                 'controller' => 'applicants',
@@ -192,7 +192,7 @@ class ApplicantsController  extends ControllerBase
                 'action' => 'index'
             ));
         }
-        $form = new ApplicantForm(null, array('edit' => true));
+        $form = new ApplicantForm(null, array('edit' => true, 'type' => $this->request->getPost('type')));
         $this->view->form = $form;
         $data = $this->request->getPost();
         if (!$form->isValid($data, $applicant)) {
@@ -218,6 +218,7 @@ class ApplicantsController  extends ControllerBase
                 'params' => ['id' => $id]
             ));
         }
+        $this->flashSession->success('Заявитель сохранен');
         $form->clear();
         return $this->dispatcher->forward(array(
             'module' => 'backend',

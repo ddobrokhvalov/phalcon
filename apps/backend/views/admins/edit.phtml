@@ -3,7 +3,7 @@
 {% block body %}
 <div class="admin-main-wrap admin-page">
     <div class="bread-crumbs-holder">
-        <a href="/admin/admins/index">Вернуться к списку администраторов</a>
+        <a href="#" onclick="history.back();return false;">Вернуться к списку администраторов</a>
     </div>
     <h1>{{admin.surname}} {{admin.name}} {{admin.patronymic}}</h1>
     <div class="admin-change-access">

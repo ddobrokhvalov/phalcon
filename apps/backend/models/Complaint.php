@@ -38,11 +38,12 @@ class Complaint extends Model
         return 'complaint';
     }
 
-    public function getComplaintQuestion(){
+    public function getComplaintQuestion($not_read = array('y', 'n')){
         return Question::find(array(
-            "complaint_id = :complaint_id:",
+            "complaint_id = :complaint_id: AND read IN ({read:array})",
             'bind' => array(
                 'complaint_id' => $this->id,
+                'read' => $not_read,
             ),
             "order" => "id DESC",
         ));
@@ -70,8 +71,11 @@ class Complaint extends Model
         return $answer_owner;
     }
     
-    public function getCountQuestions($question) {
+    public function getCountQuestions($question, $only_count = FALSE) {
         $rows = $question->toArray();
+        if ($only_count) {
+            return count($rows);
+        }
         return count($rows) ? '<span class="has-questions"></span>' : '<span class="no-questions"></span>';
     }
 

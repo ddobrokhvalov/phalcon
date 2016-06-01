@@ -30,23 +30,22 @@
             </div>
           </div>
         </div>
-        <div class="admin-lt-content">
+        <div class="admin-lt-content" id="sort-table">
             <ul class="lt-content-top">
                 <li></li>
                 <li><span>Аватар</span></li>
-                <li><span>Фио</span></li>
-                <li><span>E-mail</span></li>
-                <li><span>Доступ</span></li>
-                <li></li>
+                <li sort-field="sort-fio"><span class="sortable">Фио</span></li>
+                <li sort-field="sort-email"><span class="sortable">E-mail</span></li>
+                <li sort-field="sort-access"><span class="sortable">Доступ</span></li>
             </ul>
             {% for user in page.items %}
-            <ul class="lt-content-main">
+            {% set permissions = user.getPermissions() %}
+            <ul class="lt-content-main" sort-fio="{{user.surname}} {{user.name}}" sort-email="{{user.email}}" sort-access="{{permissions}}" detail-url="{{url('admin/admins/edit/' ~ user.id)}}">
                 <li><div class="lt-psevdo-check">{{hidden_field('admin-id', 'value':user.id)}}</div></li>
                 <li>{% if user.avatar!='' %}<img src="/files/avatars/{{user.avatar}}" alt="">{% endif %}</li>
                 <li>{{user.surname}} {{user.name}}</li>
                 <li>{{user.email}}</li>
-                <li></li>
-                <li>{{ link_to("admin/admins/edit/" ~ user.id, 'Изменить') }}</li>
+                <li>{{permissions}}</li>
             </ul>
             {% endfor %}
         </div>

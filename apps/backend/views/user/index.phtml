@@ -10,7 +10,7 @@
                 <div></div>Выбрать все
             </div>
             <div class="lt-head-btns">
-                <div class="btn" data-toggle="modal" data-target=".modal-send-message-lg">Отправить сообщение</div>
+                <div class="btn" data-toggle="modal" id="show-send-massage-dialog">Отправить сообщение</div>
                 <div onclick="block_unblock_users(1)">Заблокировать</div>
                 <div class="disabled-btn" onclick="block_unblock_users(0)">Разблокировать</div>
                 <div data-toggle="modal" data-target=".confirm-deletion-user-lg">Удалить</div>
@@ -56,25 +56,23 @@
             </div>
           </div>
         </div>
-        <div class="admin-lt-content">
+        <div class="admin-lt-content" id="sort-table">
             <ul class="lt-content-top">
-                <li><span>ФИО</span></li>
-                <li><span>Телефон</span></li>
-                <li><span>Заявители</span></li>
-                <li><span>Жалобы</span></li>
-                <li><span>Подписка до</span></li>
-                <li><span>Тариф</span></li>
-                <li></li>
+                <li sort-field="sort-fio"><span class="sortable">ФИО</span></li>
+                <li sort-field="sort-phone"><span class="sortable">Телефон</span></li>
+                <li sort-field="sort-applicants"><span class="sortable">Заявители</span></li>
+                <li sort-field="sort-complaints"><span class="sortable">Жалобы</span></li>
+                <li sort-field="sort-time-to"><span class="sortable">Подписка до</span></li>
+                <li sort-field="sort-rate"><span class="sortable">Тариф</span></li>
             </ul>
             {% for user in page.items %}
-            <ul class="lt-content-main {% if user.status == 0 %} hidden-arg {% endif %}">
+            <ul sort-fio="{{user.lastname}} {{user.firstname}} {{user.patronymic}}" sort-phone="{{user.phone}}" sort-applicants="35" sort-complaints="29" sort-time-to="22.01.2016" class="lt-content-main {% if user.status == 0 %} hidden-arg {% endif %}" detail-url="{{url('admin/user/edit/' ~ user.id)}}">
                 <li><div class="lt-psevdo-check">{{hidden_field('user-id', 'value':user.id)}}</div>{{user.lastname}} {{user.firstname}} {{user.patronymic}}</li>
                 <li>{{user.phone}}</li>
                 <li>35</li>
                 <li>29</li>
                 <li>22.01.2016</li>
                 <li><div class="good-bad extended"></div></li>
-                <li>{{ link_to("admin/user/edit/" ~ user.id, 'Изменить') }}</li>
             </ul>
             {% endfor %}
         </div>

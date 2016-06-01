@@ -30,17 +30,17 @@
             </div>
 
         </div>
-        <div class="admin-lt-content">
+        <div class="admin-lt-content" id="sort-table">
             <ul class="lt-content-top">
-                <li><span>Название довода</span></li>
-                <li><span>Категория довода</span></li>
-                <li><span>Добавлен</span></li>
+                <li sort-field="sort-name"><span class="sortable">Название довода</span></li>
+                <li sort-field="sort-cat-name"><span class="sortable">Категория довода</span></li>
+                <li sort-field="sort-date"><span class="sortable">Добавлен</span></li>
             </ul>
             {% for argument in Arguments %}
-            <ul class="lt-content-main {% if argument.argument_status == 0 %} hidden-arg {% endif %}">
+            <ul sort-name="{{argument.name}}" sort-cat-name="{{argument.catname}}" sort-date="{{argument.date|strtotime}}" class="lt-content-main {% if argument.argument_status == 0 %} hidden-arg {% endif %}">
                 <li>
                     <div class="lt-psevdo-check">{{hidden_field('argument-id', 'value':argument.id)}}</div>
-                    {{argument.name}}
+                    <div class="sort-field">{{argument.name}}</div>
                 </li>
                 <li>{{argument.catname}}</li>
                 <li>{{date('d.m.Y', argument.date|strtotime)}}</li>

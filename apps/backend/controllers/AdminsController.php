@@ -21,7 +21,7 @@ class AdminsController extends ControllerBase
         if (!isset($next_items)) {
             $next_items = 0;
         }
-        $item_per_page = 15 + $next_items;
+        $item_per_page = 20 + $next_items;
         $this->persistent->searchParams = null;
         $this->view->form = new AdminForm;
 

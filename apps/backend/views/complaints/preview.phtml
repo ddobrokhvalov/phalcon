@@ -4,7 +4,7 @@
     <!-- ****************** complaints preview ***************** -->
     <div class="admin-main-wrap complaints-preview-wrap">
         <div class="bread-crumbs-holder">
-            <a href="/admin/complaints/index">Вернуться на страницу жалоб</a>
+            <a href="#" onclick="history.back();return false;">Вернуться на страницу жалоб</a>
         </div>
         <h1>Просмотр жалобы</h1>
         <div class="notification-number-box notif-unreasonably"> <!-- if notification is rightly - remoove class "notif-unreasonably" -->
@@ -14,9 +14,17 @@
             </p>
         </div>
         <div class="edit-notification-box">
+            {% if complaint.status == 'draft' %}
+            <a href="#">Редактировать</a>
+            {% else %}
             <a href="#" class="edit-notif-active">Редактировать</a>
+            {% endif %}
             <a href="#" onclick="change_complaint_status({{complaint.id}}, 'copy')">Копировать</a>
+            {% if complaint.status == 'under_consideration' %}
             <a href="#" onclick="change_complaint_status({{complaint.id}}, 'recalled')">Отозвать</a>
+            {% else %}
+            <a class="edit-notif-active" href="#" onclick="return false;">Отозвать</a>
+            {% endif %}
             <a href="#" onclick="change_complaint_status({{complaint.id}}, 'archive')">В архив</a>
             <a href="#"><div data-toggle="modal" data-target=".confirm-deletion-complaint-lg">Удалить</div></a>
         </div>

@@ -27,21 +27,19 @@
               </div>
             </div>
         </div>
-        <div class="admin-lt-content">
+        <div class="admin-lt-content" id="sort-table">
             <ul class="lt-content-top">
-                <li><span>Краткое наименование</span></li>
-                <li><span>Телефон</span></li>
-                <li><span>Имейл</span></li>
-                <li><span>Жалобы</span></li>
-                <li></li>
+                <li sort-field="sort-name"><span class="sortable">Краткое наименование</span></li>
+                <li sort-field="sort-phone"><span class="sortable">Телефон</span></li>
+                <li sort-field="sort-email"><span class="sortable">Имейл</span></li>
+                <li sort-field="sort-complaints"><span class="sortable">Жалобы</span></li>
             </ul>
             {% for applicant in page.items %}
-            <ul class="lt-content-main">
+            <ul class="lt-content-main" sort-name="{{applicant.name_short}}" sort-phone="{{applicant.telefone}}" sort-email="{{applicant.email}}" sort-complaints="{{applicant.getCountComplaints(applicant.id)}}" detail-url="{{url('admin/applicants/info/' ~ applicant.id)}}">
                 <li><div class="lt-psevdo-check">{{hidden_field('applicant-id', 'value':applicant.id)}}</div>{{applicant.name_short}}</li>
                 <li>{{applicant.telefone}}</li>
                 <li>{{applicant.email}}</li>
                 <li>{{applicant.getCountComplaints(applicant.id)}}</li>
-                <li>{{ link_to("admin/applicants/info/" ~ applicant.id, 'Просмотр') }}</li>
             </ul>
             {% endfor %}
         </div>

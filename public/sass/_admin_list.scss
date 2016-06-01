@@ -6,8 +6,13 @@
 		display: inline-block;
 		margin-bottom: 32px;
 	}
-    .admin-lt-content li:nth-child(5) {
-        width: 150px;
+    .admin-lt-content {
+        li:nth-child(5) {
+            width: 235px;
+        }
+        li:nth-child(4) {
+            width: 246px;
+        }
     }
 }
 .admin-add {
@@ -84,9 +89,8 @@
 		}
 		&:hover{
 			color: $white;
-			font-weight: 600;
+			/*font-weight: 600;*/
 			background-color: $h-blue;
-            margin-left: 10px;
 		}
 	}
 }
@@ -99,6 +103,7 @@
 		&:nth-child(3) span,
 		&:nth-child(4) span,
 		&:nth-child(5) span {
+            cursor: pointer;
 			padding-right: 16px;
 			background: $white url(../images/arrow-to-down.png) 100% 50% no-repeat;
 		}

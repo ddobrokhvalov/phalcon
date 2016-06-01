@@ -52,7 +52,14 @@
 	li:nth-child(3) {
 		padding-left: 15px;
 	}
-	span {
+    li {
+        span {
+            background: #ffffff url("../images/arrow-to-down.png") no-repeat scroll 100% 50%;
+            cursor: pointer;
+            padding-right: 16px;
+        }
+    }
+	/*span {
 		position: relative;
 		&:after {
 			position: absolute;
@@ -63,7 +70,7 @@
 			height: 7px;
 			background: url(../images/arrow-to-down.png) 0 0 no-repeat;
 		}
-	}
+	}*/
 }
 .admin-table-box {
 	.admin-table-body li ul {

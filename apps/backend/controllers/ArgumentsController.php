@@ -77,7 +77,7 @@ class ArgumentsController  extends ControllerBase
             )->delete();
         }
         $this->view->disable();
-
+        $this->flashSession->success('Довод удален');
         $data = "ok";
         echo json_encode($data);
     }
@@ -108,6 +108,7 @@ class ArgumentsController  extends ControllerBase
             )->delete();
             }
         }
+        $this->flashSession->success('Категория удалена');
         $this->view->disable();
         echo json_encode($data);
     }
@@ -118,6 +119,7 @@ class ArgumentsController  extends ControllerBase
             $category = new ArgumentsCategory();
             $category->name = $category_name;
             $category->create();
+            $this->flashSession->success('Категория сохранена');
         }
 
         $this->view->disable();
@@ -152,6 +154,7 @@ class ArgumentsController  extends ControllerBase
                     }
                 }*/
             }
+            $this->flashSession->success('Изменения сохранены');
         }
         $this->view->disable();
 

@@ -1,4 +1,16 @@
 jQuery(document).ready(function($) {
+    $('.lawyer-wrap .lebel-checkbox').click(function(evt){
+        evt.preventDefault();
+        if($(this).hasClass('main-active-checkbox')){
+            $(this).removeClass('main-active-checkbox');
+            $('#only_new_form #only_new').val('');
+            $('#only_new_form').submit();
+        } else{
+            $(this).addClass('main-active-checkbox');
+            $('#only_new_form #only_new').val('j');
+            $('#only_new_form').submit();
+        }
+    });
 	// challenge left menu
 	$('.lm-burger-open').click(function() {
 		$('.admin-lm-wrap').animate({left: 0}, 400);
@@ -61,23 +73,35 @@ jQuery(document).ready(function($) {
         changeShowHideButtonBackground();
         changeBlockUnblockButtonBackground();
 	});
-	$('.lt-content-main').click(function() {
-		$(this).find('.lt-psevdo-check').toggleClass('psevdo-checked');
-		if ($(this).find('.lt-psevdo-check').hasClass('psevdo-checked')) {
-			if ($(this).hasClass('red-bg')) {
-				$(this).css('background-color', '#fef0f2');
-			} else {
-				$(this).css('background-color', '#e5f7fd');
-			}
-		} else {
-			if ($(this).hasClass('red-bg')) {
-				$(this).css('background-color', '#fef0f2');
-			} else {
-				$(this).css('background-color', '#fff');
-			}
-		}
-        changeShowHideButtonBackground();
-        changeBlockUnblockButtonBackground();
+	$('.lt-content-main').click(function(evt) {
+        if(evt.target != undefined && evt.target.className.contains('lt-psevdo-check')){
+            $(this).find('.lt-psevdo-check').toggleClass('psevdo-checked');
+            if ($(this).find('.lt-psevdo-check').hasClass('psevdo-checked')) {
+                if ($(this).hasClass('red-bg')) {
+                    $(this).css('background-color', '#fef0f2');
+                } else {
+                    $(this).css('background-color', '#e5f7fd');
+                }
+            } else {
+                if ($(this).hasClass('red-bg')) {
+                    $(this).css('background-color', '#fef0f2');
+                } else {
+                    $(this).css('background-color', '#fff');
+                }
+            }
+            changeShowHideButtonBackground();
+            changeBlockUnblockButtonBackground();
+        } else if(evt.target != undefined && (evt.target.className.contains('with-dropdown') || evt.target.className.contains('jl-status') || evt.target.id == 'dLabel')) {
+            $(this).find('.with-dropdown div[data-toggle=dropdown]').dropdown('toggle');
+            return false;
+        } else {
+            var to_url = $(this).attr('detail-url');
+            if (to_url != undefined) {
+                window.location.href = to_url;
+            } else {
+                $(this).find('.lt-psevdo-check').trigger('click');
+            }
+        }
 	});
 	// change text on arguments list category
 	$('.lt-arg-second .lt-content-main li p').click(function() {
@@ -231,7 +255,18 @@ jQuery(document).ready(function($) {
             change_complaint_status(complaintId, status);
         }
     });
-
+    $(".user-list #show-send-massage-dialog").click(function(){
+        var id_array = [];
+        $('.admin-lt-holder .lt-content-main').each(function(){
+            var id = $(this).find('div.psevdo-checked #user-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $('.modal-send-message-lg').modal('show');
+        }
+    });
 });
 var userPageLtContentLi = 0;
 //status block

@@ -9,12 +9,12 @@ use Multiple\Backend\Models\Question as Question;
 class LawyerController extends ControllerBase
 {
 
-    public function indexAction(){
+    public function indexAction(){//DebugBreak();
         $next_items = $this->request->getPost('next-portions-items');
         if (!isset($next_items)) {
             $next_items = 0;
         }
-        $item_per_page = 5 + $next_items;
+        $item_per_page = 20 + $next_items;
         $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
         $questions = $this->modelsManager->createBuilder()
             ->distinct('Multiple\Backend\Models\Complaint.id')
@@ -31,6 +31,7 @@ class LawyerController extends ControllerBase
         $pages = $paginator->getPaginate();
         $this->view->page = $pages;
         $this->view->item_per_page = $item_per_page;
+        $this->view->only_new = isset($_POST['only_new']) && $_POST['only_new'] ? array('n') : array('y', 'n');
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->setMenu();
     }

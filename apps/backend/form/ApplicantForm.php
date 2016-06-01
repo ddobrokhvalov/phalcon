@@ -34,158 +34,178 @@ class ApplicantForm extends Form
             )
         );
         //
-        $name_full = new Text('name_full');
-        $name_full->setLabel('Полное наименование');
-        $name_full->setFilters(array('striptags', 'string'));
-        $name_full->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Полное наименование обязательно'
+        if (isset($options['type']) && $options['type'] == 'urlico') {
+            $name_full = new Text('name_full');
+            $name_full->setLabel('Полное наименование');
+            $name_full->setFilters(array('striptags', 'string'));
+            $name_full->addValidators(
+                array(
+                    new PresenceOf(
+                        array(
+                            'message' => 'Полное наименование обязательно'
+                        )
                     )
                 )
-            )
-        );
-        $this->add($name_full);
+            );
+            $this->add($name_full);
+        }
         //
-        $name_short = new Text('name_short');
-        $name_short->setLabel('Короткое наименование');
-        $name_short->setFilters(array('striptags', 'string'));
-        $name_short->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Короткое наименование обязательно'
+        if (isset($options['type']) && $options['type'] == 'urlico') {
+            $name_short = new Text('name_short');
+            $name_short->setLabel('Короткое наименование');
+            $name_short->setFilters(array('striptags', 'string'));
+            $name_short->addValidators(
+                array(
+                    new PresenceOf(
+                        array(
+                            'message' => 'Короткое наименование обязательно'
+                        )
                     )
                 )
-            )
-        );
-        $this->add($name_short);
+            );
+            $this->add($name_short);
+        }
         //
-        $inn = new Text('inn');
-        $inn->setLabel('Инн');
-        $inn->setFilters(array('striptags', 'string'));
-        $inn->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Инн обязательно'
+        if (isset($options['type']) && $options['type'] == 'urlico') {
+            $inn = new Text('inn');
+            $inn->setLabel('Инн');
+            $inn->setFilters(array('striptags', 'string'));
+            $inn->addValidators(
+                array(
+                    new PresenceOf(
+                        array(
+                            'message' => 'Инн обязательно'
+                        )
                     )
                 )
-            )
-        );
-        $this->add($inn);
+            );
+            $this->add($inn);
+        }
         //
-        $kpp = new Text('kpp');
-        $kpp->setLabel('КПП');
-        $kpp->setFilters(array('striptags', 'string'));
-        $kpp->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'КПП обязательно'
+        if (isset($options['type']) && $options['type'] == 'urlico') {
+            $kpp = new Text('kpp');
+            $kpp->setLabel('КПП');
+            $kpp->setFilters(array('striptags', 'string'));
+            $kpp->addValidators(
+                array(
+                    new PresenceOf(
+                        array(
+                            'message' => 'КПП обязательно'
+                        )
                     )
                 )
-            )
-        );
-        $this->add($kpp);
+            );
+            $this->add($kpp);
+        }
         //
-        $address = new Text('address');
-        $address->setLabel('Адрес местонахождения');
-        $address->setFilters(array('striptags', 'string'));
-        $address->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Адрес местонахождения обязательно'
+        if (isset($options['type']) && $options['type'] == 'urlico') {
+            $address = new Text('address');
+            $address->setLabel('Адрес местонахождения');
+            $address->setFilters(array('striptags', 'string'));
+            $address->addValidators(
+                array(
+                    new PresenceOf(
+                        array(
+                            'message' => 'Адрес местонахождения обязательно'
+                        )
                     )
                 )
-            )
-        );
-        $this->add($address);
+            );
+            $this->add($address);
+        }
         //
-        $position = new Text('position');
-        $position->setLabel('Должность заявителя');
-        $position->setFilters(array('striptags', 'string'));
-        $position->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Должность заявителя обязательно'
+        if (isset($options['type']) && $options['type'] == 'urlico') {
+            $position = new Text('position');
+            $position->setLabel('Должность заявителя');
+            $position->setFilters(array('striptags', 'string'));
+            $position->addValidators(
+                array(
+                    new PresenceOf(
+                        array(
+                            'message' => 'Должность заявителя обязательно'
+                        )
                     )
                 )
-            )
-        );
-        $this->add($position);
+            );
+            $this->add($position);
+        }
         //
-        $fio_applicant = new Text('fio_applicant');
-        $fio_applicant->setLabel('ФИО заявителя');
-        $fio_applicant->setFilters(array('striptags', 'string'));
-        $fio_applicant->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'ФИО заявителя заявителя обязательно'
+        if (isset($options['type']) && ($options['type'] == 'urlico' || $options['type'] == 'fizlico')) {
+            $fio_applicant = new Text('fio_applicant');
+            $fio_applicant->setLabel('ФИО заявителя');
+            $fio_applicant->setFilters(array('striptags', 'string'));
+            $fio_applicant->addValidators(
+                array(
+                    new PresenceOf(
+                        array(
+                            'message' => 'ФИО заявителя заявителя обязательно'
+                        )
                     )
                 )
-            )
-        );
-        $this->add($fio_applicant);
+            );
+            $this->add($fio_applicant);
+        }
         //
-        $fio_contact_person = new Text('fio_contact_person');
-        $fio_contact_person->setLabel('ФИО контактного лица');
-        $fio_contact_person->setFilters(array('striptags', 'string'));
-        $fio_contact_person->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'ФИО контактного лица обязательно'
+        if (isset($options['type']) && ($options['type'] == 'urlico' || $options['type'] == 'fizlico')) {
+            $fio_contact_person = new Text('fio_contact_person');
+            $fio_contact_person->setLabel('ФИО контактного лица');
+            $fio_contact_person->setFilters(array('striptags', 'string'));
+            $fio_contact_person->addValidators(
+                array(
+                    new PresenceOf(
+                        array(
+                            'message' => 'ФИО контактного лица обязательно'
+                        )
                     )
                 )
-            )
-        );
-        $this->add($fio_contact_person);
+            );
+            $this->add($fio_contact_person);
+        }
         //
-        $telefone = new Text('telefone');
-        $telefone->setLabel('Контактный факс, телефон');
-        $telefone->setFilters(array('striptags', 'string'));
-        $telefone->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Контактный факс, телефон обязательно'
+        if (isset($options['type']) && ($options['type'] == 'urlico' || $options['type'] == 'fizlico')) {
+            $telefone = new Text('telefone');
+            $telefone->setLabel('Контактный факс, телефон');
+            $telefone->setFilters(array('striptags', 'string'));
+            $telefone->addValidators(
+                array(
+                    new PresenceOf(
+                        array(
+                            'message' => 'Контактный факс, телефон обязательно'
+                        )
                     )
                 )
-            )
-        );
-        $this->add($telefone);
+            );
+            $this->add($telefone);
+        }
        ///
-        $telefone = new Text('email');
-        $telefone->setLabel('Контактный факс, телефон');
-        $telefone->setFilters(array('striptags', 'string'));
-        $telefone->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Контактный факс, телефон обязательно'
-                    )
-                )
-            )
-        );
-        $this->add($telefone);
-        ///
-        $email = new Text('email');
-        $email->setLabel('email');
-        $email->setFilters(array('striptags', 'string'));
-        $email->addValidators(
-            array(
-                new PresenceOf(
-                    array(
-                        'message' => 'Email обязательно'
-                    )
-                )
-            )
-        );
-        $this->add($email);
+       if (isset($options['type']) && ($options['type'] == 'urlico' || $options['type'] == 'fizlico')) {
+           $telefone = new Text('email');
+           $telefone->setLabel('Контактный факс, телефон');
+           $telefone->setFilters(array('striptags', 'string'));
+           $telefone->addValidators(
+               array(
+                   new PresenceOf(
+                       array(
+                           'message' => 'Контактный факс, телефон обязательно'
+                       )
+                   )
+               )
+           );
+           $this->add($telefone);
+           ///
+           $email = new Text('email');
+           $email->setLabel('email');
+           $email->setFilters(array('striptags', 'string'));
+           $email->addValidators(
+               array(
+                   new PresenceOf(
+                       array(
+                           'message' => 'Email обязательно'
+                       )
+                   )
+               )
+           );
+           $this->add($email);
+       }
     }
 }

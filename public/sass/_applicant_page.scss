@@ -44,6 +44,7 @@
 		&:nth-child(1) span,
 		&:nth-child(2) span {
 			padding-right: 16px;
+            cursor: pointer;
 			background: $white url(../images/arrow-to-down.png) 100% 50% no-repeat;
 		}
 	}
@@ -161,7 +162,6 @@
         padding: 0 18px;
         &:hover {
             color: $white;
-            font-weight: 600;
             text-decoration: none;
         }
     }
@@ -190,7 +190,6 @@
 	div {
 		cursor: pointer;
 		&:not(:last-child):hover {
-			font-weight: 600;
 			color: $white;
 			background-color: $h-blue;
 		}

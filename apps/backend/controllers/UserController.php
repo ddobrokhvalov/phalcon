@@ -22,7 +22,7 @@ class UserController extends ControllerBase
             $next_items = 0;
         }
         $this->persistent->searchParams = null;
-        $item_per_page = 15 + $next_items;
+        $item_per_page = 20 + $next_items;
         $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
         $users = User::find();
         $paginator = new Paginator(array(
@@ -97,7 +97,7 @@ class UserController extends ControllerBase
             foreach ($user->getMessages() as $message)
                 $this->flashSession->error($message);
         } else
-            $this->flashSession->success("Your information was stored correctly!");
+            $this->flashSession->success("Изменения сохранены");
         
         return $this->dispatcher->forward(array(
             'module' => 'backend',
@@ -121,8 +121,9 @@ class UserController extends ControllerBase
         $user = new User();
         $post = $this->request->getPost();
         $data['email'] = $post['email'];
-        $user = User::findFirstByEmail($post['email']);
-        if ($user) {
+        $data['status'] = 1;
+        $exist_user = User::findFirstByEmail($post['email']);
+        if ($exist_user) {
             $this->flashSession->error("Пользователь с имейлом {$post['email']} уже существует");
             return $this->dispatcher->forward(array(
                 'module' => 'backend',
@@ -166,7 +167,7 @@ class UserController extends ControllerBase
     {
         $user = User::findFirstById($id);
         if (!$user) {
-            $this->flash->error("User was not found");
+            $this->flashSession->error("Пользователь не найден");
             return $this->forward("user/index");
         }
         $appl = new Applicant();
@@ -210,7 +211,7 @@ class UserController extends ControllerBase
             )->delete();
         }
         $this->view->disable();
-
+        $this->flashSession->success('Пользователи удалены');
         $data = "ok";
         echo json_encode($data);
     }
@@ -238,7 +239,7 @@ class UserController extends ControllerBase
             }
         }
         $this->view->disable();
-
+        $this->flashSession->success('Изменения сохранены');
         $data = "ok";
         echo json_encode($data);
     }
@@ -261,7 +262,7 @@ class UserController extends ControllerBase
             }
         }
         $this->view->disable();
-
+        $this->flashSession->success('Заявитель сохранено');
         $data = "ok";
         echo json_encode($data);
     }

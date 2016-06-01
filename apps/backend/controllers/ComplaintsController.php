@@ -14,7 +14,7 @@ class ComplaintsController extends ControllerBase
         if (!isset($next_items)) {
             $next_items = 0;
         }
-        $item_per_page = 15 + $next_items;
+        $item_per_page = 20 + $next_items;
         $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
         $complaints = Complaint::find();
         $paginator = new Paginator(array(
@@ -46,6 +46,7 @@ class ComplaintsController extends ControllerBase
                     )
                 )
             )->delete();
+            $this->flashSession->success('Жалобы удалены');
         } elseif($complaint_id){
             $complaint = Complaint::find(
                 array(
@@ -55,6 +56,7 @@ class ComplaintsController extends ControllerBase
                     )
                 )
             )->delete();
+            $this->flashSession->success('Жалоба удалена');
         } else {
             $data = FALSE;
         }
@@ -75,6 +77,7 @@ class ComplaintsController extends ControllerBase
             } else {
                 @Complaint::changeStatus($status, array($complaint_id));
             }
+            $this->flashSession->success('Статус изменен');
         } else {
             $data = FALSE;
         }
