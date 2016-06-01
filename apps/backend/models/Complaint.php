@@ -40,7 +40,7 @@ class Complaint extends Model
 
     public function getComplaintQuestion($not_read = array('y', 'n')){
         return Question::find(array(
-            "complaint_id = :complaint_id: AND read IN ({read:array})",
+            "complaint_id = :complaint_id: AND is_read IN ({read:array})",
             'bind' => array(
                 'complaint_id' => $this->id,
                 'read' => $not_read,
