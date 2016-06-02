@@ -44,7 +44,16 @@
 	}
 }
 .block-user-editing {
-	margin-bottom: 58px;
+	padding-bottom: 58px;
+    background-color: #f7f8fa;
+    margin-bottom: 36px;
+    .delete-or-save button.delete, label p {
+        background-color: #f7f8fa;
+        margin-bottom: 0px;
+    }
+    .delete-or-save button.delete:hover {
+        background-color: #fef0f2;
+    }
 }
 .appllicant-page .user-top-lt {
 	margin-top: 30px;
@@ -81,17 +90,31 @@
 .user-page .lt-content-top {
 	li {
 		span {
-			padding-right: 0;
+			//padding-right: 0;
 	    	line-height: 75px;
-			background: none;
+			//background: none;
 		}
 	}
+    li:nth-child(5) {
+        span{
+            background: none;
+        }
+    }
 }
 .user-page .lt-psevdo-check {
 	top: 18px;
 }
-.user-page .appllicant-page .lt-psevdo-check {
-	top: 28px;
+.user-page .appllicant-page {
+    .lt-psevdo-check {
+        top: 25px;
+    }
+    .lt-content-main {
+        li:first-child {
+            padding-top: 20px;
+            line-height: 24px;
+            min-height: 72px;
+        }
+    }
 }
 .user-page .admin-lt-content .lt-content-top {
 	li {
@@ -108,7 +131,9 @@
 			li:nth-child(2) {
 				text-transform: uppercase;
 			}
-			li:nth-child(4),
+			li:nth-child(4) {
+                padding-right: 14px;
+            }
 			li:nth-child(5) {
 				padding-right: 14px;
 			}
@@ -119,7 +144,7 @@
 		padding: 15px 0 20px 14px;
 		line-height: 22px;
 		&:first-child {
-			width: 355px;
+			width: 335px;
 		}
 		&:nth-child(2) {
 			width: 58px;
@@ -134,7 +159,7 @@
 			width: 210px;
 		}
 		&:nth-child(6) {
-			width: 67px;
+			width: 87px;
 		}
 	}
 }
@@ -146,18 +171,117 @@
 	}
 }
 .user-page .appllicant-page .lt-content-top {
+    li {
+        span {
+            padding-right: 16px;
+            background: #f9f9fa url(../images/arrow-to-down.png) 100% 50% no-repeat;
+        }
+    }
+}
+.user-page .lt-content-top {
 	li {
 		span {
 			padding-right: 16px;
-			background: $white url(../images/arrow-to-down.png) 100% 50% no-repeat;
+			background: #f9f9fa url(../images/arrow-to-down.png) 100% 50% no-repeat;
 		}
 	}
 }
+.user-page .appllicant-page {
+    ul {
+        border-bottom: none;
+    }
+    ul.status-green {
+        border-top: 3px solid $status-green;
+    }
+    ul.status-red {
+        border-top: 3px solid $status-red;
+    }
+    ul.status-blue {
+        border-top: 3px solid $status-blue;
+    }
+    ul.status-black {
+        border-top: 3px solid $status-black;
+    }
+    .jl-status-short {
+        width: 22px;
+        min-height: 22px;
+    }
+    .dropdown, .dropup {
+        text-align: center;
+        height: 100%;
+        #dLabel {
+            height: 100%;
+            .jl-status-short {
+                background-position: center center;
+                display: block;
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+    .dropdown-menu {
+        width: 196px;
+        margin-left: -125px;
+        font-weight: 400 !important;
+        &:hover {
+            font-weight: 400 !important;
+        }
+        li {
+            width: 100% !important;
+            padding-left: 15px !important;
+            text-transform: uppercase;
+            font-weight: 400 !important;
+            height: 40px !important;
+            span {
+                display: block;
+                line-height: 40px;
+                font-weight: 400 !important;
+                &:hover {
+                    font-weight: 400 !important;
+                }
+            }
+            &:hover {
+                font-weight: 400 !important;
+                background-color: #e5f7fd;
+            }
+        }
+        li.header-dropdown {
+            margin-bottom: 20px;
+            padding-left: 15px !important;
+            font-weight: bold;
+            span {
+                display: inline-block;
+            }
+            &:hover{
+                background-color: transparent;
+            }
+        }
+    }
+    .lt-content-main li {
+        position: unset;
+    }
+    .dropdown-menu{
+        li:nth-child(3) {
+            padding-top: 0 !important;
+            min-height: 0 !important;
+        }
+        li:first-child {
+            min-height: 0 !important;
+        }
+    } 
+}
 .user-page .appllicant-page .admin-lt-content {
-	.lt-content-main li:last-child {
-		padding-right: 0;
-		height: 72px;
-	}
+	.lt-content-main {
+        li:last-child {
+            padding-right: 0;
+            height: 72px;
+        }
+        li:nth-child(3) {
+            line-height: 24px;
+            padding-top: 20px;
+            min-height: 72px;
+        }
+    }
 	li {
 		padding-top: 0;
 		padding-bottom: 0;
@@ -166,10 +290,10 @@
 			width: 338px;
 		}
 		&:nth-child(2) {
-			width: 146px;
+			width: 175px;
 		}
 		&:nth-child(3) {
-			width: 296px;
+			width: 265px;
 		}
 		&:nth-child(4) {
 			width: 113px;

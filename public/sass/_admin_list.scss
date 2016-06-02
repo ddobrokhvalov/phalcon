@@ -96,6 +96,7 @@
 }
 .lt-content-top {
 	text-transform: uppercase;
+    background-color: #f9f9fa;
 	li {
 		span {
 			font-size: 11px;
@@ -105,7 +106,7 @@
 		&:nth-child(5) span {
             cursor: pointer;
 			padding-right: 16px;
-			background: $white url(../images/arrow-to-down.png) 100% 50% no-repeat;
+			background: #f9f9fa url(../images/arrow-to-down.png) 100% 50% no-repeat;
 		}
 	}
 }

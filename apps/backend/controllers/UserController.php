@@ -170,8 +170,8 @@ class UserController extends ControllerBase
             $this->flashSession->error("Пользователь не найден");
             return $this->forward("user/index");
         }
-        $appl = new Applicant();
-        $this->view->applicants = $appl->findByUserId($id);
+        //$appl = new Applicant();
+        //$this->view->applicants = $appl->findByUserId($id);
         $complaints = new Complaint();
         $applicants = new Applicant();
         $this->view->complaints = $complaints->findUserComplaints($id, false);
@@ -179,7 +179,7 @@ class UserController extends ControllerBase
         $this->view->edituser = $user;
         $this->setMenu();
     }
-
+    
     public function delAction($id)
     {
         $user = User::findFirstById($id);
@@ -262,7 +262,7 @@ class UserController extends ControllerBase
             }
         }
         $this->view->disable();
-        $this->flashSession->success('Заявитель сохранено');
+        $this->flashSession->success('Сообщение отправлено');
         $data = "ok";
         echo json_encode($data);
     }

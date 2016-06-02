@@ -106,9 +106,9 @@ class ArgumentsController  extends ControllerBase
                     )
                 )
             )->delete();
+            $this->flashSession->success('Категория удалена');
             }
         }
-        $this->flashSession->success('Категория удалена');
         $this->view->disable();
         echo json_encode($data);
     }

@@ -77,6 +77,8 @@
 		border-radius: 2px;
 		@include box-s;
 		-moz-appearance: textfield;
+        height: 55px;
+        line-height: 55px;
 		&:focus {
 			color: $blue;
 			border-color: $blue;

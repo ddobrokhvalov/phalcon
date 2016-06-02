@@ -10,10 +10,10 @@
                 <div></div>Выбрать все
             </div>
             <div class="lt-head-btns">
-                <div class="btn" data-toggle="modal" id="show-send-massage-dialog">Отправить сообщение</div>
-                <div onclick="block_unblock_users(1)">Заблокировать</div>
-                <div class="disabled-btn" onclick="block_unblock_users(0)">Разблокировать</div>
-                <div data-toggle="modal" data-target=".confirm-deletion-user-lg">Удалить</div>
+                <div class="btn disabled-btn" data-toggle="modal" id="show-send-massage-dialog">Отправить сообщение</div>
+                <div class="disabled-btn unblock" onclick="block_unblock_users(1)">Заблокировать</div>
+                <div class="disabled-btn block" onclick="block_unblock_users(0)">Разблокировать</div>
+                <div id="delete-button" class="disabled-btn" data-toggle="modal" data-target=".confirm-deletion-user-lg">Удалить</div>
             </div>
         </div>
         <div class="modal fade modal-send-message-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">

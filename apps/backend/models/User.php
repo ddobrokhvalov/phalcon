@@ -31,4 +31,19 @@ class User extends Model
     {
         return 'user';
     }
+    
+    public function getComplaintColor($status){
+        $applicant = new Applicant();
+        return $applicant->getComplaintColor($status);
+    }
+    
+    public function getComplaintStatus($status, $short){
+        $applicant = new Applicant();
+        return $applicant->getComplaintStatus($status, $short);
+    }
+    
+    public function getAllStatuses($index){
+        $applicant = new Applicant();
+        return $applicant->getAllStatuses($index);
+    }
 }

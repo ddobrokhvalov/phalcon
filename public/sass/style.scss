@@ -65,7 +65,10 @@ h4 {
 	position: relative;
 	width: 16px;
 	height: 16px;
-	background: url(../images/checkbx1.png) 0 0 no-repeat;
+	background: url(../images/checkbx1.png) 0 0 no-repeat !important;
+    p {
+        background-color: transparent !important;
+    }
 	input {
 		position: absolute;
 		top: 0;
@@ -77,7 +80,7 @@ h4 {
 		cursor: pointer;
 	}
 	&.main-active-checkbox {
-		background-position: 0 bottom;
+		background-position: 0 bottom !important;
 	}
 }
 

@@ -24,7 +24,7 @@
 		&:nth-child(6) span {
             cursor: pointer;
 			padding-right: 16px;
-			background: $white url(../images/arrow-to-down.png) 100% 50% no-repeat;
+			background: #f9f9fa url(../images/arrow-to-down.png) 100% 50% no-repeat;
 		}
 	}
 }
@@ -79,7 +79,7 @@
     }
     .lt-content-top {
         li:first-child span, li:nth-child(2) span {
-            background: #ffffff url("../images/arrow-to-down.png") no-repeat scroll 100% 50%;
+            background: #f9f9fa url("../images/arrow-to-down.png") no-repeat scroll 100% 50%;
             cursor: pointer;
             padding-right: 16px;
         }
@@ -88,12 +88,13 @@
 .list-logs .admin-lt-content {
     .lt-content-top {
         li:first-child span, li:nth-child(2) span {
-            background: #ffffff url("../images/arrow-to-down.png") no-repeat scroll 100% 50%;
+            background: #f9f9fa url("../images/arrow-to-down.png") no-repeat scroll 100% 50%;
             cursor: pointer;
             padding-right: 16px;
         }
     }
 }
+
 .appllicant-page-detail {
 	.admin-lt-content li {
 		&:first-child {

@@ -9,7 +9,7 @@
     </div>
     <h1>{{edituser.email}}</h1>
     <div class="admin-change-access">
-        <span>Тариф пробный до 12.02.2016 ?--WHERE TO GET IT FROM--?</span>
+        <span>Тариф пробный до 12.02.2016</span>
         <div class="change-access">Изменить тариф</div>
     </div>
     <div class="block-user-editing">
@@ -54,7 +54,7 @@
                 </label>
             </div>
             <div class="delete-or-save">
-                <button>Удалить пользователя</button><!--todo-->
+                <button class="delete">Удалить пользователя</button><!--todo-->
                 <button>Сохранить изменения</button><!--todo-->
             </div>
         </form>
@@ -68,22 +68,22 @@
             <div></div>Выбрать все
         </div>
         <div class="lt-head-btns">
-            <div>Изменить</div>
+            <!--<div>Изменить</div>-->
             <div>Заблокировать</div>
             <div>Удалить</div>
         </div>
     </div>
-    <div class="admin-lt-content userPageLtContent">
+    <div class="admin-lt-content userPageLtContent" id="sort-table">
         <ul class="lt-content-top">
-            <li><span>Наименование</span></li>
-            <li><span>тип</span></li>
-            <li><span>инн</span></li>
-            <li><span>фио</span></li>
+            <li sort-field="sort-name"><span class="sortable">Наименование</span></li>
+            <li sort-field="sort-type"><span class="sortable">тип</span></li>
+            <li sort-field="sort-inn"><span class="sortable">инн</span></li>
+            <li sort-field="sort-fio"><span class="sortable">фио</span></li>
             <li><span>Контактные данные</span></li>
-            <li><span>Жалобы</span></li>
+            <li sort-field="sort-complaints"><span class="sortable">Жалобы</span></li>
         </ul>
         {% for applicant in applicants %}
-        <ul class="lt-content-main">
+        <ul class="lt-content-main" sort-name="{{applicant['name_full']}}" sort-type="{{applicant['type']}}" sort-inn="{{applicant['inn']}}" sort-fio="{{applicant['fio_applicant']}}" sort-complaints="{{applicant['cnt']}}">
             <li>
                 <div class="lt-psevdo-check"></div>
                 {{applicant['name_full']}}
@@ -91,7 +91,7 @@
             <li>
                 {% if applicant['type'] == 'urlico' %}
                     юр
-                {% elseif applicant['type'] == 'fiz' %}
+                {% elseif applicant['type'] == 'fizlico' %}
                     физ
                 {% else %}
                     ип
@@ -120,28 +120,45 @@
                     <div>Удалить</div>
                 </div>
             </div>
-            <div class="admin-lt-content">
+            <div class="admin-lt-content"  id="sort-table-2">
                 <ul class="lt-content-top">
-                    <li><span>Имя жалобы</span></li>
-                    <li><span>Номер закупки</span></li>
-                    <li><span>Заявитель</span></li>
-                    <li><span>Дата подачи</span></li>
-                    <li><span>Статус</span></li>
+                    <li sort-field="sort-name"><span class="sortable-2">Имя жалобы</span></li>
+                    <li sort-field="sort-number"><span class="sortable-2">Номер закупки</span></li>
+                    <li sort-field="sort-applicant"><span class="sortable-2">Заявитель</span></li>
+                    <li sort-field="sort-date"><span class="sortable-2">Дата подачи</span></li>
+                    <li sort-field="sort-status"><span class="sortable-2">Статус</span></li>
                 </ul>
-                {% for comliant in complaints %}
-                <ul class="j-user-info lt-content-main {%if comliant['status'] =='submitted' %}top-bd-blue{%elseif comliant['status'] == 'unfounded'%}top-bd-red{%elseif comliant['status'] == 'justified'%}top-bd-green{%endif%}">
+                {% for complaint in complaints %}
+                <ul class="j-user-info lt-content-main {{ edituser.getComplaintColor(complaint['status'])}}" sort-name="{{complaint['complaint_name']}}" sort-number="{{complaint['auction_id']}}" sort-applicant="{{complaint['apname']}}" sort-date="{{complaint['date']|strtotime}}" sort-status="{{complaint['status']}}">
                     <li>
-                        <div class="lt-psevdo-check"></div>
-                        {{comliant['complaint_name']}}
+                        <div class="lt-psevdo-check">{{hidden_field('complaint-id', 'value':complaint['id'])}}</div>
+                        {{complaint['complaint_name']}}
                     </li>
-                    <li>{{comliant['auction_id']}}</li>
-                    <li>{{comliant['apname']}}</li>
-                    <li>{{date('d.m.Y' ,comliant['date']|strtotime)}}</li>
-                    <li class="j-user-status-info">
+                    <li>{{complaint['auction_id']}}</li>
+                    <li>{{complaint['apname']}}</li>
+                    <li>{{date('d.m.Y', complaint['date']|strtotime)}}</li>
+                    <!--<li class="j-user-status-info">
                         <div class="appll-status-icon">
-                        <input class="j-comlient-status" name="status" type="hidden" value="{{comliant['status']}}">
+                        <input class="j-comlient-status" name="status" type="hidden" value="{{complaint['status']}}">
                         </div>
                         <div class="close-status-list">Сменить статус</div>
+                    </li>-->
+                    <li class='with-dropdown'>
+                        <div class="dropdown">
+                          <div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{edituser.getComplaintStatus(complaint['status'], TRUE)}}
+                          </div>
+                          <ul class="dropdown-menu" aria-labelledby="dLabel">
+                            <li class="header-dropdown">Сменить статус<span class="caret"></span></li>
+                            <li>{{edituser.getAllStatuses(0)}}</li>
+                            <li>{{edituser.getAllStatuses(1)}}</li>
+                            <li>{{edituser.getAllStatuses(2)}}</li>
+                            <li>{{edituser.getAllStatuses(3)}}</li>
+                            <li>{{edituser.getAllStatuses(4)}}</li>
+                            <li>{{edituser.getAllStatuses(5)}}</li>
+                            <li>{{edituser.getAllStatuses(6)}}</li>
+                          </ul>
+                        </div>
                     </li>
                 </ul>
                 {% endfor %}

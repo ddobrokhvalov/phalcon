@@ -56,9 +56,10 @@
                 </div>
             </div>
         </div>
+        {% set questions = complaint.getComplaintQuestion() %}
+        {% if questions|count > 0 %}
         <div class="complaints-lawyer-quest">
             <h3>Вопросы юристу</h3>
-            {% set questions = complaint.getComplaintQuestion() %}
             {% for question in questions %}
             <div class="compl-quest-cont">
                 {% set answers = complaint.getComplaintQuestionAnswer(question.id) %}
@@ -93,6 +94,12 @@
             </div>
             {% endfor %}
         </div>
+        {% endif %}
     </div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.deploy-complaint').trigger('click');
+        });
+    </script>
     <!-- ******************************************************* -->
 {% endblock %}

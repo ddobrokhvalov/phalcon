@@ -194,7 +194,19 @@ class ApplicantsController  extends ControllerBase
         }
         $form = new ApplicantForm(null, array('edit' => true, 'type' => $this->request->getPost('type')));
         $this->view->form = $form;
-        $data = $this->request->getPost();
+        $all_fields = array(
+            'name_full' => '',
+            'name_short' => '',
+            'inn' => '',
+            'kpp' => '',
+            'address' => '',
+            'position' => '',
+            'fio_applicant' => '',
+            'fio_contact_person' => '',
+            'telefone' => '',
+            'email' => '',
+        );
+        $data = array_merge($all_fields, $this->request->getPost());
         if (!$form->isValid($data, $applicant)) {
             foreach ($form->getMessages() as $message) {
                 $this->flashSession->error($message);
@@ -205,7 +217,10 @@ class ApplicantsController  extends ControllerBase
                 'action' => 'edit',
                 'params' => ['id' => $id]
             ));
-            return $this->forward('user/editapplicant/' . $id);
+            return $this->forward('admin/applicants/edit/' . $id);
+        }
+        foreach ($data as $field => $value) {
+            $applicant->$field = $value;
         }
         if ($applicant->save() == false) {
             foreach ($applicant->getMessages() as $message) {

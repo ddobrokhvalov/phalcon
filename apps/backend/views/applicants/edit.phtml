@@ -8,13 +8,14 @@
     {{flashSession.output()}}
     <h1>Редактировать заявителя</h1>
     <div class="tabs-block">
+        {{hidden_field('applicant-current-type', 'value':applicant.type)}}
         <div class="aplicant-tabs-label">
             <div data-tabsLabel="legal-entity" {%if applicant.type=="urlico" %}class="active-tabs-label"{%endif%}>Юридическое лицо</div>
             <div data-tabsLabel="individual-entrepreneur" {%if applicant.type=="ip" %}class="active-tabs-label"{%endif%}>Индивидуальный предприниматель</div>
             <div data-tabsLabel="physical-face"  {%if applicant.type=="fizlico" %}class="active-tabs-label"{%endif%}>Физическое лицо</div>
         </div>
         <div data-tabs="legal-entity" class="tabs-content {%if applicant.type=="urlico" %}active-tabs-content{%endif%}">
-            <form action="/admin/applicants/save" method="POST">
+            <form action="/admin/applicants/save" method="POST" id="urlico">
                 {{hidden_field('id', 'value':applicant.id)}}
                 {{hidden_field('type', 'value':'urlico')}}
                 <label for="entity-textarea">
@@ -60,11 +61,11 @@
                 <div class="file-attachment">
                     <img src="images/zaglushka.png" alt="">
                 </div>
-                <button class="save-tab-form">Сохранить изменения</button>
+                <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'urlico');return false;" class="save-tab-form">Сохранить изменения</button>
             </form>
         </div>
         <div data-tabs="individual-entrepreneur" class="tabs-content {%if applicant.type=="ip" %}active-tabs-content{%endif%}">
-            <form action="/admin/applicants/save" method="POST">
+            <form action="/admin/applicants/save" method="POST" id="ip">
                 {{hidden_field('id', 'value':applicant.id)}}
                 {{hidden_field('type', 'value':'ip')}}
                 <label for="entity-textarea">
@@ -74,11 +75,11 @@
                 <div class="file-attachment">
                     <img src="images/zaglushka.png" alt="">
                 </div>
-                <button class="save-tab-form">Сохранить изменения</button>
+                <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'ip');return false;"  class="save-tab-form">Сохранить изменения</button>
             </form>
         </div>
         <div data-tabs="physical-face" class="tabs-content {%if applicant.type=="fizlico" %}active-tabs-content{%endif%}">
-            <form action="/admin/applicants/save" method="POST">
+            <form action="/admin/applicants/save" method="POST" id="fizlico">
                 {{hidden_field('id', 'value':applicant.id)}}
                 {{hidden_field('type', 'value':'fizlico')}}
                 <label for="entity-fio-z">
@@ -100,9 +101,23 @@
                 <div class="file-attachment">
                     <img src="images/zaglushka.png" alt="">
                 </div>
-                <button class="save-tab-form">Сохранить изменения</button>
+                <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'fizlico');return false;" class="save-tab-form">Сохранить изменения</button>
             </form>
         </div>
+    </div>
+    <div class="modal fade modal-confirm-change-applicant-type" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">При смене правовой формы будут удалены ранее введённые данные, присущие текущему статусу заявителя, продолжить?</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+            <button type="button" applicant-type="" onclick="jQuery('form#' + jQuery(this).attr('applicant-type')).submit();" class="btn btn-primary">Да</button>
+          </div>
+        </div>
+      </div>
     </div>
 </div>
 {% endblock %}

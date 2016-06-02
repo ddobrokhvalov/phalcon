@@ -74,7 +74,7 @@ jQuery(document).ready(function($) {
         changeBlockUnblockButtonBackground();
 	});
 	$('.lt-content-main').click(function(evt) {
-        if(evt.target != undefined && evt.target.className.contains('lt-psevdo-check')){
+        if(evt.target != undefined && typeof evt.target.classList == "object" && evt.target.classList.contains('lt-psevdo-check')){
             $(this).find('.lt-psevdo-check').toggleClass('psevdo-checked');
             if ($(this).find('.lt-psevdo-check').hasClass('psevdo-checked')) {
                 if ($(this).hasClass('red-bg')) {
@@ -91,7 +91,7 @@ jQuery(document).ready(function($) {
             }
             changeShowHideButtonBackground();
             changeBlockUnblockButtonBackground();
-        } else if(evt.target != undefined && (evt.target.className.contains('with-dropdown') || evt.target.className.contains('jl-status') || evt.target.id == 'dLabel')) {
+        } else if(evt.target != undefined && typeof evt.target.classList == "object" && (evt.target.classList.contains('with-dropdown') || evt.target.classList.contains('jl-status') || evt.target.id == 'dLabel')) {
             $(this).find('.with-dropdown div[data-toggle=dropdown]').dropdown('toggle');
             return false;
         } else {
@@ -267,6 +267,19 @@ jQuery(document).ready(function($) {
             $('.modal-send-message-lg').modal('show');
         }
     });
+    $(".user-list #delete-button").click(function(){//debugger;
+        var id_array = [];
+        $('.admin-lt-holder .lt-content-main').each(function(){
+            var id = $(this).find('div.psevdo-checked #user-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $('.confirm-deletion-user-lg').modal('show');
+        }
+        return false;
+    });
 });
 var userPageLtContentLi = 0;
 //status block
@@ -296,12 +309,22 @@ function delete_arguments() {
             dataType: 'json',
             success: function(data){
                 if (data == 'ok') {
-                   window.location.reload();
+                   window.location.reload(true);
                 }
             }
         });
     }
     $('.confirm-modal-argument-lg').modal('hide');
+}
+
+function confirm_change_applicant_type(current_type, current_form) {
+    if (current_type != current_form) {
+        $('.modal-confirm-change-applicant-type .btn-primary').attr('applicant-type', current_form);
+        $('.modal-confirm-change-applicant-type').modal('show');
+        return false;
+    } else {
+        $('form#' + current_form).submit();
+    }
 }
 
 function delete_categories() {
@@ -321,7 +344,7 @@ function delete_categories() {
             success: function(data){
                 $('.confirm-modal-category-lg').modal('hide');
                 if (data == 'ok') {
-                   window.location.reload();
+                   window.location.reload(true);
                 } else {
                     $('.modal-cant-delete-category').modal('show');
                 }
@@ -339,7 +362,7 @@ function add_category(name){
             dataType: 'json',
             success: function(data){
                 $('.modal-add-category-lg').modal('hide');
-                window.location.reload();
+                window.location.reload(true);
             }
         });
     }
@@ -361,7 +384,7 @@ function show_hide_arguments(hide) {
             dataType: 'json',
             success: function(data){
                 if (data == 'ok') {
-                   window.location.reload();
+                   window.location.reload(true);
                 }
             }
         });
@@ -397,7 +420,7 @@ function delete_complaint(complaint_id) {
                 if (data == 'ok') {
                    window.location.href = "/admin/complaints/index";
                 } else {
-                    window.location.reload();
+                    window.location.reload(true);
                 }
             }
         });
@@ -414,7 +437,7 @@ function change_complaint_status(complaint_id, status) {
             dataType: 'json',
             success: function(data){
                 if (data == 'ok') {
-                   window.location.reload();
+                   window.location.reload(true);
                 }
             }
         });
@@ -451,7 +474,7 @@ function delete_users(){
             success: function(data){
                 $('.confirm-deletion-user-lg').modal('hide');
                 if (data == 'ok') {
-                   window.location.reload();
+                   window.location.reload(true);
                 }
             }
         });
@@ -474,7 +497,7 @@ function block_unblock_users(block) {
             dataType: 'json',
             success: function(data){
                 if (data == 'ok') {
-                   window.location.reload();
+                   window.location.reload(true);
                 }
             }
         });
@@ -491,9 +514,35 @@ function changeBlockUnblockButtonBackground() {
             }
         });
         if (id_array.length) {
-            $(".disabled-btn").addClass("enabled-btn").removeClass("disabled-btn");
+            $(".disabled-btn.block").addClass("enabled-btn").removeClass("disabled-btn");
         } else {
-            $(".enabled-btn").addClass("disabled-btn").removeClass("enabled-btn");
+            $(".enabled-btn.block").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+        var id_array = [];
+        $('.admin-lt-holder .lt-content-main').each(function(elem, item){
+            if (!$(item).hasClass("hidden-arg")) {
+                var id = $(item).find('div.psevdo-checked #user-id').val();
+                if (id != undefined) {
+                    id_array.push(id);
+                }
+            }
+        });
+        if (id_array.length) {
+            $(".disabled-btn.unblock").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $(".enabled-btn.unblock").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+        var id_array = [];
+        $('.admin-lt-holder .lt-content-main').each(function(){
+            var id = $(this).find('div.psevdo-checked #user-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $("#show-send-massage-dialog, #delete-button").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $("#show-send-massage-dialog, #delete-button").addClass("disabled-btn").removeClass("enabled-btn");
         }
     }
 }
@@ -514,10 +563,10 @@ function send_message(subject, body){
             dataType: 'json',
             success: function(data){
                 $('.modal-send-message-lg').modal('hide');
+                window.location.reload(true);
             }
         });
     }
-    window.location.reload();
 }
 
 function delete_admins(){
@@ -536,7 +585,7 @@ function delete_admins(){
             dataType: 'json',
             success: function(data){
                 $('.confirm-deletion-admin-lg').modal('hide');
-                window.location.reload();
+                window.location.reload(true);
             }
         });
     }
@@ -558,7 +607,7 @@ function delete_applicants(){
             dataType: 'json',
             success: function(data){
                 $('.confirm-deletion-applicant-lg').modal('hide');
-                window.location.reload();
+                window.location.reload(true);
             }
         });
     }
@@ -580,7 +629,7 @@ function delete_all_complaints() {
             dataType: 'json',
             success: function(data){
                 if (data == 'ok') {
-                    window.location.reload();
+                    window.location.reload(true);
                 }
             }
         });
@@ -607,7 +656,7 @@ function delete_applicant(applicantId){
                     } else if(data.success == 'redirect') {
                         window.location.href = '/admin/applicants/index';
                     } else {
-                        window.location.reload();
+                        window.location.reload(true);
                     }
                 }
             });

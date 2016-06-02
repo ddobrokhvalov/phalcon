@@ -416,7 +416,7 @@
         }*/
     }
     .lt-content-top li:nth-child(6) span {
-        background: #ffffff url("../images/arrow-to-down.png") no-repeat scroll 100% 50%;
+        background: #f9f9fa url("../images/arrow-to-down.png") no-repeat scroll 100% 50%;
         cursor: pointer;
         padding-right: 16px;
     }
@@ -444,5 +444,8 @@
     }
     .admin-lt-holder {
         border-top: 1px solid #e0e3ea;
+    }
+    .jl-status {
+        line-height: 75px;
     }
 }

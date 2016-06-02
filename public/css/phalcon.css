@@ -3111,6 +3111,7 @@ q, blockquote {
     border: 1px solid;
     border-radius: 5px;
     font-weight: bold;
+    display: inline-block;
     padding: 10px;
     width: -moz-fit-content;
     width: fit-content;
@@ -3124,6 +3125,7 @@ q, blockquote {
     padding: 10px;
     width: -moz-fit-content;
     width: fit-content;
+    display: inline-block;
     margin-bottom: 5px;
 }
 .warningMessage {
@@ -3134,6 +3136,7 @@ q, blockquote {
     padding: 10px;
     width: -moz-fit-content;
     width: fit-content;
+    display: inline-block;
     margin-bottom: 5px;
 }
 .errorMessage {
@@ -3144,5 +3147,19 @@ q, blockquote {
     padding: 10px;
     width: -moz-fit-content;
     width: fit-content;
+    display: inline-block;
     margin-bottom: 5px;
+}
+.btn-primary {
+    background-color: #00aeef !important;
+    border-color: #00aeef !important;
+    color: #fff !important;
+}
+.btn-primary:hover {
+    background-color: #10b8f7 !important;
+    border-color: #10b8f7 !important;
+    color: #fff !important;
+}
+input::-ms-clear {
+    display: none;
 }
