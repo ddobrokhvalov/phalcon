@@ -10,6 +10,8 @@
                 <div></div>Выбрать все
             </div>
             <div class="lt-head-btns">
+                <div class="disabled-btn block-applicant" onclick="block_unblock_applicant(1)">Заблокировать</div>
+                <div class="disabled-btn unblock-applicant" onclick="block_unblock_applicant(0)">Разблокировать</div>
                 <div id="delete-button" class="disabled-btn">Удалить</div>
             </div>
             <div class="modal fade confirm-deletion-applicant-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -35,7 +37,7 @@
                 <li sort-field="sort-complaints"><span class="sortable">Жалобы</span></li>
             </ul>
             {% for applicant in page.items %}
-            <ul class="lt-content-main" sort-name="{{applicant.name_short}}" sort-phone="{{applicant.telefone}}" sort-email="{{applicant.email}}" sort-complaints="{{applicant.getCountComplaints(applicant.id)}}" detail-url="{{url('admin/applicants/info/' ~ applicant.id)}}">
+            <ul class="lt-content-main {% if applicant.is_blocked == 0 %} hidden-arg {% endif %}" sort-name="{{applicant.name_short}}" sort-phone="{{applicant.telefone}}" sort-email="{{applicant.email}}" sort-complaints="{{applicant.getCountComplaints(applicant.id)}}" detail-url="{{url('admin/applicants/info/' ~ applicant.id)}}">
                 <li><div class="lt-psevdo-check">{{hidden_field('applicant-id', 'value':applicant.id)}}</div>{{applicant.name_short}}</li>
                 <li>{{applicant.telefone}}</li>
                 <li>{{applicant.email}}</li>

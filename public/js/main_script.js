@@ -74,6 +74,7 @@ jQuery(document).ready(function($) {
         changeBlockUnblockButtonBackground();
         changeApplicantsButtonBackground();
         changeAdminButtonsBackground();
+        changeComplaintButtonsBackground();
 	});
 	$('.lt-content-main').click(function(evt) {
         if(evt.target != undefined && typeof evt.target.classList == "object" && evt.target.classList.contains('lt-psevdo-check')){
@@ -95,6 +96,7 @@ jQuery(document).ready(function($) {
             changeBlockUnblockButtonBackground();
             changeApplicantsButtonBackground();
             changeAdminButtonsBackground();
+            changeComplaintButtonsBackground();
         } else if(evt.target != undefined && typeof evt.target.classList == "object" && (evt.target.classList.contains('with-dropdown') || evt.target.classList.contains('jl-status') || evt.target.id == 'dLabel')) {
             $(this).find('.with-dropdown div[data-toggle=dropdown]').dropdown('toggle');
             return false;
@@ -269,6 +271,18 @@ jQuery(document).ready(function($) {
         });
         if (id_array.length) {
             $('.modal-send-message-lg').modal('show');
+        }
+    });
+    $(".complaints-list #delete-button").click(function(){
+        var id_array = [];
+        $('.admin-lt-holder .lt-content-main').each(function(){
+            var id = $(this).find('div.psevdo-checked #complaint-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $('.confirm-deletion-complaint-lg').modal('show');
         }
     });
     $(".admin-lt-holder.lt-arg #delete-button").click(function(){
@@ -496,13 +510,32 @@ function changeShowHideButtonBackground() {
 function changeApplicantsButtonBackground(){
     if($('.admin-main-wrap').hasClass('applicant-list')) {
         var id_array = [];
-        $('.admin-lt-holder .lt-content-main').each(function(){
+        $('.admin-lt-holder .lt-content-main.hidden-arg').each(function(){
             var id = $(this).find('div.psevdo-checked #applicant-id').val();
             if (id != undefined) {
                 id_array.push(id);
             }
         });
         if (id_array.length) {
+            $(".unblock-applicant").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $(".unblock-applicant").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+        var id_array2 = [];
+        $('.admin-lt-holder .lt-content-main').each(function(elem, item){
+            if (!$(item).hasClass("hidden-arg")) {
+                var id = $(item).find('div.psevdo-checked #applicant-id').val();
+                if (id != undefined) {
+                    id_array2.push(id);
+                }
+            }
+        });
+        if (id_array2.length) {
+            $(".block-applicant").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $(".block-applicant").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+        if (id_array.length || id_array2.length) {
             $("#delete-button").addClass("enabled-btn").removeClass("disabled-btn");
         } else {
             $("#delete-button").addClass("disabled-btn").removeClass("enabled-btn");
@@ -542,6 +575,21 @@ function change_complaint_status(complaint_id, status) {
                 }
             }
         });
+    }
+}
+
+function changeStatusInComplaintList(status) {
+    if (status.length) {
+        var id_array = [];
+        $('.admin-lt-holder .lt-content-main').each(function(){
+            var id = $(this).find('div.psevdo-checked #complaint-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            change_complaint_status(id_array, status);
+        }
     }
 }
 
@@ -609,6 +657,29 @@ function block_unblock_admins(block) {
     var id_array = [];
     $('.admin-lt-holder .lt-content-main').each(function(){
         var id = $(this).find('div.psevdo-checked #user-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "blockUnblock",
+            type:'POST',
+            data: { ids: id_array, block: block },
+            dataType: 'json',
+            success: function(data){
+                if (data == 'ok') {
+                   window.location.reload(true);
+                }
+            }
+        });
+    }
+}
+
+function block_unblock_applicant(block) {
+    var id_array = [];
+    $('.admin-lt-holder .lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #applicant-id').val();
         if (id != undefined) {
             id_array.push(id);
         }
@@ -700,6 +771,23 @@ function changeAdminButtonsBackground() {
     }
 }
 
+function changeComplaintButtonsBackground() {
+    if($('.admin-main-wrap').hasClass('complaints-list')){
+        var id_array = [];
+        $('.admin-lt-holder .lt-content-main').each(function(){
+            var id = $(this).find('div.psevdo-checked #complaint-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $(".disabled-btn").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $(".enabled-btn").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+    }
+}
+
 function send_message(subject, body){
     var id_array = [];
     $('.admin-lt-holder .lt-content-main').each(function(){
@@ -738,6 +826,27 @@ function delete_admins(){
             dataType: 'json',
             success: function(data){
                 $('.confirm-deletion-admin-lg').modal('hide');
+                window.location.reload(true);
+            }
+        });
+    }
+}
+
+function delete_complaints(){
+    var id_array = [];
+    $('.admin-lt-holder .lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #complaint-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "deleteComplaint",
+            type:'POST',
+            data: { id: id_array, is_array: true },
+            dataType: 'json',
+            success: function(data){
                 window.location.reload(true);
             }
         });

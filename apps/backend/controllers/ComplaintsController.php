@@ -36,8 +36,8 @@ class ComplaintsController extends ControllerBase
 
     public function deleteComplaintAction(){
         $data = "ok";
-         $complaint_id = $this->request->getPost("id");
-        if (isset($_GET['is_array']) && $complaint_id && count($complaint_id)) {
+        $complaint_id = $this->request->getPost("id");
+        if ((isset($_GET['is_array']) && $complaint_id && count($complaint_id)) || (isset($_POST['is_array']) && $complaint_id && count($complaint_id))) {
             $complaints = Complaint::find(
                 array(
                     'id IN ({ids:array})',
@@ -64,7 +64,7 @@ class ComplaintsController extends ControllerBase
         echo json_encode($data);
     }
 
-    public function changeComplaintStatusAction(){
+    public function changeComplaintStatusAction() {
         $data = "ok";
         $status = $this->request->getPost("status");
         $complaint_id = $this->request->getPost("id");
@@ -77,7 +77,11 @@ class ComplaintsController extends ControllerBase
             } else {
                 @Complaint::changeStatus($status, array($complaint_id));
             }
-            $this->flashSession->success('Статус изменен');
+            if ($status == 'copy') {
+                $this->flashSession->success('Жалоба скопирована');
+            } else {
+                $this->flashSession->success('Статус изменен');
+            }
         } else {
             $data = FALSE;
         }

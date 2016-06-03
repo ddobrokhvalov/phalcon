@@ -288,4 +288,31 @@ class ApplicantsController  extends ControllerBase
         echo json_encode(array('success' => 'ok'));
     }
 
+    public function blockUnblockAction(){
+        $users_ids = $this->request->getPost("ids");
+        $block = $this->request->getPost("block");
+        
+        if(count($users_ids)){
+            $users = Applicant::find(
+                array(
+                    'id IN ({ids:array})',
+                    'bind' => array(
+                        'ids' => $users_ids
+                    )
+                )
+            );
+            foreach ($users as $user) {
+                if ($block) {
+                    $user->is_blocked = 0;
+                } else {
+                    $user->is_blocked = 1;
+                }
+                $user->update();
+            }
+        }
+        $this->view->disable();
+        $this->flashSession->success('Изменения сохранены');
+        $data = "ok";
+        echo json_encode($data);
+    }
 }
