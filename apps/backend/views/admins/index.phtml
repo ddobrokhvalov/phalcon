@@ -12,7 +12,8 @@
             </div>
             <div class="lt-head-btns">
                 <div class="disabled-btn" id="show-send-massage-dialog">Отправить сообщение</div>
-                <div class="disabled-btn block-admin">Заблокировать</div>
+                <div class="disabled-btn block-admin" onclick="block_unblock_admins(1)">Заблокировать</div>
+                <div class="disabled-btn unblock-admin" onclick="block_unblock_admins(0)">Разблокировать</div>
                 <div class="disabled-btn" id="delete-button">Удалить</div>
             </div>
         </div>
@@ -66,7 +67,7 @@
             </ul>
             {% for user in page.items %}
             {% set permissions = user.getPermissions() %}
-            <ul class="lt-content-main" sort-fio="{{user.surname}} {{user.name}}" sort-email="{{user.email}}" sort-access="{{permissions}}" detail-url="{{url('admin/admins/edit/' ~ user.id)}}">
+            <ul class="lt-content-main {% if user.admin_status == 0 %} hidden-arg {% endif %}" sort-fio="{{user.surname}} {{user.name}}" sort-email="{{user.email}}" sort-access="{{permissions}}" detail-url="{{url('admin/admins/edit/' ~ user.id)}}">
                 <li><div class="lt-psevdo-check">{{hidden_field('user-id', 'value':user.id)}}</div></li>
                 <li>{% if user.avatar!='' %}<img src="/files/avatars/{{user.avatar}}" alt="">{% endif %}</li>
                 <li>{{user.surname}} {{user.name}}</li>

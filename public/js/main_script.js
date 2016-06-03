@@ -605,6 +605,29 @@ function block_unblock_users(block) {
     }
 }
 
+function block_unblock_admins(block) {
+    var id_array = [];
+    $('.admin-lt-holder .lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #user-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "blockUnblock",
+            type:'POST',
+            data: { ids: id_array, block: block },
+            dataType: 'json',
+            success: function(data){
+                if (data == 'ok') {
+                   window.location.reload(true);
+                }
+            }
+        });
+    }
+}
+
 function changeBlockUnblockButtonBackground() {
     if($('.admin-main-wrap').hasClass('user-list')){
         var id_array = [];
@@ -644,16 +667,35 @@ function changeBlockUnblockButtonBackground() {
 function changeAdminButtonsBackground() {
     if($('.admin-main-wrap').hasClass('admin-list')){
         var id_array = [];
-        $('.admin-lt-holder .lt-content-main').each(function(){
+        $('.admin-lt-holder .lt-content-main.hidden-arg').each(function(){
             var id = $(this).find('div.psevdo-checked #user-id').val();
             if (id != undefined) {
                 id_array.push(id);
             }
         });
         if (id_array.length) {
-            $(".disabled-btn").addClass("enabled-btn").removeClass("disabled-btn");
+            $(".unblock-admin").addClass("enabled-btn").removeClass("disabled-btn");
         } else {
-            $(".enabled-btn").addClass("disabled-btn").removeClass("enabled-btn");
+            $(".unblock-admin").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+        var id_array2 = [];
+        $('.admin-lt-holder .lt-content-main').each(function(elem, item){
+            if (!$(item).hasClass("hidden-arg")) {
+                var id = $(item).find('div.psevdo-checked #user-id').val();
+                if (id != undefined) {
+                    id_array2.push(id);
+                }
+            }
+        });
+        if (id_array2.length) {
+            $(".block-admin").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $(".block-admin").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+        if (id_array.length || id_array2.length) {
+            $("#show-send-massage-dialog, #delete-button").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $("#show-send-massage-dialog, #delete-button").addClass("disabled-btn").removeClass("enabled-btn");
         }
     }
 }

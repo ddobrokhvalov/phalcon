@@ -303,4 +303,32 @@ class AdminsController extends ControllerBase
         $this->view->disable();
         echo json_encode($result);
     }
+    
+    public function blockUnblockAction(){
+        $users_ids = $this->request->getPost("ids");
+        $block = $this->request->getPost("block");
+        
+        if(count($users_ids)){
+            $users = Admin::find(
+                array(
+                    'id IN ({ids:array})',
+                    'bind' => array(
+                        'ids' => $users_ids
+                    )
+                )
+            );
+            foreach ($users as $user) {
+                if ($block) {
+                    $user->admin_status = 0;
+                } else {
+                    $user->admin_status = 1;
+                }
+                $user->update();
+            }
+        }
+        $this->view->disable();
+        $this->flashSession->success('Изменения сохранены');
+        $data = "ok";
+        echo json_encode($data);
+    }
 }
