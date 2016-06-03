@@ -64,7 +64,7 @@
             <div class="compl-quest-cont">
                 {% set answers = complaint.getComplaintQuestionAnswer(question.id) %}
                 {% if answers.count() == 0 %}
-                    <form action="#" method="POST">
+                    <form action="/admin/complaints/addAnswer?complaint={{complaint.id}}&question={{question.id}}" method="POST">
                         <p>— {{question.text}}</p>
                         <label for="" class="hidden-textarea">
                             <span>Новое сообщение</span>

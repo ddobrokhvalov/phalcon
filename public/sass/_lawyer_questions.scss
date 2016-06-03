@@ -30,6 +30,8 @@
 .admin-table-title {
 	border-top: 1px solid $border-grey;
 	border-bottom: 1px solid $border-grey; 
+    margin-bottom: 0 !important;
+    background-color: #f9f9fa;
 	li {
 		@include box-s;
 		line-height: 75px;
@@ -74,8 +76,12 @@
 }
 .admin-table-box {
 	.admin-table-body li ul {
-		border-left: 1px solid $border-grey;
-		border-bottom: 1px solid $border-grey; 
+        border-left: 1px solid $border-grey;
+        border-bottom: 1px solid $border-grey; 
+    }
+    .admin-table-body .for-sort-date {
+        padding-top: 30px !important;
+		padding-bottom: 30px !important;
 	}
 	.admin-table-body li ul:last-child {
 		border-bottom: none;
@@ -148,6 +154,9 @@
 			@include box-s;
 		}
 	}
+}
+.lawyer-wrap .admin-pagination-box {
+    border-top: none;
 }
 .admin-table-footer {
 	overflow: hidden;

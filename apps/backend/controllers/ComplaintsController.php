@@ -4,6 +4,7 @@ namespace Multiple\Backend\Controllers;
 use Phalcon\Mvc\Controller;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Backend\Models\Complaint;
+use Multiple\Backend\Models\Answer;
 use Multiple\Library\PaginatorBuilder;
 
 class ComplaintsController extends ControllerBase
@@ -87,5 +88,24 @@ class ComplaintsController extends ControllerBase
         }
         $this->view->disable();
         echo json_encode($data);
+    }
+    
+    public function addAnswerAction() {
+        $answer_text = $this->request->getPost("lawyer-answer");
+        if (!isset($answer_text) || !strlen($answer_text)) {
+            $this->flashSession->error('Не введен ответ на вопрос');
+            return $this->forward('complaints/preview/' . $this->request->get("complaint"));
+        }
+        $data = "ok";
+        $status = $this->request->getPost("status");
+        $complaint_id = $this->request->getPost("id");
+        $answer = new Answer();
+        $answer->question_id = $this->request->get("question");
+        $answer->admin_id = $this->user->id;
+        $answer->text = $answer_text;
+        $answer->date = date('Y-m-d H:i:s');
+        $answer->save();
+        $this->flashSession->success('Ответ сохранен');
+        return $this->forward('complaints/preview/' . $this->request->get("complaint"));
     }
 }
