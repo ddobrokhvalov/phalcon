@@ -9,7 +9,6 @@
 }
 .admin-add.userAdd {
 	width: 244px;
-    margin-top: -5px;
 }
 .user-list .lt-content-top {
 	text-transform: uppercase;
@@ -120,18 +119,6 @@
     }
     ul {
         border-bottom: none;
-    }
-    ul.status-green {
-        border-top: 3px solid $status-green;
-    }
-    ul.status-red {
-        border-top: 3px solid $status-red;
-    }
-    ul.status-blue {
-        border-top: 3px solid $status-blue;
-    }
-    ul.status-black {
-        border-top: 3px solid $status-black;
     }
     .del-oredit-appll {
         div {

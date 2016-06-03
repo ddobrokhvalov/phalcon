@@ -19,8 +19,10 @@
 {% block menu %}
 {% if showMenu %}{{partial("layouts/menu")}}{% endif %}
 {% endblock %}
-<section class="page-wrap">
+<div class="header-wrap">
 {{ partial("layouts/header")}}
+</div>
+<section class="page-wrap">
 <main id="main">
 {{flashSession.output()}}
 {% block body %}

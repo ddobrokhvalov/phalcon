@@ -15,11 +15,11 @@
 	line-height: 92px;
 	font-weight: 100;
 	font-size: 30px;
-	border-top: 3px solid $blue;
 	border-bottom: 1px solid $border-grey;
 	p {
 		padding-left: 42px;
 		overflow: hidden;
+        margin: 0;
 	}
 	&.notif-unreasonably {
 		border-top: 3px solid $red;
@@ -29,19 +29,16 @@
 	}
 	.rightly-wrongly, .jl-status {
 		float: right;
-		padding-right: 42px;
-		width: 204px;
-		color: $blue;
+		padding-left: 70px !important;
+		width: 250px;
 		font-weight: 400;
 		font-size: 16px;
-		text-align: right;
 		text-transform: uppercase;
 		border-left: 1px solid $border-grey;
 	}
     .jl-status {
         line-height: unset;
-        color: $red;
-        background-position: 28px 50%;
+        background-position: left 40px center;
     }
 }
 .edit-notification-box {

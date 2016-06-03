@@ -61,6 +61,18 @@ h4 {
 	line-height: 1.1;
 	font-weight: 900;
 }
+ ul.status-green, .notification-number-box.status-green {
+    border-top: 3px solid $status-green;
+}
+ul.status-red, .notification-number-box.status-red {
+    border-top: 3px solid $status-red;
+}
+ul.status-blue, .notification-number-box.status-blue {
+    border-top: 3px solid $status-blue;
+}
+ul.status-black, .notification-number-box.status-black {
+    border-top: 3px solid $status-black;
+}
 .lebel-checkbox {
 	position: relative;
 	width: 16px;

@@ -7,7 +7,7 @@
             <a href="#" onclick="history.back();return false;">Вернуться на страницу жалоб</a>
         </div>
         <h1>Просмотр жалобы</h1>
-        <div class="notification-number-box notif-unreasonably"> <!-- if notification is rightly - remoove class "notif-unreasonably" -->
+        <div class="notification-number-box {{complaint.getComplaintColor(complaint.status)}}"> <!-- if notification is rightly - remoove class "notif-unreasonably" -->
             <p>Номер извещения №
                 <span>{{complaint.auction_id}}</span>
                 {{ complaint.getComplaintStatus(complaint.status) }}

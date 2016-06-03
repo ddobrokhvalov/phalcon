@@ -186,21 +186,10 @@
 		}
 	}
 }
+
 .user-page .appllicant-page {
     ul {
         border-bottom: none;
-    }
-    ul.status-green {
-        border-top: 3px solid $status-green;
-    }
-    ul.status-red {
-        border-top: 3px solid $status-red;
-    }
-    ul.status-blue {
-        border-top: 3px solid $status-blue;
-    }
-    ul.status-black {
-        border-top: 3px solid $status-black;
     }
     .jl-status-short {
         width: 22px;

@@ -1,12 +1,19 @@
 @import "variables_etc/variables";
 @import "variables_etc/mixins";
 
-#admin-header {
-	position: relative;
-	padding: 25px 0 72px 0;
-	&:after {
-		@include hasla;
-	}
+.header-wrap {
+    height: 90px;
+    background-color: #f7f8fa;
+    margin-bottom: 50px;
+    #admin-header {
+        position: relative;
+        padding-top: 25px;
+        max-width: 965px;
+        margin: 0 auto;
+        &:after {
+            @include hasla;
+        }
+    }
 }
 .admin-name {
 	float: left;

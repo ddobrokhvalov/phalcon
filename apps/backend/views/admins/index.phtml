@@ -11,10 +11,36 @@
                 <div></div>Выбрать все
             </div>
             <div class="lt-head-btns">
-                <div>Отправить сообщение</div>
-                <div>Заблокировать</div>
-                <a href="#"><div data-toggle="modal" data-target=".confirm-deletion-admin-lg">Удалить</div></a>
+                <div class="disabled-btn" id="show-send-massage-dialog">Отправить сообщение</div>
+                <div class="disabled-btn block-admin">Заблокировать</div>
+                <div class="disabled-btn" id="delete-button">Удалить</div>
             </div>
+        </div>
+        <div class="modal fade modal-send-message-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Отправить сообщение</h4>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <label for="message-subject" class="control-label">Тема:</label>
+                    <input type="text" class="form-control" id="message-subject">
+                  </div>
+                  <div class="form-group">
+                    <label for="message-text" class="control-label">Сообщение:</label>
+                    <textarea class="form-control" id="message-text"></textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="button" onclick="send_message($('#message-subject').val(), $('#message-text').val())" class="btn btn-primary">Отправить</button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="modal fade confirm-deletion-admin-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
           <div class="modal-dialog modal-sm">
@@ -41,7 +67,7 @@
             {% for user in page.items %}
             {% set permissions = user.getPermissions() %}
             <ul class="lt-content-main" sort-fio="{{user.surname}} {{user.name}}" sort-email="{{user.email}}" sort-access="{{permissions}}" detail-url="{{url('admin/admins/edit/' ~ user.id)}}">
-                <li><div class="lt-psevdo-check">{{hidden_field('admin-id', 'value':user.id)}}</div></li>
+                <li><div class="lt-psevdo-check">{{hidden_field('user-id', 'value':user.id)}}</div></li>
                 <li>{% if user.avatar!='' %}<img src="/files/avatars/{{user.avatar}}" alt="">{% endif %}</li>
                 <li>{{user.surname}} {{user.name}}</li>
                 <li>{{user.email}}</li>
