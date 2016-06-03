@@ -2388,7 +2388,7 @@ span.revert-bg {
 /* line 129, ../sass/_applicant_page.scss */
 .appllicant-page .admin-lt-content .lt-content-main {
   border-bottom: none;
-  border-top: 3px solid #211d1e; }
+  /*border-top: 3px solid #211d1e;*/ }
   /* line 132, ../sass/_applicant_page.scss */
   .appllicant-page .admin-lt-content .lt-content-main.top-bd-blue {
     border-top: 3px solid #00aeef; }
