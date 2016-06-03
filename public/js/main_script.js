@@ -267,7 +267,31 @@ jQuery(document).ready(function($) {
             $('.modal-send-message-lg').modal('show');
         }
     });
-    $(".user-list #delete-button").click(function(){//debugger;
+    $(".admin-lt-holder.lt-arg #delete-button").click(function(){
+        var id_array = [];
+        $('.admin-lt-holder.lt-arg .lt-content-main').each(function(){
+            var id = $(this).find('div.psevdo-checked #argument-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $('.confirm-modal-argument-lg').modal('show');
+        }
+    });
+    $(".admin-lt-holder.lt-arg-second .delete-category-btn").click(function(){
+        var id_array = [];
+        $('.admin-lt-holder.lt-arg-second .lt-content-main').each(function(){
+            var id = $(this).find('div.psevdo-checked #argument-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $('.confirm-modal-category-lg').modal('show');
+        }
+    });
+    $(".user-list #delete-button").click(function(){
         var id_array = [];
         $('.admin-lt-holder .lt-content-main').each(function(){
             var id = $(this).find('div.psevdo-checked #user-id').val();
@@ -402,9 +426,41 @@ function changeShowHideButtonBackground() {
             }
         });
         if (id_array.length) {
-            $(".disabled-btn").addClass("enabled-btn").removeClass("disabled-btn");
+            $(".btn-show").addClass("enabled-btn").removeClass("disabled-btn");
         } else {
-            $(".enabled-btn").addClass("disabled-btn").removeClass("enabled-btn");
+            $(".btn-show").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+        var id_array2 = [];
+        $('.admin-lt-holder.lt-arg .lt-content-main').each(function(elem, item){
+            if (!$(item).hasClass("hidden-arg")) {
+                var id = $(item).find('div.psevdo-checked #argument-id').val();
+                if (id != undefined) {
+                    id_array2.push(id);
+                }
+            }
+        });
+        if (id_array2.length) {
+            $(".btn-hide").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $(".btn-hide").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+        if (id_array.length || id_array2.length) {
+            $("#delete-button").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $("#delete-button").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+        // Cetegories.
+        var id_array = [];
+        $('.admin-lt-holder.lt-arg-second .lt-content-main').each(function(){
+            var id = $(this).find('div.psevdo-checked #argument-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $(".delete-category-btn").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $(".delete-category-btn").addClass("disabled-btn").removeClass("enabled-btn");
         }
     }
 }
@@ -518,28 +574,21 @@ function changeBlockUnblockButtonBackground() {
         } else {
             $(".enabled-btn.block").addClass("disabled-btn").removeClass("enabled-btn");
         }
-        var id_array = [];
+        var id_array2 = [];
         $('.admin-lt-holder .lt-content-main').each(function(elem, item){
             if (!$(item).hasClass("hidden-arg")) {
                 var id = $(item).find('div.psevdo-checked #user-id').val();
                 if (id != undefined) {
-                    id_array.push(id);
+                    id_array2.push(id);
                 }
             }
         });
-        if (id_array.length) {
+        if (id_array2.length) {
             $(".disabled-btn.unblock").addClass("enabled-btn").removeClass("disabled-btn");
         } else {
             $(".enabled-btn.unblock").addClass("disabled-btn").removeClass("enabled-btn");
         }
-        var id_array = [];
-        $('.admin-lt-holder .lt-content-main').each(function(){
-            var id = $(this).find('div.psevdo-checked #user-id').val();
-            if (id != undefined) {
-                id_array.push(id);
-            }
-        });
-        if (id_array.length) {
+        if (id_array.length || id_array2.length) {
             $("#show-send-massage-dialog, #delete-button").addClass("enabled-btn").removeClass("disabled-btn");
         } else {
             $("#show-send-massage-dialog, #delete-button").addClass("disabled-btn").removeClass("enabled-btn");

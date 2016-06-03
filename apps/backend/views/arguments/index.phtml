@@ -10,9 +10,9 @@
                 <div></div>Выбрать все
             </div>
             <div class="lt-head-btns">
-                <div onclick="show_hide_arguments(1)">Скрыть</div>
-                <div class="disabled-btn" onclick="show_hide_arguments(0)">Показать</div>
-                <div class="btn" data-toggle="modal" data-target=".confirm-modal-argument-lg">Удалить</div>
+                <div class="disabled-btn btn-hide" onclick="show_hide_arguments(1)">Скрыть</div>
+                <div class="disabled-btn btn-show" onclick="show_hide_arguments(0)">Показать</div>
+                <div id="delete-button" class="disabled-btn btn">Удалить</div>
             </div>
             <div class="modal fade confirm-modal-argument-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
               <div class="modal-dialog modal-sm">
@@ -56,7 +56,7 @@
             </div>
             <div class="lt-head-btns">
                 <div class="btn" data-toggle="modal" data-target=".modal-add-category-lg">Создать</div>
-                <div class="btn delete-category-btn" data-toggle="modal" data-target=".confirm-modal-category-lg">Удалить</div>
+                <div class="btn delete-category-btn disabled-btn">Удалить</div>
             </div>
             <div class="modal fade modal-add-category-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
               <div class="modal-dialog modal-sm">
