@@ -2662,7 +2662,7 @@ span.revert-bg {
 /* line 222, ../sass/_user_page.scss */
 .user-page .appllicant-page .dropdown-menu {
   width: 196px;
-  margin-left: -125px;
+  margin-left: -123px;
   font-weight: 400 !important; }
   /* line 226, ../sass/_user_page.scss */
   .user-page .appllicant-page .dropdown-menu:hover {
@@ -2730,10 +2730,10 @@ span.revert-bg {
     width: 175px; }
   /* line 295, ../sass/_user_page.scss */
   .user-page .appllicant-page .admin-lt-content li:nth-child(3) {
-    width: 265px; }
+    width: 260px; }
   /* line 298, ../sass/_user_page.scss */
   .user-page .appllicant-page .admin-lt-content li:nth-child(4) {
-    width: 113px; }
+    width: 120px; }
   /* line 301, ../sass/_user_page.scss */
   .user-page .appllicant-page .admin-lt-content li:nth-child(5) {
     width: 72px; }

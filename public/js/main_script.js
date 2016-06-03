@@ -72,6 +72,7 @@ jQuery(document).ready(function($) {
 		}
         changeShowHideButtonBackground();
         changeBlockUnblockButtonBackground();
+        changeApplicantsButtonBackground();
 	});
 	$('.lt-content-main').click(function(evt) {
         if(evt.target != undefined && typeof evt.target.classList == "object" && evt.target.classList.contains('lt-psevdo-check')){
@@ -91,6 +92,7 @@ jQuery(document).ready(function($) {
             }
             changeShowHideButtonBackground();
             changeBlockUnblockButtonBackground();
+            changeApplicantsButtonBackground();
         } else if(evt.target != undefined && typeof evt.target.classList == "object" && (evt.target.classList.contains('with-dropdown') || evt.target.classList.contains('jl-status') || evt.target.id == 'dLabel')) {
             $(this).find('.with-dropdown div[data-toggle=dropdown]').dropdown('toggle');
             return false;
@@ -279,6 +281,18 @@ jQuery(document).ready(function($) {
             $('.confirm-modal-argument-lg').modal('show');
         }
     });
+    $(".admin-lt-holder #delete-button").click(function(){
+        var id_array = [];
+        $('.admin-lt-holder .lt-content-main').each(function(){
+            var id = $(this).find('div.psevdo-checked #applicant-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $('.confirm-deletion-applicant-lg').modal('show');
+        }
+    });
     $(".admin-lt-holder.lt-arg-second .delete-category-btn").click(function(){
         var id_array = [];
         $('.admin-lt-holder.lt-arg-second .lt-content-main').each(function(){
@@ -461,6 +475,23 @@ function changeShowHideButtonBackground() {
             $(".delete-category-btn").addClass("enabled-btn").removeClass("disabled-btn");
         } else {
             $(".delete-category-btn").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+    }
+}
+
+function changeApplicantsButtonBackground(){
+    if($('.admin-main-wrap').hasClass('applicant-list')) {
+        var id_array = [];
+        $('.admin-lt-holder .lt-content-main').each(function(){
+            var id = $(this).find('div.psevdo-checked #applicant-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $("#delete-button").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $("#delete-button").addClass("disabled-btn").removeClass("enabled-btn");
         }
     }
 }
