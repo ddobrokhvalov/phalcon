@@ -2843,12 +2843,12 @@ span.revert-bg {
 
 @media (max-width: 1640px) {
   /* line 114, ../sass/style.scss */
-  .page-wrap {
+  .page-wrap, .header-wrap #admin-header {
     margin-left: 330px;
     margin-right: 0; } }
 @media (max-width: 1325px) {
   /* line 120, ../sass/style.scss */
-  .page-wrap {
+  .page-wrap, .header-wrap #admin-header {
     margin-left: auto;
     margin-right: auto; }
 
