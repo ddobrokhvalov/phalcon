@@ -149,12 +149,13 @@
 	}
 }
 .appllicant-page .lt-head-btns div {
-	color: #bcbcbd;
+	/*color: #bcbcbd;*/
 	padding: 0 18px;
 	&:hover {
 		font-weight: normal;
-		color: #bcbcbd;
-		background-color: $white;
+        cursor: pointer;
+		/*color: #bcbcbd;
+		background-color: $white;*/
 	}
 }
 .list-arguments .lt-head-btns {

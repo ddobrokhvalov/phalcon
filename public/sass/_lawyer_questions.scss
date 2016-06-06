@@ -237,10 +237,20 @@
 #admin-pag-prev {
 	left: 0;
 	padding-left: 20px;
-	background: url(../images/icon-pag-arr1.png) 0 0 no-repeat;
+	background: url(../images/icon-pag-arr1.png) left center no-repeat;
+}
+#admin-pag-prev:hover {
+    text-decoration: none;
+    color: #34383e;
+    font-weight: 700;
 }
 #admin-pag-next {
-	right: 0;
-	padding-right: 20px;
-	background: url(../images/icon-pag-arr2.png) 100% 0 no-repeat;
+    right: 0;
+    padding-right: 20px;
+    background: url(../images/icon-pag-arr2.png) right center no-repeat;
+}
+#admin-pag-next:hover {
+    text-decoration: none;
+    color: #34383e;
+    font-weight: 700;
 }

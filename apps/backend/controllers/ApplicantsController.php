@@ -32,6 +32,12 @@ class ApplicantsController  extends ControllerBase
     }
     
     public function addAction(){
+        $user_id = $this->request->get('user');
+        if (isset($user_id) && $user_id) {
+            $this->view->for_user_id = $user_id;
+        } else {
+            $this->view->for_user_id = 0;
+        }
         $this->setMenu();
     }
 
@@ -87,7 +93,10 @@ class ApplicantsController  extends ControllerBase
                 'action' => 'index'
             ));
         }
-        
+        $user_id = $this->request->getPost('for_user_id');
+        if ($user_id === "0") {
+            $user_id = $this->user->id;
+        }
         $applicant = new Applicant();
         switch ($_POST['type']) {
             case 'fizlico':
@@ -99,7 +108,7 @@ class ApplicantsController  extends ControllerBase
                         'action' => 'index'
                     ));
                 }
-                $applicant->user_id = $this->user->id;
+                $applicant->user_id = $user_id;
                 $applicant->type = 'fizlico';
                 $applicant->name_full = '';
                 $applicant->name_short = '';
@@ -121,7 +130,7 @@ class ApplicantsController  extends ControllerBase
                         'action' => 'add'
                     ));
                 }
-                $applicant->user_id = $this->user->id;
+                $applicant->user_id = $user_id;
                 $applicant->type = 'ip';
                 $applicant->name_full = $_POST['full-name'];
                 $applicant->name_short = '';
@@ -143,7 +152,7 @@ class ApplicantsController  extends ControllerBase
                         'action' => 'add'
                     ));
                 }
-                $applicant->user_id = $this->user->id;
+                $applicant->user_id = $user_id;
                 $applicant->type = 'urlico';
                 $applicant->name_full = $_POST['full-name'];
                 $applicant->name_short = $_POST['kratkoe-name'];

@@ -43,7 +43,7 @@ class Applicant extends Model
         return $result;
     }
 
-    public function findByUserIdWithAdditionalInfo($user_id){
+    public function findByUserIdWithAdditionalInfo($user_id){//DebugBreak();
         $db = $this->getDi()->getShared('db');
         $sql = "SELECT ap.*, count(c.id) as cnt FROM complaint as c
          INNER JOIN applicant ap ON(c.applicant_id = ap.id )         

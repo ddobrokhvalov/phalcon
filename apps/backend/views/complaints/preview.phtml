@@ -79,7 +79,9 @@
                     {% set answers = complaint.getComplaintQuestionAnswer(question.id) %}
                     {% for answer in answers %}
                         <div class="clarifying-issue">
-                        {{answer.text}}
+                            <p>
+                                {{answer.text}}
+                            </p>
                         </div>
                         <div class="legal-advisor">
                             {% set answer_owner = complaint.getAnswerOwner(answer.admin_id) %}

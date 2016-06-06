@@ -809,13 +809,25 @@ ul.status-black, .notification-number-box.status-black {
 #admin-pag-prev {
   left: 0;
   padding-left: 20px;
-  background: url(../images/icon-pag-arr1.png) 0 0 no-repeat; }
+  background: url(../images/icon-pag-arr1.png) left center no-repeat; }
 
 /* line 242, ../sass/_lawyer_questions.scss */
+#admin-pag-prev:hover {
+  text-decoration: none;
+  color: #34383e;
+  font-weight: 700; }
+
+/* line 247, ../sass/_lawyer_questions.scss */
 #admin-pag-next {
   right: 0;
   padding-right: 20px;
-  background: url(../images/icon-pag-arr2.png) 100% 0 no-repeat; }
+  background: url(../images/icon-pag-arr2.png) right center no-repeat; }
+
+/* line 252, ../sass/_lawyer_questions.scss */
+#admin-pag-next:hover {
+  text-decoration: none;
+  color: #34383e;
+  font-weight: 700; }
 
 /* line 4, ../sass/_complaints_preview.scss */
 .bread-crumbs-holder {
@@ -2420,60 +2432,61 @@ span.revert-bg {
 
 /* line 151, ../sass/_applicant_page.scss */
 .appllicant-page .lt-head-btns div {
-  color: #bcbcbd;
+  /*color: #bcbcbd;*/
   padding: 0 18px; }
   /* line 154, ../sass/_applicant_page.scss */
   .appllicant-page .lt-head-btns div:hover {
     font-weight: normal;
-    color: #bcbcbd;
-    background-color: #ffffff; }
+    cursor: pointer;
+    /*color: #bcbcbd;
+    background-color: $white;*/ }
 
-/* line 161, ../sass/_applicant_page.scss */
+/* line 162, ../sass/_applicant_page.scss */
 .list-arguments .lt-head-btns div {
   padding: 0 18px; }
-  /* line 163, ../sass/_applicant_page.scss */
+  /* line 164, ../sass/_applicant_page.scss */
   .list-arguments .lt-head-btns div:hover {
     color: #ffffff;
     text-decoration: none; }
 
-/* line 169, ../sass/_applicant_page.scss */
+/* line 170, ../sass/_applicant_page.scss */
 .appll-status-icon {
   margin: 26px auto 0;
   width: 22px;
   height: 22px;
   background: url(../images/icon-jl-chernov.png) 0 0 no-repeat; }
 
-/* line 175, ../sass/_applicant_page.scss */
+/* line 176, ../sass/_applicant_page.scss */
 .top-bd-blue .appll-status-icon {
   background-image: url(../images/icon-jl-rassmotr.png); }
 
-/* line 178, ../sass/_applicant_page.scss */
+/* line 179, ../sass/_applicant_page.scss */
 .top-bd-green .appll-status-icon {
   background-image: url(../images/icon-jl-done.png); }
 
-/* line 181, ../sass/_applicant_page.scss */
+/* line 182, ../sass/_applicant_page.scss */
 .top-bd-red .appll-status-icon {
   background-image: url(../images/icon-jl-notdone.png); }
 
-/* line 185, ../sass/_applicant_page.scss */
+/* line 186, ../sass/_applicant_page.scss */
 .appllicant-page .lt-head-btns div {
   cursor: default; }
 
-/* line 190, ../sass/_applicant_page.scss */
+/* line 191, ../sass/_applicant_page.scss */
 .appllicant-page .lt-head-btns.active-lt-head-btns div {
   cursor: pointer; }
-  /* line 192, ../sass/_applicant_page.scss */
+  /* line 193, ../sass/_applicant_page.scss */
   .appllicant-page .lt-head-btns.active-lt-head-btns div:not(:last-child):hover {
     color: #ffffff;
     background-color: #10b8f7; }
-  /* line 196, ../sass/_applicant_page.scss */
+  /* line 197, ../sass/_applicant_page.scss */
   .appllicant-page .lt-head-btns.active-lt-head-btns div:last-child {
     color: #00aeef; }
 
-/* line 201, ../sass/_applicant_page.scss */
+/* line 202, ../sass/_applicant_page.scss */
 .appllicant-page .lt-content-main {
   position: relative; }
-  /* line 203, ../sass/_applicant_page.scss */
+  /* line 204, ../sass/_applicant_page.scss */
   .appllicant-page .lt-content-main li {
     position: relative;
     z-index: 9; }

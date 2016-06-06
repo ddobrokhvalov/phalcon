@@ -75,6 +75,7 @@ jQuery(document).ready(function($) {
         changeApplicantsButtonBackground();
         changeAdminButtonsBackground();
         changeComplaintButtonsBackground();
+        changeUsersDetailsButtonsBackground();
 	});
 	$('.lt-content-main').click(function(evt) {
         if(evt.target != undefined && typeof evt.target.classList == "object" && evt.target.classList.contains('lt-psevdo-check')){
@@ -97,6 +98,7 @@ jQuery(document).ready(function($) {
             changeApplicantsButtonBackground();
             changeAdminButtonsBackground();
             changeComplaintButtonsBackground();
+            changeUsersDetailsButtonsBackground();
         } else if(evt.target != undefined && typeof evt.target.classList == "object" && (evt.target.classList.contains('with-dropdown') || evt.target.classList.contains('jl-status') || evt.target.id == 'dLabel')) {
             $(this).find('.with-dropdown div[data-toggle=dropdown]').dropdown('toggle');
             return false;
@@ -127,13 +129,13 @@ jQuery(document).ready(function($) {
 		inputVal.fadeOut('fast');
 	});
 	// editing of the applicant's complaint - the backlight in the header buttons
-	$('.appllicant-page .lt-content-main, .appllicant-page .select-all').click(function() {
+	/*$('.appllicant-page .lt-content-main, .appllicant-page .select-all').click(function() {
 		if ($('.appllicant-page .lt-psevdo-check').hasClass('psevdo-checked')) {
 			$('.appllicant-page .lt-head-btns').addClass('active-lt-head-btns');
 		} else {
 			$('.appllicant-page .lt-head-btns').removeClass('active-lt-head-btns');
 		}
-	});
+	});*/
 	// close admin popup
 	$('.admin-popup-bg, .admin-popup-close').click(function() {
 		$('.admin-popup-wrap').fadeOut();
@@ -300,6 +302,18 @@ jQuery(document).ready(function($) {
     $(".admin-lt-holder #delete-button").click(function(){
         var id_array = [];
         $('.admin-lt-holder .lt-content-main').each(function(){
+            var id = $(this).find('div.psevdo-checked #applicant-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $('.confirm-deletion-applicant-lg').modal('show');
+        }
+    });
+    $(".applicants-part-user-edit #delete-button").click(function(){
+        var id_array = [];
+        $('.admin-lt-content.userPageLtContent .lt-content-main').each(function(){
             var id = $(this).find('div.psevdo-checked #applicant-id').val();
             if (id != undefined) {
                 id_array.push(id);
@@ -543,6 +557,44 @@ function changeApplicantsButtonBackground(){
     }
 }
 
+function changeUsersDetailsButtonsBackground(){
+    if($('.admin-main-wrap').hasClass('user-page')) {
+        var id_array = [];
+        $('.admin-lt-content.userPageLtContent .lt-content-main').each(function(elem, item){
+            if ($(item).hasClass("hidden-arg")) {
+                var id = $(item).find('div.psevdo-checked #applicant-id').val();
+                if (id != undefined) {
+                    id_array.push(id);
+                }
+            }
+        });
+        if (id_array.length) {
+            $(".unblock-applicant").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $(".unblock-applicant").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+        var id_array2 = [];
+        $('.admin-lt-content.userPageLtContent .lt-content-main').each(function(elem, item){
+            if (!$(item).hasClass("hidden-arg")) {
+                var id = $(item).find('div.psevdo-checked #applicant-id').val();
+                if (id != undefined) {
+                    id_array2.push(id);
+                }
+            }
+        });
+        if (id_array2.length) {
+            $(".block-applicant").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $(".block-applicant").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+        if (id_array.length || id_array2.length) {
+            $(".applicants-part-user-edit #delete-button").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $(".applicants-part-user-edit #delete-button").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+    }
+}
+
 function delete_complaint(complaint_id) {
     if (complaint_id) {
         $.ajax({
@@ -579,6 +631,20 @@ function change_complaint_status(complaint_id, status) {
 }
 
 function changeStatusInComplaintList(status) {
+    if (status.length) {
+        var id_array = [];
+        $('.admin-lt-holder .lt-content-main').each(function(){
+            var id = $(this).find('div.psevdo-checked #complaint-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            change_complaint_status(id_array, status);
+        }
+    }
+}
+function changeStatusInUserComplaintList(status) {
     if (status.length) {
         var id_array = [];
         $('.admin-lt-holder .lt-content-main').each(function(){
@@ -699,6 +765,29 @@ function block_unblock_applicant(block) {
     }
 }
 
+function block_unblock_user_applicant(block) {
+    var id_array = [];
+    $('.admin-lt-content.userPageLtContent').each(function() {
+        var id = $(this).find('div.psevdo-checked #applicant-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "/admin/user/blockUnblockUserApplicant",
+            type:'POST',
+            data: { ids: id_array, block: block },
+            dataType: 'json',
+            success: function(data){
+                if (data == 'ok') {
+                   window.location.reload(true);
+                }
+            }
+        });
+    }
+}
+
 function changeBlockUnblockButtonBackground() {
     if($('.admin-main-wrap').hasClass('user-list')){
         var id_array = [];
@@ -771,7 +860,7 @@ function changeAdminButtonsBackground() {
     }
 }
 
-function changeComplaintButtonsBackground() {
+function changeComplaintButtonsBackground() {//debugger;
     if($('.admin-main-wrap').hasClass('complaints-list')){
         var id_array = [];
         $('.admin-lt-holder .lt-content-main').each(function(){
@@ -784,6 +873,19 @@ function changeComplaintButtonsBackground() {
             $(".disabled-btn").addClass("enabled-btn").removeClass("disabled-btn");
         } else {
             $(".enabled-btn").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+    } else if($('.user-page .appllicant-page').hasClass('complaints-list')) {
+        var id_array = [];
+        $('.appllicant-page.complaints-list .admin-lt-holder .lt-content-main').each(function(elem, item){
+            var id = $(item).find('div.psevdo-checked #complaint-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $(".appllicant-page.complaints-list .disabled-btn").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $(".appllicant-page.complaints-list .enabled-btn").addClass("disabled-btn").removeClass("enabled-btn");
         }
     }
 }
@@ -864,6 +966,28 @@ function delete_applicants(){
     if (id_array.length) {
         $.ajax({
             url: "deleteApplicants",
+            type:'POST',
+            data: { ids: id_array },
+            dataType: 'json',
+            success: function(data){
+                $('.confirm-deletion-applicant-lg').modal('hide');
+                window.location.reload(true);
+            }
+        });
+    }
+}
+
+function delete_user_applicants(){
+    var id_array = [];
+    $('.admin-lt-content.userPageLtContent').each(function(){
+        var id = $(this).find('div.psevdo-checked #applicant-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "/admin/user/deleteUserApplicants",
             type:'POST',
             data: { ids: id_array },
             dataType: 'json',
