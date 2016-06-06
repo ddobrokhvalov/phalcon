@@ -3110,7 +3110,7 @@ q, blockquote {
     border-top: none !important;
 }
 .successMessage {
-    color:#3c763d;
+    color: #00aeef;
     border: 1px solid;
     border-radius: 5px;
     font-weight: bold;

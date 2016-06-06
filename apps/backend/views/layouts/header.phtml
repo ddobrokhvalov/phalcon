@@ -3,6 +3,9 @@
         <div><img src="/files/avatars/{{curuser.avatar}}" alt="avatar admin"></div>
         <span>{{curuser.email}}</span>
     </div>
+    <div style="text-align: center; float: left; width: 50%;">
+        {{flashSession.output()}}
+    </div>
     <div class="admin-settings-logout">
         <div class="admin-settings"></div>
         <a href="/admin/login/logout" id="admin-logout"></a>
