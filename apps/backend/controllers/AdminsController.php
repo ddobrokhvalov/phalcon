@@ -7,6 +7,7 @@ use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Backend\Models\Admin;
 use Multiple\Backend\Models\Permission;
 use Multiple\Backend\Models\PermissionAdmin;
+use Multiple\Backend\Models\Messages;
 use Multiple\Backend\Form\AdminForm;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Validator\AdminValidator;
@@ -328,6 +329,29 @@ class AdminsController extends ControllerBase
         }
         $this->view->disable();
         $this->flashSession->success('Изменения сохранены');
+        $data = "ok";
+        echo json_encode($data);
+    }
+
+    public function sendMessageAction(){
+        $from = $this->user->id;
+        $toids = $this->request->getPost("toids");
+        $subject = $this->request->getPost("subject");
+        $body = $this->request->getPost("body");
+        
+        if(count($toids) && $from){
+            foreach ($toids as $to){
+                $message = new Messages();
+                $message->from_uid = $from;
+                $message->to_uid = $to;
+                $message->subject = $subject;
+                $message->body = $body;
+                $message->time = date('Y-m-d H:i:s');
+                $message->save();
+            }
+        }
+        $this->view->disable();
+        $this->flashSession->success('Сообщение отправлено');
         $data = "ok";
         echo json_encode($data);
     }
