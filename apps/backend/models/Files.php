@@ -30,6 +30,7 @@ class Files extends Model
     }
     
     public function isAllowedExtension($ext) {
+        $this->flashSession->error($ext);
         $extensions = array(
             'image/jpeg',
             'image/png',
