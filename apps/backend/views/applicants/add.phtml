@@ -13,7 +13,7 @@
             <div data-tabsLabel="physical-face">Физическое лицо</div>
         </div>
         <div data-tabs="legal-entity" class="tabs-content active-tabs-content">
-            <form action="/admin/applicants/create" method="POST">
+            <form action="/admin/applicants/create" enctype="multipart/form-data" method="POST">
                 {{hidden_field('type', 'value':'urlico')}}
                 {{hidden_field('for_user_id', 'value':for_user_id)}}
                 <label for="entity-textarea">
@@ -56,28 +56,81 @@
                     <div>E-mail</div>
                     <input type="text" name="email" id="entity-email">
                 </label>
-                <div class="file-attachment">
-                    <img src="/images/zaglushka.png" alt="">
+                <div class="file-attachment tab1">
+                    <div class="file-wrapper">
+                        <div class="text-above">Прикрепить файлы</div>
+                        <input id="upload-files" type="file" multiple name="upload-files[]">
+                    </div>
+                    <div class="file-names"></div>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function(){
+                            jQuery('.tab1 #upload-files').change(function(){
+                                var cnt = jQuery('.tab1 #upload-files')[0].files.length;
+                                var i = 0;
+                                var html = '';
+                                for (i = 0; i < cnt; i++) {
+                                    html = html + '<p>' + jQuery('.tab1 #upload-files')[0].files[i]['name'] + '</p>';
+                                }
+                                jQuery('.tab1 .file-names').html(html);
+                            });
+                        });
+                    </script>
                 </div>
                 <button class="save-tab-form">Сохранить изменения</button>
             </form>
         </div>
         <div data-tabs="individual-entrepreneur" class="tabs-content">
-            <form action="/admin/applicants/create" method="POST">
+            <form action="/admin/applicants/create" enctype="multipart/form-data" method="POST">
                 {{hidden_field('type', 'value':'indlico')}}
                 {{hidden_field('for_user_id', 'value':for_user_id)}}
                 <label for="entity-textarea">
                     <div>Полное наименование</div>
                     <textarea name="full-name" id="entity-textarea"></textarea>
                 </label>
-                <div class="file-attachment">
-                    <img src="/images/zaglushka.png" alt="">
+                <div class="file-attachment tab2">
+                    <div class="file-wrapper">
+                        <div class="text-above">Прикрепить файлы</div>
+                        <input id="upload-files" type="file" multiple name="upload-files[]">
+                    </div>
+                    <div class="file-names"></div>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function(){
+                            //$('.tab2 #upload-files').fileupload({
+                                //dataType: 'json',
+                                /*add: function (e, data) {
+                                    data.context = $('<button/>').text('Upload')
+                                        .appendTo('.tab2 .file-names')
+                                        .click(function () {
+                                            data.context = $('<p/>').text('Uploading...').replaceAll($(this));
+                                            data.submit();
+                                        });
+                                },
+                                done: function (e, data) {
+                                    data.context.text('Upload finished.');
+                                }*/
+                                /*done: function (e, data) {
+                                    $.each(data.result.files, function (index, file) {
+                                        $('<p/>').text(file.name).appendTo('.tab2 .file-names');
+                                    });
+                                }*/
+                            //});
+                            jQuery('.tab2 #upload-files').change(function(){
+                                var cnt = jQuery('.tab2 #upload-files')[0].files.length;
+                                var i = 0;
+                                var html = '';
+                                for (i = 0; i < cnt; i++) {
+                                    html = html + '<p>' + jQuery('.tab2 #upload-files')[0].files[i]['name'] + '</p>';
+                                }
+                                jQuery('.tab2 .file-names').html(html);
+                            });
+                        });
+                    </script>
                 </div>
                 <button class="save-tab-form">Сохранить изменения</button>
             </form>
         </div>
         <div data-tabs="physical-face" class="tabs-content">
-            <form action="/admin/applicants/create" method="POST">
+            <form action="/admin/applicants/create" enctype="multipart/form-data" method="POST">
                 {{hidden_field('type', 'value':'fizlico')}}
                 {{hidden_field('for_user_id', 'value':for_user_id)}}
                 <label for="entity-fio-z">
@@ -96,8 +149,25 @@
                     <div>E-mail</div>
                     <input type="text" name="email" id="entity-email">
                 </label>
-                <div class="file-attachment">
-                    <img src="/images/zaglushka.png" alt="">
+                <div class="file-attachment tab3">
+                    <div class="file-wrapper">
+                        <div class="text-above">Прикрепить файлы</div>
+                        <input id="upload-files" type="file" multiple name="upload-files[]">
+                    </div>
+                    <div class="file-names"></div>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function(){
+                            jQuery('.tab3 #upload-files').change(function(){
+                                var cnt = jQuery('.tab3 #upload-files')[0].files.length;
+                                var i = 0;
+                                var html = '';
+                                for (i = 0; i < cnt; i++) {
+                                    html = html + '<p>' + jQuery('.tab3 #upload-files')[0].files[i]['name'] + '</p>';
+                                }
+                                jQuery('.tab3 .file-names').html(html);
+                            });
+                        });
+                    </script>
                 </div>
                 <button class="save-tab-form">Сохранить изменения</button>
             </form>

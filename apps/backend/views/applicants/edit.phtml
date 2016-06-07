@@ -15,7 +15,7 @@
             <div data-tabsLabel="physical-face"  {%if applicant.type=="fizlico" %}class="active-tabs-label"{%endif%}>Физическое лицо</div>
         </div>
         <div data-tabs="legal-entity" class="tabs-content {%if applicant.type=="urlico" %}active-tabs-content{%endif%}">
-            <form action="/admin/applicants/save" method="POST" id="urlico">
+            <form action="/admin/applicants/save" method="POST" enctype="multipart/form-data" id="urlico">
                 {{hidden_field('id', 'value':applicant.id)}}
                 {{hidden_field('type', 'value':'urlico')}}
                 <label for="entity-textarea">
@@ -58,28 +58,77 @@
                     <div>E-mail</div>
                     {{text_field('email', 'value':applicant.email, "id":"entity-email", "data-name":"position-fio" )}}
                 </label>
-                <div class="file-attachment">
-                    <img src="images/zaglushka.png" alt="">
+                <div class="file-attachment tab1">
+                    <div class="file-wrapper">
+                        <div class="text-above">Прикрепить файлы</div>
+                        <input id="upload-files" type="file" multiple name="upload-files[]">
+                    </div>
+                    <div class="file-names"></div>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function(){
+                            jQuery('.tab1 #upload-files').change(function(){
+                                var cnt = jQuery('.tab1 #upload-files')[0].files.length;
+                                var i = 0;
+                                var html = '';
+                                for (i = 0; i < cnt; i++) {
+                                    html = html + '<p>' + jQuery('.tab1 #upload-files')[0].files[i]['name'] + '</p>';
+                                }
+                                jQuery('.tab1 .file-names').html(html);
+                            });
+                        });
+                    </script>
+                    <div class="attached-files">
+                        {% if attached_files|count > 0 %}
+                            {% for file in attached_files %}
+                                {{ file }}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                 </div>
                 <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'urlico');return false;" class="save-tab-form">Сохранить изменения</button>
             </form>
         </div>
         <div data-tabs="individual-entrepreneur" class="tabs-content {%if applicant.type=="ip" %}active-tabs-content{%endif%}">
-            <form action="/admin/applicants/save" method="POST" id="ip">
+            <form action="/admin/applicants/save" method="POST" enctype="multipart/form-data" id="ip">
                 {{hidden_field('id', 'value':applicant.id)}}
                 {{hidden_field('type', 'value':'ip')}}
                 <label for="entity-textarea">
                     <div>Полное наименование</div>
                     {{text_area('name_full', 'value':applicant.name_full, 'id':'entity-textarea')}}
                 </label>
-                <div class="file-attachment">
-                    <img src="images/zaglushka.png" alt="">
+                
+                <div class="file-attachment tab2">
+                    <div class="file-wrapper">
+                        <div class="text-above">Прикрепить файлы</div>
+                        <input id="upload-files" type="file" multiple name="upload-files[]">
+                    </div>
+                    <div class="file-names"></div>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function(){
+                            jQuery('.tab2 #upload-files').change(function(){
+                                var cnt = jQuery('.tab2 #upload-files')[0].files.length;
+                                var i = 0;
+                                var html = '';
+                                for (i = 0; i < cnt; i++) {
+                                    html = html + '<p>' + jQuery('.tab2 #upload-files')[0].files[i]['name'] + '</p>';
+                                }
+                                jQuery('.tab2 .file-names').html(html);
+                            });
+                        });
+                    </script>
+                    <div class="attached-files">
+                        {% if attached_files|count > 0 %}
+                            {% for file in attached_files %}
+                                {{ file }}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                 </div>
                 <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'ip');return false;"  class="save-tab-form">Сохранить изменения</button>
             </form>
         </div>
         <div data-tabs="physical-face" class="tabs-content {%if applicant.type=="fizlico" %}active-tabs-content{%endif%}">
-            <form action="/admin/applicants/save" method="POST" id="fizlico">
+            <form action="/admin/applicants/save" method="POST" enctype="multipart/form-data" id="fizlico">
                 {{hidden_field('id', 'value':applicant.id)}}
                 {{hidden_field('type', 'value':'fizlico')}}
                 <label for="entity-fio-z">
@@ -98,13 +147,39 @@
                     <div>E-mail</div>
                     {{text_field('email', 'value':applicant.email, "id":"entity-email", "data-name":"position-fio" )}}
                 </label>
-                <div class="file-attachment">
-                    <img src="images/zaglushka.png" alt="">
+                <div class="file-attachment tab3">
+                    <div class="file-wrapper">
+                        <div class="text-above">Прикрепить файлы</div>
+                        <input id="upload-files" type="file" multiple name="upload-files[]">
+                    </div>
+                    <div class="file-names"></div>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function(){
+                            jQuery('.tab3 #upload-files').change(function(){
+                                var cnt = jQuery('.tab3 #upload-files')[0].files.length;
+                                var i = 0;
+                                var html = '';
+                                for (i = 0; i < cnt; i++) {
+                                    html = html + '<p>' + jQuery('.tab3 #upload-files')[0].files[i]['name'] + '</p>';
+                                }
+                                jQuery('.tab3 .file-names').html(html);
+                            });
+                        });
+                    </script>
+                    <div class="attached-files">
+                        {% if attached_files|count > 0 %}
+                            {% for file in attached_files %}
+                                {{ file }}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                 </div>
                 <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'fizlico');return false;" class="save-tab-form">Сохранить изменения</button>
             </form>
         </div>
     </div>
+    {{hidden_field('delete-file-id', 'value':'')}}
+    {{hidden_field('delete-applicant-id', 'value':applicant.id)}}
     <div class="modal fade modal-confirm-change-applicant-type" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -115,6 +190,20 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
             <button type="button" applicant-type="" onclick="jQuery('form#' + jQuery(this).attr('applicant-type')).submit();" class="btn btn-primary">Да</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade confirm-deletion-file-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Удалить файл?</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="jQuery('#delete-file-id').val('');">Отмена</button>
+            <button type="button" onclick="delete_applicant_file()" class="btn btn-primary">Удалить</button>
           </div>
         </div>
       </div>

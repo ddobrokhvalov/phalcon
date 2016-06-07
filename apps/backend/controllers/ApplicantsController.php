@@ -6,6 +6,7 @@ use Phalcon\Paginator\Adapter\Model as Paginator;
 use \Phalcon\Paginator\Adapter\NativeArray as PaginatorArray;
 use Multiple\Backend\Models\Applicant;
 use Multiple\Backend\Models\Complaint;
+use Multiple\Backend\Models\Files;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Form\ApplicantForm;
 
@@ -81,8 +82,53 @@ class ApplicantsController  extends ControllerBase
                 'action' => 'index'
             ));
         }
+        $files_html = [];
+        if ($applicant->fid) {
+            $file_ids = unserialize($applicant->fid);
+            if (count($file_ids)) {
+                $file_model = new Files();
+                $files = Files::find(
+                    array(
+                        'id IN ({ids:array})',
+                        'bind' => array(
+                            'ids' => $file_ids
+                        )
+                    )
+                );
+                foreach ($files as $file) {
+                    $files_html[] = $file_model->getFilesHtml($file, $id);
+                }
+            }
+        }
         $this->view->applicant = $applicant;
+        $this->view->attached_files = $files_html;
         $this->setMenu();
+    }
+
+    public function deleteFileAction() {
+        $file_id = $this->request->getPost('file_id');
+        $applicant_id = $this->request->getPost('applicant_id');
+        if ($file_id && $applicant_id) {
+            $applicant = Applicant::findFirstById($applicant_id);
+            if ($applicant) {
+                $file = Files::findFirstById($file_id);
+                if ($file) {
+                    $file->delete();
+                    $applicant_files = unserialize($applicant->fid);
+                    if (count($applicant_files)) {
+                        unset($applicant_files[array_search($file_id, $applicant_files)]);
+                        $applicant->fid = serialize(array_values($applicant_files));
+                    } else {
+                        $applicant->fid = serialize(array());
+                    }
+                    $applicant->save();
+                    $this->flashSession->success('Файл удален');
+                }
+            }
+        }
+        $this->view->disable();
+        $data = "ok";
+        echo json_encode($data);
     }
 
     public function createAction(){
@@ -97,84 +143,120 @@ class ApplicantsController  extends ControllerBase
         if ($user_id === "0") {
             $user_id = $this->user->id;
         }
-        $applicant = new Applicant();
-        switch ($_POST['type']) {
-            case 'fizlico':
-                if (!isset($_POST['fio']) || !$_POST['fio']) {
-                    $this->flashSession->error('Не указаны ФИО заявителя');
+
+        $allow = TRUE;
+        // Check all files with needed rules.
+        if ($this->request->hasFiles() == true) {
+            $files_model = new Files();
+            if (!$files_model->checkAllFiles($this->request)) {
+                $allow = FALSE;
+            }
+        }
+        if ($allow) {
+            $baseLocation = 'files/applicant/';
+            $applicant = new Applicant();
+            switch ($_POST['type']) {
+                case 'fizlico':
+                    if (!isset($_POST['fio']) || !$_POST['fio']) {
+                        $this->flashSession->error('Не указаны ФИО заявителя');
+                        return $this->dispatcher->forward(array(
+                            'module' => 'backend',
+                            'controller' => 'applicants',
+                            'action' => 'index'
+                        ));
+                    }
+                    $applicant->user_id = $user_id;
+                    $applicant->type = 'fizlico';
+                    $applicant->name_full = '';
+                    $applicant->name_short = '';
+                    $applicant->inn = '';
+                    $applicant->kpp = '';
+                    $applicant->fid = '';
+                    $applicant->address = '';
+                    $applicant->position = '';
+                    $applicant->is_blocked = 1;
+                    $applicant->fio_applicant = $_POST['fio'];
+                    $applicant->fio_contact_person = $_POST['fio-kontakt-face'];
+                    $applicant->telefone = $_POST['phone'];
+                    $applicant->email = $_POST['email'];
+                    break;
+                case 'indlico':
+                    if (!isset($_POST['full-name']) || !$_POST['full-name']) {
+                        $this->flashSession->error('Полное наименование не может быть пустым');
+                        return $this->dispatcher->forward(array(
+                            'module' => 'backend',
+                            'controller' => 'applicants',
+                            'action' => 'add'
+                        ));
+                    }
+                    $applicant->user_id = $user_id;
+                    $applicant->type = 'ip';
+                    $applicant->name_full = $_POST['full-name'];
+                    $applicant->name_short = '';
+                    $applicant->inn = '';
+                    $applicant->kpp = '';
+                    $applicant->fid = '';
+                    $applicant->address = '';
+                    $applicant->position = '';
+                    $applicant->is_blocked = 1;
+                    $applicant->fio_applicant = '';
+                    $applicant->fio_contact_person = '';
+                    $applicant->telefone = '';
+                    $applicant->email = '';
+                    break;
+                case 'urlico';
+                    if (!isset($_POST['full-name']) || !$_POST['full-name']) {
+                        $this->flashSession->error('Полное наименование не может быть пустым');
+                        return $this->dispatcher->forward(array(
+                            'module' => 'backend',
+                            'controller' => 'applicants',
+                            'action' => 'add'
+                        ));
+                    }
+                    $applicant->user_id = $user_id;
+                    $applicant->type = 'urlico';
+                    $applicant->name_full = $_POST['full-name'];
+                    $applicant->name_short = $_POST['kratkoe-name'];
+                    $applicant->inn = $_POST['inn'];
+                    $applicant->kpp = $_POST['kpp'];
+                    $applicant->fid = '';
+                    $applicant->is_blocked = 1;
+                    $applicant->address = $_POST['address'];
+                    $applicant->position = $_POST['position-fio'];
+                    $applicant->fio_applicant = $_POST['fio'];
+                    $applicant->fio_contact_person = $_POST['fio-kontakt-face'];
+                    $applicant->telefone = $_POST['phone'];
+                    $applicant->email = $_POST['email'];
+                    break;
+                default:
+                    $this->flashSession->error('Не указан тип заявителя');
                     return $this->dispatcher->forward(array(
                         'module' => 'backend',
                         'controller' => 'applicants',
                         'action' => 'index'
                     ));
+            }
+            $applicant->save();
+            // Save attached files.
+            $saved_files = array();
+            if ($this->request->hasFiles() == true) {
+                foreach ($this->request->getUploadedFiles() as $file) {
+                    $applicant_file = new Files();
+                    $applicant_file->file_path = $file->getName();
+                    $applicant_file->file_size = round($file->getSize() / 1024, 2);
+                    $applicant_file->file_type = $file->getType();
+                    $applicant_file->save();
+                    $saved_files[] = $applicant_file->id;
+                    //Move the file into the application
+                    $file->moveTo($baseLocation . $file->getName());
                 }
-                $applicant->user_id = $user_id;
-                $applicant->type = 'fizlico';
-                $applicant->name_full = '';
-                $applicant->name_short = '';
-                $applicant->inn = '';
-                $applicant->kpp = '';
-                $applicant->address = '';
-                $applicant->position = '';
-                $applicant->fio_applicant = $_POST['fio'];
-                $applicant->fio_contact_person = $_POST['fio-kontakt-face'];
-                $applicant->telefone = $_POST['phone'];
-                $applicant->email = $_POST['email'];
-                break;
-            case 'indlico':
-                if (!isset($_POST['full-name']) || !$_POST['full-name']) {
-                    $this->flashSession->error('Полное наименование не может быть пустым');
-                    return $this->dispatcher->forward(array(
-                        'module' => 'backend',
-                        'controller' => 'applicants',
-                        'action' => 'add'
-                    ));
-                }
-                $applicant->user_id = $user_id;
-                $applicant->type = 'ip';
-                $applicant->name_full = $_POST['full-name'];
-                $applicant->name_short = '';
-                $applicant->inn = '';
-                $applicant->kpp = '';
-                $applicant->address = '';
-                $applicant->position = '';
-                $applicant->fio_applicant = '';
-                $applicant->fio_contact_person = '';
-                $applicant->telefone = '';
-                $applicant->email = '';
-                break;
-            case 'urlico';
-                if (!isset($_POST['full-name']) || !$_POST['full-name']) {
-                    $this->flashSession->error('Полное наименование не может быть пустым');
-                    return $this->dispatcher->forward(array(
-                        'module' => 'backend',
-                        'controller' => 'applicants',
-                        'action' => 'add'
-                    ));
-                }
-                $applicant->user_id = $user_id;
-                $applicant->type = 'urlico';
-                $applicant->name_full = $_POST['full-name'];
-                $applicant->name_short = $_POST['kratkoe-name'];
-                $applicant->inn = $_POST['inn'];
-                $applicant->kpp = $_POST['kpp'];
-                $applicant->address = $_POST['address'];
-                $applicant->position = $_POST['position-fio'];
-                $applicant->fio_applicant = $_POST['fio'];
-                $applicant->fio_contact_person = $_POST['fio-kontakt-face'];
-                $applicant->telefone = $_POST['phone'];
-                $applicant->email = $_POST['email'];
-                break;
-            default:
-                $this->flashSession->error('Не указан тип заявителя');
-                return $this->dispatcher->forward(array(
-                    'module' => 'backend',
-                    'controller' => 'applicants',
-                    'action' => 'index'
-                ));
+            }
+            $applicant->fid = serialize($saved_files);
+            $applicant->save();
+            $this->flashSession->success('Заявитель сохранен');
+        } else {
+            $this->flashSession->error('Выбран недопустимый тип файлов');
         }
-        $applicant->save();
-        $this->flashSession->success('Заявитель сохранен');
         return $this->dispatcher->forward(array(
             'module' => 'backend',
             'controller' => 'applicants',
@@ -201,49 +283,81 @@ class ApplicantsController  extends ControllerBase
                 'action' => 'index'
             ));
         }
-        $form = new ApplicantForm(null, array('edit' => true, 'type' => $this->request->getPost('type')));
-        $this->view->form = $form;
-        $all_fields = array(
-            'name_full' => '',
-            'name_short' => '',
-            'inn' => '',
-            'kpp' => '',
-            'address' => '',
-            'position' => '',
-            'fio_applicant' => '',
-            'fio_contact_person' => '',
-            'telefone' => '',
-            'email' => '',
-        );
-        $data = array_merge($all_fields, $this->request->getPost());
-        if (!$form->isValid($data, $applicant)) {
-            foreach ($form->getMessages() as $message) {
-                $this->flashSession->error($message);
+        $allow = TRUE;
+        // Check all files with needed rules.
+        if ($this->request->hasFiles() == true) {
+            $files_model = new Files();
+            if (!$files_model->checkAllFiles($this->request)) {
+                $allow = FALSE;
             }
-            return $this->dispatcher->forward(array(
-                'module' => 'backend',
-                'controller' => 'applicants',
-                'action' => 'edit',
-                'params' => ['id' => $id]
-            ));
-            return $this->forward('admin/applicants/edit/' . $id);
         }
-        foreach ($data as $field => $value) {
-            $applicant->$field = $value;
-        }
-        if ($applicant->save() == false) {
-            foreach ($applicant->getMessages() as $message) {
-                $this->flashSession->error($message);
+        if ($allow) {
+            $baseLocation = 'files/applicant/';
+            $form = new ApplicantForm(null, array('edit' => true, 'type' => $this->request->getPost('type')));
+            $this->view->form = $form;
+            $all_fields = array(
+                'name_full' => '',
+                'name_short' => '',
+                'inn' => '',
+                'kpp' => '',
+                'address' => '',
+                'position' => '',
+                'fio_applicant' => '',
+                'fio_contact_person' => '',
+                'telefone' => '',
+                'email' => '',
+            );
+            $data = array_merge($all_fields, $this->request->getPost());
+            if (!$form->isValid($data, $applicant)) {
+                foreach ($form->getMessages() as $message) {
+                    $this->flashSession->error($message);
+                }
+                return $this->dispatcher->forward(array(
+                    'module' => 'backend',
+                    'controller' => 'applicants',
+                    'action' => 'edit',
+                    'params' => ['id' => $id]
+                ));
+                return $this->forward('admin/applicants/edit/' . $id);
             }
-            return $this->dispatcher->forward(array(
-                'module' => 'backend',
-                'controller' => 'applicants',
-                'action' => 'edit',
-                'params' => ['id' => $id]
-            ));
+            foreach ($data as $field => $value) {
+                $applicant->$field = $value;
+            }
+            if ($applicant->save() == false) {
+                foreach ($applicant->getMessages() as $message) {
+                    $this->flashSession->error($message);
+                }
+                return $this->dispatcher->forward(array(
+                    'module' => 'backend',
+                    'controller' => 'applicants',
+                    'action' => 'edit',
+                    'params' => ['id' => $id]
+                ));
+            }
+            // Save attached files.
+            $saved_files = array();
+            if ($this->request->hasFiles() == true) {
+                foreach ($this->request->getUploadedFiles() as $file) {
+                    $applicant_file = new Files();
+                    $applicant_file->file_path = $file->getName();
+                    $applicant_file->file_size = round($file->getSize() / 1024, 2);
+                    $applicant_file->file_type = $file->getType();
+                    $applicant_file->save();
+                    $saved_files[] = $applicant_file->id;
+                    //Move the file into the application
+                    $file->moveTo($baseLocation . $file->getName());
+                }
+            }
+            $already_attached = unserialize($applicant->fid);
+            if (is_array($already_attached)) {
+                $applicant->fid = serialize(array_merge($already_attached, $saved_files));
+            } else {
+                $applicant->fid = serialize(array());
+            }
+            $applicant->save();
+            $this->flashSession->success('Заявитель сохранен');
+            $form->clear();
         }
-        $this->flashSession->success('Заявитель сохранен');
-        $form->clear();
         return $this->dispatcher->forward(array(
             'module' => 'backend',
             'controller' => 'applicants',

@@ -17,7 +17,7 @@ class Applicant extends Model
     public $fio_contact_person;
     public $telefone;
     public $email;
-
+    public $fid;
 
     public function initialize()
     {
@@ -43,7 +43,7 @@ class Applicant extends Model
         return $result;
     }
 
-    public function findByUserIdWithAdditionalInfo($user_id){//DebugBreak();
+    public function findByUserIdWithAdditionalInfo($user_id){
         $db = $this->getDi()->getShared('db');
         $sql = "SELECT ap.*, count(c.id) as cnt FROM complaint as c
          INNER JOIN applicant ap ON(c.applicant_id = ap.id )         
