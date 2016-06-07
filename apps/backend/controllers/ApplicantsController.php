@@ -148,7 +148,7 @@ class ApplicantsController  extends ControllerBase
         // Check all files with needed rules.
         if ($this->request->hasFiles() == true) {
             $files_model = new Files();
-            if (!$files_model->checkAllFiles($this->request, $this)) {
+            if (!$files_model->checkAllFiles($this->request)) {
                 $allow = FALSE;
             }
         }
