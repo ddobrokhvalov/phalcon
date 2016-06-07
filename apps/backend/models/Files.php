@@ -35,6 +35,7 @@ class Files extends Model
             'image/jpeg',
             'image/png',
             'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             'application/pdf',
             'application/octet-stream',
             'application/x-rar-compressed',
@@ -45,13 +46,14 @@ class Files extends Model
 
     public function getFileClass($file_type) {
         $extensions = array(
-            'image/jpeg'                    => 'image-file',
-            'image/png'                     => 'image-file',
-            'application/msword'            => 'msword-file',
-            'application/pdf'               => 'pdf-file',
-            'application/octet-stream'      => 'msword-file',
-            'application/x-rar-compressed'  => 'archive-file',
-            'application/zip'               => 'archive-file',
+            'image/jpeg'                                                                => 'image-file',
+            'image/png'                                                                 => 'image-file',
+            'application/msword'                                                        => 'msword-file',
+            'application/pdf'                                                           => 'pdf-file',
+            'application/octet-stream'                                                  => 'msword-file',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document'   => 'msword-file',
+            'application/x-rar-compressed'                                              => 'archive-file',
+            'application/zip'                                                           => 'archive-file',
         );
         return $extensions["{$file_type}"];
     }
