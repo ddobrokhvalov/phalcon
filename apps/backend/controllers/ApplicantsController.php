@@ -252,9 +252,9 @@ class ApplicantsController  extends ControllerBase
                 }
             }
             $applicant->fid = serialize($saved_files);
-            $this->flashSession->error($applicant->fid);
-            //$applicant->save();
-            if ($applicant->save() == false) {
+            //$this->flashSession->error($applicant->fid);
+            $applicant->save();
+            /*if ($applicant->save() == false) {
                 foreach ($applicant->getMessages() as $message) {
                     $this->flashSession->error($message);
                 }
@@ -264,7 +264,7 @@ class ApplicantsController  extends ControllerBase
                     'action' => 'edit',
                     'params' => ['id' => $id]
                 ));
-            }
+            }*/
             $this->flashSession->success('Заявитель сохранен');
         } else {
             $this->flashSession->error('Выбран недопустимый тип файлов');
