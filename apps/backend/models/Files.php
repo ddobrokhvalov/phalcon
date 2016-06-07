@@ -20,17 +20,17 @@ class Files extends Model
         return "files";
     }
 
-    public function checkAllFiles($request) {
+    public function checkAllFiles($request, $obb) {
         foreach ($request->getUploadedFiles() as $file) {
-            if (!$this->isAllowedExtension($file->getType())) {
+            if (!$this->isAllowedExtension($file->getType(), $obb)) {
                 return FALSE;
             }
         }
         return TRUE;
     }
     
-    public function isAllowedExtension($ext) {
-        $this->flashSession->error($ext);
+    public function isAllowedExtension($ext, $obb) {
+        $obb->flashSession->error($ext);
         $extensions = array(
             'image/jpeg',
             'image/png',
