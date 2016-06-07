@@ -252,6 +252,7 @@ class ApplicantsController  extends ControllerBase
                 }
             }
             $applicant->fid = serialize($saved_files);
+            $this->flashSession->error($applicant->fid);
             //$applicant->save();
             if ($applicant->save() == false) {
                 foreach ($applicant->getMessages() as $message) {
