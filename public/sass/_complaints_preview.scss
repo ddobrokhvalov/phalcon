@@ -154,6 +154,9 @@
         font-weight: 100;
         margin: 0 0 16px 1px;
     }
+    .complaints-content {
+        background-color: #f7f8fa;
+    }
     .complaints-content h2 {
         padding: 32px 0 28px;
         border-bottom: 1px solid #e0e3ea;
@@ -192,6 +195,7 @@
     }
     .complaints-main {
         padding: 20px 70px 20px 24px;
+        background-color: $white;
     }
     .bread-crumbs-holder a:hover {
         text-decoration: none;
@@ -199,7 +203,11 @@
     .notification-number-box .rightly-wrongly {
         box-sizing: initial;
     }
+    .notification-number-box {
+        background-color: #f7f8fa;
+    }
     .edit-notification-box {
+        background-color: #f7f8fa;
         a {
             font-size: 16px;
         }
@@ -365,12 +373,22 @@
 	}
 }
 .clarifying-issue {
-	padding: 70px 0 70px 110px;
+	padding: 45px 0 45px 35px;
+    margin-left: 80px;
+    background-color: #f7f8fa;
 	p {
 		margin-bottom: 14px;
 		font-size: 16px;
 		line-height: 28px;
+        float: left;
 	}
+    .answer-flag {
+        float: right;
+        width: 31px;
+        height: 108px;
+        margin-right: -31px;
+        background: url(../images/answer-arrow.png) center bottom no-repeat;
+    }
 }
 
 /* Scroll styling */
@@ -418,6 +436,7 @@
         padding-right: 16px;
     }
     .lt-content-main {
+        overflow: hidden;
         li:nth-child(7) {
             text-align: center;
         }

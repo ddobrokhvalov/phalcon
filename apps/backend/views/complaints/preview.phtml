@@ -82,6 +82,8 @@
                             <p>
                                 {{answer.text}}
                             </p>
+                            <div class="answer-flag"></div>
+                            <div style="clear: both;"></div>
                         </div>
                         <div class="legal-advisor">
                             {% set answer_owner = complaint.getAnswerOwner(answer.admin_id) %}
