@@ -81,10 +81,29 @@ class Permission extends Model
             if(!$edit)
                 $this->savePA($id,$this->checkPA($id,$perm['id']),$perm['id'],'edit',0);
         }
+    }
 
+    public function actionIsAllowed($admin_id, $controller, $action)
+    {
+        if($controller == 'dashboard') {
+            return TRUE;
+        }
+        $pa = $this->getAdminPermission($admin_id);
 
-
-
+        foreach ($pa as $v) {
+            if ($v['name'] == $controller) {
+                if ($action == 'index' || $action == 'search') {
+                    if ($v['pa']['read'] || $v['pa']['edit']) {
+                        return TRUE;
+                    }
+                } else {
+                    if ($v['pa']['edit']) {
+                        return TRUE;
+                    }
+                }
+            }
+        }
+        return FALSE;
     }
 
 }

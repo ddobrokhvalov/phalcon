@@ -8,6 +8,7 @@ use Multiple\Backend\Models\User;
 use Multiple\Backend\Models\Messages;
 use Multiple\Backend\Models\Applicant;
 use Multiple\Backend\Models\Complaint;
+use Multiple\Backend\Models\Permission;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Validator\UserValidator;
 use Phalcon\Validation\Validator\PresenceOf;
@@ -17,25 +18,31 @@ class UserController extends ControllerBase
 
     public function indexAction()
     {
-        $next_items = $this->request->getPost('next-portions-items');
-        if (!isset($next_items)) {
-            $next_items = 0;
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'user', 'index')) {
+           $this->view->pick("access/denied");
+           $this->setMenu();
+        } else {
+            $next_items = $this->request->getPost('next-portions-items');
+            if (!isset($next_items)) {
+                $next_items = 0;
+            }
+            $this->persistent->searchParams = null;
+            $item_per_page = 20 + $next_items;
+            $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
+            $users = User::find();
+            $paginator = new Paginator(array(
+                "data" => $users,
+                "limit" => $item_per_page,
+                "page" => $numberPage
+            ));
+            $pages = $paginator->getPaginate();
+            $this->view->page = $pages;
+            $this->view->item_per_page = $item_per_page;
+            //todo: цветовую дифференциацию, галочки
+            $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
+            $this->setMenu();
         }
-        $this->persistent->searchParams = null;
-        $item_per_page = 20 + $next_items;
-        $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
-        $users = User::find();
-        $paginator = new Paginator(array(
-            "data" => $users,
-            "limit" => $item_per_page,
-            "page" => $numberPage
-        ));
-        $pages = $paginator->getPaginate();
-        $this->view->page = $pages;
-        $this->view->item_per_page = $item_per_page;
-        //todo: цветовую дифференциацию, галочки
-        $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
-        $this->setMenu();
     }
 
     public function afterLoginAction() {
@@ -45,34 +52,39 @@ class UserController extends ControllerBase
 
     public function searchAction()
     {
-        $numberPage = 1;
-        if ($this->request->isPost()) {
-            $query = Criteria::fromInput($this->di, "Multiple\Backend\Models\User", $this->request->getPost());
-            $this->persistent->searchParams = $query->getParams();
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'user', 'search')) {
+           $this->view->pick("access/denied");
+           $this->setMenu();
         } else {
-            $numberPage = $this->request->getQuery("page", "int");
+            $numberPage = 1;
+            if ($this->request->isPost()) {
+                $query = Criteria::fromInput($this->di, "Multiple\Backend\Models\User", $this->request->getPost());
+                $this->persistent->searchParams = $query->getParams();
+            } else {
+                $numberPage = $this->request->getQuery("page", "int");
+            }
+
+            $parameters = array();
+            if ($this->persistent->searchParams) {
+                $parameters = $this->persistent->searchParams;
+            }
+
+            $users = User::find($parameters);
+            if (count($users) == 0) {
+                $this->flash->notice("The search did not find any user");
+                return $this->forward("user/index");
+            }
+
+            $paginator = new Paginator(array(
+                "data" => $users,
+                "limit" => 10,
+                "page" => $numberPage
+            ));
+
+            $this->view->page = $paginator->getPaginate();
+            $this->setMenu();
         }
-
-        $parameters = array();
-        if ($this->persistent->searchParams) {
-            $parameters = $this->persistent->searchParams;
-        }
-
-        $users = User::find($parameters);
-        if (count($users) == 0) {
-            $this->flash->notice("The search did not find any user");
-            return $this->forward("user/index");
-        }
-
-        $paginator = new Paginator(array(
-            "data" => $users,
-            "limit" => 10,
-            "page" => $numberPage
-        ));
-
-        $this->view->page = $paginator->getPaginate();
-        $this->setMenu();
-
     }
 
     public function saveAction()
@@ -170,19 +182,25 @@ class UserController extends ControllerBase
 
     public function editAction($id)
     {
-        $user = User::findFirstById($id);
-        if (!$user) {
-            $this->flashSession->error("Пользователь не найден");
-            return $this->forward("user/index");
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
+           $this->view->pick("access/denied");
+           $this->setMenu();
+        } else {
+            $user = User::findFirstById($id);
+            if (!$user) {
+                $this->flashSession->error("Пользователь не найден");
+                return $this->forward("user/index");
+            }
+            //$appl = new Applicant();
+            //$this->view->applicants = $appl->findByUserId($id);
+            $complaints = new Complaint();
+            $applicants = new Applicant();
+            $this->view->complaints = $complaints->findUserComplaints($id, false);
+            $this->view->applicants = $applicants->findByUserIdWithAdditionalInfo($id);
+            $this->view->edituser = $user;
+            $this->setMenu();
         }
-        //$appl = new Applicant();
-        //$this->view->applicants = $appl->findByUserId($id);
-        $complaints = new Complaint();
-        $applicants = new Applicant();
-        $this->view->complaints = $complaints->findUserComplaints($id, false);
-        $this->view->applicants = $applicants->findByUserIdWithAdditionalInfo($id);
-        $this->view->edituser = $user;
-        $this->setMenu();
     }
     
     public function delAction($id)
@@ -203,49 +221,60 @@ class UserController extends ControllerBase
     }    
 
     public function deleteUsersAction(){
-        $user_ids = $this->request->getPost("ids");
-        
-        if(count($user_ids)){
-            $users = User::find(
-                array(
-                    'id IN ({ids:array})',
-                    'bind' => array(
-                        'ids' => $user_ids
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
+           $data = "access_denied";
+        } else {
+            $user_ids = $this->request->getPost("ids");
+            
+            if(count($user_ids)){
+                $users = User::find(
+                    array(
+                        'id IN ({ids:array})',
+                        'bind' => array(
+                            'ids' => $user_ids
+                        )
                     )
-                )
-            )->delete();
+                )->delete();
+            }
+            
+            $this->flashSession->success('Пользователи удалены');
+            $data = "ok";
         }
         $this->view->disable();
-        $this->flashSession->success('Пользователи удалены');
-        $data = "ok";
         echo json_encode($data);
     }
 
     public function blockUnblockAction(){
-        $users_ids = $this->request->getPost("ids");
-        $block = $this->request->getPost("block");
-        
-        if(count($users_ids)){
-            $users = User::find(
-                array(
-                    'id IN ({ids:array})',
-                    'bind' => array(
-                        'ids' => $users_ids
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
+           $data = "access_denied";
+        } else {
+            $users_ids = $this->request->getPost("ids");
+            $block = $this->request->getPost("block");
+            
+            if(count($users_ids)){
+                $users = User::find(
+                    array(
+                        'id IN ({ids:array})',
+                        'bind' => array(
+                            'ids' => $users_ids
+                        )
                     )
-                )
-            );
-            foreach ($users as $user) {
-                if ($block) {
-                    $user->status = 0;
-                } else {
-                    $user->status = 1;
+                );
+                foreach ($users as $user) {
+                    if ($block) {
+                        $user->status = 0;
+                    } else {
+                        $user->status = 1;
+                    }
+                    $user->update();
                 }
-                $user->update();
             }
+            $this->flashSession->success('Изменения сохранены');
+            $data = "ok";
         }
         $this->view->disable();
-        $this->flashSession->success('Изменения сохранены');
-        $data = "ok";
         echo json_encode($data);
     }
 

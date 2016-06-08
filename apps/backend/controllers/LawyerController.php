@@ -9,7 +9,7 @@ use Multiple\Backend\Models\Question as Question;
 class LawyerController extends ControllerBase
 {
 
-    public function indexAction(){//DebugBreak();
+    public function indexAction(){
         $next_items = $this->request->getPost('next-portions-items');
         if (!isset($next_items)) {
             $next_items = 0;

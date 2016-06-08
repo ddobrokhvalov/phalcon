@@ -18,163 +18,197 @@ class AdminsController extends ControllerBase
 
     public function indexAction()
     {
-        $next_items = $this->request->getPost('next-portions-items');
-        if (!isset($next_items)) {
-            $next_items = 0;
-        }
-        $item_per_page = 20 + $next_items;
-        $this->persistent->searchParams = null;
-        $this->view->form = new AdminForm;
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'user', 'index')) {
+           $this->view->pick("access/denied");
+           $this->setMenu();
+        } else {
+            $next_items = $this->request->getPost('next-portions-items');
+            if (!isset($next_items)) {
+                $next_items = 0;
+            }
+            $item_per_page = 20 + $next_items;
+            $this->persistent->searchParams = null;
+            $this->view->form = new AdminForm;
 
-        $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
-        $users = Admin::find();
-        $paginator = new Paginator(array(
-            "data" => $users,
-            "limit" => $item_per_page,
-            "page" => $numberPage
-        ));
-        $pages = $paginator->getPaginate();
-        $this->view->page = $pages;
-        $this->view->item_per_page = $item_per_page;
-        //todo: цветовую дифференциацию, галочки
-        $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
-        $this->persistent->searchParams = null;
-        $this->view->form               = new AdminForm;
-        $this->setMenu();
+            $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
+            $users = Admin::find();
+            $paginator = new Paginator(array(
+                "data" => $users,
+                "limit" => $item_per_page,
+                "page" => $numberPage
+            ));
+            $pages = $paginator->getPaginate();
+            $this->view->page = $pages;
+            $this->view->item_per_page = $item_per_page;
+            //todo: цветовую дифференциацию, галочки
+            $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
+            $this->persistent->searchParams = null;
+            $this->view->form               = new AdminForm;
+            $this->setMenu();
+        }
     }
     public function searchAction(){
-        $numberPage = 1;
-        if ($this->request->isPost()) {
-            $query = Criteria::fromInput($this->di, "Multiple\Backend\Models\Admin", $this->request->getPost());
-            $this->persistent->searchParams = $query->getParams();
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'user', 'index')) {
+           $this->view->pick("access/denied");
+           $this->setMenu();
         } else {
-            $numberPage = $this->request->getQuery("page", "int");//todo: init if null
+            $numberPage = 1;
+            if ($this->request->isPost()) {
+                $query = Criteria::fromInput($this->di, "Multiple\Backend\Models\Admin", $this->request->getPost());
+                $this->persistent->searchParams = $query->getParams();
+            } else {
+                $numberPage = $this->request->getQuery("page", "int");//todo: init if null
+            }
+
+            $parameters = array();
+            if ($this->persistent->searchParams) {
+                $parameters = $this->persistent->searchParams;
+            }
+
+            $admins = Admin::find($parameters);
+            if (count($admins) == 0) {
+                $this->flash->notice("The search did not find any admins");
+                return $this->forward("admins/index");
+            }
+
+            $paginator = new Paginator(array(
+                "data"  => $admins,
+                "limit" => 10,
+                "page"  => $numberPage
+            ));
+
+            $this->view->page = $paginator->getPaginate();
+            $this->setMenu();
         }
-
-        $parameters = array();
-        if ($this->persistent->searchParams) {
-            $parameters = $this->persistent->searchParams;
-        }
-
-        $admins = Admin::find($parameters);
-        if (count($admins) == 0) {
-            $this->flash->notice("The search did not find any admins");
-            return $this->forward("admins/index");
-        }
-
-        $paginator = new Paginator(array(
-            "data"  => $admins,
-            "limit" => 10,
-            "page"  => $numberPage
-        ));
-
-        $this->view->page = $paginator->getPaginate();
-        $this->setMenu();
-
     }
     public function saveAction()
     {
-        $delete_admin = $this->request->getPost('delete_admin');
-        if (isset($delete_admin) && $delete_admin) {
-            Admin::findFirstById($delete_admin)->delete();
-            $this->flashSession->success("Администратор успешно удален");
-            return $this->forward("admins/index");
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
+           $this->view->pick("access/denied");
+           $this->setMenu();
+        } else {
+            $delete_admin = $this->request->getPost('delete_admin');
+            if (isset($delete_admin) && $delete_admin) {
+                Admin::findFirstById($delete_admin)->delete();
+                $this->flashSession->success("Администратор успешно удален");
+                return $this->forward("admins/index");
+            }
+            if (!$this->request->isPost())
+                return $this->forward("admins/index");
+
+            $id = $this->request->getPost("id", "int");
+            $admin = Admin::findFirstById($id);
+            if (!$admin)
+                return $this->forward("admins/index");
+            $post = $this->request->getPost();
+            if (strlen($post['password']) > 0)
+                $data['password'] = sha1($post['password']);
+            if ($this->request->hasFiles() == true)
+                $admin->saveAvatar($this->request->getUploadedFiles());
+            $data = [
+                'email'=> $post['email'],
+                'avatar' => $admin->avatar
+            ];
+            foreach(['name', 'surname', 'patronymic', 'phone'] as $key)
+                $data[$key] = $post[$key];
+            $validation = new AdminValidator();
+            $messages = $validation->validate($data);
+            if (count($messages)) {
+                foreach ($messages as $message)
+                    $this->flashSession->error($message);
+            } elseif ($admin->save($data, array_keys($data)) == false) {
+                foreach ($admin->getMessages() as $message)
+                    $this->flashSession->error($message);
+            } else
+                $this->flashSession->success("Изменения сохранены");
+            return $this->dispatcher->forward(array(
+                'module' => 'backend',
+                'controller' => 'admins',
+                'action' => 'edit',
+                'params' => ['id' => $id]
+            ));
         }
-        if (!$this->request->isPost())
-            return $this->forward("admins/index");
-
-        $id = $this->request->getPost("id", "int");
-        $admin = Admin::findFirstById($id);
-        if (!$admin)
-            return $this->forward("admins/index");
-        $post = $this->request->getPost();
-        if (strlen($post['password']) > 0)
-            $data['password'] = sha1($post['password']);
-        if ($this->request->hasFiles() == true)
-            $admin->saveAvatar($this->request->getUploadedFiles());
-        $data = [
-            'email'=> $post['email'],
-            'avatar' => $admin->avatar
-        ];
-        foreach(['name', 'surname', 'patronymic', 'phone'] as $key)
-            $data[$key] = $post[$key];
-        $validation = new AdminValidator();
-        $messages = $validation->validate($data);
-        if (count($messages)) {
-            foreach ($messages as $message)
-                $this->flashSession->error($message);
-        } elseif ($admin->save($data, array_keys($data)) == false) {
-            foreach ($admin->getMessages() as $message)
-                $this->flashSession->error($message);
-        } else
-            $this->flashSession->success("Изменения сохранены");
-        return $this->dispatcher->forward(array(
-            'module' => 'backend',
-            'controller' => 'admins',
-            'action' => 'edit',
-            'params' => ['id' => $id]
-        ));
-
     }
 
     public function addAction()
     {
-        $this->setMenu();
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
+           $this->view->pick("access/denied");
+           $this->setMenu();
+        } else {
+            $this->setMenu();
+        }
     }
     public function createAction(){
-        if (!$this->request->isPost())
-            return $this->forward("admins/index");
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
+           $this->view->pick("access/denied");
+           $this->setMenu();
+        } else {
+            if (!$this->request->isPost())
+                return $this->forward("admins/index");
 
-        $admin = new Admin();
-        $post = $this->request->getPost();
-        $data['email'] = $post['email'];
-        foreach(['name', 'surname', 'patronymic', 'phone'] as $key)
-                $data[$key] = $post[$key];
-        if ($this->request->hasFiles() == true)
-            if($admin->saveAvatar($this->request->getUploadedFiles()))
-                $data['avatar'] = $admin->avatar;
+            $admin = new Admin();
+            $post = $this->request->getPost();
+            $data['email'] = $post['email'];
+            foreach(['name', 'surname', 'patronymic', 'phone'] as $key)
+                    $data[$key] = $post[$key];
+            if ($this->request->hasFiles() == true)
+                if($admin->saveAvatar($this->request->getUploadedFiles()))
+                    $data['avatar'] = $admin->avatar;
 
-        $validation = new AdminValidator();
-        $validation->add('password', new PresenceOf((array('message' => 'The password is required'))));
-        $messages = $validation->validate($data);
-        if (count($messages)) {
-            foreach ($messages as $message)
-                $this->flashSession->error($message);
-        }
-        if (!count($messages) ) {
-            $data['password'] = sha1($post['password']);
-            if($admin->save($data, array_keys($data)) == false)
+            $validation = new AdminValidator();
+            $validation->add('password', new PresenceOf((array('message' => 'The password is required'))));
+            $messages = $validation->validate($data);
+            if (count($messages)) {
+                foreach ($messages as $message)
+                    $this->flashSession->error($message);
+            }
+            if (!count($messages) ) {
+                $data['password'] = sha1($post['password']);
+                if($admin->save($data, array_keys($data)) == false)
+                    foreach ($admin->getMessages() as $message)
+                        $this->flashSession->error($message);
+            } else
+                $this->flashSession->success("Изменения сохранены");
+            $admin->password = sha1($data['password']);        
+            if ($admin->save($data, array_keys($data)) == false)
                 foreach ($admin->getMessages() as $message)
                     $this->flashSession->error($message);
-        } else
-            $this->flashSession->success("Изменения сохранены");
-        $admin->password = sha1($data['password']);        
-        if ($admin->save($data, array_keys($data)) == false)
-            foreach ($admin->getMessages() as $message)
-                $this->flashSession->error($message);
-        if(count($messages))
-            return $this->dispatcher->forward(array(
-                'module' => 'backend',
-                'controller' => 'admins',
-                'action' => 'add',
-            ));
-        else
-            return $this->dispatcher->forward(array(
-                'module' => 'backend',
-                'controller' => 'admins',
-                'action' => 'index',
-            ));
+            if(count($messages))
+                return $this->dispatcher->forward(array(
+                    'module' => 'backend',
+                    'controller' => 'admins',
+                    'action' => 'add',
+                ));
+            else
+                return $this->dispatcher->forward(array(
+                    'module' => 'backend',
+                    'controller' => 'admins',
+                    'action' => 'index',
+                ));
+        }
     }
     public function editAction($id){
-        $admin = Admin::findFirstById($id);
-        if (!$admin) {
-            $this->flashSession->error("Администратор не найден");
-            return $this->forward("admins/index");
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
+           $this->view->pick("access/denied");
+           $this->setMenu();
+        } else {
+            $admin = Admin::findFirstById($id);
+            if (!$admin) {
+                $this->flashSession->error("Администратор не найден");
+                return $this->forward("admins/index");
+            }
+            $this->view->admin = $admin;
+            $permission = new Permission();
+            $this->view->permisions = $permission->getAdminPermissionAsKeyArray($admin->id);
+            $this->setMenu();
         }
-        $this->view->admin = $admin;
-        $permission = new Permission();
-        $this->view->permisions = $permission->getAdminPermissionAsKeyArray($admin->id);
-        $this->setMenu();
     }
     
     public function delAction($id){
@@ -217,38 +251,43 @@ class AdminsController extends ControllerBase
 
     public function profilesaveAction(){
         $result = array('success'=>true, 'errors'=>array());
-        $messages = [];
-        $admin = Admin::findFirstById($this->user->id);
-        $post = $this->request->getPost();
-        if (strlen($post['password']) > 0 || strlen($post['opassword']) > 0 || strlen($post['rpassword']) > 0) {
-            if(!strlen($post['opassword']))
-                $messages[] = 'Введите старый пароль';
-            elseif(sha1($post['opassword'])==$admin->password)
-                $messages[] = 'Cтарый пароль не верен';
-            elseif(!strlen($post['password']))
-                $messages[] = 'Введите новый пароль';
-            elseif($post['password']!==$post['rpassword'])
-                $messages[] = 'Пароли не совпадают';
-            else
-                $data['password'] = sha1($post['password']);
-        }
-        if (!count($messages)) {
-            if ($this->request->hasFiles() == true)
-                $admin->saveAvatar($this->request->getUploadedFiles());
-            $data = [
-                'email' => $post['email'],
-                'avatar' => $admin->avatar,
-                'name' =>$post['name'],
-                'surname' =>$post['surname'],
-                'patronymic' =>$post['patronymic'],
-            ];
-            $validation = new AdminValidator();
-            $messages = $validation->validate($data);
-            if (count($messages))
-                $result = array('success' => false, 'errors' => $messages);
-            elseif ($admin->save($data, array_keys($data)) == false)
-                $result = array('success' => false, 'errors' => $admin->getMessages());
-        } else $result = array('success' => false, 'errors' => $messages);
+        /*$perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
+           $result = "access_denied";
+        } else {*/
+            $messages = [];
+            $admin = Admin::findFirstById($this->user->id);
+            $post = $this->request->getPost();
+            if (strlen($post['password']) > 0 || strlen($post['opassword']) > 0 || strlen($post['rpassword']) > 0) {
+                if(!strlen($post['opassword']))
+                    $messages[] = 'Введите старый пароль';
+                elseif(sha1($post['opassword'])==$admin->password)
+                    $messages[] = 'Cтарый пароль не верен';
+                elseif(!strlen($post['password']))
+                    $messages[] = 'Введите новый пароль';
+                elseif($post['password']!==$post['rpassword'])
+                    $messages[] = 'Пароли не совпадают';
+                else
+                    $data['password'] = sha1($post['password']);
+            }
+            if (!count($messages)) {
+                if ($this->request->hasFiles() == true)
+                    $admin->saveAvatar($this->request->getUploadedFiles());
+                $data = [
+                    'email' => $post['email'],
+                    'avatar' => $admin->avatar,
+                    'name' =>$post['name'],
+                    'surname' =>$post['surname'],
+                    'patronymic' =>$post['patronymic'],
+                ];
+                $validation = new AdminValidator();
+                $messages = $validation->validate($data);
+                if (count($messages))
+                    $result = array('success' => false, 'errors' => $messages);
+                elseif ($admin->save($data, array_keys($data)) == false)
+                    $result = array('success' => false, 'errors' => $admin->getMessages());
+            } else $result = array('success' => false, 'errors' => $messages);
+        //}
         echo json_encode($result);
         exit;
     }
@@ -306,30 +345,35 @@ class AdminsController extends ControllerBase
     }
     
     public function blockUnblockAction(){
-        $users_ids = $this->request->getPost("ids");
-        $block = $this->request->getPost("block");
-        
-        if(count($users_ids)){
-            $users = Admin::find(
-                array(
-                    'id IN ({ids:array})',
-                    'bind' => array(
-                        'ids' => $users_ids
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'edit')) {
+           $data = "access_denied";
+        } else {
+            $users_ids = $this->request->getPost("ids");
+            $block = $this->request->getPost("block");
+            
+            if(count($users_ids)){
+                $users = Admin::find(
+                    array(
+                        'id IN ({ids:array})',
+                        'bind' => array(
+                            'ids' => $users_ids
+                        )
                     )
-                )
-            );
-            foreach ($users as $user) {
-                if ($block) {
-                    $user->admin_status = 0;
-                } else {
-                    $user->admin_status = 1;
+                );
+                foreach ($users as $user) {
+                    if ($block) {
+                        $user->admin_status = 0;
+                    } else {
+                        $user->admin_status = 1;
+                    }
+                    $user->update();
                 }
-                $user->update();
+                $this->flashSession->success('Изменения сохранены');
+                $data = "ok";
             }
         }
         $this->view->disable();
-        $this->flashSession->success('Изменения сохранены');
-        $data = "ok";
         echo json_encode($data);
     }
 

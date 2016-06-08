@@ -413,6 +413,8 @@ function delete_arguments() {
             success: function(data){
                 if (data == 'ok') {
                    window.location.reload(true);
+                } else if(data == 'access_denied') {
+                    window.location.href = '/admin/access/denied';
                 }
             }
         });
@@ -448,6 +450,8 @@ function delete_categories() {
                 $('.confirm-modal-category-lg').modal('hide');
                 if (data == 'ok') {
                    window.location.reload(true);
+                } else if(data == 'access_denied') {
+                    window.location.href = '/admin/access/denied';
                 } else {
                     $('.modal-cant-delete-category').modal('show');
                 }
@@ -464,8 +468,12 @@ function add_category(name){
             data: { name: name },
             dataType: 'json',
             success: function(data){
-                $('.modal-add-category-lg').modal('hide');
-                window.location.reload(true);
+                if(data == 'access_denied') {
+                    window.location.href = '/admin/access/denied';
+                } else {
+                    $('.modal-add-category-lg').modal('hide');
+                    window.location.reload(true);
+                }
             }
         });
     }
@@ -488,6 +496,8 @@ function show_hide_arguments(hide) {
             success: function(data){
                 if (data == 'ok') {
                    window.location.reload(true);
+                } else if(data == 'access_denied') {
+                    window.location.href = '/admin/access/denied';
                 }
             }
         });
@@ -628,6 +638,8 @@ function delete_complaint(complaint_id) {
             success: function(data){
                 if (data == 'ok') {
                    window.location.href = "/admin/complaints/index";
+                } else if(data == 'access_denied') {
+                    window.location.href = '/admin/access/denied';
                 } else {
                     window.location.reload(true);
                 }
@@ -713,6 +725,8 @@ function delete_users(){
                 $('.confirm-deletion-user-lg').modal('hide');
                 if (data == 'ok') {
                    window.location.reload(true);
+                } else if(data == 'access_denied') {
+                    window.location.href = '/admin/access/denied';
                 }
             }
         });
@@ -736,6 +750,8 @@ function block_unblock_users(block) {
             success: function(data){
                 if (data == 'ok') {
                    window.location.reload(true);
+                } else if(data == 'access_denied') {
+                    window.location.href = '/admin/access/denied';
                 }
             }
         });
@@ -759,6 +775,8 @@ function block_unblock_admins(block) {
             success: function(data){
                 if (data == 'ok') {
                    window.location.reload(true);
+                } else if(data == 'access_denied') {
+                    window.location.href = '/admin/access/denied';
                 }
             }
         });
@@ -972,7 +990,11 @@ function delete_complaints(){
             data: { id: id_array, is_array: true },
             dataType: 'json',
             success: function(data){
-                window.location.reload(true);
+                 if(data == 'access_denied') {
+                    window.location.href = '/admin/access/denied';
+                } else {
+                    window.location.reload(true);
+                }
             }
         });
     }
@@ -1039,6 +1061,8 @@ function delete_all_complaints() {
             success: function(data){
                 if (data == 'ok') {
                     window.location.reload(true);
+                } else if(data == 'access_denied') {
+                    window.location.href = '/admin/access/denied';
                 }
             }
         });
