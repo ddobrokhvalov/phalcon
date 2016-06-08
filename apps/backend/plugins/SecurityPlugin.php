@@ -108,36 +108,36 @@ class SecurityPlugin extends Plugin
     {
 
 
-        $auth = $this->session->get('auth');
-        if (!$auth) {
-            $admin_id = false;
-        } else {
-            $admin_id = $auth['id'];
-        }
-
-        $controller = $dispatcher->getControllerName();
-        $action = $dispatcher->getActionName();
-
-            if ($controller != 'login') {
-                //   $acl = $this->getAcl();
-                // $allowed = $acl->isAllowed($role, $controller, $action);
-
-                if ($admin_id)
-                    $allowed = $this->isAllowed($admin_id, $controller, $action);
-                /*if (!$allowed) {
-                    var_dump($allowed, $controller, $action);
-                    die('');
-                }*/
-                if (!$allowed) {
-                    $dispatcher->forward(array(
-                        'controller' => 'login',
-                        'action' => 'index'
-                    ));
-                    if ($auth)
-                        $this->session->destroy();
-                    return false;
-                }
-            }
+        //$auth = $this->session->get('auth');
+//        if (!$auth) {
+//            $admin_id = false;
+//        } else {
+//            $admin_id = $auth['id'];
+//        }
+//
+//        $controller = $dispatcher->getControllerName();
+//        $action = $dispatcher->getActionName();
+//
+//            if ($controller != 'login') {
+//                //   $acl = $this->getAcl();
+//                // $allowed = $acl->isAllowed($role, $controller, $action);
+//
+//                if ($admin_id)
+//                    $allowed = $this->isAllowed($admin_id, $controller, $action);
+//                /*if (!$allowed) {
+//                    var_dump($allowed, $controller, $action);
+//                    die('');
+//                }*/
+//                if (!$allowed) {
+//                    $dispatcher->forward(array(
+//                        'controller' => 'login',
+//                        'action' => 'index'
+//                    ));
+//                    if ($auth)
+//                        $this->session->destroy();
+//                    return false;
+//                }
+//            }
 
     }
 }

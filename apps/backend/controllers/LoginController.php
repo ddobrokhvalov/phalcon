@@ -53,7 +53,6 @@ class LoginController extends ControllerBase
 
     public function startAction()
     {
-
         if ($this->request->isPost()) {
 
 
@@ -72,14 +71,13 @@ class LoginController extends ControllerBase
             );
 
             if ($admin != false) {
-
                 $this->_registerSession($admin);
 
                 Log::addAdminLog(Log::$typeAdminAuth, Log::$textAdminLogin, $admin);
                 return $this->dispatcher->forward(
                     array(
                         'controller' => 'user',
-                        'action' => 'index'
+                        'action' => 'afterLogin'
                     )
                 );
             }

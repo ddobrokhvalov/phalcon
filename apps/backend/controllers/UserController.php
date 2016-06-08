@@ -38,6 +38,11 @@ class UserController extends ControllerBase
         $this->setMenu();
     }
 
+    public function afterLoginAction() {
+        $this->view->pick('access/afterlogin');
+        $this->setMenu();
+    }
+
     public function searchAction()
     {
         $numberPage = 1;
