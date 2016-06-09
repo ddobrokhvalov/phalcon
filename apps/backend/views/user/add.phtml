@@ -56,9 +56,11 @@
 </div>
 
 <script>
-    $( document ).ready(function() {
-        $( "#password" ).val('');
-        $( "#userEmail" ).val('');
+    $(document).ready(function() {
+        setTimeout(function(){
+            $("#userPass").val("");
+            $('#userEmail').val("");
+        }, 200);
     });
 </script>
 {% endblock %}
