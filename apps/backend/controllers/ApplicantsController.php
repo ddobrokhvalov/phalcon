@@ -267,7 +267,7 @@ class ApplicantsController  extends ControllerBase
             }*/
             $this->flashSession->success('Заявитель сохранен');
         } else {
-            $this->flashSession->error('Выбран недопустимый тип файлов');
+            $this->flashSession->error('Выбран недопустимый тип файлов или превышен размер в 5 Мб');
         }
         return $this->dispatcher->forward(array(
             'module' => 'backend',

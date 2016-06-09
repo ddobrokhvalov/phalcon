@@ -28,21 +28,33 @@ class Files extends Model
             if (!$this->isAllowedExtension($file->getType())) {
                 return FALSE;
             }
+            if (!$this->isAllowedSize($file->getSize())) {
+                return FALSE;
+            }
         }
         return TRUE;
     }
-    
-    public function isAllowedExtension($ext) {//DebugBreak();
+
+    public function isAllowedSize($size) {
+        if ($size < 5242880) {// Max allowed size is 5 Mb.
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function isAllowedExtension($ext) {
         $extensions = array(
             'image/jpeg',
             'image/png',
             'image/bmp',
+            'image/tiff',
             'application/msword',
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             'application/pdf',
             'application/octet-stream',
             'application/x-rar-compressed',
             'application/zip',
+            'application/rar',
         );
         return in_array($ext, $extensions);
     }
@@ -52,12 +64,14 @@ class Files extends Model
             'image/jpeg'                                                                => 'image-file',
             'image/png'                                                                 => 'image-file',
             'image/bmp'                                                                 => 'image-file',
+            'image/tiff'                                                                => 'image-file',
             'application/msword'                                                        => 'msword-file',
             'application/pdf'                                                           => 'pdf-file',
             'application/octet-stream'                                                  => 'msword-file',
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document'   => 'msword-file',
             'application/x-rar-compressed'                                              => 'archive-file',
             'application/zip'                                                           => 'archive-file',
+            'application/rar'                                                           => 'archive-file',
         );
         return $extensions["{$file_type}"];
     }
