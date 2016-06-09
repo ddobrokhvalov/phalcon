@@ -9,8 +9,7 @@ use Multiple\Library\TrustedLibrary;
 
 class LoginController extends Controller
 {
-    private function _registerSession($user)
-    {
+    private function _registerSession($user) {
         $this->session->set(
             'auth',
             array(
@@ -20,8 +19,7 @@ class LoginController extends Controller
         );
     }
 
-    public function logoutAction()
-    {
+    public function logoutAction(){
         $auth = $this->session->get('auth');
 
         if (!$auth) {
@@ -38,25 +36,17 @@ class LoginController extends Controller
                     )
                 )
             );
-
         }
         if ($auth)
             $this->session->destroy();
         return $this->response->redirect('/');
         //header( 'Location: http://'.$_SERVER['HTTP_HOST'] );
-
     }
 
-    public function startAction()
-    {
-
+    public function startAction() {
         if ($this->request->isPost()) {
-
-
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
-
-
             $user = User::findFirst(
                 array(
                     "email = :email:  AND password = :password:",
@@ -66,24 +56,19 @@ class LoginController extends Controller
                     )
                 )
             );
-
             if ($user != false) {
-
                 $this->_registerSession($user);
-
-
                 return $this->dispatcher->forward(
                     array(
                         'controller' => 'complaint',
                         'action' => 'index'
                     )
                 );
+            } else {
+                $this->flashSession->error('Имя пользователя или пароль введен не верно');
+                return $this->response->redirect('/');
             }
-
-
         }
-
-
         return $this->dispatcher->forward(
             array(
                 'controller' => 'login',
