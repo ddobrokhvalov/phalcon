@@ -22,6 +22,9 @@ class Files extends Model
 
     public function checkAllFiles($request) {
         foreach ($request->getUploadedFiles() as $file) {
+            if (strlen($file->getName()) == 0) {
+                return TRUE;
+            }
             if (!$this->isAllowedExtension($file->getType())) {
                 return FALSE;
             }
@@ -29,10 +32,11 @@ class Files extends Model
         return TRUE;
     }
     
-    public function isAllowedExtension($ext) {
+    public function isAllowedExtension($ext) {//DebugBreak();
         $extensions = array(
             'image/jpeg',
             'image/png',
+            'image/bmp',
             'application/msword',
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             'application/pdf',
@@ -47,6 +51,7 @@ class Files extends Model
         $extensions = array(
             'image/jpeg'                                                                => 'image-file',
             'image/png'                                                                 => 'image-file',
+            'image/bmp'                                                                 => 'image-file',
             'application/msword'                                                        => 'msword-file',
             'application/pdf'                                                           => 'pdf-file',
             'application/octet-stream'                                                  => 'msword-file',

@@ -350,14 +350,16 @@ class ApplicantsController  extends ControllerBase
             $saved_files = array();
             if ($this->request->hasFiles() == true) {
                 foreach ($this->request->getUploadedFiles() as $file) {
-                    $applicant_file = new Files();
-                    $applicant_file->file_path = $file->getName();
-                    $applicant_file->file_size = round($file->getSize() / 1024, 2);
-                    $applicant_file->file_type = $file->getType();
-                    $applicant_file->save();
-                    $saved_files[] = $applicant_file->id;
-                    //Move the file into the application
-                    $file->moveTo($baseLocation . $file->getName());
+                    if (strlen($file->getName())) {
+                        $applicant_file = new Files();
+                        $applicant_file->file_path = $file->getName();
+                        $applicant_file->file_size = round($file->getSize() / 1024, 2);
+                        $applicant_file->file_type = $file->getType();
+                        $applicant_file->save();
+                        $saved_files[] = $applicant_file->id;
+                        //Move the file into the application
+                        $file->moveTo($baseLocation . $file->getName());
+                    }
                 }
             }
             $already_attached = unserialize($applicant->fid);
