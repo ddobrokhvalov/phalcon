@@ -2755,7 +2755,7 @@ input[type="radio"]:checked + label {
     color: #34383e;
     opacity: 1;
 }
-.modal_div form input[type="text"] {
+.modal_div form input[type="text"], .modal_div form input[type="password"] {
     border: 1px solid #34383e;
     float: left;
     font-size: 18px;
