@@ -5,6 +5,7 @@ use Phalcon\Mvc\Controller;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Backend\Models\Complaint;
 use Multiple\Backend\Models\Answer;
+use Multiple\Backend\Models\Files;
 use Multiple\Backend\Models\Permission;
 use Multiple\Library\PaginatorBuilder;
 
@@ -43,7 +44,27 @@ class ComplaintsController extends ControllerBase
            $this->view->pick("access/denied");
            $this->setMenu();
         } else {
-            $this->view->complaint = Complaint::findFirstById($id);
+            $files_html = [];
+            $complaint = Complaint::findFirstById($id);
+            if ($complaint->fid) {
+                $file_ids = unserialize($complaint->fid);
+                if (count($file_ids)) {
+                    $file_model = new Files();
+                    $files = Files::find(
+                        array(
+                            'id IN ({ids:array})',
+                            'bind' => array(
+                                'ids' => $file_ids
+                            )
+                        )
+                    );
+                    foreach ($files as $file) {
+                        $files_html[] = $file_model->getFilesHtml($file, $id, 'complaint');
+                    }
+                }
+            }
+            $this->view->attached_files = $files_html;
+            $this->view->complaint = $complaint;
             $this->setMenu();
         }
     }

@@ -46,9 +46,18 @@
             <div class="deploy-complaint"><span>Показать подробно</span></div>
             <div class="complaints-content">
                 <h2>{{complaint.complaint_name}}</h2>
-                <div class="complaints-doc">
+                <!--<div class="complaints-doc">
                     <p><span></span><span></span>Решение по извещению 127563728493872.dov (125 Кб)</p>
-                    <p><span></span><span></span>Доказательства.pdf (34 Кб)</p><!--todo:-->
+                    <p><span></span><span></span>Доказательства.pdf (34 Кб)</p>
+                </div>-->
+                <div class="attached-files">
+                    {% if attached_files|count > 0 %}
+                        {% for file in attached_files %}
+                            {{ file }}
+                        {% endfor %}
+                        {% else %}
+                            {{ 'Нет прикрепленных файлов' }}
+                    {% endif %}
                 </div>
                 <div class="complaints-main mCustomScrollbar">
                     <h3>{{complaint.purchases_name}}</h3>

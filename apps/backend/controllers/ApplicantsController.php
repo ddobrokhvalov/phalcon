@@ -96,7 +96,7 @@ class ApplicantsController  extends ControllerBase
                     )
                 );
                 foreach ($files as $file) {
-                    $files_html[] = $file_model->getFilesHtml($file, $id);
+                    $files_html[] = $file_model->getFilesHtml($file, $id, 'applicant');
                 }
             }
         }

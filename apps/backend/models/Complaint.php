@@ -26,6 +26,7 @@ class Complaint extends Model
     public $okonchanie_rassmotreniya;
     public $vremya_provedeniya;
     public $text;
+    public $fid;
 
     public function initialize()
     {

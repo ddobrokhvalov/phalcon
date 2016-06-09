@@ -57,12 +57,12 @@ class Files extends Model
         return $extensions["{$file_type}"];
     }
     
-    public function getFilesHtml($file, $applicant) {
+    public function getFilesHtml($file, $id, $path) {
         $html = '';
         $html .= "<div class=\"attached-file-row\">";
         $html .=    "<div class=\"file-icon {$this->getFileClass($file->file_type)}\">";
         $html .=    '</div>';
-        $html .=    "<a class=\"file-link\" href=\"/files/applicant/{$file->file_path}\" title=\"Скачать файл\">";
+        $html .=    "<a class=\"file-link\" href=\"/files/{$path}/{$file->file_path}\" title=\"Скачать файл\">";
         $html .=        '<div>';
         $html .=            $file->file_path;
         $html .=            " ({$file->file_size} Кб)";
@@ -70,7 +70,7 @@ class Files extends Model
         $html .=    '</a>';
         $html .=    '<div class="delete-file" title="Удалить файл">';
         $html .=        "<input type=\"hidden\" name=\"file-id\" id=\"file-id\" value=\"{$file->id}\">";
-        $html .=        "<input type=\"hidden\" name=\"applicant-id\" id=\"applicant-id\" value=\"{$applicant}\">";
+        $html .=        "<input type=\"hidden\" name=\"applicant-id\" id=\"applicant-id\" value=\"{$id}\">";
         $html .=    '</div>';
         $html .=    '<div style="clear:both;"></div>';
         $html .= '</div>';

@@ -154,15 +154,22 @@
         font-weight: 100;
         margin: 0 0 16px 1px;
     }
+    .attached-files {
+        padding-bottom: 25px;
+        .delete-file {
+            display: none;
+        }
+    }
     .complaints-content {
         background-color: #f7f8fa;
-    }
-    .complaints-content h2 {
-        padding: 32px 0 28px;
-        border-bottom: 1px solid #e0e3ea;
-        font-size: 32px;
-        line-height: 1.1;
-        font-weight: 100;
+        h2 {
+            padding: 32px 0 28px;
+            border-bottom: 1px solid #e0e3ea;
+            font-size: 32px;
+            line-height: 1.1;
+            font-weight: 100;
+            margin-bottom: 22px;
+        }
     }
     .complaints-main h3, .complaints-lawyer-quest h3 {
         margin-bottom: 18px;
@@ -326,6 +333,7 @@
 	font-size: 14px;
 	line-height: 1.2;
 	text-align: center;
+    margin-top: 20px;
 	div {
 		margin: 0 auto 15px;
 		width: 96px;
