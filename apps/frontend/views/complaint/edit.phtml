@@ -108,9 +108,9 @@
                 <div class="c-jadd2-f">
                     <div class="c-jd2-f-flist">
                         <script type="text/javascript">
-                            var token = '{{token}}';
-                            $(document).on('click', '#upload', function(){
-                                ajaxFileUpload('/ajax/fileupload', 'upload_proofs');
+                            //var token = '{{token}}';
+                            //$(document).on('click', '#upload', function(){
+                                //ajaxFileUpload('/ajax/fileupload', 'upload_proofs');
                                 
                                 /*var signature = $('#upload_proofs');
                                 var file = document.getElementById("upload_proofs").files[0];
@@ -132,7 +132,7 @@
                                         },
                                         timeout: 120000 // sets timeout to 2 minutes
                                     });*/
-                                });
+                                //});
                                 /*reader.onerror = function (evt) {
                                     console.log("error reading file");
                                 };
@@ -185,40 +185,40 @@
                     </div>
                     {% endif %}
                     <script type="text/javascript">
-                        var token = '{{token}}';
-                        $(document).on('click', '.trusted-ep', function(){
-
-                            /*id[]    Коллекция `id` документов
-                            logo    URI на картинку логотипа
-                            css     URI на CSS для мастера подписи
-                            extra   Дополнительные параметры*/
-                            var id = 1;
-                            $.ajax({
-                                type: "POST",
-                                url: '/ajax/getlast',
-                                error: function(data){
-                                    console.log(data);
-                                },
-                                success: function(data) {
-                                    var postdata = {'id[]':parseInt(data), 'logo':'https://net.trusted.ru/static/images/svg/bitrix.svg', 'token':token}
-                                    $.ajax({
-                                        type: "POST",
-                                        url: '/ajax/trusted?command=sign',
-                                        dataType: 'json',
-                                        cache: false,
-                                        data: postdata,
-                                        error: function(data){
-                                            console.log(data);
-                                        },
-                                        success: function(data) {
-                                            console.log(data);
-                                        },
-                                        timeout: 120000 // sets timeout to 2 minutes
-                                    });
-                                },
-                                timeout: 120000 // sets timeout to 2 minutes
-                            });
-                        });
+                        //var token = '{{token}}';
+//                        $(document).on('click', '.trusted-ep', function(){
+//
+//                            /*id[]    Коллекция `id` документов
+//                            logo    URI на картинку логотипа
+//                            css     URI на CSS для мастера подписи
+//                            extra   Дополнительные параметры*/
+//                            var id = 1;
+//                            $.ajax({
+//                                type: "POST",
+//                                url: '/ajax/getlast',
+//                                error: function(data){
+//                                    console.log(data);
+//                                },
+//                                success: function(data) {
+//                                    var postdata = {'id[]':parseInt(data), 'logo':'https://net.trusted.ru/static/images/svg/bitrix.svg', 'token':token}
+//                                    $.ajax({
+//                                        type: "POST",
+//                                        url: '/ajax/trusted?command=sign',
+//                                        dataType: 'json',
+//                                        cache: false,
+//                                        data: postdata,
+//                                        error: function(data){
+//                                            console.log(data);
+//                                        },
+//                                        success: function(data) {
+//                                            console.log(data);
+//                                        },
+//                                        timeout: 120000 // sets timeout to 2 minutes
+//                                    });
+//                                },
+//                                timeout: 120000 // sets timeout to 2 minutes
+//                            });
+//                        });
                     </script>
                     <div class="c-jd2-f-cat">
                         <input type="radio" name="jd2cat" id="jd2cat1" checked hidden>

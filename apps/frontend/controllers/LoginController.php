@@ -42,7 +42,8 @@ class LoginController extends Controller
         }
         if ($auth)
             $this->session->destroy();
-        header( 'Location: http://'.$_SERVER['HTTP_HOST'] );
+        return $this->response->redirect('/');
+        //header( 'Location: http://'.$_SERVER['HTTP_HOST'] );
 
     }
 
