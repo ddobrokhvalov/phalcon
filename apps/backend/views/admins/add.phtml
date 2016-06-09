@@ -57,8 +57,11 @@
 </div>
 {{ partial("layouts/statuschange")}}
 <script>
-    $( document ).ready(function() {
-        $( "#password" ).val('');
+    $(document).ready(function() {
+        setTimeout(function(){
+            $("#adminPass").val("");
+            $('#adminEmail').val("");
+        }, 200);
     });
 </script>
 {% endblock %}

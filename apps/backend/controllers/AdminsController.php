@@ -155,6 +155,7 @@ class AdminsController extends ControllerBase
             $admin = new Admin();
             $post = $this->request->getPost();
             $data['email'] = $post['email'];
+            $data['password'] = $post['password'];
             foreach(['name', 'surname', 'patronymic', 'phone'] as $key)
                     $data[$key] = $post[$key];
             if ($this->request->hasFiles() == true)
@@ -162,35 +163,32 @@ class AdminsController extends ControllerBase
                     $data['avatar'] = $admin->avatar;
 
             $validation = new AdminValidator();
-            $validation->add('password', new PresenceOf((array('message' => 'The password is required'))));
+            $validation->add('password', new PresenceOf((array('message' => 'Пароль не может быть пустым'))));
             $messages = $validation->validate($data);
             if (count($messages)) {
-                foreach ($messages as $message)
-                    $this->flashSession->error($message);
+                $this->flashSession->error('Не заполнены обязательные поля');
+                /*foreach ($messages as $message)
+                    $this->flashSession->error($message);*/
             }
             if (!count($messages) ) {
-                $data['password'] = sha1($post['password']);
-                if($admin->save($data, array_keys($data)) == false)
-                    foreach ($admin->getMessages() as $message)
-                        $this->flashSession->error($message);
-            } else
-                $this->flashSession->success("Изменения сохранены");
-            $admin->password = sha1($data['password']);        
-            if ($admin->save($data, array_keys($data)) == false)
-                foreach ($admin->getMessages() as $message)
-                    $this->flashSession->error($message);
-            if(count($messages))
-                return $this->dispatcher->forward(array(
-                    'module' => 'backend',
-                    'controller' => 'admins',
-                    'action' => 'add',
-                ));
-            else
-                return $this->dispatcher->forward(array(
-                    'module' => 'backend',
-                    'controller' => 'admins',
-                    'action' => 'index',
-                ));
+                $data['password'] = sha1($data['password']);
+                if($admin->save($data, array_keys($data)) == false) {
+                    $this->flashSession->error('Возникла ошибка при сохранении администратора');
+                        return $this->dispatcher->forward(array(
+                        'module' => 'backend',
+                        'controller' => 'admins',
+                        'action' => 'add',
+                    ));
+                }
+                    /*foreach ($admin->getMessages() as $message)
+                        $this->flashSession->error($message);*/
+            }
+            $this->flashSession->success("Администратор добавлен");
+            return $this->dispatcher->forward(array(
+                'module' => 'backend',
+                'controller' => 'admins',
+                'action' => 'index',
+            ));
         }
     }
     public function editAction($id){
