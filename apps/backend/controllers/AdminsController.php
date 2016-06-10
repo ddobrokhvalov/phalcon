@@ -18,84 +18,78 @@ class AdminsController extends ControllerBase
 
     public function indexAction()
     {
-        $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'user', 'index')) {
-           $this->view->pick("access/denied");
-           $this->setMenu();
-        } else {
-            $next_items = $this->request->getPost('next-portions-items');
-            if (!isset($next_items)) {
-                $next_items = 0;
-            }
-            $item_per_page = 20 + $next_items;
-            $this->persistent->searchParams = null;
-            $this->view->form = new AdminForm;
 
-            $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
-            $users = Admin::find();
-            $paginator = new Paginator(array(
-                "data" => $users,
-                "limit" => $item_per_page,
-                "page" => $numberPage
-            ));
-            $pages = $paginator->getPaginate();
-            $this->view->page = $pages;
-            $this->view->item_per_page = $item_per_page;
-            //todo: цветовую дифференциацию, галочки
-            $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
-            $this->persistent->searchParams = null;
-            $this->view->form               = new AdminForm;
-            $this->setMenu();
+        $next_items = $this->request->getPost('next-portions-items');
+        if (!isset($next_items)) {
+            $next_items = 0;
         }
+        $item_per_page = 20 + $next_items;
+        $this->persistent->searchParams = null;
+        $this->view->form = new AdminForm;
+
+        $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $users = Admin::find();
+        $paginator = new Paginator(array(
+            "data" => $users,
+            "limit" => $item_per_page,
+            "page" => $numberPage
+        ));
+        $pages = $paginator->getPaginate();
+        $this->view->page = $pages;
+        $this->view->item_per_page = $item_per_page;
+        //todo: цветовую дифференциацию, галочки
+        $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
+        $this->persistent->searchParams = null;
+        $this->view->form = new AdminForm;
+        $this->view->user_id = $this->user->id;
+        $this->setMenu();
     }
     public function searchAction(){
-        $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'user', 'index')) {
-           $this->view->pick("access/denied");
-           $this->setMenu();
+        $numberPage = 1;
+        if ($this->request->isPost()) {
+            $query = Criteria::fromInput($this->di, "Multiple\Backend\Models\Admin", $this->request->getPost());
+            $this->persistent->searchParams = $query->getParams();
         } else {
-            $numberPage = 1;
-            if ($this->request->isPost()) {
-                $query = Criteria::fromInput($this->di, "Multiple\Backend\Models\Admin", $this->request->getPost());
-                $this->persistent->searchParams = $query->getParams();
-            } else {
-                $numberPage = $this->request->getQuery("page", "int");//todo: init if null
-            }
-
-            $parameters = array();
-            if ($this->persistent->searchParams) {
-                $parameters = $this->persistent->searchParams;
-            }
-
-            $admins = Admin::find($parameters);
-            if (count($admins) == 0) {
-                $this->flash->notice("The search did not find any admins");
-                return $this->forward("admins/index");
-            }
-
-            $paginator = new Paginator(array(
-                "data"  => $admins,
-                "limit" => 10,
-                "page"  => $numberPage
-            ));
-
-            $this->view->page = $paginator->getPaginate();
-            $this->setMenu();
+            $numberPage = $this->request->getQuery("page", "int");//todo: init if null
         }
+
+        $parameters = array();
+        if ($this->persistent->searchParams) {
+            $parameters = $this->persistent->searchParams;
+        }
+
+        $admins = Admin::find($parameters);
+        if (count($admins) == 0) {
+            $this->flash->notice("The search did not find any admins");
+            return $this->forward("admins/index");
+        }
+
+        $paginator = new Paginator(array(
+            "data"  => $admins,
+            "limit" => 10,
+            "page"  => $numberPage
+        ));
+
+        $this->view->page = $paginator->getPaginate();
+        $this->setMenu();
     }
-    public function saveAction()
-    {
-        $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
-           $this->view->pick("access/denied");
-           $this->setMenu();
-        } else {
-            $delete_admin = $this->request->getPost('delete_admin');
-            if (isset($delete_admin) && $delete_admin) {
+    public function saveAction() {
+        $delete_admin = $this->request->getPost('delete_admin');
+        if (isset($delete_admin) && $delete_admin && $this->user->id == 1) {
+            if ($delete_admin != $this->user->id) {
                 Admin::findFirstById($delete_admin)->delete();
                 $this->flashSession->success("Администратор успешно удален");
                 return $this->forward("admins/index");
+            } else {
+                $this->flashSession->error("Невозможно удалить свой аккаунт");
+                return $this->dispatcher->forward(array(
+                    'module' => 'backend',
+                    'controller' => 'admins',
+                    'action' => 'edit',
+                    'params' => ['id' => $this->user->id]
+                ));
             }
+        } else if ($this->user->id == $this->request->getPost("id", "int")) {
             if (!$this->request->isPost())
                 return $this->forward("admins/index");
 
@@ -130,25 +124,23 @@ class AdminsController extends ControllerBase
                 'action' => 'edit',
                 'params' => ['id' => $id]
             ));
+        } else {
+            $this->view->pick("access/denied");
+            $this->setMenu();
         }
     }
 
     public function addAction()
     {
-        $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
-           $this->view->pick("access/denied");
-           $this->setMenu();
+        if ($this->user->id != 1) {
+            $this->view->pick("access/denied");
+            $this->setMenu();
         } else {
             $this->setMenu();
         }
     }
     public function createAction(){
-        $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
-           $this->view->pick("access/denied");
-           $this->setMenu();
-        } else {
+        if ($this->user->id == 1) {
             if (!$this->request->isPost())
                 return $this->forward("admins/index");
 
@@ -189,14 +181,13 @@ class AdminsController extends ControllerBase
                 'controller' => 'admins',
                 'action' => 'index',
             ));
+        } else {
+            $this->view->pick("access/denied");
+            $this->setMenu();
         }
     }
     public function editAction($id){
-        $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
-           $this->view->pick("access/denied");
-           $this->setMenu();
-        } else {
+        if ($id == $this->user->id || $this->user->id == 1) {
             $admin = Admin::findFirstById($id);
             if (!$admin) {
                 $this->flashSession->error("Администратор не найден");
@@ -205,12 +196,17 @@ class AdminsController extends ControllerBase
             $this->view->admin = $admin;
             $permission = new Permission();
             $this->view->permisions = $permission->getAdminPermissionAsKeyArray($admin->id);
+            $this->view->user_id = $this->user->id;
             $this->setMenu();
+        } else {
+           $this->view->pick("access/denied");
+           $this->setMenu();
         }
     }
     
     public function delAction($id){
-        $admin = Admin::findFirstById($id);
+        $this->flashSession->error("Its wrong function for deleting admin");
+        /*$admin = Admin::findFirstById($id);
         if (!$admin) {
            // $this->flash->error("admin was not found");
             return $this->forward("admins/index");
@@ -224,35 +220,36 @@ class AdminsController extends ControllerBase
         }
 
         $this->flash->success("admin was deleted");
-        return $this->forward("admins/index");
+        return $this->forward("admins/index");*/
     }
 
     public function deleteAdminsAction(){
-        $user_ids = $this->request->getPost("ids");
-        
-        if(count($user_ids)){
-            $users = Admin::find(
-                array(
-                    'id IN ({ids:array})',
-                    'bind' => array(
-                        'ids' => $user_ids
+        if ($this->user->id != 1) {
+            $this->view->disable();
+            $data = "access_denied";
+            echo json_encode($data);
+        } else {
+            $user_ids = $this->request->getPost("ids");
+            if(count($user_ids)){
+                $users = Admin::find(
+                    array(
+                        'id IN ({ids:array})',
+                        'bind' => array(
+                            'ids' => $user_ids
+                        )
                     )
-                )
-            )->delete();
-            $this->flashSession->success("Администратор успешно удален");
-        }
-        $this->view->disable();
+                )->delete();
+                $this->flashSession->success("Администратор успешно удален");
+            }
+            $this->view->disable();
 
-        $data = "ok";
-        echo json_encode($data);
+            $data = "ok";
+            echo json_encode($data);
+        }
     }
 
     public function profilesaveAction(){
         $result = array('success'=>true, 'errors'=>array());
-        /*$perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
-           $result = "access_denied";
-        } else {*/
             $messages = [];
             $admin = Admin::findFirstById($this->user->id);
             $post = $this->request->getPost();
@@ -285,7 +282,6 @@ class AdminsController extends ControllerBase
                 elseif ($admin->save($data, array_keys($data)) == false)
                     $result = array('success' => false, 'errors' => $admin->getMessages());
             } else $result = array('success' => false, 'errors' => $messages);
-        //}
         echo json_encode($result);
         exit;
     }
@@ -343,8 +339,7 @@ class AdminsController extends ControllerBase
     }
     
     public function blockUnblockAction(){
-        $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'edit')) {
+        if ($this->user->id != 1) {
            $data = "access_denied";
         } else {
             $users_ids = $this->request->getPost("ids");

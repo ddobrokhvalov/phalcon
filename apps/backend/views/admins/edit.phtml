@@ -6,10 +6,12 @@
         <a href="#" onclick="history.back();return false;">Вернуться к списку администраторов</a>
     </div>
     <h1>{{admin.surname}} {{admin.name}} {{admin.patronymic}}</h1>
+    {% if user_id == 1 %}
     <div class="admin-change-access">
         <span>Редактирование пользователей</span>
         <div class="change-access j-change-access">Изменить доступ</div>
     </div>
+    {% endif %}
     {{flashSession.output()}}
     <div class="block-user-editing">
         <form action="/admin/admins/save" method="POST" enctype="multipart/form-data">
@@ -45,14 +47,16 @@
                 </label>
                 <label for="adminAvatar">
                     <div class="avatar-wrapper">
-                        <img id="edit-avatar" src="/files/avatars/{{admin.avatar}}" alt=""><!--todo: maby we need default image-->
+                        <img id="edit-avatar" src="/files/avatars/{{admin.avatar}}" alt="">
                     </div>
                     <p class="changeAvatar">Изменить аватар</p>
                     {{file_field('avatar', 'value':'', 'id':'adminAvatar', 'onchange':"readAvatarURL(this, '#edit-avatar')")}}
                 </label>
             </div>
             <div class="delete-or-save">
-                <button class="delete" onclick="$('#delete_admin').val('{{admin.id}}');">Удалить администратора</button><!--todo:-->
+                {% if user_id == 1 AND admin.id != user_id %}
+                    <button class="delete" onclick="$('#delete_admin').val('{{admin.id}}');">Удалить администратора</button>
+                {% endif %}
                 <button>Сохранить изменения</button>                 
             </div>
             {{hidden_field('delete_admin', 'value':'')}}

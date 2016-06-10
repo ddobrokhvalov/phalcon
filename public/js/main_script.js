@@ -969,7 +969,11 @@ function delete_admins(){
             dataType: 'json',
             success: function(data){
                 $('.confirm-deletion-admin-lg').modal('hide');
-                window.location.reload(true);
+                if(data == 'access_denied') {
+                    window.location.href = '/admin/access/denied';
+                } else {
+                    window.location.reload(true);
+                }
             }
         });
     }

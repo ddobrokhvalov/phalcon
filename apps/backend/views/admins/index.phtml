@@ -4,7 +4,9 @@
 {{flashSession.output()}}
 <div class="admin-main-wrap admin-list">
     <h1>Список администраторов</h1>
-    <a href="/admin/admins/add" class="admin-add">Добавить администратора</a>
+    {% if user_id == 1 %}
+        <a href="/admin/admins/add" class="admin-add">Добавить администратора</a>
+    {% endif %}
     <div class="admin-lt-holder">
         <div class="admin-lt-head">
             <div class="select-all">
@@ -12,9 +14,11 @@
             </div>
             <div class="lt-head-btns">
                 <div class="disabled-btn" id="show-send-massage-dialog">Отправить сообщение</div>
+                {% if user_id == 1 %}
                 <div class="disabled-btn block-admin" onclick="block_unblock_admins(1)">Заблокировать</div>
                 <div class="disabled-btn unblock-admin" onclick="block_unblock_admins(0)">Разблокировать</div>
                 <div class="disabled-btn" id="delete-button">Удалить</div>
+                {% endif %}
             </div>
         </div>
         <div class="modal fade modal-send-message-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -67,7 +71,7 @@
             </ul>
             {% for user in page.items %}
             {% set permissions = user.getPermissions() %}
-            <ul class="lt-content-main {% if user.admin_status == 0 %} hidden-arg {% endif %}" sort-fio="{{user.surname}} {{user.name}}" sort-email="{{user.email}}" sort-access="{{permissions}}" detail-url="{{url('admin/admins/edit/' ~ user.id)}}">
+            <ul class="lt-content-main {% if user.admin_status == 0 %} hidden-arg {% endif %}" sort-fio="{{user.surname}} {{user.name}}" sort-email="{{user.email}}" sort-access="{{permissions}}" {% if user_id == 1 OR user_id == user.id %} detail-url="{{url('admin/admins/edit/' ~ user.id)}}" {% endif %}>
                 <li><div class="lt-psevdo-check">{{hidden_field('user-id', 'value':user.id)}}</div></li>
                 <li>{% if user.avatar!='' %}<img src="/files/avatars/{{user.avatar}}" alt="">{% endif %}</li>
                 <li>{{user.surname}} {{user.name}}</li>
