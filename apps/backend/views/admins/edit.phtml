@@ -3,7 +3,7 @@
 {% block body %}
 <div class="admin-main-wrap admin-page">
     <div class="bread-crumbs-holder">
-        <a href="#" onclick="history.back();return false;">Вернуться к списку администраторов</a>
+        <a href="/admin/admins/index">Вернуться к списку администраторов</a>
     </div>
     <h1>{{admin.surname}} {{admin.name}} {{admin.patronymic}}</h1>
     {% if user_id == 1 %}
@@ -67,6 +67,12 @@
 <script>
     $( document ).ready(function() {
         $( "#password" ).val('');
+        var params_ = window.location.search.replace("?", "").split("=");
+        if (params_.length) {
+            if (params_[0] == "ask_admin_rights" && params_[1] == "1") {
+                $('.change-access').click();
+            }
+        }
     });
 </script>
 {% endblock %}

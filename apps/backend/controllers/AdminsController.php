@@ -147,6 +147,7 @@ class AdminsController extends ControllerBase
             $admin = new Admin();
             $post = $this->request->getPost();
             $data['email'] = $post['email'];
+            $data['admin_status'] = 0;
             $data['password'] = $post['password'];
             foreach(['name', 'surname', 'patronymic', 'phone'] as $key)
                     $data[$key] = $post[$key];
@@ -176,11 +177,13 @@ class AdminsController extends ControllerBase
                         $this->flashSession->error($message);*/
             }
             $this->flashSession->success("Администратор добавлен");
-            return $this->dispatcher->forward(array(
+            return $this->response->redirect('/admin/admins/edit/' . $admin->id . '?ask_admin_rights=1');
+            /*return $this->dispatcher->forward(array(
                 'module' => 'backend',
                 'controller' => 'admins',
-                'action' => 'index',
-            ));
+                'action' => 'edit',
+                'params' => ['id' => $admin->id]
+            ));*/
         } else {
             $this->view->pick("access/denied");
             $this->setMenu();
@@ -308,6 +311,7 @@ class AdminsController extends ControllerBase
                 'edit'=>isset($post['perm']['template']['edit'])?1:0,
             ]
         ];
+        $count_perm = 0;
         $permissions = Permission::find();
         foreach($permissions as $permission) {
             if (isset($data[$permission->name])) {
@@ -327,12 +331,20 @@ class AdminsController extends ControllerBase
                 }
                 isset($data[$permission->name]['edit']) ? $permissionAdmin->edit = $data[$permission->name]['edit'] : $permissionAdmin->edit = 0;
                 isset($data[$permission->name]['read']) ? $permissionAdmin->read = $data[$permission->name]['read'] : $permissionAdmin->read = 0;
+                if ($permissionAdmin->edit == 1 || $permissionAdmin->read == 1) {
+                    ++$count_perm;
+                }
                 if($permissionAdmin->save()==false) {
                     $result['success'] = false;
                     foreach ($permissionAdmin->getMessages() as $message)
                         $result['errors'][] = $message;
                 }
             }
+        }
+        if ($count_perm) {
+            $admin = Admin::findFirstById($id);
+            $admin->admin_status = 1;
+            $admin->save();
         }
         $this->view->disable();
         echo json_encode($result);
