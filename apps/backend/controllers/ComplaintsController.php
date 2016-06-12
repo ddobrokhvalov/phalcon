@@ -63,6 +63,11 @@ class ComplaintsController extends ControllerBase
                     }
                 }
             }
+            if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'index') && $this->user->id != 1) {
+               $this->view->allow_answer = 0;
+            } else {
+                $this->view->allow_answer = 1;
+            }
             $this->view->attached_files = $files_html;
             $this->view->complaint = $complaint;
             $this->setMenu();
