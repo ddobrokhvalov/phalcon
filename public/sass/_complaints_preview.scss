@@ -222,7 +222,18 @@
             text-decoration: none;
         }
     } 
-
+    .edit-buttons-ul {
+        height: 20px;
+        color: #00aeef;
+        display: none;
+        float: right;
+        margin-bottom: -20px;
+        li {
+            float: left;
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+    }
 }
  
 /*.complaints-lawyer-quest form:last-child::before {
@@ -381,7 +392,7 @@
 	}
 }
 .clarifying-issue {
-	padding: 45px 0 45px 35px;
+	padding: 45px 30px 45px 35px;
     margin-left: 80px;
     background-color: #f7f8fa;
 	p {
@@ -394,7 +405,7 @@
         float: right;
         width: 31px;
         height: 108px;
-        margin-right: -31px;
+        margin-right: -61px;
         background: url(../images/answer-arrow.png) center bottom no-repeat;
     }
 }

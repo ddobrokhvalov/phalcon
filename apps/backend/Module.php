@@ -76,9 +76,11 @@ class Module
 							//or remove or compiled files or make changes in children
 						));
 						$compiler = $volt->getCompiler();
-						$compiler->addFunction('truncate', function ($str) {return "mb_substr ($str) . '...'";});
+                        $compiler->addFunction('truncate', function ($str) {return "mb_substr ($str) . '...'";});
+						$compiler->addFunction('nl2br', function ($str) {return "nl2br($str)";});
                         $compiler->addFilter('strtotime', 'strtotime');
-						$compiler->addFilter('count', 'count');
+                        $compiler->addFilter('count', 'count');
+						$compiler->addFilter('$(this).text()', 'length');
 						return $volt;
 					}
 				)

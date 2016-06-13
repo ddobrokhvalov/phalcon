@@ -1004,6 +1004,46 @@ function delete_complaints(){
     }
 }
 
+function delete_answer(answer_id) {
+    if (answer_id != undefined) {
+        $.ajax({
+            url: "/admin/complaints/deleteAnswer",
+            type:'POST',
+            data: { id: answer_id },
+            dataType: 'json',
+            success: function(data){
+                if (data == 'ok') {
+                    window.location.reload(true);
+                } else if(data == 'access_denied') {
+                    window.location.href = '/admin/access/denied';
+                }
+                $('.confirm-deletion-answer').modal('hide');
+            }
+        });
+    }
+}
+
+function save_answer(answer_id, answer_text) {
+    console.log(answer_id);
+    console.log(answer_text);
+    if (answer_id != undefined && answer_text != undefined && answer_text.length) {
+        $.ajax({
+            url: "/admin/complaints/updateAnswer",
+            type:'POST',
+            data: { id: answer_id, text: answer_text },
+            dataType: 'json',
+            success: function(data){
+                if (data == 'ok') {
+                    window.location.reload(true);
+                } else if(data == 'access_denied') {
+                    window.location.href = '/admin/access/denied';
+                }
+                $('.modal-edit-answer').modal('hide');
+            }
+        });
+    }
+}
+
 function delete_applicants(){
     var id_array = [];
     $('.admin-lt-holder .lt-content-main').each(function(){

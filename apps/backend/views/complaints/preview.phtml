@@ -46,10 +46,6 @@
             <div class="deploy-complaint"><span>Показать подробно</span></div>
             <div class="complaints-content">
                 <h2>{{complaint.complaint_name}}</h2>
-                <!--<div class="complaints-doc">
-                    <p><span></span><span></span>Решение по извещению 127563728493872.dov (125 Кб)</p>
-                    <p><span></span><span></span>Доказательства.pdf (34 Кб)</p>
-                </div>-->
                 <div class="attached-files">
                     {% if attached_files|count > 0 %}
                         {% for file in attached_files %}
@@ -81,17 +77,28 @@
                             <textarea name="lawyer-answer"></textarea>
                         </label>
                         <div class="opacity-btn"></div>
-                        <button>Ответить</button>
+                        {% if allow_answer == 1 %}
+                            <button>Ответить</button>
+                        {% endif %}
                     </form>
                 {% else %}
                     <p>— {{question.text}}</p>
+                    <div class="edit-buttons">
+                        <ul class="edit-buttons-ul">
+                            <li onclick="jQuery('.modal-edit-answer').modal('show');">Редактировать</li>
+                            <li onclick="jQuery('.confirm-deletion-answer').modal('show');">Удалить</li>
+                            <li style="clear: both;"></li>
+                        </ul>
+                        <div style="clear: both;"></div>
+                    </div>
                     {% set answers = complaint.getComplaintQuestionAnswer(question.id) %}
                     {% for answer in answers %}
-                        <div class="clarifying-issue">
-                            <p>
-                                {{answer.text}}
-                            </p>
+                        {% if answer.text | length %}
+                        <div class="clarifying-issue" data-answer-id="{{answer.id}}">
                             <div class="answer-flag"></div>
+                            <p>
+                                {{ nl2br(answer.text) }}
+                            </p>
                             <div style="clear: both;"></div>
                         </div>
                         <div class="legal-advisor">
@@ -102,6 +109,7 @@
                             <p>{{answer_owner['user']}}</p>
                             <span>Ваш юридический консультант</span>
                         </div>
+                        {% endif %}
                     {% endfor %}
                 {% endif %}
             </div>
@@ -109,9 +117,83 @@
         </div>
         {% endif %}
     </div>
+    <div class="modal fade confirm-deletion-answer" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Удалить ответ на жалобу?</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+            <button id="delete_answer_buttton" type="button" answer-id="" onclick="delete_answer(jQuery(this).attr('answer-id'))" class="btn btn-primary">Удалить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade modal-edit-answer" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Редактировать ответ</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <textarea class="form-control" style="min-height: 285px;" id="answer-text"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+            <button id="button-save-answer" answer-id="" type="button" onclick="save_answer(jQuery(this).attr('answer-id'), jQuery(this).parent().parent().find('#answer-text').val());" class="btn btn-primary">Сохранить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('.deploy-complaint').trigger('click');
+            $('.clarifying-issue').hover(function(event) {
+                //$('.complaints-preview-wrap').find('.edit-buttons-ul').css('display', 'none');
+                var par = $(this).parent();
+                $('#delete_answer_buttton').attr('answer-id', par.find('.clarifying-issue').attr('data-answer-id'));
+                $('#button-save-answer').attr('answer-id', par.find('.clarifying-issue').attr('data-answer-id'));
+                var p_html = '';
+                par.find('.clarifying-issue p').each(function(){
+                    if ($(this).text().length) {
+                        p_html += $(this).html().trim();
+                    }
+                });
+                $('.modal-edit-answer #answer-text').val(p_html.replace(/<br>/g, ''));
+                //var parentOffset = $(this).parent().offset(); 
+                //var relX = event.pageX - 79/* - parentOffset.left*/;
+                //var relY = event.pageY - parentOffset.top;
+                window.initHandler = setTimeout( handler, 700 );
+                var $this = $(this);
+                function handler() {
+                    par.find('.edit-buttons-ul').css('display', 'block');
+                    var relX = event.pageX;
+                }
+            }, function() {
+                clearTimeout(window.initHandler);
+                /*var ccc = $(this).parent().parent().parent().length;
+                console.log(ccc);*/
+                    //var hhh  = $(this).parent().parent().parent().ismouseover();
+                //var hhh = $(this).parent().find('.edit-buttons').is(":hover");
+                //console.log(hhh);
+                //window.initHandler = setTimeout( handler2, 1000 );
+//                $('.complaints-preview-wrap .edit-buttons-ul').css('display', 'none');
+            });
+            /*$('.complaints-lawyer-quest').hover(function(event){
+                console.log("hovered");
+            });
+            function handler2(){
+                
+            }*/
+            /*$.mlp ={x:0,y:0};function documentHandler(){var $current =this=== document ? $(this): $(this).contents(); $current.mousemove(function(e){jQuery.mlp ={x:e.pageX,y:e.pageY}}); $current.find("iframe").load(documentHandler);}$(documentHandler); $.fn.ismouseover =function(overThis){var result =false;this.eq(0).each(function(){var $current = $(this).is("iframe")? $(this).contents().find("body"): $(this);var offset = $current.offset(); result = offset.left<=$.mlp.x && offset.left + $current.outerWidth()> $.mlp.x && offset.top<=$.mlp.y && offset.top + $current.outerHeight()> $.mlp.y;});return result;};*/
         });
     </script>
     <!-- ******************************************************* -->

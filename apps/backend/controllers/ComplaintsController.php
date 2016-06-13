@@ -108,6 +108,48 @@ class ComplaintsController extends ControllerBase
         echo json_encode($data);
     }
 
+    public function deleteAnswerAction(){
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'index') && $this->user->id != 1) {
+           $data = "access_denied";
+        } else {
+            $answer_id = $this->request->getPost("id");
+            if (isset($answer_id) && $answer_id) {
+                $answer = Answer::find(
+                    array(
+                        'id = :id:',
+                        'bind' => array(
+                            'id' => $answer_id
+                        )
+                    )
+                )->delete();
+                $this->flashSession->success('Ответ удален');
+                $data = "ok";
+            }
+        }
+        $this->view->disable();
+        echo json_encode($data);
+    }
+
+    public function updateAnswerAction(){
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'index') && $this->user->id != 1) {
+           $data = "access_denied";
+        } else {
+            $answer_id = $this->request->getPost("id");
+            $answer_text = $this->request->getPost("text");
+            if (isset($answer_id) && $answer_id && isset($answer_text) && strlen($answer_text)) {
+                $answer = Answer::findFirstById($answer_id);
+                $answer->text = $answer_text;
+                $answer->save();
+                $this->flashSession->success('Ответ сохранен');
+                $data = "ok";
+            }
+        }
+        $this->view->disable();
+        echo json_encode($data);
+    }
+
     public function changeComplaintStatusAction() {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'edit')) {

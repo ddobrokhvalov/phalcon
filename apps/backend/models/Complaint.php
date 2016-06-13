@@ -51,12 +51,13 @@ class Complaint extends Model
     }
     
     public function getComplaintQuestionAnswer($question_id){
-        return Answer::find(array(
+        $answers = Answer::find(array(
             "question_id = :question_id:",
             'bind' => array(
                 'question_id' => $question_id,
             ),
         ));
+        return $answers;
     }
 
     public function getAnswerOwner($admin_id){
