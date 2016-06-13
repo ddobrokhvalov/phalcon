@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content add-complaint-page">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
             <div class="c-cnt-pagename">
@@ -8,7 +8,7 @@
             <div class="c-jadd1">
                 <div class="c-jadd1-z">
                     <span>Номер извещения</span><br>
-                    <i>После ввода номера извещения, все данные о закупке заполняться автоматически</i>
+                    <i>После ввода номера извещения, все данные о закупке заполнятся автоматически</i>
                 </div>
                 <div class="c-jadd1-f" id="result_container">
                     №<input id="auction_id" type="text" value="" >
@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="c-jadd-spoiler folded">
-                    <a></a>
+                    <span>Развернуть</span>
                 </div>
             </div>
 
@@ -78,13 +78,15 @@
                             <div class="c-jd2-f-dov-dd-pick mCustomScrollbar">
                                 <div class="c-jd2-f-dov-dd-pick-b category-container">
                                     {% for argument in arguments  %}
-                                    <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}">
-                                        <span>{{ argument['category'].name }}</span>
-                                        {% for template in argument['templates']  %}
-                                          <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>
-                                          <label id="template_{{ template.id }}" for="jd2cbb{{ template.id }}">{{ template.name }}</label>
-                                        {% endfor %}
-                                    </div>
+                                        {% if argument['category'].cnt > 0 %}
+                                            <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}">
+                                                <span>{{ argument['category'].name }}</span>
+                                                {% for template in argument['templates']  %}
+                                                  <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>
+                                                  <label id="template_{{ template.id }}" for="jd2cbb{{ template.id }}">{{ template.name }}</label>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>
@@ -105,9 +107,30 @@
                                     setTimeout(ajaxFileUpload('/ajax/fileupload', 'cjd2file'), 6000); // sets timeout to 2 minutes
                                 });*/
                             </script>
-                            <label for="cjd2file" class="c-jd2-e-btn6">Прикрепить файлы</label>
+                            <!--<label for="cjd2file" class="c-jd2-e-btn6">Прикрепить файлы</label>-->
+                            <div class="complaint-attachment">
+                                <div class="file-wrapper">
+                                    <div class="text-above">Прикрепить файлы</div>
+                                    <input id="upload-files" type="file" multiple name="upload-files[]">
+                                </div>
+                                
+                                <script type="text/javascript">
+                                    jQuery(document).ready(function(){
+                                        jQuery('#upload-files').change(function(){
+                                            var cnt = jQuery('#upload-files')[0].files.length;
+                                            var i = 0;
+                                            var html = '';
+                                            for (i = 0; i < cnt; i++) {
+                                                html = html + '<p>' + jQuery('#upload-files')[0].files[i]['name'] + '</p>';
+                                            }
+                                            jQuery('.file-names').html(html);
+                                        });
+                                    });
+                                </script>
+                            </div>
                             <input type="file" id="cjd2file" hidden />
                         </div>
+                        <div class="file-names"></div>
                         <div class="c-jd2-f-edit-text mCustomScrollbar">
                             <div id="edit_container" class="c-jd2-f-edit-t">
                            </div>

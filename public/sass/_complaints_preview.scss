@@ -487,3 +487,47 @@
         line-height: 75px;
     }
 }
+.add-complaint-page {
+    .complaint-attachment {
+        margin-bottom: 32px;
+        padding: 22px 0 30px;
+        float: right;
+        .file-wrapper {
+            cursor: pointer;
+            width: 205px;
+            .text-above {
+                background-image: url("../images/icon-screp.png");
+                background-position: left center;
+                background-repeat: no-repeat;
+                color: #222427;
+                font-family: "Open Sans";
+                font-size: 18px;
+                padding-left: 22px;
+            }
+            #upload-files {
+                cursor: pointer;
+                margin-top: -20px;
+                opacity: 0;
+                position: absolute;
+            }
+        }
+    }
+    .file-names {
+        padding-left: 28px;
+        background-color: #ffffff;
+        float: left;
+        width: 100%;
+        border-left: 1px solid #d4d7df;
+        border-right: 1px solid #d4d7df;
+        p {
+            margin-bottom: 0;
+            margin-top: 3px;
+            &:first-child {
+                margin-top: 10px;
+            }
+            &:last-child {
+                margin-bottom: 15px;
+            }
+        }
+    }
+}
