@@ -269,9 +269,10 @@ var auction = {
             if (auction.processData(data, auction_id)) {
                 $('#auction_id').addClass('c-inp-done');
                 $('#result_container').append('<b class="msg_status_parser">Данные Получены!</b>');
-                auction.setData();
+                //auction.setData();
                 $('.complaint-main-container').show();
-                complaint.setHeader();
+                $('.category-tamplate').show();
+                //complaint.setHeader();
                 $('#notice_button').show();
                 $('.loading-gif').hide();
                 auction.auctionReady = true;
