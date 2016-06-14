@@ -51,6 +51,9 @@ class ControllerBase extends Controller
         );
     }
     public function setMenu(){
+        if (!$this->user) {
+             return $this->response->redirect('/');
+        }
         $applicant = new Applicant();
         $userApplicants = $applicant->findByUserId($this->user->id);
 
