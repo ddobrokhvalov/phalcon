@@ -52,6 +52,7 @@ class ControllerBase extends Controller
     }
     public function setMenu(){
         if (!$this->user) {
+             $this->flashSession->error('Вы не залогинены в системе');
              return $this->response->redirect('/');
         }
         $applicant = new Applicant();

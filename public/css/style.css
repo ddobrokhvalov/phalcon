@@ -1320,48 +1320,54 @@ ul.status-black, .notification-number-box.status-black {
 .complaints-list .jl-status {
   line-height: 75px; }
 
-/* line 491, ../sass/_complaints_preview.scss */
-.add-complaint-page .complaint-attachment {
-  margin-bottom: 32px;
-  padding: 22px 0 30px;
-  float: right; }
-  /* line 495, ../sass/_complaints_preview.scss */
-  .add-complaint-page .complaint-attachment .file-wrapper {
-    cursor: pointer;
-    width: 205px; }
-    /* line 498, ../sass/_complaints_preview.scss */
-    .add-complaint-page .complaint-attachment .file-wrapper .text-above {
-      background-image: url("../images/icon-screp.png");
-      background-position: left center;
-      background-repeat: no-repeat;
-      color: #222427;
-      font-family: "Open Sans";
-      font-size: 18px;
-      padding-left: 22px; }
-    /* line 507, ../sass/_complaints_preview.scss */
-    .add-complaint-page .complaint-attachment .file-wrapper #upload-files {
+/* line 490, ../sass/_complaints_preview.scss */
+.add-complaint-page {
+  /*#argument_text_container {
+      min-height: 38px;
+      box-sizing: unset;
+  }*/ }
+  /* line 491, ../sass/_complaints_preview.scss */
+  .add-complaint-page .complaint-attachment {
+    margin-bottom: 32px;
+    padding: 22px 0 30px;
+    float: right; }
+    /* line 495, ../sass/_complaints_preview.scss */
+    .add-complaint-page .complaint-attachment .file-wrapper {
       cursor: pointer;
-      margin-top: -20px;
-      opacity: 0;
-      position: absolute; }
-/* line 515, ../sass/_complaints_preview.scss */
-.add-complaint-page .file-names {
-  padding-left: 28px;
-  background-color: #ffffff;
-  float: left;
-  width: 100%;
-  border-left: 1px solid #d4d7df;
-  border-right: 1px solid #d4d7df; }
-  /* line 522, ../sass/_complaints_preview.scss */
-  .add-complaint-page .file-names p {
-    margin-bottom: 0;
-    margin-top: 3px; }
-    /* line 525, ../sass/_complaints_preview.scss */
-    .add-complaint-page .file-names p:first-child {
-      margin-top: 10px; }
-    /* line 528, ../sass/_complaints_preview.scss */
-    .add-complaint-page .file-names p:last-child {
-      margin-bottom: 15px; }
+      width: 205px; }
+      /* line 498, ../sass/_complaints_preview.scss */
+      .add-complaint-page .complaint-attachment .file-wrapper .text-above {
+        background-image: url("../images/icon-screp.png");
+        background-position: left center;
+        background-repeat: no-repeat;
+        color: #222427;
+        font-family: "Open Sans";
+        font-size: 18px;
+        padding-left: 22px; }
+      /* line 507, ../sass/_complaints_preview.scss */
+      .add-complaint-page .complaint-attachment .file-wrapper #upload-files {
+        cursor: pointer;
+        margin-top: -20px;
+        opacity: 0;
+        position: absolute; }
+  /* line 515, ../sass/_complaints_preview.scss */
+  .add-complaint-page .file-names {
+    padding-left: 28px;
+    background-color: #ffffff;
+    float: left;
+    width: 100%;
+    border-left: 1px solid #d4d7df;
+    border-right: 1px solid #d4d7df; }
+    /* line 522, ../sass/_complaints_preview.scss */
+    .add-complaint-page .file-names p {
+      margin-bottom: 0;
+      margin-top: 3px; }
+      /* line 525, ../sass/_complaints_preview.scss */
+      .add-complaint-page .file-names p:first-child {
+        margin-top: 10px; }
+      /* line 528, ../sass/_complaints_preview.scss */
+      .add-complaint-page .file-names p:last-child {
+        margin-bottom: 15px; }
 
 /* line 4, ../sass/_edit_applicant.scss */
 .aplicant-tabs-label {
@@ -2472,7 +2478,7 @@ span.revert-bg {
   border-top: none !important; }
 
 /* line 104, ../sass/_applicant_page.scss */
-#cke_1_top, .cke_toolgroup {
+#cke_1_top, .cke_toolgroup, .cke_top {
   background: transparent !important; }
 
 /* line 108, ../sass/_applicant_page.scss */

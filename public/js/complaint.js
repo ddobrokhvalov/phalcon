@@ -65,7 +65,6 @@ $(document).ready(function () {
 
 });
 
-
 var complaint = {
     complainName: '',
     complainText: '',
@@ -438,10 +437,14 @@ function initEditor(id) {
             {name: 'about', groups: ['about']}
         ],
         removeButtons: 'Underline,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source',
+        sharedSpaces: {
+            top: 'itselem',
+            left: 'itselem'
+        }
     });
     // };
     editor.disableAutoInline = true;
-
+    editor.config.extraPlugins = 'sharedspace';
 
 }
 
