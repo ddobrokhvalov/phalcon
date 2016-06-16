@@ -1,101 +1,207 @@
-
-<div class="content">
+<div class="content front-applicant">
     <div class="wrapper wrap-with-menuPanel">
-        <div class="c-content">
-            <div class="c-cnt-pagename">
-                Редактирование заявителя
+        {{flashSession.output()}}
+        <div class="c-cnt-pagename" style="float: none;">Редактировать заявителя</div>
+        <div class="tabs-block">
+            {{hidden_field('applicant-current-type', 'value':applicant.type)}}
+            <div class="aplicant-tabs-label">
+                <div data-tabsLabel="legal-entity" {%if applicant.type=="urlico" %}class="active-tabs-label"{%endif%}>Юридическое лицо</div>
+                <div data-tabsLabel="individual-entrepreneur" {%if applicant.type=="ip" %}class="active-tabs-label"{%endif%}>Индивидуальный предприниматель</div>
+                <div data-tabsLabel="physical-face"  {%if applicant.type=="fizlico" %}class="active-tabs-label"{%endif%}>Физическое лицо</div>
             </div>
-            <form id="applicant_form" action='/applicant/create' method='post' enctype='multipart/form-data' >
-
-                <input type="hidden" name="id" value="{{applicant.id}}">
-                <div class="c-zayavitel">
-                    {% if applicant.type == 'urlico'  %}
-                    <input id="czv1" name="type" type="radio" value="urlico"  checked   hidden>
-                    <label for="czv1" class="c-zv-lb1"  >юридическое лицо</label>
-                    {% endif %}
-                    {% if applicant.type == 'ip'  %}
-                    <input id="czv2" name="type" type="radio" value="ip" checked  hidden>
-                    <label for="czv2" class="c-zv-lb2">индивидуальный предприниматель</label>
-                    {% endif %}
-                    {% if applicant.type == 'fizlico'  %}
-                    <input id="czv3" name="type" type="radio" value="fizlico"  checked hidden>
-                    <label for="czv3" class="c-zv-lb1">физическое лицо</label>
-                    {% endif %}
-                </div>
-
-                <div class="c-zv-frmb">
-                    {% if applicant.name_full != '-' %}
-                    <div class="c-zv-f-str">
-                        <label for="czvr1">Полное наименование</label>
-                        <textarea id="czvr1" name="name_full" >{{ applicant.name_full }}</textarea>
-                    </div>
-                    {% endif %}
-
-                    {% if applicant.name_short != '-' %}
-                    <div class="c-zv-f-str">
-                        <label for="czvr2">Краткое наименование</label>
-                        <input type="text" id="czvr2" name="name_short" value="{{ applicant.name_short }}">
-                    </div>
-                    {% endif %}
-                    {% if applicant.inn != '-' %}
-                    <div class="c-zv-f-str">
-                        <label for="czvr3">ИНН</label>
-                        <input type="text" id="czvr3" name="inn" value="{{ applicant.inn }}" class="c-zv-frmb-in1" >
-                    </div>
-                    {% endif %}
-                    {% if applicant.kpp != '-' %}
-                    <div class="c-zv-f-str">
-                        <label for="czvr4">КПП</label>
-                        <input type="text" id="czvr4" name="kpp" value="{{ applicant.kpp }}" class="c-zv-frmb-in1">
-                    </div>
-                    {% endif %}
-                    <div class="c-zv-f-str">
-                        <label for="czvr5">Адрес местонахождения</label>
-                        <input type="text" id="czvr5" name="address" value="{{ applicant.address }}" class="c-zv-frmb-in2">
-                    </div>
-                    {% if applicant.position != '-' %}
-                    <div class="c-zv-f-str">
-                        <label for="czvr6">Должность заявителя</label>
-                        <input type="text" name="position" id="czvr6" value="{{ applicant.position }}" >
-                    </div>
-                    {% endif %}
-                    <div class="c-zv-f-str">
-                        <label for="czvr7">ФИО заявителя</label>
-                        <input type="text" id="czvr7" name="fio_applicant" value="{{ applicant.fio_applicant }}" >
-                    </div>
-                    <div class="c-zv-f-str">
-                        <label for="czvr8">ФИО контактного лица</label>
-                        <input type="text" id="czvr8" name="fio_contact_person" value="{{ applicant.fio_contact_person }}" >
-                    </div>
-                    <div class="c-zv-f-str">
-                        <label for="czvr9">Контактный факс, телефон</label>
-                        <input type="text" id="czvr9" name="telefone" class="c-zv-frmb-in1" value="{{ applicant.telefone }}" >
-                    </div>
-                    <div class="c-zv-f-str">
-                        <label for="czvr10">E-mail</label>
-                        <input type="text" name="email" id="czvr10" value="{{ applicant.email }}" >
-                    </div>
-                    <div class="c-zv-f-str2">
-                        <label for="czvr11">Прикрепить файлы</label>
-                        <input  id="czvr11" name='file[]' type='file' multiple min='1' max='9999' hidden>
-                        <div class="c-zv-f-q">
-                            ?
-                            <div class="c-zv-f-q-t">
-                                Полномочия заявителя — это либо решение об избрании руководителя (если руководитель является заявителем), либо доверенность от организации на осуществление действий по подаче жалоб в УФАС (если ЭП выпущена не на единолично исполняющее лицо)
-                            </div>
+            <div data-tabs="legal-entity" class="tabs-content {%if applicant.type=="urlico" %}active-tabs-content{%endif%}">
+                <form action="/applicant/save" method="POST" enctype="multipart/form-data" id="urlico">
+                    {{hidden_field('id', 'value':applicant.id)}}
+                    {{hidden_field('type', 'value':'urlico')}}
+                    <label for="entity-textarea">
+                        <div>Полное наименование</div>
+                        {{text_area('name_full', 'value':applicant.name_full, 'id':'entity-textarea', "class":"name-full-textarea")}}
+                    </label>
+                    <label for="entity-short">
+                        <div>Краткое наименование</div>
+                        {{text_field("name_short", "value":applicant.name_short, "data-name":"kratkoe-name", "class":"upper-text",  "id":"entity-short")}}
+                    </label>
+                    <label for="entity-inn">
+                        <div>ИНН</div>
+                        {{numeric_field('inn', 'value':applicant.inn, "id":"entity-inn", "data-name":"number")}}
+                    </label>
+                    <label for="entity-kpp">
+                        <div>КПП</div>
+                        {{numeric_field('kpp', 'value':applicant.kpp, "id":"entity-kpp")}}
+                    </label>
+                    <label for="entity-address">
+                        <div>Адрес местонахождения</div>
+                        {{text_field('address', 'value':applicant.address, "id":"entity-address", "data-name":"address")}}
+                    </label>
+                    <label for="entity-position">
+                        <div>Должность заявителя</div>
+                        {{text_field('position', 'value':applicant.position, "id":"entity-position", "data-name":"position-fio")}}
+                    </label>
+                    <label for="entity-fio-z">
+                        <div>ФИО заявителя</div>
+                        {{text_field('fio_applicant', 'value':applicant.fio_applicant, "id":"entity-fio-z", "data-name":"position-fio")}}
+                    </label>
+                    <label for="entity-position-k">
+                        <div>ФИО контактного лица</div>
+                        {{text_field('fio_contact_person', 'value':applicant.fio_contact_person, "id":"entity-fio-k", "data-name":"position-fio")}}
+                    </label>
+                    <label for="entity-phone">
+                        <div>Контактный факс, телефон</div>
+                        {{numeric_field('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
+                    </label>
+                    <label for="entity-email">
+                        <div>E-mail</div>
+                        {{text_field('email', 'value':applicant.email, "id":"entity-email", "data-name":"position-fio" )}}
+                    </label>
+                    <div class="file-attachment tab1">
+                        <div class="file-wrapper">
+                            <div class="text-above">Прикрепить файлы</div>
+                            <input id="upload-files" type="file" multiple name="upload-files[]">
                         </div>
-                        {% for file in afiles %}
-                        <div class="c-zv-f-doc">
-                            {{ file['name']}} <a href="/applicant/delfile/{{ file['id'] }}"><div class="c-zv-f-del"></div></a>
+                        <div class="file-names"></div>
+                        <script type="text/javascript">
+                            jQuery(document).ready(function(){
+                                jQuery('.tab1 #upload-files').change(function(){
+                                    var cnt = jQuery('.tab1 #upload-files')[0].files.length;
+                                    var i = 0;
+                                    var html = '';
+                                    for (i = 0; i < cnt; i++) {
+                                        html = html + '<p>' + jQuery('.tab1 #upload-files')[0].files[i]['name'] + '</p>';
+                                    }
+                                    jQuery('.tab1 .file-names').html(html);
+                                });
+                            });
+                        </script>
+                        <div class="attached-files">
+                            {% if attached_files|count > 0 %}
+                                {% for file in attached_files %}
+                                    {{ file }}
+                                {% endfor %}
+                            {% endif %}
                         </div>
-                        {% endfor %}
                     </div>
-                    <div class="c-zv-f-str3">
-                        <input id="add_applicant" type="submit" value="Сохранить">
+                    <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'urlico');return false;" class="save-tab-form">Сохранить изменения</button>
+                </form>
+            </div>
+            <div data-tabs="individual-entrepreneur" class="tabs-content {%if applicant.type=="ip" %}active-tabs-content{%endif%}">
+                <form action="/applicant/save" method="POST" enctype="multipart/form-data" id="ip">
+                    {{hidden_field('id', 'value':applicant.id)}}
+                    {{hidden_field('type', 'value':'ip')}}
+                    <label for="entity-textarea">
+                        <div>Полное наименование</div>
+                        {{text_area('name_full', 'value':applicant.name_full, 'id':'entity-textarea', "class":"name-full-textarea")}}
+                    </label>
+                    
+                    <div class="file-attachment tab2">
+                        <div class="file-wrapper">
+                            <div class="text-above">Прикрепить файлы</div>
+                            <input id="upload-files" type="file" multiple name="upload-files[]">
+                        </div>
+                        <div class="file-names"></div>
+                        <script type="text/javascript">
+                            jQuery(document).ready(function(){
+                                jQuery('.tab2 #upload-files').change(function(){
+                                    var cnt = jQuery('.tab2 #upload-files')[0].files.length;
+                                    var i = 0;
+                                    var html = '';
+                                    for (i = 0; i < cnt; i++) {
+                                        html = html + '<p>' + jQuery('.tab2 #upload-files')[0].files[i]['name'] + '</p>';
+                                    }
+                                    jQuery('.tab2 .file-names').html(html);
+                                });
+                            });
+                        </script>
+                        <div class="attached-files">
+                            {% if attached_files|count > 0 %}
+                                {% for file in attached_files %}
+                                    {{ file }}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-
-
+                    <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'ip');return false;"  class="save-tab-form">Сохранить изменения</button>
+                </form>
+            </div>
+            <div data-tabs="physical-face" class="tabs-content {%if applicant.type=="fizlico" %}active-tabs-content{%endif%}">
+                <form action="/applicant/save" method="POST" enctype="multipart/form-data" id="fizlico">
+                    {{hidden_field('id', 'value':applicant.id)}}
+                    {{hidden_field('type', 'value':'fizlico')}}
+                    <label for="entity-fio-z">
+                        <div>ФИО заявителя</div>
+                        {{text_field('fio_applicant', 'value':applicant.fio_applicant, "id":"entity-fio-z", "data-name":"position-fio")}}
+                    </label>
+                    <label for="entity-position-k">
+                        <div>ФИО контактного лица</div>
+                        {{text_field('fio_contact_person', 'value':applicant.fio_contact_person, "id":"entity-fio-k", "data-name":"position-fio")}}
+                    </label>
+                    <label for="entity-phone">
+                        <div>Контактный факс, телефон</div>
+                        {{numeric_field('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
+                    </label>
+                    <label for="entity-email">
+                        <div>E-mail</div>
+                        {{text_field('email', 'value':applicant.email, "id":"entity-email", "data-name":"position-fio" )}}
+                    </label>
+                    <div class="file-attachment tab3">
+                        <div class="file-wrapper">
+                            <div class="text-above">Прикрепить файлы</div>
+                            <input id="upload-files" type="file" multiple name="upload-files[]">
+                        </div>
+                        <div class="file-names"></div>
+                        <script type="text/javascript">
+                            jQuery(document).ready(function(){
+                                jQuery('.tab3 #upload-files').change(function(){
+                                    var cnt = jQuery('.tab3 #upload-files')[0].files.length;
+                                    var i = 0;
+                                    var html = '';
+                                    for (i = 0; i < cnt; i++) {
+                                        html = html + '<p>' + jQuery('.tab3 #upload-files')[0].files[i]['name'] + '</p>';
+                                    }
+                                    jQuery('.tab3 .file-names').html(html);
+                                });
+                            });
+                        </script>
+                        <div class="attached-files">
+                            {% if attached_files|count > 0 %}
+                                {% for file in attached_files %}
+                                    {{ file }}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'fizlico');return false;" class="save-tab-form">Сохранить изменения</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+{{hidden_field('delete-file-id', 'value':'')}}
+    {{hidden_field('delete-applicant-id', 'value':applicant.id)}}
+    <div class="modal fade modal-confirm-change-applicant-type" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">При смене правовой формы будут удалены ранее введённые данные, присущие текущему статусу заявителя, продолжить?</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+            <button type="button" applicant-type="" onclick="jQuery('form#' + jQuery(this).attr('applicant-type')).submit();" class="btn btn-primary">Да</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade confirm-deletion-file-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Удалить файл?</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="jQuery('#delete-file-id').val('');">Отмена</button>
+            <button type="button" onclick="delete_applicant_file_front()" class="btn btn-primary">Удалить</button>
+          </div>
+        </div>
+      </div>
+    </div>

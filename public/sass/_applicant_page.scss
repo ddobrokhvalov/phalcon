@@ -158,7 +158,33 @@
 		background-color: $white;*/
 	}
 }
-.edit-aplicant, .complaints-preview-wrap {
+.front-applicant {
+    .tabs-content {
+        background-color: #f7f8fa;
+        padding-left: 40px;
+        margin-left: 0;
+        width: 100%;
+    }
+    .aplicant-tabs-label div {
+        background-color: #f7f8fa;
+    }
+    .aplicant-tabs-label div.active-tabs-label {
+        background-color: #00aeef;
+    }
+    .aplicant-tabs-label div:hover {
+        background-color: #00aeef !important;
+    }
+    .wrap-with-menuPanel {
+        padding-top: 25px;
+    }
+    .c-cnt-pagename {
+        margin-top: 15px;
+    }
+    .name-full-textarea {
+        width: 815px;
+    }
+}
+.edit-aplicant, .complaints-preview-wrap, .front-applicant {
     .file-wrapper {
         width: 245px;
         cursor: pointer;
@@ -175,6 +201,7 @@
             opacity: 0;
             margin-top: -28px;
             cursor: pointer;
+            display: block;
         }
     }
     .file-names {

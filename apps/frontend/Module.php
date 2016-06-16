@@ -25,6 +25,7 @@ class Module
 		$loader->registerNamespaces(array(
 			'Multiple\Frontend\Controllers' => '../apps/frontend/controllers/',
 			'Multiple\Frontend\Models' => '../apps/frontend/models/',
+            'Multiple\Backend\Models'      => '../apps/backend/models/',
 			'Multiple\Frontend\Plugins'     => '../apps/frontend/plugins/',
 			'Multiple\Frontend\Form'        => '../apps/frontend/form/',
 			'Multiple\Library'     => '../apps/library/',
@@ -65,7 +66,21 @@ class Module
 			$view->setViewsDir('../apps/frontend/views/');
 			$view->registerEngines(
 				array(
-					".phtml" => 'Phalcon\Mvc\View\Engine\Volt'
+					".phtml" => //'Phalcon\Mvc\View\Engine\Volt'
+                    function($view, $di){
+                        $volt = new \Phalcon\Mvc\View\Engine\Volt($view, $di);
+                        $volt->setOptions(array(
+                            'compileAlways' => true
+                            //"true" if you need to renew children templates after base template changed
+                            //or remove or compiled files or make changes in children
+                        ));
+                        $compiler = $volt->getCompiler();
+                        $compiler->addFunction('nl2br', function ($str) {return "nl2br($str)";});
+                        $compiler->addFilter('strtotime', 'strtotime');
+                        $compiler->addFilter('count', 'count');
+                        $compiler->addFilter('$(this).text()', 'length');
+                        return $volt;
+                    }
 				)
 			);
 			return $view;

@@ -360,7 +360,7 @@ jQuery(document).ready(function($) {
         }
         return false;
     });
-    $('.edit-aplicant .delete-file').click(function(){
+    $('.edit-aplicant .delete-file, .front-applicant .delete-file').click(function(){
         $('#delete-file-id').val($(this).find('#file-id').val());
         $('.confirm-deletion-file-lg').modal('show');
     });
@@ -388,6 +388,25 @@ function delete_applicant_file() {
             dataType: 'json',
             success: function(data){
                 window.location.href = '/admin/applicants/edit/' + applicant_id;
+            },
+            complete: function(){
+                $('#delete-file-id').val('');
+            }
+        });
+    }
+}
+
+function delete_applicant_file_front() {
+    var applicant_id = $('#delete-applicant-id').val();
+    var file_id = $('#delete-file-id').val();
+    if (applicant_id != undefined && file_id != undefined) {
+        $.ajax({
+            url: "/applicant/deleteFile",
+            type:'POST',
+            data: { file_id: file_id, applicant_id: applicant_id },
+            dataType: 'json',
+            success: function(data){
+                window.location.href = '/applicant/edit/' + applicant_id;
             },
             complete: function(){
                 $('#delete-file-id').val('');

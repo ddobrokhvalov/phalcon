@@ -20,4 +20,12 @@ class User extends Model
     {
         return 'user';
     }
+
+    public function getSurnameAndInitials() {
+        return $this->surname.' '.substr($this->name,0,1).'.'.substr($this->patronymic,0,1).'.';
+    }
+
+    public function getEmail() {
+        return $this->email;
+    }
 }
