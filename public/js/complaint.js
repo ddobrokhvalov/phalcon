@@ -150,11 +150,12 @@ var complaint = {
             data: this.auctionData + '&complaint_text=' + this.complainText + '&complaint_name=' + this.complainName + '&applicant_id=' + applicant.id,
             success: function (msg) {
                 console.log(msg);
+                window.location.reload(true);
                 //document.location.href = '/complaint/index';
                 // alert('Сохранено успешно');
-                showSomePopupMessage('info', 'Сохранено успешно');
+                /*showSomePopupMessage('info', 'Сохранено успешно');
                 complaint.complaint_id = msg;
-                incrementMenuCount();
+                incrementMenuCount();*/
             },
             error: function (msg) {
                 console.log(msg);
