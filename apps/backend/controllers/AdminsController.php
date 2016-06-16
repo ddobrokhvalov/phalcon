@@ -12,6 +12,7 @@ use Multiple\Backend\Form\AdminForm;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Validator\AdminValidator;
 use Phalcon\Validation\Validator\PresenceOf;
+use Multiple\Library\Log;
 
 class AdminsController extends ControllerBase
 {
@@ -77,7 +78,10 @@ class AdminsController extends ControllerBase
         $delete_admin = $this->request->getPost('delete_admin');
         if (isset($delete_admin) && $delete_admin && $this->user->id == 1) {
             if ($delete_admin != $this->user->id) {
-                Admin::findFirstById($delete_admin)->delete();
+                $adm = Admin::findFirstById($delete_admin);
+                $adm_name = $adm->name;
+                $adm->delete();
+                Log::addAdminLog("Удаление администратора", "Администратор {$adm_name} удален", $this->user);
                 $this->flashSession->success("Администратор успешно удален");
                 return $this->forward("admins/index");
             } else {
@@ -116,8 +120,10 @@ class AdminsController extends ControllerBase
             } elseif ($admin->save($data, array_keys($data)) == false) {
                 foreach ($admin->getMessages() as $message)
                     $this->flashSession->error($message);
-            } else
+            } else {
+                Log::addAdminLog("Изменение администратора", "Администратор {$admin->name} изменен", $this->user);
                 $this->flashSession->success("Изменения сохранены");
+            }
             return $this->dispatcher->forward(array(
                 'module' => 'backend',
                 'controller' => 'admins',
@@ -177,6 +183,7 @@ class AdminsController extends ControllerBase
                         $this->flashSession->error($message);*/
             }
             $this->flashSession->success("Администратор добавлен");
+            Log::addAdminLog("Создание администратора", "Администратор {$admin->name} создан", $this->user);
             return $this->response->redirect('/admin/admins/edit/' . $admin->id . '?ask_admin_rights=1');
             /*return $this->dispatcher->forward(array(
                 'module' => 'backend',
@@ -241,7 +248,12 @@ class AdminsController extends ControllerBase
                             'ids' => $user_ids
                         )
                     )
-                )->delete();
+                );
+                $users_copy = $users;
+                $users->delete();
+                foreach ($users_copy as $us) {
+                    Log::addAdminLog("Удаление администратора", "Администратор {$us->name} удален", $this->user);
+                }
                 $this->flashSession->success("Администратор успешно удален");
             }
             $this->view->disable();

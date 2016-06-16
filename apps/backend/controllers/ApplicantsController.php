@@ -9,6 +9,7 @@ use Multiple\Backend\Models\Complaint;
 use Multiple\Backend\Models\Files;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Form\ApplicantForm;
+use Multiple\Library\Log;
 
 class ApplicantsController  extends ControllerBase
 {
@@ -241,14 +242,16 @@ class ApplicantsController  extends ControllerBase
             $saved_files = array();
             if ($this->request->hasFiles() == true) {
                 foreach ($this->request->getUploadedFiles() as $file) {
-                    $applicant_file = new Files();
-                    $applicant_file->file_path = $file->getName();
-                    $applicant_file->file_size = round($file->getSize() / 1024, 2);
-                    $applicant_file->file_type = $file->getType();
-                    $applicant_file->save();
-                    $saved_files[] = $applicant_file->id;
-                    //Move the file into the application
-                    $file->moveTo($baseLocation . $file->getName());
+                    if (strlen($file->getName())) {
+                        $applicant_file = new Files();
+                        $applicant_file->file_path = $file->getName();
+                        $applicant_file->file_size = round($file->getSize() / 1024, 2);
+                        $applicant_file->file_type = $file->getType();
+                        $applicant_file->save();
+                        $saved_files[] = $applicant_file->id;
+                        //Move the file into the application
+                        $file->moveTo($baseLocation . $file->getName());
+                    }
                 }
             }
             $applicant->fid = serialize($saved_files);
@@ -266,6 +269,7 @@ class ApplicantsController  extends ControllerBase
                 ));
             }*/
             $this->flashSession->success('Заявитель сохранен');
+            Log::addAdminLog("Создание заявителя", "Заявитель  {$applicant->name_full} сохранен", $this->user);
         } else {
             $this->flashSession->error('Выбран недопустимый тип файлов или превышен размер в 5 Мб');
         }
@@ -369,6 +373,7 @@ class ApplicantsController  extends ControllerBase
                 $applicant->fid = serialize(array());
             }
             $applicant->save();
+            Log::addAdminLog("Изменения заявителя", "Заявитель  {$applicant->name_full} изменен", $this->user);
             $this->flashSession->success('Заявитель сохранен');
             $form->clear();
         }
@@ -392,7 +397,12 @@ class ApplicantsController  extends ControllerBase
                         'ids' => $user_ids
                     )
                 )
-            )->delete();
+            );
+            $users_copy = $users;
+            $users->delete();
+            foreach ($users_copy as $us) {
+                Log::addAdminLog("Удаление заявителя", "Заявитель  {$us->name_full} удален", $this->user);
+            }
             $this->flashSession->success("Заявитель успешно удален");
         }
         $this->view->disable();
@@ -410,7 +420,7 @@ class ApplicantsController  extends ControllerBase
             echo json_encode(array('success' => 'redirect'));
             exit();
         }
-
+        $applicant_name = $applicant->name_full;
         if (!$applicant->delete()) {
             foreach ($applicant->getMessages() as $message) {
                 $this->flashSession->error($message);
@@ -421,6 +431,7 @@ class ApplicantsController  extends ControllerBase
         }
 
         $this->flashSession->success("Заявитель был удален");
+        Log::addAdminLog("Удаление заявителя", "Заявитель  {$applicant_name} удален", $this->user);
         $this->view->disable();
         echo json_encode(array('success' => 'ok'));
     }

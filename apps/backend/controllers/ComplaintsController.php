@@ -8,6 +8,7 @@ use Multiple\Backend\Models\Answer;
 use Multiple\Backend\Models\Files;
 use Multiple\Backend\Models\Permission;
 use Multiple\Library\PaginatorBuilder;
+use Multiple\Library\Log;
 
 class ComplaintsController extends ControllerBase
 {
@@ -161,9 +162,13 @@ class ComplaintsController extends ControllerBase
             if($status && $complaint_id){
                 if (is_array($complaint_id)) {
                     foreach ($complaint_id as $id) {
+                        $complaint = Complaint::findFirstById($id);
+                        Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
                         @Complaint::changeStatus($status, array($id));
                     }
                 } else {
+                    $complaint = Complaint::findFirstById($complaint_id);
+                    Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
                     @Complaint::changeStatus($status, array($complaint_id));
                 }
                 if ($status == 'copy') {

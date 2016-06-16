@@ -12,6 +12,7 @@ use Multiple\Backend\Models\Permission;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Validator\UserValidator;
 use Phalcon\Validation\Validator\PresenceOf;
+use Multiple\Library\Log;
 
 class UserController extends ControllerBase
 {
@@ -113,8 +114,10 @@ class UserController extends ControllerBase
         } elseif ($user->save($data, array_keys($data)) == false) {
             foreach ($user->getMessages() as $message)
                 $this->flashSession->error($message);
-        } else
+        } else {
+            Log::addAdminLog("Редактирование пользователя", "Пользователь {$user->firstname} {$user->lastname} изменен", $this->user);
             $this->flashSession->success("Изменения сохранены");
+        }
         
         return $this->dispatcher->forward(array(
             'module' => 'backend',
@@ -163,21 +166,24 @@ class UserController extends ControllerBase
                 $messages = $user->getMessages();
                 foreach ($messages as $message)
                     $this->flashSession->error($message);
-            } else
+            } else {
+                Log::addAdminLog("Создание пользователя", "Пользователь {$user->firstname} {$user->lastname} сохранен", $this->user);
                 $this->flashSession->success("Пользователь успешно сохранен");
+            }
         }
-        if(count($messages))
+        if(count($messages)) {
             return $this->dispatcher->forward(array(
                 'module' => 'backend',
                 'controller' => 'user',
                 'action' => 'add'
             ));
-        else
+        } else {
             return $this->dispatcher->forward(array(
                 'module' => 'backend',
                 'controller' => 'user',
                 'action' => 'index'
             ));
+        }
     }
 
     public function editAction($id)
@@ -235,7 +241,12 @@ class UserController extends ControllerBase
                             'ids' => $user_ids
                         )
                     )
-                )->delete();
+                );
+                $users_copy = $users;
+                $users->delete();
+                foreach ($users_copy as $us) {
+                    Log::addAdminLog("Удаление пользователя", "Пользователь {$us->firstname} {$us->lastname} удален", $this->user);
+                }
             }
             
             $this->flashSession->success('Пользователи удалены');
