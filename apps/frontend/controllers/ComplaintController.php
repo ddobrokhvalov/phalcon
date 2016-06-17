@@ -124,9 +124,10 @@ class ComplaintController extends ControllerBase
         $complaint->addComplaint($data);
 
         if ($complaint->save() == false) {
-            foreach ($complaint->getMessages() as $message) {
+            $this->flashSession->error('Не выбран заявитель');
+            /*foreach ($complaint->getMessages() as $message) {
                 $this->flashSession->error($message);
-            }
+            }*/
             $response = array('result' => 'error', 'message' => 'Ошибка при попытке сохранения жалобы');
         } else {
             $response = array('result' => 'success', 'id' => $complaint->id);
