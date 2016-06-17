@@ -18,6 +18,7 @@ class UsersController extends Controller
         if (!isset($redirect_to) || !$redirect_to || $redirect_to == '/login/start') {
             $redirect_to = '/complaint/index';
         }
+        $redirect_to = str_replace('public/', '', $redirect_to);
         $old_password = $this->request->getPost('old_password');
         $new_password = $this->request->getPost('new_password');
         $new_password_confirm = $this->request->getPost('new_password_confirm');
