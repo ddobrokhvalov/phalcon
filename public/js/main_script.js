@@ -369,7 +369,7 @@ jQuery(document).ready(function($) {
     $('.ch-r-m-text ul li').each(function(){
         ++li_mess_count;
         if (li_mess_count > 0) {
-            ul_mes_height = li_mess_count * 300;
+            ul_mes_height = li_mess_count * 150;
             if (ul_mes_height > 600) {
                 ul_mes_height = 600;
             }
