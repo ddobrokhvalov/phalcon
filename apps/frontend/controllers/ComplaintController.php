@@ -7,6 +7,7 @@ use Multiple\Frontend\Models\Applicant;
 use Multiple\Frontend\Models\Category;
 use Multiple\Frontend\Models\Complaint;
 use Multiple\Frontend\Models\Question;
+use Multiple\Frontend\Models\Files;
 use Phalcon\Mvc\Controller;
 use \Phalcon\Paginator\Adapter\NativeArray as Paginator;
 use Multiple\Library\PaginatorBuilder;
@@ -56,6 +57,26 @@ class ComplaintController extends ControllerBase
 //            $this->session->destroy();
 //            return $this->forward('/');
 //        }
+
+        $files_html = [];
+        if ($complaint->fid) {
+            $file_ids = unserialize($complaint->fid);
+            if (count($file_ids)) {
+                $file_model = new Files();
+                $files = Files::find(
+                    array(
+                        'id IN ({ids:array})',
+                        'bind' => array(
+                            'ids' => $file_ids
+                        )
+                    )
+                );
+                foreach ($files as $file) {
+                    $files_html[] = $file_model->getFilesHtml($file, $id, 'complaint');
+                }
+            }
+        }
+        $this->view->attached_files = $files_html;
         $complaint->purchases_name = str_replace("\r\n", " ", $complaint->purchases_name);
         $question = new Question();
         $complaintQuestion = $question->getComplainQuestionAndAnswer($id);

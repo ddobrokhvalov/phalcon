@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content edit-complaint-page">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
             <div class="c-cnt-pagename">
@@ -57,7 +57,7 @@
             <div class="c-jadd1">
                 <div class="c-jadd1-z">
                     <span>Номер извещения</span><br>
-                    <i>После ввода номера извещения, все данные о закупке заполняться автоматически</i>
+                    <i>После ввода номера извещения, все данные о закупке заполнятся автоматически</i>
                 </div>
                 <div class="c-jadd1-f" id="result_container">
                     №<input id="auction_id" type="text" value="" >
@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div class="c-jadd-spoiler folded">
-                    <a></a>
+                    <span style="text-transform: uppercase;">Показать подробно</span>
                 </div>
             </div>
 
@@ -155,16 +155,16 @@
                                 });*/
                             /*});*/
                         </script>
-
-                        <input type="file" name="files[]" multiple id="upload_proofs"><input type="button" id="upload">
-                        <div class="c-zv-f-doc">
-                            Решение по извещению 127563728493872.doc (125 Кб)
-                            <div class="c-zv-f-del"></div>
+                        <div class="attached-files">
+                            {% if attached_files|count > 0 %}
+                                {% for file in attached_files %}
+                                    {{ file }}
+                                {% endfor %}
+                                {% else %}
+                                    {{ 'Нет прикрепленных файлов' }}
+                            {% endif %}
                         </div>
-                        <div class="c-zv-f-pdf">
-                            Доказательства.pdf (34 Кб)
-                            <div class="c-zv-f-del"></div>
-                        </div>
+                        
                     </div>
                     <div class="c-jd2-f-edit">
                         <div class="c-jd2-f-edit-text mCustomScrollbar">

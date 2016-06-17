@@ -2556,11 +2556,11 @@ span.revert-bg {
   width: 815px; }
 
 /* line 188, ../sass/_applicant_page.scss */
-.edit-aplicant .file-wrapper, .complaints-preview-wrap .file-wrapper, .front-applicant .file-wrapper {
+.edit-aplicant .file-wrapper, .complaints-preview-wrap .file-wrapper, .front-applicant .file-wrapper, .edit-complaint-page .file-wrapper {
   width: 245px;
   cursor: pointer; }
   /* line 191, ../sass/_applicant_page.scss */
-  .edit-aplicant .file-wrapper .text-above, .complaints-preview-wrap .file-wrapper .text-above, .front-applicant .file-wrapper .text-above {
+  .edit-aplicant .file-wrapper .text-above, .complaints-preview-wrap .file-wrapper .text-above, .front-applicant .file-wrapper .text-above, .edit-complaint-page .file-wrapper .text-above {
     color: #222427;
     font-size: 22px;
     font-family: "Open Sans";
@@ -2569,58 +2569,58 @@ span.revert-bg {
     background-repeat: no-repeat;
     background-position: left center; }
   /* line 200, ../sass/_applicant_page.scss */
-  .edit-aplicant .file-wrapper #upload-files, .complaints-preview-wrap .file-wrapper #upload-files, .front-applicant .file-wrapper #upload-files {
+  .edit-aplicant .file-wrapper #upload-files, .complaints-preview-wrap .file-wrapper #upload-files, .front-applicant .file-wrapper #upload-files, .edit-complaint-page .file-wrapper #upload-files {
     opacity: 0;
     margin-top: -28px;
     cursor: pointer;
     display: block; }
 /* line 207, ../sass/_applicant_page.scss */
-.edit-aplicant .file-names, .complaints-preview-wrap .file-names, .front-applicant .file-names {
+.edit-aplicant .file-names, .complaints-preview-wrap .file-names, .front-applicant .file-names, .edit-complaint-page .file-names {
   padding-left: 28px;
   margin-bottom: 15px; }
   /* line 210, ../sass/_applicant_page.scss */
-  .edit-aplicant .file-names p, .complaints-preview-wrap .file-names p, .front-applicant .file-names p {
+  .edit-aplicant .file-names p, .complaints-preview-wrap .file-names p, .front-applicant .file-names p, .edit-complaint-page .file-names p {
     margin-bottom: 0;
     margin-top: 3px; }
 /* line 217, ../sass/_applicant_page.scss */
-.edit-aplicant .attached-files .attached-file-row .file-link, .complaints-preview-wrap .attached-files .attached-file-row .file-link, .front-applicant .attached-files .attached-file-row .file-link {
+.edit-aplicant .attached-files .attached-file-row .file-link, .complaints-preview-wrap .attached-files .attached-file-row .file-link, .front-applicant .attached-files .attached-file-row .file-link, .edit-complaint-page .attached-files .attached-file-row .file-link {
   color: #34383e;
   float: left;
   margin-left: 10px; }
   /* line 221, ../sass/_applicant_page.scss */
-  .edit-aplicant .attached-files .attached-file-row .file-link div, .complaints-preview-wrap .attached-files .attached-file-row .file-link div, .front-applicant .attached-files .attached-file-row .file-link div {
+  .edit-aplicant .attached-files .attached-file-row .file-link div, .complaints-preview-wrap .attached-files .attached-file-row .file-link div, .front-applicant .attached-files .attached-file-row .file-link div, .edit-complaint-page .attached-files .attached-file-row .file-link div {
     color: #34383e;
     font-size: 18px;
     line-height: 28px;
     font-family: "Open Sans"; }
   /* line 227, ../sass/_applicant_page.scss */
-  .edit-aplicant .attached-files .attached-file-row .file-link:hover, .complaints-preview-wrap .attached-files .attached-file-row .file-link:hover, .front-applicant .attached-files .attached-file-row .file-link:hover {
+  .edit-aplicant .attached-files .attached-file-row .file-link:hover, .complaints-preview-wrap .attached-files .attached-file-row .file-link:hover, .front-applicant .attached-files .attached-file-row .file-link:hover, .edit-complaint-page .attached-files .attached-file-row .file-link:hover {
     color: #34383e;
     text-decoration: none; }
 /* line 232, ../sass/_applicant_page.scss */
-.edit-aplicant .attached-files .attached-file-row .file-icon, .complaints-preview-wrap .attached-files .attached-file-row .file-icon, .front-applicant .attached-files .attached-file-row .file-icon {
+.edit-aplicant .attached-files .attached-file-row .file-icon, .complaints-preview-wrap .attached-files .attached-file-row .file-icon, .front-applicant .attached-files .attached-file-row .file-icon, .edit-complaint-page .attached-files .attached-file-row .file-icon {
   width: 18px;
   height: 21px;
   float: left;
   margin-top: 3px; }
 /* line 239, ../sass/_applicant_page.scss */
-.edit-aplicant .attached-files .delete-file, .complaints-preview-wrap .attached-files .delete-file, .front-applicant .attached-files .delete-file {
+.edit-aplicant .attached-files .delete-file, .complaints-preview-wrap .attached-files .delete-file, .front-applicant .attached-files .delete-file, .edit-complaint-page .attached-files .delete-file {
   width: 28px;
   height: 28px;
   float: left;
   background: url(../images/icon-file-del.png) center no-repeat;
   cursor: pointer; }
 /* line 246, ../sass/_applicant_page.scss */
-.edit-aplicant .attached-files .pdf-file, .complaints-preview-wrap .attached-files .pdf-file, .front-applicant .attached-files .pdf-file {
+.edit-aplicant .attached-files .pdf-file, .complaints-preview-wrap .attached-files .pdf-file, .front-applicant .attached-files .pdf-file, .edit-complaint-page .attached-files .pdf-file {
   background: url(../images/upload-icons.png) right bottom no-repeat; }
 /* line 249, ../sass/_applicant_page.scss */
-.edit-aplicant .attached-files .msword-file, .complaints-preview-wrap .attached-files .msword-file, .front-applicant .attached-files .msword-file {
+.edit-aplicant .attached-files .msword-file, .complaints-preview-wrap .attached-files .msword-file, .front-applicant .attached-files .msword-file, .edit-complaint-page .attached-files .msword-file {
   background: url(../images/upload-icons.png) right top no-repeat; }
 /* line 252, ../sass/_applicant_page.scss */
-.edit-aplicant .attached-files .image-file, .complaints-preview-wrap .attached-files .image-file, .front-applicant .attached-files .image-file {
+.edit-aplicant .attached-files .image-file, .complaints-preview-wrap .attached-files .image-file, .front-applicant .attached-files .image-file, .edit-complaint-page .attached-files .image-file {
   background: url(../images/upload-icons.png) left bottom no-repeat; }
 /* line 255, ../sass/_applicant_page.scss */
-.edit-aplicant .attached-files .archive-file, .complaints-preview-wrap .attached-files .archive-file, .front-applicant .attached-files .archive-file {
+.edit-aplicant .attached-files .archive-file, .complaints-preview-wrap .attached-files .archive-file, .front-applicant .attached-files .archive-file, .edit-complaint-page .attached-files .archive-file {
   background: url(../images/upload-icons.png) left top no-repeat; }
 
 /* line 261, ../sass/_applicant_page.scss */
