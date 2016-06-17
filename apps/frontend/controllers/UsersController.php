@@ -15,7 +15,7 @@ class UsersController extends Controller
 
     public function changePasswordAction() {
         $redirect_to = $this->request->getPost('current_path');
-        if (!isset($redirect_to) || !$redirect_to) {
+        if (!isset($redirect_to) || !$redirect_to || $redirect_to == '/login/start') {
             $redirect_to = '/complaint/index';
         }
         $old_password = $this->request->getPost('old_password');
