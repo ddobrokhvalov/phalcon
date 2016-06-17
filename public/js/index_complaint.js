@@ -98,6 +98,9 @@ var indexComplaint = {
     },
     addComplain: function (id) {
         this.selectedComplaint.push(id);
+        if (this.selectedComplaint.length > 0) {
+            this.activeButton('.to-archive');
+        }
         if (this.selectedComplaint.length == 1) {
             this.activeButton('.button-copy');
             if(currentStatus == 'submitted')
