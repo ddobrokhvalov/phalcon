@@ -364,6 +364,18 @@ jQuery(document).ready(function($) {
         $('#delete-file-id').val($(this).find('#file-id').val());
         $('.confirm-deletion-file-lg').modal('show');
     });
+    var li_mess_count = 0;
+    var ul_mes_height = 0;
+    $('.ch-r-m-text ul li').each(function(){
+        ++li_mess_count;
+        if (li_mess_count > 0) {
+            ul_mes_height = li_mess_count * 300;
+            if (ul_mes_height > 600) {
+                ul_mes_height = 600;
+            }
+        }
+    });
+    $('.ch-r-m-text').css('height', ul_mes_height + 'px');
 });
 var userPageLtContentLi = 0;
 //status block

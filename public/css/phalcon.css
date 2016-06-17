@@ -1075,7 +1075,7 @@ input[type="text"]:focus, textarea:focus {
 }
 .ch-r-m-text {
     float: left;
-    height: 600px;
+    /*height: 600px;*/
     width: 100%;
 }
 .ch-r-m-list {
