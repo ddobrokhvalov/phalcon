@@ -148,7 +148,7 @@
                 {{ user.email }}
             </div>
             <div class="ch-r-mail">
-                <span>5</span>
+                <span>{% if count_unread %} {{count_unread}} {% else %} {% endif %}</span>
             </div>
             <div class="ch-r-sett"></div>
             <a href="/login/logout" class="ch-r-logout"></a>
@@ -193,40 +193,49 @@
             <div class="ch-r-mail-dd">
                 <div class="ch-r-mail-dd-z">
                     Сообщения
-                    <span>5</span>
+                    <span>{% if count_unread %} {{count_unread}} {% else %} {% endif %}</span>
                 </div>
                 <div class="ch-r-m-text mCustomScrollbar">
                     <ul class="ch-r-m-list">
-                        <li class="done">
-                            Статус вашей жалобы на заявку №16473856438 изменен на «Обоснована»
-                            <a href="#">Перейти к жалобе</a>
-                            <span>6 января 2016</span>
-                        </li>
-                        <li class="notdone">
-                            Статус вашей жалобы на заявку №23872046237 изменен на «Не обоснована»
-                            <a href="#">Перейти к жалобе</a>
-                            <span>6 января 2016</span>
-                        </li>
-                        <li class="rassmotr">
-                            Статус вашей жалобы на заявку №16473856438 изменен на «Обоснована»
-                            <a href="#">Перейти к жалобе</a>
-                            <span>6 января 2016</span>
-                        </li>
-                        <li class="system">
-                            Системное сообщение, об изменнии порядка добавления жалобы в УФАС. Срочно! Прочитайте внимательно!
-                            <a href="#">Перейти</a>
-                            <span>6 января 2016</span>
-                        </li>
-                        <li class="done">
-                            Статус вашей жалобы на заявку №16473856438 изменен на «Обоснована»
-                            <a href="#">Перейти к жалобе</a>
-                            <span>6 января 2016</span>
-                        </li>
+                        {% for new_status in move_statuses %}
+                            <li class="{{ new_status['color'] }}">
+                                Статус вашей жалобы на заявку №{{new_status['auction_id']}} изменен на «{{new_status['status']}}»
+                                <a href="/complaint/edit/{{new_status['complaint_id']}}">Перейти к жалобе</a>
+                                <span>{{ new_status['date'] }}</span>
+                            </li>
+                        {% endfor %}
+                        {% for message in messages %}
+                            <li class="system">
+                                <div> Сообщение от администратора<br>Тема: {{ message.subject }} </div>
+                                <a href="#" onclick="jQuery('#message-text').val(jQuery(this).parent().find('#message_body').val());jQuery('.modal-message-detail').modal('show');return false;">Посмотреть</a>
+                                <span>{{ date('d F Y', message.time|strtotime) }}</span>
+                                {{hidden_field('message_body', 'value':message.body)}}
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div class="modal fade modal-message-detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Просмотр сообщения</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <textarea disabled="disabled" style="min-height: 220px;" class="form-control" id="message-text" value=""></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <?php echo $this->getContent(); ?>

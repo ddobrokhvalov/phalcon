@@ -85,6 +85,70 @@ class Complaint extends Model
         );
     }
 
+    public function getComplaintMovingStatus($user_id) {
+        $db = $this->getDi()->getShared('db');
+        $result = $db->query("SELECT c.id AS complaint_id, c.auction_id AS auction_id FROM complaint c LEFT JOIN applicant a ON c.applicant_id = a.id WHERE a.user_id = {$user_id}");
+        $ids = $result->fetchAll();
+        $compl_ids = array();
+        foreach ($ids as $id) {
+            $compl_ids["{$id['complaint_id']}"] = $id['auction_id'];
+        }
+        return $compl_ids;
+    }
+
+    public function getCurrentStatusRussian($status, $short = TRUE) {
+        switch ($status) {
+            case 'draft':
+                if ($short)
+                    return 'Черновик';
+                return '<span data-status="draft" class="jl-status jl-chernov">Черновик</span>';
+            case 'justified':
+                if ($short)
+                    return 'Обоснована';
+                return '<span data-status="justified" class="jl-status jl-done">Обоснована</span>';
+            case 'unfounded':
+                if ($short)
+                    return 'Необоснована';
+                return '<span data-status="unfounded" class="jl-status jl-notdone">Необоснована</span>';
+            case 'under_consideration':
+                if ($short)
+                    return 'На рассмотрении';
+                return '<span data-status="under_consideration" class="jl-status jl-rassmotr">На рассмотрении</span>';
+            case 'submitted':
+                if ($short)
+                    return 'Подана';
+                return '<span data-status="submitted" class="jl-status jl-podana">Подана</span>';
+            case 'recalled':
+                if ($short)
+                    return 'Отозвана';
+                return '<span data-status="recalled" class="jl-status jl-fail">Отозвана</span>';
+            case 'archive':
+                if ($short)
+                    return 'Архив';
+                return '<span data-status="archive" class="jl-status jl-archive">Архив</span>';
+            default:
+                return '';
+        }
+    }
+
+    public function getComplaintColor($status){
+        switch ($status) {
+            case 'draft':
+            case 'submitted':
+            case 'recalled':
+            case 'archive':
+                return ' box-status-black ';
+            case 'justified':
+                return ' box-status-green ';
+            case 'unfounded':
+                return ' box-status-red ';
+            case 'under_consideration':
+                return ' box-status-blue ';
+            default:
+                return '';
+        }
+    }
+
     public function checkComplaintOwner($id, $user_id)
     {
         $db = $this->getDi()->getShared('db');

@@ -1124,6 +1124,34 @@ input[type="text"]:focus, textarea:focus {
     color: #fff;
     display: block;
 }
+.ch-r-m-list li.box-status-black {
+    box-shadow: 3px 0 0 0 #000000 inset;
+}
+.ch-r-m-list li.box-status-blue {
+    box-shadow: 3px 0 0 0 #00aeef inset;
+}
+.ch-r-m-list li.box-status-red {
+    box-shadow: 3px 0 0 0 #f26d7d inset;
+}
+.ch-r-m-list li.box-status-green {
+    box-shadow: 3px 0 0 0 #29d3b2 inset;
+}
+.ch-r-m-list li.box-status-black:hover {
+    color: #000 !important;
+}
+.ch-r-m-list li.box-status-black:hover a {
+    color: #000 !important;
+    border: 1px solid #000;
+}
+.ch-r-m-list li.box-status-blue:hover {
+    background-color: #00aeef;
+}
+.ch-r-m-list li.box-status-red:hover {
+    background-color: #f26d7d;
+}
+.ch-r-m-list li.box-status-green:hover {
+    background-color: #29d3b2;
+}
 .ch-r-m-list li.done {
     box-shadow: 3px 0 0 0 #29d3b2 inset;
 }
