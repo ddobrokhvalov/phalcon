@@ -93,7 +93,9 @@
             <b class="applicant-name-container"></b>
             <span>Изменить Заявителя</span>
         </div>
-
+        <div class="session_message">
+            {{flashSession.output()}}
+        </div>
         <div class="ch-l-dd">
             <div  class="ch-left-cl">
                 <b class="applicant-name-container"></b>
@@ -171,21 +173,24 @@
                 <div class="ch-r-s-inf">
                     <div class="ch-r-s-i-usr">
                         Добро пожаловать<br>
-                        Vladimir.leonov@gmail.com
+                        {{ user.email }}
                     </div>
                     <div class="ch-r-s-i-mail">
                         <input id="cr1" type="checkbox" name="cr1" hidden>
                         <label for="cr1">Получать уведомления на e-mail</label>
                     </div>
                     <div class="ch-r-s-inf-f">
-                        <span>Сменить пароль</span>
-                        <label for="usri1">Старый пароль</label>
-                        <input type="text" id="usri1">
-                        <label for="usri2">Новый пароль</label>
-                        <input type="text" id="usri2">
-                        <label for="usri3">Новый пароль еще раз</label>
-                        <input type="text" id="usri3">
-                        <input type="submit" value="Сменить пароль">
+                        <form action="/users/changePassword" method="POST">
+                            <span>Сменить пароль</span>
+                            <label for="usri1">Старый пароль</label>
+                            <input type="password" id="usri1" name="old_password">
+                            <label for="usri2">Новый пароль</label>
+                            <input type="password" id="usri2" name="new_password">
+                            <label for="usri3">Новый пароль еще раз</label>
+                            <input type="password" id="usri3" name="new_password_confirm">
+                            <input type="submit" value="Сменить пароль">
+                            <input type="hidden" id="current_path" name="current_path" value="">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -237,6 +242,11 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#current_path").val(window.location.pathname);
+    });
+</script>
 
 <?php echo $this->getContent(); ?>
 
