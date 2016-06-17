@@ -136,6 +136,24 @@ class ComplaintController extends ControllerBase
         exit;
     }
 
+    public function askQuestionAction(){
+        $question = $this->request->getPost('new-question');
+        $complaint_id = $this->request->getPost('complaint_id');
+        if (isset($question) && strlen($question) && isset($complaint_id) && $complaint_id) {
+            $new_question = new Question();
+            $new_question->user_id = $this->user->id;
+            $new_question->complaint_id = $complaint_id;
+            $new_question->text = $question;
+            $new_question->date = date('Y-m-d H:i:s');
+            $new_question->is_read = 'n';
+            $new_question->save();
+            $this->flashSession->success('Ваш вопрос отправлен юристу');
+            return $this->response->redirect('/complaint/edit/' . $complaint_id);
+        }
+        $this->flashSession->error('Поле с вопросом не заполнено');
+        return $this->response->redirect('/complaint/index');
+    }
+
     public function statusAction()
     {
         if (!$this->request->isPost()) {

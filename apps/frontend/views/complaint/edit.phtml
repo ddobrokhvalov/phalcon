@@ -267,8 +267,11 @@
 
 
                 <div class="c-jd3-f">
-                    <textarea></textarea>
-                    <input type="submit" value="начать консультацию">
+                    <form action="/complaint/askQuestion" method="POST">
+                        <textarea id="new-question" name="new-question"></textarea>
+                        <input type="submit" value="начать консультацию">
+                        <input type="hidden" name="complaint_id" id="complaint_id" value="{{complaint.id}}">
+                    </form>
                 </div>
             </div>
         </div>
