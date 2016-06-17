@@ -73,7 +73,7 @@ class ControllerBase extends Controller
         if (count($statuses)) {
             $move_statuses = ComplaintMovingHistory::find(
                 array(
-                    'complaint_id IN ({ids:array}) AND is_read = 1',
+                    'complaint_id IN ({ids:array}) AND is_read = 0',
                     'bind' => array(
                         'ids' => array_keys($statuses)
                     )
