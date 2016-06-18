@@ -212,9 +212,10 @@
                         {% for message in messages %}
                             <li class="system">
                                 <div> Сообщение от администратора<br>Тема: {{ message.subject }} </div>
-                                <a href="#" onclick="jQuery('#message-text').val(jQuery(this).parent().find('#message_body').val());jQuery('.modal-message-detail').modal('show');return false;">Посмотреть</a>
+                                <a href="#" onclick="jQuery('#message-text').val(jQuery(this).parent().find('#message_body').val());jQuery('.modal-message-detail').modal('show');setMessageRed(jQuery(this).parent().find('#message_id').val());return false;">Посмотреть</a>
                                 <span>{{ date('d F Y', message.time|strtotime) }}</span>
                                 {{hidden_field('message_body', 'value':message.body)}}
+                                {{hidden_field('message_id', 'value':message.id)}}
                             </li>
                         {% endfor %}
                     </ul>

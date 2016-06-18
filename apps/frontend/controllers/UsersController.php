@@ -4,6 +4,7 @@ namespace Multiple\Frontend\Controllers;
 
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\User;
+use Multiple\Frontend\Models\Messages;
 
 class UsersController extends Controller
 {
@@ -47,6 +48,17 @@ class UsersController extends Controller
                     $this->flashSession->error('Старый пароль введен не верно');
                     return $this->response->redirect($redirect_to);
                 }
+            }
+        }
+    }
+
+    public function setMessageReadAction() {
+        $id = $this->request->getPost('message_id');
+        if (isset($id) && $id) {
+            $message = Messages::findFirstById($id);
+            if ($message) {
+                $message->is_read = 1;
+                $message->update();
             }
         }
     }

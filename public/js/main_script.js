@@ -408,6 +408,23 @@ function delete_applicant_file() {
     }
 }
 
+function setMessageRed(message_id) {
+    if (message_id != undefined) {
+        $.ajax({
+            url: "/users/setMessageRead",
+            type:'POST',
+            data: { message_id: message_id },
+            dataType: 'json',
+            success: function(data){
+                //window.location.href = '/applicant/edit/' + applicant_id;
+            },
+            complete: function(){
+                //$('#delete-file-id').val('');
+            }
+        });
+    }
+}
+
 function delete_applicant_file_front() {
     var applicant_id = $('#delete-applicant-id').val();
     var file_id = $('#delete-file-id').val();
