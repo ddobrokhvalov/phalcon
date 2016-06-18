@@ -5,6 +5,7 @@ use Phalcon\Mvc\Controller;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Backend\Models\Complaint;
 use Multiple\Backend\Models\Answer;
+use Multiple\Backend\Models\Messages;
 use Multiple\Backend\Models\Files;
 use Multiple\Backend\Models\Permission;
 use Multiple\Library\PaginatorBuilder;
@@ -195,7 +196,6 @@ class ComplaintsController extends ControllerBase
             }
             $data = "ok";
             $status = $this->request->getPost("status");
-            $complaint_id = $this->request->getPost("id");
             $answer = new Answer();
             $answer->question_id = $this->request->get("question");
             $answer->admin_id = $this->user->id;
@@ -203,6 +203,24 @@ class ComplaintsController extends ControllerBase
             $answer->date = date('Y-m-d H:i:s');
             $answer->save();
             $this->flashSession->success('Ответ сохранен');
+            /*Send new system message to user*/
+            $complaint = new Complaint();
+            $from = $this->user->id;
+            $complaint_id = $this->request->get("complaint");
+            if (isset($complaint_id) && $complaint_id) {
+                $toid = $complaint->getComplaintOwner($complaint_id);
+                $subject = "Системное сообщение";
+                $body = "Юрист дал ответ на ваш вопрос";
+                if ($toid) {
+                    $message = new Messages();
+                    $message->from_uid = $from;
+                    $message->to_uid = $toid;
+                    $message->subject = $subject;
+                    $message->body = $body;
+                    $message->time = date('Y-m-d H:i:s');
+                    $message->save();
+                }
+            }
             return $this->forward('complaints/preview/' . $this->request->get("complaint"));
         }
     }

@@ -81,6 +81,16 @@ class Complaint extends Model
         return count($rows) ? '<span class="has-questions"></span>' : '<span class="no-questions"></span>';
     }
 
+    public function getComplaintOwner($id) {
+        $db = $this->getDi()->getShared('db');
+        $result = $db->query("SELECT a.user_id FROM complaint c LEFT JOIN applicant a ON c.applicant_id = a.id WHERE c.id = {$id}");
+        $result = $result->fetch();
+        if ($result) {
+            return $result['user_id'];
+        }
+        return false;
+    }
+
     public function findUserComplaints($user_id, $status,$applicant_id =false)
     {
         $db = $this->getDi()->getShared('db');
