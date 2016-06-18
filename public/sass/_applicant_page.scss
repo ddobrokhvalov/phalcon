@@ -309,3 +309,38 @@
 		z-index: 9;
 	}
 }
+.message-page {
+    .lt-content-top {
+        li:first-child {
+            width: 325px;
+        }
+        li:nth-child(2) {
+            width: 515px;
+            line-height: 75px;
+            overflow: hidden;
+        }
+        li:nth-child(3) {
+            width: 160px;
+            span {
+                background-image: none;
+            }
+        }
+    }
+    .lt-content-main {
+        li:first-child {
+            width: 325px;
+            padding-left: 30px !important;
+        }
+        li:nth-child(2) {
+            width: 515px;
+            line-height: 75px;
+            overflow: hidden;
+        }
+        li:nth-child(3) {
+            width: 160px;
+        }
+    }
+    .lt-content-main.new-message {
+        font-weight: bold;
+    }
+}

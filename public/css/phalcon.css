@@ -1092,6 +1092,23 @@ input[type="text"]:focus, textarea:focus {
     float: left;
     list-style: outside none none;
     width: 100%;
+    margin-bottom: 0;
+}
+li.all-message-link {
+    padding-bottom: 20px !important;
+}
+li.all-message-link span {
+    color: #000 !important;
+    font-size: 14px!important;
+    opacity: 1!important;
+    text-align: center!important;
+    text-decoration: underline!important;
+    text-transform: none!important;
+    cursor: pointer!important;
+    display: block !important;
+    float: none !important;
+    margin: 0 auto !important;
+    width: 110px !important;
 }
 .ch-r-m-list li {
     border-bottom: 1px solid #e1e1e1;

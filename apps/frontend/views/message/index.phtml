@@ -1,0 +1,51 @@
+<div class="content message-page">
+    <div class="wrapper wrap-with-menuPanel">
+        <div class="c-cnt-pagename" style="float: none;">Сообщения</div>
+        <div class="admin-lt-content" id="sort-table">
+            <ul class="lt-content-top">
+                <li sort-field="sort-role"><span class="sortable">Тема</span></li>
+                <li sort-field="sort-type"><span class="sortable">Сообщение</span></li>
+                <li sort-field="sort-date"><span class="sortable">Дата</span></li>
+            </ul>
+            {% for message in page.items %}
+            <ul class="lt-content-main {% if message.is_read == 0 %} new-message {% endif %}">
+                <li><div class="lt-psevdo-check">{{hidden_field('message-id', 'value':message.id)}}</div>{{ message.subject }}</li>
+                <li>{{ message.body }}</li>
+                <li>{{ message.time }}</li>
+            </ul>
+            {% endfor %}
+        </div>
+
+        {% if page.total_items > item_per_page %}
+            <div class="admin-table-footer">
+                {% if page.current * item_per_page < page.total_items %}
+                    {% set cnt = page.total_items - (page.current * item_per_page) %}
+                    <a href="#" onclick="$('#next_items').submit()">Еще <span>{{ cnt > item_per_page ? 20 : cnt}} сообщений</span></a><!--todo: -->
+                    {% else %}
+                        <div></div>
+                {% endif %}
+                <a href="#">Показать все сообщения (<span>{{page.total_items}}</span>)</a><!--todo: -->
+            </div>
+            <form id="next_items" method="post">
+                {{hidden_field('next-portions-items', 'value':20)}}
+            </form>
+        {% endif %}
+        <div class="admin-pagination-box">
+            {% if page.current>1 %}{{ link_to("message/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
+            <ul>
+                {% for page_item in paginator_builder %}
+                <li>
+                    {% if page_item['type'] == 'page' %}
+                    {{ link_to("message/index?page=" ~ page_item['num'], page_item['num']) }}
+                    {% elseif page_item['type'] == 'delimer' %}
+                    <span>...</span>
+                    {% elseif page_item['type'] == 'current' %}
+                    <span class="active-pag-page">{{page_item['num']}}</span>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            {% if page.total_pages > page.current %}{{ link_to("message/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
+        </div>
+    </div>
+</div>

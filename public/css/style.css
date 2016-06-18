@@ -2678,6 +2678,36 @@ span.revert-bg {
     position: relative;
     z-index: 9; }
 
+/* line 314, ../sass/_applicant_page.scss */
+.message-page .lt-content-top li:first-child {
+  width: 325px; }
+/* line 317, ../sass/_applicant_page.scss */
+.message-page .lt-content-top li:nth-child(2) {
+  width: 515px;
+  line-height: 75px;
+  overflow: hidden; }
+/* line 322, ../sass/_applicant_page.scss */
+.message-page .lt-content-top li:nth-child(3) {
+  width: 160px; }
+  /* line 324, ../sass/_applicant_page.scss */
+  .message-page .lt-content-top li:nth-child(3) span {
+    background-image: none; }
+/* line 330, ../sass/_applicant_page.scss */
+.message-page .lt-content-main li:first-child {
+  width: 325px;
+  padding-left: 30px !important; }
+/* line 334, ../sass/_applicant_page.scss */
+.message-page .lt-content-main li:nth-child(2) {
+  width: 515px;
+  line-height: 75px;
+  overflow: hidden; }
+/* line 339, ../sass/_applicant_page.scss */
+.message-page .lt-content-main li:nth-child(3) {
+  width: 160px; }
+/* line 343, ../sass/_applicant_page.scss */
+.message-page .lt-content-main.new-message {
+  font-weight: bold; }
+
 /* line 5, ../sass/_user_page.scss */
 .user-page h1 {
   margin-bottom: 40px; }
