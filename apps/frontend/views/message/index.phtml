@@ -1,6 +1,28 @@
 <div class="content message-page">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-cnt-pagename" style="float: none;">Сообщения</div>
+        <div class="admin-lt-head">
+            <div class="select-all">
+                <div></div>Выбрать все
+            </div>
+            <div class="lt-head-btns">
+                <div id="delete-button" class="disabled-btn" onclick="if(!jQuery(this).hasClass('disabled-btn')){jQuery('.confirm-deletion-message').modal('show');}">Удалить</div>
+            </div>
+            <div class="modal fade confirm-deletion-message" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+              <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Удалить сообщения?</h4>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <button type="button" onclick="delete_messages()" class="btn btn-primary">Удалить</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
         <div class="admin-lt-content" id="sort-table">
             <ul class="lt-content-top">
                 <li sort-field="sort-role"><span class="sortable">Тема</span></li>

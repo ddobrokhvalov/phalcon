@@ -17,7 +17,7 @@ class MessageController extends ControllerBase
         }
         $item_per_page = 20 + $next_items;
         $messages = Messages::find(array(
-            'to_uid = :to_uid:',
+            'to_uid = :to_uid: AND is_deleted = 0',
             'bind' => array(
                 'to_uid' => $this->user->id,
             ),
@@ -37,4 +37,29 @@ class MessageController extends ControllerBase
         $this->setMenu();
     }
 
+    public function deleteAction() {
+        $messages_ids = $this->request->getPost("ids");
+            
+        if(count($messages_ids)){
+            $messages = Messages::find(
+                array(
+                    'id IN ({ids:array}) AND :to_uid:',
+                    'bind' => array(
+                        'ids' => $messages_ids,
+                        'to_uid' => $this->user->id,
+                    )
+                )
+            );
+            if ($messages) {
+                foreach ($messages as $message) {
+                    $message->is_deleted = 1;
+                    $message->update();
+                }
+            }
+        }
+        $this->flashSession->success('Сообщения удалены');
+        $data = "ok";
+        $this->view->disable();
+        echo json_encode($data);
+    }
 }

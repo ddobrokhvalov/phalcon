@@ -76,6 +76,7 @@ jQuery(document).ready(function($) {
         changeAdminButtonsBackground();
         changeComplaintButtonsBackground();
         changeUsersDetailsButtonsBackground();
+        changeMessagesButtonBackground();
 	});
 	$('.lt-content-main').click(function(evt) {
         if(evt.target != undefined && typeof evt.target.classList == "object" && evt.target.classList.contains('lt-psevdo-check')){
@@ -99,6 +100,7 @@ jQuery(document).ready(function($) {
             changeAdminButtonsBackground();
             changeComplaintButtonsBackground();
             changeUsersDetailsButtonsBackground();
+            changeMessagesButtonBackground();
         } else if(evt.target != undefined && typeof evt.target.classList == "object" && (evt.target.classList.contains('with-dropdown') || evt.target.classList.contains('jl-status') || evt.target.id == 'dLabel')) {
             $(this).find('.with-dropdown div[data-toggle=dropdown]').dropdown('toggle');
             return false;
@@ -470,6 +472,28 @@ function delete_arguments() {
     $('.confirm-modal-argument-lg').modal('hide');
 }
 
+function delete_messages() {
+    var id_array = [];
+    $('.lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #message-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "delete",
+            type:'POST',
+            data: { ids: id_array },
+            dataType: 'json',
+            success: function(data){
+                window.location.reload(true);
+            }
+        });
+    }
+    $('.confirm-deletion-message').modal('hide');
+}
+
 function confirm_change_applicant_type(current_type, current_form) {
     if (current_type != current_form) {
         $('.modal-confirm-change-applicant-type .btn-primary').attr('applicant-type', current_form);
@@ -672,6 +696,23 @@ function changeUsersDetailsButtonsBackground(){
             $(".applicants-part-user-edit #delete-button").addClass("enabled-btn").removeClass("disabled-btn");
         } else {
             $(".applicants-part-user-edit #delete-button").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+    }
+}
+
+function changeMessagesButtonBackground(){
+    if($('.content').hasClass('message-page')) {
+        var id_array = [];
+        $('.admin-lt-content .lt-content-main').each(function(elem, item){
+            var id = $(item).find('div.psevdo-checked #message-id').val();
+            if (id != undefined) {
+                id_array.push(id);
+            }
+        });
+        if (id_array.length) {
+            $("#delete-button").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $("#delete-button").addClass("disabled-btn").removeClass("enabled-btn");
         }
     }
 }
