@@ -104,6 +104,11 @@ jQuery(document).ready(function($) {
         } else if(evt.target != undefined && typeof evt.target.classList == "object" && (evt.target.classList.contains('with-dropdown') || evt.target.classList.contains('jl-status') || evt.target.id == 'dLabel')) {
             $(this).find('.with-dropdown div[data-toggle=dropdown]').dropdown('toggle');
             return false;
+        } else if (evt.currentTarget != undefined && typeof evt.currentTarget.classList == "object" && evt.currentTarget.classList.contains('show-message-popup')) {
+            $('#message-text').val(evt.currentTarget.children[1].innerHTML);
+            $('.modal-message-detail').modal('show');
+            setMessageRed(evt.currentTarget.children[0].children[0].firstChild.value);
+            evt.currentTarget.classList.remove('new-message');
         } else {
             var to_url = $(this).attr('detail-url');
             if (to_url != undefined) {
@@ -417,7 +422,10 @@ function setMessageRed(message_id) {
             type:'POST',
             data: { message_id: message_id },
             dataType: 'json',
-            success: function(data){
+            success: function(data) {
+                if (data == "ok") {
+                    
+                }
                 //window.location.href = '/applicant/edit/' + applicant_id;
             },
             complete: function(){

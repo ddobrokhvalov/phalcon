@@ -60,6 +60,9 @@ class UsersController extends Controller
                 $message->is_read = 1;
                 $message->update();
             }
+            $data = "ok";
+            $this->view->disable();
+            echo json_encode($data);
         }
     }
 }
