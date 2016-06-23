@@ -494,15 +494,16 @@
         float: right;
         .file-wrapper {
             cursor: pointer;
-            width: 205px;
+            width: 150px;
             .text-above {
-                background-image: url("../images/icon-screp.png");
+                background-image: url("../images/icon-screp2.png");
                 background-position: left center;
                 background-repeat: no-repeat;
                 color: #222427;
                 font-family: "Open Sans";
-                font-size: 18px;
-                padding-left: 22px;
+                font-size: 12px;
+                padding-left: 20px;
+                text-transform: uppercase;
             }
             #upload-files {
                 cursor: pointer;

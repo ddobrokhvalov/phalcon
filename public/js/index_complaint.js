@@ -100,6 +100,7 @@ var indexComplaint = {
         this.selectedComplaint.push(id);
         if (this.selectedComplaint.length > 0) {
             this.activeButton('.to-archive');
+            this.activeButton('.set-active');
         }
         if (this.selectedComplaint.length == 1) {
             this.activeButton('.button-copy');

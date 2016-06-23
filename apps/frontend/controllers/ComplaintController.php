@@ -81,9 +81,17 @@ class ComplaintController extends ControllerBase
                 }
             }
         }
+        $action = $this->request->get('action');
+        if (isset($action) && $action == 'edit') {
+            $this->view->edit_now = TRUE;
+        } else {
+            $this->view->edit_now = FALSE;
+        }
         $history = ComplaintMovingHistory::findFirst("complaint_id = $id");
-        $history->is_read = 1;
-        $history->update();
+        if ($history) {
+            $history->is_read = 1;
+            $history->update();
+        }
         $this->view->attached_files = $files_html;
         $complaint->purchases_name = str_replace("\r\n", " ", $complaint->purchases_name);
         $question = new Question();
@@ -140,6 +148,7 @@ class ComplaintController extends ControllerBase
         } else {
             $response = array('result' => 'success', 'id' => $complaint->id);
         }
+        header('Content-type: application/json');
         echo json_encode($response);
         exit;
     }

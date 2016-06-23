@@ -1292,6 +1292,7 @@ li.all-message-link span {
     line-height: 38px;
     text-align: center;
     text-transform: uppercase;
+    padding-left: 0 15px;
 }
 .c-cs-btns a:hover {
     background: #10b8f7 none repeat scroll 0 0;
@@ -2117,7 +2118,7 @@ input[type="radio"]:checked + label {
     border: 1px solid #d4d7df;
     border-radius: 0 0 2px 2px;
     float: left;
-    height: 700px;
+    max-height: 700px;
     margin: -1px 0 0;
     overflow: hidden;
     padding: 0;

@@ -148,9 +148,11 @@ var complaint = {
             type: 'POST',
             url: '/complaint/create',
             data: this.auctionData + '&complaint_text=' + this.complainText + '&complaint_name=' + this.complainName + '&applicant_id=' + applicant.id,
-            success: function (msg) {
-                console.log(msg);
-                window.location.reload(true);
+            success: function (data) {
+                console.log(data);
+                if (data.result == "success") {
+                    window.location.href = "/complaint/edit/" + data.id;
+                }
                 //document.location.href = '/complaint/index';
                 // alert('Сохранено успешно');
                 /*showSomePopupMessage('info', 'Сохранено успешно');
@@ -268,12 +270,12 @@ var auction = {
         succesRequest: function (data,auction_id) {
             if (auction.processData(data, auction_id)) {
                 $('#auction_id').addClass('c-inp-done');
+                $('#notice_button').css('display', 'none');
                 $('#result_container').append('<b class="msg_status_parser">Данные Получены!</b>');
                 auction.setData();
                 $('.complaint-main-container').show();
                 $('.category-tamplate').show();
                 //complaint.setHeader();
-                $('#notice_button').show();
                 $('.loading-gif').hide();
                 auction.auctionReady = true;
             } else {

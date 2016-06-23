@@ -36,7 +36,9 @@
 
                 </div>
                 <div class="c-jadd1-1-b">
-                    {% if complaint.status == 'draft' %}
+                    {% if edit_now %}
+                        <a class="grey" href="#" onclick="return false;">Редактировать</a>
+                    {% elseif complaint.status == 'draft' %}
                       <a href="/complaint/edit/{{ complaint.id }}?action=edit">Редактировать</a>
                     {% else %}
                     <a class="grey" href="#">Редактировать</a>
@@ -47,7 +49,7 @@
                     {% else %}
                         <a class="grey" href="#">Отозвать</a>
                     {% endif %}
-                    <a href="#">В архив</a>
+                    <a href="#" {% if complaint.status == 'archive' %}class="grey" onclick="return false;"{% endif %}>В архив</a>
                     <a href="#">Удалить</a>
                     {% if complaint.status == 'draft' %} <a href="#" class="c-jadd1-1-b-btn">Отправить в УФАС</a> {%
                     endif %}
