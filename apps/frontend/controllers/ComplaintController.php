@@ -6,6 +6,7 @@ namespace Multiple\Frontend\Controllers;
 use Multiple\Frontend\Models\Applicant;
 use Multiple\Frontend\Models\Category;
 use Multiple\Frontend\Models\Complaint;
+use Multiple\Frontend\Models\ComplaintMovingHistory;
 use Multiple\Frontend\Models\Question;
 use Multiple\Frontend\Models\Files;
 use Phalcon\Mvc\Controller;
@@ -80,6 +81,9 @@ class ComplaintController extends ControllerBase
                 }
             }
         }
+        $history = ComplaintMovingHistory::findFirst("complaint_id = $id");
+        $history->is_read = 1;
+        $history->update();
         $this->view->attached_files = $files_html;
         $complaint->purchases_name = str_replace("\r\n", " ", $complaint->purchases_name);
         $question = new Question();
