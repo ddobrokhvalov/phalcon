@@ -142,7 +142,7 @@ a:visited {
     margin: 6px 0 0 35px;
     padding: 0 0 0 20px;
 }
-.mh-login {
+.mh-login, .already-logged-in {
     background: #00aeef none repeat scroll 0 0;
     border-radius: 5px;
     color: #fff;
@@ -186,6 +186,12 @@ a:visited {
     float: left;
     height: 165px;
     width: 100%;
+}
+.ms1-s-b-i img {
+    margin: 0 auto;
+}
+.ms4-s-b-i img {
+    margin:  0 auto;
 }
 .mstripe-2 {
     background: #fcf6f0 url("../images/ms2-bg.jpg") no-repeat scroll center bottom / cover ;
@@ -2784,6 +2790,7 @@ input[type="radio"]:checked + label {
     position: relative;
     text-align: center;
     width: 100%;
+    margin-top: 0;
 }
 .modal_div h2::after {
     background: #fff none repeat scroll 0 0;

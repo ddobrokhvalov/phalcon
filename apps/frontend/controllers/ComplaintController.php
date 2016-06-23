@@ -17,6 +17,10 @@ class ComplaintController extends ControllerBase
 {
     public function indexAction()
     {
+        if (!$this->user) {
+             $this->flashSession->error('Вы не залогинены в системе');
+             return $this->response->redirect('/');
+        }
         $this->setMenu();
         $complaint = new Complaint();
         $status = 0;

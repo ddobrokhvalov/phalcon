@@ -79,3 +79,25 @@
         </div>
     </div>
 </div>
+<!-- popup login -->
+<div id="pop-login" class="modal_div">
+    <h2>Вход в систему</h2>
+    <form action="/login/start" method="post">
+        <label for="poplog-inp1">E-mail</label>
+        <input type="text" id="poplog-inp1" required="required" name="email">
+        <label for="poplog-inp2">Пароль</label>
+        <input type="password" id="poplog-inp2" required="required" name="password">
+        <input type="submit" value="Войти">
+    </form>
+    <div class="modal-close"></div>
+</div>
+<div id="pop-done" class="modal_div">
+    <h2>Начать работу</h2>
+    <div class="pop-done-txt">
+        На указанную вами электронную почту<br>
+        test@test.ru отправлено письмо для завершения<br>
+        регистрации
+    </div>
+    <div class="modal-close"></div>
+</div>
+<div id="overlay"></div>

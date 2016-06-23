@@ -5,7 +5,11 @@
         </div>
         <a href="tel:+88001009386" class="mh-phone">8 (800) 100-93-86</a>
         <a href="mailto:info@fas-online.ru" class="mh-mail">info@fas-online.ru</a>
-        <a href="#pop-login" class="mh-login open_modal">Вход в систему</a>
+        {% if is_logged_in %}
+            <a href="/complaint/index" class="already-logged-in">Вход в систему</a>
+        {% else %}
+            <a href="#pop-login" class="mh-login open_modal">Вход в систему</a>
+        {% endif %}
     </div>
 </div>
 
@@ -241,7 +245,7 @@
     <div class="wrapper">
         <h2>
             Кто мы и почему нам можно доверять?<br>
-            <a href="#">Перейти на сайт</a>
+            <a href="http://gos-partner.ru" target="_blank">Перейти на сайт</a>
         </h2>
         <div class="ms5-text">
             <span>Госпартнер — специализированная организация, оказывающая всестороннюю помощь участникам государственного заказа и Государственным заказчикам.</span>
