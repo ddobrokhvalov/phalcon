@@ -99,7 +99,9 @@ var indexComplaint = {
     addComplain: function (id) {
         this.selectedComplaint.push(id);
         if (this.selectedComplaint.length > 0) {
-            this.activeButton('.to-archive');
+            if (jQuery("input[name=jlist" + id + "]").parent().find('#current-status').val() != "archive") {
+                this.activeButton('.to-archive');
+            }
             this.activeButton('.set-active');
         }
         if (this.selectedComplaint.length == 1) {
@@ -109,6 +111,7 @@ var indexComplaint = {
 
         }else {
             this.deActiveButton('.button-copy');
+            this.deActiveButton('.to-archive');
             //if(currentStatus == 'submitted')
                // this.deActiveButton('.button-recall');
         }
@@ -123,8 +126,10 @@ var indexComplaint = {
         else
             this.deActiveButton('.button-copy');
 
-        if(this.selectedComplaint.length < 1)
+        if(this.selectedComplaint.length < 1) {
             this.deActiveButton('.button-recall');
+            this.deActiveButton('.to-archive');
+        }
 
     },
     selectAll: function () {

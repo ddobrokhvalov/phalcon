@@ -50,6 +50,7 @@
                             <input id="jlist{{ complaint['id'] }}" class="complaint-checkbox" type="checkbox" value="{{ complaint['id'] }}" name="jlist{{ complaint['id'] }}" hidden>
                             <label for="jlist{{ complaint['id'] }}"></label>
                             <a href="/complaint/edit/{{ complaint['id'] }}" class="complaint-name">{{ complaint['complaint_name'] }}</a>
+                            <input type="hidden" id="current-status" name="current-status" value="{{ complaint['status'] }}">
                         </div>
                         <div class="c-c-jl-z-r">
                             {% if complaint['status'] == 'draft' %}
