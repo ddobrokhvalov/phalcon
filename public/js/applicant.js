@@ -14,7 +14,7 @@ $(document).ready(function () {
             $('#applicant_form').submit();
     });
 
-    $('.select_applicant').click(function () {
+    $('.select_applicant').click(function () {//debugger;
         /*if (applicant.id) {
             $('#cl' + applicant.id).prop('checked', false);
         }*/
@@ -26,7 +26,7 @@ $(document).ready(function () {
                 return index != index_element;
             });
         }
-        applicant.selectApplicant($(this).attr("value"), $(this).html(), true, is_remove);
+        applicant.selectApplicant($(this).attr("value"), $(this).html(), true, is_remove, false);
     });
 
     $('#urlico').click(function(){ applicant.setUrlico(); });
@@ -93,7 +93,7 @@ var applicant = {
         $('.apllicant-field-container').html(applicantField.fizlico);
 
     },
-    selectApplicant: function (id, name, redirect, is_remove) {
+    selectApplicant: function (id, name, redirect, is_remove, is_select_first) {//debugger;
         if (!is_remove) {
             this.id.push(id);
             if ($('.applicant-name-container').html().length) {
@@ -102,15 +102,20 @@ var applicant = {
                 $('.applicant-name-container').html(name.trim());
             }
         }
+        if (this.id.length == 0) {
+            this.id.push("All");
+        }
         //if(typeof currentPage !== 'undefined' && currentPage == 'complaint/index' && redirect ){
+        if (!is_select_first) {
             complaint.filterComplaintByApplicant(this.id);
+        }
         //}
     },
     selectFirst: function (id, redirect) {
         id = id.split(',');
         var globalThis = this;
         $.each(id, function(index, value){
-            globalThis.selectApplicant(value, $('#name_applicant_' + value).html(), redirect, false);
+            globalThis.selectApplicant(value, $('#name_applicant_' + value).html(), redirect, false, true);
             $('#cl' + value).prop('checked', true);
         });
     }

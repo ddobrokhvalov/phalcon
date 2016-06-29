@@ -176,15 +176,19 @@ var complaint = {
         });
 
     },
-    filterComplaintByApplicant: function (applicant_id) {
+    filterComplaintByApplicant: function (applicant_id) {//debugger;
         var url = window.location.href;
-
-        if (url.indexOf('/complaint/add') == -1 && url.indexOf('applicant_id=' + applicant_id.join(",")) == -1) {
+/*return false;
+        var splitter = url.split('applicant_id=' + applicant_id.join(","));*/
+        if (!url.endsWith('applicant_id=' + applicant_id.join(","))){
+        //if ((url.indexOf('/complaint/add') == -1 && url.indexOf('applicant_id=' + applicant_id.join(",")) == -1) || splitter[1] != "") {
 
             if (typeof currentStatus != "undefined" && currentStatus != '0') {
-                document.location.href = '/complaint/index?status=' + currentStatus + '&applicant_id=' + applicant_id.join(",");
+                window.location.href = '/complaint/index?status=' + currentStatus + '&applicant_id=' + applicant_id.join(",");
             } else {
-                document.location.href = '/complaint/index?applicant_id=' + applicant_id.join(",");
+                var to_url = '/complaint/index?applicant_id=' + applicant_id.join(",");
+                console.log(to_url);
+                window.location.href = to_url;
             }
         }
 
