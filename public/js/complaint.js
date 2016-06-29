@@ -38,7 +38,8 @@ $(document).ready(function () {
         return false
     });
 
-    $('#complaint_save').click(function () {
+    $('#complaint_save').click(function (evt) {
+        evt.preventDefault();
         if (complaint.prepareData())
             complaint.saveAsDraft();
     });
@@ -103,8 +104,7 @@ var complaint = {
 
     },
     prepareData: function () {
-        console.log(applicant.id);
-        if (applicant.id == 'All' || applicant.id == undefined) {
+        if (applicant.id == 'All' || applicant.id == undefined || applicant.id.length == 0) {
             $("html, body").animate({ scrollTop: 0 }, 1);
             showSomePopupMessage('error', 'Заявитель не выбран');
             return false;
