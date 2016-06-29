@@ -172,12 +172,7 @@ class ApplicantController extends ControllerBase
         } else {
             $this->flashSession->error('Выбран недопустимый тип файлов или превышен размер в 5 Мб');
         }
-        return $this->dispatcher->forward(array(
-            'module' => 'frontend',
-            'controller' => 'applicant',
-            'action' => 'add',
-        ));
-
+        return $this->response->redirect('/complaint/index?applicant_id=' . $applicant->id);
     }
 
     public function saveAction() {
