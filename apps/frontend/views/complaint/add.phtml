@@ -4,7 +4,10 @@
             <div class="c-cnt-pagename">
                 Добавление жалобы
             </div>
-
+            <form action="/complaint/create" id="add-complaint-form" enctype="multipart/form-data" method="POST">
+            <input type="hidden" name="auctionData" id="auctionData" value="">
+            <input type="hidden" name="complaint_text" id="complaint_text" value="">
+            <input type="hidden" name="applicant_id" id="applicant_id" value="">
             <div class="c-jadd1">
                 <div class="c-jadd1-z">
                     <span>Номер извещения</span><br>
@@ -60,7 +63,7 @@
                 </div>
                 <div class="c-jadd2-f">
                     <span class="c-jadd2-f-z">Сокращенное имя жалобы (для идинтификации внутри системы)</span>
-                    <input id="complaint_name" type="text">
+                    <input id="complaint_name" type="text" name="complaint_name" value="">
                     <div class="c-jd2-f-dov-b">
                         <div class="c-jd2-f-dov">
                             Доводы жалобы
@@ -134,7 +137,7 @@
                     <div class="c-jd2-f-save">
                         <input id="complaint_save" class="complaint_save-blue" type="submit" value="Сохранить черновик">
                     </div>
-
+                    </form>
                     <div class="c-jd2-f-cat">
                         <script type="text/javascript">
                             /*var token = '{{token}}';

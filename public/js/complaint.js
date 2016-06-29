@@ -155,25 +155,25 @@ var complaint = {
         return true;
     },
     saveAsDraft: function () {
-        $.ajax({
+        $("#auctionData").val(this.auctionData);
+        $("#complaint_text").val(this.complainText);
+        $("#complaint_name").val(this.complainName);
+        $("#applicant_id").val(applicant.id);
+        $("#add-complaint-form").submit();
+        /*$.ajax({
             type: 'POST',
             url: '/complaint/create',
             data: this.auctionData + '&complaint_text=' + this.complainText + '&complaint_name=' + this.complainName + '&applicant_id=' + applicant.id,
             success: function (data) {
                 console.log(data);
                 if (data.result == "success") {
-                    window.location.href = "/complaint/index?applicant_id=" + data.id;
+                    window.location.href = "/complaint/edit/" + data.id;
                 }
-                //document.location.href = '/complaint/index';
-                // alert('Сохранено успешно');
-                /*showSomePopupMessage('info', 'Сохранено успешно');
-                complaint.complaint_id = msg;
-                incrementMenuCount();*/
             },
             error: function (msg) {
                 console.log(msg);
             }
-        });
+        });*/
 
     },
     filterComplaintByApplicant: function (applicant_id) {//debugger;

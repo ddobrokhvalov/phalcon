@@ -135,22 +135,60 @@ class ComplaintController extends ControllerBase
             exit;
         }
         $data = $this->request->getPost();
+        $data['auctionData'] = explode('&', $data['auctionData']);
+        foreach ($data['auctionData'] as $value) {
+            $value = explode('=', $value);
+            $data["{$value[0]}"] = $value[1];
+        }
         $complaint = new Complaint();
 
         $complaint->addComplaint($data);
 
         if ($complaint->save() == false) {
-            $this->flashSession->error('Не выбран заявитель');
-            /*foreach ($complaint->getMessages() as $message) {
+            //$this->flashSession->error('Не выбран заявитель');
+            foreach ($complaint->getMessages() as $message) {
                 $this->flashSession->error($message);
-            }*/
-            $response = array('result' => 'error', 'message' => 'Ошибка при попытке сохранения жалобы');
+            }
+            return $this->response->redirect('/complaint/add');
+            //$response = array('result' => 'error', 'message' => 'Ошибка при попытке сохранения жалобы');
         } else {
-            $response = array('result' => 'success', 'id' => $complaint->id);
+            $allow = TRUE;
+            // Check all files with needed rules.
+            if ($this->request->hasFiles() == true) {
+                $files_model = new Files();
+                if (!$files_model->checkAllFiles($this->request)) {
+                    $allow = FALSE;
+                }
+            }
+            if ($allow) {
+                $saved_files = array();
+                if ($this->request->hasFiles() == true) {
+                    $baseLocation = 'files/complaints/';
+                    foreach ($this->request->getUploadedFiles() as $file) {
+                        if (strlen($file->getName())) {
+                            $applicant_file = new Files();
+                            $name = explode('.', $file->getName())[0] . '_' . time() . '.' . explode('.', $file->getName())[1];
+                            $applicant_file->file_path = $name;
+                            $applicant_file->file_size = round($file->getSize() / 1024, 2);
+                            $applicant_file->file_type = $file->getType();
+                            $applicant_file->save();
+                            $saved_files[] = $applicant_file->id;
+                            //Move the file into the application
+                            $file->moveTo($baseLocation . $name);
+                        }
+                    }
+                }
+                $complaint->fid = serialize($saved_files);
+                //$this->flashSession->error($applicant->fid);
+                $complaint->save();
+            }
+            $this->flashSession->success('Жалоба сохранена');
+            return $this->response->redirect('/complaint/edit/' . $complaint->id);
+            //$response = array('result' => 'success', 'id' => $complaint->id);
         }
-        header('Content-type: application/json');
+        /*header('Content-type: application/json');
         echo json_encode($response);
-        exit;
+        exit;*/
     }
 
     public function askQuestionAction(){
