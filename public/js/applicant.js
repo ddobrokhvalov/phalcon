@@ -4,7 +4,7 @@ $(document).ready(function () {
         applicant.selectFirst(applicantFirstId,false);
 
 
-   if(typeof applicantSelectedId !== 'undefined')
+   if(typeof applicantSelectedId !== 'undefined' && applicantSelectedId != 'All')
        applicant.selectFirst(applicantSelectedId,false);
 
     $("#add_applicant").click(function (event) {
@@ -15,10 +15,18 @@ $(document).ready(function () {
     });
 
     $('.select_applicant').click(function () {
-        if (applicant.id) {
+        /*if (applicant.id) {
             $('#cl' + applicant.id).prop('checked', false);
+        }*/
+        var is_remove = false;
+        var index_element = jQuery.inArray($(this).attr("value"), applicant.id);
+        if (index_element >=0) {
+            is_remove = true;
+            applicant.id = jQuery.grep(applicant.id, function(elem, index){
+                return index != index_element;
+            });
         }
-        applicant.selectApplicant($(this).attr("value"), $(this).html(),true);
+        applicant.selectApplicant($(this).attr("value"), $(this).html(), true, is_remove);
     });
 
     $('#urlico').click(function(){ applicant.setUrlico(); });
@@ -42,7 +50,7 @@ $(document).ready(function () {
     });
 });
 var applicant = {
-    id: false,
+    id: [],
     type:false,
     save:false,
     checkInn: function(inn){
@@ -85,16 +93,26 @@ var applicant = {
         $('.apllicant-field-container').html(applicantField.fizlico);
 
     },
-    selectApplicant: function (id, name,redirect) {
-        this.id = id;
-        $('.applicant-name-container').html(name);
-        if(typeof currentPage !== 'undefined' && currentPage == 'complaint/index' && redirect ){
-            complaint.filterComplaintByApplicant(id);
+    selectApplicant: function (id, name, redirect, is_remove) {
+        if (!is_remove) {
+            this.id.push(id);
+            if ($('.applicant-name-container').html().length) {
+                $('.applicant-name-container').html($('.applicant-name-container').html().trim() + ", " + name.trim());
+            } else {
+                $('.applicant-name-container').html(name.trim());
+            }
         }
+        //if(typeof currentPage !== 'undefined' && currentPage == 'complaint/index' && redirect ){
+            complaint.filterComplaintByApplicant(this.id);
+        //}
     },
-    selectFirst: function (id,redirect) {
-        this.selectApplicant(id, $('#name_applicant_' + id).html(),redirect);
-        $('#cl' + id).prop('checked', true);
+    selectFirst: function (id, redirect) {
+        id = id.split(',');
+        var globalThis = this;
+        $.each(id, function(index, value){
+            globalThis.selectApplicant(value, $('#name_applicant_' + value).html(), redirect, false);
+            $('#cl' + value).prop('checked', true);
+        });
     }
 
 };

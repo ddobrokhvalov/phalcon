@@ -1,7 +1,8 @@
-﻿$(document).ready(function() {
+$(document).ready(function() {
     var overlay = $('#overlay');
     var open_modal = $('.open_modal');
-    var close = $('.modal-close, #overlay');
+    var open_modal2 = $('.open_modal2');
+    var close = $('.modal-close, #overlay, .popup-close');
     var modal = $('.modal_div');
 
      open_modal.click( function(event){
@@ -13,6 +14,16 @@
                      .css('display', 'block')
                      .animate({opacity: 1, top: '50%'}, 200);
          });
+     });
+     open_modal2.click( function(event){
+         event.preventDefault();
+         var div = $(this).attr('href');
+         var label = $(this).parent().parent().find('label').text().trim() + "?";
+         $("#applicant-name").html(label);
+         var applicant_id = $(this).attr('applicant-id');
+         $(".delete-applicant").attr('href', "/applicant/delete/" + applicant_id);
+         $(div).css('display', 'block').animate({opacity: 1, top: '50%'}, 200);
+         $("#overlay").css('display', 'block');
      });
      close.click( function(){
             modal
@@ -53,14 +64,22 @@ jQuery(document).ready(function($) {
 jQuery(document).ready(function(){
 	jQuery('.spoiler-text').hide()
 	jQuery('.spoiler').click(function(){
-		jQuery(this).toggleClass("folded").toggleClass("unfolded").next().slideToggle()
+		jQuery(this).toggleClass("folded").toggleClass("unfolded").next().slideToggle();
 	})
 });
 
 jQuery(document).ready(function(){
 	jQuery('.c-jadd-text').hide()
 	jQuery('.c-jadd-spoiler').click(function(){
-		jQuery(this).toggleClass("folded").toggleClass("unfolded").prev().slideToggle()
+		jQuery(this).toggleClass("folded").toggleClass("unfolded").prev().slideToggle();
+        var txt = jQuery('.c-jadd-spoiler span').text();
+        if (txt == "Показать подробно") {
+            jQuery('.c-jadd-spoiler span').text("Свернуть");
+            jQuery('.c-jadd-spoiler span').addClass("dep-up");
+        } else {
+            jQuery('.c-jadd-spoiler span').text("Показать подробно");
+            jQuery('.c-jadd-spoiler span').removeClass("dep-up");
+        }
 	})
 });
 

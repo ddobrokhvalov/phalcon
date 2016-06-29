@@ -1241,6 +1241,28 @@ function delete_applicant(applicantId){
     }
 }
 
+function get_class_by_file_type(file_type) {
+    switch (file_type) {
+        case 'pdf':
+            return 'pdf-file';
+        case 'doc':
+        case 'docx':
+            return 'msword-file';
+        case 'rar':
+        case 'zip':
+            return 'archive-file';
+        case 'jpeg':
+        case 'jpg':
+        case 'png':
+        case 'bmp':
+        case 'tif':
+        case 'tiff':
+            return 'image-file';
+        default:
+            return '';
+    }
+}
+
 function hide_arguments() {
     console.log("hidden");
 }

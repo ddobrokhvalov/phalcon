@@ -103,7 +103,18 @@ var complaint = {
 
     },
     prepareData: function () {
-
+        console.log(applicant.id);
+        if (applicant.id == 'All' || applicant.id == undefined) {
+            $("html, body").animate({ scrollTop: 0 }, 1);
+            showSomePopupMessage('error', 'Заявитель не выбран');
+            return false;
+        }
+        if (applicant.id.length > 1) {
+            $(".ch-left").click();
+            $("html, body").animate({ scrollTop: 0 }, 1);
+            showSomePopupMessage('error', 'Пожалуйста, выберите только одного заявителя');
+            return false;
+        }
         if (this.needCat3 === true && this.selectCat3 !== true) {
             showSomePopupMessage('error', 'Прием заявок по данной закупке завершен, выберите хотя бы один довод «на отклонение заявки»');
             return false;
@@ -151,7 +162,7 @@ var complaint = {
             success: function (data) {
                 console.log(data);
                 if (data.result == "success") {
-                    window.location.href = "/complaint/edit/" + data.id;
+                    window.location.href = "/complaint/index?applicant_id=" + data.id;
                 }
                 //document.location.href = '/complaint/index';
                 // alert('Сохранено успешно');
@@ -168,12 +179,12 @@ var complaint = {
     filterComplaintByApplicant: function (applicant_id) {
         var url = window.location.href;
 
-        if (url.indexOf('applicant_id=' + applicant_id) == -1) {
+        if (url.indexOf('/complaint/add') == -1 && url.indexOf('applicant_id=' + applicant_id.join(",")) == -1) {
 
-            if (currentStatus != '0') {
-                document.location.href = '/complaint/index?status=' + currentStatus + '&applicant_id=' + applicant_id;
+            if (typeof currentStatus != "undefined" && currentStatus != '0') {
+                document.location.href = '/complaint/index?status=' + currentStatus + '&applicant_id=' + applicant_id.join(",");
             } else {
-                document.location.href = '/complaint/index?applicant_id=' + applicant_id;
+                document.location.href = '/complaint/index?applicant_id=' + applicant_id.join(",");
             }
         }
 

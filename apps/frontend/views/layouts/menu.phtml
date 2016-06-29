@@ -111,14 +111,8 @@
                     <script>
                         {% if applicant_session is defined %}
                          var applicantSelectedId = '{{applicant_session}}';
-                        {% else %}
-                          var applicantFirstId = 'All';
                         {% endif %}
                     </script>
-                     {% if index_action is defined %}
-                        <input id="clAll" type="checkbox" name="clAll" hidden>
-                        <label class="select_applicant" id="name_applicant_All" value="All" for="clAll">Все</label>
-                     {% endif %}
                     {% endif %}
                     <li>
                         <input id="cl{{ applicant.id}}" type="checkbox" name="cl{{ applicant.id}}" hidden>
@@ -135,14 +129,26 @@
                         </label>
                         <div class="ch-l-i-edit">
                             <a href="/applicant/edit/{{ applicant.id}}">редактировать</a>
-                            <a href="/applicant/delete/{{ applicant.id}}">удалить</a>
+                            <!--<a href="/applicant/delete/{{ applicant.id}}">удалить</a>-->
+                            <a href="#pop-confirm-delete-applicant-front" applicant-id="{{ applicant.id}}" class="open_modal2">удалить</a>
                         </div>
                     </li>
-
                    {% endfor %}
-
                 </ul>
             </div>
+        </div>
+        <div id="pop-confirm-delete-applicant-front" class="modal_div">
+            <h2>Удаление заявителя</h2>
+            <div class="pop-done-txt">
+                Вы действительно хотите удалить заявителя</br>
+                <div id="applicant-name"></div>
+                <div class="action-buttons">
+                    <div class="popup-button cnc popup-close">Отменить</div>
+                    <a class="delete-applicant" href=""><div class="popup-button apr">Удалить</div></a>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+            <div class="modal-close"></div>
         </div>
 
         <div class="ch-right">
@@ -246,6 +252,7 @@
     </div>
   </div>
 </div>
+<div id="overlay"></div>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#current_path").val(window.location.pathname);

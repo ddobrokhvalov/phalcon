@@ -1292,29 +1292,24 @@ li.all-message-link span {
     line-height: 38px;
     text-align: center;
     text-transform: uppercase;
-    padding-left: 0 15px;
+    padding: 0 15px;
 }
 .c-cs-btns a:hover {
     background: #10b8f7 none repeat scroll 0 0;
     color: #fff !important;
-    font-weight: bold;
     text-decoration: none;
 }
 .c-cs-btns a:nth-child(1) {
     margin: 0 5px 0 0;
-    width: 135px;
 }
 .c-cs-btns a:nth-child(2) {
     margin: 0 5px 0 0;
-    width: 115px;
 }
 .c-cs-btns a:nth-child(3) {
     margin: 0 5px 0 0;
-    width: 100px;
 }
 .c-cs-btns a:nth-child(4) {
     color: #00aeef;
-    width: 105px;
 }
 #chsort {
     background: #f7f8fa none repeat scroll 0 0;
@@ -1864,6 +1859,13 @@ input[type="radio"]:checked + label {
     position: absolute;
     top: 0;
 }
+.c-jadd-spoiler span {
+    padding-right: 24px;
+    background: url(../images/icon-arr-dwn.png) 100% 40% no-repeat;
+}
+.c-jadd-spoiler span.dep-up {
+        background: url(../images/icon-arr-up.png) 100% 40% no-repeat;
+}
 .c-jadd-l {
     float: left;
     margin: -15px 0 0;
@@ -2234,7 +2236,7 @@ input[type="radio"]:checked + label {
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    z-index: 2;
+    z-index: 9999;
 }
 .alert-box.alert-info {
     background-image: url("../images/message-Info.png");
@@ -2847,6 +2849,29 @@ input[type="radio"]:checked + label {
     text-transform: uppercase;
     width: 250px;
 }
+.modal_div .action-buttons {
+    margin: 50px auto 0;
+    width: 410px;
+}
+.modal_div .action-buttons .popup-button {
+    color: #fff;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: 184px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 10px;
+    font-size: 18px;
+}
+.modal_div .action-buttons .popup-button.cnc {
+    float: left;
+    margin-right: 25px;
+    background-color: #bfc3ce;
+}
+.modal_div .action-buttons .popup-button.apr {
+    float: right;
+    background-color: #10b8f7;
+}
 .modal-close {
     background: rgba(0, 0, 0, 0) url("../images/icon-mod-close.png") no-repeat scroll center center;
     cursor: pointer;
@@ -2877,12 +2902,13 @@ input[type="radio"]:checked + label {
 }
 .pop-done-txt {
     float: left;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 100;
     line-height: 32px;
     padding: 30px 0 80px;
     text-align: center;
     width: 100%;
+    color: #292c30;
 }
 .pop-done2 {
     padding: 30px 45px !important;
@@ -3231,4 +3257,7 @@ input::-ms-clear {
 }
 [hidden] {
     display: none !important;
+}
+.c-c-jl-z-l label {
+    float: left;
 }

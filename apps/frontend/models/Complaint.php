@@ -45,7 +45,7 @@ class Complaint extends Model
             $sql .= " AND c.status = '$status'";
         }
         if($applicant_id && $applicant_id != 'All'){
-            $sql .= " AND ap.id = $applicant_id";
+            $sql .= " AND ap.id IN($applicant_id)";
         }
         $result = $db->query($sql);
         return $result->fetchAll();
