@@ -4,9 +4,9 @@
         <div class="tabs-block">
             {{hidden_field('applicant-current-type', 'value':applicant.type)}}
             <div class="aplicant-tabs-label">
-                <div data-tabsLabel="legal-entity" {%if applicant.type=="urlico" %}class="active-tabs-label"{%endif%}>Юридическое лицо</div>
-                <div data-tabsLabel="individual-entrepreneur" {%if applicant.type=="ip" %}class="active-tabs-label"{%endif%}>Индивидуальный предприниматель</div>
-                <div data-tabsLabel="physical-face"  {%if applicant.type=="fizlico" %}class="active-tabs-label"{%endif%}>Физическое лицо</div>
+                <div onclick="applicant.setUrlico();" data-tabsLabel="legal-entity" {%if applicant.type=="urlico" %}class="active-tabs-label"{%endif%}>Юридическое лицо</div>
+                <div onclick="applicant.setIp();" data-tabsLabel="individual-entrepreneur" {%if applicant.type=="ip" %}class="active-tabs-label"{%endif%}>Индивидуальный предприниматель</div>
+                <div onclick="applicant.setFizlico();" data-tabsLabel="physical-face"  {%if applicant.type=="fizlico" %}class="active-tabs-label"{%endif%}>Физическое лицо</div>
             </div>
             <div data-tabs="legal-entity" class="tabs-content {%if applicant.type=="urlico" %}active-tabs-content{%endif%}">
                 <form action="/applicant/save" method="POST" enctype="multipart/form-data" id="urlico">
@@ -79,7 +79,7 @@
                             {% endif %}
                         </div>
                     </div>
-                    <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'urlico');return false;" class="save-tab-form">Сохранить изменения</button>
+                    <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'urlico');return false;" class="save-tab-form add_applicant">Сохранить изменения</button>
                 </form>
             </div>
             <div data-tabs="individual-entrepreneur" class="tabs-content {%if applicant.type=="ip" %}active-tabs-content{%endif%}">
@@ -90,7 +90,34 @@
                         <div>Полное наименование</div>
                         {{text_area('name_full', 'value':applicant.name_full, 'id':'entity-textarea', "class":"name-full-textarea")}}
                     </label>
-                    
+                    <label for="entity-inn">
+                        <div>ИНН</div>
+                        {{numeric_field('inn', 'value':applicant.inn, "id":"entity-inn", "data-name":"number")}}
+                    </label>
+                    <label for="entity-address">
+                        <div>Адрес местонахождения</div>
+                        {{text_field('address', 'value':applicant.address, "id":"entity-address", "data-name":"address")}}
+                    </label>
+                    <label for="entity-position">
+                        <div>Должность заявителя</div>
+                        {{text_field('position', 'value':applicant.position, "id":"entity-position", "data-name":"position-fio")}}
+                    </label>
+                    <label for="entity-fio-z">
+                        <div>ФИО заявителя</div>
+                        {{text_field('fio_applicant', 'value':applicant.fio_applicant, "id":"entity-fio-z", "data-name":"position-fio")}}
+                    </label>
+                    <label for="entity-phone">
+                        <div>Контактный факс, телефон</div>
+                        {{numeric_field('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
+                    </label>
+                    <label for="entity-email">
+                        <div>E-mail</div>
+                        {{text_field('email', 'value':applicant.email, "id":"entity-email", "data-name":"position-fio" )}}
+                    </label>
+                    <label for="entity-position-k">
+                        <div>ФИО контактного лица</div>
+                        {{text_field('fio_contact_person', 'value':applicant.fio_contact_person, "id":"entity-fio-k", "data-name":"position-fio")}}
+                    </label>
                     <div class="file-attachment tab2">
                         <div class="file-wrapper">
                             <div class="text-above">Прикрепить файлы</div>
@@ -118,7 +145,7 @@
                             {% endif %}
                         </div>
                     </div>
-                    <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'ip');return false;"  class="save-tab-form">Сохранить изменения</button>
+                    <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'ip');return false;"  class="save-tab-form add_applicant">Сохранить изменения</button>
                 </form>
             </div>
             <div data-tabs="physical-face" class="tabs-content {%if applicant.type=="fizlico" %}active-tabs-content{%endif%}">
@@ -129,9 +156,9 @@
                         <div>ФИО заявителя</div>
                         {{text_field('fio_applicant', 'value':applicant.fio_applicant, "id":"entity-fio-z", "data-name":"position-fio")}}
                     </label>
-                    <label for="entity-position-k">
-                        <div>ФИО контактного лица</div>
-                        {{text_field('fio_contact_person', 'value':applicant.fio_contact_person, "id":"entity-fio-k", "data-name":"position-fio")}}
+                    <label for="entity-address">
+                        <div>Адрес местонахождения</div>
+                        {{text_field('address', 'value':applicant.address, "id":"entity-address", "data-name":"position-fio")}}
                     </label>
                     <label for="entity-phone">
                         <div>Контактный факс, телефон</div>
@@ -140,6 +167,10 @@
                     <label for="entity-email">
                         <div>E-mail</div>
                         {{text_field('email', 'value':applicant.email, "id":"entity-email", "data-name":"position-fio" )}}
+                    </label>
+                    <label for="entity-position-k">
+                        <div>ФИО контактного лица</div>
+                        {{text_field('fio_contact_person', 'value':applicant.fio_contact_person, "id":"entity-fio-k", "data-name":"position-fio")}}
                     </label>
                     <div class="file-attachment tab3">
                         <div class="file-wrapper">
@@ -168,12 +199,31 @@
                             {% endif %}
                         </div>
                     </div>
-                    <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'fizlico');return false;" class="save-tab-form">Сохранить изменения</button>
+                    <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'fizlico');return false;" class="save-tab-form add_applicant">Сохранить изменения</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var active_tab = $(".tabs-content.active-tabs-content form").attr("id");
+        switch (active_tab) {
+            case "urlico":
+                applicant.setUrlico();
+                break;
+            case "ip":
+                applicant.setIp();
+                break;
+            case "fizlico":
+                applicant.setFizlico();
+                break;
+            default:
+                console.log("Active tab not found");
+                break;
+        }
+    });
+</script>
 {{hidden_field('delete-file-id', 'value':'')}}
     {{hidden_field('delete-applicant-id', 'value':applicant.id)}}
     <div class="modal fade modal-confirm-change-applicant-type" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -185,7 +235,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-            <button type="button" applicant-type="" onclick="jQuery('form#' + jQuery(this).attr('applicant-type')).submit();" class="btn btn-primary">Да</button>
+            <button type="button" applicant-type="" onclick="jQuery('.modal-confirm-change-applicant-type').modal('hide');validateApplicantform();return false;" class="btn btn-primary">Да</button>
           </div>
         </div>
       </div>

@@ -18,43 +18,43 @@
                 {{hidden_field('for_user_id', 'value':for_user_id)}}
                 <label for="entity-textarea">
                     <div>Полное наименование</div>
-                    <textarea name="full-name" id="entity-textarea"></textarea>
+                    <textarea name="full-name" id="entity-textarea" style="width: 815px;"></textarea>
                 </label>
                 <label for="entity-short">
                     <div>Краткое наименование</div>
-                    <input type="text" name="kratkoe-name" id="entity-short">
+                    <input type="text" name="kratkoe-name" id="entity-short" style="width: 480px;">
                 </label>
                 <label for="entity-inn">
                     <div>ИНН</div>
-                    <input type="number" name="inn" id="entity-inn">
+                    <input type="number" name="inn" id="entity-inn" style="width: 260px;">
                 </label>
                 <label for="entity-kpp">
                     <div>КПП</div>
-                    <input type="number" name="kpp" id="entity-kpp">
+                    <input type="number" name="kpp" id="entity-kpp" style="width: 260px;">
                 </label>
                 <label for="entity-address">
                     <div>Адрес местонахождения</div>
-                    <input type="text" name="address" id="entity-address">
+                    <input type="text" name="address" id="entity-address" style="width: 810px;">
                 </label>
                 <label for="entity-position">
                     <div>Должность заявителя</div>
-                    <input type="text" name="position-fio" id="entity-position">
+                    <input type="text" name="position-fio" id="entity-position" style="width: 480px;">
                 </label>
                 <label for="entity-fio-z">
                     <div>ФИО заявителя</div>
-                    <input type="text" name="fio" id="entity-fio-z">
+                    <input type="text" name="fio" id="entity-fio-z" style="width: 480px;">
                 </label>
                 <label for="entity-position-k">
                     <div>ФИО контактного лица</div>
-                    <input type="text" name="fio-kontakt-face" id="entity-fio-k">
+                    <input type="text" name="fio-kontakt-face" id="entity-fio-k" style="width: 480px;">
                 </label>
                 <label for="entity-phone">
                     <div>Контактный факс, телефон</div>
-                    <input type="text" name="phone" id="entity-phone">
+                    <input type="text" name="phone" id="entity-phone" style="width: 260px;">
                 </label>
                 <label for="entity-email">
                     <div>E-mail</div>
-                    <input type="text" name="email" id="entity-email">
+                    <input type="text" name="email" id="entity-email" style="width: 480px;">
                 </label>
                 <div class="file-attachment tab1">
                     <div class="file-wrapper">
@@ -85,7 +85,35 @@
                 {{hidden_field('for_user_id', 'value':for_user_id)}}
                 <label for="entity-textarea">
                     <div>Полное наименование</div>
-                    <textarea name="full-name" id="entity-textarea"></textarea>
+                    <textarea name="full-name" id="entity-textarea" style="width: 815px;"></textarea>
+                </label>
+                <label for="entity-inn">
+                    <div>ИНН</div>
+                    <input type="number" name="inn" id="entity-inn" style="width: 260px;">
+                </label>
+                <label for="entity-address">
+                    <div>Адрес местонахождения</div>
+                    <input type="text" name="address" id="entity-address" style="width: 810px;">
+                </label>
+                <label for="entity-position">
+                    <div>Должность заявителя</div>
+                    <input type="text" name="position-fio" id="entity-position" style="width: 480px;">
+                </label>
+                <label for="entity-fio-z">
+                    <div>ФИО заявителя</div>
+                    <input type="text" name="fio" id="entity-fio-z" style="width: 480px;">
+                </label>
+                <label for="entity-phone">
+                    <div>Контактный факс, телефон</div>
+                    <input type="text" name="phone" id="entity-phone" style="width: 260px;">
+                </label>
+                <label for="entity-email">
+                    <div>E-mail</div>
+                    <input type="text" name="email" id="entity-email" style="width: 480px;">
+                </label>
+                <label for="entity-position-k">
+                    <div>ФИО контактного лица</div>
+                    <input type="text" name="fio-kontakt-face" id="entity-fio-k" style="width: 480px;">
                 </label>
                 <div class="file-attachment tab2">
                     <div class="file-wrapper">
@@ -95,25 +123,6 @@
                     <div class="file-names"></div>
                     <script type="text/javascript">
                         jQuery(document).ready(function(){
-                            //$('.tab2 #upload-files').fileupload({
-                                //dataType: 'json',
-                                /*add: function (e, data) {
-                                    data.context = $('<button/>').text('Upload')
-                                        .appendTo('.tab2 .file-names')
-                                        .click(function () {
-                                            data.context = $('<p/>').text('Uploading...').replaceAll($(this));
-                                            data.submit();
-                                        });
-                                },
-                                done: function (e, data) {
-                                    data.context.text('Upload finished.');
-                                }*/
-                                /*done: function (e, data) {
-                                    $.each(data.result.files, function (index, file) {
-                                        $('<p/>').text(file.name).appendTo('.tab2 .file-names');
-                                    });
-                                }*/
-                            //});
                             jQuery('.tab2 #upload-files').change(function(){
                                 var cnt = jQuery('.tab2 #upload-files')[0].files.length;
                                 var i = 0;
@@ -135,19 +144,23 @@
                 {{hidden_field('for_user_id', 'value':for_user_id)}}
                 <label for="entity-fio-z">
                     <div>ФИО заявителя</div>
-                    <input type="text" name="fio" id="entity-fio-z">
+                    <input type="text" name="fio" id="entity-fio-z" style="width: 480px;">
                 </label>
-                <label for="entity-position-k">
-                    <div>ФИО контактного лица</div>
-                    <input type="text" name="fio-kontakt-face" id="entity-fio-k">
+                <label for="entity-address">
+                    <div>Адрес местонахождения</div>
+                    <input type="text" name="address" id="entity-address" style="width: 810px;">
                 </label>
                 <label for="entity-phone">
                     <div>Контактный факс, телефон</div>
-                    <input type="text" name="phone" id="entity-phone">
+                    <input type="text" name="phone" id="entity-phone" style="width: 260px;">
                 </label>
                 <label for="entity-email">
                     <div>E-mail</div>
-                    <input type="text" name="email" id="entity-email">
+                    <input type="text" name="email" id="entity-email" style="width: 480px;">
+                </label>
+                <label for="entity-position-k">
+                    <div>ФИО контактного лица</div>
+                    <input type="text" name="fio-kontakt-face" id="entity-fio-k" style="width: 480px;">
                 </label>
                 <div class="file-attachment tab3">
                     <div class="file-wrapper">

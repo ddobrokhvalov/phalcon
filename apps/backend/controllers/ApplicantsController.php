@@ -157,54 +157,6 @@ class ApplicantsController  extends ControllerBase
             $baseLocation = 'files/applicant/';
             $applicant = new Applicant();
             switch ($_POST['type']) {
-                case 'fizlico':
-                    if (!isset($_POST['fio']) || !$_POST['fio']) {
-                        $this->flashSession->error('Не указаны ФИО заявителя');
-                        return $this->dispatcher->forward(array(
-                            'module' => 'backend',
-                            'controller' => 'applicants',
-                            'action' => 'index'
-                        ));
-                    }
-                    $applicant->user_id = $user_id;
-                    $applicant->type = 'fizlico';
-                    $applicant->name_full = '';
-                    $applicant->name_short = '';
-                    $applicant->inn = '';
-                    $applicant->kpp = '';
-                    $applicant->fid = '';
-                    $applicant->address = '';
-                    $applicant->position = '';
-                    $applicant->is_blocked = 1;
-                    $applicant->fio_applicant = $_POST['fio'];
-                    $applicant->fio_contact_person = $_POST['fio-kontakt-face'];
-                    $applicant->telefone = $_POST['phone'];
-                    $applicant->email = $_POST['email'];
-                    break;
-                case 'indlico':
-                    if (!isset($_POST['full-name']) || !$_POST['full-name']) {
-                        $this->flashSession->error('Полное наименование не может быть пустым');
-                        return $this->dispatcher->forward(array(
-                            'module' => 'backend',
-                            'controller' => 'applicants',
-                            'action' => 'add'
-                        ));
-                    }
-                    $applicant->user_id = $user_id;
-                    $applicant->type = 'ip';
-                    $applicant->name_full = $_POST['full-name'];
-                    $applicant->name_short = '';
-                    $applicant->inn = '';
-                    $applicant->kpp = '';
-                    $applicant->fid = '';
-                    $applicant->address = '';
-                    $applicant->position = '';
-                    $applicant->is_blocked = 1;
-                    $applicant->fio_applicant = '';
-                    $applicant->fio_contact_person = '';
-                    $applicant->telefone = '';
-                    $applicant->email = '';
-                    break;
                 case 'urlico';
                     if (!isset($_POST['full-name']) || !$_POST['full-name']) {
                         $this->flashSession->error('Полное наименование не может быть пустым');
@@ -224,6 +176,54 @@ class ApplicantsController  extends ControllerBase
                     $applicant->is_blocked = 1;
                     $applicant->address = $_POST['address'];
                     $applicant->position = $_POST['position-fio'];
+                    $applicant->fio_applicant = $_POST['fio'];
+                    $applicant->fio_contact_person = $_POST['fio-kontakt-face'];
+                    $applicant->telefone = $_POST['phone'];
+                    $applicant->email = $_POST['email'];
+                    break;
+                case 'indlico':
+                    if (!isset($_POST['full-name']) || !$_POST['full-name']) {
+                        $this->flashSession->error('Полное наименование не может быть пустым');
+                        return $this->dispatcher->forward(array(
+                            'module' => 'backend',
+                            'controller' => 'applicants',
+                            'action' => 'add'
+                        ));
+                    }
+                    $applicant->user_id = $user_id;
+                    $applicant->type = 'ip';
+                    $applicant->name_full = $_POST['full-name'];
+                    $applicant->name_short = '';
+                    $applicant->inn = $_POST['inn'];
+                    $applicant->kpp = '';
+                    $applicant->fid = '';
+                    $applicant->address = $_POST['address'];
+                    $applicant->position = $_POST['position-fio'];
+                    $applicant->is_blocked = 1;
+                    $applicant->fio_applicant = $_POST['fio'];
+                    $applicant->fio_contact_person = $_POST['fio-kontakt-face'];
+                    $applicant->telefone = $_POST['phone'];
+                    $applicant->email = $_POST['email'];
+                    break;
+                case 'fizlico':
+                    if (!isset($_POST['fio']) || !$_POST['fio']) {
+                        $this->flashSession->error('Не указаны ФИО заявителя');
+                        return $this->dispatcher->forward(array(
+                            'module' => 'backend',
+                            'controller' => 'applicants',
+                            'action' => 'index'
+                        ));
+                    }
+                    $applicant->user_id = $user_id;
+                    $applicant->type = 'fizlico';
+                    $applicant->name_full = '';
+                    $applicant->name_short = '';
+                    $applicant->inn = '';
+                    $applicant->kpp = '';
+                    $applicant->fid = '';
+                    $applicant->address = $_POST['address'];
+                    $applicant->position = '';
+                    $applicant->is_blocked = 1;
                     $applicant->fio_applicant = $_POST['fio'];
                     $applicant->fio_contact_person = $_POST['fio-kontakt-face'];
                     $applicant->telefone = $_POST['phone'];

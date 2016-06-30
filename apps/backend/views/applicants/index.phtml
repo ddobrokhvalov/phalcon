@@ -40,8 +40,15 @@
                 {% if applicant.type == 'ip' %}
                     <ul class="lt-content-main {% if applicant.is_blocked == 0 %} hidden-arg {% endif %}" sort-name="{{applicant.name_full}}" sort-phone="" sort-email="" sort-complaints="{{applicant.getCountComplaints(applicant.id)}}" detail-url="{{url('admin/applicants/info/' ~ applicant.id)}}">
                         <li><div class="lt-psevdo-check">{{hidden_field('applicant-id', 'value':applicant.id)}}</div>{{applicant.name_full}}</li>
-                        <li>-</li>
-                        <li>-</li>
+                        <li>{{applicant.telefone}}</li>
+                        <li>{{applicant.email}}</li>
+                        <li>{{applicant.getCountComplaints(applicant.id)}}</li>
+                    </ul>
+                {% elseif applicant.type == 'fizlico' %}
+                    <ul class="lt-content-main {% if applicant.is_blocked == 0 %} hidden-arg {% endif %}" sort-name="{{applicant.fio_applicant}}" sort-phone="" sort-email="" sort-complaints="{{applicant.getCountComplaints(applicant.id)}}" detail-url="{{url('admin/applicants/info/' ~ applicant.id)}}">
+                        <li><div class="lt-psevdo-check">{{hidden_field('applicant-id', 'value':applicant.id)}}</div>{{applicant.fio_applicant}}</li>
+                        <li>{{applicant.telefone}}</li>
+                        <li>{{applicant.email}}</li>
                         <li>{{applicant.getCountComplaints(applicant.id)}}</li>
                     </ul>
                 {% else %}

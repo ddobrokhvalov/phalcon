@@ -1466,7 +1466,7 @@ ul.status-black, .notification-number-box.status-black {
         width: 256px; }
       /* line 94, ../sass/_edit_applicant.scss */
       .tabs-content label input[data-name="address"] {
-        width: 100%; }
+        width: 810px; }
       /* line 97, ../sass/_edit_applicant.scss */
       .tabs-content label input[data-name="position-fio"] {
         width: 479px; }

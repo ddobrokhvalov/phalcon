@@ -42,9 +42,9 @@
         <div class="c-cnt-pagename" style="float: none;">Добавить заявителя</div>
         <div class="tabs-block">
             <div class="aplicant-tabs-label">
-                <div data-tabsLabel="legal-entity" class="active-tabs-label">Юридическое лицо</div>
-                <div data-tabsLabel="individual-entrepreneur">Индивидуальный предприниматель</div>
-                <div data-tabsLabel="physical-face">Физическое лицо</div>
+                <div data-tabsLabel="legal-entity" class="active-tabs-label" onclick="applicant.setUrlico();">Юридическое лицо</div>
+                <div data-tabsLabel="individual-entrepreneur" onclick="applicant.setIp();">Индивидуальный предприниматель</div>
+                <div data-tabsLabel="physical-face" onclick="applicant.setFizlico();">Физическое лицо</div>
             </div>
             <div data-tabs="legal-entity" class="tabs-content active-tabs-content">
                 <form action="/applicant/create" enctype="multipart/form-data" method="POST">
@@ -110,7 +110,7 @@
                             });
                         </script>
                     </div>
-                    <button class="save-tab-form">Сохранить изменения</button>
+                    <button class="save-tab-form add_applicant">Сохранить изменения</button>
                 </form>
             </div>
             <div data-tabs="individual-entrepreneur" class="tabs-content">
@@ -120,6 +120,34 @@
                     <label for="entity-textarea">
                         <div>Полное наименование</div>
                         <textarea name="full-name" id="entity-textarea" style="width: 815px;"></textarea>
+                    </label>
+                    <label for="entity-inn">
+                        <div>ИНН</div>
+                        <input type="number" name="inn" id="entity-inn" style="width: 260px;">
+                    </label>
+                    <label for="entity-address">
+                        <div>Адрес местонахождения</div>
+                        <input type="text" name="address" id="entity-address" style="width: 810px;">
+                    </label>
+                    <label for="entity-position">
+                        <div>Должность заявителя</div>
+                        <input type="text" name="position-fio" id="entity-position" style="width: 480px;">
+                    </label>
+                    <label for="entity-fio-z">
+                        <div>ФИО заявителя</div>
+                        <input type="text" name="fio" id="entity-fio-z" style="width: 480px;">
+                    </label>
+                    <label for="entity-phone">
+                        <div>Контактный факс, телефон</div>
+                        <input type="text" name="phone" id="entity-phone" style="width: 260px;">
+                    </label>
+                    <label for="entity-email">
+                        <div>E-mail</div>
+                        <input type="text" name="email" id="entity-email" style="width: 480px;">
+                    </label>
+                    <label for="entity-position-k">
+                        <div>ФИО контактного лица</div>
+                        <input type="text" name="fio-kontakt-face" id="entity-fio-k" style="width: 480px;">
                     </label>
                     <div class="file-attachment tab2">
                         <div class="file-wrapper">
@@ -141,7 +169,7 @@
                             });
                         </script>
                     </div>
-                    <button class="save-tab-form">Сохранить изменения</button>
+                    <button class="save-tab-form add_applicant">Сохранить изменения</button>
                 </form>
             </div>
             <div data-tabs="physical-face" class="tabs-content">
@@ -152,9 +180,9 @@
                         <div>ФИО заявителя</div>
                         <input type="text" name="fio" id="entity-fio-z" style="width: 480px;">
                     </label>
-                    <label for="entity-position-k">
-                        <div>ФИО контактного лица</div>
-                        <input type="text" name="fio-kontakt-face" id="entity-fio-k" style="width: 480px;">
+                    <label for="entity-address">
+                        <div>Адрес местонахождения</div>
+                        <input type="text" name="address" id="entity-address" style="width: 480px;">
                     </label>
                     <label for="entity-phone">
                         <div>Контактный факс, телефон</div>
@@ -163,6 +191,10 @@
                     <label for="entity-email">
                         <div>E-mail</div>
                         <input type="text" name="email" id="entity-email" style="width: 480px;">
+                    </label>
+                    <label for="entity-position-k">
+                        <div>ФИО контактного лица</div>
+                        <input type="text" name="fio-kontakt-face" id="entity-fio-k" style="width: 480px;">
                     </label>
                     <div class="file-attachment tab3">
                         <div class="file-wrapper">
@@ -184,7 +216,7 @@
                             });
                         </script>
                     </div>
-                    <button class="save-tab-form">Сохранить изменения</button>
+                    <button class="save-tab-form add_applicant">Сохранить изменения</button>
                 </form>
             </div>
         </div>

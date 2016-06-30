@@ -96,7 +96,34 @@
                     <div>Полное наименование</div>
                     {{text_area('name_full', 'value':applicant.name_full, 'id':'entity-textarea')}}
                 </label>
-                
+                <label for="entity-inn">
+                    <div>ИНН</div>
+                    {{numeric_field('inn', 'value':applicant.inn, "id":"entity-inn", "data-name":"number")}}
+                </label>
+                <label for="entity-address">
+                    <div>Адрес местонахождения</div>
+                    {{text_field('address', 'value':applicant.address, "id":"entity-address", "data-name":"address")}}
+                </label>
+                <label for="entity-position">
+                    <div>Должность заявителя</div>
+                    {{text_field('position', 'value':applicant.position, "id":"entity-position", "data-name":"position-fio")}}
+                </label>
+                <label for="entity-fio-z">
+                    <div>ФИО заявителя</div>
+                    {{text_field('fio_applicant', 'value':applicant.fio_applicant, "id":"entity-fio-z", "data-name":"position-fio")}}
+                </label>
+                <label for="entity-phone">
+                    <div>Контактный факс, телефон</div>
+                    {{numeric_field('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
+                </label>
+                <label for="entity-email">
+                    <div>E-mail</div>
+                    {{text_field('email', 'value':applicant.email, "id":"entity-email", "data-name":"position-fio" )}}
+                </label>
+                <label for="entity-position-k">
+                    <div>ФИО контактного лица</div>
+                    {{text_field('fio_contact_person', 'value':applicant.fio_contact_person, "id":"entity-fio-k", "data-name":"position-fio")}}
+                </label>
                 <div class="file-attachment tab2">
                     <div class="file-wrapper">
                         <div class="text-above">Прикрепить файлы</div>
@@ -135,9 +162,9 @@
                     <div>ФИО заявителя</div>
                     {{text_field('fio_applicant', 'value':applicant.fio_applicant, "id":"entity-fio-z", "data-name":"position-fio")}}
                 </label>
-                <label for="entity-position-k">
-                    <div>ФИО контактного лица</div>
-                    {{text_field('fio_contact_person', 'value':applicant.fio_contact_person, "id":"entity-fio-k", "data-name":"position-fio")}}
+                <label for="entity-address">
+                    <div>Адрес местонахождения</div>
+                    {{text_field('address', 'value':applicant.address, "id":"entity-address", "data-name":"position-fio" )}}
                 </label>
                 <label for="entity-phone">
                     <div>Контактный факс, телефон</div>
@@ -146,6 +173,10 @@
                 <label for="entity-email">
                     <div>E-mail</div>
                     {{text_field('email', 'value':applicant.email, "id":"entity-email", "data-name":"position-fio" )}}
+                </label>
+                <label for="entity-position-k">
+                    <div>ФИО контактного лица</div>
+                    {{text_field('fio_contact_person', 'value':applicant.fio_contact_person, "id":"entity-fio-k", "data-name":"position-fio")}}
                 </label>
                 <div class="file-attachment tab3">
                     <div class="file-wrapper">
