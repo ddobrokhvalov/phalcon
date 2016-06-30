@@ -116,6 +116,12 @@ ul.status-black, .notification-number-box.status-black {
 		margin-right: 0;
 	}
 }
+@media (max-width: 1282px) {
+  .lm-logo {
+      width: 70% !important;
+      margin-left: 40px;
+  }
+}
 @media (max-width: 1325px) {
 	.page-wrap, .header-wrap #admin-header {
 		margin-left: auto;

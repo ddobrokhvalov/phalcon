@@ -3261,3 +3261,6 @@ input::-ms-clear {
 .c-c-jl-z-l label {
     float: left;
 }
+input#upload-files::-webkit-file-upload-button {
+    CURSOR: POINTER;
+}
