@@ -3174,6 +3174,7 @@ input[type="radio"]:checked + label {
 .left-menu-holder.scroll-pane {
     height: 766px;
     padding-right: 12px !important;
+    outline: none;
 }
 body .cke_float {
     border: 0 none;
