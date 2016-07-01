@@ -1247,6 +1247,7 @@ function get_class_by_file_type(file_type) {
             return 'pdf-file';
         case 'doc':
         case 'docx':
+        case 'rtf':
             return 'msword-file';
         case 'rar':
         case 'zip':
