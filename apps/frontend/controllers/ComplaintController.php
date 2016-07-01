@@ -168,7 +168,7 @@ class ComplaintController extends ControllerBase
                         if (strlen($file->getName())) {
                             $applicant_file = new Files();
                             $name = explode('.', $file->getName())[0] . '_' . time() . '.' . explode('.', $file->getName())[1];
-                            $name = iconv("UTF-8", "cp1251", $name);
+                            //$name = iconv("UTF-8", "cp1251", $name);
                             $applicant_file->file_path = $name;
                             $applicant_file->file_size = round($file->getSize() / 1024, 2);
                             $applicant_file->file_type = $file->getType();
