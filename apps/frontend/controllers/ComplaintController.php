@@ -184,7 +184,7 @@ class ComplaintController extends ControllerBase
                 $complaint->save();
             }
             $this->flashSession->success('Жалоба сохранена');
-            return $this->response->redirect('/complaint/edit/' . $complaint->id);
+            return $this->response->redirect('complaint/edit/' . $complaint->id);
             //$response = array('result' => 'success', 'id' => $complaint->id);
         }
         /*header('Content-type: application/json');
