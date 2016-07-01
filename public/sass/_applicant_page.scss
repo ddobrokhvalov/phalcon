@@ -188,7 +188,7 @@
     margin-top: 25px;
     margin-bottom: -10px;
 }
-.edit-aplicant, .complaints-preview-wrap, .front-applicant, .edit-complaint-page, .add-complaint-page {
+.edit-aplicant, .complaints-preview-wrap, .front-applicant, .edit-complaint-page, .add-complaint-page, .front-applicant {
     .file-wrapper {
         width: 245px;
         cursor: pointer;
@@ -262,7 +262,7 @@
         }
     }
 }
-.add-complaint-page {
+.add-complaint-page, .front-applicant {
     .attached-file-row {
         padding: 4px 0 !important;
         .file-icon {
@@ -284,6 +284,11 @@
     }
     .file-names {
         margin-bottom: 0 !important;
+    }
+}
+.front-applicant {
+    .file-names {
+        padding-left: 0 !important;
     }
 }
 .list-arguments .lt-head-btns {

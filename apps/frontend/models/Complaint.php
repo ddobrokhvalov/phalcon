@@ -194,6 +194,7 @@ class Complaint extends Model
                     $newComplaint->id = NULL;
                     $newComplaint->complaint_name .= ' (Копия)';
                     $newComplaint->status = 'draft';
+                    $newComplaint->fid = serialize(array());
                     $newComplaint->save();
                     return $newComplaint->id;
                 } else {

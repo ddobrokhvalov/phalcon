@@ -1264,6 +1264,17 @@ function get_class_by_file_type(file_type) {
     }
 }
 
+function showStyledPopupMessage(popup, title, message) {
+    $(popup + " h2").html(title);
+    $(popup + " .pop-done-txt").html(message);
+    $('#overlay').fadeIn(400,
+    function(){
+        $(popup)
+            .css('display', 'block')
+            .animate({opacity: 1, top: '50%'}, 200);
+    });
+}
+
 function hide_arguments() {
     console.log("hidden");
 }

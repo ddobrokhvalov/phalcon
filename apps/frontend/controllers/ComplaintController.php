@@ -77,7 +77,7 @@ class ComplaintController extends ControllerBase
                     )
                 );
                 foreach ($files as $file) {
-                    $files_html[] = $file_model->getFilesHtml($file, $id, 'complaint');
+                    $files_html[] = $file_model->getFilesHtml($file, $id, 'complaints');
                 }
             }
         }
@@ -168,6 +168,7 @@ class ComplaintController extends ControllerBase
                         if (strlen($file->getName())) {
                             $applicant_file = new Files();
                             $name = explode('.', $file->getName())[0] . '_' . time() . '.' . explode('.', $file->getName())[1];
+                            $name = iconv("UTF-8", "cp1251", $name);
                             $applicant_file->file_path = $name;
                             $applicant_file->file_size = round($file->getSize() / 1024, 2);
                             $applicant_file->file_type = $file->getType();
@@ -218,6 +219,7 @@ class ComplaintController extends ControllerBase
         $data = $this->request->getPost();
         $complaint = new Complaint();
         $result = $complaint->changeStatus($data['status'], json_decode($data['complaints']), $this->user->id);
+        $this->flashSession->success('Копия жалобы создана');
         echo $result;
         exit;
     }

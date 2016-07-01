@@ -105,18 +105,18 @@ var complaint = {
     },
     prepareData: function () {
         if (applicant.id == 'All' || applicant.id == undefined || applicant.id.length == 0) {
-            $("html, body").animate({ scrollTop: 0 }, 1);
-            showSomePopupMessage('error', 'Заявитель не выбран');
+            //$("html, body").animate({ scrollTop: 0 }, 1);
+            showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Заявитель не выбран");
             return false;
         }
         if (applicant.id.length > 1) {
             $(".ch-left").click();
             $("html, body").animate({ scrollTop: 0 }, 1);
-            showSomePopupMessage('error', 'Пожалуйста, выберите только одного заявителя');
+            showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Пожалуйста, выберите только одного заявителя");
             return false;
         }
         if (this.needCat3 === true && this.selectCat3 !== true) {
-            showSomePopupMessage('error', 'Прием заявок по данной закупке завершен, выберите хотя бы один довод «на отклонение заявки»');
+            showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Прием заявок по данной закупке завершен, выберите хотя бы один довод «на отклонение заявки»");
             return false;
         }
 
@@ -138,7 +138,7 @@ var complaint = {
 
         if (!validator.text(this.complainText, 2, 20000)) {
             // alert('текст жалобы должен быть');
-            showSomePopupMessage('warning', 'текст жалобы должен быть');
+            showStyledPopupMessage("#pop-before-ask-question", "Уведомление", "Текст жалобы должен быть");
             return false;
         }
 
@@ -289,6 +289,7 @@ var auction = {
                 $('#result_container').append('<b class="msg_status_parser">Данные Получены!</b>');
                 auction.setData();
                 $('.complaint-main-container').show();
+                $('.more-information-block').show();
                 $('.category-tamplate').show();
                 //complaint.setHeader();
                 $('.loading-gif').hide();

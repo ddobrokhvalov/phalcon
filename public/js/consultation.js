@@ -11,7 +11,6 @@ $(document).ready(function () {
                     url: '/consultation/addquestion',
                     data: 'question_text=' + text + '&complaint_id=' + complaint.complaint_id,
                     success: function (msg) {
-                        console.log(msg);
                       var html =   '<div class="c-jd3-cb-usr">'+
                           $('#question_text').val()+
                         '</div>'+
@@ -30,11 +29,11 @@ $(document).ready(function () {
                 });
 
             }else{
-                showMessagePopup('warning', 'Текст жалобы должен состоять максимум из 5000, минимум из 5 символов');
+                showStyledPopupMessage("#pop-before-ask-question", "Уведомление", "Текст жалобы должен состоять максимум из 5000, минимум из 5 символов");
             }
 
         }else{
-            showMessagePopup('warning', 'Сначала, сохраните жалобу в черновик');
+            showStyledPopupMessage("#pop-before-ask-question", "Уведомление", "Сначала сохраните жалобу в черновик");
         }
     });
 

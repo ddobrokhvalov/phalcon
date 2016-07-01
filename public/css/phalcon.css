@@ -1799,6 +1799,10 @@ input[type="radio"]:checked + label {
     text-transform: uppercase;
     width: 270px;
 }
+#notice_button {
+    color: #fefefe !important;
+    font-size: 18px;
+}
 .c-jadd1-f b {
     color: #29d3b2;
     font-size: 18px;
@@ -3068,7 +3072,7 @@ input[type="radio"]:checked + label {
 .c-jadd1-1-b a {
     cursor: pointer !important;
 }
-.complaint-main-container {
+.complaint-main-container, .more-information-block {
     display: none;
 }
 .loading-gif {
