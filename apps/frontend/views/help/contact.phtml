@@ -7,19 +7,21 @@
 
             <div class="c-mapb">
                 <script type="text/javascript" charset="utf-8" src="https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=S6PvMetJxzVzDK2kZx6n9rfkbBu45eCR&width=970&height=470&lang=ru_UA&sourceType=constructor"></script>
-            </div>
-
+                {{ flashSession.output() }}
+            </div>            
             <div class="c-m-form">
                 <span>Напишите нам</span>
-                <label for="cmf1">Как вас зовут</label>
-                <input type="text" id="cmf1">
-                <label for="cmf2">Контактный телефон</label>
-                <input type="text" id="cmf2">
-                <label for="cmf3">E-mail</label>
-                <input type="text" id="cmf3">
-                <label for="cmf4">Ваше собщение</label>
-                <textarea id="cmf4"></textarea>
-                <input type="submit" value="Отправить сообщение">
+                <form action="/help/sendMailFromContact" method="POST" id="contact-form">
+                    <label for="cmf1">Как вас зовут</label>
+                    <input type="text" id="cmf1" name="sender-name">
+                    <label for="cmf2">Контактный телефон</label>
+                    <input type="text" id="cmf2" name="sender-phone">
+                    <label for="cmf3">E-mail</label>
+                    <input type="text" id="cmf3" name="sender-email">
+                    <label for="cmf4">Ваше собщение</label>
+                    <textarea id="cmf4" name="sender-message"></textarea>
+                    <input type="submit" value="Отправить сообщение">
+                </form>
             </div>
 
             <div class="c-m-addr">
