@@ -175,7 +175,7 @@ class ComplaintController extends ControllerBase
                             $applicant_file->save();
                             $saved_files[] = $applicant_file->id;
                             //Move the file into the application
-                            $file->moveTo($baseLocation . iconv("UTF-8", "cp1251", $name));
+                            $file->moveTo($baseLocation . $name);
                         }
                     }
                 }
