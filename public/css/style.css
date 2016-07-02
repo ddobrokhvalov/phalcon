@@ -1321,16 +1321,16 @@ ul.status-black, .notification-number-box.status-black {
   line-height: 75px; }
 
 /* line 491, ../sass/_complaints_preview.scss */
-.add-complaint-page .complaint-attachment {
+.add-complaint-page .complaint-attachment, .edit-complaint-page.edit-now .complaint-attachment {
   margin-bottom: 32px;
   padding: 22px 0 30px;
   float: right; }
   /* line 495, ../sass/_complaints_preview.scss */
-  .add-complaint-page .complaint-attachment .file-wrapper {
+  .add-complaint-page .complaint-attachment .file-wrapper, .edit-complaint-page.edit-now .complaint-attachment .file-wrapper {
     cursor: pointer;
     width: 150px; }
     /* line 498, ../sass/_complaints_preview.scss */
-    .add-complaint-page .complaint-attachment .file-wrapper .text-above {
+    .add-complaint-page .complaint-attachment .file-wrapper .text-above, .edit-complaint-page.edit-now .complaint-attachment .file-wrapper .text-above {
       background-image: url("../images/icon-screp2.png");
       background-position: left center;
       background-repeat: no-repeat;
@@ -1340,14 +1340,14 @@ ul.status-black, .notification-number-box.status-black {
       padding-left: 20px;
       text-transform: uppercase; }
     /* line 508, ../sass/_complaints_preview.scss */
-    .add-complaint-page .complaint-attachment .file-wrapper #upload-files {
+    .add-complaint-page .complaint-attachment .file-wrapper #upload-files, .edit-complaint-page.edit-now .complaint-attachment .file-wrapper #upload-files {
       cursor: pointer;
       margin-top: -20px;
       opacity: 0;
       width: 150px;
       position: absolute; }
 /* line 517, ../sass/_complaints_preview.scss */
-.add-complaint-page .file-names {
+.add-complaint-page .file-names, .edit-complaint-page.edit-now .file-names {
   padding-left: 28px;
   background-color: #ffffff;
   float: left;
@@ -1355,14 +1355,14 @@ ul.status-black, .notification-number-box.status-black {
   border-left: 1px solid #d4d7df;
   border-right: 1px solid #d4d7df; }
   /* line 524, ../sass/_complaints_preview.scss */
-  .add-complaint-page .file-names p {
+  .add-complaint-page .file-names p, .edit-complaint-page.edit-now .file-names p {
     margin-bottom: 0;
     margin-top: 3px; }
     /* line 527, ../sass/_complaints_preview.scss */
-    .add-complaint-page .file-names p:first-child {
+    .add-complaint-page .file-names p:first-child, .edit-complaint-page.edit-now .file-names p:first-child {
       margin-top: 10px; }
     /* line 530, ../sass/_complaints_preview.scss */
-    .add-complaint-page .file-names p:last-child {
+    .add-complaint-page .file-names p:last-child, .edit-complaint-page.edit-now .file-names p:last-child {
       margin-bottom: 15px; }
 
 /* line 4, ../sass/_edit_applicant.scss */
@@ -2632,109 +2632,113 @@ span.revert-bg {
   background: url(../images/upload-icons.png) left top no-repeat; }
 
 /* line 266, ../sass/_applicant_page.scss */
-.add-complaint-page .attached-file-row, .front-applicant .attached-file-row {
+.edit-complaint-page.edit-now .attached-file-row:first-child {
+  margin-top: 10px; }
+
+/* line 271, ../sass/_applicant_page.scss */
+.add-complaint-page .attached-file-row, .front-applicant .attached-file-row, .edit-complaint-page.edit-now .attached-file-row {
   padding: 4px 0 !important; }
-  /* line 268, ../sass/_applicant_page.scss */
-  .add-complaint-page .attached-file-row .file-icon, .front-applicant .attached-file-row .file-icon {
+  /* line 273, ../sass/_applicant_page.scss */
+  .add-complaint-page .attached-file-row .file-icon, .front-applicant .attached-file-row .file-icon, .edit-complaint-page.edit-now .attached-file-row .file-icon {
     margin-top: 0 !important; }
-  /* line 271, ../sass/_applicant_page.scss */
-  .add-complaint-page .attached-file-row .delete-file, .front-applicant .attached-file-row .delete-file {
+  /* line 276, ../sass/_applicant_page.scss */
+  .add-complaint-page .attached-file-row .delete-file, .front-applicant .attached-file-row .delete-file, .edit-complaint-page.edit-now .attached-file-row .delete-file {
     width: 26px !important;
     height: 26px !important; }
-  /* line 275, ../sass/_applicant_page.scss */
-  .add-complaint-page .attached-file-row .file-link, .front-applicant .attached-file-row .file-link {
+  /* line 280, ../sass/_applicant_page.scss */
+  .add-complaint-page .attached-file-row .file-link, .front-applicant .attached-file-row .file-link, .edit-complaint-page.edit-now .attached-file-row .file-link {
     font-size: 16px; }
-  /* line 278, ../sass/_applicant_page.scss */
-  .add-complaint-page .attached-file-row:last-child, .front-applicant .attached-file-row:last-child {
+  /* line 283, ../sass/_applicant_page.scss */
+  .add-complaint-page .attached-file-row:last-child, .front-applicant .attached-file-row:last-child, .edit-complaint-page.edit-now .attached-file-row:last-child {
     margin-bottom: 10px; }
-/* line 282, ../sass/_applicant_page.scss */
-.add-complaint-page #attached-file-0, .front-applicant #attached-file-0 {
+/* line 287, ../sass/_applicant_page.scss */
+.add-complaint-page #attached-file-0, .front-applicant #attached-file-0, .edit-complaint-page.edit-now #attached-file-0 {
   margin-top: 10px; }
-/* line 285, ../sass/_applicant_page.scss */
-.add-complaint-page .file-names, .front-applicant .file-names {
+/* line 290, ../sass/_applicant_page.scss */
+.add-complaint-page .file-names, .front-applicant .file-names, .edit-complaint-page.edit-now .file-names {
   margin-bottom: 0 !important; }
 
-/* line 290, ../sass/_applicant_page.scss */
+/* line 295, ../sass/_applicant_page.scss */
 .front-applicant .file-names {
   padding-left: 0 !important; }
 
-/* line 295, ../sass/_applicant_page.scss */
+/* line 300, ../sass/_applicant_page.scss */
 .list-arguments .lt-head-btns div {
   padding: 0 18px; }
-  /* line 297, ../sass/_applicant_page.scss */
+  /* line 302, ../sass/_applicant_page.scss */
   .list-arguments .lt-head-btns div:hover {
     color: #ffffff;
     text-decoration: none; }
 
-/* line 303, ../sass/_applicant_page.scss */
+/* line 308, ../sass/_applicant_page.scss */
 .appll-status-icon {
   margin: 26px auto 0;
   width: 22px;
   height: 22px;
   background: url(../images/icon-jl-chernov.png) 0 0 no-repeat; }
 
-/* line 309, ../sass/_applicant_page.scss */
+/* line 314, ../sass/_applicant_page.scss */
 .top-bd-blue .appll-status-icon {
   background-image: url(../images/icon-jl-rassmotr.png); }
 
-/* line 312, ../sass/_applicant_page.scss */
+/* line 317, ../sass/_applicant_page.scss */
 .top-bd-green .appll-status-icon {
   background-image: url(../images/icon-jl-done.png); }
 
-/* line 315, ../sass/_applicant_page.scss */
+/* line 320, ../sass/_applicant_page.scss */
 .top-bd-red .appll-status-icon {
   background-image: url(../images/icon-jl-notdone.png); }
 
-/* line 319, ../sass/_applicant_page.scss */
+/* line 324, ../sass/_applicant_page.scss */
 .appllicant-page .lt-head-btns div {
   cursor: default; }
 
-/* line 324, ../sass/_applicant_page.scss */
+/* line 329, ../sass/_applicant_page.scss */
 .appllicant-page .lt-head-btns.active-lt-head-btns div {
   cursor: pointer; }
-  /* line 326, ../sass/_applicant_page.scss */
+  /* line 331, ../sass/_applicant_page.scss */
   .appllicant-page .lt-head-btns.active-lt-head-btns div:not(:last-child):hover {
     color: #ffffff;
     background-color: #10b8f7; }
-  /* line 330, ../sass/_applicant_page.scss */
+  /* line 335, ../sass/_applicant_page.scss */
   .appllicant-page .lt-head-btns.active-lt-head-btns div:last-child {
     color: #00aeef; }
 
-/* line 335, ../sass/_applicant_page.scss */
+/* line 340, ../sass/_applicant_page.scss */
 .appllicant-page .lt-content-main {
   position: relative; }
-  /* line 337, ../sass/_applicant_page.scss */
+  /* line 342, ../sass/_applicant_page.scss */
   .appllicant-page .lt-content-main li {
     position: relative;
     z-index: 9; }
 
-/* line 344, ../sass/_applicant_page.scss */
+/* line 349, ../sass/_applicant_page.scss */
 .message-page .lt-content-top li:first-child {
   width: 325px; }
-/* line 347, ../sass/_applicant_page.scss */
+/* line 352, ../sass/_applicant_page.scss */
 .message-page .lt-content-top li:nth-child(2) {
   width: 515px;
   line-height: 75px;
   overflow: hidden; }
-/* line 352, ../sass/_applicant_page.scss */
+/* line 357, ../sass/_applicant_page.scss */
 .message-page .lt-content-top li:nth-child(3) {
   width: 160px; }
-  /* line 354, ../sass/_applicant_page.scss */
+  /* line 359, ../sass/_applicant_page.scss */
   .message-page .lt-content-top li:nth-child(3) span {
     background-image: none; }
-/* line 360, ../sass/_applicant_page.scss */
+/* line 365, ../sass/_applicant_page.scss */
 .message-page .lt-content-main li:first-child {
   width: 325px;
   padding-left: 30px !important; }
-/* line 364, ../sass/_applicant_page.scss */
+/* line 369, ../sass/_applicant_page.scss */
 .message-page .lt-content-main li:nth-child(2) {
   width: 515px;
   line-height: 75px;
   overflow: hidden; }
-/* line 369, ../sass/_applicant_page.scss */
+/* line 374, ../sass/_applicant_page.scss */
 .message-page .lt-content-main li:nth-child(3) {
   width: 160px; }
-/* line 373, ../sass/_applicant_page.scss */
+/* line 378, ../sass/_applicant_page.scss */
 .message-page .lt-content-main.new-message {
   font-weight: bold; }
 

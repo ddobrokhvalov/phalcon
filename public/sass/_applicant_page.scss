@@ -262,7 +262,12 @@
         }
     }
 }
-.add-complaint-page, .front-applicant {
+.edit-complaint-page.edit-now {
+    .attached-file-row:first-child {
+        margin-top: 10px;
+    }
+}
+.add-complaint-page, .front-applicant, .edit-complaint-page.edit-now {
     .attached-file-row {
         padding: 4px 0 !important;
         .file-icon {

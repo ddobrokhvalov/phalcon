@@ -22,6 +22,7 @@ class Complaint extends Model
     public $data_provedeniya;
     public $okonchanie_rassmotreniya;
     public $vremya_provedeniya;
+    public $complaint_text_order;
 
     public function initialize()
     {

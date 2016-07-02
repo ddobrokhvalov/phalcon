@@ -99,8 +99,12 @@ $(document).ready(function(){
 $(document).ready(function() {
     $(".ch-l-dd").hide();
     $(".ch-left").click(function(){
-        $(".ch-l-dd").slideToggle(300);
-        $('.opacity-layer').show();
+        if ($("#is_edit_now").val() == "is_edit_now") {
+            showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Нельзя менять заявителя во время редактирования жалобы");
+        } else {
+            $(".ch-l-dd").slideToggle(300);
+            $('.opacity-layer').show();
+        }
     });
     $(".ch-left-cl").click(function(){
         $(".ch-l-dd").slideToggle(300);

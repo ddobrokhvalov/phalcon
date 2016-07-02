@@ -371,6 +371,11 @@ jQuery(document).ready(function($) {
         $('#delete-file-id').val($(this).find('#file-id').val());
         $('.confirm-deletion-file-lg').modal('show');
     });
+    $('.edit-complaint-page.edit-now .delete-file').click(function(){
+        //$('#delete-file-id').val($(this).find('#file-id').val());
+        //$('.confirm-deletion-file-lg').modal('show');
+        delete_complaint_file_edit_form($("#update-complaint-id").val(), $(this).find('#file-id').val());
+    });
     var li_mess_count = 0;
     var ul_mes_height = 0;
     $('.ch-r-m-text ul li').each(function(){
@@ -395,6 +400,21 @@ var statModal = '<ul class="status-list-holder">' +
 					'<li rel = "recalled">Отозвана</li>' +
 					'<li rel = "archive">Архив</li>' +
 				'</ul>';
+
+function delete_complaint_file_edit_form(complaint_id, file_id) {
+    if (complaint_id != undefined && file_id != undefined) {
+        $.ajax({
+            url: "/complaint/deleteFile",
+            type:'POST',
+            data: { file_id: file_id, complaint_id: complaint_id },
+            dataType: 'json',
+            success: function(data){
+                showStyledPopupMessage("#pop-before-ask-question", "Уведомление", "Файл успешно удален");
+                $("#delete-file-row-" + file_id).remove();
+            },
+        });
+    }
+}
 
 function delete_applicant_file() {
     var applicant_id = $('#delete-applicant-id').val();
@@ -998,7 +1018,7 @@ function changeAdminButtonsBackground() {
     }
 }
 
-function changeComplaintButtonsBackground() {//debugger;
+function changeComplaintButtonsBackground() {
     if($('.admin-main-wrap').hasClass('complaints-list')){
         var id_array = [];
         $('.admin-lt-holder .lt-content-main').each(function(){

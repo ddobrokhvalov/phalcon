@@ -8,6 +8,7 @@ use Multiple\Frontend\Models\Category;
 use Multiple\Frontend\Models\Complaint;
 use Multiple\Frontend\Models\ComplaintMovingHistory;
 use Multiple\Frontend\Models\Question;
+use Multiple\Frontend\Models\UsersArguments;
 use Multiple\Frontend\Models\Files;
 use Phalcon\Mvc\Controller;
 use \Phalcon\Paginator\Adapter\NativeArray as Paginator;
@@ -45,24 +46,70 @@ class ComplaintController extends ControllerBase
 
     }
 
+    public function deleteFileAction() {
+        $file_id = $this->request->getPost('file_id');
+        $complaint_id = $this->request->getPost('complaint_id');
+        if ($file_id && $complaint_id) {
+            $complaint = Complaint::findFirstById($complaint_id);
+            if ($complaint) {
+                $file = Files::findFirstById($file_id);
+                if ($file) {
+                    $file->delete();
+                    $complaint_files = unserialize($complaint->fid);
+                    if (count($complaint_files)) {
+                        unset($complaint_files[array_search($file_id, $complaint_files)]);
+                        $complaint->fid = serialize(array_values($complaint_files));
+                    } else {
+                        $complaint->fid = serialize(array());
+                    }
+                    $complaint->save();
+                    //$this->flashSession->success('Файл удален');
+                }
+            }
+        }
+        $this->view->disable();
+        $data = "ok";
+        echo json_encode($data);
+    }
+
     public function editAction($id)
     {
         //TrustedLibrary::trusted_library_init();
         $complaint = Complaint::findFirstById($id);
         if (!$complaint || !$complaint->checkComplaintOwner($id, $this->user->id))
             return $this->forward('complaint/index');
-        //if (isset($_SESSION['TRUSTEDNET']['OAUTH'])) $OAuth2 = unserialize($_SESSION['TRUSTEDNET']['OAUTH']);
-//        if (isset($OAuth2)){
-//            /*$token = $OAuth2->getAccessToken();
-//            if(!$OAuth2->checkToken())
-//                if($OAuth2->refresh())*/ $token = $OAuth2->getRefreshToken();
-//            $this->view->token  = $token;
-//
-//        } else {
-//            $this->session->destroy();
-//            return $this->forward('/');
-//        }
 
+        // Load arguments
+        $category = new Category();
+        $arguments = $category->getArguments();
+        $this->view->arguments = $arguments;
+        // Load users arguments
+        $arguments = UsersArguments::find(
+            array(
+                'complaint_id = :complaint_id:',
+                'bind' => [
+                    'complaint_id' => $id,
+                ]
+            )
+        );
+        $user_arguments = '';
+        $argument_order = 0;
+        $categories_id = [];
+        $arguments_id = [];
+        foreach ($arguments as $argument) {
+            $categories_id[] = $argument->argument_category_id;
+            $arguments_id[] = $argument->argument_id;
+            if ($argument_order == $complaint->complaint_text_order) {
+                $user_arguments .= $complaint->complaint_text . '</br>';
+                $user_arguments .= $argument->text . '</br>';
+            } else {
+                $user_arguments .= $argument->text . '</br>';
+            }
+            ++$argument_order;
+        }
+        $this->view->categories_id = implode(',', $categories_id);
+        $this->view->arguments_id = implode(',', $arguments_id);
+        $this->view->complaint_text_order = $complaint->complaint_text_order;
         $files_html = [];
         if ($complaint->fid) {
             $file_ids = unserialize($complaint->fid);
@@ -87,6 +134,7 @@ class ComplaintController extends ControllerBase
         } else {
             $this->view->edit_now = FALSE;
         }
+        $this->view->user_arguments = $user_arguments;
         $history = ComplaintMovingHistory::findFirst("complaint_id = $id");
         if ($history) {
             $history->is_read = 1;
@@ -134,8 +182,29 @@ class ComplaintController extends ControllerBase
             echo 'error';
             exit;
         }
+        $users_arguments_ = [];
         $data = $this->request->getPost();
         $data['auctionData'] = explode('&', $data['auctionData']);
+        $users_arguments = explode('_?_', $data['arguments_data']);
+        unset($users_arguments[count($users_arguments) - 1]);
+        foreach ($users_arguments as $key => $row) {
+            $users_arguments[$key] = explode('?|||?', $row);
+        }
+        foreach ($users_arguments as $key => &$row) {
+            //$cnt = count($row);
+            foreach ($row as $data_) {
+                $data_ = explode('===', $data_);
+                $users_arguments_[$key][$data_[0]] = $data_[1];
+                if (isset($users_arguments_[$key]['argument_id']) && $users_arguments_[$key]['argument_id'] == 'just_text') {
+                    $data['complaint_text'] = $data_[1];
+                    $data['complaint_text_order'] = $users_arguments_[$key]['order'];
+                }
+            }
+            /*for ($ind = 0; $ind < $cnt; $ind++) {
+                unset($row[$ind]);
+            }*/
+            //$users_arguments[$key] = explode('?|||?', $row);
+        }
         foreach ($data['auctionData'] as $value) {
             $value = explode('=', $value);
             $data["{$value[0]}"] = $value[1];
@@ -153,6 +222,20 @@ class ComplaintController extends ControllerBase
             //$response = array('result' => 'error', 'message' => 'Ошибка при попытке сохранения жалобы');
         } else {
             $allow = TRUE;
+
+            // Save users arguments.
+            foreach ($users_arguments_ as $argument) {
+                if ($argument['argument_id'] != 'just_text') {
+                    $u_arg = new UsersArguments();
+                    $u_arg->complaint_id = $complaint->id;
+                    $u_arg->argument_id = $argument['argument_id'];
+                    $u_arg->argument_order = $argument['order'];
+                    $u_arg->text = $argument['argument_text'];
+                    $u_arg->argument_category_id = $argument['category_id'];
+                    $u_arg->save();
+                }
+            }
+            
             // Check all files with needed rules.
             if ($this->request->hasFiles() == true) {
                 $files_model = new Files();
@@ -190,6 +273,107 @@ class ComplaintController extends ControllerBase
         /*header('Content-type: application/json');
         echo json_encode($response);
         exit;*/
+    }
+    
+    public function updateAction()
+    {
+        if (!$this->request->isPost()) {
+            echo 'error';
+            exit;
+        }
+        $users_arguments_ = [];
+        $data = $this->request->getPost();
+        $users_arguments = explode('_?_', $data['arguments_data']);
+        unset($users_arguments[count($users_arguments) - 1]);
+        foreach ($users_arguments as $key => $row) {
+            $users_arguments[$key] = explode('?|||?', $row);
+        }
+        foreach ($users_arguments as $key => &$row) {
+            foreach ($row as $data_) {
+                $data_ = explode('===', $data_);
+                $users_arguments_[$key][$data_[0]] = $data_[1];
+                if (isset($users_arguments_[$key]['argument_id']) && $users_arguments_[$key]['argument_id'] == 'just_text') {
+                    $data['complaint_text'] = $data_[1];
+                    $data['complaint_text_order'] = $users_arguments_[$key]['order'];
+                }
+            }
+        }
+        $complaint = Complaint::findFirstById($data['update-complaint-id']);
+        if ($complaint) {
+            $complaint->complaint_name = $data['complaint_name'];
+            $complaint->complaint_text = $data['complaint_text'];
+            $complaint->complaint_text_order = $data['complaint_text_order'];
+        }
+
+        if ($complaint->update() == false) {
+            //$this->flashSession->error('Не выбран заявитель');
+            foreach ($complaint->getMessages() as $message) {
+                $this->flashSession->error($message);
+            }
+            return $this->response->redirect('/complaint/edit/' + $data['update-complaint-id']);
+        } else {
+            $allow = TRUE;
+
+            // Remove all arguments
+            $arguments_delete = UsersArguments::find(
+                array(
+                    'complaint_id = :complaint_id:',
+                    'bind' => [
+                        'complaint_id' => $data['update-complaint-id'],
+                    ]
+                )
+            )->delete();
+
+            // Save users arguments.
+            foreach ($users_arguments_ as $argument) {
+                if ($argument['argument_id'] != 'just_text') {
+                    $u_arg = new UsersArguments();
+                    $u_arg->complaint_id = $complaint->id;
+                    $u_arg->argument_id = $argument['argument_id'];
+                    $u_arg->argument_order = $argument['order'];
+                    $u_arg->text = $argument['argument_text'];
+                    $u_arg->argument_category_id = $argument['category_id'];
+                    $u_arg->save();
+                }
+            }
+            
+            // Check all files with needed rules.
+            if ($this->request->hasFiles() == true) {
+                $files_model = new Files();
+                if (!$files_model->checkAllFiles($this->request)) {
+                    $allow = FALSE;
+                }
+            }
+            if ($allow) {
+                $saved_files = array();
+                if ($this->request->hasFiles() == true) {
+                    $baseLocation = 'files/complaints/';
+                    foreach ($this->request->getUploadedFiles() as $file) {
+                        if (strlen($file->getName())) {
+                            $applicant_file = new Files();
+                            $name = explode('.', $file->getName())[0] . '_' . time() . '.' . explode('.', $file->getName())[1];
+                            //$name = iconv("UTF-8", "cp1251", $name);
+                            $applicant_file->file_path = $name;
+                            $applicant_file->file_size = round($file->getSize() / 1024, 2);
+                            $applicant_file->file_type = $file->getType();
+                            $applicant_file->save();
+                            $saved_files[] = $applicant_file->id;
+                            //Move the file into the application
+                            $file->moveTo($baseLocation . $name);
+                        }
+                    }
+                }
+                $old_files = unserialize($complaint->fid);
+                if (count($old_files)) {
+                    $complaint->fid = serialize(array_merge($old_files, $saved_files));
+                } else {
+                    $complaint->fid = serialize($saved_files);
+                }
+                $complaint->save();
+            }
+            $this->flashSession->success('Жалоба обновлена');
+            return $this->response->redirect('complaint/edit/' . $complaint->id);
+        }
     }
 
     public function askQuestionAction(){

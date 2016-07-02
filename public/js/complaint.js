@@ -76,7 +76,7 @@ var complaint = {
     cat3: false,
     needCat3: false,
     selectCat3: false,
-
+    arguments_data: '',
 
     setHeader: function () {
         var now = new Date();
@@ -122,7 +122,7 @@ var complaint = {
 
         if (!auction.auctionReady)
             return false;
-
+//bugger;
         $('#complaint_name').removeClass('c-inp-done');
         $('#complaint_name').removeClass('c-inp-error');
         this.complainName = $('#complaint_name').val();
@@ -131,8 +131,18 @@ var complaint = {
             return false;
         }
         $('#complaint_name').addClass('c-inp-done');
+        var ind = 0;
+        $("#edit_container .template_edit").each(function() {
+            /*var row_obj = {};
+            row_obj["order"] = ind;
+            row_obj["argument_id"] = $(this).attr("data-argument-id");
+            row_obj["argument_text"] = $(this).find(".edit-textarea").html();*/
+            complaint.arguments_data += "order===" + ind + "?|||?category_id===" + $(this).attr("data-category-id") +  "?|||?argument_id===" + $(this).attr("data-argument-id") + "?|||?argument_text===" + $(this).find(".edit-textarea").html() + "_?_";
+            ++ind;
+        });
         this.complainText = '';
         for (var key in argument.argumentList) {
+            console.log(key);
             this.complainText += $('#edit_textarea_' + argument.argumentList[key]).html();
         }
 
@@ -155,8 +165,10 @@ var complaint = {
         return true;
     },
     saveAsDraft: function () {
+    
         $("#auctionData").val(this.auctionData);
-        $("#complaint_text").val(this.complainText);
+        $("#arguments_data").val(complaint.arguments_data + "");
+        //$("#complaint_text").val(this.complainText);
         $("#complaint_name").val(this.complainName);
         $("#applicant_id").val(applicant.id);
         $("#add-complaint-form").submit();
@@ -176,7 +188,7 @@ var complaint = {
         });*/
 
     },
-    filterComplaintByApplicant: function (applicant_id) {//debugger;
+    filterComplaintByApplicant: function (applicant_id) {
         var url = window.location.href;
 /*return false;
         var splitter = url.split('applicant_id=' + applicant_id.join(","));*/
@@ -198,19 +210,33 @@ var drake = false;
 var currTextArea = 0;
 var argument = {
     argumentList: [],
-    addArgument: function (id, cat_id) {
+    addArgument: function (id, cat_id, complaint_text) {
 
+        complaint_text = complaint_text || "";
+        templates["just_text"] = "Вы можете ввести свой текст здесь";
         if (complaint.needCat3 === true && cat_id == 3) {
 
             complaint.selectCat3 = true;
         }
 
 
-        this.argumentList.push(id);
-        var templateName = $('#template_' + id).html();
-        $('.argument_text_container').append('<span id="argument_text_container_' + id + '" class="atx argument_text_container_' + id + '">' + templateName + ' <a class="remove-argument" value="' + id + '"  ></a></span>');
+        if (id != "just_text") {
+            this.argumentList.push(id);
+        }
+        if (id != "just_text") {
+            var templateName = $('#template_' + id).html();
+        } else {
+            var templateName = "Пользовательский текст";
+        }
+        if (id != "just_text") {
+            $('.argument_text_container').append('<span id="argument_text_container_' + id + '" class="atx argument_text_container_' + id + '">' + templateName + ' <a class="remove-argument" value="' + id + '"  ></a></span>');
+        }
 
-        var html = '<div class="template_edit" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
+        var c_text = templates[id];
+        if (complaint_text.length) {
+            c_text = complaint_text;
+        }
+        var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" class="template_edit" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
             '<span>' + templateName + '</span>' +
             '<div class="c-edit-j-h-ctr">' +
             '<a  class="template-edit-control down c-edit-j-h-ctr1">Переместить ниже</a> <a class="template-edit-control up c-edit-j-h-ctr2">Переместить выше</a>' +
@@ -218,13 +244,13 @@ var argument = {
             '</div>' +
             '</div>' +
             '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" >' +
-            templates[id] +
+            c_text +
             '</div></div></div>';
         $('#edit_container').append(html);
         currTextArea = 'edit_textarea_' + id;
         setTimeout(function () {
             if (drake !== false) {
-                drake.destroy();
+                drake.destroy(true);
             }
           //  drake = dragula([document.getElementById('edit_container')]);
             drake = dragula([document.getElementById('argument_text_container')]);
@@ -294,6 +320,7 @@ var auction = {
                 //complaint.setHeader();
                 $('.loading-gif').hide();
                 auction.auctionReady = true;
+                argument.addArgument("just_text", "just_text");
             } else {
                 $('#auction_id').addClass('c-inp-error');
                 $('#result_container').append('<b style="color:red!important;" class="msg_status_parser">Ошибка!</b>');
@@ -438,6 +465,9 @@ function incrementMenuCount() {
     $('.menu-status-draft').html(parseInt(countDraft) + 1);
 }
 function initEditor(id) {
+    if ( CKEDITOR.instances[id] ) {
+        CKEDITOR.remove(CKEDITOR.instances[id]);
+    }
     var editor = CKEDITOR.inline(document.getElementById(id), {
         toolbarGroups: [
             {name: 'clipboard', groups: ['clipboard', 'undo']},

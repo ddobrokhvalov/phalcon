@@ -78,7 +78,7 @@ class Files extends Model
     
     public function getFilesHtml($file, $id, $path) {
         $html = '';
-        $html .= "<div class=\"attached-file-row\">";
+        $html .= "<div class=\"attached-file-row\" id=\"delete-file-row-{$file->id}\">";
         $html .=    "<div class=\"file-icon {$this->getFileClass($file->file_type)}\">";
         $html .=    '</div>';
         $html .=    "<a class=\"file-link\" href=\"/files/{$path}/{$file->file_path}\" title=\"Скачать файл\">";

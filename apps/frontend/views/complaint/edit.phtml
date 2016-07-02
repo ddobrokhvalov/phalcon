@@ -1,4 +1,4 @@
-<div class="content edit-complaint-page">
+<div class="content edit-complaint-page {% if complaint.status == 'draft' and action_edit === true %}edit-now {% endif %}">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
             <div class="c-cnt-pagename">
@@ -59,15 +59,15 @@
             <div class="c-jadd1">
                 <div class="c-jadd1-z">
                     <span>Номер извещения</span><br>
-                    <i>После ввода номера извещения, все данные о закупке заполнятся автоматически</i>
+                    <!--<i>После ввода номера извещения, все данные о закупке заполнятся автоматически</i>-->
                 </div>
                 <div class="c-jadd1-f" id="result_container">
-                    №<input id="auction_id" type="text" value="" >
-                    <input id="notice_button" type="submit" value="Получить данные">
+                    №<input id="auction_id" type="text" value="{{ complaint.auction_id }}" disabled="disabled">
+                    <!--<input id="notice_button" type="submit" value="Получить данные">
                     <span class="loading-gif">
                         <img width="30px" height="30px" src="/img/loading.gif">
 
-                     </span>
+                     </span>-->
                 </div>
             </div>
             {% endif %}
@@ -102,134 +102,146 @@
                     <span style="text-transform: uppercase;">Показать подробно</span>
                 </div>
             </div>
+            
+            {% if complaint.status == 'draft' and action_edit === true %}
+            <form action="/complaint/update" id="add-complaint-form" enctype="multipart/form-data" method="POST">
+            <input type="hidden" name="auctionData" id="auctionData" value="">
+            <input type="hidden" name="arguments_data" id="arguments_data" value="">
+            <input type="hidden" name="complaint_text" id="complaint_text" value="">
+            <input type="hidden" name="applicant_id" id="applicant_id" value="">
+            <input type="hidden" name="update-complaint-id" id="update-complaint-id" value="{{ complaint.id }}">
+                <div class="c-jadd2 complaint-main-container" style="display: block !important;">
+                    <div class="c-jadd2-f">
+                        <span class="c-jadd2-f-z">Сокращенное имя жалобы (для идинтификации внутри системы)</span>
+                        <input id="complaint_name" type="text" name="complaint_name" value="{{ complaint.complaint_name }}">
+                        <div class="c-jd2-f-dov-b">
+                            <div class="c-jd2-f-dov">
+                                Доводы жалобы
+                            </div>
+                            <div class="argument_text_container c-jd2-f-dov-dd-t2" >
 
-            <div class="c-jadd2">
-                <div class="c-jadd2-z">
-                    {{ complaint.complaint_name }}
-                </div>
-                <div class="c-jadd2-f">
-                    <div class="c-jd2-f-flist">
-                        <script type="text/javascript">
-                            //var token = '{#token#}';
-                            //$(document).on('click', '#upload', function(){
-                                //ajaxFileUpload('/ajax/fileupload', 'upload_proofs');
-                                
-                                /*var signature = $('#upload_proofs');
-                                var file = document.getElementById("upload_proofs").files[0];
-                                var reader = new FileReader();
-                                reader.onload = function (evt) {
-                                    console.log(evt.target.result);
-                                    var postdata = {id:1, 'token':token, 'signature':evt.target.result}
-                                    $.ajax({
-                                        type: "POST",
-                                        url: '/ajax/trusted?command=upload',
-                                        dataType: 'json',
-                                        cache: false,
-                                        data: postdata,
-                                        error: function(data){
-                                            console.log(data);
-                                        },
-                                        success: function(data) {
-                                            console.log(data);
-                                        },
-                                        timeout: 120000 // sets timeout to 2 minutes
-                                    });*/
-                                //});
-                                /*reader.onerror = function (evt) {
-                                    console.log("error reading file");
-                                };
-                                reader.readAsText(file, "UTF-8");
-                                /*
-                                var postdata = {id:1, 'token':token, 'signature':signature}
-                                $.ajax({
-                                    type: "POST",
-                                    url: '/ajax/trusted?command=upload',
-                                    dataType: 'json',
-                                    cache: false,
-                                    data: postdata,
-                                    error: function(data){
-                                        console.log(data);
-                                    },
-                                    success: function(data) {
-                                        console.log(data);
-                                    },
-                                    timeout: 120000 // sets timeout to 2 minutes
-                                });*/
-                            /*});*/
-                        </script>
-                        <div class="attached-files">
-                            {% if attached_files|count > 0 %}
-                                {% for file in attached_files %}
-                                    {{ file }}
-                                {% endfor %}
-                                {% else %}
-                                    {{ 'Нет прикрепленных файлов' }}
-                            {% endif %}
-                        </div>
-                        
-                    </div>
-                    <div class="c-jd2-f-edit">
-                        <div class="c-jd2-f-edit-text mCustomScrollbar">
-                            {% if complaint.status == 'draft' and action_edit === true %}
-                                <div contenteditable class="c-jd2-f-edit-t complaint-text">
-                                    {{ complaint.complaint_text }}
+                            </div>
+                            <div class="c-jd2-f-dov-dd">
+                                <div class="c-jd2-f-dov-dd-z">
+                                    Доводы жалобы
                                 </div>
-                            {% else %}
+                                <div id="argument_text_container" class="argument_text_container c-jd2-f-dov-dd-t" >
+
+                                </div>
+                                <div class="c-jd2-f-dov-dd-pick mCustomScrollbar">
+                                    <div class="c-jd2-f-dov-dd-pick-b category-container">
+                                        {% for argument in arguments  %}
+                                            {% if argument['category'].cnt > 0 %}
+                                                <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}" style="display: block !important;">
+                                                    <span>{{ argument['category'].name }}</span>
+                                                    {% for template in argument['templates']  %}
+                                                      <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>
+                                                      <label id="template_{{ template.id }}" for="jd2cbb{{ template.id }}">{{ template.name }}</label>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="c-jadd2-f-z">Текст жалобы</span>
+                        <div class="c-jd2-f-edit">
+                            <div class="c-jd2-f-edit-h">
+                                <div style="float: left; padding-top: 8px;" id="itselem"></div>
+                                <div class="complaint-attachment">
+                                    <div class="file-wrapper">
+                                        <div class="text-above">Прикрепить файлы</div>
+                                        <input id="upload-files" type="file" multiple name="upload-files[]">
+                                    </div>
+                                    
+                                    <script type="text/javascript">
+                                        jQuery(document).ready(function(){
+                                            jQuery('#upload-files').change(function(){
+                                                var cnt = jQuery('#upload-files')[0].files.length;
+                                                var i = 0;
+                                                var html = '';
+                                                for (i = 0; i < cnt; i++) {
+                                                    var file_data = jQuery('#upload-files')[0].files[i]['name'].split('.');
+                                                    var file_type = file_data[file_data.length - 1];
+                                                    var file_size = jQuery('#upload-files')[0].files[i]['size'] / 1024;
+                                                    var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery('#upload-files')[0].files[i]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
+                                                }
+                                                jQuery('.attached-files .attached-files-wrap').html(html);
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                                <input type="file" id="cjd2file" hidden />
+                            </div>
+                            <div class="file-names">
+                                <div class="attached-files">
+                                    {% if attached_files|count > 0 %}
+                                        {% for file in attached_files %}
+                                            {{ file }}
+                                        {% endfor %}
+                                        {% else %}
+                                            {{ 'Нет прикрепленных файлов' }}
+                                    {% endif %}
+                                    <div class="attached-files-wrap"></div>
+                                </div>
+                            </div>
+                            <div class="c-jd2-f-edit-text mCustomScrollbar">
+                                <div id="edit_container" class="c-jd2-f-edit-t">
+                               </div>
+                            </div>
+                        </div>
+
+                        <div class="c-jd2-f-save">
+                            <input id="complaint_save" class="complaint_save-blue" type="submit" value="Сохранить черновик" onclick="auction.auctionReady=true;">
+                        </div>
+                        </form>
+                        <div class="c-jd2-f-cat">
+                            <input type="radio" name="jd2cat" id="jd2cat1" checked hidden>
+                            <label class = "trusted-ep" for="jd2cat1">Подписать ЭП</label>
+                            <input type="radio" name="jd2cat" id="jd2cat2" hidden>
+                            <label for="jd2cat2">Отправить в УФАС</label>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="c-jadd2">
+                    <div class="c-jadd2-z">
+                        {{ complaint.complaint_name }}
+                    </div>
+                    <div class="c-jadd2-f">
+                        <div class="c-jd2-f-flist">
+                            <div class="attached-files">
+                                {% if attached_files|count > 0 %}
+                                    {% for file in attached_files %}
+                                        {{ file }}
+                                    {% endfor %}
+                                    {% else %}
+                                        {{ 'Нет прикрепленных файлов' }}
+                                {% endif %}
+                            </div>
+                            <script type="text/javascript">
+                                $(".attached-file-row").each(function() {
+                                    $(this).find('div.delete-file').remove();
+                                });
+                            </script>
+                        </div>
+                        <div class="c-jd2-f-edit">
+                            <div class="c-jd2-f-edit-text mCustomScrollbar">
                                 <div class="c-jd2-f-edit-t">
-                                    {{ complaint.complaint_text }}
+                                    {{ user_arguments }}
                                 </div>
-                            {% endif %}
+                            </div>
+                        </div>
+                        <div class="c-jd2-f-cat">
+                            <input type="radio" name="jd2cat" id="jd2cat1" checked hidden>
+                            <label for="jd2cat1" class="trusted-ep">Подписать ЭП</label>
+                            <input type="radio" name="jd2cat" id="jd2cat2" hidden>
+                            <label for="jd2cat2">Отправить в УФАС</label>
                         </div>
                     </div>
-                    {% if complaint.status == 'draft' and action_edit === true %}
-                    <div class="c-jd2-f-save">
-                        <input id="complaint_edit_save" class="complaint_save-blue" type="submit" value="Сохранить черновик">
-                    </div>
-                    {% endif %}
-                    <script type="text/javascript">
-                        //var token = '{#token#}';
-//                        $(document).on('click', '.trusted-ep', function(){
-//
-//                            /*id[]    Коллекция `id` документов
-//                            logo    URI на картинку логотипа
-//                            css     URI на CSS для мастера подписи
-//                            extra   Дополнительные параметры*/
-//                            var id = 1;
-//                            $.ajax({
-//                                type: "POST",
-//                                url: '/ajax/getlast',
-//                                error: function(data){
-//                                    console.log(data);
-//                                },
-//                                success: function(data) {
-//                                    var postdata = {'id[]':parseInt(data), 'logo':'https://net.trusted.ru/static/images/svg/bitrix.svg', 'token':token}
-//                                    $.ajax({
-//                                        type: "POST",
-//                                        url: '/ajax/trusted?command=sign',
-//                                        dataType: 'json',
-//                                        cache: false,
-//                                        data: postdata,
-//                                        error: function(data){
-//                                            console.log(data);
-//                                        },
-//                                        success: function(data) {
-//                                            console.log(data);
-//                                        },
-//                                        timeout: 120000 // sets timeout to 2 minutes
-//                                    });
-//                                },
-//                                timeout: 120000 // sets timeout to 2 minutes
-//                            });
-//                        });
-                    </script>
-                    <div class="c-jd2-f-cat">
-                        <input type="radio" name="jd2cat" id="jd2cat1" checked hidden>
-                        <label for="jd2cat1" class="trusted-ep">Подписать ЭП</label>
-                        <input type="radio" name="jd2cat" id="jd2cat2" hidden>
-                        <label for="jd2cat2">Отправить в УФАС</label>
-                    </div>
                 </div>
-            </div>
+            {% endif %}
 
             <div class="c-jadd3">
                 <div class="c-jd3-z">
@@ -279,20 +291,55 @@
         </div>
     </div>
 </div>
+<input type="hidden" name="categories_id" id="categories_id" value="{{ categories_id }}">
+<input type="hidden" name="arguments_id" id="arguments_id" value="{{ arguments_id }}">
+{% if complaint.status == 'draft' and action_edit === true %}
+    <input type="hidden" name="is_edit_now" id="is_edit_now" value="is_edit_now">
+{% else %}
+    <input type="hidden" name="is_edit_now" id="is_edit_now" value="">
+{% endif %}
 <script>
-    auction.data['complaint_id'] = '{{complaint.id }}';
+    //$(document).ready(function(){
+        auction.data['complaint_id'] = '{{complaint.id }}';
 
-    auction.data['type'] = '{{complaint.type }}';
-    auction.data['purchases_made'] = '{{complaint.purchases_made }}';
-    auction.data['purchases_name'] = '{{complaint.purchases_name }}';
-    auction.data['contact'] = '{{complaint.contact }}';
-    auction.data['nachalo_podachi'] = '{{complaint.nachalo_podachi }}';
-    auction.data['okonchanie_podachi'] = '{{complaint.okonchanie_podachi }}';
-    auction.data['vskrytie_konvertov'] = '{{complaint.vskrytie_konvertov }}';
-    auction.data['data_rassmotreniya'] = '{{complaint.data_rassmotreniya }}';
-    auction.data['data_provedeniya'] = '{{complaint.data_provedeniya }}';
-    auction.data['okonchanie_rassmotreniya'] = '{{complaint.okonchanie_rassmotreniya }}';
-    auction.data['vremya_provedeniya'] = '{{complaint.vremya_provedeniya }}';
-    auction.setData();
-
+        auction.data['type'] = '{{complaint.type }}';
+        auction.data['purchases_made'] = '{{complaint.purchases_made }}';
+        auction.data['purchases_name'] = '{{complaint.purchases_name }}';
+        auction.data['contact'] = '{{complaint.contact }}';
+        auction.data['nachalo_podachi'] = '{{complaint.date_start }}';
+        auction.data['okonchanie_podachi'] = '{{complaint.okonchanie_podachi }}';
+        auction.data['vskrytie_konvertov'] = '{{complaint.vskrytie_konvertov }}';
+        auction.data['data_rassmotreniya'] = '{{complaint.data_rassmotreniya }}';
+        auction.data['data_provedeniya'] = '{{complaint.data_provedeniya }}';
+        auction.data['okonchanie_rassmotreniya'] = '{{complaint.okonchanie_rassmotreniya }}';
+        auction.data['vremya_provedeniya'] = '{{complaint.vremya_provedeniya }}';
+        auction.setData();
+        {% if complaint.status == 'draft' and action_edit === true %}
+            var templates = {};
+            {% for argument in arguments  %}
+                {% for template in argument['templates']  %}
+                   templates[{{template.id}}] = '{{template.text}}';
+                {% endfor %}
+            {% endfor %}
+            var categories_id = $("#arguments_id").val().split(",");
+            $.each(categories_id, function( index, value ) {
+                if (index == {{ complaint_text_order }}) {
+                    argument.addArgument("just_text", "just_text", '{{complaint.complaint_text}}');
+                }
+                /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
+                $(".category-container input#jd2cbb" + value).prop('checked', true);
+                var cat = $(".category-container input#jd2cbb" + value).attr("category");
+                argument.addArgument(value, cat);
+            });
+            setTimeout(function(){
+                applicant.id = ["{{complaint.applicant_id}}"];
+            }, 500);
+        {% endif %}
+        
+    //});
 </script>
+<div id="pop-before-ask-question" class="modal_div">
+    <h2></h2>
+    <div class="pop-done-txt"></div>
+    <div class="modal-close"></div>
+</div>
