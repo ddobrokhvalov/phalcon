@@ -24,6 +24,10 @@ class LogController extends ControllerBase
         $data = $this->request->getPost();
         $logs = $log->filterLog($data);
         $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $show_all_items = $this->request->get('all-portions-items');
+        if (isset($show_all_items) && $show_all_items == 'all_items') {
+            $item_per_page = 99999;
+        }
         $paginator = new Paginator(array(
             "data"  => $logs,
             "limit" => $item_per_page,

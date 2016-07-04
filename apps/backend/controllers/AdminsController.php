@@ -27,7 +27,10 @@ class AdminsController extends ControllerBase
         $item_per_page = 20 + $next_items;
         $this->persistent->searchParams = null;
         $this->view->form = new AdminForm;
-
+        $show_all_items = $this->request->get('all-portions-items');
+        if (isset($show_all_items) && $show_all_items == 'all_items') {
+            $item_per_page = 99999;
+        }
         $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
         $users = Admin::find();
         $paginator = new Paginator(array(

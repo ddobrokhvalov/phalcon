@@ -85,7 +85,7 @@
             {% else %}
                 <div></div>
         {% endif %}
-        <a href="#">Показать всех пользователей (<span>{{page.total_items}}</span>)</a><!--todo: -->
+        <a href="/admin/user/index?all-portions-items=all_items">Показать всех пользователей (<span>{{page.total_items}}</span>)</a>
     </div>
     <form id="next_items" method="post">
         {{hidden_field('next-portions-items', 'value':20)}}
