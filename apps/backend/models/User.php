@@ -17,6 +17,8 @@ class User extends Model
     public $patronymic;
     public $phone;
     public $activity;
+    public $users_applicants;
+    public $users_complaints;
 
     public function initialize()
     {
@@ -25,6 +27,13 @@ class User extends Model
         $this->status = new RawValue('default');
         $this->date_registration = new RawValue('Now()');//todo: check when edit
         $this->activity = new RawValue('default');
+    }
+
+    public function afterFetch() {
+        $complaints = new Complaint();
+        $applicants = new Applicant();
+        $this->users_complaints = count($complaints->findUserComplaints($this->id, false));
+        $this->users_applicants = count($applicants->findByUserIdWithAdditionalInfo($this->id));
     }
 
     public function getSource()
