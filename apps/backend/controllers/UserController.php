@@ -110,6 +110,8 @@ class UserController extends ControllerBase
         if (strlen($post['password']) > 0)
             $data['password'] = sha1($post['password']);
 
+        $notifications = $this->request->getPost('notifications');
+        $data['notifications'] = $notifications ? 1 : 0;
         $validation = new UserValidator();
         $messages = $validation->validate($data);
         if (count($messages)) {

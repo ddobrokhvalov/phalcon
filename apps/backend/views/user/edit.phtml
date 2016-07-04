@@ -5,7 +5,7 @@
 {{flashSession.output()}}
 <div class="admin-main-wrap user-page">
     <div class="bread-crumbs-holder">
-        <a href="#" onclick="history.back();return false;">Вернуться к списку пользователей</a>
+        <a href="/admin/user/index">Вернуться к списку пользователей</a>
     </div>
     <h1>{{edituser.email}}</h1>
     <div class="admin-change-access">
@@ -45,7 +45,7 @@
                     {{password_field('password', 'value':'', 'id':'userPass')}}
                 </label>
                 <label for="sendEmailNotice" class="lebel-checkbox">
-                    {{check_field('password', 'value':'', 'id':'sendEmailNotice')}}
+                    {{check_field('notifications', 'value':edituser.notifications, 'id':'sendEmailNotice')}}
                     <p>Отправлять уведомления на e-mail</p>
                 </label>
                 <label for="userComment">
@@ -196,8 +196,12 @@
 </div>
 
 <script>
-    $( document ).ready(function() {
+    $(document).ready(function() {
         $( "#password" ).val('');
+        if($("#sendEmailNotice").val() == "1") {
+            $("label[for=sendEmailNotice]").addClass("main-active-checkbox");
+            $("#sendEmailNotice").prop("checked", "checked");
+        }
     });
 </script>
 {% endblock %}
