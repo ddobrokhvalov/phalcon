@@ -92,6 +92,25 @@ class UserController extends ControllerBase
         }
     }
 
+    public function deleteUserAction($id) {
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
+           $this->view->pick("access/denied");
+           $this->setMenu();
+        } else {
+            if ($id) {
+                User::findFirstById($id)->delete();
+                $this->flashSession->success("Пользователь удален");
+                return $this->dispatcher->forward(array(
+                    'module' => 'backend',
+                    'controller' => 'user',
+                    'action' => 'index',
+                    'params' => []
+                ));
+            }
+        }
+    }
+
     public function saveAction()
     {
         if (!$this->request->isPost())

@@ -13,7 +13,7 @@
         <div class="change-access">Изменить тариф</div>
     </div>
     <div class="block-user-editing">
-        <form action="/admin/user/save" method="post">
+        <form action="/admin/user/save" method="post" id="user-form">
             {{hidden_field('id', 'value':edituser.id)}}
             <div class="left-block-editing">
                 <span>Данные пользователя</span>
@@ -54,8 +54,8 @@
                 </label>
             </div>
             <div class="delete-or-save">
-                <button class="delete">Удалить пользователя</button><!--todo-->
-                <button>Сохранить изменения</button><!--todo-->
+                <button class="delete" onclick="jQuery('#user-form').attr('action', '/admin/user/deleteUser/{{edituser.id}}')">Удалить пользователя</button>
+                <button>Сохранить изменения</button>
             </div>
         </form>
     </div>
