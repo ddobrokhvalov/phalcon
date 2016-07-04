@@ -1,19 +1,35 @@
-<form action="/admin/login/start" method="post"><fieldset>
-<fieldset>
-    <div>
-        <label for="email">Логин/Email</label>
-        <div>
-            {{ text_field('email') }}
-        </div>
+<html>
+<head>
+<title>{% block title %}ФАС ОНЛАЙН{% endblock %}</title>
+{% block styles %}
+<link rel="stylesheet" href="/css/style.css" />
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+{% endblock %}
+</head>
+<body id="backend-login">
+<div class="backend-login-wrap">
+    <div class="backend-login">
+        <h2>Вход в систему</h2>
+        <form action="/admin/login/start" method="post">
+            <div>
+                <label for="email">Логин/Email</label>
+                <div>
+                    {{ text_field('email') }}
+                </div>
+            </div>
+            <div>
+                <label for="password">Пароль</label>
+                <div>
+                    {{ password_field('password') }}
+                </div>
+            </div>
+            <div>
+                {{ submit_button('Войти') }}
+            </div>
+        </form>
     </div>
-    <div>
-        <label for="password">Пароль</label>
-        <div>
-            {{ password_field('password') }}
-        </div>
-    </div>
-    <div>
-        {{ submit_button('Войти') }}
-    </div>
-</fieldset>
-</form>
+</div>
+</body>
+</html>

@@ -3092,6 +3092,85 @@ span.revert-bg {
     .status-list-holder li:nth-child(7) {
       background-image: url(../images/icon-jl-archive.png); }
 
+/* line 374, ../sass/_user_page.scss */
+body#backend-login {
+  background-color: #aeafb2; }
+
+/* line 377, ../sass/_user_page.scss */
+.backend-login-wrap {
+  padding-top: 100px; }
+  /* line 379, ../sass/_user_page.scss */
+  .backend-login-wrap .backend-login {
+    width: 700px;
+    height: 568px;
+    margin: 0px auto;
+    background-color: #fff; }
+    /* line 384, ../sass/_user_page.scss */
+    .backend-login-wrap .backend-login h2 {
+      background: #00aeef none repeat scroll 0 0;
+      color: #fff;
+      float: left;
+      font-size: 56px;
+      font-weight: 100;
+      line-height: 145px;
+      margin-top: 0;
+      overflow: hidden;
+      padding: 0 0 30px;
+      position: relative;
+      text-align: center;
+      width: 100%; }
+      /* line 397, ../sass/_user_page.scss */
+      .backend-login-wrap .backend-login h2:after {
+        background: #fff none repeat scroll 0 0;
+        content: "";
+        display: block;
+        height: 125px;
+        left: -10px;
+        margin: -45px 0 0 -15%;
+        position: absolute;
+        top: 100%;
+        transform: rotate(-2.5deg);
+        width: 130%; }
+    /* line 410, ../sass/_user_page.scss */
+    .backend-login-wrap .backend-login form {
+      float: left;
+      margin: 20px 0 45px 145px;
+      width: 410px; }
+      /* line 414, ../sass/_user_page.scss */
+      .backend-login-wrap .backend-login form label {
+        float: left;
+        font-size: 18px;
+        width: 100%;
+        display: inline-block;
+        font-weight: 700;
+        margin-bottom: 5px;
+        max-width: 100%; }
+      /* line 423, ../sass/_user_page.scss */
+      .backend-login-wrap .backend-login form input[type="text"], .backend-login-wrap .backend-login form input[type="password"] {
+        border: 1px solid #34383e;
+        float: left;
+        font-size: 18px;
+        height: 60px;
+        margin: 5px 0 25px;
+        padding: 0 10px;
+        width: 100%; }
+      /* line 432, ../sass/_user_page.scss */
+      .backend-login-wrap .backend-login form input[type="submit"] {
+        background: #00aeef none repeat scroll 0 0;
+        border: 0 none;
+        border-radius: 5px;
+        color: #fff !important;
+        float: left;
+        font-size: 18px;
+        font-weight: 600 !important;
+        height: 66px;
+        margin: 10px 80px 0;
+        padding: 0 50px;
+        text-decoration: none !important;
+        text-transform: uppercase;
+        width: 250px;
+        cursor: pointer; }
+
 @media (max-width: 1640px) {
   /* line 114, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {

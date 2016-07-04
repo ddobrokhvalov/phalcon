@@ -96,6 +96,13 @@ class LoginController extends ControllerBase
 
     public function indexAction()
     {
-
+        if ($this->user) {
+            return $this->dispatcher->forward(
+                array(
+                    'controller' => 'user',
+                    'action' => 'afterLogin'
+                )
+            );
+        }
     }
 }

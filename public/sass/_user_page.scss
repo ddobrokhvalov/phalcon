@@ -371,3 +371,80 @@
 		}
 	}
 }
+body#backend-login {
+    background-color: #aeafb2;
+}
+.backend-login-wrap {
+    padding-top: 100px;
+    .backend-login {
+        width: 700px;
+        height: 568px;
+        margin: 0px auto;
+        background-color: #fff;
+        h2 {
+            background: #00aeef none repeat scroll 0 0;
+            color: #fff;
+            float: left;
+            font-size: 56px;
+            font-weight: 100;
+            line-height: 145px;
+            margin-top: 0;
+            overflow: hidden;
+            padding: 0 0 30px;
+            position: relative;
+            text-align: center;
+            width: 100%;
+            &:after {
+                background: #fff none repeat scroll 0 0;
+                content: "";
+                display: block;
+                height: 125px;
+                left: -10px;
+                margin: -45px 0 0 -15%;
+                position: absolute;
+                top: 100%;
+                transform: rotate(-2.5deg);
+                width: 130%;
+            }
+        }
+        form {
+            float: left;
+            margin: 20px 0 45px 145px;
+            width: 410px;
+            label {
+                float: left;
+                font-size: 18px;
+                width: 100%;
+                display: inline-block;
+                font-weight: 700;
+                margin-bottom: 5px;
+                max-width: 100%;
+            }
+            input[type="text"], input[type="password"] {
+                border: 1px solid #34383e;
+                float: left;
+                font-size: 18px;
+                height: 60px;
+                margin: 5px 0 25px;
+                padding: 0 10px;
+                width: 100%;
+            }
+            input[type="submit"] {
+                background: #00aeef none repeat scroll 0 0;
+                border: 0 none;
+                border-radius: 5px;
+                color: #fff !important;
+                float: left;
+                font-size: 18px;
+                font-weight: 600 !important;
+                height: 66px;
+                margin: 10px 80px 0;
+                padding: 0 50px;
+                text-decoration: none !important;
+                text-transform: uppercase;
+                width: 250px;
+                cursor: pointer;
+            }
+        }
+    }
+}
