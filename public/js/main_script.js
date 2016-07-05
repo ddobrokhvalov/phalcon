@@ -150,7 +150,8 @@ jQuery(document).ready(function($) {
 	// show complain details
 	$('.deploy-complaint').click(function() {
 		$('.deploy-complaint span').toggleClass('dep-up');
-		$('.complaints-content').slideToggle();
+        //$('.complaints-content').slideToggle();
+		$('.details-complaint .c-jadd-text').slideToggle();
 	});
 	// show and close answer to lawyer question on complaints
 	$('.opacity-btn').click(function() {

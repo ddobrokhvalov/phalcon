@@ -43,8 +43,35 @@
           </div>
         </div>
         <div class="details-complaint">
-            <div class="deploy-complaint"><span>Показать подробно</span></div>
-            <div class="complaints-content">
+            <div class="c-jadd-text">
+                <div class="c-jadd1-z">
+                    <span>Данные о закупке</span>
+                </div>
+                <div class="c-jadd-l">
+                   <div class="c-jadd-lr-row">
+                        <span>Способ проведения закупки</span>
+                        <span class="auction-data" id="type">{{ complaint.type }}</span>
+                    </div>
+                    <div class="c-jadd-lr-row">
+                        <span>Закупку осуществляет</span>
+                        <span class="auction-data" id="purchases_made">{{ complaint.purchases_made }}</span>
+                    </div>
+                    <div class="c-jadd-lr-row">
+                        <span>Наименование закупки</span>
+                       <span class="auction-data" id="purchases_name"> {{ complaint.purchases_name }}</span>
+                    </div>
+                    <div class="c-jadd-lr-row">
+                        <span>Контакты</span>
+                       <span class="auction-data" id="contact"> {{ complaint.contact }}</span>
+                    </div>
+                </div>
+                <div class="c-jadd-r date-container">
+
+                </div>
+            </div>
+            <div class="c-jadd-spoiler"><span>Показать подробно</span></div>
+        </div>
+        <div class="complaints-content">
                 <h2>{{complaint.complaint_name}}</h2>
                 <div class="attached-files">
                     {% if attached_files|count > 0 %}
@@ -60,7 +87,6 @@
                     {{complaint.complaint_text}}
                 </div>
             </div>
-        </div>
         {% set questions = complaint.getComplaintQuestion() %}
         {% if questions|count > 0 %}
         <div class="complaints-lawyer-quest">
@@ -154,8 +180,136 @@
     </div>
     
     <script type="text/javascript">
+    var auction = {
+        auctionReady: false,
+        /* data: {
+         auction_id: '',
+         type: '',
+         purchases_made: '',
+         purchases_name: '',
+         contact: '',
+         date_start: '',
+         date_end: '',
+         date_opening: '',
+         date_review: ''
+         }, */
+
+        data: {},
+
+        setData: function () {
+
+            /*$('#type').html(this.data.type);
+            $('#purchases_made').html(this.data.purchases_made);
+            $('#purchases_name').html(this.data.purchases_name);
+            $('#contact').html(this.data.contact);*/
+
+            var html = '<div class="c-jadd-lr-row"><span>Наименование закупки</span><div class="c-jadd-lr-sel"><select><option>УФАС по г. Санкт-Петербургу</option><option>УФАС по г. Санкт-Петербургу</option><option>УФАС по г. Санкт-Петербургу</option></select></div></div>';
+            if (this.data.type == 'Открытый конкурс') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
+                html += this.processHTML('Дата рассмотрения и оценки заявок', this.data.data_rassmotreniya);
+            }
+            if (this.data.type == 'Электронный аукцион') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата проведения электронного аукциона', this.data.data_provedeniya);
+                html += this.processHTML('Дата окончания срока рассмотрения первых частей заявок', this.data.okonchanie_rassmotreniya);
+                html += this.processHTML('Время проведения электронного аукциона', this.data.vremya_provedeniya);
+            }
+            if (this.data.type == 'Конкурс с ограниченным участием') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
+                html += this.processHTML('Дата проведения предквалификационного отбора', this.data.data_provedeniya);
+                html += this.processHTML('Дата рассмотрения и оценки заявок', this.data.data_rassmotreniya);
+            }
+            if (this.data.type == 'Запрос котировок') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время проведения вскрытия конвертов, открытия доступа к электронным документам заявок', this.data.vskrytie_konvertov);
+            }
+            if (this.data.type == 'Повторный конкурс с ограниченным участием') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время проведения вскрытия конвертов, открытия доступа к электронным документам заявок', this.data.vskrytie_konvertov);
+
+                html += this.processHTML('Дата проведения предквалификационного отбора', this.data.data_provedeniya);
+                html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе', this.data.data_rassmotreniya);
+            }
+            if (this.data.type == 'Закрытый конкурс') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
+                html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе', this.data.data_rassmotreniya);
+            }
+            if (this.data.type == 'Закрытый конкурс с ограниченным участием') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
+                html += this.processHTML('Дата проведения предквалификационного отбора', this.data.data_provedeniya);
+                html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе', this.data.data_rassmotreniya);
+            }
+            if (this.data.type == 'Запрос предложений') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время вскрытия конвертов, открытия доступа к электронным документам заявок', this.data.vskrytie_konvertov);
+                html += this.processHTML('Дата и время рассмотрения и оценки заявок участников', this.data.data_rassmotreniya);
+                html += this.processHTML('Дата и время вскрытия конвертов с окончательными предложениями, открытия доступа к электронным документам окончательных документов', this.data.okonchanie_rassmotreniya);
+            }
+            if (this.data.type == 'Предварительный отбор') {
+                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                html += this.processHTML('Дата и время проведения предварительного отбора', this.data.data_provedeniya);
+            }
+
+
+            $('.date-container').html(html);
+
+        }
+        ,
+        processHTML: function (text, value) {
+            return '<div class="c-jadd-lr-row"><span>' + text + '</span><span class="auction-data" >' + value + '</span></div>';
+
+        }
+        ,
+        clearData: function () {
+            for (var key in this.data) {
+                this.data[key] = '';
+            }
+        }
+
+
+    }
+    ;
+    auction.data['complaint_id'] = '{{complaint.id }}';
+
+        auction.data['type'] = '{{complaint.type }}';
+        auction.data['purchases_made'] = '{{complaint.purchases_made }}';
+        auction.data['purchases_name'] = '{{complaint.purchases_name }}';
+        auction.data['contact'] = '{{complaint.contact }}';
+        auction.data['nachalo_podachi'] = '{{complaint.date_start }}';
+        auction.data['okonchanie_podachi'] = '{{complaint.okonchanie_podachi }}';
+        auction.data['vskrytie_konvertov'] = '{{complaint.vskrytie_konvertov }}';
+        auction.data['data_rassmotreniya'] = '{{complaint.data_rassmotreniya }}';
+        auction.data['data_provedeniya'] = '{{complaint.data_provedeniya }}';
+        auction.data['okonchanie_rassmotreniya'] = '{{complaint.okonchanie_rassmotreniya }}';
+        auction.data['vremya_provedeniya'] = '{{complaint.vremya_provedeniya }}';
+        auction.setData();
         $(document).ready(function() {
-            $('.deploy-complaint').trigger('click');
+            jQuery('.c-jadd-text').hide();
+            jQuery('.c-jadd-spoiler').click(function(){
+                jQuery(this).toggleClass("folded").toggleClass("unfolded").prev().slideToggle();
+                var txt = jQuery('.c-jadd-spoiler span').text();
+                if (txt == "Показать подробно") {
+                    jQuery('.c-jadd-spoiler span').text("Свернуть");
+                    jQuery('.c-jadd-spoiler span').addClass("dep-up");
+                } else {
+                    jQuery('.c-jadd-spoiler span').text("Показать подробно");
+                    jQuery('.c-jadd-spoiler span').removeClass("dep-up");
+                }
+            });
+            //$('.deploy-complaint').trigger('click');
             $('.clarifying-issue').hover(function(event) {
                 //$('.complaints-preview-wrap').find('.edit-buttons-ul').css('display', 'none');
                 var par = $(this).parent();

@@ -912,27 +912,26 @@ ul.status-black, .notification-number-box.status-black {
 
 /* line 79, ../sass/_complaints_preview.scss */
 .complaints-content {
-  display: none;
   margin-top: 38px;
   padding: 0 42px 43px;
   border-top: 3px solid #00aeef; }
-  /* line 84, ../sass/_complaints_preview.scss */
+  /* line 83, ../sass/_complaints_preview.scss */
   .complaints-content h2 {
     padding: 32px 0 28px;
     border-bottom: 1px solid #e0e3ea; }
 
-/* line 89, ../sass/_complaints_preview.scss */
+/* line 88, ../sass/_complaints_preview.scss */
 .complaints-doc {
   margin-left: -21px;
   padding: 22px 0 13px; }
-  /* line 92, ../sass/_complaints_preview.scss */
+  /* line 91, ../sass/_complaints_preview.scss */
   .complaints-doc p {
     position: relative;
     margin-bottom: 16px;
     padding-left: 50px;
     font-size: 16px;
     line-height: 21px; }
-    /* line 98, ../sass/_complaints_preview.scss */
+    /* line 97, ../sass/_complaints_preview.scss */
     .complaints-doc p span {
       position: absolute;
       top: 0;
@@ -940,62 +939,71 @@ ul.status-black, .notification-number-box.status-black {
       height: 21px;
       background-repeat: no-repeat;
       background-image: url(../images/upload-icons.png); }
-  /* line 108, ../sass/_complaints_preview.scss */
+  /* line 107, ../sass/_complaints_preview.scss */
   .complaints-doc p:first-child span:first-child {
     left: 0;
     background-position: 0 0; }
-  /* line 112, ../sass/_complaints_preview.scss */
+  /* line 111, ../sass/_complaints_preview.scss */
   .complaints-doc p:first-child span:last-child {
     left: 22px;
     background-position: -32px 0; }
-  /* line 118, ../sass/_complaints_preview.scss */
+  /* line 117, ../sass/_complaints_preview.scss */
   .complaints-doc p:last-child span:first-child {
     left: 0;
     background-position: 0 -29px; }
-  /* line 122, ../sass/_complaints_preview.scss */
+  /* line 121, ../sass/_complaints_preview.scss */
   .complaints-doc p:last-child span:last-child {
     left: 22px;
     background-position: -32px -29px; }
 
-/* line 128, ../sass/_complaints_preview.scss */
+/* line 127, ../sass/_complaints_preview.scss */
 .complaints-main {
   border: 1px solid #e0e3ea;
   padding-left: 24px;
   /*max-height: 841px;*/ }
-  /* line 132, ../sass/_complaints_preview.scss */
+  /* line 131, ../sass/_complaints_preview.scss */
   .complaints-main h3 {
     margin-bottom: 18px; }
-  /* line 135, ../sass/_complaints_preview.scss */
+  /* line 134, ../sass/_complaints_preview.scss */
   .complaints-main p, .complaints-main li {
     margin-bottom: 14px;
     font-size: 16px;
     line-height: 28px; }
-  /* line 140, ../sass/_complaints_preview.scss */
+  /* line 139, ../sass/_complaints_preview.scss */
   .complaints-main ul {
     margin-left: 18px; }
-  /* line 143, ../sass/_complaints_preview.scss */
+  /* line 142, ../sass/_complaints_preview.scss */
   .complaints-main h4 {
     margin-bottom: 10px; }
-  /* line 146, ../sass/_complaints_preview.scss */
+  /* line 145, ../sass/_complaints_preview.scss */
   .complaints-main li {
     padding-left: 22px; }
 
-/* line 151, ../sass/_complaints_preview.scss */
+/* line 150, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap h1 {
   font-size: 46px;
   line-height: 1.1;
   font-weight: 100;
   margin: 0 0 16px 1px; }
-/* line 157, ../sass/_complaints_preview.scss */
+/* line 156, ../sass/_complaints_preview.scss */
+.complaints-preview-wrap .c-jadd-spoiler {
+  float: none;
+  border-bottom: 1px solid #ebebeb;
+  border-left: 1px solid #ebebeb;
+  border-right: 1px solid #ebebeb; }
+/* line 162, ../sass/_complaints_preview.scss */
+.complaints-preview-wrap .c-jadd-text {
+  padding: 35px; }
+/* line 165, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .attached-files {
   padding-bottom: 25px; }
-  /* line 159, ../sass/_complaints_preview.scss */
+  /* line 167, ../sass/_complaints_preview.scss */
   .complaints-preview-wrap .attached-files .delete-file {
     display: none; }
-/* line 163, ../sass/_complaints_preview.scss */
+/* line 171, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .complaints-content {
   background-color: #f7f8fa; }
-  /* line 165, ../sass/_complaints_preview.scss */
+  /* line 173, ../sass/_complaints_preview.scss */
   .complaints-preview-wrap .complaints-content h2 {
     padding: 32px 0 28px;
     border-bottom: 1px solid #e0e3ea;
@@ -1003,16 +1011,16 @@ ul.status-black, .notification-number-box.status-black {
     line-height: 1.1;
     font-weight: 100;
     margin-bottom: 22px; }
-/* line 174, ../sass/_complaints_preview.scss */
+/* line 182, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .complaints-main h3, .complaints-preview-wrap .complaints-lawyer-quest h3 {
   margin-bottom: 18px;
   font-size: 32px;
   line-height: 1.1;
   font-weight: 100; }
-/* line 180, ../sass/_complaints_preview.scss */
+/* line 188, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .complaints-lawyer-quest h3 {
   margin-bottom: 10px; }
-/* line 183, ../sass/_complaints_preview.scss */
+/* line 191, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .compl-quest-cont form::before {
   background-color: #e0e3ea;
   bottom: 0;
@@ -1021,52 +1029,52 @@ ul.status-black, .notification-number-box.status-black {
   left: -35px;
   position: absolute;
   width: 963px; }
-/* line 192, ../sass/_complaints_preview.scss */
+/* line 200, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .compl-quest-cont:last-child form::before {
   display: none; }
-/* line 195, ../sass/_complaints_preview.scss */
+/* line 203, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .compl-quest-cont form::after {
   content: '';
   display: block;
   clear: both; }
-/* line 200, ../sass/_complaints_preview.scss */
+/* line 208, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .compl-quest-cont:last-child form {
   padding-bottom: 50px; }
-/* line 203, ../sass/_complaints_preview.scss */
+/* line 211, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .complaints-main {
   padding: 20px 70px 20px 24px;
   background-color: #ffffff; }
-/* line 207, ../sass/_complaints_preview.scss */
+/* line 215, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .bread-crumbs-holder a:hover {
   text-decoration: none; }
-/* line 210, ../sass/_complaints_preview.scss */
+/* line 218, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .notification-number-box .rightly-wrongly {
   box-sizing: initial; }
-/* line 213, ../sass/_complaints_preview.scss */
+/* line 221, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .notification-number-box {
   background-color: #f7f8fa; }
-/* line 216, ../sass/_complaints_preview.scss */
+/* line 224, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .edit-notification-box {
   background-color: #f7f8fa; }
-  /* line 218, ../sass/_complaints_preview.scss */
+  /* line 226, ../sass/_complaints_preview.scss */
   .complaints-preview-wrap .edit-notification-box a {
     font-size: 16px; }
-  /* line 221, ../sass/_complaints_preview.scss */
+  /* line 229, ../sass/_complaints_preview.scss */
   .complaints-preview-wrap .edit-notification-box a:hover {
     text-decoration: none; }
-/* line 225, ../sass/_complaints_preview.scss */
+/* line 233, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .edit-buttons-ul {
   height: 20px;
   color: #00aeef;
   display: none;
   float: right;
   margin-bottom: -20px; }
-  /* line 231, ../sass/_complaints_preview.scss */
+  /* line 239, ../sass/_complaints_preview.scss */
   .complaints-preview-wrap .edit-buttons-ul li {
     float: left;
     padding: 5px 15px;
     cursor: pointer; }
-    /* line 235, ../sass/_complaints_preview.scss */
+    /* line 243, ../sass/_complaints_preview.scss */
     .complaints-preview-wrap .edit-buttons-ul li:hover {
       text-decoration: underline; }
 
@@ -1076,26 +1084,26 @@ ul.status-black, .notification-number-box.status-black {
 /*.complaints-lawyer-quest form:last-child {
     padding-bottom: 84px;
 }*/
-/* line 252, ../sass/_complaints_preview.scss */
+/* line 260, ../sass/_complaints_preview.scss */
 .complaints-lawyer-quest {
   margin-top: 43px;
   padding: 40px 0 34px 35px;
   border: 1px solid #e0e3ea;
   border-top: 3px solid #00aeef; }
-  /* line 257, ../sass/_complaints_preview.scss */
+  /* line 265, ../sass/_complaints_preview.scss */
   .complaints-lawyer-quest h3 {
     margin-bottom: 10px; }
-  /* line 260, ../sass/_complaints_preview.scss */
+  /* line 268, ../sass/_complaints_preview.scss */
   .complaints-lawyer-quest form {
     position: relative;
     padding-bottom: 84px;
     width: 740px; }
-    /* line 264, ../sass/_complaints_preview.scss */
+    /* line 272, ../sass/_complaints_preview.scss */
     .complaints-lawyer-quest form:after {
       content: '';
       display: block;
       clear: both; }
-    /* line 267, ../sass/_complaints_preview.scss */
+    /* line 275, ../sass/_complaints_preview.scss */
     .complaints-lawyer-quest form:before {
       position: absolute;
       content: '';
@@ -1104,10 +1112,10 @@ ul.status-black, .notification-number-box.status-black {
       width: 963px;
       height: 1px;
       background-color: #e0e3ea; }
-    /* line 276, ../sass/_complaints_preview.scss */
+    /* line 284, ../sass/_complaints_preview.scss */
     .complaints-lawyer-quest form:not(:first-child) {
       margin-top: 30px; }
-    /* line 279, ../sass/_complaints_preview.scss */
+    /* line 287, ../sass/_complaints_preview.scss */
     .complaints-lawyer-quest form p {
       margin-bottom: 5px;
       font-size: 20px;
@@ -1115,13 +1123,13 @@ ul.status-black, .notification-number-box.status-black {
       font-weight: 100;
       font-style: italic;
       color: #00aeef; }
-    /* line 287, ../sass/_complaints_preview.scss */
+    /* line 295, ../sass/_complaints_preview.scss */
     .complaints-lawyer-quest form span {
       display: none;
       opacity: 0;
       font-size: 16px;
       margin-bottom: 15px; }
-    /* line 293, ../sass/_complaints_preview.scss */
+    /* line 301, ../sass/_complaints_preview.scss */
     .complaints-lawyer-quest form textarea {
       margin-bottom: 24px;
       padding: 0;
@@ -1139,7 +1147,7 @@ ul.status-black, .notification-number-box.status-black {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box; }
-    /* line 309, ../sass/_complaints_preview.scss */
+    /* line 317, ../sass/_complaints_preview.scss */
     .complaints-lawyer-quest form button {
       position: absolute;
       top: 72px;
@@ -1156,22 +1164,22 @@ ul.status-black, .notification-number-box.status-black {
       background-color: #00aeef;
       cursor: pointer;
       outline: none; }
-      /* line 325, ../sass/_complaints_preview.scss */
+      /* line 333, ../sass/_complaints_preview.scss */
       .complaints-lawyer-quest form button:hover {
         background-color: #10b8f7; }
 
-/* line 331, ../sass/_complaints_preview.scss */
+/* line 339, ../sass/_complaints_preview.scss */
 .compl-quest-cont {
   position: relative;
   padding-right: 174px; }
-  /* line 334, ../sass/_complaints_preview.scss */
+  /* line 342, ../sass/_complaints_preview.scss */
   .compl-quest-cont > p {
     font-size: 24px;
     line-height: 34px;
     font-weight: 100;
     font-style: italic; }
 
-/* line 341, ../sass/_complaints_preview.scss */
+/* line 349, ../sass/_complaints_preview.scss */
 .legal-advisor {
   position: absolute;
   top: 50%;
@@ -1182,31 +1190,31 @@ ul.status-black, .notification-number-box.status-black {
   line-height: 1.2;
   text-align: center;
   margin-top: 20px; }
-  /* line 351, ../sass/_complaints_preview.scss */
+  /* line 359, ../sass/_complaints_preview.scss */
   .legal-advisor div {
     margin: 0 auto 15px;
     width: 96px;
     height: 96px;
     overflow: hidden;
     border-radius: 50%; }
-    /* line 357, ../sass/_complaints_preview.scss */
+    /* line 365, ../sass/_complaints_preview.scss */
     .legal-advisor div img {
       width: 100%; }
-  /* line 361, ../sass/_complaints_preview.scss */
+  /* line 369, ../sass/_complaints_preview.scss */
   .legal-advisor p {
     margin-bottom: 10px;
     font-weight: 900;
     text-transform: uppercase; }
-  /* line 366, ../sass/_complaints_preview.scss */
+  /* line 374, ../sass/_complaints_preview.scss */
   .legal-advisor span {
     font-weight: 100;
     font-style: italic; }
 
-/* line 371, ../sass/_complaints_preview.scss */
+/* line 379, ../sass/_complaints_preview.scss */
 .hidden-textarea {
   display: none;
   width: 100%; }
-  /* line 374, ../sass/_complaints_preview.scss */
+  /* line 382, ../sass/_complaints_preview.scss */
   .hidden-textarea div {
     position: absolute;
     top: 98px;
@@ -1217,7 +1225,7 @@ ul.status-black, .notification-number-box.status-black {
     cursor: pointer;
     background: url(../images/icon-tag-del.png) 50% 50% no-repeat; }
 
-/* line 385, ../sass/_complaints_preview.scss */
+/* line 393, ../sass/_complaints_preview.scss */
 .opacity-btn {
   position: absolute;
   top: 72px;
@@ -1226,22 +1234,22 @@ ul.status-black, .notification-number-box.status-black {
   width: 140px;
   height: 50px;
   cursor: pointer; }
-  /* line 393, ../sass/_complaints_preview.scss */
+  /* line 401, ../sass/_complaints_preview.scss */
   .opacity-btn:hover {
     background-color: rgba(255, 255, 255, 0.1); }
 
-/* line 397, ../sass/_complaints_preview.scss */
+/* line 405, ../sass/_complaints_preview.scss */
 .clarifying-issue {
   padding: 45px 30px 45px 35px;
   margin-left: 80px;
   background-color: #f7f8fa; }
-  /* line 401, ../sass/_complaints_preview.scss */
+  /* line 409, ../sass/_complaints_preview.scss */
   .clarifying-issue p {
     margin-bottom: 14px;
     font-size: 16px;
     line-height: 28px;
     float: left; }
-  /* line 407, ../sass/_complaints_preview.scss */
+  /* line 415, ../sass/_complaints_preview.scss */
   .clarifying-issue .answer-flag {
     float: right;
     width: 31px;
@@ -1250,34 +1258,34 @@ ul.status-black, .notification-number-box.status-black {
     background: url(../images/answer-arrow.png) center bottom no-repeat; }
 
 /* Scroll styling */
-/* line 417, ../sass/_complaints_preview.scss */
+/* line 425, ../sass/_complaints_preview.scss */
 .complaints-main .mCSB_inside > .mCSB_container {
   padding: 20px 70px 20px 0; }
 
-/* line 423, ../sass/_complaints_preview.scss */
+/* line 431, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:first-child {
   border-left: medium none;
   padding-left: 0;
   width: 0; }
-/* line 428, ../sass/_complaints_preview.scss */
+/* line 436, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(2) {
   width: 425px;
   border-left: none;
   line-height: 24px; }
-/* line 433, ../sass/_complaints_preview.scss */
+/* line 441, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(3) {
   width: 175px; }
-/* line 436, ../sass/_complaints_preview.scss */
+/* line 444, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(4) {
   width: 95px; }
-/* line 439, ../sass/_complaints_preview.scss */
+/* line 447, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(5) {
   width: 95px;
   padding-right: 11px; }
-/* line 443, ../sass/_complaints_preview.scss */
+/* line 451, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(6) {
   width: 175px; }
-/* line 447, ../sass/_complaints_preview.scss */
+/* line 455, ../sass/_complaints_preview.scss */
 .complaints-list .lt-content-top li:nth-child(2) {
   border-left: medium none;
   line-height: 75px;
@@ -1285,51 +1293,51 @@ ul.status-black, .notification-number-box.status-black {
   /*li:first-child {
       
   }*/ }
-/* line 455, ../sass/_complaints_preview.scss */
+/* line 463, ../sass/_complaints_preview.scss */
 .complaints-list .lt-content-top li:nth-child(6) span {
   background: #f9f9fa url("../images/arrow-to-down.png") no-repeat scroll 100% 50%;
   cursor: pointer;
   padding-right: 16px; }
-/* line 460, ../sass/_complaints_preview.scss */
+/* line 468, ../sass/_complaints_preview.scss */
 .complaints-list .lt-content-main {
   overflow: hidden; }
-  /* line 462, ../sass/_complaints_preview.scss */
+  /* line 470, ../sass/_complaints_preview.scss */
   .complaints-list .lt-content-main li:nth-child(7) {
     text-align: center; }
-  /* line 465, ../sass/_complaints_preview.scss */
+  /* line 473, ../sass/_complaints_preview.scss */
   .complaints-list .lt-content-main .has-questions {
     width: 100%;
     display: inline-block;
     height: 100%;
     background: transparent url("../images/icon-lm-dd.png") no-repeat scroll center center; }
-  /* line 471, ../sass/_complaints_preview.scss */
+  /* line 479, ../sass/_complaints_preview.scss */
   .complaints-list .lt-content-main .no-questions {
     width: 100%;
     display: inline-block;
     height: 100%;
     background-position: 50% 50%;
     background: transparent url("../images/icon-lm-ddcl.png") no-repeat scroll center center; }
-/* line 479, ../sass/_complaints_preview.scss */
+/* line 487, ../sass/_complaints_preview.scss */
 .complaints-list h1 {
   display: inline-block;
   margin-bottom: 32px; }
-/* line 483, ../sass/_complaints_preview.scss */
+/* line 491, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-holder {
   border-top: 1px solid #e0e3ea; }
-/* line 486, ../sass/_complaints_preview.scss */
+/* line 494, ../sass/_complaints_preview.scss */
 .complaints-list .jl-status {
   line-height: 75px; }
 
-/* line 491, ../sass/_complaints_preview.scss */
+/* line 499, ../sass/_complaints_preview.scss */
 .add-complaint-page .complaint-attachment, .edit-complaint-page.edit-now .complaint-attachment {
   margin-bottom: 32px;
   padding: 22px 0 30px;
   float: right; }
-  /* line 495, ../sass/_complaints_preview.scss */
+  /* line 503, ../sass/_complaints_preview.scss */
   .add-complaint-page .complaint-attachment .file-wrapper, .edit-complaint-page.edit-now .complaint-attachment .file-wrapper {
     cursor: pointer;
     width: 150px; }
-    /* line 498, ../sass/_complaints_preview.scss */
+    /* line 506, ../sass/_complaints_preview.scss */
     .add-complaint-page .complaint-attachment .file-wrapper .text-above, .edit-complaint-page.edit-now .complaint-attachment .file-wrapper .text-above {
       background-image: url("../images/icon-screp2.png");
       background-position: left center;
@@ -1339,14 +1347,14 @@ ul.status-black, .notification-number-box.status-black {
       font-size: 12px;
       padding-left: 20px;
       text-transform: uppercase; }
-    /* line 508, ../sass/_complaints_preview.scss */
+    /* line 516, ../sass/_complaints_preview.scss */
     .add-complaint-page .complaint-attachment .file-wrapper #upload-files, .edit-complaint-page.edit-now .complaint-attachment .file-wrapper #upload-files {
       cursor: pointer;
       margin-top: -20px;
       opacity: 0;
       width: 150px;
       position: absolute; }
-/* line 517, ../sass/_complaints_preview.scss */
+/* line 525, ../sass/_complaints_preview.scss */
 .add-complaint-page .file-names, .edit-complaint-page.edit-now .file-names {
   padding-left: 28px;
   background-color: #ffffff;
@@ -1354,18 +1362,18 @@ ul.status-black, .notification-number-box.status-black {
   width: 100%;
   border-left: 1px solid #d4d7df;
   border-right: 1px solid #d4d7df; }
-  /* line 524, ../sass/_complaints_preview.scss */
+  /* line 532, ../sass/_complaints_preview.scss */
   .add-complaint-page .file-names p, .edit-complaint-page.edit-now .file-names p {
     margin-bottom: 0;
     margin-top: 3px; }
-    /* line 527, ../sass/_complaints_preview.scss */
+    /* line 535, ../sass/_complaints_preview.scss */
     .add-complaint-page .file-names p:first-child, .edit-complaint-page.edit-now .file-names p:first-child {
       margin-top: 10px; }
-    /* line 530, ../sass/_complaints_preview.scss */
+    /* line 538, ../sass/_complaints_preview.scss */
     .add-complaint-page .file-names p:last-child, .edit-complaint-page.edit-now .file-names p:last-child {
       margin-bottom: 15px; }
 
-/* line 537, ../sass/_complaints_preview.scss */
+/* line 545, ../sass/_complaints_preview.scss */
 a:focus {
   text-decoration: none; }
 

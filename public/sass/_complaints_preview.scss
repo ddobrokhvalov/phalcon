@@ -77,7 +77,6 @@
 	}
 }
 .complaints-content {
-	display: none;
 	margin-top: 38px;
 	padding: 0 42px 43px;
 	border-top: 3px solid $blue;
@@ -153,6 +152,15 @@
         line-height: 1.1;
         font-weight: 100;
         margin: 0 0 16px 1px;
+    }
+    .c-jadd-spoiler {
+        float: none;
+        border-bottom: 1px solid #ebebeb;
+        border-left: 1px solid #ebebeb;
+        border-right: 1px solid #ebebeb;
+    }
+    .c-jadd-text {
+        padding: 35px;
     }
     .attached-files {
         padding-bottom: 25px;
