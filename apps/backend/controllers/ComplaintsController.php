@@ -39,6 +39,7 @@ class ComplaintsController extends ControllerBase
             $pages = $paginator->getPaginate();
             $this->view->page = $pages;
             $this->view->item_per_page = $item_per_page;
+            $this->view->scroll_to_down = $next_items > 0 ? TRUE : FALSE;
             $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
             $this->setMenu();
         }

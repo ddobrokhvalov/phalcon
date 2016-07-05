@@ -25,7 +25,7 @@
             {% else %}
             <a class="edit-notif-active" href="#" onclick="return false;">Отозвать</a>
             {% endif %}
-            <a href="#" onclick="change_complaint_status({{complaint.id}}, 'archive')">В архив</a>
+            <a href="#" onclick="change_complaint_status({{complaint.id}}, {% if complaint.status != 'archive' %}'archive'{% else %}'draft'{% endif %})">{% if complaint.status != 'archive' %}В архив{% else%}Активировать{% endif %}</a>
             <a href="#"><div data-toggle="modal" data-target=".confirm-deletion-complaint-lg">Удалить</div></a>
         </div>
         <div class="modal fade confirm-deletion-complaint-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">

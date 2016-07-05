@@ -1329,13 +1329,17 @@ function ajaxProfileUpdate() {
 		contentType: false,
 		enctype: 'multipart/form-data',
 		success : function(data) {
-			if(data['success']==true)
-				showSomePopupMessage('info', 'Ваш профиль успешно обновлен');
+			if(data['success']==true) {
+                $('.admin-set-top').trigger('click');
+                showStyledPopupMessage("#styled-popup-container", "Уведомление", "Ваш профиль успешно обновлен");
+            }
 			else {
 				var errors_list = '';
-				for(var index in data['errors'] ) 
-					errors_list = errors_list + data['errors'][index]+'\n\r';				
-				showSomePopupMessage('error', errors_list);
+				for(var index in data['errors'] ) {
+					errors_list = errors_list + data['errors'][index]+'\n\r';
+                }
+                $('.admin-set-top').trigger('click');
+				showStyledPopupMessage("#styled-popup-container", "Ошибка", errors_list);
 			}
 
 		}

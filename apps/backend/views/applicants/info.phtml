@@ -76,7 +76,7 @@
                     {{complaint['complaint_name']}}
                 </li>
                 <li>{{complaint['auction_id']}}</li>
-                <li>{{date('Y.m.d', complaint['date']|strtotime)}}</li>
+                <li>{{date('d.m.Y', complaint['date']|strtotime)}}</li>
                 <li class='with-dropdown'>
                     <div class="dropdown">
                       <div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

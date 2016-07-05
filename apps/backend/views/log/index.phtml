@@ -98,7 +98,7 @@
         <li>{{ log.au }}</li>
         <li>{{ log.type }}</li>
         <li>{{ log.text }}</li>
-        <li>{{ log.date }}</li>
+        <li>{{date('d.m.Y', log.date|strtotime)}}</li>
     </ul>
     {% endfor %}
 </div>
@@ -134,5 +134,10 @@
     </ul>
     {% if page.total_pages > page.current %}{{ link_to("admin/log/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
 </div>
+{% if scroll_to_down %}
+    <script type="text/javascript">
+        $("html, body").animate({ scrollTop: $(document).height() - 310 }, 1)
+    </script>
+{% endif %}
 </div>
 {% endblock %}

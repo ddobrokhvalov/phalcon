@@ -57,3 +57,17 @@
         </div>
     </article>
 </header>
+<div id="styled-popup-container" class="modal_div">
+    <h2></h2>
+    <div class="pop-done-txt"></div>
+    <div class="modal-close"></div>
+</div>
+<div id="overlay"></div>
+<script type="text/javascript">
+    $(".modal-close").click(function(){
+        $('#overlay').fadeOut(400,
+            function(){
+                $(this).parent().css('display', 'none');
+            });
+    });
+</script>

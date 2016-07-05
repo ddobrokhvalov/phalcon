@@ -42,6 +42,7 @@ class LawyerController extends ControllerBase
             $this->view->page = $pages;
             $this->view->item_per_page = $item_per_page;
             $this->view->only_new = isset($_POST['only_new']) && $_POST['only_new'] ? array('n') : array('y', 'n');
+            $this->view->scroll_to_down = $next_items > 0 ? TRUE : FALSE;
             $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
             $this->setMenu();
         }

@@ -44,6 +44,7 @@ class AdminsController extends ControllerBase
         //todo: цветовую дифференциацию, галочки
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->persistent->searchParams = null;
+        $this->view->scroll_to_down = $next_items > 0 ? TRUE : FALSE;
         $this->view->form = new AdminForm;
         $this->view->user_id = $this->user->id;
         $this->setMenu();
@@ -96,7 +97,7 @@ class AdminsController extends ControllerBase
                     'params' => ['id' => $this->user->id]
                 ));
             }
-        } else if ($this->user->id == $this->request->getPost("id", "int")) {
+        } else if ($this->user->id == $this->request->getPost("id", "int") || $this->user->id == 1) {
             if (!$this->request->isPost())
                 return $this->forward("admins/index");
 
@@ -109,10 +110,8 @@ class AdminsController extends ControllerBase
                 $data['password'] = sha1($post['password']);
             if ($this->request->hasFiles() == true)
                 $admin->saveAvatar($this->request->getUploadedFiles());
-            $data = [
-                'email'=> $post['email'],
-                'avatar' => $admin->avatar
-            ];
+            $data['email'] = $post['email'];
+            $data['avatar'] = $admin->avatar;
             foreach(['name', 'surname', 'patronymic', 'phone'] as $key)
                 $data[$key] = $post[$key];
             $validation = new AdminValidator();

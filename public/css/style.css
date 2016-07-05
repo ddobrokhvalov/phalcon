@@ -1365,6 +1365,10 @@ ul.status-black, .notification-number-box.status-black {
     .add-complaint-page .file-names p:last-child, .edit-complaint-page.edit-now .file-names p:last-child {
       margin-bottom: 15px; }
 
+/* line 537, ../sass/_complaints_preview.scss */
+a:focus {
+  text-decoration: none; }
+
 /* line 4, ../sass/_edit_applicant.scss */
 .aplicant-tabs-label {
   position: relative;

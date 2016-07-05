@@ -98,6 +98,9 @@
                 tinysort('#sort-table li.lt-content-main', {attr: sort_by, order: sort_order[current_sort]});
             });
         });
+        {% if scroll_to_down %}
+            $("html, body").animate({ scrollTop: $(document).height() - 310 }, 1)
+        {% endif %}
     </script>
 </div>
 {% endblock %}
