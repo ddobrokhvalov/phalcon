@@ -8,7 +8,7 @@
         <a href="/admin/user/index">Вернуться к списку пользователей</a>
     </div>
     <div class="block-user-editing">
-        <form action="/admin/user/create" method="post">
+        <form action="/admin/user/create" method="post" id="add-user-form">
             {{hidden_field('id', 'value':'')}}
             <div class="left-block-editing">
                 <span>Данные пользователя</span>
@@ -49,7 +49,7 @@
                 </label>
             </div>
             <div class="delete-or-save">
-                <button>Сохранить изменения</button><!--todo-->
+                <button>Сохранить изменения</button>
             </div>
         </form>
     </div>
@@ -60,7 +60,76 @@
         setTimeout(function(){
             $("#userPass").val("");
             $('#userEmail').val("");
-        }, 200);
+        }, 500);
+        $('form .delete-or-save button').click(function(evt){
+            evt.preventDefault();
+            addUserFormValidator.start();
+            if (addUserFormValidator.result) {
+                $("#add-user-form").submit();
+            } else {
+                return false;
+            }
+        });
     });
+    var addUserFormValidator = {
+        result: true,
+        start: function () {
+            this.result = true;
+            var field_selector = '#fUser';
+            if (!validator.text($(field_selector).val(), 3, 100)) {
+               this.showError(field_selector, 'Ошибка! фамилия должна быть от 3 до 100 символов');
+               this.result = false;
+            } else {
+               this.done(field_selector);
+            }
+            var field_selector = '#iUser';
+            if (!validator.text($(field_selector).val(), 2, 100)) {
+               this.showError(field_selector, 'Ошибка! Имя должно быть от 2 до 100 символов');
+               this.result = false;
+            } else {
+               this.done(field_selector);
+            }
+            var field_selector = '#oUser';
+            if (!validator.text($(field_selector).val(), 3, 100)) {
+               this.showError(field_selector, 'Ошибка! Отчество должно быть от 3 до 100 символов');
+               this.result = false;
+            } else {
+               this.done(field_selector);
+            }
+            var field_selector = '#telFaxUser';
+            if (!validator.numeric($(field_selector).val(), 5, 100)) {
+               this.showError(field_selector, 'Ошибка! Поле факс, телефон не может быть пустым');
+               this.result = false;
+            } else {
+               this.done(field_selector);
+            }
+            var field_selector = '#userEmail';
+            if (!validator.email($(field_selector).val())) {
+               this.showError(field_selector, 'Ошибка! Неверный E-mail');
+               this.result = false;
+            } else {
+               this.done(field_selector);
+            }
+            var field_selector = '#userPass';
+             if (!validator.text($(field_selector).val(), 4, 100)) {
+               this.showError(field_selector, 'Ошибка! Пароль должен быть от 4 до 100 символов');
+               this.result = false;
+            } else {
+               this.done(field_selector);
+            }
+        },
+        done: function (element) {
+            $(element).addClass('c-inp-done');
+            $(element).parent().children('.c-inp-err-t').remove();
+        },
+        showError: function (element, msg) {
+            this.result = false;
+            $(element).removeClass('c-inp-done');
+            $(element).addClass('c-inp-error');
+            $(element).parent().children('.c-inp-err-t').remove();
+            $(element).parent().append('<div class="c-inp-err-t">' + msg + '</div>');
+
+        }
+    }
 </script>
 {% endblock %}

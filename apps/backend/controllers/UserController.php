@@ -177,6 +177,12 @@ class UserController extends ControllerBase
                 'action' => 'index'
             ));
         }
+        $send_notifications = $this->request->getpost('sendEmail');
+        if (isset($send_notifications)) {
+            $data['notifications'] = 1;
+        } else {
+            $data['notifications'] = 0;
+        }
         foreach(['lastname', 'firstname', 'patronymic', 'phone', 'admin_comment', 'password'] as $key)
            $data[$key] = $post[$key];
         $validation = new UserValidator();
