@@ -45,10 +45,12 @@ class Applicant extends Model
 
     public function findByUserIdWithAdditionalInfo($user_id){
         $db = $this->getDi()->getShared('db');
-        $sql = "SELECT ap.*, count(c.id) as cnt FROM complaint as c
+        /*$sql = "SELECT ap.*, count(c.id) as cnt FROM complaint as c
          INNER JOIN applicant ap ON(c.applicant_id = ap.id )         
          WHERE ap.user_id =$user_id
-         GROUP BY ap.id";
+         GROUP BY ap.id";*/
+         $sql = "SELECT a.*, count(c.id) as cnt FROM applicant a LEFT JOIN complaint c ON c.applicant_id = a.id WHERE a.user_id = $user_id
+         GROUP BY a.id";
         $result = $db->query($sql);
         return $result->fetchAll();
     }
