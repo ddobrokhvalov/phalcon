@@ -106,7 +106,7 @@
                 {% else %}
                     <div></div>
             {% endif %}
-            <a href="#">Показать все жалобы (<span>{{page.total_items}}</span>)</a><!--todo: -->
+            <a href="/admin/applicants/info/{{applicant.id}}?all-portions-items=all_items">Показать все жалобы (<span>{{page.total_items}}</span>)</a><!--todo: -->
         </div>
         <form id="next_items" method="post">
             {{hidden_field('next-portions-items', 'value':20)}}
@@ -120,7 +120,7 @@
             {% for page_item in paginator_builder %}
             <li>
                 {% if page_item['type'] == 'page' %}
-                {{ link_to("complaint/index"~applicant.id~"?page=" ~ page_item['num'], page_item['num']) }}
+                {{ link_to("/admin/applicants/info/"~applicant.id~"?page=" ~ page_item['num'], page_item['num']) }}
                 {% elseif page_item['type'] == 'delimer' %}
                 <span>...</span>
                 {% elseif page_item['type'] == 'current' %}

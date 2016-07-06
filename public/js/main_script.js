@@ -786,17 +786,46 @@ function change_complaint_status(complaint_id, status) {
 function changeStatusInComplaintList(status) {
     if (status.length) {
         var id_array = [];
-        $('.admin-lt-holder .lt-content-main').each(function(){
-            var id = $(this).find('div.psevdo-checked #complaint-id').val();
-            if (id != undefined) {
-                id_array.push(id);
+        if (status == 'recalled') {
+            $('.admin-lt-holder .lt-content-main.podana').each(function(){
+                var id = $(this).find('div.psevdo-checked #complaint-id').val();
+                if (id != undefined) {
+                    id_array.push(id);
+                }
+            });
+            if (id_array.length) {
+                change_complaint_status(id_array, status);
+            } else {
+                return false;
             }
-        });
-        if (status == "copy" && id_array.length > 1) {
-            return false;
-        }
-        if (id_array.length) {
-            change_complaint_status(id_array, status);
+        } else if (status == 'archive') {
+            $('.admin-lt-holder .lt-content-main').each(function(item, elem){
+                if (!$(elem).hasClass("alr-archive")) {
+                    var id = $(elem).find('div.psevdo-checked #complaint-id').val();
+                    if (id != undefined) {
+                        id_array.push(id);
+                    }
+                }
+                
+            });
+            if (id_array.length) {
+                change_complaint_status(id_array, status);
+            } else {
+                return false;
+            }
+        } else {
+            $('.admin-lt-holder .lt-content-main').each(function(){
+                var id = $(this).find('div.psevdo-checked #complaint-id').val();
+                if (id != undefined) {
+                    id_array.push(id);
+                }
+            });
+            if (status == "copy" && id_array.length > 1) {
+                return false;
+            }
+            if (id_array.length) {
+                change_complaint_status(id_array, status);
+            }
         }
     }
 }
@@ -1026,6 +1055,7 @@ function changeComplaintButtonsBackground() {
     if($('.admin-main-wrap').hasClass('complaints-list')){
         var id_array = [];
         var submitted_id = [];
+        var archived_id = [];
         $('.admin-lt-holder .lt-content-main').each(function(elem, item){
             var id = $(this).find('div.psevdo-checked #complaint-id').val();
             if (id != undefined) {
@@ -1037,9 +1067,11 @@ function changeComplaintButtonsBackground() {
         } else {
             $(".enabled-btn").addClass("disabled-btn").removeClass("enabled-btn");
         }
+        // Disable "Copy" button if choosed more than 1 complaint.
         if (id_array.length > 1) {
             $(".copy-complaint").addClass("disabled-btn").removeClass("enabled-btn");
         }
+        // Check logic for "Otozvat" button if status is "submitted".
         $('.admin-lt-holder .lt-content-main.podana').each(function(elem, item){
             var id = $(this).find('div.psevdo-checked #complaint-id').val();
             if (id != undefined) {
@@ -1048,6 +1080,25 @@ function changeComplaintButtonsBackground() {
         });
         if (submitted_id.length == 0) {
             $(".recall-complaint").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+        // Check logic for "activate"/"deactivate" button.
+        $('.admin-lt-holder .lt-content-main.alr-archive').each(function(elem, item){
+            var id = $(this).find('div.psevdo-checked #complaint-id').val();
+            if (id != undefined) {
+                archived_id.push(id);
+            }
+        });
+        if (archived_id.length > 0) {
+            $(".un-archive-complaint").addClass("enabled-btn").removeClass("disabled-btn");
+            $(".archive-complaint").addClass("disabled-btn").removeClass("enabled-btn");
+        } else {
+            $(".un-archive-complaint").addClass("disabled-btn").removeClass("enabled-btn");
+            //$(".archive-complaint").addClass("enabled-btn").removeClass("disabled-btn");
+        }
+        if (id_array.length > archived_id.length) {
+            $(".archive-complaint").addClass("enabled-btn").removeClass("disabled-btn");
+        } else {
+            $(".archive-complaint").addClass("disabled-btn").removeClass("enabled-btn");
         }
     } else if($('.user-page .appllicant-page').hasClass('complaints-list')) {
         var id_array = [];

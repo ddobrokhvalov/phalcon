@@ -164,18 +164,45 @@ class ComplaintsController extends ControllerBase
         } else {
             $status = $this->request->getPost("status");
             $complaint_id = $this->request->getPost("id");
-            
+
             if($status && $complaint_id){
                 if (is_array($complaint_id)) {
                     foreach ($complaint_id as $id) {
                         $complaint = Complaint::findFirstById($id);
-                        if ($status == 'recalled' && $complaint->status == 'submitted') {
-                            Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
-                            @Complaint::changeStatus($status, array($id));
-                        } else if ($status != 'recalled' && $complaint->status != 'submitted') {
-                            Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
-                            @Complaint::changeStatus($status, array($id));
+                        switch ($status) {
+                            case 'recalled':
+                                if ($complaint->status == 'submitted') {
+                                    Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
+                                    @Complaint::changeStatus($status, array($id));
+                                    $this->flashSession->success('Статус изменен');
+                                }
+                                break;
+                            case 'draft':
+                                if ($complaint->status == 'archive') {
+                                    Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
+                                    @Complaint::changeStatus($status, array($id));
+                                    $this->flashSession->success('Статус изменен');
+                                }
+                                break;
+                            case 'archive':
+                                if ($complaint->status == 'draft' || $complaint->status == 'unfounded' || $complaint->status == 'recalled') {
+                                    Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
+                                    @Complaint::changeStatus($status, array($id));
+                                    $this->flashSession->success('Статус изменен');
+                                }
+                                break;
+                            default:
+                                Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
+                                @Complaint::changeStatus($status, array($id));
+                                $this->flashSession->success('Статус изменен');
+                                break;
                         }
+                        /*if ($status == 'recalled' && $complaint->status == 'submitted') {
+                            
+                        } else*/ /*if ($status != 'recalled' && $complaint->status != 'submitted') {
+                            Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
+                            @Complaint::changeStatus($status, array($id));
+                        }*/
                     }
                 } else {
                     $complaint = Complaint::findFirstById($complaint_id);
@@ -184,8 +211,6 @@ class ComplaintsController extends ControllerBase
                 }
                 if ($status == 'copy') {
                     $this->flashSession->success('Жалоба скопирована');
-                } else {
-                    $this->flashSession->success('Статус изменен');
                 }
                 $data = "ok";
             }
