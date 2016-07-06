@@ -1398,7 +1398,7 @@ function ajaxProfileUpdate() {
 		enctype: 'multipart/form-data',
 		success : function(data) {
 			if(data['success']==true) {
-                $('.admin-set-top').trigger('click');
+                $('.admin-set-top').click();
                 showStyledPopupMessage("#styled-popup-container", "Уведомление", "Ваш профиль успешно обновлен");
             }
 			else {

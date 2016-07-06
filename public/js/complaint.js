@@ -213,7 +213,8 @@ var argument = {
     addArgument: function (id, cat_id, complaint_text) {
 
         complaint_text = complaint_text || "";
-        templates["just_text"] = "Вы можете ввести свой текст здесь";
+        //templates["just_text"] = "Вы можете ввести свой текст здесь";
+        templates["just_text"] = "";
         if (complaint.needCat3 === true && cat_id == 3) {
 
             complaint.selectCat3 = true;
