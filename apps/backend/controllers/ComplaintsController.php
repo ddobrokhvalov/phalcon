@@ -208,6 +208,7 @@ class ComplaintsController extends ControllerBase
                     $complaint = Complaint::findFirstById($complaint_id);
                     Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
                     @Complaint::changeStatus($status, array($complaint_id));
+                    $this->flashSession->success('Статус изменен');
                 }
                 if ($status == 'copy') {
                     $this->flashSession->success('Жалоба скопирована');

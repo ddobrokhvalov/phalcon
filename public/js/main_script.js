@@ -1,4 +1,11 @@
 jQuery(document).ready(function($) {
+    $(".modal-close").click(function(){
+        var obj = $(this);
+        $('#overlay').fadeOut(400,
+            function(){
+                $(obj).parent().css('display', 'none');
+            });
+    });
     $('.lawyer-wrap .lebel-checkbox').click(function(evt){
         evt.preventDefault();
         if($(this).hasClass('main-active-checkbox')){
@@ -267,9 +274,13 @@ jQuery(document).ready(function($) {
         }
         var status = $(this).find('span').attr('data-status');
         var complaintId = $(this).parent().parent().parent().parent().find('li:first-child #complaint-id').val();
-        if (status.length && complaintId != undefined) {
-            change_complaint_status(complaintId, status);
-        }
+        /*if (status.length && complaintId != undefined) {
+            if ($(".admin-main-wrap").hasClass("complaints-list")) {*/
+                show_confirm_changing_status_popup(complaintId, status);
+            /*} else {
+                change_complaint_status(complaintId, status);
+            }
+        }*/
     });
     $("#show-send-massage-dialog").click(function(){
         var id_array = [];
@@ -765,6 +776,17 @@ function delete_complaint(complaint_id) {
         });
     }
     $('.confirm-modal-lg').modal('hide');
+}
+
+function show_confirm_changing_status_popup(complaint_id, status) {
+    if (complaint_id && status.length) {
+        showStyledPopupMessageWithButtons(
+            "#pop-confirm-change-complaint-status",
+            "Подтвердите действие",
+            "Вы действительно хотите сменить статус?",
+            "change_complaint_status(" + complaint_id +", '" + status + "');"
+        );
+    }
 }
 
 function change_complaint_status(complaint_id, status) {
@@ -1355,6 +1377,18 @@ function get_class_by_file_type(file_type) {
 function showStyledPopupMessage(popup, title, message) {
     $(popup + " h2").html(title);
     $(popup + " .pop-done-txt").html(message);
+    $('#overlay').fadeIn(400,
+    function(){
+        $(popup)
+            .css('display', 'block')
+            .animate({opacity: 1, top: '50%'}, 200);
+    });
+}
+
+function showStyledPopupMessageWithButtons(popup, title, message, click_function) {
+    $(popup + " h2").html(title);
+    $(popup + " .popup-content").html(message);
+    $(popup + " .popup-button.apr").attr("onclick", click_function);
     $('#overlay').fadeIn(400,
     function(){
         $(popup)

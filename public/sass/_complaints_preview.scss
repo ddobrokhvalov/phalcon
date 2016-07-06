@@ -437,6 +437,7 @@
             width: 425px;
             border-left: none;
             line-height: 24px;
+            overflow: hidden;
         }
         li:nth-child(3) {
             width: 175px;
@@ -445,11 +446,11 @@
             width: 95px;
         }
         li:nth-child(5) {
-            width: 95px;
+            width: 85px;
             padding-right: 11px;
         }
         li:nth-child(6) {
-            width: 175px;
+            width: 185px;
         }
     }
     .lt-content-top li:nth-child(2) {
@@ -466,7 +467,6 @@
         padding-right: 16px;
     }
     .lt-content-main {
-        overflow: hidden;
         li:nth-child(7) {
             text-align: center;
         }
@@ -493,6 +493,37 @@
     }
     .jl-status {
         line-height: 75px;
+    }
+    .dropdown-menu {
+        font-weight: 400 !important;
+        margin-left: -12px;
+        width: 186px;
+        li {
+            font-weight: 400 !important;
+            height: 40px !important;
+            padding-left: 15px !important;
+            text-transform: uppercase;
+            width: 100% !important;
+            border: none !important;
+            text-align: left !important;
+            span {
+                display: block;
+                font-weight: 400 !important;
+                line-height: 40px;
+            }
+            &:hover {
+                background-color: #e5f7fd;
+                font-weight: 400 !important;
+            }
+        }
+        li.header-dropdown {
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-left: 15px !important;
+            &:hover {
+                background-color: transparent;
+            }
+        }
     }
 }
 .add-complaint-page, .edit-complaint-page.edit-now {

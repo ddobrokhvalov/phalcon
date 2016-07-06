@@ -50,7 +50,23 @@
                 <li>{{ complaint.auction_id }}</li>
                 <li>{{ date('d.m.Y', complaint.date|strtotime) }}</li>
                 <li>{{ complaint.getCountQuestions(complaint.Question) }}</li>
-                <li>{{ complaint.getComplaintStatus(complaint.status) }}</li>
+                <li class='with-dropdown'>
+                    <div class="dropdown">
+                      <div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{complaint.getComplaintStatus(complaint.status)}}
+                      </div>
+                      <ul class="dropdown-menu" aria-labelledby="dLabel">
+                        <li class="header-dropdown">Сменить статус<span class="caret"></span></li>
+                        <li>{{complaint.getAllStatuses(0)}}</li>
+                        <li>{{complaint.getAllStatuses(1)}}</li>
+                        <li>{{complaint.getAllStatuses(2)}}</li>
+                        <li>{{complaint.getAllStatuses(3)}}</li>
+                        <li>{{complaint.getAllStatuses(4)}}</li>
+                        <li>{{complaint.getAllStatuses(5)}}</li>
+                        <li>{{complaint.getAllStatuses(6)}}</li>
+                      </ul>
+                    </div>
+                </li>
             </ul>
             {% endfor %}
         </div>
@@ -91,5 +107,17 @@
             $("html, body").animate({ scrollTop: $(document).height() - 310 }, 1)
         </script>
     {% endif %}
+</div>
+<div id="pop-confirm-change-complaint-status" class="modal_div">
+    <h2></h2>
+    <div class="pop-done-txt">
+        <div class="popup-content"></div>
+        <div class="action-buttons">
+            <div class="popup-button cnc popup-close">Отменить</div>
+            <div class="popup-button apr">Да</div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div class="modal-close"></div>
 </div>
 {% endblock %}

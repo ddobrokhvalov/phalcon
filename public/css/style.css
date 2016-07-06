@@ -1271,21 +1271,22 @@ ul.status-black, .notification-number-box.status-black {
 .complaints-list .admin-lt-content li:nth-child(2) {
   width: 425px;
   border-left: none;
-  line-height: 24px; }
-/* line 441, ../sass/_complaints_preview.scss */
+  line-height: 24px;
+  overflow: hidden; }
+/* line 442, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(3) {
   width: 175px; }
-/* line 444, ../sass/_complaints_preview.scss */
+/* line 445, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(4) {
   width: 95px; }
-/* line 447, ../sass/_complaints_preview.scss */
+/* line 448, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(5) {
-  width: 95px;
+  width: 85px;
   padding-right: 11px; }
-/* line 451, ../sass/_complaints_preview.scss */
+/* line 452, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(6) {
-  width: 175px; }
-/* line 455, ../sass/_complaints_preview.scss */
+  width: 185px; }
+/* line 456, ../sass/_complaints_preview.scss */
 .complaints-list .lt-content-top li:nth-child(2) {
   border-left: medium none;
   line-height: 75px;
@@ -1293,30 +1294,27 @@ ul.status-black, .notification-number-box.status-black {
   /*li:first-child {
       
   }*/ }
-/* line 463, ../sass/_complaints_preview.scss */
+/* line 464, ../sass/_complaints_preview.scss */
 .complaints-list .lt-content-top li:nth-child(6) span {
   background: #f9f9fa url("../images/arrow-to-down.png") no-repeat scroll 100% 50%;
   cursor: pointer;
   padding-right: 16px; }
-/* line 468, ../sass/_complaints_preview.scss */
-.complaints-list .lt-content-main {
-  overflow: hidden; }
-  /* line 470, ../sass/_complaints_preview.scss */
-  .complaints-list .lt-content-main li:nth-child(7) {
-    text-align: center; }
-  /* line 473, ../sass/_complaints_preview.scss */
-  .complaints-list .lt-content-main .has-questions {
-    width: 100%;
-    display: inline-block;
-    height: 100%;
-    background: transparent url("../images/icon-lm-dd.png") no-repeat scroll center center; }
-  /* line 479, ../sass/_complaints_preview.scss */
-  .complaints-list .lt-content-main .no-questions {
-    width: 100%;
-    display: inline-block;
-    height: 100%;
-    background-position: 50% 50%;
-    background: transparent url("../images/icon-lm-ddcl.png") no-repeat scroll center center; }
+/* line 470, ../sass/_complaints_preview.scss */
+.complaints-list .lt-content-main li:nth-child(7) {
+  text-align: center; }
+/* line 473, ../sass/_complaints_preview.scss */
+.complaints-list .lt-content-main .has-questions {
+  width: 100%;
+  display: inline-block;
+  height: 100%;
+  background: transparent url("../images/icon-lm-dd.png") no-repeat scroll center center; }
+/* line 479, ../sass/_complaints_preview.scss */
+.complaints-list .lt-content-main .no-questions {
+  width: 100%;
+  display: inline-block;
+  height: 100%;
+  background-position: 50% 50%;
+  background: transparent url("../images/icon-lm-ddcl.png") no-repeat scroll center center; }
 /* line 487, ../sass/_complaints_preview.scss */
 .complaints-list h1 {
   display: inline-block;
@@ -1327,17 +1325,48 @@ ul.status-black, .notification-number-box.status-black {
 /* line 494, ../sass/_complaints_preview.scss */
 .complaints-list .jl-status {
   line-height: 75px; }
+/* line 497, ../sass/_complaints_preview.scss */
+.complaints-list .dropdown-menu {
+  font-weight: 400 !important;
+  margin-left: -12px;
+  width: 186px; }
+  /* line 501, ../sass/_complaints_preview.scss */
+  .complaints-list .dropdown-menu li {
+    font-weight: 400 !important;
+    height: 40px !important;
+    padding-left: 15px !important;
+    text-transform: uppercase;
+    width: 100% !important;
+    border: none !important;
+    text-align: left !important; }
+    /* line 509, ../sass/_complaints_preview.scss */
+    .complaints-list .dropdown-menu li span {
+      display: block;
+      font-weight: 400 !important;
+      line-height: 40px; }
+    /* line 514, ../sass/_complaints_preview.scss */
+    .complaints-list .dropdown-menu li:hover {
+      background-color: #e5f7fd;
+      font-weight: 400 !important; }
+  /* line 519, ../sass/_complaints_preview.scss */
+  .complaints-list .dropdown-menu li.header-dropdown {
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-left: 15px !important; }
+    /* line 523, ../sass/_complaints_preview.scss */
+    .complaints-list .dropdown-menu li.header-dropdown:hover {
+      background-color: transparent; }
 
-/* line 499, ../sass/_complaints_preview.scss */
+/* line 530, ../sass/_complaints_preview.scss */
 .add-complaint-page .complaint-attachment, .edit-complaint-page.edit-now .complaint-attachment {
   margin-bottom: 32px;
   padding: 22px 0 30px;
   float: right; }
-  /* line 503, ../sass/_complaints_preview.scss */
+  /* line 534, ../sass/_complaints_preview.scss */
   .add-complaint-page .complaint-attachment .file-wrapper, .edit-complaint-page.edit-now .complaint-attachment .file-wrapper {
     cursor: pointer;
     width: 150px; }
-    /* line 506, ../sass/_complaints_preview.scss */
+    /* line 537, ../sass/_complaints_preview.scss */
     .add-complaint-page .complaint-attachment .file-wrapper .text-above, .edit-complaint-page.edit-now .complaint-attachment .file-wrapper .text-above {
       background-image: url("../images/icon-screp2.png");
       background-position: left center;
@@ -1347,14 +1376,14 @@ ul.status-black, .notification-number-box.status-black {
       font-size: 12px;
       padding-left: 20px;
       text-transform: uppercase; }
-    /* line 516, ../sass/_complaints_preview.scss */
+    /* line 547, ../sass/_complaints_preview.scss */
     .add-complaint-page .complaint-attachment .file-wrapper #upload-files, .edit-complaint-page.edit-now .complaint-attachment .file-wrapper #upload-files {
       cursor: pointer;
       margin-top: -20px;
       opacity: 0;
       width: 150px;
       position: absolute; }
-/* line 525, ../sass/_complaints_preview.scss */
+/* line 556, ../sass/_complaints_preview.scss */
 .add-complaint-page .file-names, .edit-complaint-page.edit-now .file-names {
   padding-left: 28px;
   background-color: #ffffff;
@@ -1362,18 +1391,18 @@ ul.status-black, .notification-number-box.status-black {
   width: 100%;
   border-left: 1px solid #d4d7df;
   border-right: 1px solid #d4d7df; }
-  /* line 532, ../sass/_complaints_preview.scss */
+  /* line 563, ../sass/_complaints_preview.scss */
   .add-complaint-page .file-names p, .edit-complaint-page.edit-now .file-names p {
     margin-bottom: 0;
     margin-top: 3px; }
-    /* line 535, ../sass/_complaints_preview.scss */
+    /* line 566, ../sass/_complaints_preview.scss */
     .add-complaint-page .file-names p:first-child, .edit-complaint-page.edit-now .file-names p:first-child {
       margin-top: 10px; }
-    /* line 538, ../sass/_complaints_preview.scss */
+    /* line 569, ../sass/_complaints_preview.scss */
     .add-complaint-page .file-names p:last-child, .edit-complaint-page.edit-now .file-names p:last-child {
       margin-bottom: 15px; }
 
-/* line 545, ../sass/_complaints_preview.scss */
+/* line 576, ../sass/_complaints_preview.scss */
 a:focus {
   text-decoration: none; }
 
