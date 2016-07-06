@@ -122,12 +122,12 @@ var complaint = {
 
         if (!auction.auctionReady)
             return false;
-//bugger;
+
         $('#complaint_name').removeClass('c-inp-done');
         $('#complaint_name').removeClass('c-inp-error');
         this.complainName = $('#complaint_name').val();
-        if (!validator.text(this.complainName, 3, 200)) {
-            $('#complaint_name').addClass('c-inp-error');
+        if (!validator.text(this.complainName, 3, 255)) {
+            this.showError('#complaint_name', 'Ошибка! Полное наименование должно быть от 3 до 255 символов', 'before');
             return false;
         }
         $('#complaint_name').addClass('c-inp-done');
@@ -186,6 +186,21 @@ var complaint = {
                 console.log(msg);
             }
         });*/
+
+    },
+    showError: function (element, msg, insert_here) {
+        this.result = false;
+        $(element).removeClass('c-inp-done');
+        $(element).addClass('c-inp-error');
+        $(element).parent().children('.c-inp-err-t').remove();
+        switch (insert_here) {
+            case 'before':
+                $(element).before('<div class="c-inp-err-t">' + msg + '</div>');
+                break;
+            default:
+                $(element).parent().append('<div class="c-inp-err-t">' + msg + '</div>');
+                break;
+        }
 
     },
     filterComplaintByApplicant: function (applicant_id) {
