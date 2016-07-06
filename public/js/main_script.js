@@ -792,6 +792,9 @@ function changeStatusInComplaintList(status) {
                 id_array.push(id);
             }
         });
+        if (status == "copy" && id_array.length > 1) {
+            return false;
+        }
         if (id_array.length) {
             change_complaint_status(id_array, status);
         }
@@ -1022,7 +1025,8 @@ function changeAdminButtonsBackground() {
 function changeComplaintButtonsBackground() {
     if($('.admin-main-wrap').hasClass('complaints-list')){
         var id_array = [];
-        $('.admin-lt-holder .lt-content-main').each(function(){
+        var submitted_id = [];
+        $('.admin-lt-holder .lt-content-main').each(function(elem, item){
             var id = $(this).find('div.psevdo-checked #complaint-id').val();
             if (id != undefined) {
                 id_array.push(id);
@@ -1032,6 +1036,18 @@ function changeComplaintButtonsBackground() {
             $(".disabled-btn").addClass("enabled-btn").removeClass("disabled-btn");
         } else {
             $(".enabled-btn").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+        if (id_array.length > 1) {
+            $(".copy-complaint").addClass("disabled-btn").removeClass("enabled-btn");
+        }
+        $('.admin-lt-holder .lt-content-main.podana').each(function(elem, item){
+            var id = $(this).find('div.psevdo-checked #complaint-id').val();
+            if (id != undefined) {
+                submitted_id.push(id);
+            }
+        });
+        if (submitted_id.length == 0) {
+            $(".recall-complaint").addClass("disabled-btn").removeClass("enabled-btn");
         }
     } else if($('.user-page .appllicant-page').hasClass('complaints-list')) {
         var id_array = [];

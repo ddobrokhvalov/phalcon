@@ -39,7 +39,7 @@
                 <li sort-field="sort-status"><span class="sortable">Статус</span></li>
             </ul>
             {% for complaint in page.items %}
-            <ul class="lt-content-main" sort-number="{{complaint.auction_id}}" sort-date="{{complaint.date|strtotime}}" sort-questions="{{complaint.getCountQuestions(complaint.Question, true)}}" sort-status="{{complaint.status}}" detail-url="{{url('admin/complaints/preview/' ~ complaint.id)}}">
+            <ul class="lt-content-main {% if complaint.status == 'submitted' %}podana{% endif %}" sort-number="{{complaint.auction_id}}" sort-date="{{complaint.date|strtotime}}" sort-questions="{{complaint.getCountQuestions(complaint.Question, true)}}" sort-status="{{complaint.status}}" detail-url="{{url('admin/complaints/preview/' ~ complaint.id)}}">
                 <li><div class="lt-psevdo-check">{{hidden_field('complaint-id', 'value':complaint.id)}}</div></li>
                 {% if complaint.purchases_name | length > 155 %}
                 <li style="padding-top:20px;padding-left:35px;">{{ truncate(complaint.purchases_name, 0, 155) }}</li>

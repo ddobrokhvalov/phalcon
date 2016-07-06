@@ -169,8 +169,13 @@ class ComplaintsController extends ControllerBase
                 if (is_array($complaint_id)) {
                     foreach ($complaint_id as $id) {
                         $complaint = Complaint::findFirstById($id);
-                        Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
-                        @Complaint::changeStatus($status, array($id));
+                        if ($status == 'recalled' && $complaint->status == 'submitted') {
+                            Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
+                            @Complaint::changeStatus($status, array($id));
+                        } else if ($status != 'recalled' && $complaint->status != 'submitted') {
+                            Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
+                            @Complaint::changeStatus($status, array($id));
+                        }
                     }
                 } else {
                     $complaint = Complaint::findFirstById($complaint_id);
