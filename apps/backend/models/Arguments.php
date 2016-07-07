@@ -17,4 +17,5 @@ class Arguments extends Model
     {
         return 'arguments';
     }
+
 }
