@@ -1,0 +1,9 @@
+.argumentsComplaints {
+  padding: 0 40px 40px;
+  &:after {
+    @include hasla;
+  }
+  button {
+    float: right;
+  }
+}
