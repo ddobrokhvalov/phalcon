@@ -9,6 +9,7 @@ jQuery(document).ready(function($) {
 	    var choosenValue = $(this).attr('data-value');
 	    $(this).parent().parent().parent().find('.hidden-select').val(choosenValue).prop('selected', true);
 	    $(this).parent().parent().find('.current-option span').text($(this).text());
+	    $(this).parent().parent().find('.current-option span').removeClass('rotate-icon');
 	    $(this).parent().parent().find('.current-option').attr('data-value', choosenValue);
 	    $(this).parent().parent().find('.custom-options').slideUp();
 	});

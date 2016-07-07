@@ -3809,18 +3809,108 @@ body#backend-login {
 }
 
 /* line 1, ../sass/_arguments_complaints_popup.scss */
+.argComp {
+  top: calc(50% - 250px);
+  height: 500px;
+}
+
+/* line 5, ../sass/_arguments_complaints_popup.scss */
 .argumentsComplaints {
   padding: 0 40px 40px;
 }
-/* line 3, ../sass/_arguments_complaints_popup.scss */
+/* line 7, ../sass/_arguments_complaints_popup.scss */
 .argumentsComplaints:after {
   content: '';
   display: block;
   clear: both;
 }
-/* line 6, ../sass/_arguments_complaints_popup.scss */
+/* line 10, ../sass/_arguments_complaints_popup.scss */
 .argumentsComplaints button {
   float: right;
+}
+/* line 13, ../sass/_arguments_complaints_popup.scss */
+.argumentsComplaints .custom-options {
+  margin: 0;
+}
+/* line 16, ../sass/_arguments_complaints_popup.scss */
+.argumentsComplaints .arguments-steps {
+  margin: 20px 0 0;
+}
+/* line 18, ../sass/_arguments_complaints_popup.scss */
+.argumentsComplaints .arguments-steps:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* line 23, ../sass/_arguments_complaints_popup.scss */
+.steps-line {
+  position: relative;
+  float: left;
+  margin-bottom: 50px;
+  width: 32%;
+  height: 35px;
+}
+/* line 29, ../sass/_arguments_complaints_popup.scss */
+.steps-line:first-child {
+  width: 4%;
+}
+/* line 31, ../sass/_arguments_complaints_popup.scss */
+.steps-line:first-child span {
+  right: auto;
+  left: 0;
+  width: 50px;
+}
+/* line 38, ../sass/_arguments_complaints_popup.scss */
+.steps-line:nth-child(2) span {
+  right: -14px;
+}
+/* line 43, ../sass/_arguments_complaints_popup.scss */
+.steps-line:nth-child(3) span {
+  right: -14px;
+}
+/* line 49, ../sass/_arguments_complaints_popup.scss */
+.steps-line:last-child div:after {
+  right: 15px;
+}
+/* line 54, ../sass/_arguments_complaints_popup.scss */
+.steps-line span {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+/* line 62, ../sass/_arguments_complaints_popup.scss */
+.steps-line div {
+  position: relative;
+  top: 3px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #eff2f7;
+}
+/* line 69, ../sass/_arguments_complaints_popup.scss */
+.steps-line div:after {
+  position: absolute;
+  content: '';
+  top: -3px;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  background-color: #eff2f7;
+}
+/* line 81, ../sass/_arguments_complaints_popup.scss */
+.steps-line div.arg-nextStep {
+  background-color: #00aeef;
+}
+/* line 83, ../sass/_arguments_complaints_popup.scss */
+.steps-line div.arg-nextStep:after {
+  background-color: #00aeef;
 }
 
 @media (max-width: 1640px) {
