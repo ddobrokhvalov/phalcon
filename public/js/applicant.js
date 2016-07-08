@@ -126,11 +126,11 @@ var applicant = {
         if (this.id.length == 0) {
             this.id.push("All");
         }
-        //if(typeof currentPage !== 'undefined' && currentPage == 'complaint/index' && redirect ){
+        ////if(typeof currentPage !== 'undefined' && currentPage == 'complaint/index' && redirect ){
         if (!is_select_first) {
             complaint.filterComplaintByApplicant(this.id);
         }
-        //}
+       // }
     },
     selectFirst: function (id, redirect) {
         id = id.split(',');

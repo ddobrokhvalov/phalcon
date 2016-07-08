@@ -196,12 +196,21 @@
     </div>
 </div>
 
-<article class="admin-popup-wrap" style="display: none;">
+<article class="admin-popup-wrap">
     <div class="admin-popup-bg"></div>
     <div class="admin-popup-content argComp">
         <div class="admin-popup-close"></div>
         <h6>Доводы жалоб</h6>
         <div class="argumentsComplaints">
+            <form action="#" method="POST">
+                <div class="word-argCompl-find">
+                    <p>Поиск по ключевому слову</p>
+                    <div class="word-argCompl-input">
+                        <input type="text">
+                        <button>Искать</button>
+                    </div>
+                </div>
+            </form>
             <form action="#" method="POST">
                 <ul class="arguments-steps">
                     <li class="steps-line arg-dunStep">
@@ -221,8 +230,11 @@
                         <span>шаг 4</span>
                     </li>
                 </ul>
-                <div class="select-holder">
+                <div id="1_argComplSelect" class="select-holder">
                     <select name="" class="hidden-select">
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
                         <option value=""></option>
                     </select>
                     <div class="title-info-box">Выберите тип жалобы</div>
@@ -238,20 +250,81 @@
                         </ul>
                     </div>
                 </div>
-                <button class="right">Дальше</button>
+                <div id="2_argComplSelect" class="select-holder" style="display: none">
+                    <select name="" class="hidden-select">
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                    </select>
+                    <div class="title-info-box">Выберите под->тип жалобы</div>
+                    <div class="custom_select">
+                        <div class="current-option" data-value="">
+                            <span>Жалоба на положения документации</span>
+                        </div>
+                        <ul class="custom-options">
+                            <li data-value="">Lorem ipsum.</li>
+                            <li data-value="">Lorem ipsum.</li>
+                            <li data-value="">Lorem ipsum.</li>
+                            <li data-value="">Lorem ipsum.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="3_argComplSelect" class="select-holder" style="display: none">
+                    <select name="" class="hidden-select">
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                    </select>
+                    <div class="title-info-box">Выберите под->под->тип жалобы</div>
+                    <div class="custom_select">
+                        <div class="current-option" data-value="">
+                            <span>Жалоба на положения документации</span>
+                        </div>
+                        <ul class="custom-options">
+                            <li data-value="">Lorem ipsum.</li>
+                            <li data-value="">Lorem ipsum.</li>
+                            <li data-value="">Lorem ipsum.</li>
+                            <li data-value="">Lorem ipsum.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="4_argComplSelect" class="select-holder" style="display: none">
+                    <select name="" class="hidden-select">
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                    </select>
+                    <div class="title-info-box">Доводы</div>
+                    <div class="custom_select">
+                        <div class="current-option" data-value="">
+                            <span>Жалоба на положения документации</span>
+                        </div>
+                        <ul class="custom-options">
+                            <li data-value="">Lorem ipsum.</li>
+                            <li data-value="">Lorem ipsum.</li>
+                            <li data-value="">Lorem ipsum.</li>
+                            <li data-value="">Lorem ipsum.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="argCompl-review mCustomScrollbar">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid atque cumque, dolorem doloribus ea error illo ipsam iure laudantium odio tenetur ullam vel voluptatem! Ad aliquid aspernatur, blanditiis deserunt doloremque dolores, ex fugiat hic necessitatibus nihil nobis numquam quasi quis repellat sapiente tenetur totam. Eligendi incidunt natus quia ratione repellendus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid atque cumque, dolorem doloribus ea error illo ipsam iure laudantium odio tenetur ullam vel voluptatem! Ad aliquid aspernatur, blanditiis deserunt doloremque dolores, ex fugiat hic necessitatibus nihil nobis numquam quasi quis repellat sapiente tenetur totam. Eligendi incidunt natus quia ratione repellendus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid atque cumque, dolorem doloribus ea error illo ipsam iure laudantium odio tenetur ullam vel voluptatem! Ad aliquid aspernatur, blanditiis deserunt doloremque dolores, ex fugiat hic necessitatibus nihil nobis numquam quasi quis repellat sapiente tenetur totam. Eligendi incidunt natus quia ratione repellendus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid atque cumque, dolorem doloribus ea error illo ipsam iure laudantium odio tenetur ullam vel voluptatem! Ad aliquid aspernatur, blanditiis deserunt doloremque dolores, ex fugiat hic necessitatibus nihil nobis numquam quasi quis repellat sapiente tenetur totam. Eligendi incidunt natus quia ratione repellendus.</p>
+                </div>
+                <div class="btn-div">Просмотреть</div>
+                <button id="argComplBtn">Дальше</button>
             </form>
         </div>
     </div>
 </article>
-
 
 <div id="pop-before-ask-question" class="modal_div">
     <h2></h2>
     <div class="pop-done-txt"></div>
     <div class="modal-close"></div>
 </div>
-
-
 
 
 <script>
