@@ -404,6 +404,10 @@ jQuery(document).ready(function($) {
     $('.opacity-cap-compl').click(function() {
         $('.add-complaint-page').next().fadeIn();
     });
+
+    $('.word-argCompl-find p').click(function() {
+        $('.word-argCompl-input').fadeIn();
+    });
 });
 var userPageLtContentLi = 0;
 //status block
