@@ -400,6 +400,10 @@ jQuery(document).ready(function($) {
         }
     });
     $('.ch-r-m-text').css('height', ul_mes_height + 'px');
+
+    $('.opacity-cap-compl').click(function() {
+        $('.add-complaint-page').next().fadeIn();
+    });
 });
 var userPageLtContentLi = 0;
 //status block

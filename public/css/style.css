@@ -1827,11 +1827,12 @@ a:focus {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
 }
 
-/* line 20, ../sass/_status_change.scss */
+/* line 21, ../sass/_status_change.scss */
 .admin-popup-bg {
   position: absolute;
   top: 0;
@@ -1843,7 +1844,7 @@ a:focus {
   background-color: rgba(52, 56, 62, 0.4);
 }
 
-/* line 30, ../sass/_status_change.scss */
+/* line 31, ../sass/_status_change.scss */
 .admin-popup-close {
   position: absolute;
   top: 19px;
@@ -1855,7 +1856,7 @@ a:focus {
   background: url(../images/icon-mod-close.png) no-repeat center;
 }
 
-/* line 40, ../sass/_status_change.scss */
+/* line 41, ../sass/_status_change.scss */
 .admin-popup-content {
   position: relative;
   z-index: 9999;
@@ -1868,7 +1869,7 @@ a:focus {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 49, ../sass/_status_change.scss */
+/* line 50, ../sass/_status_change.scss */
 .admin-popup-content h6 {
   position: relative;
   overflow: hidden;
@@ -1879,7 +1880,7 @@ a:focus {
   color: #ffffff;
   text-align: center;
 }
-/* line 58, ../sass/_status_change.scss */
+/* line 59, ../sass/_status_change.scss */
 .admin-popup-content h6:before {
   position: absolute;
   content: '';
@@ -1891,11 +1892,11 @@ a:focus {
   background-color: #00aeef;
   transform: rotate(-3deg);
 }
-/* line 70, ../sass/_status_change.scss */
+/* line 71, ../sass/_status_change.scss */
 .admin-popup-content ul {
   margin-top: 30px;
 }
-/* line 73, ../sass/_status_change.scss */
+/* line 74, ../sass/_status_change.scss */
 .admin-popup-content label {
   position: relative;
   margin-left: 102px;
@@ -1905,7 +1906,7 @@ a:focus {
   font-weight: 100;
   cursor: pointer;
 }
-/* line 81, ../sass/_status_change.scss */
+/* line 82, ../sass/_status_change.scss */
 .admin-popup-content label div {
   position: absolute;
   content: '';
@@ -1915,7 +1916,7 @@ a:focus {
   height: 16px;
   background: url(../images/checkbx1.png) 0 0 no-repeat;
 }
-/* line 90, ../sass/_status_change.scss */
+/* line 91, ../sass/_status_change.scss */
 .admin-popup-content label input {
   position: absolute;
   top: calc(50% - 8px);
@@ -1927,7 +1928,7 @@ a:focus {
   opacity: 0;
   cursor: pointer;
 }
-/* line 102, ../sass/_status_change.scss */
+/* line 103, ../sass/_status_change.scss */
 .admin-popup-content button {
   display: block;
   margin: 0 auto 40px;
@@ -3983,33 +3984,90 @@ body#backend-login {
     color: #eff2f7;
   }
 }
+/* line 1, ../sass/_complaint_add.scss */
+.opacity-cap-compl {
+  position: absolute;
+  top: 0;
+  right: 1px;
+  z-index: 1;
+  width: 99%;
+  height: 100%;
+  cursor: pointer;
+}
+/* line 9, ../sass/_complaint_add.scss */
+.opacity-cap-compl:after {
+  position: absolute;
+  content: '';
+  top: 1px;
+  right: 0;
+  z-index: 1;
+  height: 75px;
+  width: 100px;
+  background-color: #ffffff;
+}
+/* line 19, ../sass/_complaint_add.scss */
+.opacity-cap-compl:before {
+  position: absolute;
+  content: '';
+  top: 26px;
+  right: 30px;
+  z-index: 2;
+  width: 22px;
+  height: 22px;
+  background: url(../images/icon-jl-rassmotr.png) 0 0 no-repeat;
+}
+/* line 30, ../sass/_complaint_add.scss */
+.opacity-cap-compl:hover:before {
+  animation: rotate 2s ease-in infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(30deg);
+  }
+  60% {
+    transform: rotate(-30deg);
+  }
+  90% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
 @media (max-width: 1640px) {
-  /* line 115, ../sass/style.scss */
+  /* line 116, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: 330px;
     margin-right: 0;
   }
 }
 @media (max-width: 1282px) {
-  /* line 121, ../sass/style.scss */
+  /* line 122, ../sass/style.scss */
   .lm-logo {
     width: 70% !important;
     margin-left: 40px;
   }
 }
 @media (max-width: 1325px) {
-  /* line 127, ../sass/style.scss */
+  /* line 128, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* line 131, ../sass/style.scss */
+  /* line 132, ../sass/style.scss */
   .admin-lm-wrap {
     left: -242px;
   }
 
-  /* line 134, ../sass/style.scss */
+  /* line 135, ../sass/style.scss */
   .lm-burger {
     display: block;
   }
