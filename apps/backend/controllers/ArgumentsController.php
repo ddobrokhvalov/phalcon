@@ -196,31 +196,7 @@ class ArgumentsController  extends ControllerBase
     public function getAjaxCategoryAction(){
         $obj = new ArgumentsCategory();
         $data = $obj->getAllCategory();
-        $data = $obj->buildTreeArray($data);
-        echo json_encode($data);
-//        $data = $obj->getTree(2);
-//        if(!isset($_POST['parent_id']) || !is_numeric($_POST['parent_id'])){
-//            echo json_encode(['error' => 'no data post']);
-//            return false;
-//        }
-//        $cat_id = (int)$_POST['parent_id'];
-//        $data = ArgumentsCategory::find(['conditions' => 'parent_id = '.$cat_id]);
-//        if(!empty($data)){
-//            $res_arr = array();
-//            foreach($data as $key){
-//                $res_arr[] = array(
-//                    'id'        => $key->id,
-//                    'name'      => $key->name,
-//                    'parent_id' => $key->parent_id,
-//                );
-//            }
-//            if(!empty($res_arr)){
-//                echo json_encode($res_arr);
-//                return false;
-//            }
-//            else json_encode(["error" => "empty data"]);
-//        } else {
-//            json_encode(["error" => "empty data"]);
-//        }
+        $data = $obj->buildTreeArray( $data );
+        echo json_encode( $data );
     }
 }
