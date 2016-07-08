@@ -193,11 +193,11 @@ class ArgumentsController  extends ControllerBase
         echo json_encode($data);
     }
 
-    public function getAjaxParentCategoryAction(){
-
+    public function getAjaxCategoryAction(){
         $obj = new ArgumentsCategory();
         $data = $obj->getAllCategory();
         $data = $obj->buildTreeArray($data);
+        echo json_encode($data);
 //        $data = $obj->getTree(2);
 //        if(!isset($_POST['parent_id']) || !is_numeric($_POST['parent_id'])){
 //            echo json_encode(['error' => 'no data post']);
