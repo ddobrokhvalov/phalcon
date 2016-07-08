@@ -3882,10 +3882,10 @@ body#backend-login {
 /* line 46, ../sass/_arguments_complaints_popup.scss */
 .word-argCompl-input {
   display: none;
-  overflow: hidden;
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
 }
 /* line 52, ../sass/_arguments_complaints_popup.scss */
 .word-argCompl-input input {
