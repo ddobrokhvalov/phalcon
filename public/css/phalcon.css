@@ -83,7 +83,7 @@ a:visited {
     text-decoration: none;
 }
 .wrapper {
-    margin: 0 auto;
+    margin: 0 0 0 500px;
     min-height: calc(100%);
     position: relative;
     width: 1000px;
@@ -1845,7 +1845,7 @@ input[type="radio"]:checked + label {
     padding: 0 20px 0 70px;
 }
 .c-jadd-spoiler.unfolded a::before {
-    content: "свернуть";
+    content: "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
     left: 0;
     line-height: normal;
     position: absolute;
@@ -1857,7 +1857,7 @@ input[type="radio"]:checked + label {
     padding: 0 20px 0 90px;
 }
 .c-jadd-spoiler.folded a::before {
-    content: "развернуть";
+    content: "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
     left: 0;
     line-height: normal;
     position: absolute;
@@ -2992,7 +2992,7 @@ input[type="radio"]:checked + label {
 }
 @media (min-width: 1299px) {
 .wrapper.wrap-with-menuPanel, .c-header .wrapper {
-    float: right;
+    /*float: right;*/
 }
 .lm-opcl-btn1, .lm-opcl-btn2 {
     display: none;
