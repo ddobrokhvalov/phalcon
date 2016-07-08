@@ -176,6 +176,18 @@ class ComplaintController extends ControllerBase
         $this->view->arguments = $arguments;
     }
 
+    public function deleteAction($id){
+        $complaint = Complaint::findFirst($id);
+        if (!$complaint || !$complaint->checkComplaintOwner($id, $this->user->id))
+            return $this->forward('complaint/index');
+
+        if ($complaint != false) {
+            $complaint->delete();
+        }
+        $this->flashSession->success('Жалоба успешно удалена');
+        return $this->response->redirect('/complaint/index');
+    }
+
     public function createAction()
     {
         if (!$this->request->isPost()) {
@@ -452,5 +464,4 @@ class ComplaintController extends ControllerBase
         exit;
 
     }
-
 }

@@ -148,7 +148,7 @@ var complaint = {
 
         if (!validator.text(this.complainText, 2, 20000)) {
             // alert('текст жалобы должен быть');
-            showStyledPopupMessage("#pop-before-ask-question", "Уведомление", "Текст жалобы должен быть");
+            showStyledPopupMessage("#pop-before-ask-question", "Уведомление", "Не добавлен довод!");
             return false;
         }
 
@@ -211,11 +211,35 @@ var complaint = {
         //if ((url.indexOf('/complaint/add') == -1 && url.indexOf('applicant_id=' + applicant_id.join(",")) == -1) || splitter[1] != "") {
 
             if (typeof currentStatus != "undefined" && currentStatus != '0') {
-                window.location.href = '/complaint/index?status=' + currentStatus + '&applicant_id=' + applicant_id.join(",");
+                $.ajax({
+                    type: 'POST',
+                    url: '/applicant/ajaxSetApplicantId',
+                    data: 'applicant_id=' + applicant_id.join(","),
+                    success: function (msg) {
+                        console.log(msg)
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+
+                });
+                //window.location.href = '/complaint/index?status=' + currentStatus + '&applicant_id=' + applicant_id.join(",");
             } else {
-                var to_url = '/complaint/index?applicant_id=' + applicant_id.join(",");
-                console.log(to_url);
-                window.location.href = to_url;
+                $.ajax({
+                    type: 'POST',
+                    url: '/applicant/ajaxSetApplicantId',
+                    data: 'applicant_id=' + applicant_id.join(","),
+                    success: function (msg) {
+                        console.log(msg)
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+
+                });
+                //var to_url = '/complaint/index?applicant_id=' + applicant_id.join(",");
+                //console.log(to_url);
+                //window.location.href = to_url;
             }
         }
 

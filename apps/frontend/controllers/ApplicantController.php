@@ -350,4 +350,8 @@ class ApplicantController extends ControllerBase
         exit;
     }
 
+    public function ajaxSetApplicantIdAction(){
+        if(isset($_POST['applicant_id']))
+            $this->session->set('applicant', array('applicant_id' => $_POST['applicant_id']));
+    }
 }
