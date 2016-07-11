@@ -43,6 +43,11 @@ $(document).ready(function () {
         if (complaint.prepareData())
             complaint.saveAsDraft();
     });
+    $('#back_complaint_save').click(function (evt) {
+        evt.preventDefault();
+        if (complaint.prepareData())
+            complaint.saveAsDraft();
+    });
     $('.alert-box').on('click', 'div', function () {
         $('.alert-wrap, .alert-box').fadeOut(400);
     });
@@ -287,7 +292,7 @@ var argument = {
             c_text +
             '</div></div></div>';
         $('#edit_container').append(html);
-        currTextArea = 'edit_textarea_' + id;
+        var currTextArea = 'edit_textarea_' + id;
         setTimeout(function () {
             if (drake !== false) {
                 drake.destroy(true);

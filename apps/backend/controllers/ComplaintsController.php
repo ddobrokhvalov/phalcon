@@ -10,6 +10,10 @@ use Multiple\Backend\Models\Files;
 use Multiple\Backend\Models\Permission;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Library\Log;
+use Multiple\Backend\Models\Category;
+use Multiple\Backend\Models\UsersArguments;
+use Multiple\Backend\Models\ComplaintMovingHistory;
+use Multiple\Backend\Models\Question;
 
 class ComplaintsController extends ControllerBase
 {
@@ -42,6 +46,90 @@ class ComplaintsController extends ControllerBase
             $this->view->scroll_to_down = $next_items > 0 ? TRUE : FALSE;
             $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
             $this->setMenu();
+        }
+    }
+
+    public function editAction( $id ){
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'edit')) {
+            $this->view->pick("access/denied");
+            $this->setMenu();
+        } else {
+            $complaint = Complaint::findFirstById( $id );
+            if (!$complaint) return $this->forward('admin/complaint/index');
+            $category = new Category();
+            $arguments = $category->getArguments();
+            $this->view->arguments = $arguments;
+            $arguments = UsersArguments::find(
+                array(
+                    'complaint_id = :complaint_id:',
+                    'bind' => [
+                        'complaint_id' => $id,
+                    ]
+                )
+            );
+            $user_arguments = '';
+            $argument_order = 0;
+            $categories_id = [];
+            $arguments_id = [];
+
+            foreach ($arguments as $argument) {
+                $categories_id[] = $argument->argument_category_id;
+                $arguments_id[] = $argument->argument_id;
+                if ($argument_order == $complaint->complaint_text_order) {
+                    $user_arguments .= $complaint->complaint_text . '</br>';
+                    $user_arguments .= $argument->text . '</br>';
+                } else {
+                    $user_arguments .= $argument->text . '</br>';
+                }
+                ++$argument_order;
+            }
+            $this->view->categories_id = implode(',', $categories_id);
+            $this->view->arguments_id = implode(',', $arguments_id);
+            $this->view->complaint_text_order = $complaint->complaint_text_order;
+            $files_html = [];
+            if ($complaint->fid) {
+                $file_ids = unserialize($complaint->fid);
+                if (count($file_ids)) {
+                    $file_model = new Files();
+                    $files = Files::find(
+                        array(
+                            'id IN ({ids:array})',
+                            'bind' => array(
+                                'ids' => $file_ids
+                            )
+                        )
+                    );
+                    foreach ($files as $file) {
+                        $files_html[] = $file_model->getFilesHtml($file, $id, 'complaints');
+                    }
+                }
+            }
+
+            $action = $this->request->get('action');
+            if (isset($action) && $action == 'edit') {
+                $this->view->edit_now = TRUE;
+            } else {
+                $this->view->edit_now = FALSE;
+            }
+            $this->view->user_arguments = $user_arguments;
+            $history = ComplaintMovingHistory::findFirst("complaint_id = $id");
+            if ($history) {
+                $history->is_read = 1;
+                $history->update();
+            }
+            $this->view->attached_files = $files_html;
+            $complaint->purchases_name = str_replace("\r\n", " ", $complaint->purchases_name);
+            $question = new Question();
+            $complaintQuestion = $question->getComplainQuestionAndAnswer($id);
+            $this->setMenu();
+            $this->view->complaint = $complaint;
+            $this->view->complaint_question = $complaintQuestion;
+            $this->view->action_edit = false;
+            if (isset($_GET['action']) && $_GET['action'] == 'edit' && $complaint->status =='draft')
+                $this->view->action_edit = true;
+
+
         }
     }
 
@@ -220,10 +308,11 @@ class ComplaintsController extends ControllerBase
         echo json_encode($data);
     }
     
-    public function addAnswerAction() {
+    public function addAnswerAction()
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'edit')) {
-           $data = "access_denied";
+            $data = "access_denied";
         } else {
             $answer_text = $this->request->getPost("lawyer-answer");
             if (!isset($answer_text) || !strlen($answer_text)) {
@@ -258,8 +347,173 @@ class ComplaintsController extends ControllerBase
                 }
             }
             $response = new \Phalcon\Http\Response();
-            $response->redirect('admin/complaints/preview/'.$this->request->get("complaint"));
+            $response->redirect('admin/complaints/preview/' . $this->request->get("complaint"));
             $response->send();
         }
+    }
+
+    public function deleteAction($id){
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'edit')) {
+            $this->view->pick("access/denied");
+            $this->setMenu();
+        }
+        $complaint = Complaint::findFirst($id);
+        if (!$complaint)
+            return $this->forward('/admin/complaints/index');
+
+        if ($complaint != false) {
+            $complaint->delete();
+        }
+        $this->flashSession->success('Жалоба успешно удалена');
+        return $this->response->redirect('/admin/complaints/index');
+    }
+
+    public function saveAction()
+    {
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'edit')) {
+            $this->view->pick("access/denied");
+            $this->setMenu();
+        }
+        $data = $this->request->getPost();
+        $complaint = Complaint::findFirstById($data['complaint_id']);
+        if (!$complaint || $complaint->status!='draft' ) {
+            echo 'error';
+            exit;
+        }
+        echo $complaint->saveComplaint($data);
+        exit;
+
+    }
+    public function updateAction()
+    {
+        if (!$this->request->isPost()) {
+            echo 'error';
+            exit;
+        }
+        $users_arguments_ = [];
+        $data = $this->request->getPost();
+        $users_arguments = explode('_?_', $data['arguments_data']);
+        unset($users_arguments[count($users_arguments) - 1]);
+        foreach ($users_arguments as $key => $row) {
+            $users_arguments[$key] = explode('?|||?', $row);
+        }
+        foreach ($users_arguments as $key => &$row) {
+            foreach ($row as $data_) {
+                $data_ = explode('===', $data_);
+                $users_arguments_[$key][$data_[0]] = $data_[1];
+                if (isset($users_arguments_[$key]['argument_id']) && $users_arguments_[$key]['argument_id'] == 'just_text') {
+                    $data['complaint_text'] = $data_[1];
+                    $data['complaint_text_order'] = $users_arguments_[$key]['order'];
+                }
+            }
+        }
+        $complaint = Complaint::findFirstById($data['update-complaint-id']);
+        if ($complaint) {
+            $complaint->complaint_name = $data['complaint_name'];
+            $complaint->complaint_text = $data['complaint_text'];
+            $complaint->complaint_text_order = $data['complaint_text_order'];
+        }
+
+        if ($complaint->update() == false) {
+            //$this->flashSession->error('Не выбран заявитель');
+            foreach ($complaint->getMessages() as $message) {
+                $this->flashSession->error($message);
+            }
+            return $this->response->redirect('/complaint/edit/' + $data['update-complaint-id']);
+        } else {
+            $allow = TRUE;
+
+            // Remove all arguments
+            $arguments_delete = UsersArguments::find(
+                array(
+                    'complaint_id = :complaint_id:',
+                    'bind' => [
+                        'complaint_id' => $data['update-complaint-id'],
+                    ]
+                )
+            )->delete();
+
+            // Save users arguments.
+            foreach ($users_arguments_ as $argument) {
+                if ($argument['argument_id'] != 'just_text') {
+                    $u_arg = new UsersArguments();
+                    $u_arg->complaint_id = $complaint->id;
+                    $u_arg->argument_id = $argument['argument_id'];
+                    $u_arg->argument_order = $argument['order'];
+                    $u_arg->text = $argument['argument_text'];
+                    $u_arg->argument_category_id = $argument['category_id'];
+                    $u_arg->save();
+                }
+            }
+
+            // Check all files with needed rules.
+            if ($this->request->hasFiles() == true) {
+                $files_model = new Files();
+                if (!$files_model->checkAllFiles($this->request)) {
+                    $allow = FALSE;
+                }
+            }
+            if ($allow) {
+                $saved_files = array();
+                if ($this->request->hasFiles() == true) {
+                    $baseLocation = 'files/complaints/';
+                    foreach ($this->request->getUploadedFiles() as $file) {
+                        if (strlen($file->getName())) {
+                            $applicant_file = new Files();
+                            $name = explode('.', $file->getName())[0] . '_' . time() . '.' . explode('.', $file->getName())[1];
+                            //$name = iconv("UTF-8", "cp1251", $name);
+                            $applicant_file->file_path = $name;
+                            $applicant_file->file_size = round($file->getSize() / 1024, 2);
+                            $applicant_file->file_type = $file->getType();
+                            $applicant_file->save();
+                            $saved_files[] = $applicant_file->id;
+                            //Move the file into the application
+                            $file->moveTo($baseLocation . $name);
+                        }
+                    }
+                }
+                $old_files = unserialize($complaint->fid);
+                if (count($old_files)) {
+                    $complaint->fid = serialize(array_merge($old_files, $saved_files));
+                } else {
+                    $complaint->fid = serialize($saved_files);
+                }
+                $complaint->save();
+            }
+            $this->flashSession->success('Жалоба обновлена');
+            return $this->response->redirect('admin/complaints/preview/' . $complaint->id);
+        }
+    }
+    public function statusAction()
+    {
+        if (!$this->request->isPost()) {
+            echo 'error';
+            exit;
+        }
+        $data = $this->request->getPost();
+        $complaint = new Complaint();
+        $result = $complaint->changeStatus($data['status'], json_decode($data['complaints']), $this->user->id);
+        $this->flashSession->success('Копия жалобы создана');
+        echo $result;
+        exit;
+    }
+    public function askQuestionAction(){
+        $question = $this->request->getPost('new-question');
+        $complaint_id = $this->request->getPost('complaint_id');
+        if (isset($question) && strlen($question) && isset($complaint_id) && $complaint_id) {
+            $new_question = new Question();
+            $new_question->user_id = $this->user->id;
+            $new_question->complaint_id = $complaint_id;
+            $new_question->text = $question;
+            $new_question->date = date('Y-m-d H:i:s');
+            $new_question->is_read = 'n';
+            $new_question->save();
+            $this->flashSession->success('Ваш вопрос отправлен юристу');
+            return $this->response->redirect('/admin/complaints/edit/' . $complaint_id);
+        }
+        $this->flashSession->error('Поле с вопросом не заполнено');
+        return $this->response->redirect('/admin/complaints/index');
     }
 }

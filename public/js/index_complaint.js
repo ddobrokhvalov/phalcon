@@ -27,9 +27,13 @@ $(document).ready(function () {
     });
 
     $('.button-copy-edit-page').click(function(){
-
             indexComplaint.selectedComplaint.push( $(this).attr("value"));
             indexComplaint.changeStatus('copy');
+
+    });
+    $('.button-back-copy-edit-page').click(function(){
+        indexComplaint.selectedComplaint.push( $(this).attr("value"));
+        indexComplaint.changeStatusBack('copy');
 
     });
 
@@ -89,6 +93,25 @@ var indexComplaint = {
                     document.location.href = '/complaint/edit/'+msg;
                 else
                     document.location.href = '/complaint/index';
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+
+        });
+    },
+    changeStatusBack: function (status) {
+        var data = JSON.stringify(this.selectedComplaint);
+        $.ajax({
+            type: 'POST',
+            url: '/admin/complaints/status',
+            data: 'status=' + status + '&complaints=' + data,
+            success: function (msg) {
+                console.log(msg);
+                if(status == 'copy')
+                    document.location.href = 'admin/complaints/edit/'+msg;
+                else
+                    document.location.href = 'admin/complaints/index';
             },
             error: function (msg) {
                 console.log(msg);

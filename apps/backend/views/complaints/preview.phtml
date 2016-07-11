@@ -15,7 +15,7 @@
         </div>
         <div class="edit-notification-box">
             {% if complaint.status == 'draft' %}
-            <a href="#">Редактировать</a>
+            <a href="/admin/complaints/edit/{{complaint.id}}?action=edit">Редактировать</a>
             {% else %}
             <a href="#" class="edit-notif-active">Редактировать</a>
             {% endif %}
