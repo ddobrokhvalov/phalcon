@@ -257,7 +257,9 @@ class ComplaintsController extends ControllerBase
                     $message->save();
                 }
             }
-            return $this->forward('complaints/preview/' . $this->request->get("complaint"));
+            $response = new \Phalcon\Http\Response();
+            $response->redirect('admin/complaints/preview/'.$this->request->get("complaint"));
+            $response->send();
         }
     }
 }

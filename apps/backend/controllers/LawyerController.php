@@ -27,7 +27,7 @@ class LawyerController extends ControllerBase
                 $item_per_page = 99999;
             }
             $questions = $this->modelsManager->createBuilder()
-                ->distinct('Multiple\Backend\Models\Complaint.id')
+                ->distinct(true)
                 ->from('Multiple\Backend\Models\Complaint')
                 ->join('Multiple\Backend\Models\Question', 'Multiple\Backend\Models\Complaint.id=Multiple\Backend\Models\Question.complaint_id')
                 ->orderby('Multiple\Backend\Models\Complaint.id');

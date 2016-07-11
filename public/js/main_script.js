@@ -408,6 +408,13 @@ jQuery(document).ready(function($) {
     $('.word-argCompl-find p').click(function() {
         $('.word-argCompl-input').fadeIn();
     });
+
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest(".word-argCompl-find").length) {
+            $('.word-argCompl-input').fadeOut();
+        }
+        e.stopPropagation();
+    });
 });
 var userPageLtContentLi = 0;
 //status block

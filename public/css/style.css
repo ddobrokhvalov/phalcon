@@ -1202,10 +1202,10 @@ ul.status-black, .notification-number-box.status-black {
 }
 /* line 191, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .compl-quest-cont form::before {
-  background-color: #e0e3ea;
+  /*background-color: #e0e3ea;*/
   bottom: 0;
   content: "";
-  height: 1px;
+  /*height: 1px;*/
   left: -35px;
   position: absolute;
   width: 963px;
@@ -1308,8 +1308,8 @@ ul.status-black, .notification-number-box.status-black {
   bottom: 0;
   left: -35px;
   width: 963px;
-  height: 1px;
-  background-color: #e0e3ea;
+  /*height: 1px;*/
+  /*background-color: #e0e3ea;*/
 }
 /* line 284, ../sass/_complaints_preview.scss */
 .complaints-lawyer-quest form:not(:first-child) {
@@ -1353,7 +1353,8 @@ ul.status-black, .notification-number-box.status-black {
 /* line 317, ../sass/_complaints_preview.scss */
 .complaints-lawyer-quest form button {
   position: absolute;
-  top: 72px;
+  /*top: 72px;*/
+  top: 32px;
   left: 0;
   z-index: 1;
   width: 140px;
@@ -1442,7 +1443,7 @@ ul.status-black, .notification-number-box.status-black {
 /* line 393, ../sass/_complaints_preview.scss */
 .opacity-btn {
   position: absolute;
-  top: 72px;
+  top: 33px;
   left: 0;
   z-index: 2;
   width: 140px;
@@ -3886,8 +3887,9 @@ body#backend-login {
   top: 0;
   left: 0;
   width: 100%;
+  height: 40px;
 }
-/* line 52, ../sass/_arguments_complaints_popup.scss */
+/* line 53, ../sass/_arguments_complaints_popup.scss */
 .word-argCompl-input input {
   position: absolute;
   top: 0;
@@ -3899,7 +3901,7 @@ body#backend-login {
   border: 1px solid #e0e3ea;
   border-radius: 2px;
 }
-/* line 63, ../sass/_arguments_complaints_popup.scss */
+/* line 64, ../sass/_arguments_complaints_popup.scss */
 .word-argCompl-input button {
   position: absolute;
   top: 0;
@@ -3911,48 +3913,48 @@ body#backend-login {
   line-height: 40px;
 }
 
-/* line 74, ../sass/_arguments_complaints_popup.scss */
+/* line 75, ../sass/_arguments_complaints_popup.scss */
 .steps-line {
   position: relative;
   float: left;
   width: 32%;
   height: 35px;
 }
-/* line 81, ../sass/_arguments_complaints_popup.scss */
+/* line 82, ../sass/_arguments_complaints_popup.scss */
 .steps-line.arg-dunStep span, .steps-line.arg-nextStep span {
   color: #34383e;
 }
-/* line 84, ../sass/_arguments_complaints_popup.scss */
+/* line 85, ../sass/_arguments_complaints_popup.scss */
 .steps-line.arg-dunStep div, .steps-line.arg-nextStep div {
   background-color: #00aeef;
 }
-/* line 86, ../sass/_arguments_complaints_popup.scss */
+/* line 87, ../sass/_arguments_complaints_popup.scss */
 .steps-line.arg-dunStep div:after, .steps-line.arg-nextStep div:after {
   background-color: #00aeef;
 }
-/* line 91, ../sass/_arguments_complaints_popup.scss */
+/* line 92, ../sass/_arguments_complaints_popup.scss */
 .steps-line:first-child {
   width: 4%;
 }
-/* line 93, ../sass/_arguments_complaints_popup.scss */
+/* line 94, ../sass/_arguments_complaints_popup.scss */
 .steps-line:first-child span {
   right: auto;
   left: 0;
   width: 50px;
 }
-/* line 100, ../sass/_arguments_complaints_popup.scss */
+/* line 101, ../sass/_arguments_complaints_popup.scss */
 .steps-line:nth-child(2) span {
   right: -14px;
 }
-/* line 105, ../sass/_arguments_complaints_popup.scss */
+/* line 106, ../sass/_arguments_complaints_popup.scss */
 .steps-line:nth-child(3) span {
   right: -14px;
 }
-/* line 111, ../sass/_arguments_complaints_popup.scss */
+/* line 112, ../sass/_arguments_complaints_popup.scss */
 .steps-line:last-child div:after {
   right: 15px;
 }
-/* line 116, ../sass/_arguments_complaints_popup.scss */
+/* line 117, ../sass/_arguments_complaints_popup.scss */
 .steps-line span {
   position: absolute;
   right: 0;
@@ -3962,7 +3964,7 @@ body#backend-login {
   text-transform: uppercase;
   color: #eff2f7;
 }
-/* line 125, ../sass/_arguments_complaints_popup.scss */
+/* line 126, ../sass/_arguments_complaints_popup.scss */
 .steps-line div {
   position: relative;
   top: 3px;
@@ -3971,7 +3973,7 @@ body#backend-login {
   height: 1px;
   background-color: #eff2f7;
 }
-/* line 132, ../sass/_arguments_complaints_popup.scss */
+/* line 133, ../sass/_arguments_complaints_popup.scss */
 .steps-line div:after {
   position: absolute;
   content: '';
@@ -3985,19 +3987,19 @@ body#backend-login {
   background-color: #eff2f7;
 }
 
-/* line 148, ../sass/_arguments_complaints_popup.scss */
+/* line 149, ../sass/_arguments_complaints_popup.scss */
 .arg-nextStep + li div {
   -webkit-animation: line 3s ease-in infinite;
   -o-animation: line 3s ease-in infinite;
   animation: line 3s ease-in infinite;
 }
-/* line 152, ../sass/_arguments_complaints_popup.scss */
+/* line 153, ../sass/_arguments_complaints_popup.scss */
 .arg-nextStep + li div:after {
   -webkit-animation: bullet 3s ease-in infinite;
   -o-animation: bullet 3s ease-in infinite;
   animation: bullet 3s ease-in infinite;
 }
-/* line 158, ../sass/_arguments_complaints_popup.scss */
+/* line 159, ../sass/_arguments_complaints_popup.scss */
 .arg-nextStep + li span {
   -webkit-animation: span 3s ease-in infinite;
   -o-animation: span 3s ease-in infinite;
@@ -4037,7 +4039,7 @@ body#backend-login {
     color: #eff2f7;
   }
 }
-/* line 198, ../sass/_arguments_complaints_popup.scss */
+/* line 199, ../sass/_arguments_complaints_popup.scss */
 .btn-div {
   float: left;
   margin-top: 30px;
@@ -4053,12 +4055,12 @@ body#backend-login {
   background-color: #00aeef;
   cursor: pointer;
 }
-/* line 212, ../sass/_arguments_complaints_popup.scss */
+/* line 213, ../sass/_arguments_complaints_popup.scss */
 .btn-div:hover {
   background-color: #10b8f7;
 }
 
-/* line 216, ../sass/_arguments_complaints_popup.scss */
+/* line 217, ../sass/_arguments_complaints_popup.scss */
 .argCompl-review {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -4068,7 +4070,7 @@ body#backend-login {
   max-height: 200px;
   border: 1px solid #e0e3ea;
 }
-/* line 222, ../sass/_arguments_complaints_popup.scss */
+/* line 223, ../sass/_arguments_complaints_popup.scss */
 .argCompl-review p {
   margin-right: 10px;
 }
