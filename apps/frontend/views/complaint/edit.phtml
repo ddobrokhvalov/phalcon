@@ -159,19 +159,15 @@
 
                                         jQuery(document).ready(function(){
                                             jQuery('#upload-files').change(function(){
-                                                console.log( jQuery('#upload-files')[0].files);
                                                 var cnt = jQuery('#upload-files')[0].files.length;
-                                                var i = 0;
                                                 var html = '';
-                                                var currentCount = jQuery('.attached-files .attached-files-wrap .attached-file-row').length;
                                                 for (i = 0; i < cnt; i++) {
                                                     var file_data = jQuery('#upload-files')[0].files[i]['name'].split('.');
                                                     var file_type = file_data[file_data.length - 1];
                                                     var file_size = jQuery('#upload-files')[0].files[i]['size'] / 1024;
-                                                    var count = currentCount + i;
-                                                    var html = html + '<div id="attached-file-' + count + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery('#upload-files')[0].files[i]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
+                                                    var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery('#upload-files')[0].files[i]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
                                                 }
-                                                jQuery('.attached-files .attached-files-wrap').append(html);
+                                                jQuery('.attached-files .attached-files-wrap').html(html);
                                             });
                                         });
                                     </script>
