@@ -26,29 +26,4 @@
     height: 22px;
     background: url(../images/icon-jl-rassmotr.png) 0 0 no-repeat;
   }
-  &:hover {
-    &:before {
-      animation: rotate 2s ease-in infinite;
-    }
-  }
-}
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  10% {
-    transform: rotate(0deg);
-  }
-  30% {
-    transform: rotate(30deg);
-  }
-  60% {
-    transform: rotate(-30deg);
-  }
-  90% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
 }
