@@ -1202,10 +1202,10 @@ ul.status-black, .notification-number-box.status-black {
 }
 /* line 191, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .compl-quest-cont form::before {
-  background-color: #e0e3ea;
+  /*background-color: #e0e3ea;*/
   bottom: 0;
   content: "";
-  height: 1px;
+  /*height: 1px;*/
   left: -35px;
   position: absolute;
   width: 963px;
@@ -1308,8 +1308,8 @@ ul.status-black, .notification-number-box.status-black {
   bottom: 0;
   left: -35px;
   width: 963px;
-  height: 1px;
-  background-color: #e0e3ea;
+  /*height: 1px;*/
+  /*background-color: #e0e3ea;*/
 }
 /* line 284, ../sass/_complaints_preview.scss */
 .complaints-lawyer-quest form:not(:first-child) {
@@ -1353,7 +1353,8 @@ ul.status-black, .notification-number-box.status-black {
 /* line 317, ../sass/_complaints_preview.scss */
 .complaints-lawyer-quest form button {
   position: absolute;
-  top: 72px;
+  /*top: 72px;*/
+  top: 32px;
   left: 0;
   z-index: 1;
   width: 140px;
@@ -1442,7 +1443,7 @@ ul.status-black, .notification-number-box.status-black {
 /* line 393, ../sass/_complaints_preview.scss */
 .opacity-btn {
   position: absolute;
-  top: 72px;
+  top: 33px;
   left: 0;
   z-index: 2;
   width: 140px;
