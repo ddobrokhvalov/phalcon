@@ -89,10 +89,48 @@ var indexComplaint = {
             data: 'status=' + status + '&complaints=' + data,
             success: function (msg) {
                 console.log(msg);
-                if(status == 'copy')
-                    document.location.href = '/complaint/edit/'+msg;
-                else
-                    document.location.href = '/complaint/index';
+                switch(status){
+                    case 'copy':
+                        $(".admin-popup-content p").text("Копия сделана успешно!");
+                        $('.admin-popup-close, .admin-popup-bg').on('click', function() {
+                            document.location.href = '/complaint/edit/' + msg
+                        });
+                        $(".admin-popup-wrap").show();
+                        setTimeout( function(){
+                            document.location.href = '/complaint/edit/' + msg
+                        }, 2000);
+                    break;
+                    case 'archive':
+                        $(".admin-popup-content p").text("Жалоба успешно помещена в архив!");
+                        $(".admin-popup-wrap").show();
+                        setTimeout( function(){
+                            location.reload();
+                        }, 2000);
+                    break;
+                    case 'delete':
+                        $(".admin-popup-content p").text("Жалоба успешно удалена!");
+                        $('.admin-popup-close, .admin-popup-bg').on('click', function() {
+                            location.reload();
+                        });
+                        $(".admin-popup-wrap").show();
+                        setTimeout( function(){
+                            location.reload();
+                        }, 2000);
+                    break;
+                    case 'activate':
+                        $(".admin-popup-content p").text("Жалоба успешно активирована!");
+                        $('.admin-popup-close, .admin-popup-bg').on('click', function() {
+                            location.reload();
+                        });
+                        $(".admin-popup-wrap").show();
+                        setTimeout( function(){
+                            location.reload();
+                        }, 2000);
+                    break;
+                    default:
+                        document.location.href = '/complaint/index';
+                    break
+                }
             },
             error: function (msg) {
                 console.log(msg);

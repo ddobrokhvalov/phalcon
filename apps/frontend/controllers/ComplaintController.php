@@ -415,7 +415,7 @@ class ComplaintController extends ControllerBase
         $data = $this->request->getPost();
         $complaint = new Complaint();
         $result = $complaint->changeStatus($data['status'], json_decode($data['complaints']), $this->user->id);
-        $this->flashSession->success('Копия жалобы создана');
+        //$this->flashSession->success('Копия жалобы создана');
         echo $result;
         exit;
     }
