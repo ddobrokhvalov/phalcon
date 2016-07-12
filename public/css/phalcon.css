@@ -83,7 +83,8 @@ a:visited {
     text-decoration: none;
 }
 .wrapper {
-    margin: 0 0 0 500px;
+    /*margin: 0 0 0 500px;*/
+    margin: 0 auto;
     min-height: calc(100%);
     position: relative;
     width: 1000px;
