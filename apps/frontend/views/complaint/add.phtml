@@ -263,10 +263,13 @@
                             <span>Жалоба на положения документации</span>
                         </div>
                         <ul class="custom-options">
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
+                            {% for arg in arguments%}
+                                <li data-value="">{{arg.name}}</li>
+                            {% endfor %}
+<!--                            <li data-value="">Lorem ipsum.</li>-->
+<!--                            <li data-value="">Lorem ipsum.</li>-->
+<!--                            <li data-value="">Lorem ipsum.</li>-->
+<!--                            <li data-value="">Lorem ipsum.</li>-->
                         </ul>
                     </div>
                 </div>

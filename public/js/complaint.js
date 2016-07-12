@@ -411,7 +411,6 @@ var auction = {
         }
         ,
         setData: function () {
-
             $('#type').html(this.data.type);
             $('#purchases_made').html(this.data.purchases_made);
             $('#purchases_name').html(this.data.purchases_name);
