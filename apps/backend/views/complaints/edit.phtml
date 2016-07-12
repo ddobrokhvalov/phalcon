@@ -320,6 +320,7 @@
 {% else %}
 <input type="hidden" name="is_edit_now" id="is_edit_now" value="">
 {% endif %}
+
 <script>
     //$(document).ready(function(){
     auction.data['complaint_id'] = '{{complaint.id }}';
@@ -338,22 +339,33 @@
     auction.setData();
     {% if complaint.status == 'draft' and action_edit === true %}
     var templates = {};
+    var arr_sub = {};
+    debugger;
     {% for argument in arguments  %}
         {% for template in argument['templates']  %}
             templates[{{template.id}}] = '{{template.text}}';
         {% endfor %}
+    {% endfor %}
+    {% if arr_sub_cat is defined  %}
+        {% for sub in arr_sub_cat %}
+            arr_sub[{{sub['id']}}] = "{{sub['text']}}";
         {% endfor %}
+    {% endif %}
         var categories_id = $("#arguments_id").val().split(",");
-        debugger;
         $.each(categories_id, function( index, value ) {
             debugger;
             if (index == {{ complaint_text_order }}) {
-        argument.addArgument("just_text", "just_text", '{{complaint.complaint_text}}');
-    }
+                argument.addArgument("just_text", "just_text", "{{complaint.complaint_text}}");
+            }
         /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
         $(".category-container input#jd2cbb" + value).prop('checked', true);
         var cat = $(".category-container input#jd2cbb" + value).attr("category");
-        argument.addArgument(value, cat);
+        if(Object.keys(arr_sub).length){
+            argument.addArgument(value, cat, arr_sub[cat]);
+        } else {
+            argument.addArgument(value, cat);
+        }
+
     });
     setTimeout(function(){
         applicant.id = ["{{complaint.applicant_id}}"];

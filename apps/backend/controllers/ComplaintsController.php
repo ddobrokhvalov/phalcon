@@ -14,6 +14,7 @@ use Multiple\Backend\Models\Category;
 use Multiple\Backend\Models\UsersArguments;
 use Multiple\Backend\Models\ComplaintMovingHistory;
 use Multiple\Backend\Models\Question;
+use Multiple\Backend\Models\Applicant;
 
 class ComplaintsController extends ControllerBase
 {
@@ -55,6 +56,7 @@ class ComplaintsController extends ControllerBase
             $this->view->pick("access/denied");
             $this->setMenu();
         } else {
+            $this->view->show_applicant = true;
             $complaint = Complaint::findFirstById( $id );
             if (!$complaint) return $this->forward('admin/complaint/index');
             $category = new Category();
@@ -72,6 +74,7 @@ class ComplaintsController extends ControllerBase
             $argument_order = 0;
             $categories_id = [];
             $arguments_id = [];
+            $arr_sub_cat = array();
 
             foreach ($arguments as $argument) {
                 $categories_id[] = $argument->argument_category_id;
@@ -82,7 +85,14 @@ class ComplaintsController extends ControllerBase
                 } else {
                     $user_arguments .= $argument->text . '</br>';
                 }
+                $arr_sub_cat[] = array(
+                    'id'   => $argument->argument_id,
+                    'text' => $argument->text,
+                );
                 ++$argument_order;
+            }
+            if(!empty($arr_sub_cat)){
+                $this->view->arr_sub_cat = $arr_sub_cat;
             }
             $this->view->categories_id = implode(',', $categories_id);
             $this->view->arguments_id = implode(',', $arguments_id);

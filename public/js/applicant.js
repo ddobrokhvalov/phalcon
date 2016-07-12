@@ -31,6 +31,7 @@ $(document).ready(function () {
     });
 
     $('.select_applicant').click(function () {
+        debugger;
         /*if (applicant.id) {
             $('#cl' + applicant.id).prop('checked', false);
         }*/
@@ -115,6 +116,7 @@ var applicant = {
         this.type = 'fizlico';
     },
     selectApplicant: function (id, name, redirect, is_remove, is_select_first) {
+        debugger;
         if (!is_remove) {
             this.id.push(id);
             if ($('.applicant-name-container').html().length) {
