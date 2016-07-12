@@ -1,0 +1,382 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - Жалобы{% endblock %}
+{% block body %}
+<script type="text/javascript" src="/js/dragula.js"></script>
+<script type="text/javascript" src="/js/main_script.js"></script>
+<script type="text/javascript" src="/js/type_select.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/tinysort.js"></script>
+<script type="text/javascript" src="/js/sort.extend.tinysort.js"></script>
+<script type="text/javascript" src="/js/init.js"></script>
+<script type="text/javascript" src="/js/validator.js"></script>
+<script type="text/javascript" src="/js/complaint.js"></script>
+<script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/js/applicant.js"></script>
+<style>
+    #footer{
+        padding: 59px 0 63px 559px;
+    }
+    .page-wrap{
+        margin: 0px 0 0 -46px;
+    }
+</style>
+<div class="content edit-complaint-page {% if complaint.status == 'draft' and action_edit === true %}edit-now {% endif %}">
+    <div class="wrapper wrap-with-menuPanel">
+        <div class="c-content">
+            <!--            <div class="c-cnt-pagename">-->
+            <!--                Важно, нельзя скопировать документацию-->
+            <!--            </div>-->
+
+            <div class="c-jadd1-1">
+                <div class="c-jadd1-1-h">
+                    <div class="c-jadd1-1-h-l">
+                        Номер извещения №{{complaint.auction_id}}
+                    </div>
+                    <div class="c-jadd1-1-h-r">
+                        {% if complaint.status == 'draft' %}
+                        <span class="jl-status jl-chernov">Черновик</span>
+                        {% endif %}
+                        {% if complaint.status == 'justified' %}
+                        <span class="jl-status jl-done">Обоснована</span>
+                        {% endif %}
+                        {% if complaint.status == 'unfounded' %}
+                        <span class="jl-status jl-notdone">Необоснована</span>
+                        {% endif %}
+                        {% if complaint.status == 'under_consideration' %}
+                        <span class="jl-status jl-rassmotr">На рассмотрении</span>
+                        {% endif %}
+                        {% if complaint.status == 'submitted' %}
+                        <span class="jl-status jl-podana">Подана</span>
+                        {% endif %}
+                        {% if complaint.status == 'recalled' %}
+                        <span class="jl-status jl-fail">Отозвана</span>
+                        {% endif %}
+                        {% if complaint.status == 'archive' %}
+                        <span class="jl-status jl-archive">Архив</span>
+                        {% endif %}
+                    </div>
+
+                </div>
+                <div class="c-jadd1-1-b">
+                    {% if edit_now %}
+                    <a class="grey" href="#" onclick="return false;">Редактировать</a>
+                    {% elseif complaint.status == 'draft' %}
+                    <a href="/complaint/edit/{{ complaint.id }}?action=edit">Редактировать</a>
+                    {% else %}
+                    <a class="grey" href="#">Редактировать</a>
+                    {% endif %}
+                    <a  value="{{ complaint.id }}" onclick="change_complaint_status({{ complaint.id }}, 'copy')" >Копировать</a>
+                    {% if complaint.status == 'submitted' %}
+                    <a  href="/complaint/recall/{{ complaint.id }}">Отозвать</a>
+                    {% else %}
+                    <a class="grey" href="#">Отозвать</a>
+                    {% endif %}
+                    <a href="#" onclick="change_complaint_status({{complaint.id}}, {% if complaint.status != 'archive' %}'archive'{% else %}'draft'{% endif %})">{% if complaint.status != 'archive' %}В архив{% else%}Активировать{% endif %}</a>
+                    <a href="/admin/complaints/delete/{{ complaint.id }}">Удалить</a>
+                    {% if complaint.status == 'draft' %} <a href="#" class="c-jadd1-1-b-btn">Отправить в УФАС</a> {%
+                    endif %}
+                </div>
+            </div>
+            {% if complaint.status == 'draft' and action_edit === true %}
+            <div class="c-jadd1">
+                <div class="c-jadd1-z">
+                    <span>Номер извещения</span><br>
+                    <!--<i>После ввода номера извещения, все данные о закупке заполнятся автоматически</i>-->
+                </div>
+                <div class="c-jadd1-f" id="result_container">
+                    №<input id="auction_id" type="text" value="{{ complaint.auction_id }}" disabled="disabled">
+                    <!--<input id="notice_button" type="submit" value="Получить данные">
+                    <span class="loading-gif">
+                        <img width="30px" height="30px" src="/img/loading.gif">
+
+                     </span>-->
+                </div>
+            </div>
+            {% endif %}
+            <div class="c-jadd-sp">
+                <div class="c-jadd-text">
+                    <div class="c-jadd1-z">
+                        <span>Данные о закупке</span>
+                    </div>
+                    <div class="c-jadd-l">
+                        <div class="c-jadd-lr-row">
+                            <span>Способ проведения закупки</span>
+                            <span class="auction-data" id="type">{{ complaint.type }}</span>
+                        </div>
+                        <div class="c-jadd-lr-row">
+                            <span>Закупку осуществляет</span>
+                            <span class="auction-data" id="purchases_made">{{ complaint.purchases_made }}</span>
+                        </div>
+                        <div class="c-jadd-lr-row">
+                            <span>Наименование закупки</span>
+                            <span class="auction-data" id="purchases_name"> {{ complaint.purchases_name }}</span>
+                        </div>
+                        <div class="c-jadd-lr-row">
+                            <span>Контакты</span>
+                            <span class="auction-data" id="contact"> {{ complaint.contact }}</span>
+                        </div>
+                    </div>
+                    <div class="c-jadd-r date-container">
+
+                    </div>
+                </div>
+                <div class="c-jadd-spoiler folded">
+                    <span style="text-transform: uppercase;">Показать подробно</span>
+                </div>
+            </div>
+
+            {% if complaint.status == 'draft' and action_edit === true %}
+            <form action="/admin/complaints/update" id="add-complaint-form" enctype="multipart/form-data" method="POST">
+                <input type="hidden" name="auctionData" id="auctionData" value="">
+                <input type="hidden" name="arguments_data" id="arguments_data" value="">
+                <input type="hidden" name="complaint_text" id="complaint_text" value="">
+                <input type="hidden" name="applicant_id" id="applicant_id" value="">
+                <input type="hidden" name="update-complaint-id" id="update-complaint-id" value="{{ complaint.id }}">
+                <div class="c-jadd2 complaint-main-container" style="display: block !important;">
+                    <div class="c-jadd2-f">
+                        <span class="c-jadd2-f-z">Сокращенное имя жалобы (для идинтификации внутри системы)</span>
+                        <input id="complaint_name" type="text" name="complaint_name" value="{{ complaint.complaint_name }}">
+                        <div class="c-jd2-f-dov-b">
+                            <div class="c-jd2-f-dov">
+                                Доводы жалобы
+                            </div>
+                            <div class="argument_text_container c-jd2-f-dov-dd-t2" >
+
+                            </div>
+                            <div class="c-jd2-f-dov-dd">
+                                <div class="c-jd2-f-dov-dd-z">
+                                    Доводы жалобы
+                                </div>
+                                <div id="argument_text_container" class="argument_text_container c-jd2-f-dov-dd-t" >
+
+                                </div>
+                                <div class="c-jd2-f-dov-dd-pick mCustomScrollbar">
+                                    <div class="c-jd2-f-dov-dd-pick-b category-container">
+                                        {% for argument in arguments  %}
+                                        {% if argument['category'].cnt > 0 %}
+                                        <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}" style="display: block !important;">
+                                            <span>{{ argument['category'].name }}</span>
+                                            {% for template in argument['templates']  %}
+                                            <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>
+                                            <label id="template_{{ template.id }}" for="jd2cbb{{ template.id }}">{{ template.name }}</label>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="c-jadd2-f-z">Текст жалобы</span>
+                        <div class="c-jd2-f-edit">
+                            <div class="c-jd2-f-edit-h">
+                                <div style="float: left; padding-top: 8px;" id="itselem"></div>
+                                <div class="complaint-attachment">
+                                    <div class="file-wrapper">
+                                        <div class="text-above">Прикрепить файлы</div>
+                                        <input id="upload-files" type="file" multiple="multiple" name="upload-files[]">
+                                    </div>
+
+                                    <script type="text/javascript">
+
+                                        jQuery(document).ready(function(){
+                                            jQuery('#upload-files').change(function(){
+                                                var cnt = jQuery('#upload-files')[0].files.length;
+                                                var html = '';
+                                                for (i = 0; i < cnt; i++) {
+                                                    var file_data = jQuery('#upload-files')[0].files[i]['name'].split('.');
+                                                    var file_type = file_data[file_data.length - 1];
+                                                    var file_size = jQuery('#upload-files')[0].files[i]['size'] / 1024;
+                                                    var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery('#upload-files')[0].files[i]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
+                                                }
+                                                jQuery('.attached-files .attached-files-wrap').html(html);
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                                <input type="file" id="cjd2file" hidden />
+                            </div>
+                            <div class="file-names">
+                                <div class="attached-files">
+                                    {% if attached_files|count > 0 %}
+                                    {% for file in attached_files %}
+                                    {{ file }}
+                                    {% endfor %}
+                                    {% else %}
+                                    {{ 'Нет прикрепленных файлов' }}
+                                    {% endif %}
+                                    <div class="attached-files-wrap"></div>
+                                </div>
+                            </div>
+                            <div class="c-jd2-f-edit-text mCustomScrollbar">
+                                <div id="edit_container" class="c-jd2-f-edit-t">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="c-jd2-f-save">
+                            <input id="back_complaint_save" class="complaint_save-blue" type="submit" value="Сохранить черновик" onclick="auction.auctionReady=true;">
+                        </div>
+            </form>
+            <div class="c-jd2-f-cat">
+                <input type="radio" name="jd2cat" id="jd2cat1" checked hidden>
+                <label class = "trusted-ep" for="jd2cat1">Подписать ЭП</label>
+                <input type="radio" name="jd2cat" id="jd2cat2" hidden>
+                <label for="jd2cat2">Отправить в УФАС</label>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="c-jadd2">
+        <div class="c-jadd2-z">
+            {{ complaint.complaint_name }}
+        </div>
+        <div class="c-jadd2-f">
+            <div class="c-jd2-f-flist">
+                <div class="attached-files">
+                    {% if attached_files|count > 0 %}
+                    {% for file in attached_files %}
+                    {{ file }}
+                    {% endfor %}
+                    {% else %}
+                    {{ 'Нет прикрепленных файлов' }}
+                    {% endif %}
+                </div>
+                <script type="text/javascript">
+                    $(".attached-file-row").each(function() {
+                        $(this).find('div.delete-file').remove();
+                    });
+                </script>
+            </div>
+            <div class="c-jd2-f-edit">
+                <div class="c-jd2-f-edit-text mCustomScrollbar">
+                    <div class="c-jd2-f-edit-t">
+                        {{ user_arguments }}
+                    </div>
+                </div>
+            </div>
+            <div class="c-jd2-f-cat">
+                <input type="radio" name="jd2cat" id="jd2cat1" checked hidden>
+                <label for="jd2cat1" class="trusted-ep">Подписать ЭП</label>
+                <input type="radio" name="jd2cat" id="jd2cat2" hidden>
+                <label for="jd2cat2">Отправить в УФАС</label>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="c-jadd3">
+        <div class="c-jd3-z">
+            <span>Помощь юриста</span>
+            <i>Не знаете как оформить жалобу, есть вопросы? Обратитесь к нашему юристу.</i>
+        </div>
+
+        {% for item in complaint_question %}
+        <div class="c-jd3-commb">
+            <div class="c-jd3-cb-usr">
+                {{ item['question'].text}}
+            </div>
+            <div class="c-jd3-cb-answ">
+                {% if item['admin'].id is defined %}
+                <div class="c-jd3-cb-answ-a">
+                    <img src="/files/avatars/{{item['admin'].avatar}}" alt="">
+                    <b>
+                        {{ item['admin'].name }}
+                    </b>
+                    <i>
+                        Ваш юридический<br>
+                        консультант
+                    </i>
+                </div>
+                {% endif %}
+                <div class="c-jd3-cb-answ-t">
+                    {% if item['answer']['id'] is defined %}
+                    {{ item['answer']['text'] }}
+                    {% else %}
+                    Когда наш консультант ответит Вам прийдет уведомление.
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+
+        <div class="c-jd3-f">
+            <form action="/admin/complaints/askQuestion" method="POST">
+                <textarea id="new-question" name="new-question"></textarea>
+                <input type="submit" value="начать консультацию">
+                <input type="hidden" name="complaint_id" id="complaint_id" value="{{complaint.id}}">
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<input type="hidden" name="categories_id" id="categories_id" value="{{ categories_id }}">
+<input type="hidden" name="arguments_id" id="arguments_id" value="{{ arguments_id }}">
+{% if complaint.status == 'draft' and action_edit === true %}
+<input type="hidden" name="is_edit_now" id="is_edit_now" value="is_edit_now">
+{% else %}
+<input type="hidden" name="is_edit_now" id="is_edit_now" value="">
+{% endif %}
+
+<script>
+    //$(document).ready(function(){
+    auction.data['complaint_id'] = '{{complaint.id }}';
+
+    auction.data['type'] = '{{complaint.type }}';
+    auction.data['purchases_made'] = '{{complaint.purchases_made }}';
+    auction.data['purchases_name'] = '{{complaint.purchases_name }}';
+    auction.data['contact'] = '{{complaint.contact }}';
+    auction.data['nachalo_podachi'] = '{{complaint.date_start }}';
+    auction.data['okonchanie_podachi'] = '{{complaint.okonchanie_podachi }}';
+    auction.data['vskrytie_konvertov'] = '{{complaint.vskrytie_konvertov }}';
+    auction.data['data_rassmotreniya'] = '{{complaint.data_rassmotreniya }}';
+    auction.data['data_provedeniya'] = '{{complaint.data_provedeniya }}';
+    auction.data['okonchanie_rassmotreniya'] = '{{complaint.okonchanie_rassmotreniya }}';
+    auction.data['vremya_provedeniya'] = '{{complaint.vremya_provedeniya }}';
+    auction.setData();
+    {% if complaint.status == 'draft' and action_edit === true %}
+    var templates = {};
+    var arr_sub = {};
+    debugger;
+    {% for argument in arguments  %}
+        {% for template in argument['templates']  %}
+            templates[{{template.id}}] = '{{template.text}}';
+        {% endfor %}
+    {% endfor %}
+    {% if arr_sub_cat is defined  %}
+        {% for sub in arr_sub_cat %}
+            arr_sub[{{sub['id']}}] = "{{sub['text']}}";
+        {% endfor %}
+    {% endif %}
+        var categories_id = $("#arguments_id").val().split(",");
+        $.each(categories_id, function( index, value ) {
+            debugger;
+            if (index == {{ complaint_text_order }}) {
+                argument.addArgument("just_text", "just_text", "{{complaint.complaint_text}}");
+            }
+        /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
+        $(".category-container input#jd2cbb" + value).prop('checked', true);
+        var cat = $(".category-container input#jd2cbb" + value).attr("category");
+        if(Object.keys(arr_sub).length){
+            argument.addArgument(value, cat, arr_sub[cat]);
+        } else {
+            argument.addArgument(value, cat);
+        }
+
+    });
+    setTimeout(function(){
+        applicant.id = ["{{complaint.applicant_id}}"];
+    }, 500);
+    {% endif %}
+
+    //});
+</script>
+<div id="pop-before-ask-question" class="modal_div">
+    <h2></h2>
+    <div class="pop-done-txt"></div>
+    <div class="modal-close"></div>
+</div>
+{% endblock %}
