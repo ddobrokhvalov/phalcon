@@ -10,6 +10,7 @@ use Multiple\Frontend\Models\ComplaintMovingHistory;
 use Multiple\Frontend\Models\Question;
 use Multiple\Frontend\Models\UsersArguments;
 use Multiple\Frontend\Models\Files;
+use Multiple\Library\Parser;
 use Phalcon\Mvc\Controller;
 use \Phalcon\Paginator\Adapter\NativeArray as Paginator;
 use Multiple\Library\PaginatorBuilder;
@@ -145,11 +146,23 @@ class ComplaintController extends ControllerBase
         $question = new Question();
         $complaintQuestion = $question->getComplainQuestionAndAnswer($id);
         $this->setMenu();
+        $parser = new Parser();
+        $data = $parser->parseAuction((string)$complaint->auction_id);
+        $complaint->nachalo_podachi =           isset($data['procedura']['nachalo_podachi'])            ? $data['procedura']['nachalo_podachi']         : null;
+        $complaint->okonchanie_podachi =        isset($data['procedura']['okonchanie_podachi'])         ? $data['procedura']['okonchanie_podachi']      : null;
+        $complaint->okonchanie_rassmotreniya =  isset($data['procedura']['okonchanie_rassmotreniya'])   ? $data['procedura']['okonchanie_rassmotreniya']: null;
+        $complaint->data_provedeniya =          isset($data['procedura']['data_provedeniya'])           ? $data['procedura']['data_provedeniya']        : null;
+        $complaint->vremya_provedeniya =        isset($data['procedura']['vremya_provedeniya'])         ? $data['procedura']['vremya_provedeniya']      : null;
+        $complaint->vskrytie_konvertov =        isset($data['procedura']['vskrytie_konvertov'])         ? $data['procedura']['vskrytie_konvertov']      : null;
+        $complaint->data_rassmotreniya =        isset($data['procedura']['data_rassmotreniya'])         ? $data['procedura']['data_rassmotreniya']      : null;
+        if(is_null($complaint->date_start)) $complaint->date_start = $complaint->nachalo_podachi;
+
         $this->view->complaint = $complaint;
         $this->view->complaint_question = $complaintQuestion;
         $this->view->action_edit = false;
         if (isset($_GET['action']) && $_GET['action'] == 'edit' && $complaint->status =='draft')
             $this->view->action_edit = true;
+        unset($data);
     }
 
 
