@@ -50,4 +50,9 @@ class Question extends Model
         }
         return $qa;
     }
+
+    public function countNonRead(){
+        $count = Question::find("is_read='n'");
+        return count($count);
+    }
 }
