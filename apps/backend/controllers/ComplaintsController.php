@@ -365,6 +365,12 @@ class ComplaintsController extends ControllerBase
                     $message->body = $body;
                     $message->time = date('Y-m-d H:i:s');
                     $message->save();
+
+                    $quest = Question::findFirstById($answer->question_id);
+                    if($quest){
+                        $quest->is_read = 'y';
+                        $quest->save();
+                    }
                 }
             }
             $response = new \Phalcon\Http\Response();
