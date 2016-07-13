@@ -15,6 +15,7 @@ use Multiple\Backend\Models\UsersArguments;
 use Multiple\Backend\Models\ComplaintMovingHistory;
 use Multiple\Backend\Models\Question;
 use Multiple\Backend\Models\Applicant;
+use Multiple\Library\Parser;
 
 class ComplaintsController extends ControllerBase
 {
@@ -174,6 +175,16 @@ class ComplaintsController extends ControllerBase
                 $this->view->allow_answer = 1;
             }
             $this->view->attached_files = $files_html;
+            $parser = new Parser();
+            $data = $parser->parseAuction((string)$complaint->auction_id);
+            $complaint->nachalo_podachi =           isset($data['procedura']['nachalo_podachi'])            ? $data['procedura']['nachalo_podachi']         : null;
+            $complaint->okonchanie_podachi =        isset($data['procedura']['okonchanie_podachi'])         ? $data['procedura']['okonchanie_podachi']      : null;
+            $complaint->okonchanie_rassmotreniya =  isset($data['procedura']['okonchanie_rassmotreniya'])   ? $data['procedura']['okonchanie_rassmotreniya']: null;
+            $complaint->data_provedeniya =          isset($data['procedura']['data_provedeniya'])           ? $data['procedura']['data_provedeniya']        : null;
+            $complaint->vremya_provedeniya =        isset($data['procedura']['vremya_provedeniya'])         ? $data['procedura']['vremya_provedeniya']      : null;
+            $complaint->vskrytie_konvertov =        isset($data['procedura']['vskrytie_konvertov'])         ? $data['procedura']['vskrytie_konvertov']      : null;
+            $complaint->data_rassmotreniya =        isset($data['procedura']['data_rassmotreniya'])         ? $data['procedura']['data_rassmotreniya']      : null;
+            if(is_null($complaint->date_start)) $complaint->date_start = $complaint->nachalo_podachi;
             $this->view->complaint = $complaint;
             $this->setMenu();
         }
