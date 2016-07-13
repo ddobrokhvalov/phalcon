@@ -111,6 +111,11 @@ a:visited {
 .mheader a:hover {
     text-decoration: none;
 }
+#isread{
+    background: none;
+    color: #34383e;
+    padding-left: 0;
+}
 .mhlogo {
     background: rgba(0, 0, 0, 0) url("../images/hlogo.png") no-repeat scroll center center;
     height: 27px;

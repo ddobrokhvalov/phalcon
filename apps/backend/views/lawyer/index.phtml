@@ -31,7 +31,7 @@
                     {% for question in questions %}
                     <ul>
                         <li class="for-sort-date">{{date('d.m.Y', question.date|strtotime)}}</li>
-                        <li><a href="/admin/complaints/preview/{{question.complaint_id}}">{{question.text}}</a></li>
+                        <li ><a href="/admin/complaints/preview/{{question.complaint_id}}" {% if question.is_read == 'y' %}id="isread"{% endif %}">{{question.text}}</a></li>
                     </ul>
                     {% endfor %}
                 </li>
