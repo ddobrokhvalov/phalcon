@@ -56,7 +56,7 @@ class ControllerBase extends Controller
             'Complaint'=>Complaint::count(),
             'Arguments'=>Arguments::count(),
             'Log'=>Log::count(),
-            'Question'=> Question::count(),
+            'Question'=> Question::countNonRead(),
             'Admin'=> Admin::count(),
         ];
     }
