@@ -170,13 +170,22 @@ var complaint = {
         return true;
     },
     saveAsDraft: function () {
-    
         $("#auctionData").val(this.auctionData);
         $("#arguments_data").val(complaint.arguments_data + "");
         //$("#complaint_text").val(this.complainText);
         $("#complaint_name").val(this.complainName);
         $("#applicant_id").val(applicant.id);
-        $("#add-complaint-form").submit();
+
+        $(".admin-popup-content p").text("Жалоба успешно сохранена!");
+        $('.admin-popup-close, .admin-popup-bg').on('click', function() {
+            $("#add-complaint-form").submit();
+        });
+        $(".admin-popup-wrap").show();
+        setTimeout( function(){
+            $("#add-complaint-form").submit();
+        }, 2000);
+
+
         /*$.ajax({
             type: 'POST',
             url: '/complaint/create',
