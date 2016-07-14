@@ -122,11 +122,24 @@ var applicant = {
             if ($('.applicant-name-container').html().length) {
                 $('.applicant-name-container').html($('.applicant-name-container').html().trim() + ", " + name.trim());
             } else {
-                $('.applicant-name-container').html(name.trim());
+                if(name != undefined) {
+                    $('.applicant-name-container').html(name.trim());
+                }
             }
+        }else {
+            var temp = $('.applicant-name-container').html();
+            temp = temp.replace(name.trim(),'');
+            temp = temp.split(',');
+            for (var i = temp.length; i > 0; i--) {
+                if (temp[i] == " ") {
+                    temp.splice(i,1);
+                }
+            }
+            $('.applicant-name-container').html(temp.join(','));
         }
         if (this.id.length == 0) {
             this.id.push("All");
+            $('.applicant-name-container').empty();
         }
         ////if(typeof currentPage !== 'undefined' && currentPage == 'complaint/index' && redirect ){
         if (!is_select_first) {
