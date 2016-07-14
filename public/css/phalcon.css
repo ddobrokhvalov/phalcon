@@ -3210,7 +3210,7 @@ q, blockquote {
     border-top: none !important;
 }
 .successMessage {
-    color: #00aeef;
+    color: red;
     border: 1px solid;
     border-radius: 5px;
     font-weight: bold;

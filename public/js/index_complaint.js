@@ -82,7 +82,14 @@ var indexComplaint = {
         $(button).addClass('button_copy_deactive');
     },
     changeStatus: function (status) {
+        debugger;
         var data = JSON.stringify(this.selectedComplaint);
+        var edit = $(".c-jadd1-1-b").attr("edit");
+        if(edit != undefined){
+            var temp = new Array();
+            temp.push(edit);
+            data= JSON.stringify(temp);
+        }
         $.ajax({
             type: 'POST',
             url: '/complaint/status',
