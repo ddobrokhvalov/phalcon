@@ -164,7 +164,7 @@ $(document).ready(function(){
     jQuery(function(f){
         var element = f('#chsort');
         f(window).scroll(function(){
-            element['fade'+ (f(this).scrollTop() > 250 ? 'In': 'Out')](200);
+            element['fade'+ (f(this).scrollTop() > 200 ? 'In': 'Out')](200);
         });
     });
 });
