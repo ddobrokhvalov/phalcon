@@ -294,7 +294,7 @@ var argument = {
             '<span>' + templateName + '</span>' +
             '<div class="c-edit-j-h-ctr">' +
             '<a  class="template-edit-control down c-edit-j-h-ctr1">Переместить ниже</a> <a class="template-edit-control up c-edit-j-h-ctr2">Переместить выше</a>' +
-            '<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' +
+            //'<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' +
             '</div>' +
             '</div>' +
             '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" >' +
