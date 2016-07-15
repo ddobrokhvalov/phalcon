@@ -78,10 +78,7 @@
   width: 32%;
   height: 35px;
   &.arg-dunStep,
-  &.arg-nextStep{
-    span {
-      color: #34383e;
-    }
+  &.arg-nextStep {
     div {
       background-color: $blue;
       &:after {
@@ -121,7 +118,7 @@
     z-index: 1;
     font-size: 14px;
     text-transform: uppercase;
-    color: #eff2f7;
+    color: #34383e;
   }
   div {
     position: relative;
@@ -150,16 +147,6 @@
       -webkit-animation: line 3s ease-in infinite;
       -o-animation: line 3s ease-in infinite;
       animation: line 3s ease-in infinite;
-      &:after {
-        -webkit-animation: bullet 3s ease-in infinite;
-        -o-animation: bullet 3s ease-in infinite;
-        animation: bullet 3s ease-in infinite;
-      }
-    }
-    span {
-      -webkit-animation: span 3s ease-in infinite;
-      -o-animation: span 3s ease-in infinite;
-      animation: span 3s ease-in infinite;
     }
   }
 }
@@ -172,28 +159,6 @@
   }
   100% {
     background-color: #eff2f7;
-  }
-}
-@keyframes bullet {
-  0% {
-    background-color: #eff2f7;
-  }
-  50% {
-    background-color: $blue;
-  }
-  100% {
-    background-color: #eff2f7;
-  }
-}
-@keyframes span {
-  0% {
-    color: #eff2f7;
-  }
-  50% {
-    color: #34383e;
-  }
-  100% {
-    color: #eff2f7;
   }
 }
 .btn-div {
