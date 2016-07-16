@@ -204,10 +204,10 @@
         <div class="argumentsComplaints">
             <form action="#" method="POST">
                 <div class="word-argCompl-find">
-                    <p>Поиск по ключевому слову</p>
+                    <p>Поиск</p>
                     <div class="word-argCompl-input">
-                        <input type="text">
-                        <button>Искать</button>
+                        <input type="text" placeholder="Искать">
+                        <button></button>
                     </div>
                 </div>
             </form>
@@ -227,7 +227,7 @@
                     </li>
                     <li class="steps-line">
                         <div></div>
-                        <span>шаг 4</span>
+                        <span>Список доводов</span>
                     </li>
                 </ul>
                 <div id="1_argComplSelect" class="select-holder">
@@ -241,12 +241,13 @@
                     <div class="custom_select">
                         <div class="current-option" data-value="">
                             <span>Жалоба на положения документации</span>
+                            <div></div>
                         </div>
-                        <ul class="custom-options">
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
+                        <ul class="custom-options mCustomScrollbar">
+                            <li class="argo" data-value="">Lorem ipsum.</li>
+                            <li class="argo" data-value="">Lorem ipsum.</li>
+                            <li class="argo" data-value="">Lorem ipsum.</li>
+                            <li class="argo" data-value="">Lorem ipsum.</li>
                         </ul>
                     </div>
                 </div>
@@ -262,7 +263,8 @@
                         <div class="current-option" data-value="">
                             <span>Жалоба на положения документации</span>
                         </div>
-                        <ul class="custom-options">
+                        <ul class="custom-options mCustomScrollbar">
+                            <div></div>
                             {% for arg in arguments%}
                                 <li data-value="">{{arg.name}}</li>
                             {% endfor %}
@@ -284,8 +286,9 @@
                     <div class="custom_select">
                         <div class="current-option" data-value="">
                             <span>Жалоба на положения документации</span>
+                            <div></div>
                         </div>
-                        <ul class="custom-options">
+                        <ul class="custom-options mCustomScrollbar">
                             <li data-value="">Lorem ipsum.</li>
                             <li data-value="">Lorem ipsum.</li>
                             <li data-value="">Lorem ipsum.</li>
@@ -304,8 +307,9 @@
                     <div class="custom_select">
                         <div class="current-option" data-value="">
                             <span>Жалоба на положения документации</span>
+                            <div></div>
                         </div>
-                        <ul class="custom-options">
+                        <ul class="custom-options mCustomScrollbar">
                             <li data-value="">Lorem ipsum.</li>
                             <li data-value="">Lorem ipsum.</li>
                             <li data-value="">Lorem ipsum.</li>
@@ -313,10 +317,17 @@
                         </ul>
                     </div>
                 </div>
+                <div class="title-info-box">Доводы</div>
                 <div class="argCompl-review mCustomScrollbar">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid atque cumque, dolorem doloribus ea error illo ipsam iure laudantium odio tenetur ullam vel voluptatem! Ad aliquid aspernatur, blanditiis deserunt doloremque dolores, ex fugiat hic necessitatibus nihil nobis numquam quasi quis repellat sapiente tenetur totam. Eligendi incidunt natus quia ratione repellendus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid atque cumque, dolorem doloribus ea error illo ipsam iure laudantium odio tenetur ullam vel voluptatem! Ad aliquid aspernatur, blanditiis deserunt doloremque dolores, ex fugiat hic necessitatibus nihil nobis numquam quasi quis repellat sapiente tenetur totam. Eligendi incidunt natus quia ratione repellendus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid atque cumque, dolorem doloribus ea error illo ipsam iure laudantium odio tenetur ullam vel voluptatem! Ad aliquid aspernatur, blanditiis deserunt doloremque dolores, ex fugiat hic necessitatibus nihil nobis numquam quasi quis repellat sapiente tenetur totam. Eligendi incidunt natus quia ratione repellendus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid atque cumque, dolorem doloribus ea error illo ipsam iure laudantium odio tenetur ullam vel voluptatem! Ad aliquid aspernatur, blanditiis deserunt doloremque dolores, ex fugiat hic necessitatibus nihil nobis numquam quasi quis repellat sapiente tenetur totam. Eligendi incidunt natus quia ratione repellendus.</p>
+                    <ul>
+                        <li>Lorem ipsum dolor sit.</li>
+                        <li>Lorem ipsum dolor sit amet, consectetur.</li>
+                        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur error esse, molestias perferendis quaerat sint.</li>
+                        <li>Lorem ipsum dolor.</li>
+                        <li>Lorem ipsum dolor sit amet.</li>
+                    </ul>
                 </div>
-                <div class="btn-div">Просмотреть</div>
+                <div class="btn-div">Добавть довод</div>
                 <button id="argComplBtn">Дальше</button>
             </form>
         </div>

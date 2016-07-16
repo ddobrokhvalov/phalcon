@@ -1,5 +1,49 @@
+.argComp {
+  h6 {
+    margin-bottom: 5px;
+    font-size: 48px;
+    line-height: 110px;
+    &:before {
+      top: -28px;
+      left: -9px;
+      -webkit-transform: rotate(-4.5deg);
+      -moz-transform: rotate(-4.5deg);
+      -ms-transform: rotate(-4.5deg);
+      -o-transform: rotate(-4.5deg);
+      transform: rotate(-4.5deg);
+    }
+  }
+  .admin-popup-close {
+    top: 15px;
+  }
+  .title-info-box {
+    padding-left: 7px;
+    font-size: 24px;
+    color: #000;
+  }
+  .mCSB_scrollTools .mCSB_draggerRail {
+    background-color: transparent;
+  }
+  .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+    background: #b8b8b8;
+    width: 9px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+  }
+  .mCSB_scrollTools .mCSB_dragger {
+    &:hover {
+      .mCSB_dragger_bar {
+        background: #b8b8b8;
+      }
+    }
+  }
+  .mCSB_inside > .mCSB_container {
+    margin-right: 40px;
+  }
+}
 .argumentsComplaints {
-  padding: 0 40px 40px;
+  padding: 0 40px 20px;
   &:after {
     @include hasla;
   }
@@ -11,55 +55,100 @@
     }
   }
   .custom-options {
-    margin: 0;
+    margin: 14px 0 0 0;
+    padding: 10px 4px 10px 30px;
+    max-height: 265px;
+    border: none;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    li {
+      margin-right: 30px;
+      padding: 0 0 0 18px;
+      font-size: 20px;
+      line-height: 65px;
+      color: #000;
+      border-bottom: 1px solid #fff;
+      &:last-child {
+        border-bottom: none;
+      }
+      &:hover {
+        background-color: transparent;
+      }
+    }
   }
   .arguments-steps {
-    margin: 40px 0 30px;
+    margin: 0;
+    padding: 42px 0 30px;
     &:after {
       @include hasla;
     }
   }
   .current-option {
-    padding-bottom: 10px;
     span {
-      text-transform: uppercase;
+      font-size: 20px;
+      color: #000;
+      text-transform: none;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      border-radius: 8px;
+      border-color: #d2d2d2;
+      background-color: #fff;
+      &:after {
+        right: 38px;
+      }
+    }
+    > div {
+      position: relative;
+      z-index: -1;
+      bottom: 18px;
+      transition: bottom 0.6s ease;
+      &.transDiv {
+        bottom: -3px;
+      }
+      &:after {
+        position: absolute;
+        content: '';
+        right: 38px;
+        bottom: -16px;
+        width: 0;
+        height: 0;
+        border-left: 9px solid transparent;
+        border-right: 9px solid transparent;
+        border-bottom: 18px solid #f0f0f0;
+      }
     }
   }
 }
 .word-argCompl-find {
   position: relative;
-  height: 40px;
-  margin-top: 20px;
   p {
     display: inline-block;
-    padding: 0 15px;
-    font-size: 16px;
-    line-height: 40px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s ease-out;
-    &:hover {
-      color: $blue;
-    }
+    margin: 0;
+    padding-left: 7px;
+    font-size: 20px;
+    line-height: 2;
+    font-weight: 100;
   }
 }
 .word-argCompl-input {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
-  height: 40px;
+  @include plsh(#acacad);
   input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 0 15px;
-    width: 440px;
-    height: 40px;
-    line-height: 40px;
-    border: 1px solid #e0e3ea;
-    border-radius: 2px;
+    @include box-s;
+    padding: 0 100px 0 36px;
+    width: 100%;
+    height: 44px;
+    font-size: 14px;
+    line-height: 44px;
+    color: #2c2f32;
+    border: none;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    background-color: #f0f0f0;
   }
   button {
     position: absolute;
@@ -67,16 +156,19 @@
     right: 0;
     margin: 0;
     padding: 0;
-    width: 150px;
-    font-size: 14px;
-    line-height: 40px;
+    width: 100px;
+    height: 44px;
+    background: url(../images/admin-popup-search.png) 38% 50% no-repeat;
+    &:hover {
+      background-color: transparent;
+    }
   }
 }
 .steps-line {
   position: relative;
   float: left;
   width: 32%;
-  height: 35px;
+  height: 40px;
   &.arg-dunStep,
   &.arg-nextStep {
     div {
@@ -107,8 +199,12 @@
   &:last-child {
     div {
       &:after {
-        right: 15px;
+        right: 32px;
       }
+    }
+    span {
+      bottom: -20px;
+      max-width: 80px;
     }
   }
   span {
@@ -117,6 +213,7 @@
     bottom: 0;
     z-index: 1;
     font-size: 14px;
+    text-align: center;
     text-transform: uppercase;
     color: #34383e;
   }
@@ -130,10 +227,10 @@
     &:after {
       position: absolute;
       content: '';
-      top: -3px;
+      top: -4px;
       right: 0;
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
       border-radius: 50%;
@@ -181,11 +278,34 @@
 }
 .argCompl-review {
   @include box-s;
-  padding: 10px 0 10px 15px;
+  padding: 10px 3px 10px 13px;
   width: 100%;
-  max-height: 200px;
-  border: 1px solid #e0e3ea;
-  p {
-    margin-right: 10px;
+  max-height: 198px;
+  border: 1px solid #d2d2d2;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  ul {
+    margin: 0;
+  }
+  li {
+    overflow: hidden;
+    @include box-s;
+    margin-right: 6px;
+    padding: 0 10px 0 23px;
+    color: #000;
+    font-size: 20px;
+    font-weight: 100;
+    line-height: 65px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid #d2d2d2;
+    &:first-child {
+      margin-top: -10px;
+    }
+    &:last-child {
+      margin-bottom: -10px;
+      border-bottom: none;
+    }
   }
 }
