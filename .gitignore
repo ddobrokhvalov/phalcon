@@ -5,3 +5,4 @@ base-template.phtml%*
 /public/files/avatars
 public/.sass-cache/
 public/config.rb
+.idea/
