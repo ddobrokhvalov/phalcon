@@ -140,6 +140,19 @@ class AdminsController extends ControllerBase
 
     public function addAction()
     {
+        $params = $this->dispatcher->getParams();
+        if(!empty($params)) $this->view->params = $params;
+        else {
+            $this->view->params = array(
+                'email'         => '',
+                'password'      => '',
+                'name'          => '',
+                'surname'       => '',
+                'phone'         => '',
+                'patronymic'    => '',
+                'avatar'        => '',
+            );
+        }
         if ($this->user->id != 1) {
             $this->view->pick("access/denied");
             $this->setMenu();
@@ -152,8 +165,31 @@ class AdminsController extends ControllerBase
             if (!$this->request->isPost())
                 return $this->forward("admins/index");
 
-            $admin = new Admin();
             $post = $this->request->getPost();
+
+            $checkEmail = Admin::findFirst("email = '{$post['email']}'");
+            if($checkEmail != false) {
+                $this->flashSession->error('Пользователь с таким email уже есть!');
+                $admin = new Admin();
+                if ($this->request->hasFiles() == true)
+                    if($admin->saveAvatar($this->request->getUploadedFiles()))
+                        $avatar = $admin->avatar;
+
+                return $this->dispatcher->forward(array(
+                    'module' => 'backend',
+                    'controller' => 'admins',
+                    'action' => 'add',
+                    'params' => array(
+                        'name'          => $post['name'],
+                        'surname'       => $post['surname'],
+                        'phone'         => $post['phone'],
+                        'patronymic'    => $post['patronymic'],
+                        'avatar'        => (!isset($avatar)) ? '' : $avatar
+                    )
+                ));
+            }
+
+            $admin = new Admin();
             $data['email'] = $post['email'];
             $data['admin_status'] = 0;
             $data['password'] = $post['password'];
@@ -168,6 +204,18 @@ class AdminsController extends ControllerBase
             $messages = $validation->validate($data);
             if (count($messages)) {
                 $this->flashSession->error('Не заполнены обязательные поля');
+                return $this->dispatcher->forward(array(
+                    'module' => 'backend',
+                    'controller' => 'admins',
+                    'action' => 'add',
+                    'params' => array(
+                        'name'          => $post['name'],
+                        'surname'       => $post['surname'],
+                        'phone'         => $post['phone'],
+                        'patronymic'    => $post['patronymic'],
+                        'avatar'        => (!isset($avatar)) ? '' : $avatar
+                    )
+                ));
                 /*foreach ($messages as $message)
                     $this->flashSession->error($message);*/
             }

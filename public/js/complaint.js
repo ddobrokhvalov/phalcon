@@ -176,11 +176,11 @@ var complaint = {
         $("#complaint_name").val(this.complainName);
         $("#applicant_id").val(applicant.id);
 
-        $(".admin-popup-content p").text("Жалоба успешно сохранена!");
+        $(".add-popup-wrap p").text("Жалоба успешно сохранена!");
         $('.admin-popup-close, .admin-popup-bg').on('click', function() {
             $("#add-complaint-form").submit();
         });
-        $(".admin-popup-wrap").show();
+        $(".add-popup-wrap").show();
         setTimeout( function(){
             $("#add-complaint-form").submit();
         }, 2000);

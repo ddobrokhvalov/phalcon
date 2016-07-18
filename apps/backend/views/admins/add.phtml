@@ -16,19 +16,19 @@
                 <span>Данные администратора</span>
                 <label for="fAdmin">
                     <p>Фамилия</p>
-                    {{text_field('surname', 'value':'', 'id':'fAdmin')}}
+                    {{text_field('surname', 'value':params['surname'], 'id':'fAdmin')}}
                 </label>
                 <label for="iAdmin">
                     <p>Имя</p>
-                    {{text_field('name', 'value':'', 'id':'iAdmin')}}
+                    {{text_field('name', 'value':params['name'], 'id':'iAdmin')}}
                 </label>
                 <label for="oAdmin">
                     <p>Отчество</p>
-                    {{text_field('patronymic', 'value':'', 'id':'oAdmin')}}
+                    {{text_field('patronymic', 'value':params['patronymic'], 'id':'oAdmin')}}
                 </label>
                 <label for="telFaxAdmin">
                     <p>Контактный факс, телефон</p>
-                    {{ numeric_field('phone', 'value':'', 'id':'telFaxAdmin')}}
+                    {{ numeric_field('phone', 'value':params['phone'], 'id':'telFaxAdmin')}}
                 </label>
                 <label for="adminEmail">
                     <p>E-mail</p>
@@ -46,7 +46,7 @@
                         <img src="" alt=""><!--todo: maby we need default image-->
                     </div>
                     <p class="changeAvatar">Изменить аватар</p>
-                    {{file_field('avatar', 'value':'', 'id':'adminAvatar', 'onchange':"readAvatarURL(this, '#edit-avatar')")}}
+                    {{file_field('avatar', 'value':params['avatar'], 'id':'adminAvatar', 'onchange':"readAvatarURL(this, '#edit-avatar')")}}
                 </label>
             </div>
             <div class="delete-or-save">
