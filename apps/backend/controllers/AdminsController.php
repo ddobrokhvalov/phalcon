@@ -168,7 +168,7 @@ class AdminsController extends ControllerBase
             $post = $this->request->getPost();
 
             $checkEmail = Admin::findFirst("email = '{$post['email']}'");
-            if(!$checkEmail == false) {
+            if($checkEmail != false) {
                 $this->flashSession->error('Пользователь с таким email уже есть!');
                 $admin = new Admin();
                 if ($this->request->hasFiles() == true)
@@ -180,8 +180,6 @@ class AdminsController extends ControllerBase
                     'controller' => 'admins',
                     'action' => 'add',
                     'params' => array(
-                        'email'         => $post['email'],
-                        'password'      => $post['password'],
                         'name'          => $post['name'],
                         'surname'       => $post['surname'],
                         'phone'         => $post['phone'],
@@ -206,6 +204,18 @@ class AdminsController extends ControllerBase
             $messages = $validation->validate($data);
             if (count($messages)) {
                 $this->flashSession->error('Не заполнены обязательные поля');
+                return $this->dispatcher->forward(array(
+                    'module' => 'backend',
+                    'controller' => 'admins',
+                    'action' => 'add',
+                    'params' => array(
+                        'name'          => $post['name'],
+                        'surname'       => $post['surname'],
+                        'phone'         => $post['phone'],
+                        'patronymic'    => $post['patronymic'],
+                        'avatar'        => (!isset($avatar)) ? '' : $avatar
+                    )
+                ));
                 /*foreach ($messages as $message)
                     $this->flashSession->error($message);*/
             }
