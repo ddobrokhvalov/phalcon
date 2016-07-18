@@ -1202,10 +1202,10 @@ ul.status-black, .notification-number-box.status-black {
 }
 /* line 191, ../sass/_complaints_preview.scss */
 .complaints-preview-wrap .compl-quest-cont form::before {
-  /*background-color: #e0e3ea;*/
+  background-color: #e0e3ea;
   bottom: 0;
   content: "";
-  /*height: 1px;*/
+  height: 1px;
   left: -35px;
   position: absolute;
   width: 963px;
@@ -1308,8 +1308,8 @@ ul.status-black, .notification-number-box.status-black {
   bottom: 0;
   left: -35px;
   width: 963px;
-  /*height: 1px;*/
-  /*background-color: #e0e3ea;*/
+  height: 1px;
+  background-color: #e0e3ea;
 }
 /* line 284, ../sass/_complaints_preview.scss */
 .complaints-lawyer-quest form:not(:first-child) {
@@ -1353,8 +1353,7 @@ ul.status-black, .notification-number-box.status-black {
 /* line 317, ../sass/_complaints_preview.scss */
 .complaints-lawyer-quest form button {
   position: absolute;
-  /*top: 72px;*/
-  top: 32px;
+  top: 72px;
   left: 0;
   z-index: 1;
   width: 140px;
@@ -1443,7 +1442,7 @@ ul.status-black, .notification-number-box.status-black {
 /* line 393, ../sass/_complaints_preview.scss */
 .opacity-btn {
   position: absolute;
-  top: 33px;
+  top: 72px;
   left: 0;
   z-index: 2;
   width: 140px;
@@ -3817,154 +3816,268 @@ body#backend-login {
   cursor: pointer;
 }
 
-/* line 1, ../sass/_arguments_complaints_popup.scss */
-.argumentsComplaints {
-  padding: 0 40px 40px;
+/* line 2, ../sass/_arguments_complaints_popup.scss */
+.argComp h6 {
+  margin-bottom: 5px;
+  font-size: 48px;
+  line-height: 110px;
 }
-/* line 3, ../sass/_arguments_complaints_popup.scss */
+/* line 6, ../sass/_arguments_complaints_popup.scss */
+.argComp h6:before {
+  top: -28px;
+  left: -9px;
+  -webkit-transform: rotate(-4.5deg);
+  -moz-transform: rotate(-4.5deg);
+  -ms-transform: rotate(-4.5deg);
+  -o-transform: rotate(-4.5deg);
+  transform: rotate(-4.5deg);
+}
+/* line 16, ../sass/_arguments_complaints_popup.scss */
+.argComp .admin-popup-close {
+  top: 15px;
+}
+/* line 19, ../sass/_arguments_complaints_popup.scss */
+.argComp .title-info-box {
+  padding-left: 7px;
+  font-size: 24px;
+  color: #000;
+}
+/* line 24, ../sass/_arguments_complaints_popup.scss */
+.argComp .mCSB_scrollTools .mCSB_draggerRail {
+  background-color: transparent;
+}
+/* line 27, ../sass/_arguments_complaints_popup.scss */
+.argComp .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+  background: #b8b8b8;
+  width: 9px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+/* line 36, ../sass/_arguments_complaints_popup.scss */
+.argComp .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
+  background: #b8b8b8;
+}
+/* line 41, ../sass/_arguments_complaints_popup.scss */
+.argComp .mCSB_inside > .mCSB_container {
+  margin-right: 40px;
+}
+
+/* line 45, ../sass/_arguments_complaints_popup.scss */
+.argumentsComplaints {
+  padding: 0 40px 20px;
+}
+/* line 47, ../sass/_arguments_complaints_popup.scss */
 .argumentsComplaints:after {
   content: '';
   display: block;
   clear: both;
 }
-/* line 6, ../sass/_arguments_complaints_popup.scss */
+/* line 50, ../sass/_arguments_complaints_popup.scss */
 .argumentsComplaints button {
   float: right;
   margin: 30px 0 0;
 }
-/* line 9, ../sass/_arguments_complaints_popup.scss */
+/* line 53, ../sass/_arguments_complaints_popup.scss */
 .argumentsComplaints button:hover {
   background-color: #10b8f7;
 }
-/* line 13, ../sass/_arguments_complaints_popup.scss */
+/* line 57, ../sass/_arguments_complaints_popup.scss */
 .argumentsComplaints .custom-options {
-  margin: 0;
+  margin: 14px 0 0 0;
+  padding: 10px 4px 10px 30px;
+  max-height: 265px;
+  border: none;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
 }
-/* line 16, ../sass/_arguments_complaints_popup.scss */
+/* line 66, ../sass/_arguments_complaints_popup.scss */
+.argumentsComplaints .custom-options li {
+  margin-right: 30px;
+  padding: 0 0 0 18px;
+  font-size: 20px;
+  line-height: 65px;
+  color: #000;
+  border-bottom: 1px solid #fff;
+}
+/* line 73, ../sass/_arguments_complaints_popup.scss */
+.argumentsComplaints .custom-options li:last-child {
+  border-bottom: none;
+}
+/* line 76, ../sass/_arguments_complaints_popup.scss */
+.argumentsComplaints .custom-options li:hover {
+  background-color: transparent;
+}
+/* line 81, ../sass/_arguments_complaints_popup.scss */
 .argumentsComplaints .arguments-steps {
-  margin: 40px 0 30px;
+  margin: 0;
+  padding: 42px 0 30px;
 }
-/* line 18, ../sass/_arguments_complaints_popup.scss */
+/* line 84, ../sass/_arguments_complaints_popup.scss */
 .argumentsComplaints .arguments-steps:after {
   content: '';
   display: block;
   clear: both;
 }
-/* line 22, ../sass/_arguments_complaints_popup.scss */
-.argumentsComplaints .current-option {
-  padding-bottom: 10px;
-}
-/* line 24, ../sass/_arguments_complaints_popup.scss */
+/* line 89, ../sass/_arguments_complaints_popup.scss */
 .argumentsComplaints .current-option span {
-  text-transform: uppercase;
+  font-size: 20px;
+  color: #000;
+  text-transform: none;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  border-color: #d2d2d2;
+  background-color: #fff;
+}
+/* line 98, ../sass/_arguments_complaints_popup.scss */
+.argumentsComplaints .current-option span:after {
+  right: 38px;
+}
+/* line 102, ../sass/_arguments_complaints_popup.scss */
+.argumentsComplaints .current-option > div {
+  position: relative;
+  z-index: -1;
+  bottom: 18px;
+  transition: bottom 0.6s ease;
+}
+/* line 107, ../sass/_arguments_complaints_popup.scss */
+.argumentsComplaints .current-option > div.transDiv {
+  bottom: -3px;
+}
+/* line 110, ../sass/_arguments_complaints_popup.scss */
+.argumentsComplaints .current-option > div:after {
+  position: absolute;
+  content: '';
+  right: 38px;
+  bottom: -16px;
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 18px solid #f0f0f0;
 }
 
-/* line 29, ../sass/_arguments_complaints_popup.scss */
+/* line 124, ../sass/_arguments_complaints_popup.scss */
 .word-argCompl-find {
   position: relative;
-  height: 40px;
-  margin-top: 20px;
 }
-/* line 33, ../sass/_arguments_complaints_popup.scss */
+/* line 126, ../sass/_arguments_complaints_popup.scss */
 .word-argCompl-find p {
   display: inline-block;
-  padding: 0 15px;
-  font-size: 16px;
-  line-height: 40px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.2s ease-out;
-}
-/* line 41, ../sass/_arguments_complaints_popup.scss */
-.word-argCompl-find p:hover {
-  color: #00aeef;
+  margin: 0;
+  padding-left: 7px;
+  font-size: 20px;
+  line-height: 2;
+  font-weight: 100;
 }
 
-/* line 46, ../sass/_arguments_complaints_popup.scss */
+/* line 135, ../sass/_arguments_complaints_popup.scss */
 .word-argCompl-input {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
-  height: 40px;
 }
-/* line 53, ../sass/_arguments_complaints_popup.scss */
+/* line 12, ../sass/variables_etc/_mixins.scss */
+.word-argCompl-input input::-webkit-input-placeholder {
+  color: #acacad;
+}
+/* line 13, ../sass/variables_etc/_mixins.scss */
+.word-argCompl-input input:-ms-input-placeholder {
+  color: #acacad;
+}
+/* line 14, ../sass/variables_etc/_mixins.scss */
+.word-argCompl-input input:-moz-placeholder {
+  color: #acacad;
+}
+/* line 139, ../sass/_arguments_complaints_popup.scss */
 .word-argCompl-input input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 0 15px;
-  width: 440px;
-  height: 40px;
-  line-height: 40px;
-  border: 1px solid #e0e3ea;
-  border-radius: 2px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0 100px 0 36px;
+  width: 100%;
+  height: 44px;
+  font-size: 14px;
+  line-height: 44px;
+  color: #2c2f32;
+  border: none;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
 }
-/* line 64, ../sass/_arguments_complaints_popup.scss */
+/* line 153, ../sass/_arguments_complaints_popup.scss */
 .word-argCompl-input button {
   position: absolute;
   top: 0;
   right: 0;
   margin: 0;
   padding: 0;
-  width: 150px;
-  font-size: 14px;
-  line-height: 40px;
+  width: 100px;
+  height: 44px;
+  background: url(../images/admin-popup-search.png) 38% 50% no-repeat;
+}
+/* line 162, ../sass/_arguments_complaints_popup.scss */
+.word-argCompl-input button:hover {
+  background-color: transparent;
 }
 
-/* line 75, ../sass/_arguments_complaints_popup.scss */
+/* line 167, ../sass/_arguments_complaints_popup.scss */
 .steps-line {
   position: relative;
   float: left;
   width: 32%;
-  height: 35px;
+  height: 40px;
 }
-/* line 82, ../sass/_arguments_complaints_popup.scss */
-.steps-line.arg-dunStep span, .steps-line.arg-nextStep span {
-  color: #34383e;
-}
-/* line 85, ../sass/_arguments_complaints_popup.scss */
+/* line 174, ../sass/_arguments_complaints_popup.scss */
 .steps-line.arg-dunStep div, .steps-line.arg-nextStep div {
   background-color: #00aeef;
 }
-/* line 87, ../sass/_arguments_complaints_popup.scss */
+/* line 176, ../sass/_arguments_complaints_popup.scss */
 .steps-line.arg-dunStep div:after, .steps-line.arg-nextStep div:after {
   background-color: #00aeef;
 }
-/* line 92, ../sass/_arguments_complaints_popup.scss */
+/* line 181, ../sass/_arguments_complaints_popup.scss */
 .steps-line:first-child {
   width: 4%;
 }
-/* line 94, ../sass/_arguments_complaints_popup.scss */
+/* line 183, ../sass/_arguments_complaints_popup.scss */
 .steps-line:first-child span {
   right: auto;
   left: 0;
   width: 50px;
 }
-/* line 101, ../sass/_arguments_complaints_popup.scss */
+/* line 190, ../sass/_arguments_complaints_popup.scss */
 .steps-line:nth-child(2) span {
   right: -14px;
 }
-/* line 106, ../sass/_arguments_complaints_popup.scss */
+/* line 195, ../sass/_arguments_complaints_popup.scss */
 .steps-line:nth-child(3) span {
   right: -14px;
 }
-/* line 112, ../sass/_arguments_complaints_popup.scss */
+/* line 201, ../sass/_arguments_complaints_popup.scss */
 .steps-line:last-child div:after {
-  right: 15px;
+  right: 32px;
 }
-/* line 117, ../sass/_arguments_complaints_popup.scss */
+/* line 205, ../sass/_arguments_complaints_popup.scss */
+.steps-line:last-child span {
+  bottom: -20px;
+  max-width: 80px;
+}
+/* line 210, ../sass/_arguments_complaints_popup.scss */
 .steps-line span {
   position: absolute;
   right: 0;
   bottom: 0;
   z-index: 1;
   font-size: 14px;
+  text-align: center;
   text-transform: uppercase;
-  color: #eff2f7;
+  color: #34383e;
 }
-/* line 126, ../sass/_arguments_complaints_popup.scss */
+/* line 220, ../sass/_arguments_complaints_popup.scss */
 .steps-line div {
   position: relative;
   top: 3px;
@@ -3973,37 +4086,25 @@ body#backend-login {
   height: 1px;
   background-color: #eff2f7;
 }
-/* line 133, ../sass/_arguments_complaints_popup.scss */
+/* line 227, ../sass/_arguments_complaints_popup.scss */
 .steps-line div:after {
   position: absolute;
   content: '';
-  top: -3px;
+  top: -4px;
   right: 0;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
   background-color: #eff2f7;
 }
 
-/* line 149, ../sass/_arguments_complaints_popup.scss */
+/* line 243, ../sass/_arguments_complaints_popup.scss */
 .arg-nextStep + li div {
   -webkit-animation: line 3s ease-in infinite;
   -o-animation: line 3s ease-in infinite;
   animation: line 3s ease-in infinite;
-}
-/* line 153, ../sass/_arguments_complaints_popup.scss */
-.arg-nextStep + li div:after {
-  -webkit-animation: bullet 3s ease-in infinite;
-  -o-animation: bullet 3s ease-in infinite;
-  animation: bullet 3s ease-in infinite;
-}
-/* line 159, ../sass/_arguments_complaints_popup.scss */
-.arg-nextStep + li span {
-  -webkit-animation: span 3s ease-in infinite;
-  -o-animation: span 3s ease-in infinite;
-  animation: span 3s ease-in infinite;
 }
 
 @keyframes line {
@@ -4017,29 +4118,7 @@ body#backend-login {
     background-color: #eff2f7;
   }
 }
-@keyframes bullet {
-  0% {
-    background-color: #eff2f7;
-  }
-  50% {
-    background-color: #00aeef;
-  }
-  100% {
-    background-color: #eff2f7;
-  }
-}
-@keyframes span {
-  0% {
-    color: #eff2f7;
-  }
-  50% {
-    color: #34383e;
-  }
-  100% {
-    color: #eff2f7;
-  }
-}
-/* line 199, ../sass/_arguments_complaints_popup.scss */
+/* line 261, ../sass/_arguments_complaints_popup.scss */
 .btn-div {
   float: left;
   margin-top: 30px;
@@ -4055,24 +4134,52 @@ body#backend-login {
   background-color: #00aeef;
   cursor: pointer;
 }
-/* line 213, ../sass/_arguments_complaints_popup.scss */
+/* line 275, ../sass/_arguments_complaints_popup.scss */
 .btn-div:hover {
   background-color: #10b8f7;
 }
 
-/* line 217, ../sass/_arguments_complaints_popup.scss */
+/* line 279, ../sass/_arguments_complaints_popup.scss */
 .argCompl-review {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 10px 0 10px 15px;
+  padding: 10px 3px 10px 13px;
   width: 100%;
-  max-height: 200px;
-  border: 1px solid #e0e3ea;
+  max-height: 198px;
+  border: 1px solid #d2d2d2;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
 }
-/* line 223, ../sass/_arguments_complaints_popup.scss */
-.argCompl-review p {
-  margin-right: 10px;
+/* line 288, ../sass/_arguments_complaints_popup.scss */
+.argCompl-review ul {
+  margin: 0;
+}
+/* line 291, ../sass/_arguments_complaints_popup.scss */
+.argCompl-review li {
+  overflow: hidden;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-right: 6px;
+  padding: 0 10px 0 23px;
+  color: #000;
+  font-size: 20px;
+  font-weight: 100;
+  line-height: 65px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid #d2d2d2;
+}
+/* line 303, ../sass/_arguments_complaints_popup.scss */
+.argCompl-review li:first-child {
+  margin-top: -10px;
+}
+/* line 306, ../sass/_arguments_complaints_popup.scss */
+.argCompl-review li:last-child {
+  margin-bottom: -10px;
+  border-bottom: none;
 }
 
 /* line 1, ../sass/_complaint_add.scss */
