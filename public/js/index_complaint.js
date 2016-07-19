@@ -1,5 +1,7 @@
 $(document).ready(function () {
     $('.select_all_complaint').click(function () {
+        debugger;
+        console.log(this)
         if ($(this).is(':checked')) {
             indexComplaint.selectAll();
         } else {
@@ -18,6 +20,7 @@ $(document).ready(function () {
     $('.change-status').click(function () {
         debugger;
         var status = $(this).attr("value");
+
         if(!$(this).hasClass("button_copy_deactive")){
             indexComplaint.changeStatus(status);
         }
@@ -42,8 +45,9 @@ $(document).ready(function () {
 
     $('.button-recall').click(function(){
         //if(currentStatus == 'submitted'){
+        if(!$(this).hasClass("button_copy_deactive")){
             indexComplaint.recall();
-        //}
+        }
     });
 
 });
@@ -55,6 +59,7 @@ var indexComplaint = {
     returnButton:false,
     inArchivButton:false,
     deleteButton:false,
+    recollButton:false,
     recall: function(){//todo: mabe we need to use changeStatus
         var data = JSON.stringify(this.selectedComplaint);
         $.ajax({
@@ -62,7 +67,14 @@ var indexComplaint = {
             url: '/complaint/recall/0',
             data: 'status=' + status + '&complaints=' + data,
             success: function (msg) {
-                console.log(msg);
+                $(".admin-popup-content p").text("Жалоба успешно отозвана!");
+                $('.admin-popup-close, .admin-popup-bg').on('click', function() {
+                    location.reload();
+                });
+                $(".admin-popup-wrap").show();
+                setTimeout( function(){
+                    location.reload();
+                }, 2000);
              /*   if(status == 'copy')
                     document.location.href = '/complaint/edit/'+msg;
                 else
@@ -75,6 +87,18 @@ var indexComplaint = {
 
         });
     },
+
+    getUrlVars: function(){
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    },
     activeButton: function (button) {
         if(button == '.button-copy'){
             this.copyButton = true;
@@ -84,6 +108,9 @@ var indexComplaint = {
         }
         if(button == '.to-delete'){
             this.deleteButton = true;
+        }
+        if(button == '.button-recall'){
+            this.recollButton = false;
         }
         $(button).removeClass('button_copy_deactive');
         $(button).addClass('button_copy_active');
@@ -97,6 +124,9 @@ var indexComplaint = {
         }
         if(button == '.to-delete'){
             this.deleteButton = false;
+        }
+        if(button == '.button-recall'){
+            this.recollButton = false;
         }
         $(button).removeClass('button_copy_active');
         $(button).addClass('button_copy_deactive');
@@ -116,6 +146,7 @@ var indexComplaint = {
             url: '/complaint/status',
             data: 'status=' + status + '&complaints=' + data,
             success: function (msg) {
+                debugger;
                 console.log(msg);
                 switch(status){
                     case 'copy':
@@ -155,6 +186,16 @@ var indexComplaint = {
                             location.reload();
                         }, 2000);
                     break;
+                    case 'recalled':
+                        $(".admin-popup-content p").text("Жалоба успешно отозвана!");
+                        $('.admin-popup-close, .admin-popup-bg').on('click', function() {
+                            location.reload();
+                        });
+                        $(".admin-popup-wrap").show();
+                        setTimeout( function(){
+                            location.reload();
+                        }, 2000);
+                        break;
                     default:
                         document.location.href = '/complaint/index';
                     break
@@ -192,68 +233,148 @@ var indexComplaint = {
             'id':id,
             'status': jQuery("input[name=jlist" + id + "]").parent().find('#current-status').val()
         });
-
+        switch (currentStatus){
+            case 'draft':
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                    this.deActiveButton('.button-recall');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                } else if(this.arrComplaint.length > 1){
+                    this.deActiveButton('.button-copy');
+                    this.deActiveButton('.button-recall');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                }
+            break;
+            case 'submitted':
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                    this.activeButton('.button-recall');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                } else if(this.arrComplaint.length > 1){
+                    this.deActiveButton('.button-copy');
+                    this.activeButton('.button-recall');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                }
+                break;
+            case 'under_consideration':
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                } else if(this.arrComplaint.length > 1){
+                    this.deActiveButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                }
+                break;
+            break;
+            case 'justified':
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                } else if(this.arrComplaint.length > 1){
+                    this.deActiveButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                }
+            break;
+            case 'unfounded':
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                } else if(this.arrComplaint.length > 1){
+                    this.deActiveButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                }
+            break;
+            case 'recalled':
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                } else if(this.arrComplaint.length > 1){
+                    this.deActiveButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                }
+            break;
+            case 'archive':
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                    this.activeButton('.set-active');
+                } else if(this.arrComplaint.length > 1){
+                    this.deActiveButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                    this.activeButton('.set-active');
+                }
+            break;
+            default:
+                var checkSame = true;
+                var current = this.arrComplaint[0].status;
+                this.deActiveButton('.button-copy');
+                this.deActiveButton('.button-recall');
+                this.deActiveButton('.to-archive');
+                this.deActiveButton('.to-delete');
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                }
+                for(var i = 0; i < this.arrComplaint.length; i++){
+                    switch(this.arrComplaint[i].status){
+                        case 'draft':
+                            this.activeButton('.to-archive');
+                            this.activeButton('.to-delete');
+                        break;
+                        case 'archive':
+                            this.activeButton('.to-archive');
+                            this.activeButton('.to-delete');
+                            this.activeButton('.set-active');
+                        break;
+                        case 'submitted':
+                            this.activeButton('.button-recall');
+                            this.activeButton('.to-archive');
+                            this.activeButton('.to-delete');
+                        break;
+                        case 'recalled':
+                            this.activeButton('.to-archive');
+                            this.activeButton('.to-delete');
+                        break;
+                        case 'under_consideration':
+                            this.activeButton('.to-archive');
+                            this.activeButton('.to-delete');
+                        break;
+                        case 'justified':
+                            this.activeButton('.to-archive');
+                            this.activeButton('.to-delete');
+                        break;
+                        case 'unfounded':
+                            this.activeButton('.to-archive');
+                            this.activeButton('.to-delete');
+                        break;
+                    };
+                    if(this.arrComplaint[i].status != current){
+                        checkSame = false;
+                    }
+                }
+            break;
+        }
 
         if(this.arrComplaint.length == 0){
             $(".c-cs-btns").removeClass("c-cs-btns-after");
             $(".button_copy_active").removeClass("button_copy_active");
+            $(".to-delete").removeClass("delete-active");
+            this.deActiveButton('.to-delete');
         }
 
-        if(this.arrComplaint.length == 1){
-            if(this.arrComplaint[0].status == 'draft' || this.arrComplaint[0].status == 'archive'){
-                this.activeButton('.button-copy');
-            }
-            if(this.arrComplaint[0].status == 'draft'){
-                this.activeButton('.to-archive');
-            }
-            if(this.arrComplaint[0].status == 'archive'){
-                this.deActiveButton('.to-archive');
-            }
-        }
-
-        if(this.arrComplaint.length > 1){
-            this.deActiveButton('.button-copy');
-            //$(".button-copy ").removeClass("button_copy_active");
-
-            var checkSame = true;
-            var current = this.arrComplaint[0].status;
-            var archive = false;
-            var draft   = false;
-            for(var i = 0; i < this.arrComplaint.length; i++){
-                if(this.arrComplaint[i].status == 'draft')     draft = true;
-                if(this.arrComplaint[i].status == 'archive')   archive = true;
-                if(this.arrComplaint[i].status != current){
-                    checkSame = false;
-                }
-            }
-
-            if(checkSame && draft){
-                this.activeButton('.to-archive');
-            }
-            if(draft && archive){
-                this.deActiveButton('.to-archive');
-            }
-        }
-
-
-        //if (this.selectedComplaint.length > 0) {
-        //    if (jQuery("input[name=jlist" + id + "]").parent().find('#current-status').val() != "archive") {
-        //        this.activeButton('.to-archive');
-        //        $(".to-archive").addClass("button_copy_active");
-        //    }
-        //    this.activeButton('.set-active');
-        //}
-        //if (this.selectedComplaint.length == 1) {
-        //    this.activeButton('.button-copy');
-        //    if(currentStatus == 'submitted')
-        //      this.activeButton('.button-recall');
-        //
-        //}else {
-        //    this.deActiveButton('.button-copy');
-        //    this.deActiveButton('.to-archive');
-        //    //if(currentStatus == 'submitted')
-        //       // this.deActiveButton('.button-recall');
-        //}
     },
     removeComplain: function (id) {
         debugger;
@@ -263,79 +384,209 @@ var indexComplaint = {
         }
 
         if(this.arrComplaint.length > 0){
+            $(".to-delete").addClass("delete-active");
             for(var i = 0; i < this.arrComplaint.length; i++){
                 if(this.arrComplaint[i].id == id) this.arrComplaint.splice(i, 1);
             }
         }
-
-
         if(this.arrComplaint.length == 0){
             $(".c-cs-btns").removeClass("c-cs-btns-after");
             $(".button_copy_active").removeClass("button_copy_active");
+            $(".to-delete").removeClass("delete-active");
+            this.deActiveButton('.to-delete');
         }
-
-        if(this.arrComplaint.length == 1){
-            if(this.arrComplaint[0].status == 'draft' || this.arrComplaint[0].status == 'archive'){
-                this.activeButton('.button-copy');
-            }
-            if(this.arrComplaint[0].status == 'draft'){
-                this.activeButton('.to-archive');
-            }
-            if(this.arrComplaint[0].status == 'archive'){
-                this.deActiveButton('.to-archive');
-            }
-        }
-
-        if(this.arrComplaint.length > 1){
-            this.deActiveButton('.button-copy');
-            //$(".button-copy ").removeClass("button_copy_active");
-
-            var checkSame = true;
-            var current = this.arrComplaint[0].status;
-            var archive = false;
-            var draft   = false;
-            for(var i = 0; i < this.arrComplaint.length; i++){
-                if(this.arrComplaint[i].status == 'draft')     draft = true;
-                if(this.arrComplaint[i].status == 'archive')   archive = true;
-                if(this.arrComplaint[i].status != current){
-                    checkSame = false;
+        switch (currentStatus){
+            case 'draft':
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                    this.deActiveButton('.button-recall');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                } else if(this.arrComplaint.length > 1){
+                    this.deActiveButton('.button-copy');
+                    this.deActiveButton('.button-recall');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
                 }
-            }
-            if(checkSame && draft){
-                this.activeButton('.to-archive');
-            }
-            if(draft && archive){
+            break;
+            case 'submitted':
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                    this.activeButton('.button-recall');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                } else if(this.arrComplaint.length > 1){
+                    this.deActiveButton('.button-copy');
+                    this.activeButton('.button-recall');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                }
+            break;
+            case 'under_consideration':
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                } else if(this.arrComplaint.length > 1){
+                    this.deActiveButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                }
+            break;
+            case 'justified':
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                } else if(this.arrComplaint.length > 1){
+                    this.deActiveButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                }
+            break;
+            case 'unfounded':
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                } else if(this.arrComplaint.length > 1){
+                    this.deActiveButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                }
+            break;
+            case 'recalled':
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                } else if(this.arrComplaint.length > 1){
+                    this.deActiveButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                }
+            break;
+            case 'archive':
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                    this.activeButton('.set-active');
+                } else if(this.arrComplaint.length > 1){
+                    this.deActiveButton('.button-copy');
+                    this.activeButton('.to-archive');
+                    this.activeButton('.to-delete');
+                    this.activeButton('.set-active');
+                }
+            break;
+            default:
+                var checkSame = true;
+                var current = this.arrComplaint[0].status;
+                this.deActiveButton('.button-copy');
+                this.deActiveButton('.button-recall');
                 this.deActiveButton('.to-archive');
-            }
+                this.deActiveButton('.to-delete');
+                if(this.arrComplaint.length == 1){
+                    this.activeButton('.button-copy');
+                }
+                for(var i = 0; i < this.arrComplaint.length; i++){
+                    switch(this.arrComplaint[i].status){
+                        case 'draft':
+                            this.activeButton('.to-archive');
+                            this.activeButton('.to-delete');
+                            break;
+                        case 'archive':
+                            this.activeButton('.to-archive');
+                            this.activeButton('.to-delete');
+                            this.activeButton('.set-active');
+                            break;
+                        case 'submitted':
+                            this.activeButton('.button-recall');
+                            this.activeButton('.to-archive');
+                            this.activeButton('.to-delete');
+                            break;
+                        case 'recalled':
+                            this.activeButton('.to-archive');
+                            this.activeButton('.to-delete');
+                            break;
+                        case 'under_consideration':
+                            this.activeButton('.to-archive');
+                            this.activeButton('.to-delete');
+                            break;
+                        case 'justified':
+                            this.activeButton('.to-archive');
+                            this.activeButton('.to-delete');
+                            break;
+                        case 'unfounded':
+                            this.activeButton('.to-archive');
+                            this.activeButton('.to-delete');
+                            break;
+                    };
+                    if(this.arrComplaint[i].status != current){
+                        checkSame = false;
+                    }
+                }
+            break;
         }
-        //if (this.selectedComplaint.length == 1)
-        //    this.activeButton('.button-copy');
-        //else
-        //    this.deActiveButton('.button-copy');
-        //
-        //if(this.selectedComplaint.length < 1) {
-        //    this.deActiveButton('.button-recall');
-        //    this.deActiveButton('.to-archive');
-        //    $(".to-archive").removeClass("button_copy_active");
-        //}
     },
     selectAll: function () {
         debugger;
+        var self = this;
+        var count = 0;
         this.deActiveButton('.button-copy');
-        $(".to-archive").addClass("button_copy_active");
-        if(currentStatus == 'submitted')
-            this.activeButton('.button-recall');
+        this.deActiveButton('.button-recall');
+        this.deActiveButton('.to-archive');
+        this.deActiveButton('.to-delete');
         $('.complaint-checkbox').each(function () {
+            var id = $(this).val();
+            var status = jQuery("input[name=jlist" + id + "]").parent().find('#current-status').val();
+            if(count < 1){
+                self.activeButton('.button-copy');
+            }else {
+                self.deActiveButton('.button-copy');
+            }
+            switch(status){
+                case 'draft':
+                    self.activeButton('.to-archive');
+                    self.activeButton('.to-delete');
+                    break;
+                case 'archive':
+                    self.activeButton('.to-archive');
+                    self.activeButton('.to-delete');
+                    self.activeButton('.set-active');
+                    break;
+                case 'submitted':
+                    self.activeButton('.button-recall');
+                    self.activeButton('.to-archive');
+                    self.activeButton('.to-delete');
+                    break;
+                case 'recalled':
+                    self.activeButton('.to-archive');
+                    self.activeButton('.to-delete');
+                    break;
+                case 'under_consideration':
+                    self.activeButton('.to-archive');
+                    self.activeButton('.to-delete');
+                    break;
+                case 'justified':
+                    self.activeButton('.to-archive');
+                    self.activeButton('.to-delete');
+                    break;
+                case 'unfounded':
+                    self.activeButton('.to-archive');
+                    self.activeButton('.to-delete');
+                    break;
+            };
             indexComplaint.selectedComplaint.push($(this).val());
+            count++;
             $(this).prop('checked', true);
         });
     },
     deSelectAll: function () {
-        debugger;
-        console.log(this.selectedComplaint);
-        $(".to-archive").removeClass("button_copy_active");
-        if(currentStatus == 'submitted')
-          this.deActiveButton('.button-recall');
+        this.deActiveButton('.button-copy');
+        this.deActiveButton('.button-recall');
+        this.deActiveButton('.to-archive');
+        this.deActiveButton('.to-delete');
         this.selectedComplaint = [];
         $('.complaint-checkbox').each(function () {
             $(this).prop('checked', false);
