@@ -592,6 +592,9 @@ var indexComplaint = {
         this.deActiveButton('.to-archive');
         this.deActiveButton('.to-delete');
         this.deActiveButton('.set-active');
+        $(".c-cs-btns").removeClass("c-cs-btns-after");
+        $(".button_copy_active").removeClass("button_copy_active");
+        $(".to-delete").removeClass("delete-active");
         this.selectedComplaint = [];
         $('.complaint-checkbox').each(function () {
             $(this).prop('checked', false);
