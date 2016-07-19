@@ -233,6 +233,7 @@ var indexComplaint = {
             'id':id,
             'status': jQuery("input[name=jlist" + id + "]").parent().find('#current-status').val()
         });
+        this.deActiveButton('.button-recall');
         switch (currentStatus){
             case 'draft':
                 if(this.arrComplaint.length == 1){
@@ -311,6 +312,7 @@ var indexComplaint = {
                     this.activeButton('.to-archive');
                     this.activeButton('.to-delete');
                     this.activeButton('.set-active');
+                    this.deActiveButton('.button-recall');
                 } else if(this.arrComplaint.length > 1){
                     this.deActiveButton('.button-copy');
                     this.activeButton('.to-archive');
@@ -397,6 +399,7 @@ var indexComplaint = {
             $(".to-delete").removeClass("delete-active");
             this.deActiveButton('.to-delete');
         }
+        this.deActiveButton('.button-recall');
         switch (currentStatus){
             case 'draft':
                 if(this.arrComplaint.length == 1){
@@ -474,6 +477,7 @@ var indexComplaint = {
                     this.activeButton('.to-archive');
                     this.activeButton('.to-delete');
                     this.activeButton('.set-active');
+                    this.deActiveButton('.button-recall');
                 } else if(this.arrComplaint.length > 1){
                     this.deActiveButton('.button-copy');
                     this.activeButton('.to-archive');
