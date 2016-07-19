@@ -335,7 +335,9 @@ var indexComplaint = {
                             this.activeButton('.to-delete');
                         break;
                         case 'archive':
-                            this.activeButton('.to-archive');
+                            if(this.arrComplaint[i].status != 'archive'){
+                                this.activeButton('.to-archive');
+                            }
                             this.activeButton('.to-delete');
                             this.activeButton('.set-active');
                         break;
@@ -496,7 +498,9 @@ var indexComplaint = {
                             this.activeButton('.to-delete');
                             break;
                         case 'archive':
-                            this.activeButton('.to-archive');
+                            if(this.arrComplaint[i].status != 'archive'){
+                                this.activeButton('.to-archive');
+                            }
                             this.activeButton('.to-delete');
                             this.activeButton('.set-active');
                             break;
