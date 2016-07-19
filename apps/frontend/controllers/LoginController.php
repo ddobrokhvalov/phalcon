@@ -57,6 +57,10 @@ class LoginController extends Controller
                 )
             );
             if ($user != false) {
+                if($user->status == 0){
+                    $this->flashSession->error('Вы были заблокированы администратором!');
+                    return $this->response->redirect('/?block=true');
+                }
                 $this->_registerSession($user);
                 return $this->dispatcher->forward(
                     array(
@@ -64,7 +68,7 @@ class LoginController extends Controller
                         'action' => 'index'
                     )
                 );
-            } else {
+            }  else {
                 $this->flashSession->error('Имя пользователя или пароль введен не верно');
                 return $this->response->redirect('/');
             }

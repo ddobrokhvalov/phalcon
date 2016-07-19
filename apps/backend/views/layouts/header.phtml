@@ -63,11 +63,3 @@
     <div class="modal-close"></div>
 </div>
 <div id="overlay"></div>
-<script type="text/javascript">
-    $(".modal-close").click(function(){
-        $('#overlay').fadeOut(400,
-            function(){
-                $(this).parent().css('display', 'none');
-            });
-    });
-</script>

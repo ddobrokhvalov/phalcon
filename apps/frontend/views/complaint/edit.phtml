@@ -1,9 +1,9 @@
 <div class="content edit-complaint-page {% if complaint.status == 'draft' and action_edit === true %}edit-now {% endif %}">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
-            <div class="c-cnt-pagename">
-                Важно, нельзя скопировать документацию
-            </div>
+<!--            <div class="c-cnt-pagename">-->
+<!--                Важно, нельзя скопировать документацию-->
+<!--            </div>-->
 
             <div class="c-jadd1-1">
                 <div class="c-jadd1-1-h">
@@ -35,7 +35,7 @@
                     </div>
 
                 </div>
-                <div class="c-jadd1-1-b">
+                <div class="c-jadd1-1-b" edit="{{ complaint.id }}">
                     {% if edit_now %}
                         <a class="grey" href="#" onclick="return false;">Редактировать</a>
                     {% elseif complaint.status == 'draft' %}
@@ -45,12 +45,12 @@
                     {% endif %}
                     <a class="button-copy-edit-page" value="{{ complaint.id }}" >Копировать</a>
                     {% if complaint.status == 'submitted' %}
-                      <a  href="/complaint/recall/{{ complaint.id }}">Отозвать</a>
+                      <a  href="/complaint/recall/{{ complaint.id }}" value="recalled">Отозвать</a>
                     {% else %}
                         <a class="grey" href="#">Отозвать</a>
                     {% endif %}
-                    <a href="#" {% if complaint.status == 'archive' %}class="grey" onclick="return false;"{% endif %}>В архив</a>
-                    <a href="#">Удалить</a>
+                    <a href="#" {% if complaint.status == 'archive' %}class="grey" onclick="return false;"{%else%} class="change-status to-archive button_copy_active" {% endif %} value="archive">В архив</a>
+                    <a href="/complaint/delete/{{ complaint.id }}" class="change-status to-delete" value="delete">Удалить</a>
                     {% if complaint.status == 'draft' %} <a href="#" class="c-jadd1-1-b-btn">Отправить в УФАС</a> {%
                     endif %}
                 </div>
@@ -152,14 +152,14 @@
                                 <div class="complaint-attachment">
                                     <div class="file-wrapper">
                                         <div class="text-above">Прикрепить файлы</div>
-                                        <input id="upload-files" type="file" multiple name="upload-files[]">
+                                        <input id="upload-files" type="file" multiple="multiple" name="upload-files[]">
                                     </div>
                                     
                                     <script type="text/javascript">
+
                                         jQuery(document).ready(function(){
                                             jQuery('#upload-files').change(function(){
                                                 var cnt = jQuery('#upload-files')[0].files.length;
-                                                var i = 0;
                                                 var html = '';
                                                 for (i = 0; i < cnt; i++) {
                                                     var file_data = jQuery('#upload-files')[0].files[i]['name'].split('.');
@@ -257,7 +257,7 @@
                     <div class="c-jd3-cb-answ">
                         {% if item['admin'].id is defined %}
                         <div class="c-jd3-cb-answ-a">
-                            <img src="images/img-urist.png" alt="">
+                            <img src="/files/avatars/{{item['admin'].avatar}}" alt="">
                             <b>
                                 {{ item['admin'].name }}
                             </b>
@@ -300,6 +300,7 @@
 {% endif %}
 <script>
     //$(document).ready(function(){
+        debugger;
         auction.data['complaint_id'] = '{{complaint.id }}';
 
         auction.data['type'] = '{{complaint.type }}';
@@ -316,11 +317,17 @@
         auction.setData();
         {% if complaint.status == 'draft' and action_edit === true %}
             var templates = {};
+            var arr_sub = {};
             {% for argument in arguments  %}
                 {% for template in argument['templates']  %}
                    templates[{{template.id}}] = '{{template.text}}';
                 {% endfor %}
             {% endfor %}
+            {% if arr_sub_cat is defined  %}
+                {% for sub in arr_sub_cat %}
+                    arr_sub[{{sub['id']}}] = "{{sub['text']}}";
+                {% endfor %}
+            {% endif %}
             var categories_id = $("#arguments_id").val().split(",");
             $.each(categories_id, function( index, value ) {
                 if (index == {{ complaint_text_order }}) {
@@ -329,7 +336,11 @@
                 /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
                 $(".category-container input#jd2cbb" + value).prop('checked', true);
                 var cat = $(".category-container input#jd2cbb" + value).attr("category");
-                argument.addArgument(value, cat);
+                if(Object.keys(arr_sub).length){
+                    argument.addArgument(value, cat, arr_sub[cat]);
+                } else {
+                    argument.addArgument(value, cat);
+                }
             });
             setTimeout(function(){
                 applicant.id = ["{{complaint.applicant_id}}"];
@@ -343,3 +354,34 @@
     <div class="pop-done-txt"></div>
     <div class="modal-close"></div>
 </div>
+
+<style>
+    .admin-popup-content.edit-popup{
+        text-align: center;
+    }
+    .admin-popup-content.edit-popup p{
+        font-size: 25px;
+    }
+    .admin-popup-content.edit-popup h6 {
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 19px;
+        font-size: 31px;
+        line-height: 64px;
+        font-weight: 100;
+        color: #ffffff;
+        text-align: center;
+    }
+    .admin-popup-content.edit-popup{
+        width: 500px;
+    }
+</style>
+<article class="admin-popup-wrap" style="display:none;">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content edit-popup">
+        <div class="admin-popup-close"></div>
+        <h6>Успех!</h6>
+        <p></p>
+    </div>
+</article>
+

@@ -77,6 +77,7 @@ class Module
 						));
 						$compiler = $volt->getCompiler();
                         $compiler->addFunction('truncate', function ($str) {return "mb_substr ($str) . '...'";});
+                        $compiler->addFunction('delete_slash', function ($str) {return "str_replace('\r\n', ' ', $str)";});
 						$compiler->addFunction('nl2br', function ($str) {return "nl2br($str)";});
                         $compiler->addFilter('strtotime', 'strtotime');
                         $compiler->addFilter('count', 'count');

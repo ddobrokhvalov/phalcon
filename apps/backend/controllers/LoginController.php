@@ -42,13 +42,7 @@ class LoginController extends ControllerBase
         }
         if ($auth)
             $this->session->destroy();
-        return $this->dispatcher->forward(
-            array(
-                'controller' => 'login',
-                'action' => 'index'
-            )
-        );
-
+        return $this->response->redirect('/admin/login/index');
     }
 
     public function startAction()

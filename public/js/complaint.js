@@ -43,6 +43,11 @@ $(document).ready(function () {
         if (complaint.prepareData())
             complaint.saveAsDraft();
     });
+    $('#back_complaint_save').click(function (evt) {
+        evt.preventDefault();
+        if (complaint.prepareData())
+            complaint.saveAsDraft();
+    });
     $('.alert-box').on('click', 'div', function () {
         $('.alert-wrap, .alert-box').fadeOut(400);
     });
@@ -122,12 +127,12 @@ var complaint = {
 
         if (!auction.auctionReady)
             return false;
-//bugger;
+
         $('#complaint_name').removeClass('c-inp-done');
         $('#complaint_name').removeClass('c-inp-error');
         this.complainName = $('#complaint_name').val();
-        if (!validator.text(this.complainName, 3, 200)) {
-            $('#complaint_name').addClass('c-inp-error');
+        if (!validator.text(this.complainName, 3, 255)) {
+            this.showError('#complaint_name', 'Ошибка! Полное наименование должно быть от 3 до 255 символов', 'before');
             return false;
         }
         $('#complaint_name').addClass('c-inp-done');
@@ -148,7 +153,7 @@ var complaint = {
 
         if (!validator.text(this.complainText, 2, 20000)) {
             // alert('текст жалобы должен быть');
-            showStyledPopupMessage("#pop-before-ask-question", "Уведомление", "Текст жалобы должен быть");
+            showStyledPopupMessage("#pop-before-ask-question", "Уведомление", "Не добавлен довод!");
             return false;
         }
 
@@ -165,13 +170,22 @@ var complaint = {
         return true;
     },
     saveAsDraft: function () {
-    
         $("#auctionData").val(this.auctionData);
         $("#arguments_data").val(complaint.arguments_data + "");
         //$("#complaint_text").val(this.complainText);
         $("#complaint_name").val(this.complainName);
         $("#applicant_id").val(applicant.id);
-        $("#add-complaint-form").submit();
+
+        $(".add-popup-wrap p").text("Жалоба успешно сохранена!");
+        $('.admin-popup-close, .admin-popup-bg').on('click', function() {
+            $("#add-complaint-form").submit();
+        });
+        $(".add-popup-wrap").show();
+        setTimeout( function(){
+            $("#add-complaint-form").submit();
+        }, 2000);
+
+
         /*$.ajax({
             type: 'POST',
             url: '/complaint/create',
@@ -188,6 +202,21 @@ var complaint = {
         });*/
 
     },
+    showError: function (element, msg, insert_here) {
+        this.result = false;
+        $(element).removeClass('c-inp-done');
+        $(element).addClass('c-inp-error');
+        $(element).parent().children('.c-inp-err-t').remove();
+        switch (insert_here) {
+            case 'before':
+                $(element).before('<div class="c-inp-err-t">' + msg + '</div>');
+                break;
+            default:
+                $(element).parent().append('<div class="c-inp-err-t">' + msg + '</div>');
+                break;
+        }
+
+    },
     filterComplaintByApplicant: function (applicant_id) {
         var url = window.location.href;
 /*return false;
@@ -196,11 +225,35 @@ var complaint = {
         //if ((url.indexOf('/complaint/add') == -1 && url.indexOf('applicant_id=' + applicant_id.join(",")) == -1) || splitter[1] != "") {
 
             if (typeof currentStatus != "undefined" && currentStatus != '0') {
-                window.location.href = '/complaint/index?status=' + currentStatus + '&applicant_id=' + applicant_id.join(",");
+                $.ajax({
+                    type: 'POST',
+                    url: '/applicant/ajaxSetApplicantId',
+                    data: 'applicant_id=' + applicant_id.join(","),
+                    success: function (msg) {
+                        console.log(msg)
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+
+                });
+                //window.location.href = '/complaint/index?status=' + currentStatus + '&applicant_id=' + applicant_id.join(",");
             } else {
-                var to_url = '/complaint/index?applicant_id=' + applicant_id.join(",");
-                console.log(to_url);
-                window.location.href = to_url;
+                $.ajax({
+                    type: 'POST',
+                    url: '/applicant/ajaxSetApplicantId',
+                    data: 'applicant_id=' + applicant_id.join(","),
+                    success: function (msg) {
+                        console.log(msg)
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+
+                });
+                //var to_url = '/complaint/index?applicant_id=' + applicant_id.join(",");
+                //console.log(to_url);
+                //window.location.href = to_url;
             }
         }
 
@@ -213,7 +266,8 @@ var argument = {
     addArgument: function (id, cat_id, complaint_text) {
 
         complaint_text = complaint_text || "";
-        templates["just_text"] = "Вы можете ввести свой текст здесь";
+        //templates["just_text"] = "Вы можете ввести свой текст здесь";
+        templates["just_text"] = "";
         if (complaint.needCat3 === true && cat_id == 3) {
 
             complaint.selectCat3 = true;
@@ -240,14 +294,14 @@ var argument = {
             '<span>' + templateName + '</span>' +
             '<div class="c-edit-j-h-ctr">' +
             '<a  class="template-edit-control down c-edit-j-h-ctr1">Переместить ниже</a> <a class="template-edit-control up c-edit-j-h-ctr2">Переместить выше</a>' +
-            '<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' +
+            //'<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' +
             '</div>' +
             '</div>' +
             '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" >' +
             c_text +
             '</div></div></div>';
         $('#edit_container').append(html);
-        currTextArea = 'edit_textarea_' + id;
+        var currTextArea = 'edit_textarea_' + id;
         setTimeout(function () {
             if (drake !== false) {
                 drake.destroy(true);
@@ -366,7 +420,6 @@ var auction = {
         }
         ,
         setData: function () {
-
             $('#type').html(this.data.type);
             $('#purchases_made').html(this.data.purchases_made);
             $('#purchases_name').html(this.data.purchases_name);

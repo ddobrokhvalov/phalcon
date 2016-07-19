@@ -7,8 +7,8 @@ html, body {
 	height: 100%
 }
 body {
-	position: relative;
-	font-family: 'Open Sans', sans-serif;
+	position: relative !important;
+	font-family: 'Open Sans', sans-serif !important;
 }
 input, textarea {
 	outline: none; 
@@ -109,6 +109,8 @@ ul.status-black, .notification-number-box.status-black {
 @import "admin_page";
 @import "applicant_page";
 @import "user_page";
+@import "arguments_complaints_popup";
+@import "complaint_add";
 
 @media (max-width: 1640px) {
 	.page-wrap, .header-wrap #admin-header {

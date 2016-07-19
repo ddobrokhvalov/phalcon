@@ -8,3 +8,8 @@
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
+@mixin plsh($color) {
+	input::-webkit-input-placeholder  { color:$color; }
+	input:-ms-input-placeholder { color:$color; }
+	input:-moz-placeholder { color:$color; }
+}

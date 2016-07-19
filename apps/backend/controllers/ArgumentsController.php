@@ -192,4 +192,11 @@ class ArgumentsController  extends ControllerBase
         $this->view->disable();
         echo json_encode($data);
     }
+
+    public function getAjaxCategoryAction(){
+        $obj = new ArgumentsCategory();
+        $data = $obj->getAllCategory();
+        $data = $obj->buildTreeArray( $data );
+        echo json_encode( $data );
+    }
 }

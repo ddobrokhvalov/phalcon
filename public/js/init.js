@@ -38,21 +38,21 @@ $(document).ready(function() {
 
 jQuery(document).ready(function($) {
     // the correct location of the sidebar
-    if ($('.content .wrapper').hasClass('wrap-with-menuPanel')) {
-        var windowWidth = $(window).width() + 17,
-            objCont = $('.content .wrap-with-menuPanel'),
-            objHead = $('.c-header .wrapper');
-
-        if (windowWidth > 1300) {
-            var off = objCont.offset().left - 284,
-                rounding = Math.round(off / 2);
-
-            if (off > 1) {
-                objCont.css({marginRight: rounding}); 
-                objHead.css({marginRight: rounding}); 
-            }   
-        }
-    }
+    //if ($('.content .wrapper').hasClass('wrap-with-menuPanel')) {
+    //    var windowWidth = $(window).width() + 17,
+    //        objCont = $('.content .wrap-with-menuPanel'),
+    //        objHead = $('.c-header .wrapper');
+    //
+    //    if (windowWidth > 1300) {
+    //        var off = objCont.offset().left - 284,
+    //            rounding = Math.round(off / 2);
+    //
+    //        if (off > 1) {
+    //            objCont.css({marginRight: rounding});
+    //            objHead.css({marginRight: rounding});
+    //        }
+    //    }
+    //}
     // adding stylized scrolling ыidebar
    /* if ($(window).height() <= 860) {
         $('.left-menu-holder').addClass('scroll-pane');
@@ -164,7 +164,7 @@ $(document).ready(function(){
     jQuery(function(f){
         var element = f('#chsort');
         f(window).scroll(function(){
-            element['fade'+ (f(this).scrollTop() > 400 ? 'In': 'Out')](200);
+            element['fade'+ (f(this).scrollTop() > 200 ? 'In': 'Out')](200);
         });
     });
 });

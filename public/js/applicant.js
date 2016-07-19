@@ -31,6 +31,7 @@ $(document).ready(function () {
     });
 
     $('.select_applicant').click(function () {
+        debugger;
         /*if (applicant.id) {
             $('#cl' + applicant.id).prop('checked', false);
         }*/
@@ -58,10 +59,13 @@ $(document).ready(function () {
     });
 
     $('.c-content input[type="checkbox"]').click(function() {
+        debugger;
         if ($(this).prop('checked')) {
             $('.c-cs-btns').addClass('c-cs-btns-after');
         } else {
-            $('.c-cs-btns').removeClass('c-cs-btns-after');
+            if($( "input[class='complaint-checkbox']:checked" ).length == 0) {
+                $('.c-cs-btns').removeClass('c-cs-btns-after');
+            }
         }
     });
 });
@@ -115,22 +119,36 @@ var applicant = {
         this.type = 'fizlico';
     },
     selectApplicant: function (id, name, redirect, is_remove, is_select_first) {
+        debugger;
         if (!is_remove) {
             this.id.push(id);
             if ($('.applicant-name-container').html().length) {
                 $('.applicant-name-container').html($('.applicant-name-container').html().trim() + ", " + name.trim());
             } else {
-                $('.applicant-name-container').html(name.trim());
+                if(name != undefined) {
+                    $('.applicant-name-container').html(name.trim());
+                }
             }
+        }else {
+            var temp = $('.applicant-name-container').html();
+            temp = temp.replace(name.trim(),'');
+            temp = temp.split(',');
+            for (var i = temp.length; i > 0; i--) {
+                if (temp[i] == " ") {
+                    temp.splice(i,1);
+                }
+            }
+            $('.applicant-name-container').html(temp.join(','));
         }
         if (this.id.length == 0) {
             this.id.push("All");
+            $('.applicant-name-container').empty();
         }
-        //if(typeof currentPage !== 'undefined' && currentPage == 'complaint/index' && redirect ){
+        ////if(typeof currentPage !== 'undefined' && currentPage == 'complaint/index' && redirect ){
         if (!is_select_first) {
             complaint.filterComplaintByApplicant(this.id);
         }
-        //}
+       // }
     },
     selectFirst: function (id, redirect) {
         id = id.split(',');

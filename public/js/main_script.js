@@ -1,4 +1,11 @@
 jQuery(document).ready(function($) {
+    $(".modal-close").click(function(){
+        var obj = $(this);
+        $('#overlay').fadeOut(400,
+            function(){
+                $(obj).parent().css('display', 'none');
+            });
+    });
     $('.lawyer-wrap .lebel-checkbox').click(function(evt){
         evt.preventDefault();
         if($(this).hasClass('main-active-checkbox')){
@@ -267,9 +274,13 @@ jQuery(document).ready(function($) {
         }
         var status = $(this).find('span').attr('data-status');
         var complaintId = $(this).parent().parent().parent().parent().find('li:first-child #complaint-id').val();
-        if (status.length && complaintId != undefined) {
-            change_complaint_status(complaintId, status);
-        }
+        /*if (status.length && complaintId != undefined) {
+            if ($(".admin-main-wrap").hasClass("complaints-list")) {*/
+                show_confirm_changing_status_popup(complaintId, status);
+            /*} else {
+                change_complaint_status(complaintId, status);
+            }
+        }*/
     });
     $("#show-send-massage-dialog").click(function(){
         var id_array = [];
@@ -389,6 +400,14 @@ jQuery(document).ready(function($) {
         }
     });
     $('.ch-r-m-text').css('height', ul_mes_height + 'px');
+
+    $('.opacity-cap-compl').click(function() {
+        $('.add-complaint-page').next().fadeIn();
+    });
+
+    $('.argComp .current-option').click(function() {
+        $(this).find('div').toggleClass('transDiv');
+    });
 });
 var userPageLtContentLi = 0;
 //status block
@@ -765,6 +784,17 @@ function delete_complaint(complaint_id) {
         });
     }
     $('.confirm-modal-lg').modal('hide');
+}
+
+function show_confirm_changing_status_popup(complaint_id, status) {
+    if (complaint_id && status.length) {
+        showStyledPopupMessageWithButtons(
+            "#pop-confirm-change-complaint-status",
+            "Подтвердите действие",
+            "Вы действительно хотите сменить статус?",
+            "change_complaint_status(" + complaint_id +", '" + status + "');"
+        );
+    }
 }
 
 function change_complaint_status(complaint_id, status) {
@@ -1363,6 +1393,18 @@ function showStyledPopupMessage(popup, title, message) {
     });
 }
 
+function showStyledPopupMessageWithButtons(popup, title, message, click_function) {
+    $(popup + " h2").html(title);
+    $(popup + " .popup-content").html(message);
+    $(popup + " .popup-button.apr").attr("onclick", click_function);
+    $('#overlay').fadeIn(400,
+    function(){
+        $(popup)
+            .css('display', 'block')
+            .animate({opacity: 1, top: '50%'}, 200);
+    });
+}
+
 function hide_arguments() {
     console.log("hidden");
 }
@@ -1398,7 +1440,7 @@ function ajaxProfileUpdate() {
 		enctype: 'multipart/form-data',
 		success : function(data) {
 			if(data['success']==true) {
-                $('.admin-set-top').trigger('click');
+                $('.admin-set-top').click();
                 showStyledPopupMessage("#styled-popup-container", "Уведомление", "Ваш профиль успешно обновлен");
             }
 			else {

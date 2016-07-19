@@ -8,10 +8,13 @@
                 </div>
                 <div class="c-cs-btns">
                     <a class="button-copy">Копировать</a>
-
-                    <a class="change-status" value="recalled" >Отозвать</a>
+                    <a class="button-recall" value="recalled" >Отозвать</a>
+                    {% if menu_status == 'archive' %}
+                    <a class="change-status set-active" value="activate" >Активировать</a>
+                    {% else %}
                     <a class="change-status to-archive" value="archive" >В архив</a>
-                    <a class="change-status" value="delete">Удалить</a>
+                    {% endif %}
+                    <a class="change-status to-delete" value="delete">Удалить</a>
                 </div>
             </div>
         </div>
@@ -38,7 +41,7 @@
                     {% else %}
                     <a class="change-status to-archive" value="archive" >В архив</a>
                     {% endif %}
-                    <a class="change-status" value="delete">Удалить</a>
+                    <a class="change-status to-delete" value="delete">Удалить</a>
                 </div>
             </div>
 
@@ -136,3 +139,4 @@
 var currentPage = 'complaint/index';
 var currentStatus ='{{ status }}';
 </script>
+
