@@ -3859,7 +3859,7 @@ body#backend-login {
   background: #b8b8b8;
 }
 /* line 41, ../sass/_arguments_complaints_popup.scss */
-.argComp .mCSB_inside > .mCSB_container {
+.argComp .custom-options .mCSB_inside > .mCSB_container {
   margin-right: 40px;
 }
 
@@ -4120,6 +4120,7 @@ body#backend-login {
 }
 /* line 261, ../sass/_arguments_complaints_popup.scss */
 .btn-div {
+  display: none;
   float: left;
   margin-top: 30px;
   width: 202px;
@@ -4134,12 +4135,12 @@ body#backend-login {
   background-color: #00aeef;
   cursor: pointer;
 }
-/* line 275, ../sass/_arguments_complaints_popup.scss */
+/* line 276, ../sass/_arguments_complaints_popup.scss */
 .btn-div:hover {
   background-color: #10b8f7;
 }
 
-/* line 279, ../sass/_arguments_complaints_popup.scss */
+/* line 280, ../sass/_arguments_complaints_popup.scss */
 .argCompl-review {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -4152,11 +4153,11 @@ body#backend-login {
   -moz-border-radius: 8px;
   border-radius: 8px;
 }
-/* line 288, ../sass/_arguments_complaints_popup.scss */
+/* line 289, ../sass/_arguments_complaints_popup.scss */
 .argCompl-review ul {
   margin: 0;
 }
-/* line 291, ../sass/_arguments_complaints_popup.scss */
+/* line 292, ../sass/_arguments_complaints_popup.scss */
 .argCompl-review li {
   overflow: hidden;
   -webkit-box-sizing: border-box;
@@ -4172,11 +4173,11 @@ body#backend-login {
   text-overflow: ellipsis;
   border-bottom: 1px solid #d2d2d2;
 }
-/* line 303, ../sass/_arguments_complaints_popup.scss */
+/* line 304, ../sass/_arguments_complaints_popup.scss */
 .argCompl-review li:first-child {
   margin-top: -10px;
 }
-/* line 306, ../sass/_arguments_complaints_popup.scss */
+/* line 307, ../sass/_arguments_complaints_popup.scss */
 .argCompl-review li:last-child {
   margin-bottom: -10px;
   border-bottom: none;
