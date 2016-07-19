@@ -541,9 +541,14 @@ var indexComplaint = {
         this.deActiveButton('.button-recall');
         this.deActiveButton('.to-archive');
         this.deActiveButton('.to-delete');
+        this.arrComplaint = [];
         $('.complaint-checkbox').each(function () {
             var id = $(this).val();
             var status = jQuery("input[name=jlist" + id + "]").parent().find('#current-status').val();
+            self.arrComplaint.push({
+                'id':id,
+                'status': jQuery("input[name=jlist" + id + "]").parent().find('#current-status').val()
+            });
             if(count < 1){
                 self.activeButton('.button-copy');
             }else {
@@ -595,6 +600,7 @@ var indexComplaint = {
         $(".c-cs-btns").removeClass("c-cs-btns-after");
         $(".button_copy_active").removeClass("button_copy_active");
         $(".to-delete").removeClass("delete-active");
+        this.arrComplaint = [];
         this.selectedComplaint = [];
         $('.complaint-checkbox').each(function () {
             $(this).prop('checked', false);
