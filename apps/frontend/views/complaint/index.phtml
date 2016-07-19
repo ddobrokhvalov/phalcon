@@ -140,3 +140,39 @@ var currentPage = 'complaint/index';
 var currentStatus ='{{ status }}';
 </script>
 
+<div id="pop-before-ask-question" class="modal_div">
+    <h2></h2>
+    <div class="pop-done-txt"></div>
+    <div class="modal-close"></div>
+</div>
+
+<style>
+    .admin-popup-content.index-popup{
+        text-align: center;
+    }
+    .admin-popup-content.index-popup p{
+        font-size: 25px;
+    }
+    .admin-popup-content.index-popup h6 {
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 19px;
+        font-size: 31px;
+        line-height: 64px;
+        font-weight: 100;
+        color: #ffffff;
+        text-align: center;
+    }
+    .admin-popup-content.index-popup{
+        width: 500px;
+    }
+</style>
+<article class="admin-popup-wrap" style="display:none;">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content edit-popup">
+        <div class="admin-popup-close"></div>
+        <h6>Успех!</h6>
+        <p></p>
+    </div>
+</article>
+
