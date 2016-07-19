@@ -1315,7 +1315,7 @@ li.all-message-link span {
     margin: 0 5px 0 0;
 }
 .c-cs-btns a:nth-child(4) {
-    color: #00aeef;
+    /*color: #00aeef;*/
 }
 #chsort {
     background: #f7f8fa none repeat scroll 0 0;
@@ -3275,4 +3275,8 @@ input::-ms-clear {
 }
 input#upload-files::-webkit-file-upload-button {
     CURSOR: POINTER;
+}
+
+.delete-active{
+    color: #00aeef!important;
 }

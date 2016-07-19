@@ -59,10 +59,13 @@ $(document).ready(function () {
     });
 
     $('.c-content input[type="checkbox"]').click(function() {
+        debugger;
         if ($(this).prop('checked')) {
             $('.c-cs-btns').addClass('c-cs-btns-after');
         } else {
-            $('.c-cs-btns').removeClass('c-cs-btns-after');
+            if($( "input[class='complaint-checkbox']:checked" ).length == 0) {
+                $('.c-cs-btns').removeClass('c-cs-btns-after');
+            }
         }
     });
 });
