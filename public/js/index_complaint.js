@@ -591,6 +591,7 @@ var indexComplaint = {
         this.deActiveButton('.button-recall');
         this.deActiveButton('.to-archive');
         this.deActiveButton('.to-delete');
+        this.deActiveButton('.set-active');
         this.selectedComplaint = [];
         $('.complaint-checkbox').each(function () {
             $(this).prop('checked', false);
