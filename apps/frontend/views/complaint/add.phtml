@@ -244,14 +244,13 @@
                             <div></div>
                         </div>
                         <ul class="custom-options mCustomScrollbar">
-                            <li class="argo" data-value="">Lorem ipsum.</li>
-                            <li class="argo" data-value="">Lorem ipsum.</li>
-                            <li class="argo" data-value="">Lorem ipsum.</li>
-                            <li class="argo" data-value="">Lorem ipsum.</li>
+                            {% for cat in categories%}
+                                <li class="argo" data-value="{{cat.id}}" data-parent="{{cat.parent_id}}">{{cat.name}}</li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
-                <div id="2_argComplSelect" class="select-holder" style="display: none">
+                <div id="2_argComplSelect" class="select-holder" style="">
                     <select name="" class="hidden-select">
                         <option value=""></option>
                         <option value=""></option>

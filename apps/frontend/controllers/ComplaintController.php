@@ -17,7 +17,7 @@ use Multiple\Library\PaginatorBuilder;
 use Multiple\Frontend\Models\Arguments;
 use Multiple\Frontend\Models\ArgumentsCategory;
 //use Multiple\Library\TrustedLibrary;
-use Multiple\Frontend\Models\ArgumentsCategory;
+
 
 class ComplaintController extends ControllerBase
 {
@@ -504,6 +504,10 @@ class ComplaintController extends ControllerBase
         switch($step){
             case 2:
                 $parent_id = $this->request->get('id');
+                if(!is_numeric($parent_id)){
+                    echo json_encode(array('error' => 'bad data'));
+                    exit;
+                }
                 $cat_arguments = ArgumentsCategory::find("parent_id = {$parent_id}");
                 foreach($cat_arguments as $cat){
                     $result['cat_arguments'][] = array(
@@ -516,6 +520,10 @@ class ComplaintController extends ControllerBase
             break;
             case 3:
                 $id         = $this->request->get('id');
+                if(!is_numeric($id)){
+                    echo json_encode(array('error' => 'bad data'));
+                    exit;
+                }
                 $parent_id  = ArgumentsCategory::findFirst($id);
                 $parent_id  = $parent_id->parent_id;
                 $cat_arguments = ArgumentsCategory::find("parent_id = {$id}");
@@ -541,9 +549,13 @@ class ComplaintController extends ControllerBase
             break;
             case 4:
                 $id         = $this->request->get('id');
-                $arguments = Arguments::find(array(
-                    'condition' => "category_id = {$id}"
-                ));
+                if(!is_numeric($id)){
+                    echo json_encode(array('error' => 'bad data'));
+                    exit;
+                }
+                $arguments = Arguments::query()
+                    ->where("category_id = {$id}")
+                    ->execute();
                 foreach($arguments as $argument){
                     $result['arguments'][] = array(
                         'id'        => $argument->id,
@@ -554,8 +566,6 @@ class ComplaintController extends ControllerBase
                 echo json_encode($result);
             break;
         }
-
-
         exit;
     }
 
