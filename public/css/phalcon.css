@@ -83,11 +83,15 @@ a:visited {
     text-decoration: none;
 }
 .wrapper {
-    /*margin: 0 0 0 500px;*/
     margin: 0 auto;
     min-height: calc(100%);
     position: relative;
     width: 1000px;
+}
+@media (max-width: 1617px) and (min-width: 1317px) {
+    .wrapper {
+        margin: 0 0 0 300px;
+    }
 }
 .mheader {
     float: left;
@@ -3004,10 +3008,12 @@ input[type="radio"]:checked + label {
     display: none;
 }
 }
-@media (max-width: 1299px) {
-.left-menu-block {
-    left: -242px;
+@media (max-width: 1317px) {
+    .left-menu-block {
+        left: -242px;
+    }
 }
+@media (max-width: 1299px) {
 .lm-opcl-btn2 {
     display: none;
 }
