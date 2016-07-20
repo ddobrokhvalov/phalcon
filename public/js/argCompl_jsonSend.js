@@ -8,7 +8,7 @@ $('.DALEE').click(function() {
 function sendRequest(data, resultTarget, answer_callback) {
     $.ajax({
         type: "POST",
-        url: "http://fas/complaint/ajaxCheckStep",
+        url: "http://fas/complaint/ajaxStepsAddComplaint",
         data: data,
         success: function(msg) {
             var answer = JSON && JSON.parse(msg) || $.parseJSON(msg);
