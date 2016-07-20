@@ -123,6 +123,7 @@ class ComplaintController extends ControllerBase
         $this->view->categories_id = implode(',', $categories_id);
         $this->view->arguments_id = implode(',', $arguments_id);
         $this->view->complaint_text_order = $complaint->complaint_text_order;
+
         $files_html = [];
         if ($complaint->fid) {
             $file_ids = unserialize($complaint->fid);
@@ -277,7 +278,7 @@ class ComplaintController extends ControllerBase
                     $u_arg->save();
                 }
             }
-            
+
             // Check all files with needed rules.
             if ($this->request->hasFiles() == true) {
                 $files_model = new Files();
@@ -378,7 +379,8 @@ class ComplaintController extends ControllerBase
                     $u_arg->save();
                 }
             }
-            
+
+            $data = $_FILES;
             // Check all files with needed rules.
             if ($this->request->hasFiles() == true) {
                 $files_model = new Files();
