@@ -175,38 +175,44 @@ class Complaint extends Model
         foreach ($data as $id) { //todo: make through db query this. 'id IN ()' is faster then ORM
                                  //todo: $complaint->checkComplaintOwner($v, $this->user->id) add this
          //   if ($this->checkComplaintOwner($id, $user_id)) {
-                $complaint = Complaint::findFirstById($id);
-                if(!$complaint || $complaint->status==$status || ($complaint->status!='submitted' && $status=='recall' && $user_id!='parser'))
-                    continue;
-                elseif ($status == 'activate') {  //This return from arhive. We need to check history and set last status.
-                    $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
-                    if($complainthistory)
-                        $this->changeStatus($complainthistory->old_status, [$id]);
-                    else
-                        $this->changeStatus('draft', [$id]);
-                }
-                elseif ($status == 'delete') {
-                    ComplaintMovingHistory::delete_history($id);                      
-                    $complaint->delete();
-                }elseif ($status == 'copy') {
-                    $newComplaint = new Complaint();
-                    foreach($complaint as $k=>$v)
-                        $newComplaint->$k = $v;
-                    $newComplaint->id = NULL;
-                    $newComplaint->complaint_name .= ' (Копия)';
-                    $newComplaint->status = 'draft';
-                    $newComplaint->fid = serialize(array());
-                    $newComplaint->save();
-                    return $newComplaint->id;
-                } else {
-                    $complaintmovinghistory = new ComplaintMovingHistory();
-                    $complaintmovinghistory->save(['complaint_id'=>$id, 'old_status'=>$complaint->status, 'new_status'=>$status]);
-                    $complaint->status = $status;
-                    $complaint->save();
-                }
-          //  } else {
-         //       continue;
-          //  }
+            $complaint = Complaint::findFirstById($id);
+            if(!$complaint || $complaint->status==$status) {
+                continue;
+            } elseif ($status == 'activate' ) {  //This return from arhive. We need to check history and set last status.
+                $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
+                if($complainthistory)
+                    $this->changeStatus($complainthistory->old_status, [$id]);
+                else
+                    $this->changeStatus('draft', [$id]);
+            } elseif ($status == 'delete') {
+                ComplaintMovingHistory::delete_history($id);
+                $complaint->delete();
+            } elseif ($status == 'copy') {
+                $newComplaint = new Complaint();
+                foreach($complaint as $k=>$v)
+                    $newComplaint->$k = $v;
+                $newComplaint->id = NULL;
+                $newComplaint->complaint_name .= ' (Копия)';
+                $newComplaint->status = 'draft';
+                $newComplaint->fid = serialize(array());
+                $newComplaint->save();
+                return $newComplaint->id;
+            } elseif ($status == 'recolled' && $complaint->status == 'submitted'){
+                $complaintmovinghistory = new ComplaintMovingHistory();
+                $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
+                $complaint->status = 'recolled';
+                $complaint->save();
+            } elseif ($status == 'archive') {
+                $complaintmovinghistory = new ComplaintMovingHistory();
+                $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
+                $complaint->status = 'archive';
+                $complaint->save();
+            } else {
+                $complaintmovinghistory = new ComplaintMovingHistory();
+                $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
+                $complaint->status = $status;
+                $complaint->save();
+            }
         }
     }
 

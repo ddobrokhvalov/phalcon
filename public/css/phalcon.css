@@ -1319,7 +1319,7 @@ li.all-message-link span {
     margin: 0 5px 0 0;
 }
 .c-cs-btns a:nth-child(4) {
-    color: #00aeef;
+    /*color: #00aeef;*/
 }
 #chsort {
     background: #f7f8fa none repeat scroll 0 0;
@@ -2421,7 +2421,8 @@ input[type="radio"]:checked + label {
     margin: 0 50px 0 0;
 }
 .c-edit-j-h-ctr a:nth-child(2) {
-    margin: 0 50px 0 0;
+    /*margin: 0 50px 0 0;*/
+    margin: 0 0px 0 0;
 }
 .c-edit-j-h-ctr1 {
     background: rgba(0, 0, 0, 0) url("../images/icon-ed-arr1.png") no-repeat scroll left center;
@@ -3286,4 +3287,8 @@ input::-ms-clear {
 }
 input#upload-files::-webkit-file-upload-button {
     CURSOR: POINTER;
+}
+
+.delete-active{
+    color: #00aeef!important;
 }
