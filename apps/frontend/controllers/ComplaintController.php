@@ -14,6 +14,8 @@ use Multiple\Library\Parser;
 use Phalcon\Mvc\Controller;
 use \Phalcon\Paginator\Adapter\NativeArray as Paginator;
 use Multiple\Library\PaginatorBuilder;
+use Multiple\Frontend\Models\Arguments;
+use Multiple\Frontend\Models\ArgumentsCategory;
 //use Multiple\Library\TrustedLibrary;
 
 class ComplaintController extends ControllerBase
@@ -486,4 +488,71 @@ class ComplaintController extends ControllerBase
         exit;
 
     }
+
+    public function ajaxStepsAddComplaintAction(){
+        $step = $this->request->get('step');
+        $result = array(
+            'cat_arguments' => array(),
+            'arguments'     => array()
+        );
+        switch($step){
+            case 2:
+                $parent_id = $this->request->get('id');
+                $cat_arguments = ArgumentsCategory::find("parent_id = {$parent_id}");
+                foreach($cat_arguments as $cat){
+                    $result['cat_arguments'][] = array(
+                        'id'        => $cat->id,
+                        'name'      => $cat->name,
+                        'parent_id' => $cat->parent_id,
+                    );
+                }
+                echo json_encode($result);
+            break;
+            case 3:
+                $id         = $this->request->get('id');
+                $parent_id  = ArgumentsCategory::findFirst($id);
+                $parent_id  = $parent_id->parent_id;
+                $cat_arguments = ArgumentsCategory::find("parent_id = {$id}");
+                foreach($cat_arguments as $cat){
+                    $result['cat_arguments'][] = array(
+                        'id'        => $cat->id,
+                        'name'      => $cat->name,
+                        'parent_id' => $cat->parent_id,
+                    );
+                }
+                $arguments = Arguments::query()
+                    ->where("category_id = {$id}")
+                    ->orWhere("category_id = {$parent_id}")
+                    ->execute();
+                foreach($arguments as $argument){
+                    $result['arguments'][] = array(
+                        'id'        => $argument->id,
+                        'name'      => $argument->name,
+                        'category_id' => $argument->category_id,
+                    );
+                }
+                echo json_encode($result);
+            break;
+            case 4:
+                $id         = $this->request->get('id');
+                $arguments = Arguments::find(array(
+                    'condition' => "category_id = {$id}"
+                ));
+                foreach($arguments as $argument){
+                    $result['arguments'][] = array(
+                        'id'        => $argument->id,
+                        'name'      => $argument->name,
+                        'category_id' => $argument->category_id,
+                    );
+                }
+                echo json_encode($result);
+            break;
+        }
+
+
+        exit;
+    }
+
+
+
 }
