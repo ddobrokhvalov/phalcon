@@ -3012,6 +3012,12 @@ input[type="radio"]:checked + label {
     .left-menu-block {
         left: -242px;
     }
+    .lm-opcl-btn1 {
+        display: block;
+    }
+    .lm-opcl-btnb {
+        z-index: 1;
+    }
 }
 @media (max-width: 1299px) {
 .lm-opcl-btn2 {
