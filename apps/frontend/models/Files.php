@@ -21,9 +21,6 @@ class Files extends Model
     }
 
     public function checkAllFiles($request) {
-
-        $data = $request->getUploadedFiles();
-
         foreach ($request->getUploadedFiles() as $file) {
             if (strlen($file->getName()) == 0) {
                 return TRUE;
