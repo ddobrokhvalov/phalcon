@@ -17,6 +17,7 @@ use Multiple\Library\PaginatorBuilder;
 use Multiple\Frontend\Models\Arguments;
 use Multiple\Frontend\Models\ArgumentsCategory;
 //use Multiple\Library\TrustedLibrary;
+use Multiple\Frontend\Models\ArgumentsCategory;
 
 class ComplaintController extends ControllerBase
 {
@@ -183,6 +184,8 @@ class ComplaintController extends ControllerBase
         $this->setMenu();
         $category = new Category();
         $arguments = $category->getArguments();
+
+
         //if (isset($_SESSION['TRUSTEDNET']['OAUTH'])) $OAuth2 = unserialize($_SESSION['TRUSTEDNET']['OAUTH']);
 //        if (isset($OAuth2)){
 //            /*$token = $OAuth2->getAccessToken();
@@ -195,8 +198,11 @@ class ComplaintController extends ControllerBase
 //            $this->session->destroy();
 //            return $this->forward('/');
 //        }
+        $data = ArgumentsCategory::query()
+                ->where('parent_id=0')
+                ->execute();
 
-
+        $this->view->categories = $data;
         $this->view->arguments = $arguments;
     }
 
