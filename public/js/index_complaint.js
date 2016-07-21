@@ -625,6 +625,7 @@ function initialize( ){
     self.arrComplaint = [];
 
     $('.complaint-checkbox:checked').each(function () {
+        debugger;
         $(".c-cs-btns").addClass("c-cs-btns-after");
         var id = $(this).val();
         var status = jQuery("input[name=jlist" + id + "]").parent().find('#current-status').val();
@@ -643,7 +644,7 @@ function initialize( ){
                 self.activeButton('.to-delete');
                 break;
             case 'archive':
-                self.activeButton('.to-archive');
+                self.deActiveButton('.to-archive');
                 self.activeButton('.to-delete');
                 self.activeButton('.set-active');
                 break;
