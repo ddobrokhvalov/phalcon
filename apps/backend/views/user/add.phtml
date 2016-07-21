@@ -14,23 +14,23 @@
                 <span>Данные пользователя</span>
                 <label for="fUser">
                     <p>Фамилия</p>
-                    {{text_field('lastname', 'value':'', 'id':'fUser')}}
+                    {{text_field('lastname', 'value':params['lastname'], 'id':'fUser')}}
                 </label>
                 <label for="iUser">
                     <p>Имя</p>
-                    {{text_field('firstname', 'value':'', 'id':'iUser')}}
+                    {{text_field('firstname', 'value':params['firstname'], 'id':'iUser')}}
                 </label>
                 <label for="oUser">
                     <p>Отчество</p>
-                    {{text_field('patronymic', 'value':'', 'id':'oUser')}}
+                    {{text_field('patronymic', 'value':params['patronymic'], 'id':'oUser')}}
                 </label>
                 <label for="telFaxUser">
                     <p>Контактный факс, телефон</p>
-                    {{ numeric_field('phone', 'value':'', 'id':'telFaxUser')}}
+                    {{ numeric_field('phone', 'value':params['phone'], 'id':'telFaxUser')}}
                 </label>
                 <label for="userEmail">
                     <p>E-mail</p>
-                    {{text_field('email', 'value':'', 'id':'userEmail')}}
+                    {{text_field('email', 'value':params['email'], 'id':'userEmail')}}
                 </label>
             </div>
             <div class="right-block-editing">
@@ -39,13 +39,13 @@
                     <p>Задайте новый пароль</p>
                     {{password_field('password', 'value':'', 'id':'userPass')}}
                 </label>
-                <label for="sendEmailNotice" class="lebel-checkbox">
-                    {{check_field('sendEmail', 'value':'', 'id':'sendEmailNotice')}}
+                <label for="sendEmailNotice" class="lebel-checkbox {% if params['sendEmail'] != ''%} lebel-checkbox main-active-checkbox {% endif %}">
+                    {{check_field('sendEmail', 'value':'on', 'id':'sendEmailNotice')}}
                     <p>Отправлять уведомления на e-mail</p>
                 </label>
                 <label for="userComment">
                     <p>Комментарий админа (только для админа!)</p>
-                    {{text_area('admin_comment', 'value':'', 'id':'userComment')}}
+                    {{text_area('admin_comment', 'value':params['admin_comment'], 'id':'userComment')}}
                 </label>
             </div>
             <div class="delete-or-save">

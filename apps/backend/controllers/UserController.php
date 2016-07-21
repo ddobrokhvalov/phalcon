@@ -156,6 +156,20 @@ class UserController extends ControllerBase
 
     public function addAction()
     {
+        $params = $this->dispatcher->getParams();
+        if(!empty($params)) $this->view->params = $params;
+        else {
+            $this->view->params = array(
+                'email'         => '',
+                'password'      => '',
+                'firstname'     => '',
+                'lastname'      => '',
+                'phone'         => '',
+                'patronymic'    => '',
+                'admin_comment' => '',
+                'sendEmail'     => ''
+            );
+        }
         $this->setMenu();
     }
 
@@ -170,11 +184,21 @@ class UserController extends ControllerBase
         $data['status'] = 1;
         $exist_user = User::findFirstByEmail($post['email']);
         if ($exist_user) {
-            $this->flashSession->error("Пользователь с имейлом {$post['email']} уже существует");
+//            $this->flashSession->error("Пользователь с имейлом {$post['email']} уже существует");
+            $this->flashSession->error('Пользователь с таким email уже есть!');
             return $this->dispatcher->forward(array(
                 'module' => 'backend',
                 'controller' => 'user',
-                'action' => 'index'
+                'action' => 'add',
+                'params' => array(
+                    'firstname'          => $post['firstname'],
+                    'lastname'       => $post['lastname'],
+                    'phone'         => $post['phone'],
+                    'patronymic'    => $post['patronymic'],
+                    'email'         => $post['email'],
+                    'admin_comment' => $post['admin_comment'],
+                    'sendEmail'     => $post['sendEmail']
+                )
             ));
         }
         $send_notifications = $this->request->getpost('sendEmail');
