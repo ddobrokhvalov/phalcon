@@ -228,7 +228,6 @@ var indexComplaint = {
         });
     },
     addComplain: function (id) {
-        debugger;
         this.selectedComplaint.push(id);
         this.arrComplaint.push({
             'id':id,
@@ -615,7 +614,6 @@ var indexComplaint = {
 
 
 function initialize( ){
-    debugger;
     if(typeof edit == undefined) {
         var self = indexComplaint;
         var count = 0;

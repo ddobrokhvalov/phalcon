@@ -73,7 +73,8 @@
       &:last-child {
         border-bottom: none;
       }
-      &:hover {
+      &:hover, &:focus {
+        color: $blue;
         background-color: transparent;
       }
     }
@@ -268,6 +269,7 @@
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
+  background-color: #f0f0f0;
   ul {
     margin: 0;
   }
@@ -283,12 +285,16 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     border-bottom: 1px solid #d2d2d2;
+    cursor: pointer;
     &:first-child {
       margin-top: -10px;
     }
     &:last-child {
       margin-bottom: -10px;
       border-bottom: none;
+    }
+    &:hover {
+      color: $blue !important;
     }
   }
 }
