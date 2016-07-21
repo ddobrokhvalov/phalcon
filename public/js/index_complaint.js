@@ -616,62 +616,66 @@ var indexComplaint = {
 
 function initialize( ){
     debugger;
-    var self = indexComplaint;
-    var count = 0;
-    self.deActiveButton('.button-copy');
-    self.deActiveButton('.button-recall');
-    self.deActiveButton('.to-archive');
-    self.deActiveButton('.to-delete');
-    self.arrComplaint = [];
+    if(typeof edit == undefined) {
+        var self = indexComplaint;
+        var count = 0;
 
-    $('.complaint-checkbox:checked').each(function () {
-        debugger;
-        $(".c-cs-btns").addClass("c-cs-btns-after");
-        var id = $(this).val();
-        var status = jQuery("input[name=jlist" + id + "]").parent().find('#current-status').val();
-        self.arrComplaint.push({
-            'id':id,
-            'status': jQuery("input[name=jlist" + id + "]").parent().find('#current-status').val()
+        self.deActiveButton('.button-copy');
+        self.deActiveButton('.button-recall');
+        self.deActiveButton('.to-archive');
+        self.deActiveButton('.to-delete');
+        self.arrComplaint = [];
+
+        $('.complaint-checkbox:checked').each(function () {
+            debugger;
+            $(".c-cs-btns").addClass("c-cs-btns-after");
+            var id = $(this).val();
+            var status = jQuery("input[name=jlist" + id + "]").parent().find('#current-status').val();
+            self.arrComplaint.push({
+                'id': id,
+                'status': jQuery("input[name=jlist" + id + "]").parent().find('#current-status').val()
+            });
+            if (count < 1) {
+                self.activeButton('.button-copy');
+            } else {
+                self.deActiveButton('.button-copy');
+            }
+            switch (status) {
+                case 'draft':
+                    self.activeButton('.to-archive');
+                    self.activeButton('.to-delete');
+                    break;
+                case 'archive':
+                    self.deActiveButton('.to-archive');
+                    self.activeButton('.to-delete');
+                    self.activeButton('.set-active');
+                    break;
+                case 'submitted':
+                    self.activeButton('.button-recall');
+                    self.activeButton('.to-archive');
+                    self.activeButton('.to-delete');
+                    break;
+                case 'recalled':
+                    self.activeButton('.to-archive');
+                    self.activeButton('.to-delete');
+                    break;
+                case 'under_consideration':
+                    self.activeButton('.to-archive');
+                    self.activeButton('.to-delete');
+                    break;
+                case 'justified':
+                    self.activeButton('.to-archive');
+                    self.activeButton('.to-delete');
+                    break;
+                case 'unfounded':
+                    self.activeButton('.to-archive');
+                    self.activeButton('.to-delete');
+                    break;
+            }
+            ;
+            self.selectedComplaint.push($(this).val());
+            count++;
+            $(this).prop('checked', true);
         });
-        if(count < 1){
-            self.activeButton('.button-copy');
-        }else {
-            self.deActiveButton('.button-copy');
-        }
-        switch(status){
-            case 'draft':
-                self.activeButton('.to-archive');
-                self.activeButton('.to-delete');
-                break;
-            case 'archive':
-                self.deActiveButton('.to-archive');
-                self.activeButton('.to-delete');
-                self.activeButton('.set-active');
-                break;
-            case 'submitted':
-                self.activeButton('.button-recall');
-                self.activeButton('.to-archive');
-                self.activeButton('.to-delete');
-                break;
-            case 'recalled':
-                self.activeButton('.to-archive');
-                self.activeButton('.to-delete');
-                break;
-            case 'under_consideration':
-                self.activeButton('.to-archive');
-                self.activeButton('.to-delete');
-                break;
-            case 'justified':
-                self.activeButton('.to-archive');
-                self.activeButton('.to-delete');
-                break;
-            case 'unfounded':
-                self.activeButton('.to-archive');
-                self.activeButton('.to-delete');
-                break;
-        };
-        self.selectedComplaint.push($(this).val());
-        count++;
-        $(this).prop('checked', true);
-    });
+    }
 }
