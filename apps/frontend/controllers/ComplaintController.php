@@ -567,6 +567,25 @@ class ComplaintController extends ControllerBase
                 }
                 echo json_encode($result);
             break;
+            case 5:
+                $search = $this->request->get('search');
+                $search = (isset($search)) ? trim($search) : '';
+                if(empty($search)){
+                    echo json_encode($result);
+                    exit;
+                }
+                $arguments = Arguments::query()
+                    ->where('name LIKE :name:', array('name' => '%' . $search . '%'))
+                    ->execute();
+                foreach($arguments as $argument){
+                    $result['arguments'][] = array(
+                        'id'        => $argument->id,
+                        'name'      => $argument->name,
+                        'category_id' => $argument->category_id,
+                    );
+                }
+                echo json_encode($result);
+            break;
         }
         exit;
     }
