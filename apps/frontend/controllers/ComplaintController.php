@@ -498,8 +498,8 @@ class ComplaintController extends ControllerBase
     public function ajaxStepsAddComplaintAction(){
         $step = $this->request->get('step');
         $result = array(
-            'cat_arguments' => array(),
-            'arguments'     => array()
+            "cat_arguments" => array(),
+            "arguments"     => array()
         );
         switch($step){
             case 2:
@@ -510,10 +510,10 @@ class ComplaintController extends ControllerBase
                 }
                 $cat_arguments = ArgumentsCategory::find("parent_id = {$parent_id}");
                 foreach($cat_arguments as $cat){
-                    $result['cat_arguments'][] = array(
-                        'id'        => $cat->id,
-                        'name'      => $cat->name,
-                        'parent_id' => $cat->parent_id,
+                    $result["cat_arguments"][] = array(
+                        "id"        => $cat->id,
+                        "name"      => $cat->name,
+                        "parent_id" => $cat->parent_id,
                     );
                 }
                 echo json_encode($result);

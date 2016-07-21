@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
 	    $(this).find('span').toggleClass('rotate-icon');
 	});
 
-	$('.custom-options li').click(function(){
+	$('.custom-options').on('click', 'li', function(){
 	    var choosenValue = $(this).attr('data-value');
 	    $(this).parent().parent().parent().find('.hidden-select').val(choosenValue).prop('selected', true);
 	    $(this).parent().parent().find('.current-option span').text($(this).text());
