@@ -216,6 +216,7 @@
     text-align: center;
     text-transform: uppercase;
     color: #34383e;
+    cursor: pointer;
   }
   div {
     position: relative;
@@ -258,25 +259,6 @@
     background-color: #eff2f7;
   }
 }
-.btn-div {
-  display: none;
-  float: left;
-  margin-top: 30px;
-  width: 202px;
-  font-size: 16px;
-  line-height: 50px;
-  font-weight: 600;
-  color: #fff;
-  text-align: center;
-  text-transform: uppercase;
-  border: none;
-  border-radius: 6px;
-  background-color: #00aeef;
-  cursor: pointer;
-  &:hover {
-    background-color: $h-blue;
-  }
-}
 .argCompl-review {
   @include box-s;
   padding: 10px 3px 10px 13px;
@@ -308,5 +290,27 @@
       margin-bottom: -10px;
       border-bottom: none;
     }
+  }
+}
+.last-argComplList {
+  display: none;
+}
+.btn-div {
+  display: none;
+  float: left;
+  margin-top: 30px;
+  width: 202px;
+  font-size: 16px;
+  line-height: 50px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 6px;
+  background-color: #00aeef;
+  cursor: pointer;
+  &:hover {
+    background-color: $h-blue;
   }
 }
