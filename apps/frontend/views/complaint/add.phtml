@@ -1,3 +1,4 @@
+<script type="application/javascript" src="/js/argCompl_jsonSend.js"></script>
 <div class="content add-complaint-page">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
@@ -244,28 +245,22 @@
                 <ul class="arguments-steps">
                     <li class="steps-line arg-nextStep"> <!-- arg-dunStep-->
                         <div></div>
-                        <span>шаг 1</span>
+                        <span id="1_stepSpan">шаг 1</span>
                     </li>
                     <li class="steps-line">
                         <div></div>
-                        <span>шаг 2</span>
+                        <span id="2_stepSpan">шаг 2</span>
                     </li>
                     <li class="steps-line">
                         <div></div>
-                        <span>шаг 3</span>
+                        <span id="3_stepSpan">шаг 3</span>
                     </li>
                     <li class="steps-line">
                         <div></div>
-                        <span>Список доводов</span>
+                        <span id="4_stepSpan">Список доводов</span>
                     </li>
                 </ul>
-                <div id="1_argComplSelect" class="select-holder">
-                    <select name="" class="hidden-select">
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                    </select>
+                <div id="argComplSelect" class="select-holder">
                     <div class="title-info-box">Выберите тип жалобы</div>
                     <div class="custom_select">
                         <div class="current-option" data-value="">
@@ -279,70 +274,7 @@
                         </ul>
                     </div>
                 </div>
-                <div id="2_argComplSelect" class="select-holder" style="">
-                    <select name="" class="hidden-select">
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                    </select>
-                    <div class="title-info-box">Выберите под->тип жалобы</div>
-                    <div class="custom_select">
-                        <div class="current-option" data-value="">
-                            <span>Жалоба на положения документации</span>
-                        </div>
-                        <ul class="custom-options mCustomScrollbar">
-                            <div></div>
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div id="3_argComplSelect" class="select-holder" style="display: none">
-                    <select name="" class="hidden-select">
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                    </select>
-                    <div class="title-info-box">Выберите под->под->тип жалобы</div>
-                    <div class="custom_select">
-                        <div class="current-option" data-value="">
-                            <span>Жалоба на положения документации</span>
-                            <div></div>
-                        </div>
-                        <ul class="custom-options mCustomScrollbar">
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div id="4_argComplSelect" class="select-holder" style="display: none">
-                    <select name="" class="hidden-select">
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                    </select>
-                    <div class="title-info-box">Доводы</div>
-                    <div class="custom_select">
-                        <div class="current-option" data-value="">
-                            <span>Жалоба на положения документации</span>
-                            <div></div>
-                        </div>
-                        <ul class="custom-options mCustomScrollbar">
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
-                            <li data-value="">Lorem ipsum.</li>
-                        </ul>
-                    </div>
-                </div>
-                <section class="last-argComplList" style="display: none">
+                <section class="last-argComplList">
                     <div class="title-info-box">Доводы</div>
                     <div class="argCompl-review mCustomScrollbar">
                         <ul>
@@ -366,7 +298,6 @@
     <div class="pop-done-txt"></div>
     <div class="modal-close"></div>
 </div>
-
 
 <script>
 var templates = {};
