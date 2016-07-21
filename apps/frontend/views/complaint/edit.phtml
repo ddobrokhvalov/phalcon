@@ -50,7 +50,7 @@
                         <a class="grey" href="#">Отозвать</a>
                     {% endif %}
                     <a href="#" {% if complaint.status == 'archive' %}class="grey" onclick="return false;"{%else%} class="change-status to-archive button_copy_active" {% endif %} value="archive">В архив</a>
-                    <a href="/complaint/delete/{{ complaint.id }}" class="change-status to-delete " value="delete">Удалить</a>
+                    <a href="#" class="change-status to-delete " value="delete">Удалить</a>
                     {% if complaint.status == 'draft' %} <a href="#" class="c-jadd1-1-b-btn">Отправить в УФАС</a> {%
                     endif %}
                 </div>

@@ -170,11 +170,11 @@ var indexComplaint = {
                     case 'delete':
                         $(".admin-popup-content p").text("Жалоба успешно удалена!");
                         $('.admin-popup-close, .admin-popup-bg').on('click', function() {
-                            location.reload();
+                            document.location.href = '/complaint/index';
                         });
                         $(".admin-popup-wrap").show();
                         setTimeout( function(){
-                            location.reload();
+                            document.location.href = '/complaint/index';
                         }, 2000);
                     break;
                     case 'activate':
