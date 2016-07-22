@@ -30,6 +30,9 @@ class ArgumentsController  extends ControllerBase
                 ->getQuery()
                 ->execute();
             $this->view->Arguments = $Arguments;
+//            $obj = new ArgumentsCategory();
+//            $data = $obj->getAllCategory();
+//            $data = $obj->buildTreeArray( $data );
             $this->view->ArgumentsCategory = ArgumentsCategory::find();
             $this->setMenu();
         //}
@@ -140,10 +143,13 @@ class ArgumentsController  extends ControllerBase
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
            $data = "access_denied";
         } else {
+            $parent_id = $this->request->getPost('parent_id');
+            $parent_id = (isset($parent_id)) ? $parent_id : 0;
             $category_name = $this->request->getPost("name");
             if ($category_name) {
                 $category = new ArgumentsCategory();
                 $category->name = $category_name;
+                $category->parent_id = $parent_id;
                 $category->create();
                 $this->flashSession->success('Категория сохранена');
             }
