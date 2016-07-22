@@ -567,7 +567,7 @@ class ComplaintController extends ControllerBase
                 }
                 echo json_encode($result);
             break;
-            case 5:
+            case 6:
                 $search = $this->request->get('search');
                 $search = (isset($search)) ? trim($search) : '';
                 if(empty($search)){
