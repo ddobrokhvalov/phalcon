@@ -499,11 +499,26 @@ class ComplaintController extends ControllerBase
 
     public function ajaxStepsAddComplaintAction(){
         $step = $this->request->get('step');
+        if(!is_numeric($step)){
+            echo json_encode(array('error' => 'bad data'));
+            exit;
+        }
         $result = array(
             "cat_arguments" => array(),
             "arguments"     => array()
         );
         switch($step){
+            case 1:
+                $cat_arguments = ArgumentsCategory::find("parent_id = 0");
+                foreach($cat_arguments as $cat){
+                    $result["cat_arguments"][] = array(
+                        "id"        => $cat->id,
+                        "name"      => $cat->name,
+                        "parent_id" => $cat->parent_id,
+                    );
+                }
+                echo json_encode($result);
+            break;
             case 2:
                 $parent_id = $this->request->get('id');
                 if(!is_numeric($parent_id)){
@@ -567,7 +582,7 @@ class ComplaintController extends ControllerBase
                 }
                 echo json_encode($result);
             break;
-            case 5:
+            case 6:
                 $search = $this->request->get('search');
                 $search = (isset($search)) ? trim($search) : '';
                 if(empty($search)){
