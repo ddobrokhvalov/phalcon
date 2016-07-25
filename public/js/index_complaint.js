@@ -228,7 +228,6 @@ var indexComplaint = {
         });
     },
     addComplain: function (id) {
-        debugger;
         this.selectedComplaint.push(id);
         this.arrComplaint.push({
             'id':id,

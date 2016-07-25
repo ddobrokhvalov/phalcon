@@ -48,8 +48,9 @@
     @include hasla;
   }
   button {
+    display: none;
     float: right;
-    margin: 30px 0 0;
+    margin: 0;
     &:hover {
       background-color: $h-blue;
     }
@@ -73,10 +74,14 @@
       &:last-child {
         border-bottom: none;
       }
-      &:hover {
+      &:hover, &:focus {
+        color: $blue;
         background-color: transparent;
       }
     }
+  }
+  .custom_select {
+    margin-bottom: 30px;
   }
   .arguments-steps {
     margin: 0;
@@ -151,6 +156,7 @@
     background-color: #f0f0f0;
   }
   button {
+    display: block;
     position: absolute;
     top: 0;
     right: 0;
@@ -216,7 +222,12 @@
     text-align: center;
     text-transform: uppercase;
     color: #34383e;
-    cursor: pointer;
+    &.stepBack {
+      &:hover {
+        cursor: pointer;
+        color: $blue;
+      }
+    }
   }
   div {
     position: relative;
@@ -268,6 +279,7 @@
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
+  background-color: #f0f0f0;
   ul {
     margin: 0;
   }
@@ -283,22 +295,22 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     border-bottom: 1px solid #d2d2d2;
-    &:first-child {
-      margin-top: -10px;
-    }
+    cursor: pointer;
     &:last-child {
-      margin-bottom: -10px;
       border-bottom: none;
+    }
+    &:hover {
+      color: $blue !important;
     }
   }
 }
 .last-argComplList {
   display: none;
+  margin-bottom: 30px;
 }
 .btn-div {
   display: none;
   float: left;
-  margin-top: 30px;
   width: 202px;
   font-size: 16px;
   line-height: 50px;
