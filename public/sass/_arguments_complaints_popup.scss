@@ -222,7 +222,12 @@
     text-align: center;
     text-transform: uppercase;
     color: #34383e;
-    cursor: pointer;
+    &.stepBack {
+      &:hover {
+        cursor: pointer;
+        color: $blue;
+      }
+    }
   }
   div {
     position: relative;
