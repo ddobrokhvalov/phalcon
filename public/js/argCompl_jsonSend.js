@@ -7,6 +7,9 @@ $(document).ready(function() {
     $('#argComplBtn').click(function(e) {
         nextStep(e);
     });
+    $('.word-argCompl-input button').click(function(e) {
+        searchStep(e)
+    });
     $('.argCompl-review').on('click', 'li', function() {
         ajaxSendObj.showHideBtn($(this));
     });
@@ -15,9 +18,20 @@ $(document).ready(function() {
     });
 });
 
+function searchStep(e) {
+    ajaxSendObj.step = 6;
+    var searchValue = $('.word-argCompl-input input').val(),
+        data = '?search=' + searchValue + '&step=' + ajaxSendObj.step;
+    ajaxSendObj.sendRequest(data);
+    e.preventDefault();
+}
+
 function nextStep(e) {
-    var id = $('#argComplSelect .current-option').attr('data-value');
-    var data = '?id=' + id + '&step=' + ajaxSendObj.step;
+    if (ajaxSendObj.step == 6) {
+        ajaxSendObj.step = 2;
+    }
+    var id = $('#argComplSelect .current-option').attr('data-value'),
+        data = '?id=' + id + '&step=' + ajaxSendObj.step;
     ajaxSendObj.sendRequest(data);
     $('#argComplBtn').slideUp(400);
     e.preventDefault();
@@ -49,13 +63,17 @@ var ajaxSendObj = {
             url: "http://fas/complaint/ajaxStepsAddComplaint" + data,
             dataType: 'json',
             success: function (value) {
-                ajaxSendObj.stepsCacheArr.push(value);
-                ajaxSendObj.showDopBlocks();
-                ajaxSendObj.withoutCatArg(value);
-                ajaxSendObj.writeSelectLi(value);
-                ajaxSendObj.writeListLi(value);
-                ajaxSendObj.changeLineSteps();
-                ajaxSendObj.stepIncrease();
+                if (ajaxSendObj.step != 6) {
+                    ajaxSendObj.stepsCacheArr.push(value);
+                    ajaxSendObj.showDopBlocks();
+                    ajaxSendObj.withoutCatArg(value);
+                    ajaxSendObj.writeSelectLi(value);
+                    ajaxSendObj.writeListLi(value);
+                    ajaxSendObj.changeLineSteps();
+                    ajaxSendObj.stepIncrease();
+                } else {
+                    ajaxSendObj.searchWriteStep(value);
+                }
             },
             error: function (xhr) {
                 alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
@@ -152,7 +170,7 @@ var ajaxSendObj = {
         if ($(obj).hasClass('back1')) {
             ajaxSendObj.stepsCacheArr = [];
             ajaxSendObj.step = 2;
-            $('.last-argComplList').slideUp(300);
+            $('.last-argComplList').slideUp(400);
             $('#argComplSelect').slideDown(400);
             $('#argComplSelect .current-option span').text('Жалоба на положения документации');
             $('#argComplSelect .custom-options li').remove();
@@ -167,18 +185,13 @@ var ajaxSendObj = {
             reclassStepsLine(1);
         }
         if ($(obj).hasClass('back2')) {
-            ajaxSendObj.stepsCacheArr.splice(1, 1);
-            ajaxSendObj.step = 3;
-            $('.last-argComplList').slideUp(300);
-            $('#argComplSelect').slideDown(400);
-            $('#argComplSelect .current-option span').text(lookingParentId(0));
-            $('#argComplSelect .custom-options li').remove();
+            fillingItems(1);
             lookingToFillSelect(0);
             reclassStepsLine(2);
         }
         if ($(obj).hasClass('back3')) {
-            ajaxSendObj.stepsCacheArr.splice(2, 1);
-            ajaxSendObj.step = 4;
+            fillingItems(2);
+            lookingToFillSelect(1);
             reclassStepsLine(3);
         }
         function reclassStepsLine(num) {
@@ -195,26 +208,6 @@ var ajaxSendObj = {
                 $('.steps-line:nth-child(3) span').attr('class', '');
             }
         }
-        function lookingParentId(num) {
-            var behindParId = ajaxSendObj.stepsCacheArr[num].cat_arguments[num].parent_id,
-                behindName = '';
-            if (num == 0) {
-                for (var i = 0; i < readyDataCatArg.length; i++) {
-                    var saveArr = readyDataCatArg[i].id;
-                    if (saveArr == behindParId) {
-                        behindName = readyDataCatArg[i].name;
-                    }
-                }
-            } else {
-                for (var i = 0; i < ajaxSendObj.stepsCacheArr[num].cat_arguments.length; i++) {
-                    var saveArr = ajaxSendObj.stepsCacheArr[num].cat_arguments[i].id;
-                    if (saveArr == behindParId) {
-                        behindName = ajaxSendObj.stepsCacheArr[num].cat_arguments[i].name;
-                    }
-                }
-            }
-            return behindName;
-        }
         function lookingToFillSelect(num) {
             for (var i = 0; i < ajaxSendObj.stepsCacheArr[num].cat_arguments.length; i++) {
                 $('#argComplSelect .custom-options div div:first').append(
@@ -225,5 +218,52 @@ var ajaxSendObj = {
                 );
             }
         }
+        function fillingItems(num) {
+            ajaxSendObj.stepsCacheArr.splice(num, ajaxSendObj.stepsCacheArr.length - num);
+            ajaxSendObj.step = num + 2;
+            if (num == 1) {
+                $('.last-argComplList').slideUp(400);
+            } else if (num == 2) {
+                $('.last-argComplList').slideDown(400);
+            }
+            $('#argComplSelect').slideDown(400);
+            $('#argComplSelect .current-option span').text(lookingParentId(num - 1));
+            $('#argComplSelect .custom-options li').remove();
+        }
+        function lookingParentId(num) {
+            var behindParId = ajaxSendObj.stepsCacheArr[num].cat_arguments[0].parent_id,
+                behindName = '';
+            if (num == 0) {
+                for (var i = 0; i < readyDataCatArg.length; i++) {
+                    var saveArr = readyDataCatArg[i].id;
+                    if (saveArr == behindParId) {
+                        behindName = readyDataCatArg[i].name;
+                    }
+                }
+            } else if (num == 1) {
+                for (var i = 0; i < ajaxSendObj.stepsCacheArr[0].cat_arguments.length; i++) {
+                    var saveArr = ajaxSendObj.stepsCacheArr[0].cat_arguments[i].id;
+                    if (saveArr == behindParId) {
+                        behindName = ajaxSendObj.stepsCacheArr[0].cat_arguments[i].name;
+                    }
+                }
+            }
+            return behindName;
+        }
+    },
+    searchWriteStep: function(data) {
+        $('#argComplSelect').slideUp(400);
+        $('.last-argComplList').slideDown(400);
+        $('.argCompl-review li').remove();
+        for (var i = 0; i < data.arguments.length; i++) {
+            $('.argCompl-review ul').append(
+                '<li data-value="' + data.arguments[i].id +
+                '" data-parent="' + data.arguments[i].category_id +
+                '">' + data.arguments[i].name + '</li>'
+            );
+        }
+        $('.steps-line:first').removeClass('arg-nextStep');
+        $('.steps-line').addClass('arg-dunStep');
+        $('.steps-line:first span').addClass('stepBack back1');
     }
 };
