@@ -13,3 +13,10 @@
 	input:-ms-input-placeholder { color:$color; }
 	input:-moz-placeholder { color:$color; }
 }
+@mixin transition($prop, $time, $how) {
+	-webkit-transition: $prop $time $how;
+	-moz-transition: $prop $time $how;
+	-ms-transition: $prop $time $how;
+	-o-transition: $prop $time $how;
+	transition: $prop $time $how;
+}
