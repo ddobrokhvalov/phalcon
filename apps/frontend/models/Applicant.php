@@ -46,7 +46,7 @@ class Applicant extends Model
     {
         $result = Applicant::find(
         array(
-            "user_id = :user_id: ",
+            "user_id = :user_id: AND is_blocked = 1",
             'bind' => array(
                 'user_id' => $user_id
             )
