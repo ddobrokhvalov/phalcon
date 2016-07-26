@@ -1,6 +1,3 @@
-@import "variables_etc/variables";
-@import "variables_etc/mixins";
-
 .admin-popup-wrap {
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -17,6 +14,9 @@
 	z-index: 1;
 	width: 100%;
 	height: 100%;
+	&.addArguments {
+		display: none;
+	}
 }
 .admin-popup-bg {
 	position: absolute;

@@ -1,5 +1,8 @@
 $(document).ready(function() {
     startCatArguments($('#argComplSelect .custom-options li'));
+    $('.opacity-cap-compl').click(function() {
+        $('.addArguments').fadeIn().css('display', 'flex');
+    });
     $('#argComplSelect .custom-options').on('click', 'li', function() {
         $('#argComplBtn').slideDown(400);
         $('.argCompl-review li').css('color', '#000');
@@ -23,6 +26,12 @@ $(document).ready(function() {
         argument.addArgument(argObjSend.id, argObjSend.cat_id, argObjSend.complaint_text);
         $('.admin-popup-wrap').fadeOut();
     });
+    $('.steps-line span').hover(function() {
+        if($(this).hasClass('stepBack')) {
+            $(this).parent().find('div').toggleClass('stepBack-hover');
+        }
+    });
+    // 0372100047315000207
 });
 
 function searchStep(e) {
