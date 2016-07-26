@@ -16,6 +16,13 @@ $(document).ready(function() {
     $('.steps-line span').click(function() {
         ajaxSendObj.stepsRewriteData($(this));
     });
+    $('.argCompl-review').on('click', 'li', function() {
+        argObjSend.choosenArgFunc($(this));
+    });
+    $('.btn-div').click(function() {
+        argument.addArgument(argObjSend.id, argObjSend.cat_id, argObjSend.complaint_text);
+        $('.admin-popup-wrap').fadeOut();
+    });
 });
 
 function searchStep(e) {
@@ -53,6 +60,17 @@ function startCatArguments(objLi) {
         this.parent_id = parent_id;
     }
 }
+
+var argObjSend = {
+    id: 0,
+    cat_id: 0,
+    complaint_text: '',
+    choosenArgFunc: function(data) {
+        this.id = data.attr('data-value');
+        this.cat_id = data.attr('data-parent');
+        this.complaint_text = data.text();
+    }
+};
 
 var ajaxSendObj = {
     step: 2,
