@@ -1,6 +1,7 @@
 $(document).ready(function() {
     startCatArguments($('#argComplSelect .custom-options li'));
     $('.opacity-cap-compl').click(function() {
+        ajaxSendObj.firstStepRewriteData();
         $('.addArguments').fadeIn().css('display', 'flex');
     });
     $('#argComplSelect .custom-options').on('click', 'li', function() {
@@ -31,7 +32,6 @@ $(document).ready(function() {
             $(this).parent().find('div').toggleClass('stepBack-hover');
         }
     });
-    // 0372100047315000207
 });
 
 function searchStep(e) {
@@ -193,45 +193,37 @@ var ajaxSendObj = {
             });
         }
     },
+    firstStepRewriteData: function() {
+        ajaxSendObj.stepsCacheArr = [];
+        ajaxSendObj.step = 2;
+        $('.last-argComplList').slideUp(400);
+        $('#argComplSelect').slideDown(400);
+        $('#argComplSelect .current-option span').text('Жалоба на положения документации');
+        $('#argComplSelect .custom-options li').remove();
+        for (var i = 0; i < readyDataCatArg.length; i++) {
+            $('#argComplSelect .custom-options div div:first').append(
+                '<li class="argo"' +
+                ' data-value="' + readyDataCatArg[i].id +
+                '" data-parent="' + readyDataCatArg[i].parent_id +
+                '">' + readyDataCatArg[i].name + '</li>'
+            );
+        }
+        ajaxSendObj.reclassStepsLine(1);
+        $('.steps-line:first span').removeClass('stepBack back1');
+    },
     stepsRewriteData: function(obj) {
         if ($(obj).hasClass('back1')) {
-            ajaxSendObj.stepsCacheArr = [];
-            ajaxSendObj.step = 2;
-            $('.last-argComplList').slideUp(400);
-            $('#argComplSelect').slideDown(400);
-            $('#argComplSelect .current-option span').text('Жалоба на положения документации');
-            $('#argComplSelect .custom-options li').remove();
-            for (var i = 0; i < readyDataCatArg.length; i++) {
-                $('#argComplSelect .custom-options div div:first').append(
-                    '<li class="argo"' +
-                    ' data-value="' + readyDataCatArg[i].id +
-                    '" data-parent="' + readyDataCatArg[i].parent_id +
-                    '">' + readyDataCatArg[i].name + '</li>'
-                );
-            }
-            reclassStepsLine(1);
-            $('.steps-line:first span').removeClass('stepBack back1');
+            ajaxSendObj.firstStepRewriteData();
         }
         if ($(obj).hasClass('back2')) {
             fillingItems(1);
             lookingToFillSelect(0);
-            reclassStepsLine(2);
+            ajaxSendObj.reclassStepsLine(2);
         }
         if ($(obj).hasClass('back3')) {
             fillingItems(2);
             lookingToFillSelect(1);
-            reclassStepsLine(3);
-        }
-        function reclassStepsLine(num) {
-            $('.steps-line').removeClass('arg-dunStep arg-nextStep');
-            $('.steps-line:nth-child(' + num + ')').addClass('arg-nextStep');
-            if (num == 2) {
-                $('.steps-line:nth-child(1)').addClass('arg-dunStep');
-                $('.steps-line:nth-child(2) span, .steps-line:nth-child(3) span').attr('class', '');
-            } else if (num == 3) {
-                $('.steps-line:nth-child(1), .steps-line:nth-child(2)').addClass('arg-dunStep');
-                $('.steps-line:nth-child(3) span').attr('class', '');
-            }
+            ajaxSendObj.reclassStepsLine(3);
         }
         function lookingToFillSelect(num) {
             for (var i = 0; i < ajaxSendObj.stepsCacheArr[num].cat_arguments.length; i++) {
@@ -274,6 +266,17 @@ var ajaxSendObj = {
                 }
             }
             return behindName;
+        }
+    },
+    reclassStepsLine: function(num) {
+        $('.steps-line').removeClass('arg-dunStep arg-nextStep');
+        $('.steps-line:nth-child(' + num + ')').addClass('arg-nextStep');
+        if (num == 2) {
+            $('.steps-line:nth-child(1)').addClass('arg-dunStep');
+            $('.steps-line:nth-child(2) span, .steps-line:nth-child(3) span').attr('class', '');
+        } else if (num == 3) {
+            $('.steps-line:nth-child(1), .steps-line:nth-child(2)').addClass('arg-dunStep');
+            $('.steps-line:nth-child(3) span').attr('class', '');
         }
     },
     searchWriteStep: function(data) {
