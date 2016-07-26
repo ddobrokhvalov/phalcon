@@ -12,7 +12,7 @@ $(document).ready(function() {
         nextStep(e);
     });
     $('.word-argCompl-input button').click(function(e) {
-        searchStep(e)
+        searchStep(e);
     });
     $('.argCompl-review').on('click', 'li', function() {
         ajaxSendObj.showHideBtn($(this));
