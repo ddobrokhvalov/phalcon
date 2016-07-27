@@ -73,12 +73,15 @@ class LoginController extends Controller
                 return $this->response->redirect('/');
             }
         }
-        return $this->dispatcher->forward(
-            array(
-                'controller' => 'login',
-                'action' => 'index'
-            )
-        );
+//        return $this->dispatcher->forward(
+//            array(
+//                'controller' => 'login',
+//                'action' => 'index'
+//            )
+//        );
+
+
+        return $this->response->redirect('complaint/index');
     }
 
     public function authorizeAction()
@@ -88,6 +91,6 @@ class LoginController extends Controller
 
     public function indexAction()
     {
-
+       return $this->response->redirect('/');
     }
 }
