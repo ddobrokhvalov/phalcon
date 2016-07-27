@@ -1,6 +1,6 @@
 <?php
 namespace Multiple\Frontend\Models;
-
+use Multiple\Library\Parser;
 use Phalcon\Mvc\Model;
 
 class Complaint extends Model
@@ -58,12 +58,13 @@ class Complaint extends Model
         // test mode
         //$status = 'submitted';
             //
+
         $this->status = $status;
         $this->date = date('Y-m-d H:i:s');
         foreach ($data as $k => $v) {
-
             $this->$k = $v;
         }
+
     }
 
     public function findCountUserComplaints($user_id)
@@ -217,7 +218,7 @@ class Complaint extends Model
     }
 
     public function saveComplaint($data){
-        $this->type = $data['type'];
+        //$this->type = $data['type'];
         $this->purchases_made = $data['purchases_made'];
         $this->purchases_name = $data['purchases_name'];
         $this->contact = $data['contact'];
