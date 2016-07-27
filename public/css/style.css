@@ -2315,106 +2315,23 @@ a:focus {
   margin-top: 20px;
 }
 
-/* line 5, ../sass/_list_arguments.scss */
-.list-arguments h1 {
+/* line 1, ../sass/_list_arguments.scss */
+.listArguments {
+  overflow: hidden;
+}
+/* line 3, ../sass/_list_arguments.scss */
+.listArguments h1 {
   display: inline-block;
-  margin-bottom: 32px;
-}
-/* line 9, ../sass/_list_arguments.scss */
-.list-arguments .second-lt-h1 {
-  margin-top: 45px;
+  margin-bottom: 0;
 }
 
-/* line 13, ../sass/_list_arguments.scss */
+/* line 8, ../sass/_list_arguments.scss */
 .admin-add.add-arg {
-  width: 182px;
-}
-
-/* line 18, ../sass/_list_arguments.scss */
-.lt-arg .lt-content-top li:nth-child(1) span, .lt-arg .lt-content-top li:nth-child(2) span, .lt-arg .lt-content-top li:nth-child(3) span {
-  cursor: pointer;
-  padding-right: 16px;
-  background: #f9f9fa url(../images/arrow-to-down.png) 100% 50% no-repeat;
-}
-
-/* line 30, ../sass/_list_arguments.scss */
-.lt-arg .admin-lt-content ul:not(:first-child) li:first-child {
-  padding-left: 34px;
-}
-/* line 35, ../sass/_list_arguments.scss */
-.lt-arg .admin-lt-content li {
-  padding-left: 18px;
-}
-/* line 37, ../sass/_list_arguments.scss */
-.lt-arg .admin-lt-content li:first-child {
-  padding-left: 34px;
-  width: 553px;
-}
-/* line 41, ../sass/_list_arguments.scss */
-.lt-arg .admin-lt-content li:nth-child(2) {
-  width: 293px;
-}
-/* line 44, ../sass/_list_arguments.scss */
-.lt-arg .admin-lt-content li:nth-child(3) {
+  display: inline-block;
+  margin: 10px 0 20px;
+  padding: 0 50px;
   width: auto;
-}
-
-/* line 51, ../sass/_list_arguments.scss */
-.lt-arg .lt-content-main:hover li:not(:last-child) {
-  font-weight: normal;
-}
-
-/* line 56, ../sass/_list_arguments.scss */
-.lt-arg-second .lt-psevdo-check {
-  left: 4px;
-}
-
-/* line 60, ../sass/_list_arguments.scss */
-.lt-arg-second .admin-lt-content ul:first-child li {
-  position: relative;
-}
-/* line 63, ../sass/_list_arguments.scss */
-.lt-arg-second .admin-lt-content li {
-  padding-left: 34px !important;
-  width: 100%;
-}
-/* line 66, ../sass/_list_arguments.scss */
-.lt-arg-second .admin-lt-content li input {
-  display: none;
-  position: absolute;
-  top: 18px;
-  left: 28px;
-  padding: 0 6px;
-  width: 792px;
-  font: 14px/38px 'Open Sans', sans-serif;
-  color: #34383e;
-  text-align: left;
-  border: 1px solid #e0e3ea;
-  border-radius: 2px;
-  background-color: #ffffff;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-/* line 81, ../sass/_list_arguments.scss */
-.lt-arg-second .admin-lt-content li span {
-  display: none;
-  position: absolute;
-  top: 18px;
-  right: 11px;
-  width: 121px;
-  font-size: 14px;
-  line-height: 38px;
-  font-weight: 600;
-  color: #ffffff;
-  text-align: center;
-  text-transform: uppercase;
-  border-radius: 2px;
-  background-color: #00aeef;
-}
-/* line 95, ../sass/_list_arguments.scss */
-.lt-arg-second .admin-lt-content li span:hover {
-  background-color: #10b8f7;
+  font-size: 18px;
 }
 
 /* line 5, ../sass/_user_list.scss */
