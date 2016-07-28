@@ -210,6 +210,52 @@ class ArgumentsController  extends ControllerBase
         echo json_encode( $data );
     }
 
+
+    public function ajaxRemoveCatAction(){
+        $category = $this->request->get('category');
+        $arguments = $this->request->get('arguments');
+        if($category != '') $category = json_decode($category);
+        if($category != '') $category = json_decode($arguments);
+
+        if(count($arguments)){
+            $arguments = Arguments::find(
+                array(
+                    'id IN ({ids:array})',
+                    'bind' => array(
+                        'ids' => $arguments
+                    )
+                )
+            )->delete();
+        }
+
+        if(count($category)){
+            $categories = ArgumentsCategory::find(
+                array(
+                    'id IN ({ids:array})',
+                    'bind' => array(
+                        'ids' => $category
+                    )
+                )
+            )->delete();
+        }
+    }
+
+    public function ajaxRemoveArgAction(){
+        $arguments = $this->request->get('arguments');
+        if($arguments != '') $category = json_decode($arguments);
+
+        if(count($arguments)){
+            $arguments = Arguments::find(
+                array(
+                    'id IN ({ids:array})',
+                    'bind' => array(
+                        'ids' => $arguments
+                    )
+                )
+            )->delete();
+        }
+    }
+
     public function ajaxGetCatArgumentsAction(){
         $id = $this->request->get('id');
         if(!is_numeric($id)){
