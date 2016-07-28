@@ -1,5 +1,11 @@
+%blockIcons {
+  background-image: url(../images/categoryArguments-icons.png);
+  background-repeat: no-repeat;
+}
+
 .listArguments {
   overflow: hidden;
+  color: #34383e;
   h1 {
     display: inline-block;
     margin-bottom: 0;
@@ -11,4 +17,185 @@
   padding: 0 50px;
   width: auto;
   font-size: 18px;
+}
+.catArguments {
+  margin-bottom: 58px;
+  border-top: 3px solid $h-blue;
+}
+.category {
+  height: 80px;
+  border-bottom: 1px solid #e6e8ed;
+  background-color: #f7f8fa;
+  &:after {
+    @include hasla;
+  }
+  > * {
+    float: left;
+    height: 80px;
+    line-height: 80px;
+  }
+  h2 {
+    margin: 0 45px 0 0;
+    font-size: 24px;
+    font-weight: 400;
+    cursor: pointer;
+  }
+  h3 {
+    margin: 0 25px 0 0;
+    font-size: 18px;
+    font-weight: 100;
+    cursor: pointer;
+  }
+  &_arrow {
+    width: 33px;
+    background: url(../images/categoryArguments-arrow.png) 50% 50% no-repeat;
+    @include transition(transform, 0.2s, ease-out);
+    cursor: pointer;
+    &.categoryArrow-hover {
+      @include rotate(-90deg);
+    }
+  }
+  &_add {
+    position: relative;
+    padding-left: 42px;
+    font-size: 12px;
+    font-weight: 100;
+    text-transform: uppercase;
+    color: $h-blue;
+    cursor: pointer;
+    &:before {
+      @extend %blockIcons;
+      position: absolute;
+      content: '';
+      top: 50%;
+      left: 0;
+      margin-top: -11px;
+      width: 26px;
+      height: 23px;
+      background-position: 0 0;
+    }
+    &.crossView {
+      padding-left: 53px;
+      &:before {
+        width: 25px;
+        background-position: -57px 0;
+      }
+      &:after {
+        @extend %blockIcons;
+        position: absolute;
+        content: '';
+        top: 50%;
+        left: 31px;
+        margin-top: -6px;
+        width: 13px;
+        height: 12px;
+        background-position: -147px -1px;
+      }
+    }
+    &.withoutText {
+      margin-right: 16px;
+      padding: 0;
+      width: 26px;
+    }
+  }
+  &_argumentAdd {
+    position: relative;
+    width: 18px;
+    height: 80px;
+    font-size: 12px;
+    font-weight: 100;
+    text-transform: uppercase;
+    color: $h-blue;
+    cursor: pointer;
+    &:before {
+      @extend %blockIcons;
+      position: absolute;
+      content: '';
+      top: 50%;
+      left: 0;
+      margin-top: -11px;
+      width: 18px;
+      height: 22px;
+      background-position: -32px 0;
+    }
+    &.crossView {
+      padding-left: 53px;
+      &:before {
+        background-position: -89px 0;
+      }
+      &:after {
+        @extend %blockIcons;
+        position: absolute;
+        content: '';
+        top: 50%;
+        left: 31px;
+        margin-top: -6px;
+        width: 13px;
+        height: 12px;
+        background-position: -147px -1px;
+      }
+    }
+  }
+  &_delete {
+    position: relative;
+    float: right;
+    width: 28px;
+    cursor: pointer;
+    &:after {
+      @extend %blockIcons;
+      position: absolute;
+      content: '';
+      top: 50%;
+      left: 0;
+      margin-top: -13px;
+      width: 100%;
+      height: 27px;
+      background-position: -165px 0;
+    }
+  }
+  &_edit {
+    position: relative;
+    float: right;
+    margin: 0 14px 0 24px;
+    width: 27px;
+    cursor: pointer;
+    &:after {
+      @extend %blockIcons;
+      position: absolute;
+      content: '';
+      top: 50%;
+      left: 0;
+      margin-top: -13px;
+      width: 100%;
+      height: 27px;
+      background-position: -113px 0;
+    }
+  }
+}
+.argument {
+  h3 {
+    margin-left: 33px;
+  }
+}
+.subWrap {
+  &_1 {
+    > .category {
+      padding-left: 90px;
+    }
+  }
+  &_2 {
+    > .category {
+      padding-left: 125px;
+    }
+  }
+  &_3 {
+    > .category {
+      padding-left: 160px;
+    }
+  }
+  &_4 {
+    > .category {
+      padding-left: 195px;
+    }
+  }
 }
