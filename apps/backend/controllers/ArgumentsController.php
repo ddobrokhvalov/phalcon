@@ -33,7 +33,11 @@ class ArgumentsController  extends ControllerBase
 //            $obj = new ArgumentsCategory();
 //            $data = $obj->getAllCategory();
 //            $data = $obj->buildTreeArray( $data );
-            $this->view->ArgumentsCategory = ArgumentsCategory::find();
+            $this->view->ArgumentsCategory = ArgumentsCategory::find(
+                array(
+                    "parent_id = 0",
+                )
+            );
             $this->setMenu();
         //}
     }
@@ -205,4 +209,40 @@ class ArgumentsController  extends ControllerBase
         $data = $obj->buildTreeArray( $data );
         echo json_encode( $data );
     }
+
+    public function ajaxGetCatArgumentsAction(){
+        $id = $this->request->get('id');
+        if(!is_numeric($id)){
+            echo json_encode(array('error' => 'bad data'));
+            exit;
+        }
+
+        $result = array(
+            "cat_arguments" => array(),
+            "arguments"     => array()
+        );
+
+        $cat_arguments = ArgumentsCategory::find("parent_id = {$id}");
+        $arguments = Arguments::query()
+            ->where("category_id = {$id}")
+            ->execute();
+
+        foreach($cat_arguments as $cat){
+            $result["cat_arguments"][] = array(
+                "id"        => $cat->id,
+                "name"      => $cat->name,
+                "parent_id" => $cat->parent_id,
+            );
+        }
+        foreach($arguments as $argument){
+            $result['arguments'][] = array(
+                'id'        => $argument->id,
+                'name'      => $argument->name,
+                'category_id' => $argument->category_id,
+            );
+        }
+
+        echo json_encode($result);
+    }
+
 }
