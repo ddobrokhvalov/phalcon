@@ -9,85 +9,96 @@
     <div class="admin-add add-cat">Добавить</div>
 </div>
 <ul>
+    {% for cat in ArgumentsCategory %}
     <li class="catArguments">
         <div class="category">
             <div class="category_arrow"></div>
-            <h2>Lorem ipsum dolor si</h2>
+            <h2>{{ cat.name }}</h2>
             <div class="category_add">Добавить категорию</div>
             <div class="category_edit"></div>
             <div class="category_delete"></div>
         </div>
     </li>
-    <li class="catArguments">
-        <ul>
-            <li class="category">
-                <div class="category_arrow"></div>
-                <h2>Lorem ipsum dolor si</h2>
-                <div class="category_add">Добавить категорию</div>
-                <div class="category_edit"></div>
-                <div class="category_delete"></div>
-            </li>
-            <li>
-                <ul class="subWrap_1">
-                    <li class="category">
-                        <div class="category_arrow"></div>
-                        <h3>Lorem ipsum dolor si</h3>
-                        <div class="category_add">Добавить категорию</div>
-                        <div class="category_edit"></div>
-                        <div class="category_delete"></div>
-                    </li>
-                    <li>
-                        <ul class="subWrap_2">
-                            <li class="category">
-                                <div class="category_arrow"></div>
-                                <h3>Lorem ipsum dolor si</h3>
-                                <div class="category_add withoutText"></div>
-                                <div class="category_argumentAdd"></div>
-                                <div class="category_edit"></div>
-                                <div class="category_delete"></div>
-                            </li>
-                            <li>
-                                <ul class="subWrap_3">
-                                    <li class="category">
-                                        <div class="category_arrow"></div>
-                                        <h3>Lorem ipsum dolor si</h3>
-                                        <div class="category_add crossView">Подкатегорию</div>
-                                        <div class="category_edit"></div>
-                                        <div class="category_delete"></div>
-                                    </li>
-                                    <li>
-                                        <ul class="subWrap_4">
-                                            <li class="category argument">
-                                                <h3>Lorem ipsum dolor si</h3>
-                                                <div class="category_argumentAdd crossView">Довод</div>
-                                                <div class="category_edit"></div>
-                                                <div class="category_delete"></div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="category argument">
-                                        <h3>Lorem ipsum dolor si</h3>
-                                        <div class="category_argumentAdd crossView">Довод</div>
-                                        <div class="category_edit"></div>
-                                        <div class="category_delete"></div>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <li class="catArguments">
-        <div class="category">
-            <div class="category_arrow"></div>
-            <h2>Lorem ipsum dolor si</h2>
-            <div class="category_add">Добавить категорию</div>
-            <div class="category_edit"></div>
-            <div class="category_delete"></div>
-        </div>
-    </li>
+    {% endfor %}
+<!--    <li class="catArguments">-->
+<!--        <div class="category">-->
+<!--            <div class="category_arrow"></div>-->
+<!--            <h2>Lorem ipsum dolor si</h2>-->
+<!--            <div class="category_add">Добавить категорию</div>-->
+<!--            <div class="category_edit"></div>-->
+<!--            <div class="category_delete"></div>-->
+<!--        </div>-->
+<!--    </li>-->
+<!--    <li class="catArguments">-->
+<!--        <ul>-->
+<!--            <li class="category">-->
+<!--                <div class="category_arrow"></div>-->
+<!--                <h2>Lorem ipsum dolor si</h2>-->
+<!--                <div class="category_add">Добавить категорию</div>-->
+<!--                <div class="category_edit"></div>-->
+<!--                <div class="category_delete"></div>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <ul class="subWrap_1">-->
+<!--                    <li class="category">-->
+<!--                        <div class="category_arrow"></div>-->
+<!--                        <h3>Lorem ipsum dolor si</h3>-->
+<!--                        <div class="category_add">Добавить категорию</div>-->
+<!--                        <div class="category_edit"></div>-->
+<!--                        <div class="category_delete"></div>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <ul class="subWrap_2">-->
+<!--                            <li class="category">-->
+<!--                                <div class="category_arrow"></div>-->
+<!--                                <h3>Lorem ipsum dolor si</h3>-->
+<!--                                <div class="category_add withoutText"></div>-->
+<!--                                <div class="category_argumentAdd"></div>-->
+<!--                                <div class="category_edit"></div>-->
+<!--                                <div class="category_delete"></div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <ul class="subWrap_3">-->
+<!--                                    <li class="category">-->
+<!--                                        <div class="category_arrow"></div>-->
+<!--                                        <h3>Lorem ipsum dolor si</h3>-->
+<!--                                        <div class="category_add crossView">Подкатегорию</div>-->
+<!--                                        <div class="category_edit"></div>-->
+<!--                                        <div class="category_delete"></div>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <ul class="subWrap_4">-->
+<!--                                            <li class="category argument">-->
+<!--                                                <h3>Lorem ipsum dolor si</h3>-->
+<!--                                                <div class="category_argumentAdd crossView">Довод</div>-->
+<!--                                                <div class="category_edit"></div>-->
+<!--                                                <div class="category_delete"></div>-->
+<!--                                            </li>-->
+<!--                                        </ul>-->
+<!--                                    </li>-->
+<!--                                    <li class="category argument">-->
+<!--                                        <h3>Lorem ipsum dolor si</h3>-->
+<!--                                        <div class="category_argumentAdd crossView">Довод</div>-->
+<!--                                        <div class="category_edit"></div>-->
+<!--                                        <div class="category_delete"></div>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </li>-->
+<!--    <li class="catArguments">-->
+<!--        <div class="category">-->
+<!--            <div class="category_arrow"></div>-->
+<!--            <h2>Lorem ipsum dolor si</h2>-->
+<!--            <div class="category_add">Добавить категорию</div>-->
+<!--            <div class="category_edit"></div>-->
+<!--            <div class="category_delete"></div>-->
+<!--        </div>-->
+<!--    </li>-->
 </ul>
 
 <article class="admin-popup-wrap add-Arguments_category">
