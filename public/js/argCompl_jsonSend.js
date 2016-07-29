@@ -89,7 +89,7 @@ var ajaxSendObj = {
             type: "GET",
             url: "http://fas/complaint/ajaxStepsAddComplaint" + data,
             dataType: 'json',
-            success: function (value) {
+            success: function(value) {
                 if (ajaxSendObj.step != 6) {
                     ajaxSendObj.stepsCacheArr.push(value);
                     ajaxSendObj.showDopBlocks();
@@ -102,7 +102,7 @@ var ajaxSendObj = {
                     ajaxSendObj.searchWriteStep(value);
                 }
             },
-            error: function (xhr) {
+            error: function(xhr) {
                 alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
                 + xhr.statusText + ' ResponseText:' + xhr.responseText);
             }

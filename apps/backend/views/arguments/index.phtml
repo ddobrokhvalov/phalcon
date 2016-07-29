@@ -2,9 +2,10 @@
 {% block title %}ФАС ОНЛАЙН - Доводы{% endblock %}
 {% block body %}
 
+<script type="application/javascript" src="/js/category_add.js"></script>
 <div class="admin-main-wrap listArguments">
     <h1>Категория</h1>
-    <a href="/admin/arguments/add" class="admin-add add-arg">Добавить</a>
+    <div class="admin-add add-cat">Добавить</div>
 </div>
 <ul>
     <li class="catArguments">
@@ -87,5 +88,19 @@
         </div>
     </li>
 </ul>
+
+<article class="admin-popup-wrap add-Arguments_category">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content">
+        <div class="admin-popup-close"></div>
+        <h6>Добавить новую категорию</h6>
+        <div class="inputBox">
+            <h4>Название категори</h4>
+            <input type="text">
+        </div>
+        <div class="popupBtn cancel">Отмена</div>
+        <div class="popupBtn saveCat">Сохранить</div>
+    </div>
+</article>
 
 {% endblock %}
