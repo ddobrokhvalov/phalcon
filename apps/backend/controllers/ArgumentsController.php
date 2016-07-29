@@ -308,11 +308,11 @@ class ArgumentsController  extends ControllerBase
                 $category->parent_id = $parent_id;
                 $category->create();
 
-                echo json_encode(array('category' => array(
+                echo json_encode(array(
                     'id'   => $category->id,
                     'name' => $category->name,
                     'parent_id' => $category->parent_id,
-                )));
+                ));
             }
         }
     }
