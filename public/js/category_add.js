@@ -20,14 +20,14 @@ function popupCancel() {
 
 function categorySend() {
     var catName = $('.inputBox input').val(),
-        data = '?id=' + 0 + '&name=' + catName;
+        data = 'id=' + 0 + '&name=' + catName;
     createNewCategory.newCategorySend(data);
 }
 
 function deleteCatBlock(obj) {
     var thisId = obj.parent().attr('data-id'),
-        data = '?id=' + thisId;
-    deleteCategory.deleteCategorySend(data);
+        data = 'id=' + thisId;
+    deleteCategory.deleteCategorySend(data, obj.parent().parent());
 }
 
 var shell;
@@ -82,20 +82,27 @@ var createNewCategory = {
 };
 
 var deleteCategory = {
-    deleteCategorySend: function(data) {
+    deleteCategorySend: function(data, obj) {
         $.ajax({
             type: "GET",
             url: "http://fas/admin/arguments/ajaxRemove",
             data: data,
             dataType: 'json',
-            success: function(value) {
-                console.log(value);
+            context: obj,
+            success: function() {
+                deleteCategory.clearDOM($(this));
             },
             error: function(xhr) {
                 alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
                     + xhr.statusText + ' ResponseText:' + xhr.responseText);
             }
         });
+    },
+    clearDOM: function(obj) {
+        obj.slideUp(400);
+        setTimeout(function() {
+            obj.remove();
+        }, 400);
     }
 }
 
