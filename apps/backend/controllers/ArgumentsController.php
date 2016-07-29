@@ -30,9 +30,6 @@ class ArgumentsController  extends ControllerBase
                 ->getQuery()
                 ->execute();
             $this->view->Arguments = $Arguments;
-//            $obj = new ArgumentsCategory();
-//            $data = $obj->getAllCategory();
-//            $data = $obj->buildTreeArray( $data );
             $this->view->ArgumentsCategory = ArgumentsCategory::find(
                 array(
                     "parent_id = 0",
@@ -203,22 +200,40 @@ class ArgumentsController  extends ControllerBase
         echo json_encode($data);
     }
 
-    public function getAjaxCategoryAction(){
-        $obj = new ArgumentsCategory();
-        $data = $obj->getAllCategory();
-        $data = $obj->buildTreeArray( $data );
-        echo json_encode( $data );
-    }
 
+
+    /*AJAX*/
+
+//    public function getAjaxCategoryAction(){
+//        $obj = new ArgumentsCategory();
+//        $data = $obj->getAllCategory();
+//        $data = $obj->buildTreeArray( $data );
+//        echo json_encode( $data );
+//    }
 
 
     public function ajaxRemoveAction(){
-        $id = $this->request->get('id');
-        if(!is_numeric($id)){
-            echo "bad data";
-            exit;
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
+            $this->view->pick("access/denied");
+            $this->setMenu();
+        } else {
+            $id = $this->request->get('id');
+            $argument = $this->request->get('argument');
+            if (!is_numeric($id)) {
+                echo "bad data";
+                exit;
+            }
+            if (isset($argument) && $argument == true) {
+                Arguments::find(
+                    array(
+                        "id = {$id}",
+                    )
+                )->delete();
+            } else {
+                $this->deleteTrees($id);
+            }
         }
-        $this->deleteTrees( $id );
     }
 
     private function deleteTrees($id){
@@ -279,4 +294,92 @@ class ArgumentsController  extends ControllerBase
         echo json_encode($result);
     }
 
+    public function ajaxAddCategoryAction(){
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
+            echo json_encode(array('status' => 'permission denied'));
+        } else {
+            $parent_id = $this->request->get('parent_id');
+            $parent_id = (isset($parent_id)) ? $parent_id : 0;
+            $category_name = $this->request->get("name");
+            if ($category_name) {
+                $category = new ArgumentsCategory();
+                $category->name = $category_name;
+                $category->parent_id = $parent_id;
+                $category->create();
+                echo json_encode(array('status' => 'ok'));
+            }
+        }
+    }
+
+
+    public function ajaxAddArgumentsAction(){
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
+            $this->view->pick("access/denied");
+            $this->setMenu();
+        } else {
+            $data = $this->request->get("arguments");
+            $errors = FALSE;
+            $err_arr = array();
+            if ($data) {
+                $argument = new Arguments();
+                foreach ($data as $field => $value) {
+                    if ($value) {
+                        $argument->$field = $value;
+                    } else {
+                        $err_arr[] = $this->getFieldName($field) . ' не может быть пустым';
+                        $errors = TRUE;
+                    }
+                }
+                if (!$errors) {
+                    $argument->argument_status = 1;
+                    $argument->date = date('Y-m-d H:i:s');
+                    $argument->save();
+                    echo json_encode(array( 'status' => 'ok' ));
+                    exit;
+                } else {
+                    echo json_encode(array( 'status' => $err_arr ));
+                    exit;
+                }
+            }
+        }
+    }
+
+
+    public function ajaxEditAction(){
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
+            $this->view->pick("access/denied");
+            $this->setMenu();
+        } else {
+            $edit = $this->request->get("edit");
+            if(!isset($edit['id']) || !is_numeric($edit['id'])){
+                echo json_encode(array('err' => 'bad id'));
+                exit;
+            }
+            if(!isset($edit['name']) || trim($edit['name']) == ''){
+                echo json_encode(array('err' => 'bad name'));
+                exit;
+            }
+            if(isset($edit['arg']) && $edit['arg'] == true){
+                if(!isset($edit['text']) && trim($edit['text']) == ''){
+                    echo json_encode(array('err' => 'bad text'));
+                    exit;
+                }
+                $id = $edit['id'];
+                $argument = Arguments::findFirst($id);
+                $argument->name = trim($edit['name']);
+                $argument->text = trim($edit['text']);
+                $argument->save();
+                echo json_encode(array('status' => 'ok'));
+            } else {
+                $id = $edit['id'];
+                $category = ArgumentsCategory::findFirst($id);
+                $category->name = trim($edit['name']);
+                $category->save();
+                echo json_encode(array('status' => 'ok'));
+            }
+        }
+    }
 }
