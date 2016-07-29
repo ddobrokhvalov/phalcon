@@ -206,6 +206,16 @@
     }
   }
 }
+%popupBorder {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 100;
+  color: #2c2f32;
+  border: 1px solid #d3d3d3;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
 .add-Arguments_category {
   display: none;
   .admin-popup-content {
@@ -256,17 +266,18 @@
       color: #2c2f32;
     }
     input {
+      @extend %popupBorder;
       padding: 0 40px;
-      width: 100%;
       height: 66px;
-      font-size: 20px;
-      font-weight: 100;
-      line-height: 66px;
-      color: #2c2f32;
-      border: 1px solid #d3d3d3;
-      -webkit-border-radius: 8px;
-      -moz-border-radius: 8px;
-      border-radius: 8px;
+    }
+    textarea {
+      @extend %popupBorder;
+      padding: 10px 40px;
+      height: 250px;
+      resize: none;
     }
   }
+}
+.argumentText {
+  display: none;
 }

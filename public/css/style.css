@@ -2556,25 +2556,37 @@ a:focus {
 }
 
 /* line 209, ../sass/_list_arguments.scss */
+.add-Arguments_category .inputBox input, .add-Arguments_category .inputBox textarea {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 100;
+  color: #2c2f32;
+  border: 1px solid #d3d3d3;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+
+/* line 219, ../sass/_list_arguments.scss */
 .add-Arguments_category {
   display: none;
 }
-/* line 211, ../sass/_list_arguments.scss */
+/* line 221, ../sass/_list_arguments.scss */
 .add-Arguments_category .admin-popup-content {
   width: 755px;
 }
-/* line 213, ../sass/_list_arguments.scss */
+/* line 223, ../sass/_list_arguments.scss */
 .add-Arguments_category .admin-popup-content:after {
   content: '';
   display: block;
   clear: both;
 }
-/* line 216, ../sass/_list_arguments.scss */
+/* line 226, ../sass/_list_arguments.scss */
 .add-Arguments_category .admin-popup-content h6 {
   margin-bottom: 34px;
   font-size: 48px;
 }
-/* line 219, ../sass/_list_arguments.scss */
+/* line 229, ../sass/_list_arguments.scss */
 .add-Arguments_category .admin-popup-content h6:before {
   top: -27px;
   left: -9px;
@@ -2584,7 +2596,7 @@ a:focus {
   -o-transform: rotate(-4deg);
   transform: rotate(-4deg);
 }
-/* line 226, ../sass/_list_arguments.scss */
+/* line 236, ../sass/_list_arguments.scss */
 .add-Arguments_category .popupBtn {
   float: left;
   margin-left: 87px;
@@ -2600,41 +2612,43 @@ a:focus {
   background-color: #00aeef;
   cursor: pointer;
 }
-/* line 240, ../sass/_list_arguments.scss */
+/* line 250, ../sass/_list_arguments.scss */
 .add-Arguments_category .popupBtn:last-child {
   float: right;
   margin-right: 87px;
   margin-left: 0;
 }
-/* line 245, ../sass/_list_arguments.scss */
+/* line 255, ../sass/_list_arguments.scss */
 .add-Arguments_category .popupBtn:hover {
   background-color: #10b8f7;
 }
-/* line 249, ../sass/_list_arguments.scss */
+/* line 259, ../sass/_list_arguments.scss */
 .add-Arguments_category .inputBox {
   margin: 0 auto 66px;
   width: 580px;
 }
-/* line 252, ../sass/_list_arguments.scss */
+/* line 262, ../sass/_list_arguments.scss */
 .add-Arguments_category .inputBox h4 {
   font-size: 24px;
   font-weight: 100;
   line-height: 60px;
   color: #2c2f32;
 }
-/* line 258, ../sass/_list_arguments.scss */
+/* line 268, ../sass/_list_arguments.scss */
 .add-Arguments_category .inputBox input {
   padding: 0 40px;
-  width: 100%;
   height: 66px;
-  font-size: 20px;
-  font-weight: 100;
-  line-height: 66px;
-  color: #2c2f32;
-  border: 1px solid #d3d3d3;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
+}
+/* line 273, ../sass/_list_arguments.scss */
+.add-Arguments_category .inputBox textarea {
+  padding: 10px 40px;
+  height: 250px;
+  resize: none;
+}
+
+/* line 281, ../sass/_list_arguments.scss */
+.argumentText {
+  display: none;
 }
 
 /* line 5, ../sass/_user_list.scss */
