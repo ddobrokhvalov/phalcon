@@ -9,8 +9,7 @@ $(document).ready(function() {
         categorySend();
     });
     $('.argCatTree').on('click', '.category_delete', function() {
-        var thisParent = $(this).parent().parent;
-        deleteCatBlock();
+        deleteCatBlock($(this));
     });
 });
 
@@ -25,8 +24,10 @@ function categorySend() {
     createNewCategory.newCategorySend(data);
 }
 
-function deleteCatBlock() {
-
+function deleteCatBlock(obj) {
+    var thisId = obj.parent().attr('data-id'),
+        data = '?id=' + thisId;
+    deleteCategory.deleteCategorySend(data);
 }
 
 var shell;
@@ -88,8 +89,7 @@ var deleteCategory = {
             data: data,
             dataType: 'json',
             success: function(value) {
-                shell = new ShellToFill('', value.name, value.id, value.parent_id);
-                createNewCategory.createCategory();
+                console.log(value);
             },
             error: function(xhr) {
                 alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
