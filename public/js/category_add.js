@@ -1,5 +1,9 @@
 $(document).ready(function() {
     $('.add-cat').click(function() {
+        if ($('.saveCat').hasClass('subChild')) {
+            $('.saveCat').removeClass('subChild');
+            catNum = '';
+        }
         $('.add-Arguments_category').fadeIn().css('display', 'flex');
     });
     $('.cancel').click(function() {
@@ -11,31 +15,45 @@ $(document).ready(function() {
     $('.argCatTree').on('click', '.category_delete', function() {
         deleteCatBlock($(this));
     });
+    $('.argCatTree').on('click', '.category_add', function() {
+        createSubCat_Arg($(this));
+    });
 });
 
+var catNum = '',
+    parentId,
+    shell;
+function categorySend() {
+    var catName = $('.inputBox input').val(),
+        data;
+    if ($('.saveCat').hasClass('subChild')) {
+        catNum++;
+        data = 'id=' + parentId + '&name=' + catName;
+    } else {
+        data = 'id=' + 0 + '&name=' + catName;
+    }
+    createNewCategory.newCategorySend(data);
+}
+function createSubCat_Arg(obj) {
+    $('.saveCat').addClass('subChild');
+    catNum = obj.parent().attr('data-value');
+    parentId = obj.parent().attr('data-id');
+    $('.add-Arguments_category').fadeIn().css('display', 'flex');
+}
 function popupCancel() {
     $('.admin-popup-wrap').fadeOut();
     $('.inputBox input').val('');
 }
-
-function categorySend() {
-    var catName = $('.inputBox input').val(),
-        data = 'id=' + 0 + '&name=' + catName;
-    createNewCategory.newCategorySend(data);
-}
-
 function deleteCatBlock(obj) {
     var thisId = obj.parent().attr('data-id'),
         data = 'id=' + thisId;
     deleteCategory.deleteCategorySend(data, obj.parent().parent());
 }
-
-var shell;
 function ShellToFill(step, titleText, id, parent_id) {
     this.wrapp = '<li class="catArguments">';
     this.holder = '<ul class="subWrap_' + step + '">';
-    this.box = '<div class="category" data-id="' + id + '" data-parent_id="' + parent_id + '">';
-    this.box2 = '<li class="category" data-id="' + id + '" data-parent_id="' + parent_id + '">';
+    this.box = '<div class="category" data-value="" data-id="' + id + '" data-parent_id="' + parent_id + '">';
+    this.box2 = '<li class="category" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '">';
     this.arrow = '<div class="category_arrow"></div>';
     this.title = '<h2>' + titleText + '</h2>';
     this.title2 = '<h3>' + titleText + '</h3>';
@@ -50,14 +68,28 @@ function ShellToFill(step, titleText, id, parent_id) {
 
 var createNewCategory = {
     newCategorySend: function(data) {
-        $.ajax({
+            $.ajax({
             type: "GET",
             url: "http://fas/admin/arguments/ajaxAddCategory",
             data: data,
             dataType: 'json',
             success: function(value) {
-                shell = new ShellToFill('', value.name, value.id, value.parent_id);
-                createNewCategory.createCategory();
+                console.log(value);
+                shell = new ShellToFill(catNum, value.name, value.id, value.parent_id);
+                popupCancel();
+                switch(catNum) {
+                    case 1:
+                        createNewCategory.createSubCategory_1();
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        createNewCategory.createCategory();
+                }
             },
             error: function(xhr) {
                 alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
@@ -66,7 +98,6 @@ var createNewCategory = {
         });
     },
     createCategory: function() {
-        $('.admin-popup-wrap').fadeOut();
         $('.argCatTree').append(
             shell.wrapp +
             shell.box +
@@ -77,7 +108,16 @@ var createNewCategory = {
             shell.catDel +
             '</div></li>'
         );
-        $('.inputBox input').val('');
+    },
+    createSubCategory_1: function() {
+        $('.argCatTree').append(
+            shell.wrapp +
+            shell.box +
+            shell.arrow +
+            shell.title +
+            shell.catAdd +
+            '</div></li>'
+        );
     }
 };
 
