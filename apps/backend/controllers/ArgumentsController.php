@@ -341,7 +341,12 @@ class ArgumentsController  extends ControllerBase
                     $argument->argument_status = 1;
                     $argument->date = date('Y-m-d H:i:s');
                     $argument->save();
-                    echo json_encode(array( 'status' => 'ok' ));
+                    echo json_encode(array(
+                        'id'   => $argument->id,
+                        'category_id' => $argument->category_id,
+                        'name' => $argument->name,
+                        'text' => $argument->text
+                    ));
                     exit;
                 } else {
                     echo json_encode(array( 'status' => $err_arr ));
@@ -377,13 +382,22 @@ class ArgumentsController  extends ControllerBase
                 $argument->name = trim($edit['name']);
                 $argument->text = trim($edit['text']);
                 $argument->save();
-                echo json_encode(array('status' => 'ok'));
+                echo json_encode(array(
+                    'id'    => $argument->id,
+                    'category_id' => $argument->category_id,
+                    'name' => $argument->name,
+                    'text' => $argument->text
+                ));
             } else {
                 $id = $edit['id'];
                 $category = ArgumentsCategory::findFirst($id);
                 $category->name = trim($edit['name']);
                 $category->save();
-                echo json_encode(array('status' => 'ok'));
+                echo json_encode(array(
+                    'id'   => $category->id,
+                    'name' => $category->name,
+                    'parent_id' => $category->parent_id
+                ));
             }
         }
     }
