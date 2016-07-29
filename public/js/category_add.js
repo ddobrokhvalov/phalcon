@@ -85,7 +85,7 @@ var deleteCategory = {
     deleteCategorySend: function(data) {
         $.ajax({
             type: "GET",
-            url: "http://fas/admin/arguments/ajaxAddCategory",
+            url: "http://fas/admin/arguments/ajaxRemove",
             data: data,
             dataType: 'json',
             success: function(value) {
