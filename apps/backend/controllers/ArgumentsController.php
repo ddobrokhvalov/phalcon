@@ -230,15 +230,15 @@ class ArgumentsController  extends ControllerBase
                         "id = {$id}",
                     )
                 )->delete();
-                echo json_decode(array('status' => 'ok'));
+                echo json_encode(array('status' => 'ok'));
                 exit;
             } else {
                 $this->deleteTrees($id);
-                echo json_decode(array('status' => 'ok'));
+                echo json_encode(array('status' => 'ok'));
                 exit;
             }
         }
-        echo json_decode(array('status' => 'err'));
+        echo json_encode(array('status' => 'err'));
         exit;
     }
 
