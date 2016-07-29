@@ -211,49 +211,37 @@ class ArgumentsController  extends ControllerBase
     }
 
 
-    public function ajaxRemoveCatAction(){
-        $category = $this->request->get('category');
-        $arguments = $this->request->get('arguments');
-        if($category != '') $category = json_decode($category);
-        if($category != '') $category = json_decode($arguments);
 
-        if(count($arguments)){
-            $arguments = Arguments::find(
-                array(
-                    'id IN ({ids:array})',
-                    'bind' => array(
-                        'ids' => $arguments
-                    )
-                )
-            )->delete();
+    public function ajaxRemoveAction(){
+        $id = $this->request->get('id');
+        if(!is_numeric($id)){
+            echo "bad data";
+            exit;
         }
-
-        if(count($category)){
-            $categories = ArgumentsCategory::find(
-                array(
-                    'id IN ({ids:array})',
-                    'bind' => array(
-                        'ids' => $category
-                    )
-                )
-            )->delete();
-        }
+        $this->deleteTrees( $id );
     }
 
-    public function ajaxRemoveArgAction(){
-        $arguments = $this->request->get('arguments');
-        if($arguments != '') $category = json_decode($arguments);
-
-        if(count($arguments)){
-            $arguments = Arguments::find(
-                array(
-                    'id IN ({ids:array})',
-                    'bind' => array(
-                        'ids' => $arguments
-                    )
-                )
-            )->delete();
+    private function deleteTrees($id){
+        Arguments::find(
+            array(
+                "category_id = {$id}",
+            )
+        )->delete();
+        $categories = ArgumentsCategory::find(
+            array(
+                "parent_id = {$id}"
+            )
+        );
+        if(count($categories)) {
+            foreach ($categories as $key) {
+                $this->deleteTrees($key->id);
+            }
         }
+        ArgumentsCategory::find(
+            array(
+                "id = {$id}"
+            )
+        )->delete();
     }
 
     public function ajaxGetCatArgumentsAction(){
