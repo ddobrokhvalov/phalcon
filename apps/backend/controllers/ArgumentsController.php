@@ -230,10 +230,16 @@ class ArgumentsController  extends ControllerBase
                         "id = {$id}",
                     )
                 )->delete();
+                echo json_decode(array('status' => 'ok'));
+                exit;
             } else {
                 $this->deleteTrees($id);
+                echo json_decode(array('status' => 'ok'));
+                exit;
             }
         }
+        echo json_decode(array('status' => 'err'));
+        exit;
     }
 
     private function deleteTrees($id){
@@ -342,10 +348,10 @@ class ArgumentsController  extends ControllerBase
                     $argument->date = date('Y-m-d H:i:s');
                     $argument->save();
                     echo json_encode(array(
-                        'id'   => $argument->id,
-                        'category_id' => $argument->category_id,
-                        'name' => $argument->name,
-                        'text' => $argument->text
+                        'id'            => $argument->id,
+                        'category_id'   => $argument->category_id,
+                        'name'          => $argument->name,
+                        'text'          => $argument->text
                     ));
                     exit;
                 } else {
@@ -383,10 +389,10 @@ class ArgumentsController  extends ControllerBase
                 $argument->text = trim($edit['text']);
                 $argument->save();
                 echo json_encode(array(
-                    'id'    => $argument->id,
-                    'category_id' => $argument->category_id,
-                    'name' => $argument->name,
-                    'text' => $argument->text
+                    'id'            => $argument->id,
+                    'category_id'   => $argument->category_id,
+                    'name'          => $argument->name,
+                    'text'          => $argument->text
                 ));
             } else {
                 $id = $edit['id'];
@@ -394,8 +400,8 @@ class ArgumentsController  extends ControllerBase
                 $category->name = trim($edit['name']);
                 $category->save();
                 echo json_encode(array(
-                    'id'   => $category->id,
-                    'name' => $category->name,
+                    'id'        => $category->id,
+                    'name'      => $category->name,
                     'parent_id' => $category->parent_id
                 ));
             }
