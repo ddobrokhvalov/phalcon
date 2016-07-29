@@ -307,7 +307,12 @@ class ArgumentsController  extends ControllerBase
                 $category->name = $category_name;
                 $category->parent_id = $parent_id;
                 $category->create();
-                echo json_encode(array('status' => 'ok'));
+
+                echo json_encode(array('category' => array(
+                    'id'   => $category->id,
+                    'name' => $category->name,
+                    'parent_id' => $category->parent_id,
+                )));
             }
         }
     }
