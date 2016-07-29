@@ -21,10 +21,24 @@ function popupCancel() {
     $('.inputBox input').val('');
 }
 
+var shell = new ShellToFill();
+function ShellToFill(step, titleText, id, parent_id) {
+    this.wrapp = '<li class="catArguments">';
+    this.holder = '<ul class="subWrap_' + step + '">';
+    this.box = '<div class="category" data-id="' + id + '" data-parent_id="' + parent_id + '">';
+    this.arrow = '<div class="category_arrow"></div>';
+    this.title1 = '<h2>' + titleText + '</h2>';
+    this.title2 = '<h3>' + titleText + '</h3>';
+    this.catAdd = '<div class="category_add">Добавить категорию</div>';
+    this.catAddnt = '<div class="category_add withoutText"></div>';
+    this.catAddCross = '<div class="category_add crossView">Подкатегорию</div>';
+    this.argAdd = '<div class="category_argumentAdd"></div>';
+    this.argAddCross = '<div class="category_argumentAdd crossView">Довод</div>';
+    this.catEdit = '<div class="category_edit"></div>';
+    this.catDel = '<div class="category_delete"></div>';
+};
+
 var createNewCategory = {
-    step: 1,
-    title: '',
-    text: '',
     newCategorySend: function(data) {
         $.ajax({
             type: "GET",
@@ -33,7 +47,8 @@ var createNewCategory = {
             dataType: 'json',
             success: function(value) {
                 console.log(value);
-                // createNewCategory.createParentCategory();
+                ShellToFill(1, value.name, value.id, value.parent_id);
+                createNewCategory.createParentCategory();
             },
             error: function(xhr) {
                 alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
@@ -41,30 +56,21 @@ var createNewCategory = {
             }
         });
     },
-    // createParentCategory: function() {
-    //
-    // }
-};
-
-var shell = new ShellToFill(
-    createNewCategory.step,
-    createNewCategory.title,
-    createNewCategory.text
-);
-function ShellToFill(step, titleText, text) {
-    this.wrapp = '<li class="catArguments">';
-    this.holder = '<ul class="subWrap_' + step + '">';
-    this.box = '<div class="category">';
-    this.arrow = '<div class="category_arrow"></div>';
-    this.title1 = '<h2>' + titleText + '</h2>';
-    this.title2 = '<h3>' + titleText + '</h3>';
-    this.catAdd = '<div class="category_add">' + text + '</div>';
-    this.catAddnt = '<div class="category_add withoutText"></div>';
-    this.catAddCross = '<div class="category_add crossView">' + text + '</div>';
-    this.argAdd = '<div class="category_argumentAdd"></div>';
-    this.argAddCross = '<div class="category_argumentAdd crossView">' + text + '</div>';
-    this.catEdit = '<div class="category_edit"></div>';
-    this.catDel = '<div class="category_delete"></div>';
+    createParentCategory: function() {
+        $('.admin-popup-wrap').fadeOut();
+        $('.argCatTree').append(
+            shell.wrapp +
+            '<ul>' +
+            shell.box +
+            shell.arrow +
+            shell.title1 +
+            shell.catAdd +
+            shell.catEdit +
+            shell.catDel +
+            '</ul>' +
+            '</li>'
+        );
+    }
 };
 
 
