@@ -331,6 +331,13 @@ class ArgumentsController  extends ControllerBase
             $this->setMenu();
         } else {
             $data = $this->request->get("arguments");
+            if(!isset($data)){
+                echo json_encode(array( 'status' => 'non data' ));
+                exit;
+            } else if(!isset($data['category_id']) || !is_numeric($data['category_id'])){
+                echo json_encode(array( 'status' => 'bad id' ));
+                exit;
+            }
             $errors = FALSE;
             $err_arr = array();
             if ($data) {
