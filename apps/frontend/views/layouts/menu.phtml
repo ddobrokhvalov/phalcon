@@ -206,16 +206,22 @@
                     Сообщения
                     <span>{% if count_unread %} {{count_unread}} {% else %} {% endif %}</span>
                 </div>
-                <div class="ch-r-m-text mCustomScrollbar">
+                <div class="ch-r-m-text">
                     <ul class="ch-r-m-list">
+                        {% set cnt_mes = 0 %}
                         {% for new_status in move_statuses %}
-                            <li class="{{ new_status['color'] }}">
-                                Статус вашей жалобы на заявку №{{new_status['auction_id']}} изменен на «{{new_status['status']}}»
-                                <a href="/complaint/edit/{{new_status['complaint_id']}}">Перейти к жалобе</a>
-                                <span>{{ new_status['date'] }}</span>
-                            </li>
+                            {% if cnt_mes < 4 %}
+                            <a href="/complaint/edit/{{new_status['complaint_id']}}">
+                                <li class="{{ new_status['color'] }}">
+                                    Статус вашей жалобы на заявку №{{new_status['auction_id']}} изменен на «{{new_status['status']}}»
+                                    <span>{{ new_status['date'] }}</span>
+                                </li>
+                            </a>
+                            {% endif %}
+                            {% set cnt_mes+=1 %}
                         {% endfor %}
                         {% for message in messages %}
+                            {% if cnt_mes < 4 %}
                             <li class="system">
                                 <div> Сообщение от администратора<br>Тема: {{ message.subject }} </div>
                                 <a href="#" onclick="jQuery('#message-text').val(jQuery(this).parent().find('#message_body').val());jQuery('.modal-message-detail').modal('show');setMessageRed(jQuery(this).parent().find('#message_id').val());jQuery(this).parent().remove();var cnt_m1 = +(jQuery('.ch-r-mail-dd-z span').text());cnt_m1-=1;jQuery('.ch-r-mail-dd-z span').text(' ' + cnt_m1 + ' ');jQuery('.ch-r-mail span').text(' ' + cnt_m1 + ' ');return false;">Посмотреть</a>
@@ -223,9 +229,11 @@
                                 {{hidden_field('message_body', 'value':message.body)}}
                                 {{hidden_field('message_id', 'value':message.id)}}
                             </li>
+                            {% endif %}
+                            {% set cnt_mes+=1 %}
                         {% endfor %}
-                        <li class="all-message-link">
-                            <span onclick="window.location.href='/message/index';">Все сообщения</span>
+                        <li class="all-message-link" onclick="window.location.href='/message/index';">
+                            Все сообщения
                         </li>
                     </ul>
                 </div>
