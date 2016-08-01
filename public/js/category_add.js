@@ -1,10 +1,6 @@
 $(document).ready(function() {
     $('.add-cat').click(function() {
-        if ($('.saveCat').hasClass('subChild')) {
-            $('.saveCat').removeClass('subChild');
-            catNum = '';
-        }
-        $('.add-Arguments_category').fadeIn().css('display', 'flex');
+        addNewCat();
     });
     $('.cancel').click(function() {
         popupCancel();
@@ -20,16 +16,17 @@ $(document).ready(function() {
     });
     $('.argCatTree').on('click', '.category_arrow, .category h2, .category h3', function() {
         var data = 'id=' + $(this).parent().attr('data-id');
-        receivingData.getData(data);
+        receivingData.getSomeData(data, $(this).parent(), $(this).parent().attr('data-value'));
     });
     $('.argCatTree').on('click', '.category_argumentAdd', function() {
         addArgumentFunc($(this));
     });
+    $('.argCatTree').on('click', '.category_edit', function() {
+        editCatArg($(this).parent());
+    });
 });
 
-var catNum = '',
-    parentId,
-    shell;
+var catNum = '', parentId, argName, argText, shell;
 function categorySend() {
     var catName = $('.inputBox input').val(),
         data;
@@ -47,7 +44,16 @@ function categorySend() {
         createNewCategory.newCategorySend(data);
     }
 }
+function addNewCat() {
+    if ($('.saveCat').hasClass('subChild')) {
+        $('.saveCat').removeClass('subChild');
+    }
+    catNum = '';
+    $('.argumentText').hide();
+    $('.add-Arguments_category').fadeIn().css('display', 'flex');
+}
 function createSubCat_Arg(obj) {
+    $('.argumentText').hide();
     $('.saveCat').addClass('subChild');
     catNum = obj.parent().attr('data-value');
     parentId = obj.parent().attr('data-id');
@@ -56,23 +62,43 @@ function createSubCat_Arg(obj) {
 function popupCancel() {
     $('.admin-popup-wrap').fadeOut();
     $('.inputBox input').val('');
+    $('.argumentText').hide();
 }
 function deleteCatBlock(obj) {
-    var thisId = obj.parent().attr('data-id'),
+    var thisId = obj.parent().attr('data-id'), data;
+    if (obj.parent().attr('id') == 'argument') {
+        data = 'id=' + thisId + '&argument=true';
+    } else {
         data = 'id=' + thisId;
+    }
     deleteCategory.deleteCategorySend(data, obj.parent().parent());
 }
 function addArgumentFunc(obj) {
     parentId = obj.parent().attr('data-id');
+    catNum = obj.parent().attr('data-value');
+    $('.argumentText textarea').val('').text('');
     $('.argumentText').show();
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
     $('.saveCat').removeClass('subChild').addClass('createArgument');
+}
+function editCatArg(obj) {
+    parentId = obj.attr('data-parent_id');
+    $('.argumentText textarea').val('').text('');
+    if (obj.attr('id') == 'argument') {
+        $('.argumentText').show();
+        argName = obj.find('h3').text();
+    } else {
+        $('.argumentText').hide();
+    }
+    $('.add-Arguments_category').fadeIn().css('display', 'flex');
+    $('.saveCat').removeClass('subChild createArgument').addClass('editArgCat');
 }
 function ShellToFill(step, titleText, id, parent_id) {
     this.wrapp = '<li class="catArguments">';
     this.holder = '<ul class="subWrap_' + step + '">';
     this.box = '<div class="category" data-value="" data-id="' + id + '" data-parent_id="' + parent_id + '">';
     this.box2 = '<li class="category" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '">';
+    this.box3 = '<li class="category" id="argument" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '">';
     this.arrow = '<div class="category_arrow"></div>';
     this.title = '<h2>' + titleText + '</h2>';
     this.title2 = '<h3>' + titleText + '</h3>';
@@ -146,6 +172,103 @@ var createNewCategory = {
     }
 };
 
+var addArgument = {
+    addData: function(data) {
+        $.ajax({
+            type: "GET",
+            url: "http://fas/admin/arguments/ajaxAddArguments",
+            data: data,
+            dataType: 'json',
+            success: function(value) {
+                var argNum = catNum;
+                argNum++;
+                shell = new ShellToFill(argNum, value.name, value.id, value.category_id);
+                popupCancel();
+                $('.subWrap_' + catNum + ' .category').each(function() {
+                    if ($(this).attr('data-id') == parentId) {
+                        $(this).parent().append(writeGetData.subCategory_4());
+                    }
+                });
+            },
+            error: function(xhr) {
+                alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
+                    + xhr.statusText + ' ResponseText:' + xhr.responseText);
+            }
+        });
+    }
+};
+
+var receivingData = {
+    getSomeData: function(data, obj, num) {
+        $.ajax({
+            type: "GET",
+            url: "http://fas/admin/arguments/ajaxGetCatArguments",
+            data: data,
+            dataType: 'json',
+            success: function(value) {
+                if (num == 0) {
+                    for (var i = 0; i < value.cat_arguments.length; i++) {
+                        shell = new ShellToFill(1, value.cat_arguments[i].name, value.cat_arguments[i].id, value.cat_arguments[i].parent_id);
+                        obj.parent().append(writeGetData.subCategory_1());
+                    }
+                } else if (num == 1) {
+                    for (var i = 0; i < value.cat_arguments.length; i++) {
+                        shell = new ShellToFill(2, value.cat_arguments[i].name, value.cat_arguments[i].id, value.cat_arguments[i].parent_id);
+                        obj.parent().append(writeGetData.subCategory_2());
+                    }
+                } else if (num == 2) {
+                    for (var i = 0; i < value.cat_arguments.length; i++) {
+                        shell = new ShellToFill(3, value.cat_arguments[i].name, value.cat_arguments[i].id, value.cat_arguments[i].parent_id);
+                        obj.parent().append(writeGetData.subCategory_3());
+                    }
+                    for (var i = 0; i < value.arguments.length; i++) {
+                        shell = new ShellToFill(3, value.arguments[i].name, value.arguments[i].id, value.arguments[i].category_id);
+                        obj.parent().append(writeGetData.subCategory_4());
+                    }
+                } else if (num == 3) {
+                    for (var i = 0; i < value.cat_arguments.length; i++) {
+                        shell = new ShellToFill(4, value.cat_arguments[i].name, value.cat_arguments[i].id, value.cat_arguments[i].parent_id);
+                        obj.parent().append(writeGetData.subCategory_4());
+                    }
+                    for (var i = 0; i < value.arguments.length; i++) {
+                        shell = new ShellToFill(4, value.arguments[i].name, value.arguments[i].id, value.arguments[i].category_id);
+                        obj.parent().append(writeGetData.subCategory_4());
+                    }
+                }
+            },
+            error: function(xhr) {
+                alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
+                    + xhr.statusText + ' ResponseText:' + xhr.responseText);
+            }
+        });
+    }
+};
+
+var editCategoryArgument = {
+    edit: function(data, obj) {
+        $.ajax({
+            type: "GET",
+            url: "http://fas/admin/arguments/ajaxRemove",
+            data: data,
+            dataType: 'json',
+            context: obj,
+            success: function() {
+                deleteCategory.clearDOM($(this));
+            },
+            error: function(xhr) {
+                alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
+                    + xhr.statusText + ' ResponseText:' + xhr.responseText);
+            }
+        });
+    },
+    clearDOM: function(obj) {
+        obj.slideUp(400);
+        setTimeout(function() {
+            obj.remove();
+        }, 400);
+    }
+};
+
 var deleteCategory = {
     deleteCategorySend: function(data, obj) {
         $.ajax({
@@ -169,65 +292,6 @@ var deleteCategory = {
             obj.remove();
         }, 400);
     }
-}
-
-var receivingData = {
-    getData: function(data) {
-        $.ajax({
-            type: "GET",
-            url: "http://fas/admin/arguments/ajaxGetCatArguments",
-            data: data,
-            dataType: 'json',
-            success: function(value) {
-                shell = new ShellToFill(catNum, value.name, value.id, value.parent_id);
-                switch(catNum) {
-                    case 1:
-                        createNewCategory.createSubCategory_1();
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                }
-            },
-            error: function(xhr) {
-                alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
-                    + xhr.statusText + ' ResponseText:' + xhr.responseText);
-            }
-        });
-    },
-    cycleData: function() {
-
-    }
-};
-
-var addArgument = {
-    addData: function(data) {
-        $.ajax({
-            type: "GET",
-            url: "http://fas/admin/arguments/ajaxAddArguments",
-            data: data,
-            dataType: 'json',
-            success: function(value) {
-                console.log(value);
-                shell = new ShellToFill(catNum, value.name, value.id, value.parent_id);
-                switch(catNum) {
-                    case 3:
-                        createNewCategory.createSubCategory_3();
-                        break;
-                    case 4:
-                        createNewCategory.createSubCategory_4();
-                        break;
-                }
-            },
-            error: function(xhr) {
-                alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
-                    + xhr.statusText + ' ResponseText:' + xhr.responseText);
-            }
-        });
-    },
 };
 
 var writeGetData = {
@@ -278,14 +342,10 @@ var writeGetData = {
     subCategory_4: function() {
         return '<li>' +
             shell.holder +
-            shell.box2 +
+            shell.box3 +
             shell.title2 +
             shell.catEdit +
             shell.catDel +
             '</ul></li>'
     }
 };
-
-
-
-/* /ajaxRemove?edit[id]=6&edit[name]=jhbnji&edit[arg]=true&edit[text]=mkonkomko */
