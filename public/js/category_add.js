@@ -41,7 +41,6 @@ function categorySend() {
         var argumentName = $('.inputBox input').val(),
             argumentText = $('.inputBox textarea').val();
         data = 'arguments[category_id]=' + parentId + '&arguments[name]=' + argumentName + '&arguments[text]=' + argumentText;
-        console.log(data);
         addArgument.addData(data);
     } else {
         data = 'parent_id=' + 0 + '&name=' + catName;
@@ -208,7 +207,7 @@ var addArgument = {
     addData: function(data) {
         $.ajax({
             type: "GET",
-            url: "http://fas/admin/arguments/ajaxAddArgument",
+            url: "http://fas/admin/arguments/ajaxAddArguments",
             data: data,
             dataType: 'json',
             success: function(value) {
