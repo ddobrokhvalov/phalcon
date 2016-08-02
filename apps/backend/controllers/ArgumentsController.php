@@ -342,7 +342,6 @@ class ArgumentsController  extends ControllerBase
             $errors = FALSE;
             $err_arr = array();
             if ($data) {
-                $argument = new Arguments();
                 foreach ($data as $field => $value) {
                     if ($value) {
                         $argument->$field = $value;
@@ -352,6 +351,7 @@ class ArgumentsController  extends ControllerBase
                     }
                 }
                 if (!$errors) {
+                    $argument = new Arguments();
                     $argument->argument_status = 1;
                     $argument->date = date('Y-m-d H:i:s');
                     $argument->save();
@@ -393,6 +393,10 @@ class ArgumentsController  extends ControllerBase
                 }
                 $id = $edit['id'];
                 $argument = Arguments::findFirst($id);
+                if(!$argument){
+                    echo json_encode(array('err' => 'bad id'));
+                    exit;
+                }
                 $argument->name = trim($edit['name']);
                 $argument->text = trim($edit['text']);
                 $argument->save();
@@ -405,6 +409,10 @@ class ArgumentsController  extends ControllerBase
             } else {
                 $id = $edit['id'];
                 $category = ArgumentsCategory::findFirst($id);
+                if(!$category){
+                    echo json_encode(array('err' => 'bad id'));
+                    exit;
+                }
                 $category->name = trim($edit['name']);
                 $category->save();
                 echo json_encode(array(
