@@ -6,6 +6,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     padding: 0;
     vertical-align: baseline;
 }
+
 strong {
     font-weight: bolder;
 }
@@ -1110,31 +1111,38 @@ input[type="text"]:focus, textarea:focus {
     width: 100%;
     margin-bottom: 0;
 }
-li.all-message-link {
-    padding-bottom: 20px !important;
+.ch-r-m-list li.all-message-link:hover {
+    background-color: #00aeef;
+    padding: 0;
+    color: #ffffff;
 }
-li.all-message-link span {
-    color: #000 !important;
-    font-size: 14px!important;
-    opacity: 1!important;
-    text-align: center!important;
-    text-decoration: underline!important;
-    text-transform: none!important;
-    cursor: pointer!important;
-    display: block !important;
-    float: none !important;
-    margin: 0 auto !important;
-    width: 110px !important;
+.ch-r-m-list li.all-message-link {
+    height: 53px;
+    line-height: 53px;
+    background-color: #00aeef;
+    color: #ffffff;
+    font-size: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 0;
+    font-weight: unset;
+    float: left;
+}
+.ch-r-m-list a {
+    float: left;
+    display: block;
+    text-decoration: none !important;
 }
 .ch-r-m-list li {
     border-bottom: 1px solid #e1e1e1;
-    float: left;
     font-size: 18px;
     font-weight: 100;
     line-height: 28px;
     margin: 0 0 -1px;
-    padding: 20px 30px 0;
+    padding: 20px 30px 33px 30px;
     width: 100%;
+    color: #222427;
 }
 .ch-r-m-list li span {
     float: left;
@@ -1179,10 +1187,11 @@ li.all-message-link span {
 .ch-r-m-list li.box-status-green {
     box-shadow: 3px 0 0 0 #29d3b2 inset;
 }
-.ch-r-m-list li.box-status-black:hover {
-    color: #000 !important;
+.ch-r-m-list li:hover {
+    background-color: #eeeeee;
+    color: #282828;
 }
-.ch-r-m-list li.box-status-black:hover a {
+/*.ch-r-m-list li.box-status-black:hover a {
     color: #000 !important;
     border: 1px solid #000;
 }
@@ -1194,7 +1203,7 @@ li.all-message-link span {
 }
 .ch-r-m-list li.box-status-green:hover {
     background-color: #29d3b2;
-}
+}*/
 .ch-r-m-list li.done {
     box-shadow: 3px 0 0 0 #29d3b2 inset;
 }

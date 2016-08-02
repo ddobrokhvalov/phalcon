@@ -5,6 +5,16 @@ $(document).ready(function() {
     $('#editingComplaints').click(function() {
         changeAdminsAccess($(this), $('#readingComplaints'));
     });
+    $("label[for=readingComplaints]").click(function(){
+        if ($("#editingComplaints").is(":checked")) {
+            return false;
+        }
+    });
+    $("label[for=usersReading]").click(function(){
+        if ($("#editUser").is(":checked")) {
+            return false;
+        }
+    });
 });
 
 function changeAdminsAccess(obj, inheritance) {

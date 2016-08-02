@@ -13,7 +13,10 @@
         li:nth-child(4) {
             width: 246px;
         }
-    }
+        li {
+            overflow: hidden;
+        }
+    }   
 }
 .admin-add {
 	float: right;
