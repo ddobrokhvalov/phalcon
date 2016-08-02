@@ -3620,7 +3620,11 @@ body#backend-login {
   margin-top: 35px; }
   /* line 39, ../sass/_complaint_add.scss */
   .add-complaint-page .c-cs-cb label {
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    text-transform: none; }
+/* line 44, ../sass/_complaint_add.scss */
+.add-complaint-page .c-jadd3 {
+  display: none; }
 
 @media (max-width: 1640px) {
   /* line 116, ../sass/style.scss */

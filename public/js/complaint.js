@@ -371,6 +371,7 @@ var auction = {
                 $('.complaint-main-container').show();
                 $('.more-information-block').show();
                 $('.category-tamplate').show();
+                $('.c-jadd3').show();
                 //complaint.setHeader();
                 $('.loading-gif').hide();
                 auction.auctionReady = true;

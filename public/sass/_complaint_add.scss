@@ -28,16 +28,20 @@
   }
 }
 .add-complaint-page {
-.c-jadd1 {
-    padding: 30px 40px 22px 40px;
-  }
-  input[type="checkbox"] + label {
-    line-height: unset;
-  }
-  .c-cs-cb {
-    margin-top: 35px;
-    label {
-        margin-bottom: 0;
+    .c-jadd1 {
+        padding: 30px 40px 22px 40px;
     }
-  }
+    input[type="checkbox"] + label {
+        line-height: unset;
+    }
+    .c-cs-cb {
+        margin-top: 35px;
+        label {
+            margin-bottom: 0;
+            text-transform: none;
+        }
+    }
+    .c-jadd3 {
+        display: none;
+    }
 }
