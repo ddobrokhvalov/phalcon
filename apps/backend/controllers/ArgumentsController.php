@@ -293,6 +293,7 @@ class ArgumentsController  extends ControllerBase
             $result['arguments'][] = array(
                 'id'        => $argument->id,
                 'name'      => $argument->name,
+                'text'      => $argument->text,
                 'category_id' => $argument->category_id,
             );
         }
