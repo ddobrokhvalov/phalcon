@@ -1,128 +1,113 @@
 {% extends "base-template.phtml" %}
 {% block title %}ФАС ОНЛАЙН - Доводы{% endblock %}
 {% block body %}
-<div class="admin-main-wrap list-arguments">
-    <h1>Доводы</h1>
-    <a href="/admin/arguments/add" class="admin-add add-arg">Добавить довод</a>
-    <div class="admin-lt-holder lt-arg">
-        <div class="admin-lt-head">
-            <div class="select-all">
-                <div></div>Выбрать все
-            </div>
-            <div class="lt-head-btns">
-                <div class="disabled-btn btn-hide" onclick="show_hide_arguments(1)">Скрыть</div>
-                <div class="disabled-btn btn-show" onclick="show_hide_arguments(0)">Показать</div>
-                <div id="delete-button" class="disabled-btn btn">Удалить</div>
-            </div>
-            <div class="modal fade confirm-modal-argument-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-              <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Удалить выбранные доводы?</h4>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <button type="button" onclick="delete_arguments()" class="btn btn-primary">Удалить</button>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-        </div>
-        <div class="admin-lt-content" id="sort-table">
-            <ul class="lt-content-top">
-                <li sort-field="sort-name"><span class="sortable">Название довода</span></li>
-                <li sort-field="sort-cat-name"><span class="sortable">Категория довода</span></li>
-                <li sort-field="sort-date"><span class="sortable">Добавлен</span></li>
-            </ul>
-            {% for argument in Arguments %}
-            <ul sort-name="{{argument.name}}" sort-cat-name="{{argument.catname}}" sort-date="{{argument.date|strtotime}}" class="lt-content-main {% if argument.argument_status == 0 %} hidden-arg {% endif %}">
-                <li>
-                    <div class="lt-psevdo-check">{{hidden_field('argument-id', 'value':argument.id)}}</div>
-                    <div class="sort-field">{{argument.name}}</div>
-                </li>
-                <li>{{argument.catname}}</li>
-                <li>{{date('d.m.Y', argument.date|strtotime)}}</li>
-            </ul>
-            {% endfor %}
-        </div>
-    </div>
-    <h1 class="second-lt-h1">Категории доводов</h1>
-    <div class="admin-lt-holder lt-arg-second">
-        <div class="admin-lt-head">
-            <div class="select-all">
-                <div></div>Выбрать все
-            </div>
-            <div class="lt-head-btns">
-                <div class="btn" data-toggle="modal" data-target=".modal-add-category-lg">Создать</div>
-                <div class="btn delete-category-btn disabled-btn">Удалить</div>
-            </div>
-            <div class="modal fade modal-add-category-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-              <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Добавить новую категорию</h4>
-                  </div>
-                  <div class="modal-body">
-                    <form>
-                      <div class="form-group">
-                        <label for="category-name" class="control-label mgb">Название категории:</label>
-                        <input type="text" class="form-control" id="category-name">
-                          <label for="all-category-name" class="control-label">Все категории:</label>
-                          <input type="text" class="form-control" id="all-category-name">
-                      </div>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <button type="button" onclick="add_category($('#category-name').val())" class="btn btn-primary">Сохранить</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="modal fade confirm-modal-category-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-              <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Удалить выбранные категории?</h4>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <button type="button" onclick="delete_categories()" class="btn btn-primary">Удалить</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal fade modal-cant-delete-category" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-              <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Невозможно удалить категории в которых есть доводы</h4>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="admin-lt-content">
-            {% for category in ArgumentsCategory %}
-            <ul class="lt-content-main">
-                <li>
-                    <div class="lt-psevdo-check">{{hidden_field('argument-id', 'value':category.id)}}</div>
-                    <p>{{category.name}}</p>
-                    <input type="text">
-                    <span>Сохранить</span>
-                </li>
-            </ul>
-            {% endfor %}
-        </div>
-    </div>
+<script type="application/javascript" src="/js/category_add.js"></script>
+<script type="application/javascript" src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<div class="admin-main-wrap listArguments">
+    <h1>Категория</h1>
+    <div class="admin-add add-cat">Добавить</div>
 </div>
+<ul class="argCatTree">
+    {% for cat in ArgumentsCategory %}
+    <li class="catArguments">
+        <div class="category" data-value="0" data-id="{{ cat.id }}" data-parent_id="{{ cat.parent_id }}">
+            <div class="category_arrow"></div>
+            <h2>{{ cat.name }}</h2>
+            <div class="category_add">Добавить категорию</div>
+            <div class="category_edit"></div>
+            <div class="category_delete"></div>
+        </div>
+    </li>
+    {% endfor %}
+<!--    <li class="catArguments">-->
+<!--        <ul>-->
+<!--            <li class="category">-->
+<!--                <div class="category_arrow"></div>-->
+<!--                <h2>Lorem ipsum dolor si</h2>-->
+<!--                <div class="category_add">Добавить категорию</div>-->
+<!--                <div class="category_edit"></div>-->
+<!--                <div class="category_delete"></div>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <ul class="subWrap_1">-->
+<!--                    <li class="category">-->
+<!--                        <div class="category_arrow"></div>-->
+<!--                        <h3>Lorem ipsum dolor si</h3>-->
+<!--                        <div class="category_add">Добавить категорию</div>-->
+<!--                        <div class="category_edit"></div>-->
+<!--                        <div class="category_delete"></div>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <ul class="subWrap_2">-->
+<!--                            <li class="category">-->
+<!--                                <div class="category_arrow"></div>-->
+<!--                                <h3>Lorem ipsum dolor si</h3>-->
+<!--                                <div class="category_add withoutText"></div>-->
+<!--                                <div class="category_argumentAdd"></div>-->
+<!--                                <div class="category_edit"></div>-->
+<!--                                <div class="category_delete"></div>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <ul class="subWrap_3">-->
+<!--                                    <li class="category">-->
+<!--                                        <div class="category_arrow"></div>-->
+<!--                                        <h3>Lorem ipsum dolor si</h3>-->
+<!--                                        <div class="category_add crossView">Подкатегорию</div>-->
+<!--                                        <div class="category_edit"></div>-->
+<!--                                        <div class="category_delete"></div>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <ul class="subWrap_4">-->
+<!--                                            <li class="category argument">-->
+<!--                                                <h3>Lorem ipsum dolor si</h3>-->
+<!--                                                <div class="category_argumentAdd crossView">Довод</div>-->
+<!--                                                <div class="category_edit"></div>-->
+<!--                                                <div class="category_delete"></div>-->
+<!--                                            </li>-->
+<!--                                        </ul>-->
+<!--                                    </li>-->
+<!--                                    <li class="category argument">-->
+<!--                                        <h3>Lorem ipsum dolor si</h3>-->
+<!--                                        <div class="category_argumentAdd crossView">Довод</div>-->
+<!--                                        <div class="category_edit"></div>-->
+<!--                                        <div class="category_delete"></div>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </li>-->
+<!--    <li class="catArguments">-->
+<!--        <div class="category">-->
+<!--            <div class="category_arrow"></div>-->
+<!--            <h2>Lorem ipsum dolor si</h2>-->
+<!--            <div class="category_add">Добавить категорию</div>-->
+<!--            <div class="category_edit"></div>-->
+<!--            <div class="category_delete"></div>-->
+<!--        </div>-->
+<!--    </li>-->
+</ul>
+
+<article class="admin-popup-wrap add-Arguments_category">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content">
+        <div class="admin-popup-close"></div>
+        <h6>Добавить новую категорию</h6>
+        <div class="inputBox">
+            <h4>Название категори</h4>
+            <input type="text">
+        </div>
+        <div class="inputBox argumentText">
+            <h4>Текст довода</h4>
+            <textarea class="mCustomScrollbar"></textarea>
+        </div>
+        <div class="popupBtn cancel">Отмена</div>
+        <div class="popupBtn saveCat">Сохранить</div>
+    </div>
+</article>
+
 {% endblock %}
