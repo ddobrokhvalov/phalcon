@@ -302,6 +302,7 @@ var editCategoryArgument = {
             var thisId = $(this).attr('data-id');
             if (thisId == val.id) {
                 $(this).find('h3').text(val.name);
+                $(this).find('p').text(val.text);
             }
         });
     },
@@ -310,7 +311,6 @@ var editCategoryArgument = {
             var thisId = $(this).attr('data-id');
             if (thisId == val.id) {
                 $(this).find('h2, h3').text(val.name);
-                $(this).find('p').text(val.text);
             }
         });
     }
