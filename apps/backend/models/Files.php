@@ -81,7 +81,7 @@ class Files extends Model
         $html .= "<div class=\"attached-file-row\">";
         $html .=    "<div class=\"file-icon {$this->getFileClass($file->file_type)}\">";
         $html .=    '</div>';
-        $html .=    "<a class=\"file-link\" href=\"/files/{$path}s/{$file->file_path}\" title=\"Скачать файл\">";
+        $html .=    "<a class=\"file-link\" href=\"/files/{$path}/{$file->file_path}\" title=\"Скачать файл\">";
         $html .=        '<div>';
         $html .=            $file->file_path;
         $html .=            " ({$file->file_size} Кб)";

@@ -567,7 +567,7 @@ function confirm_change_applicant_type(current_type, current_form) {
         $('.modal-confirm-change-applicant-type').modal('show');
         return false;
     } else {
-        //$('form#' + current_form).submit();
+        $('form#' + current_form).submit();
     }
 }
 
@@ -816,12 +816,12 @@ function show_confirm_changing_status_popup(complaint_id, status) {
     }
 }
 
-function change_complaint_status(complaint_id, status) {
-    if (complaint_id && status.length) {
+function change_complaint_status(complaint_id, st) {
+    if (complaint_id && st.length) {
         $.ajax({
             url: "/admin/complaints/changeComplaintStatus",
             type:'POST',
-            data: { id: complaint_id, status: status },
+            data: { id: complaint_id, status: st },
             dataType: 'json',
             success: function(data){
                 if (data == 'ok') {
@@ -833,7 +833,7 @@ function change_complaint_status(complaint_id, status) {
 }
 
 function changeStatusInComplaintList(status) {
-    console.log(status);
+    console.log(this);
     //if (status.length) {
     //    var id_array = [];
     //    if (status == 'recalled') {
@@ -883,9 +883,32 @@ function changeStatusInComplaintList(status) {
         id_array.push(arrCheck[i].id);
     }
 
-    if(id_array.length){
-        change_complaint_status(id_array, status);
+    if(id_array.length) {
+        switch (status) {
+            case 'copy':
+                if (!$(".copy-complaint").hasClass('disabled-btn')) {
+                    change_complaint_status(id_array, status);
+                }
+                break;
+            case 'recalled':
+                if (!$(".recall-complaint").hasClass('disabled-btn')) {
+                    change_complaint_status(id_array, status);
+                }
+                break;
+            case 'archive':
+                if (!$(".archive-complaint").hasClass('disabled-btn')) {
+                    change_complaint_status(id_array, status);
+                }
+                break;
+            case 'activate':
+                if (!$(".un-archive-complaint").hasClass('disabled-btn')) {
+                    change_complaint_status(id_array, status);
+                }
+                break;
+        }
     }
+
+
 
 
     //$('.admin-lt-holder .lt-content-main').each(function(){
