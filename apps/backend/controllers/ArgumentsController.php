@@ -342,6 +342,7 @@ class ArgumentsController  extends ControllerBase
             $errors = FALSE;
             $err_arr = array();
             if ($data) {
+                $argument = new Arguments();
                 foreach ($data as $field => $value) {
                     if ($value) {
                         $argument->$field = $value;
@@ -351,7 +352,6 @@ class ArgumentsController  extends ControllerBase
                     }
                 }
                 if (!$errors) {
-                    $argument = new Arguments();
                     $argument->argument_status = 1;
                     $argument->date = date('Y-m-d H:i:s');
                     $argument->save();
