@@ -567,7 +567,7 @@ function confirm_change_applicant_type(current_type, current_form) {
         $('.modal-confirm-change-applicant-type').modal('show');
         return false;
     } else {
-        //$('form#' + current_form).submit();
+        $('form#' + current_form).submit();
     }
 }
 
