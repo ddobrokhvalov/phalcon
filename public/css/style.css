@@ -98,58 +98,60 @@ img {
     font-size: 46px;
     line-height: 1.1;
     font-weight: 100;
-    margin-bottom: 32px; }
+    margin-bottom: 32px;
+    max-width: 960px;
+    overflow: hidden; }
 
-/* line 44, ../sass/style.scss */
+/* line 46, ../sass/style.scss */
 #main {
   display: table-row;
   height: 100%; }
 
-/* line 48, ../sass/style.scss */
+/* line 50, ../sass/style.scss */
 h1 {
   font-size: 46px;
   line-height: 1.1;
   font-weight: 100;
   margin: 0 0 16px 1px; }
 
-/* line 54, ../sass/style.scss */
+/* line 56, ../sass/style.scss */
 h2, h3 {
   font-size: 32px;
   line-height: 1.1;
   font-weight: 100; }
 
-/* line 59, ../sass/style.scss */
+/* line 61, ../sass/style.scss */
 h4 {
   font-size: 18px;
   line-height: 1.1;
   font-weight: 900; }
 
-/* line 64, ../sass/style.scss */
+/* line 66, ../sass/style.scss */
 ul.status-green, .notification-number-box.status-green {
   border-top: 3px solid #53cab3; }
 
-/* line 67, ../sass/style.scss */
+/* line 69, ../sass/style.scss */
 ul.status-red, .notification-number-box.status-red {
   border-top: 3px solid #f26d7d; }
 
-/* line 70, ../sass/style.scss */
+/* line 72, ../sass/style.scss */
 ul.status-blue, .notification-number-box.status-blue {
   border-top: 3px solid #00aeef; }
 
-/* line 73, ../sass/style.scss */
+/* line 75, ../sass/style.scss */
 ul.status-black, .notification-number-box.status-black {
   border-top: 3px solid #3d3f40; }
 
-/* line 76, ../sass/style.scss */
+/* line 78, ../sass/style.scss */
 .lebel-checkbox {
   position: relative;
   width: 16px;
   height: 16px;
   background: url(../images/checkbx1.png) 0 0 no-repeat !important; }
-  /* line 81, ../sass/style.scss */
+  /* line 83, ../sass/style.scss */
   .lebel-checkbox p {
     background-color: transparent !important; }
-  /* line 84, ../sass/style.scss */
+  /* line 86, ../sass/style.scss */
   .lebel-checkbox input {
     position: absolute;
     top: 0;
@@ -159,7 +161,7 @@ ul.status-black, .notification-number-box.status-black {
     margin: 0;
     opacity: 0;
     cursor: pointer; }
-  /* line 94, ../sass/style.scss */
+  /* line 96, ../sass/style.scss */
   .lebel-checkbox.main-active-checkbox {
     background-position: 0 bottom !important; }
 
@@ -3829,25 +3831,25 @@ body#backend-login {
   display: none; }
 
 @media (max-width: 1640px) {
-  /* line 116, ../sass/style.scss */
+  /* line 118, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: 330px;
     margin-right: 0; } }
 @media (max-width: 1282px) {
-  /* line 122, ../sass/style.scss */
+  /* line 124, ../sass/style.scss */
   .lm-logo {
     width: 70% !important;
     margin-left: 40px; } }
 @media (max-width: 1325px) {
-  /* line 128, ../sass/style.scss */
+  /* line 130, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: auto;
     margin-right: auto; }
 
-  /* line 132, ../sass/style.scss */
+  /* line 134, ../sass/style.scss */
   .admin-lm-wrap {
     left: -242px; }
 
-  /* line 135, ../sass/style.scss */
+  /* line 137, ../sass/style.scss */
   .lm-burger {
     display: block; } }
