@@ -284,7 +284,6 @@ var editCategoryArgument = {
             data: data,
             dataType: 'json',
             success: function(value) {
-                console.log(value, name);
                 if (name == 'argument') {
                     editCategoryArgument.renameArg(value);
                 } else {
@@ -302,7 +301,7 @@ var editCategoryArgument = {
         $('.argCatTree #argument').each(function() {
             var thisId = $(this).attr('data-id');
             if (thisId == val.id) {
-                $(this).find('h2, h3').text(val.name);
+                $(this).find('h3').text(val.name);
             }
         });
     },
@@ -310,7 +309,7 @@ var editCategoryArgument = {
         $('.argCatTree #category').each(function() {
             var thisId = $(this).attr('data-id');
             if (thisId == val.id) {
-                $(this).find('h3').text(val.name);
+                $(this).find('h2, h3').text(val.name);
                 $(this).find('p').text(val.text);
             }
         });
