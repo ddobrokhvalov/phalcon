@@ -87,6 +87,8 @@ function editCatArg(obj) {
     if (obj.attr('id') == 'argument') {
         $('.argumentText').show();
         argName = obj.find('h3').text();
+        console.log(argName)
+        $('.inputBox input').val(argName);
     } else {
         $('.argumentText').hide();
     }
@@ -180,6 +182,7 @@ var addArgument = {
             data: data,
             dataType: 'json',
             success: function(value) {
+                console.log(value);
                 var argNum = catNum;
                 argNum++;
                 shell = new ShellToFill(argNum, value.name, value.id, value.category_id);
@@ -206,18 +209,27 @@ var receivingData = {
             data: data,
             dataType: 'json',
             success: function(value) {
-                console.log(obj.next().length);
-                // if (obj.next().length != 0) {
-                    if (num == 0) {
-                        cycleData(1, writeGetData.subCategory_1);
-                    } else if (num == 1) {
-                        cycleData(2, writeGetData.subCategory_2);
-                    } else if (num == 2) {
-                        cycleData(3, writeGetData.subCategory_3);
-                    } else if (num == 3) {
-                        cycleData(4, writeGetData.subCategory_4);
-                    }
-                // }
+                console.log(value);
+                num++;
+                switch(num) {
+                    case 1:
+                        cycleData(num, writeGetData.subCategory_1);
+                        break;
+                    case 2:
+                        cycleData(num, writeGetData.subCategory_2);
+                        break;
+                    case 3:
+                        cycleData(num, writeGetData.subCategory_3);
+                        break;
+                    case 4:
+                        cycleData(num, writeGetData.subCategory_4);
+                        break;
+                }
+                if (obj.next().length == 0) {
+                    alert('неты данных!');
+                } else {
+
+                }
                 function cycleData(numb, func) {
                     for (var i = 0; i < value.cat_arguments.length; i++) {
                         shell = new ShellToFill(numb, value.cat_arguments[i].name, value.cat_arguments[i].id, value.cat_arguments[i].parent_id);
@@ -254,12 +266,6 @@ var editCategoryArgument = {
                     + xhr.statusText + ' ResponseText:' + xhr.responseText);
             }
         });
-    },
-    clearDOM: function(obj) {
-        obj.slideUp(400);
-        setTimeout(function() {
-            obj.remove();
-        }, 400);
     }
 };
 

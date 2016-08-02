@@ -833,7 +833,7 @@ function change_complaint_status(complaint_id, status) {
 }
 
 function changeStatusInComplaintList(status) {
-    console.log(status);
+    console.log(this);
     //if (status.length) {
     //    var id_array = [];
     //    if (status == 'recalled') {
@@ -883,9 +883,32 @@ function changeStatusInComplaintList(status) {
         id_array.push(arrCheck[i].id);
     }
 
-    if(id_array.length){
-        change_complaint_status(id_array, status);
+    if(id_array.length) {
+        switch (status) {
+            case 'copy':
+                if (!$(".copy-complaint").hasClass('disabled-btn')) {
+                    change_complaint_status(id_array, status);
+                }
+                break;
+            case 'recalled':
+                if (!$(".recall-complaint").hasClass('disabled-btn')) {
+                    change_complaint_status(id_array, status);
+                }
+                break;
+            case 'archive':
+                if (!$(".archive-complaint").hasClass('disabled-btn')) {
+                    change_complaint_status(id_array, status);
+                }
+                break;
+            case 'activate':
+                if (!$(".un-archive-complaint").hasClass('disabled-btn')) {
+                    change_complaint_status(id_array, status);
+                }
+                break;
+        }
     }
+
+
 
 
     //$('.admin-lt-holder .lt-content-main').each(function(){
