@@ -206,34 +206,28 @@ var receivingData = {
             data: data,
             dataType: 'json',
             success: function(value) {
-                if (num == 0) {
-                    for (var i = 0; i < value.cat_arguments.length; i++) {
-                        shell = new ShellToFill(1, value.cat_arguments[i].name, value.cat_arguments[i].id, value.cat_arguments[i].parent_id);
-                        obj.parent().append(writeGetData.subCategory_1());
+                console.log(obj.next().length);
+                // if (obj.next().length != 0) {
+                    if (num == 0) {
+                        cycleData(1, writeGetData.subCategory_1);
+                    } else if (num == 1) {
+                        cycleData(2, writeGetData.subCategory_2);
+                    } else if (num == 2) {
+                        cycleData(3, writeGetData.subCategory_3);
+                    } else if (num == 3) {
+                        cycleData(4, writeGetData.subCategory_4);
                     }
-                } else if (num == 1) {
+                // }
+                function cycleData(numb, func) {
                     for (var i = 0; i < value.cat_arguments.length; i++) {
-                        shell = new ShellToFill(2, value.cat_arguments[i].name, value.cat_arguments[i].id, value.cat_arguments[i].parent_id);
-                        obj.parent().append(writeGetData.subCategory_2());
-                    }
-                } else if (num == 2) {
-                    for (var i = 0; i < value.cat_arguments.length; i++) {
-                        shell = new ShellToFill(3, value.cat_arguments[i].name, value.cat_arguments[i].id, value.cat_arguments[i].parent_id);
-                        obj.parent().append(writeGetData.subCategory_3());
+                        shell = new ShellToFill(numb, value.cat_arguments[i].name, value.cat_arguments[i].id, value.cat_arguments[i].parent_id);
+                        obj.parent().append(func());
                     }
                     for (var i = 0; i < value.arguments.length; i++) {
-                        shell = new ShellToFill(3, value.arguments[i].name, value.arguments[i].id, value.arguments[i].category_id);
-                        obj.parent().append(writeGetData.subCategory_4());
+                        shell = new ShellToFill(numb, value.arguments[i].name, value.arguments[i].id, value.arguments[i].category_id);
+                        obj.parent().append(func());
                     }
-                } else if (num == 3) {
-                    for (var i = 0; i < value.cat_arguments.length; i++) {
-                        shell = new ShellToFill(4, value.cat_arguments[i].name, value.cat_arguments[i].id, value.cat_arguments[i].parent_id);
-                        obj.parent().append(writeGetData.subCategory_4());
-                    }
-                    for (var i = 0; i < value.arguments.length; i++) {
-                        shell = new ShellToFill(4, value.arguments[i].name, value.arguments[i].id, value.arguments[i].category_id);
-                        obj.parent().append(writeGetData.subCategory_4());
-                    }
+
                 }
             },
             error: function(xhr) {
