@@ -87,7 +87,7 @@ var ajaxSendObj = {
     sendRequest: function(data) {
         $.ajax({
             type: "GET",
-            url: "http://fas/complaint/ajaxStepsAddComplaint" + data,
+            url: "http://fas-online.ru/complaint/ajaxStepsAddComplaint" + data,
             dataType: 'json',
             success: function(value) {
                 if (ajaxSendObj.step != 6) {
