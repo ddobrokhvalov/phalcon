@@ -165,7 +165,7 @@ class ComplaintsController extends ControllerBase
                         )
                     );
                     foreach ($files as $file) {
-                        $files_html[] = $file_model->getFilesHtml($file, $id, 'complaint');
+                        $files_html[] = $file_model->getFilesHtml($file, $id, 'complaints');
                     }
                 }
             }
