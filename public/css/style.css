@@ -2385,6 +2385,10 @@ a:focus {
   cursor: pointer;
 }
 /* line 50, ../sass/_list_arguments.scss */
+.category p {
+  display: none;
+}
+/* line 53, ../sass/_list_arguments.scss */
 .category_arrow {
   width: 33px;
   background: url(../images/categoryArguments-arrow.png) 50% 50% no-repeat;
@@ -2395,7 +2399,7 @@ a:focus {
   transition: transform 0.2s ease-out;
   cursor: pointer;
 }
-/* line 55, ../sass/_list_arguments.scss */
+/* line 58, ../sass/_list_arguments.scss */
 .category_arrow.categoryArrow-hover {
   -webkit-transform: rotate(-90deg);
   -moz-transform: rotate(-90deg);
@@ -2403,7 +2407,7 @@ a:focus {
   -o-transform: rotate(-90deg);
   transform: rotate(-90deg);
 }
-/* line 59, ../sass/_list_arguments.scss */
+/* line 62, ../sass/_list_arguments.scss */
 .category_add {
   position: relative;
   padding-left: 42px;
@@ -2413,7 +2417,7 @@ a:focus {
   color: #10b8f7;
   cursor: pointer;
 }
-/* line 67, ../sass/_list_arguments.scss */
+/* line 70, ../sass/_list_arguments.scss */
 .category_add:before {
   position: absolute;
   content: '';
@@ -2424,20 +2428,20 @@ a:focus {
   height: 23px;
   background-position: 0 0;
 }
-/* line 78, ../sass/_list_arguments.scss */
+/* line 81, ../sass/_list_arguments.scss */
 .category_add:hover {
   color: #002e3f;
 }
-/* line 81, ../sass/_list_arguments.scss */
+/* line 84, ../sass/_list_arguments.scss */
 .category_add.crossView {
   padding-left: 53px;
 }
-/* line 83, ../sass/_list_arguments.scss */
+/* line 86, ../sass/_list_arguments.scss */
 .category_add.crossView:before {
   width: 25px;
   background-position: -57px 0;
 }
-/* line 87, ../sass/_list_arguments.scss */
+/* line 90, ../sass/_list_arguments.scss */
 .category_add.crossView:after {
   position: absolute;
   content: '';
@@ -2448,13 +2452,13 @@ a:focus {
   height: 12px;
   background-position: -147px -1px;
 }
-/* line 99, ../sass/_list_arguments.scss */
+/* line 102, ../sass/_list_arguments.scss */
 .category_add.withoutText {
   margin-right: 16px;
   padding: 0;
   width: 26px;
 }
-/* line 105, ../sass/_list_arguments.scss */
+/* line 108, ../sass/_list_arguments.scss */
 .category_argumentAdd {
   position: relative;
   width: 18px;
@@ -2465,7 +2469,7 @@ a:focus {
   color: #10b8f7;
   cursor: pointer;
 }
-/* line 114, ../sass/_list_arguments.scss */
+/* line 117, ../sass/_list_arguments.scss */
 .category_argumentAdd:before {
   position: absolute;
   content: '';
@@ -2476,19 +2480,19 @@ a:focus {
   height: 22px;
   background-position: -32px 0;
 }
-/* line 125, ../sass/_list_arguments.scss */
+/* line 128, ../sass/_list_arguments.scss */
 .category_argumentAdd:hover {
   color: #002e3f;
 }
-/* line 128, ../sass/_list_arguments.scss */
+/* line 131, ../sass/_list_arguments.scss */
 .category_argumentAdd.crossView {
   padding-left: 53px;
 }
-/* line 130, ../sass/_list_arguments.scss */
+/* line 133, ../sass/_list_arguments.scss */
 .category_argumentAdd.crossView:before {
   background-position: -89px 0;
 }
-/* line 133, ../sass/_list_arguments.scss */
+/* line 136, ../sass/_list_arguments.scss */
 .category_argumentAdd.crossView:after {
   position: absolute;
   content: '';
@@ -2499,14 +2503,14 @@ a:focus {
   height: 12px;
   background-position: -147px -1px;
 }
-/* line 146, ../sass/_list_arguments.scss */
+/* line 149, ../sass/_list_arguments.scss */
 .category_delete {
   position: relative;
   float: right;
   width: 28px;
   cursor: pointer;
 }
-/* line 151, ../sass/_list_arguments.scss */
+/* line 154, ../sass/_list_arguments.scss */
 .category_delete:after {
   position: absolute;
   content: '';
@@ -2517,7 +2521,7 @@ a:focus {
   height: 27px;
   background-position: -165px 0;
 }
-/* line 163, ../sass/_list_arguments.scss */
+/* line 166, ../sass/_list_arguments.scss */
 .category_edit {
   position: relative;
   float: right;
@@ -2525,7 +2529,7 @@ a:focus {
   width: 27px;
   cursor: pointer;
 }
-/* line 169, ../sass/_list_arguments.scss */
+/* line 172, ../sass/_list_arguments.scss */
 .category_edit:after {
   position: absolute;
   content: '';
@@ -2537,29 +2541,29 @@ a:focus {
   background-position: -113px 0;
 }
 
-/* line 183, ../sass/_list_arguments.scss */
+/* line 186, ../sass/_list_arguments.scss */
 .argument h3 {
   margin-left: 33px;
 }
 
-/* line 189, ../sass/_list_arguments.scss */
+/* line 192, ../sass/_list_arguments.scss */
 .subWrap_1 > .category {
   padding-left: 90px;
 }
-/* line 194, ../sass/_list_arguments.scss */
+/* line 197, ../sass/_list_arguments.scss */
 .subWrap_2 > .category {
   padding-left: 125px;
 }
-/* line 199, ../sass/_list_arguments.scss */
+/* line 202, ../sass/_list_arguments.scss */
 .subWrap_3 > .category {
   padding-left: 160px;
 }
-/* line 204, ../sass/_list_arguments.scss */
+/* line 207, ../sass/_list_arguments.scss */
 .subWrap_4 > .category {
   padding-left: 195px;
 }
 
-/* line 209, ../sass/_list_arguments.scss */
+/* line 212, ../sass/_list_arguments.scss */
 .add-Arguments_category .inputBox input, .add-Arguments_category .inputBox textarea {
   width: 100%;
   font-size: 20px;
@@ -2571,26 +2575,26 @@ a:focus {
   border-radius: 8px;
 }
 
-/* line 219, ../sass/_list_arguments.scss */
+/* line 222, ../sass/_list_arguments.scss */
 .add-Arguments_category {
   display: none;
 }
-/* line 221, ../sass/_list_arguments.scss */
+/* line 224, ../sass/_list_arguments.scss */
 .add-Arguments_category .admin-popup-content {
   width: 755px;
 }
-/* line 223, ../sass/_list_arguments.scss */
+/* line 226, ../sass/_list_arguments.scss */
 .add-Arguments_category .admin-popup-content:after {
   content: '';
   display: block;
   clear: both;
 }
-/* line 226, ../sass/_list_arguments.scss */
+/* line 229, ../sass/_list_arguments.scss */
 .add-Arguments_category .admin-popup-content h6 {
   margin-bottom: 34px;
   font-size: 48px;
 }
-/* line 229, ../sass/_list_arguments.scss */
+/* line 232, ../sass/_list_arguments.scss */
 .add-Arguments_category .admin-popup-content h6:before {
   top: -27px;
   left: -9px;
@@ -2600,7 +2604,7 @@ a:focus {
   -o-transform: rotate(-4deg);
   transform: rotate(-4deg);
 }
-/* line 236, ../sass/_list_arguments.scss */
+/* line 239, ../sass/_list_arguments.scss */
 .add-Arguments_category .popupBtn {
   float: left;
   margin-left: 87px;
@@ -2616,41 +2620,41 @@ a:focus {
   background-color: #00aeef;
   cursor: pointer;
 }
-/* line 250, ../sass/_list_arguments.scss */
+/* line 253, ../sass/_list_arguments.scss */
 .add-Arguments_category .popupBtn:last-child {
   float: right;
   margin-right: 87px;
   margin-left: 0;
 }
-/* line 255, ../sass/_list_arguments.scss */
+/* line 258, ../sass/_list_arguments.scss */
 .add-Arguments_category .popupBtn:hover {
   background-color: #10b8f7;
 }
-/* line 259, ../sass/_list_arguments.scss */
+/* line 262, ../sass/_list_arguments.scss */
 .add-Arguments_category .inputBox {
   margin: 0 auto 66px;
   width: 580px;
 }
-/* line 262, ../sass/_list_arguments.scss */
+/* line 265, ../sass/_list_arguments.scss */
 .add-Arguments_category .inputBox h4 {
   font-size: 24px;
   font-weight: 100;
   line-height: 60px;
   color: #2c2f32;
 }
-/* line 268, ../sass/_list_arguments.scss */
+/* line 271, ../sass/_list_arguments.scss */
 .add-Arguments_category .inputBox input {
   padding: 0 40px;
   height: 66px;
 }
-/* line 273, ../sass/_list_arguments.scss */
+/* line 276, ../sass/_list_arguments.scss */
 .add-Arguments_category .inputBox textarea {
   padding: 10px 40px;
   height: 250px;
   resize: none;
 }
 
-/* line 281, ../sass/_list_arguments.scss */
+/* line 284, ../sass/_list_arguments.scss */
 .argumentText {
   display: none;
 }
