@@ -27,3 +27,17 @@
     background: url(../images/icon-jl-rassmotr.png) 0 0 no-repeat;
   }
 }
+.add-complaint-page {
+.c-jadd1 {
+    padding: 30px 40px 22px 40px;
+  }
+  input[type="checkbox"] + label {
+    line-height: unset;
+  }
+  .c-cs-cb {
+    margin-top: 35px;
+    label {
+        margin-bottom: 0;
+    }
+  }
+}
