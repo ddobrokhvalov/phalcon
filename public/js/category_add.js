@@ -140,7 +140,7 @@ var createNewCategory = {
     newCategorySend: function(data) {
             $.ajax({
             type: "GET",
-            url: "http://fas/admin/arguments/ajaxAddCategory",
+            url: "http://fas-online.ru/admin/arguments/ajaxAddCategory",
             data: data,
             dataType: 'json',
             success: function(value) {
@@ -202,7 +202,7 @@ var addArgument = {
     addData: function(data) {
         $.ajax({
             type: "GET",
-            url: "http://fas/admin/arguments/ajaxAddArguments",
+            url: "http://fas-online.ru/admin/arguments/ajaxAddArguments",
             data: data,
             dataType: 'json',
             success: function(value) {
@@ -228,7 +228,7 @@ var receivingData = {
     getSomeData: function(data, obj, num) {
         $.ajax({
             type: "GET",
-            url: "http://fas/admin/arguments/ajaxGetCatArguments",
+            url: "http://fas-online.ru/admin/arguments/ajaxGetCatArguments",
             data: data,
             dataType: 'json',
             success: function(value) {
@@ -280,7 +280,7 @@ var editCategoryArgument = {
     editCatArg: function(data, name) {
         $.ajax({
             type: "GET",
-            url: "http://fas/admin/arguments/ajaxEdit",
+            url: "http://fas-online.ru/admin/arguments/ajaxEdit",
             data: data,
             dataType: 'json',
             success: function(value) {
@@ -320,7 +320,7 @@ var deleteCategory = {
     deleteCategorySend: function(data, obj) {
         $.ajax({
             type: "GET",
-            url: "http://fas/admin/arguments/ajaxRemove",
+            url: "http://fas-online.ru/admin/arguments/ajaxRemove",
             data: data,
             dataType: 'json',
             context: obj,
