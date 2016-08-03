@@ -816,12 +816,12 @@ function show_confirm_changing_status_popup(complaint_id, status) {
     }
 }
 
-function change_complaint_status(complaint_id, status) {
-    if (complaint_id && status.length) {
+function change_complaint_status(complaint_id, st) {
+    if (complaint_id && st.length) {
         $.ajax({
             url: "/admin/complaints/changeComplaintStatus",
             type:'POST',
-            data: { id: complaint_id, status: status },
+            data: { id: complaint_id, status: st },
             dataType: 'json',
             success: function(data){
                 if (data == 'ok') {

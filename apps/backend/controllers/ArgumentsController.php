@@ -393,6 +393,10 @@ class ArgumentsController  extends ControllerBase
                 }
                 $id = $edit['id'];
                 $argument = Arguments::findFirst($id);
+                if(!$argument){
+                    echo json_encode(array('err' => 'bad id'));
+                    exit;
+                }
                 $argument->name = trim($edit['name']);
                 $argument->text = trim($edit['text']);
                 $argument->save();
@@ -405,6 +409,10 @@ class ArgumentsController  extends ControllerBase
             } else {
                 $id = $edit['id'];
                 $category = ArgumentsCategory::findFirst($id);
+                if(!$category){
+                    echo json_encode(array('err' => 'bad id'));
+                    exit;
+                }
                 $category->name = trim($edit['name']);
                 $category->save();
                 echo json_encode(array(

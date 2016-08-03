@@ -26,7 +26,7 @@ $(document).ready(function() {
     });
 });
 
-var catNum = '', parentId, argName, argText, shell;
+var catNum = '', parentId, shell, catArgObj;
 function categorySend() {
     var catName = $('.inputBox input').val(),
         data;
@@ -39,6 +39,19 @@ function categorySend() {
             argumentText = $('.inputBox textarea').val();
         data = 'arguments[category_id]=' + parentId + '&arguments[name]=' + argumentName + '&arguments[text]=' + argumentText;
         addArgument.addData(data);
+    } else if ($('.saveCat').hasClass('editArgCat')) {
+        if (catArgObj.descr == 'argument') {
+            catArgObj.name = $('.inputBox input').val();
+            catArgObj.text = $('.inputBox textarea').val();
+            data = 'edit[id]=' + catArgObj.id +
+                '&edit[name]=' + catArgObj.name +
+                '&edit[arg]=true&edit[text]=' + catArgObj.text;
+            editCategoryArgument.editCatArg(data, catArgObj.descr);
+        } else {
+            catArgObj.name = $('.inputBox input').val();
+            data = 'edit[id]=' + catArgObj.id + '&edit[name]=' + catArgObj.name;
+            editCategoryArgument.editCatArg(data, catArgObj.descr);
+        }
     } else {
         data = 'parent_id=' + 0 + '&name=' + catName;
         createNewCategory.newCategorySend(data);
@@ -83,23 +96,33 @@ function addArgumentFunc(obj) {
 }
 function editCatArg(obj) {
     parentId = obj.attr('data-parent_id');
-    $('.argumentText textarea').val('').text('');
     if (obj.attr('id') == 'argument') {
         $('.argumentText').show();
-        argName = obj.find('h3').text();
-        console.log(argName)
-        $('.inputBox input').val(argName);
+        catArgObj = {
+            descr: obj.attr('id'),
+            name: obj.find('h3').text(),
+            text: obj.find('p').text(),
+            id: parseInt(obj.attr('data-id'))
+        };
+        $('.inputBox input').val(catArgObj.name);
+        $('.argumentText textarea').text(catArgObj.text).val(catArgObj.text);
     } else {
         $('.argumentText').hide();
+        catArgObj = {
+            descr: obj.attr('id'),
+            name: obj.find('h3, h2').text(),
+            id: parseInt(obj.attr('data-id'))
+        };
+        $('.inputBox input').val(catArgObj.name);
     }
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
     $('.saveCat').removeClass('subChild createArgument').addClass('editArgCat');
 }
-function ShellToFill(step, titleText, id, parent_id) {
+function ShellToFill(step, titleText, id, parent_id, text) {
     this.wrapp = '<li class="catArguments">';
     this.holder = '<ul class="subWrap_' + step + '">';
-    this.box = '<div class="category" data-value="" data-id="' + id + '" data-parent_id="' + parent_id + '">';
-    this.box2 = '<li class="category" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '">';
+    this.box = '<div class="category" id="category" data-value="" data-id="' + id + '" data-parent_id="' + parent_id + '">';
+    this.box2 = '<li class="category" id="category" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '">';
     this.box3 = '<li class="category" id="argument" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '">';
     this.arrow = '<div class="category_arrow"></div>';
     this.title = '<h2>' + titleText + '</h2>';
@@ -108,6 +131,7 @@ function ShellToFill(step, titleText, id, parent_id) {
     this.catAdd2 = '<div class="category_add withoutText"></div>';
     this.argAdd = '<div class="category_argumentAdd"></div>';
     this.argAddCross = '<div class="category_argumentAdd crossView">Довод</div>';
+    this.argText = '<p>' + text + '</p>';
     this.catEdit = '<div class="category_edit"></div>';
     this.catDel = '<div class="category_delete"></div>';
 }
@@ -182,10 +206,9 @@ var addArgument = {
             data: data,
             dataType: 'json',
             success: function(value) {
-                console.log(value);
                 var argNum = catNum;
                 argNum++;
-                shell = new ShellToFill(argNum, value.name, value.id, value.category_id);
+                shell = new ShellToFill(argNum, value.name, value.id, value.category_id, value.text);
                 popupCancel();
                 $('.subWrap_' + catNum + ' .category').each(function() {
                     if ($(this).attr('data-id') == parentId) {
@@ -209,20 +232,22 @@ var receivingData = {
             data: data,
             dataType: 'json',
             success: function(value) {
-                console.log(value);
                 num++;
                 switch(num) {
                     case 1:
-                        cycleData(num, writeGetData.subCategory_1);
+                        cycleDataCat(num, writeGetData.subCategory_1);
                         break;
                     case 2:
-                        cycleData(num, writeGetData.subCategory_2);
+                        cycleDataCat(num, writeGetData.subCategory_2);
                         break;
                     case 3:
-                        cycleData(num, writeGetData.subCategory_3);
+                        cycleDataCat(num, writeGetData.subCategory_3);
+                        if (value.arguments.length != 0) {
+                            cycleDataArg(num, writeGetData.subCategory_4);
+                        }
                         break;
                     case 4:
-                        cycleData(num, writeGetData.subCategory_4);
+                        cycleDataArg(num, writeGetData.subCategory_4);
                         break;
                 }
                 if (obj.next().length == 0) {
@@ -230,16 +255,17 @@ var receivingData = {
                 } else {
 
                 }
-                function cycleData(numb, func) {
+                function cycleDataCat(numb, func) {
                     for (var i = 0; i < value.cat_arguments.length; i++) {
                         shell = new ShellToFill(numb, value.cat_arguments[i].name, value.cat_arguments[i].id, value.cat_arguments[i].parent_id);
                         obj.parent().append(func());
                     }
+                }
+                function cycleDataArg(numb, func) {
                     for (var i = 0; i < value.arguments.length; i++) {
-                        shell = new ShellToFill(numb, value.arguments[i].name, value.arguments[i].id, value.arguments[i].category_id);
+                        shell = new ShellToFill(numb, value.arguments[i].name, value.arguments[i].id, value.arguments[i].category_id, value.arguments[i].text);
                         obj.parent().append(func());
                     }
-
                 }
             },
             error: function(xhr) {
@@ -251,19 +277,40 @@ var receivingData = {
 };
 
 var editCategoryArgument = {
-    edit: function(data, obj) {
+    editCatArg: function(data, name) {
         $.ajax({
             type: "GET",
-            url: "http://fas/admin/arguments/ajaxRemove",
+            url: "http://fas/admin/arguments/ajaxEdit",
             data: data,
             dataType: 'json',
-            context: obj,
-            success: function() {
-                deleteCategory.clearDOM($(this));
+            success: function(value) {
+                if (name == 'argument') {
+                    editCategoryArgument.renameArg(value);
+                } else {
+                    editCategoryArgument.renameCat(value);
+                }
+                popupCancel();
             },
             error: function(xhr) {
                 alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
                     + xhr.statusText + ' ResponseText:' + xhr.responseText);
+            }
+        });
+    },
+    renameArg: function(val) {
+        $('.argCatTree #argument').each(function() {
+            var thisId = $(this).attr('data-id');
+            if (thisId == val.id) {
+                $(this).find('h3').text(val.name);
+                $(this).find('p').text(val.text);
+            }
+        });
+    },
+    renameCat: function(val) {
+        $('.argCatTree #category').each(function() {
+            var thisId = $(this).attr('data-id');
+            if (thisId == val.id) {
+                $(this).find('h2, h3').text(val.name);
             }
         });
     }
@@ -344,6 +391,7 @@ var writeGetData = {
             shell.holder +
             shell.box3 +
             shell.title2 +
+            shell.argText +
             shell.catEdit +
             shell.catDel +
             '</ul></li>'
