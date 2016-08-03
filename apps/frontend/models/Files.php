@@ -45,6 +45,7 @@ class Files extends Model
     public function isAllowedExtension($ext) {
         $extensions = array(
             'text/plain',
+            'image/png',
             'image/jpeg',
             'image/png',
             'image/bmp',
@@ -56,17 +57,20 @@ class Files extends Model
             'application/x-rar-compressed',
             'application/zip',
             'application/rar',
+            'application/rtf',
+            'text/richtext',
+            'application/x-rtf'
         );
         return in_array($ext, $extensions);
     }
 
     public function getFileClass($file_type) {
         $extensions = array(
-            'text/plain'                                                                => 'text/plain',
             'image/jpeg'                                                                => 'image-file',
             'image/png'                                                                 => 'image-file',
             'image/bmp'                                                                 => 'image-file',
             'image/tiff'                                                                => 'image-file',
+            'image/rtf'                                                                 => 'image-file',
             'application/msword'                                                        => 'msword-file',
             'application/pdf'                                                           => 'pdf-file',
             'application/octet-stream'                                                  => 'msword-file',
