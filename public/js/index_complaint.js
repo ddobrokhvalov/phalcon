@@ -321,6 +321,7 @@ var indexComplaint = {
                 }
             break;
             default:
+                debugger;
                 var checkSame = true;
                 var current = this.arrComplaint[0].status;
                 this.deActiveButton('.button-copy');
@@ -330,16 +331,31 @@ var indexComplaint = {
                 if(this.arrComplaint.length == 1){
                     this.activeButton('.button-copy');
                 }
-                for(var i = 0; i < this.arrComplaint.length; i++){
-                    switch(this.arrComplaint[i].status){
+
+
+                var same = true;
+                var currStat = this.arrComplaint[0].status;
+                var arrStatus = new Array();
+                arrStatus.push(currStat);
+                for(var i = 0; i <  this.arrComplaint.length; i++){
+                    if(currStat != this.arrComplaint[i].status){
+                        arrStatus.push(this.arrComplaint[i].status);
+                        same = false;
+                    }
+                }
+
+                arrStatus = arrStatus.filter(function(item, pos, self) { return self.indexOf(item) == pos; })
+
+                if(same){
+                    switch(currStat){
                         case 'draft':
                             this.activeButton('.to-archive');
                             this.activeButton('.to-delete');
                         break;
                         case 'archive':
-                            if(this.arrComplaint[i].status != 'archive'){
-                                this.activeButton('.to-archive');
-                            }
+                            //if(this.arrComplaint[i].status != 'archive'){
+                            //    this.activeButton('.to-archive');
+                            //}
                             this.activeButton('.to-delete');
                             this.activeButton('.set-active');
                         break;
@@ -365,10 +381,51 @@ var indexComplaint = {
                             this.activeButton('.to-delete');
                         break;
                     };
-                    if(this.arrComplaint[i].status != current){
-                        checkSame = false;
+                } else {
+                    if(arrStatus.indexOf('archive') && arrStatus.indexOf('submitted')){
+                       console.log('dddd');
                     }
                 }
+
+                //for(var i = 0; i < this.arrComplaint.length; i++){
+                //    switch(this.arrComplaint[i].status){
+                //        case 'draft':
+                //            this.activeButton('.to-archive');
+                //            this.activeButton('.to-delete');
+                //        break;
+                //        case 'archive':
+                //            if(this.arrComplaint[i].status != 'archive'){
+                //                this.activeButton('.to-archive');
+                //            }
+                //            this.activeButton('.to-delete');
+                //            this.activeButton('.set-active');
+                //        break;
+                //        case 'submitted':
+                //            this.activeButton('.button-recall');
+                //            this.activeButton('.to-archive');
+                //            this.activeButton('.to-delete');
+                //        break;
+                //        case 'recalled':
+                //            this.activeButton('.to-archive');
+                //            this.activeButton('.to-delete');
+                //        break;
+                //        case 'under_consideration':
+                //            this.activeButton('.to-archive');
+                //            this.activeButton('.to-delete');
+                //        break;
+                //        case 'justified':
+                //            this.activeButton('.to-archive');
+                //            this.activeButton('.to-delete');
+                //        break;
+                //        case 'unfounded':
+                //            this.activeButton('.to-archive');
+                //            this.activeButton('.to-delete');
+                //        break;
+                //    };
+                //    if(this.arrComplaint[i].status != current){
+                //        checkSame = false;
+                //    }
+                //}
             break;
         }
 
