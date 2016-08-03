@@ -169,12 +169,26 @@ class ComplaintsController extends ControllerBase
                     }
                 }
             }
+            $arguments = UsersArguments::find(
+                array(
+                    'complaint_id = :complaint_id:',
+                    'bind' => [
+                        'complaint_id' => $id,
+                    ]
+                )
+            );
+            $user_arguments = '';
+            foreach ($arguments as $argument) {
+                $user_arguments .= $argument->text . '</br>';
+            }
+
             if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'index') && $this->user->id != 1) {
                $this->view->allow_answer = 0;
             } else {
                 $this->view->allow_answer = 1;
             }
             $this->view->attached_files = $files_html;
+            $this->view->user_arguments = $user_arguments;
 //            $parser = new Parser();
 //            $data = $parser->parseAuction((string)$complaint->auction_id);
 //            $complaint->nachalo_podachi =           isset($data['procedura']['nachalo_podachi'])            ? $data['procedura']['nachalo_podachi']         : null;
