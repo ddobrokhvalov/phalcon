@@ -58,12 +58,12 @@ function categorySend() {
 }
 function toggleClick(objClick) {
     if (objClick.parent().attr('data-toggle') == 'true') {
-        objClick.parent().next().remove();
+        objClick.parent().nextAll().remove();
         var data = 'id=' + objClick.parent().attr('data-id');
         receivingData.getSomeData(data, objClick.parent(), objClick.parent().attr('data-value'));
         objClick.parent().attr('data-toggle', 'false');
     } else {
-        objClick.parent().next().find('.category').slideUp(400);
+        objClick.parent().nextAll().slideUp(400);
         objClick.parent().attr('data-toggle', 'true');
     }
 }
