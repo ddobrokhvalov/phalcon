@@ -389,8 +389,9 @@ class ApplicantsController  extends ControllerBase
         return $this->dispatcher->forward(array(
             'module' => 'backend',
             'controller' => 'applicants',
-            'action' => 'edit',
-            'params' => ['id' => $id],
+            'action'    => 'index'
+//            'action' => 'edit',
+//            'params' => ['id' => $id],
         ));
 
     }
