@@ -44,6 +44,7 @@ class Files extends Model
 
     public function isAllowedExtension($ext) {
         $extensions = array(
+            'text/plain',
             'image/jpeg',
             'image/png',
             'image/bmp',
@@ -61,6 +62,7 @@ class Files extends Model
 
     public function getFileClass($file_type) {
         $extensions = array(
+            'text/plain'                                                                => 'text/plain',
             'image/jpeg'                                                                => 'image-file',
             'image/png'                                                                 => 'image-file',
             'image/bmp'                                                                 => 'image-file',
