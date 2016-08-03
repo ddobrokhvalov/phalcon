@@ -15,8 +15,7 @@ $(document).ready(function() {
         createSubCat_Arg($(this));
     });
     $('.argCatTree').on('click', '.category_arrow, .category h2, .category h3', function() {
-        var data = 'id=' + $(this).parent().attr('data-id');
-        receivingData.getSomeData(data, $(this).parent(), $(this).parent().attr('data-value'));
+        toggleClick($(this));
     });
     $('.argCatTree').on('click', '.category_argumentAdd', function() {
         addArgumentFunc($(this));
@@ -55,6 +54,17 @@ function categorySend() {
     } else {
         data = 'parent_id=' + 0 + '&name=' + catName;
         createNewCategory.newCategorySend(data);
+    }
+}
+function toggleClick(objClick) {
+    if (objClick.parent().attr('data-toggle') == 'true') {
+        objClick.parent().next().remove();
+        var data = 'id=' + objClick.parent().attr('data-id');
+        receivingData.getSomeData(data, objClick.parent(), objClick.parent().attr('data-value'));
+        objClick.parent().attr('data-toggle', 'false');
+    } else {
+        objClick.parent().next().find('.category').slideUp(400);
+        objClick.parent().attr('data-toggle', 'true');
     }
 }
 function addNewCat() {
@@ -121,9 +131,9 @@ function editCatArg(obj) {
 function ShellToFill(step, titleText, id, parent_id, text) {
     this.wrapp = '<li class="catArguments">';
     this.holder = '<ul class="subWrap_' + step + '">';
-    this.box = '<div class="category" id="category" data-value="" data-id="' + id + '" data-parent_id="' + parent_id + '">';
-    this.box2 = '<li class="category" id="category" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '">';
-    this.box3 = '<li class="category" id="argument" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '">';
+    this.box = '<div class="category" id="category" data-value="" data-id="' + id + '" data-parent_id="' + parent_id + '" data-toggle="true">';
+    this.box2 = '<li class="category" id="category" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '" data-toggle="true">';
+    this.box3 = '<li class="category" id="argument" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '" data-toggle="true">';
     this.arrow = '<div class="category_arrow"></div>';
     this.title = '<h2>' + titleText + '</h2>';
     this.title2 = '<h3>' + titleText + '</h3>';
@@ -233,7 +243,7 @@ var receivingData = {
             dataType: 'json',
             success: function(value) {
                 num++;
-                switch(num) {
+                switch (num) {
                     case 1:
                         cycleDataCat(num, writeGetData.subCategory_1);
                         break;
