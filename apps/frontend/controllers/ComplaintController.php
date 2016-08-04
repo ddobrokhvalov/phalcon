@@ -539,10 +539,27 @@ class ComplaintController extends ControllerBase
             break;
             case 3:
                 $id         = $this->request->get('id');
+                $type       = $this->request->get('type');
+                if(!isset($type) || trim($type) == ''){
+                    echo json_encode(array('error' => 'bad data'));
+                    exit;
+                }
                 if(!is_numeric($id)){
                     echo json_encode(array('error' => 'bad data'));
                     exit;
                 }
+
+                $type = strtolower(trim($type));
+                if(strripos($type, 'электронный')){
+                    $type = 0;
+                } elseif(strripos($type, 'конкурс')){
+                    $type = 1;
+                } elseif(strripos($type, 'котировок')){
+                    $type = 2;
+                } elseif(strripos($type, 'предложений')){
+                    $type = 3;
+                }
+
                 $parent_id  = ArgumentsCategory::findFirst($id);
                 $parent_id  = $parent_id->parent_id;
                 $cat_arguments = ArgumentsCategory::find("parent_id = {$id}");
@@ -556,6 +573,7 @@ class ComplaintController extends ControllerBase
                 $arguments = Arguments::query()
                     ->where("category_id = {$id}")
                     ->orWhere("category_id = {$parent_id}")
+                    ->andWhere("type = {$type}")
                     ->execute();
                 foreach($arguments as $argument){
                     $result['arguments'][] = array(
@@ -568,12 +586,30 @@ class ComplaintController extends ControllerBase
             break;
             case 4:
                 $id         = $this->request->get('id');
+                $type       = $this->request->get('type');
                 if(!is_numeric($id)){
                     echo json_encode(array('error' => 'bad data'));
                     exit;
                 }
+                if(!isset($type) || trim($type) == ''){
+                    echo json_encode(array('error' => 'bad data'));
+                    exit;
+                }
+
+                $type = strtolower(trim($type));
+                if(strripos($type, 'электронный')){
+                    $type = 0;
+                } elseif(strripos($type, 'конкурс')){
+                    $type = 1;
+                } elseif(strripos($type, 'котировок')){
+                    $type = 2;
+                } elseif(strripos($type, 'предложений')){
+                    $type = 3;
+                }
+
                 $arguments = Arguments::query()
                     ->where("category_id = {$id}")
+                    ->andWhere("type = {$type}")
                     ->execute();
                 foreach($arguments as $argument){
                     $result['arguments'][] = array(
@@ -587,12 +623,31 @@ class ComplaintController extends ControllerBase
             case 6:
                 $search = $this->request->get('search');
                 $search = (isset($search)) ? trim($search) : '';
+                $type       = $this->request->get('type');
+
                 if(empty($search)){
                     echo json_encode($result);
                     exit;
                 }
+                if(!isset($type) || trim($type) == ''){
+                    echo json_encode(array('error' => 'bad data'));
+                    exit;
+                }
+
+                $type = strtolower(trim($type));
+                if(strripos($type, 'электронный')){
+                    $type = 0;
+                } elseif(strripos($type, 'конкурс')){
+                    $type = 1;
+                } elseif(strripos($type, 'котировок')){
+                    $type = 2;
+                } elseif(strripos($type, 'предложений')){
+                    $type = 3;
+                }
+
                 $arguments = Arguments::query()
                     ->where('name LIKE :name:', array('name' => '%' . $search . '%'))
+                    ->andWhere("type = {$type}")
                     ->execute();
                 foreach($arguments as $argument){
                     $result['arguments'][] = array(
