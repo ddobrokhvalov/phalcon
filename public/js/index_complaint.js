@@ -605,7 +605,7 @@ var indexComplaint = {
         self.activeButton('.to-delete');
         self.deActiveButton('.button-recall');
         this.arrComplaint = [];
-        var arrStatus = new Array;
+        var arrStatus = new Array();
         var same = true;
         $('.complaint-checkbox').each(function () {
             debugger;

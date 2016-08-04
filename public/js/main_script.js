@@ -1145,49 +1145,52 @@ function changeAdminButtonsBackground() {
 }
 
 function changeComplaintButtonsBackground() {
+    debugger;
     $(".copy-complaint").addClass('disabled-btn').removeClass('enabled-btn');
     $(".archive-complaint").addClass('disabled-btn').removeClass('enabled-btn');
     $(".recall-complaint").addClass('disabled-btn').removeClass('enabled-btn');
     $(".un-archive-complaint").addClass('disabled-btn').removeClass('enabled-btn');
     $("#delete-button").addClass('disabled-btn').removeClass('enabled-btn');
-    if(arrCheck.length){
-        if(arrCheck.length == 1){
-            $(".copy-complaint").addClass("enabled-btn").removeClass("disabled-btn");
-        }
-        for(var i = 0; i < arrCheck.length; i++){
-            switch(arrCheck[i].status){
-                case 'draft':
-                    $(".archive-complaint").addClass("enabled-btn").removeClass("disabled-btn");
-                    $("#delete-button").addClass('enabled-btn').removeClass('disabled-btn');
-                    break;
-                case 'archive':
-                    $("#delete-button").addClass('enabled-btn').removeClass('disabled-btn');
-                    $(".un-archive-complaint").addClass('enabled-btn').removeClass('disabled-btn');
-                    break;
-                case 'submitted':
-                    $(".archive-complaint").addClass("enabled-btn").removeClass("disabled-btn");
-                    $(".recall-complaint").addClass('enabled-btn').removeClass('disabled-btn');
-                    $("#delete-button").addClass('enabled-btn').removeClass('disabled-btn');
-                    break;
-                case 'recalled':
-                    $(".archive-complaint").addClass("enabled-btn").removeClass("disabled-btn");
-                    $("#delete-button").addClass('enabled-btn').removeClass('disabled-btn');
-                    break;
-                case 'under_consideration':
-                    $(".archive-complaint").addClass("enabled-btn").removeClass("disabled-btn");
-                    $("#delete-button").addClass('enabled-btn').removeClass('disabled-btn');
-                    break;
-                case 'justified':
-                    $(".archive-complaint").addClass("enabled-btn").removeClass("disabled-btn");
-                    $("#delete-button").addClass('enabled-btn').removeClass('disabled-btn');
-                    break;
-                case 'unfounded':
-                    $(".archive-complaint").addClass("enabled-btn").removeClass("disabled-btn");
-                    $("#delete-button").addClass('enabled-btn').removeClass('disabled-btn');
-                    break;
-            };
+
+    var arrStatus = new Array();
+    var same = true;
+    var curStat = arrCheck[0].status;
+    arrStatus.push(curStat);
+
+    if(arrCheck.length == 1){
+        $(".copy-complaint").addClass('enabled-btn').removeClass('disabled-btn');
+    }else if( arrCheck.length > 1){
+        $(".copy-complaint").addClass('disabled-btn').removeClass('enabled-btn');
+    }
+
+    for(var i = 0; i < arrCheck.length; i++){
+        if(curStat != arrCheck[i].status){
+            same = false;
+            arrStatus.push(arrCheck[i].status);
         }
     }
+
+    if(arrStatus.indexOf('archive') != -1){
+        $(".archive-complaint").addClass('disabled-btn').removeClass('enabled-btn');
+    } else if(arrStatus.indexOf('archive') == -1) {
+        $(".archive-complaint").addClass('enabled-btn').removeClass('disabled-btn');
+    }
+    if(arrStatus.indexOf('archive') != -1 && same == true){
+        $(".un-archive-complaint").addClass('enabled-btn').removeClass('disabled-btn');
+    }
+
+    if(arrStatus.indexOf('submitted') != -1 && same != true){
+        $(".recall-complaint").addClass('disabled-btn').removeClass('enabled-btn');
+    } else if(arrStatus.indexOf('submitted') != -1 && same == true){
+        $(".recall-complaint").addClass('enabled-btn').removeClass('disabled-btn');
+    }
+    if(arrStatus.indexOf('draft') != -1 || arrStatus.indexOf('submitted') != -1
+        || arrStatus.indexOf('recalled') != -1  || arrStatus.indexOf('under_consideration')
+        || arrStatus.indexOf('justified') || arrStatus.indexOf('unfounded')){
+        $("#delete-button").addClass('enabled-btn').removeClass('disabled-btn');
+    }
+
+
     //if($('.admin-main-wrap').hasClass('complaints-list')){
     //    var id_array = [];
     //    var submitted_id = [];
