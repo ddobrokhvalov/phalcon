@@ -252,7 +252,8 @@ class Complaint extends Model
                     $test = new Complaint();
                     $test->changeStatus($complainthistory->old_status, array($id));
                 } else {
-                    $this->changeStatus('draft', array($id));
+                    $test = new Complaint();
+                    $test->changeStatus('draft', array($id));
                 }
             } elseif ($status == 'delete') {
                 ComplaintMovingHistory::delete_history($id);
