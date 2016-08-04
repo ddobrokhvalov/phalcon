@@ -1,6 +1,7 @@
 <?php
 namespace Multiple\Backend\Models;
 
+use Phalcon\Exception;
 use Phalcon\Mvc\Model;
 use Multiple\Backend\Models\Question;
 use Multiple\Backend\Models\ComplaintMovingHistory;
@@ -241,18 +242,18 @@ class Complaint extends Model
 
     public function changeStatus($status, $data, $user_id = false)//todo: do we need user_id
     {
-        foreach ($data as $id) { //todo: make through db query this. 'id IN ()' is faster then ORM
-                                 //todo: $complaint->checkComplaintOwner($v, $this->user->id) add this
-         //   if ($this->checkComplaintOwner($id, $user_id)) {
+        foreach ($data as $id) {
             $complaint = Complaint::findFirstById($id);
             if(!$complaint || $complaint->status==$status) {
                 continue;
             } elseif ($status == 'activate' ) {  //This return from arhive. We need to check history and set last status.
                 $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
-                if($complainthistory)
-                    $this->changeStatus($complainthistory->old_status, [$id]);
-                else
-                    $this->changeStatus('draft', [$id]);
+                if($complainthistory) {
+                    $test = new Complaint();
+                    $test->changeStatus($complainthistory->old_status, array($id));
+                } else {
+                    $this->changeStatus('draft', array($id));
+                }
             } elseif ($status == 'delete') {
                 ComplaintMovingHistory::delete_history($id);
                 $complaint->delete();
@@ -282,9 +283,6 @@ class Complaint extends Model
                 $complaint->status = $status;
                 $complaint->save();
             }
-          //  } else {
-         //       continue;
-          //  }
         }
     }
 
