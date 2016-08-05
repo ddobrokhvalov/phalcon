@@ -132,7 +132,7 @@ var ajaxSendObj = {
         }
     },
     withoutCatArg: function(data) {
-        if (data.cat_arguments.length == 0) {
+        if (data.cat_arguments.length === 0) {
             $('#argComplSelect').slideUp(400);
         }
     },

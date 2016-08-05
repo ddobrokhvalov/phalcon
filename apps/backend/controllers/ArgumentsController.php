@@ -354,6 +354,7 @@ class ArgumentsController  extends ControllerBase
                 if (!$errors) {
                     $argument->argument_status = 1;
                     $argument->date = date('Y-m-d H:i:s');
+                    $argument->type = 0;
                     $argument->save();
                     echo json_encode(array(
                         'id'            => $argument->id,

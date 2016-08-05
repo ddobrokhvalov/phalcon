@@ -7,6 +7,7 @@ class Arguments extends Model
     public $id;
     public $name;
     public $argument_status;
+    public $type;
 
     public function initialize()
     {

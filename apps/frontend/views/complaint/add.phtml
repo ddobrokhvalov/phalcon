@@ -269,8 +269,8 @@
                         <div></div>
                     </div>
                     <ul class="custom-options mCustomScrollbar">
-                        {% for cat in categories%}
-                            <li class="argo" data-value="{{cat.id}}" data-parent="{{cat.parent_id}}">{{cat.name}}</li>
+                        {% for key, val in categories%}
+                            <li class="argo" data-value="{{val['id']}}" data-parent="{{val['parent_id']}}">{{val['name']}}</li>
                         {% endfor %}
                     </ul>
                 </div>
