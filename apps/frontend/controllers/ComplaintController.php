@@ -17,6 +17,7 @@ use Multiple\Library\PaginatorBuilder;
 use Multiple\Frontend\Models\Arguments;
 use Multiple\Frontend\Models\ArgumentsCategory;
 //use Multiple\Library\TrustedLibrary;
+use  Phalcon\Mvc\Model\Query\Builder;
 
 
 class ComplaintController extends ControllerBase
@@ -549,20 +550,33 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $type = strtolower(trim($type));
-                if(strripos($type, 'электронный')){
+                $type = trim($type);
+                $type = mb_strtolower($type);
+                if(preg_match  ('/электронный/', $type)){
                     $type = 0;
-                } elseif(strripos($type, 'конкурс')){
+                }
+                if(preg_match  ('/конкурс/', $type)){
                     $type = 1;
-                } elseif(strripos($type, 'котировок')){
+                }
+                if(preg_match  ('/котировок/', $type)){
                     $type = 2;
-                } elseif(strripos($type, 'предложений')){
+                }
+                if(preg_match  ('/предложений/', $type)){
                     $type = 3;
                 }
 
                 $parent_id  = ArgumentsCategory::findFirst($id);
                 $parent_id  = $parent_id->parent_id;
-                $cat_arguments = ArgumentsCategory::find("parent_id = {$id}");
+                //$cat_arguments = ArgumentsCategory::find("parent_id = {$id}");
+
+                $cat_arguments = new Builder();
+                $cat_arguments->getDistinct();
+                $cat_arguments->addFrom('Multiple\Frontend\Models\ArgumentsCategory', 'ArgumentsCategory');
+                $cat_arguments->rightJoin('Multiple\Frontend\Models\Arguments', 'ArgumentsCategory.id = category_id');
+                $cat_arguments->where("parent_id = {$parent_id}");
+                $cat_arguments->groupBy('ArgumentsCategory.id');
+                $cat_arguments = $cat_arguments->getQuery()->execute();
+
                 foreach($cat_arguments as $cat){
                     $result['cat_arguments'][] = array(
                         'id'        => $cat->id,
@@ -570,16 +584,19 @@ class ComplaintController extends ControllerBase
                         'parent_id' => $cat->parent_id,
                     );
                 }
+
                 $arguments = Arguments::query()
                     ->where("category_id = {$id}")
                     ->orWhere("category_id = {$parent_id}")
                     ->andWhere("type = {$type}")
                     ->execute();
+
                 foreach($arguments as $argument){
                     $result['arguments'][] = array(
-                        'id'        => $argument->id,
-                        'name'      => $argument->name,
-                        'category_id' => $argument->category_id,
+                        'id'            => $argument->id,
+                        'name'          => $argument->name,
+                        'category_id'   => $argument->category_id,
+                        'type'          => $type,
                     );
                 }
                 echo json_encode($result);
@@ -596,14 +613,18 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $type = strtolower(trim($type));
-                if(strripos($type, 'электронный')){
+                $type = trim($type);
+                $type = mb_strtolower($type);
+                if(preg_match  ('/электронный/', $type)){
                     $type = 0;
-                } elseif(strripos($type, 'конкурс')){
+                }
+                if(preg_match  ('/конкурс/', $type)){
                     $type = 1;
-                } elseif(strripos($type, 'котировок')){
+                }
+                if(preg_match  ('/котировок/', $type)){
                     $type = 2;
-                } elseif(strripos($type, 'предложений')){
+                }
+                if(preg_match  ('/предложений/', $type)){
                     $type = 3;
                 }
 
@@ -616,6 +637,7 @@ class ComplaintController extends ControllerBase
                         'id'        => $argument->id,
                         'name'      => $argument->name,
                         'category_id' => $argument->category_id,
+                        'type'        => $type
                     );
                 }
                 echo json_encode($result);
@@ -634,14 +656,18 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $type = strtolower(trim($type));
-                if(strripos($type, 'электронный')){
+                $type = trim($type);
+                $type = mb_strtolower($type);
+                if(preg_match  ('/электронный/', $type)){
                     $type = 0;
-                } elseif(strripos($type, 'конкурс')){
+                }
+                if(preg_match  ('/конкурс/', $type)){
                     $type = 1;
-                } elseif(strripos($type, 'котировок')){
+                }
+                if(preg_match  ('/котировок/', $type)){
                     $type = 2;
-                } elseif(strripos($type, 'предложений')){
+                }
+                if(preg_match  ('/предложений/', $type)){
                     $type = 3;
                 }
 
@@ -651,9 +677,10 @@ class ComplaintController extends ControllerBase
                     ->execute();
                 foreach($arguments as $argument){
                     $result['arguments'][] = array(
-                        'id'        => $argument->id,
-                        'name'      => $argument->name,
-                        'category_id' => $argument->category_id,
+                        'id'            => $argument->id,
+                        'name'          => $argument->name,
+                        'category_id'   => $argument->category_id,
+                        'type'          => $type
                     );
                 }
                 echo json_encode($result);
