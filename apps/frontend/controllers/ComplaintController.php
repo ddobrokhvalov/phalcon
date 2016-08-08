@@ -204,26 +204,26 @@ class ComplaintController extends ControllerBase
 //        }
 
 
-        $data = ArgumentsCategory::query()
-                ->where('parent_id=0')
-                ->execute();
+//        $data = ArgumentsCategory::query()
+//                ->where('parent_id=0')
+//                ->execute();
 
-        $arg = new ArgumentsCategory();
-        $data = $arg->getCategoryNotEmpty();
-        $temp = array();
-        foreach($data as $val){
-            if($val->parent_id == 0) {
-                $temp[] = array(
-                    'id' => $val->id_cat,
-                    'name' => $val->lvl1,
-                    'parent_id' => 0
-                );
-            }
-        }
-        $temp = array_map("unserialize", array_unique( array_map("serialize", $temp) ));
+//        $arg = new ArgumentsCategory();
+//        $data = $arg->getCategoryNotEmpty();
+//        $temp = array();
+//        foreach($data as $val){
+//            if($val->parent_id == 0) {
+//                $temp[] = array(
+//                    'id' => $val->lvl1_id,
+//                    'name' => $val->lvl1,
+//                    'parent_id' => 0
+//                );
+//            }
+//        }
+//        $temp = array_map("unserialize", array_unique( array_map("serialize", $temp) ));
 
-        $arg = new ArgumentsCategory();
-        $this->view->categories = $temp;
+        //$arg = new ArgumentsCategory();
+        //$this->view->categories = $temp;
         $this->view->arguments = $arguments;
     }
 
@@ -529,37 +529,80 @@ class ComplaintController extends ControllerBase
         );
         switch($step){
             case 1:
-                $cat_arguments = ArgumentsCategory::find("parent_id = 0");
-                foreach($cat_arguments as $cat){
-                    $result["cat_arguments"][] = array(
-                        "id"        => $cat->id,
-                        "name"      => $cat->name,
-                        "parent_id" => $cat->parent_id,
+                $type       = $this->request->get('type');
+                $type = trim($type);
+                $type = mb_strtolower($type);
+                if(preg_match  ('/электронный/', $type)){
+                    $type = 0;
+                }elseif(preg_match  ('/конкурс/', $type)){
+                    $type = 1;
+                }elseif(preg_match  ('/котировок/', $type)){
+                    $type = 2;
+                }elseif(preg_match  ('/предложений/', $type)){
+                    $type = 3;
+                }else{
+                    echo json_encode(array('error' => 'bad type'));
+                    exit;
+                }
+
+                $cat = new ArgumentsCategory();
+                $cat_arguments = $cat->getCategoryNotEmpty($type);
+                foreach($cat_arguments as $val){
+                    $result['cat_arguments'][] = array(
+                        'id' => $val->lvl1_id,
+                        'name' => $val->lvl1,
+                        'parent_id' => 0
                     );
                 }
                 echo json_encode($result);
             break;
             case 2:
                 $parent_id = $this->request->get('id');
+                $type       = $this->request->get('type');
                 if(!is_numeric($parent_id)){
                     echo json_encode(array('error' => 'bad data'));
                     exit;
                 }
-                $cat_arguments = ArgumentsCategory::find("parent_id = {$parent_id}");
+                if(!isset($type) || trim($type) == ''){
+                    echo json_encode(array('error' => 'bad type'));
+                    exit;
+                }
+
+                $type = trim($type);
+                $type = mb_strtolower($type);
+                if(preg_match  ('/электронный/', $type)){
+                    $type = 0;
+                }elseif(preg_match  ('/конкурс/', $type)){
+                    $type = 1;
+                }elseif(preg_match  ('/котировок/', $type)){
+                    $type = 2;
+                }elseif(preg_match  ('/предложений/', $type)){
+                    $type = 3;
+                }else{
+                    echo json_encode(array('error' => 'bad type'));
+                    exit;
+                }
+
+                $cat = new ArgumentsCategory();
+                $cat_arguments = $cat->getCategoryNotEmpty($type);
+
                 foreach($cat_arguments as $cat){
+                    if($cat->lvl1_id == $parent_id) {
                         $result["cat_arguments"][] = array(
-                            "id" => $cat->id,
-                            "name" => $cat->name,
-                            "parent_id" => $cat->parent_id,
+                            "id" => $cat->lvl2_id,
+                            "name" => $cat->lvl2,
+                            "parent_id" => $cat->lvl1_id,
                         );
+                    }
                 }
                 echo json_encode($result);
             break;
             case 3:
-                $id         = $this->request->get('id');
-                $type       = 'электронный';
+                $id  = $this->request->get('id');
+                $type       = $this->request->get('type');
+
                 if(!isset($type) || trim($type) == ''){
-                    echo json_encode(array('error' => 'bad data'));
+                    echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
                 if(!is_numeric($id)){
@@ -571,25 +614,24 @@ class ComplaintController extends ControllerBase
                 $type = mb_strtolower($type);
                 if(preg_match  ('/электронный/', $type)){
                     $type = 0;
-                }
-                if(preg_match  ('/конкурс/', $type)){
+                }elseif(preg_match  ('/конкурс/', $type)){
                     $type = 1;
-                }
-                if(preg_match  ('/котировок/', $type)){
+                }elseif(preg_match  ('/котировок/', $type)){
                     $type = 2;
-                }
-                if(preg_match  ('/предложений/', $type)){
+                }elseif(preg_match  ('/предложений/', $type)){
                     $type = 3;
+                }else{
+                    echo json_encode(array('error' => 'bad type'));
+                    exit;
                 }
 
                 $parent_id  = ArgumentsCategory::findFirst($id);
                 $parent_id  = $parent_id->parent_id;
-                //$cat_arguments = ArgumentsCategory::find("parent_id = {$id}");
 
                 $cat_arguments = new Builder();
                 $cat_arguments->getDistinct();
                 $cat_arguments->addFrom('Multiple\Frontend\Models\ArgumentsCategory', 'ArgumentsCategory');
-                $cat_arguments->rightJoin('Multiple\Frontend\Models\Arguments', 'ArgumentsCategory.id = category_id');
+                $cat_arguments->rightJoin('Multiple\Frontend\Models\Arguments', "ArgumentsCategory.id = category_id AND type = {$type}");
                 $cat_arguments->where("parent_id = {$id}");
                 $cat_arguments->groupBy('ArgumentsCategory.id');
                 $cat_arguments = $cat_arguments->getQuery()->execute();
@@ -620,30 +662,30 @@ class ComplaintController extends ControllerBase
             break;
             case 4:
                 $id         = $this->request->get('id');
-                //$type       = $this->request->get('type');
-                $type       = 'электронный';
+                $type       = $this->request->get('type');
+
                 if(!is_numeric($id)){
                     echo json_encode(array('error' => 'bad data'));
                     exit;
                 }
-//                if(!isset($type) || trim($type) == ''){
-//                    echo json_encode(array('error' => 'bad data'));
-//                    exit;
-//                }
+                if(!isset($type) || trim($type) == ''){
+                    echo json_encode(array('error' => 'bad type'));
+                    exit;
+                }
 
                 $type = trim($type);
                 $type = mb_strtolower($type);
                 if(preg_match  ('/электронный/', $type)){
                     $type = 0;
-                }
-                if(preg_match  ('/конкурс/', $type)){
+                }elseif(preg_match  ('/конкурс/', $type)){
                     $type = 1;
-                }
-                if(preg_match  ('/котировок/', $type)){
+                }elseif(preg_match  ('/котировок/', $type)){
                     $type = 2;
-                }
-                if(preg_match  ('/предложений/', $type)){
+                }elseif(preg_match  ('/предложений/', $type)){
                     $type = 3;
+                }else{
+                    echo json_encode(array('error' => 'bad type'));
+                    exit;
                 }
 
                 $arguments = Arguments::query()
@@ -670,7 +712,7 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
                 if(!isset($type) || trim($type) == ''){
-                    echo json_encode(array('error' => 'bad data'));
+                    echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
 
@@ -678,15 +720,14 @@ class ComplaintController extends ControllerBase
                 $type = mb_strtolower($type);
                 if(preg_match  ('/электронный/', $type)){
                     $type = 0;
-                }
-                if(preg_match  ('/конкурс/', $type)){
+                }elseif(preg_match  ('/конкурс/', $type)){
                     $type = 1;
-                }
-                if(preg_match  ('/котировок/', $type)){
+                }elseif(preg_match  ('/котировок/', $type)){
                     $type = 2;
-                }
-                if(preg_match  ('/предложений/', $type)){
+                }elseif(preg_match  ('/предложений/', $type)){
                     $type = 3;
+                }else{
+                    $type = -1;
                 }
 
                 $arguments = Arguments::query()

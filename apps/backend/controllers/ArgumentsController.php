@@ -338,7 +338,12 @@ class ArgumentsController  extends ControllerBase
             } else if(!isset($data['category_id']) || !is_numeric($data['category_id'])){
                 echo json_encode(array( 'status' => 'bad id' ));
                 exit;
+            } else if(!isset($data['type']) || !is_numeric($data['type'])){
+                echo json_encode(array( 'status' => 'bad type' ));
+                exit;
             }
+
+
             $errors = FALSE;
             $err_arr = array();
             if ($data) {
@@ -354,7 +359,6 @@ class ArgumentsController  extends ControllerBase
                 if (!$errors) {
                     $argument->argument_status = 1;
                     $argument->date = date('Y-m-d H:i:s');
-                    $argument->type = 0;
                     $argument->save();
                     echo json_encode(array(
                         'id'            => $argument->id,
