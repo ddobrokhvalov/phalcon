@@ -665,7 +665,7 @@ var indexComplaint = {
 
 
 function initialize( ){
-    debugger;
+    // debugger;
     if(typeof edit == "undefined") {
         var self = indexComplaint;
         var count = 0;
@@ -678,7 +678,7 @@ function initialize( ){
         var arrStatus = new Array;
         var same = true;
         $('.complaint-checkbox:checked').each(function () {
-            debugger;
+            // debugger;
             self.activeButton('.to-archive');
             self.activeButton('.to-delete');
             self.deActiveButton('.button-recall');
