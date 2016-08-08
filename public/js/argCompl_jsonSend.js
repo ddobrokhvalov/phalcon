@@ -1,6 +1,7 @@
 $(document).ready(function() {
     startCatArguments($('#argComplSelect .custom-options li'));
     $('.opacity-cap-compl').click(function() {
+        methodProcurement();
         ajaxSendObj.firstStepRewriteData();
         $('.addArguments').fadeIn().css('display', 'flex');
     });
@@ -32,27 +33,32 @@ $(document).ready(function() {
             $(this).parent().find('div').toggleClass('stepBack-hover');
         }
     });
+
+    // 0372100047315000207
 });
 
+var typeComplicant = $('.type_complicant').val();
+function methodProcurement() {
+    var data = '&step=' + startSend.step + '&type=' + typeComplicant;
+    startSend.sendRequest(data);
+}
 function searchStep(e) {
     ajaxSendObj.step = 6;
     var searchValue = $('.word-argCompl-input input').val(),
-        data = '?search=' + searchValue + '&step=' + ajaxSendObj.step;
+        data = '?search=' + searchValue + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant;
     ajaxSendObj.sendRequest(data);
     e.preventDefault();
 }
-
 function nextStep(e) {
     if (ajaxSendObj.step == 6) {
         ajaxSendObj.step = 2;
     }
     var id = $('#argComplSelect .current-option').attr('data-value'),
-        data = '?id=' + id + '&step=' + ajaxSendObj.step;
+        data = '?id=' + id + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant;
     ajaxSendObj.sendRequest(data);
     $('#argComplBtn').slideUp(400);
     e.preventDefault();
 }
-
 var readyDataCatArg = [];
 function startCatArguments(objLi) {
     $(objLi).each(function() {
@@ -80,7 +86,24 @@ var argObjSend = {
         this.complaint_text = data.text();
     }
 };
-
+var startSend = {
+    step: 1,
+    sendRequest: function(data) {
+        $.ajax({
+            type: "GET",
+            url: "http://fas/complaint/ajaxStepsAddComplaint" + data,
+            dataType: 'json',
+            success: function(value) {
+                console.log(value);
+                ajaxSendObj.writeSelectLi(value);
+            },
+            error: function(xhr) {
+                alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
+                    + xhr.statusText + ' ResponseText:' + xhr.responseText);
+            }
+        });
+    }
+};
 var ajaxSendObj = {
     step: 2,
     stepsCacheArr: [],
