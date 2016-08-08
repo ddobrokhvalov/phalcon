@@ -1,8 +1,6 @@
 $(document).ready(function() {
-    startCatArguments($('#argComplSelect .custom-options li'));
     $('.opacity-cap-compl').click(function() {
         methodProcurement();
-        ajaxSendObj.firstStepRewriteData();
         $('.addArguments').fadeIn().css('display', 'flex');
     });
     $('#argComplSelect .custom-options').on('click', 'li', function() {
@@ -37,8 +35,9 @@ $(document).ready(function() {
     // 0372100047315000207
 });
 
-var typeComplicant = $('.type_complicant').val();
+var typeComplicant;
 function methodProcurement() {
+    typeComplicant = $('.type_complicant').val();
     var data = '&step=' + startSend.step + '&type=' + typeComplicant;
     startSend.sendRequest(data);
 }
@@ -59,22 +58,6 @@ function nextStep(e) {
     $('#argComplBtn').slideUp(400);
     e.preventDefault();
 }
-var readyDataCatArg = [];
-function startCatArguments(objLi) {
-    $(objLi).each(function() {
-        var loadDataObj = new LoadData(
-            $(this).attr('data-value'),
-            $(this).attr('data-parent'),
-            $(this).text()
-        );
-        readyDataCatArg.push(loadDataObj);
-    });
-    function LoadData(id, parent_id, name) {
-        this.id = id;
-        this.name = name;
-        this.parent_id = parent_id;
-    }
-}
 
 var argObjSend = {
     id: 0,
@@ -86,6 +69,7 @@ var argObjSend = {
         this.complaint_text = data.text();
     }
 };
+var readyDataCatArg;
 var startSend = {
     step: 1,
     sendRequest: function(data) {
@@ -94,7 +78,7 @@ var startSend = {
             url: "http://fas/complaint/ajaxStepsAddComplaint" + data,
             dataType: 'json',
             success: function(value) {
-                console.log(value);
+                readyDataCatArg = value;
                 ajaxSendObj.writeSelectLi(value);
             },
             error: function(xhr) {
@@ -124,6 +108,7 @@ var ajaxSendObj = {
                 } else {
                     ajaxSendObj.searchWriteStep(value);
                 }
+                console.log(ajaxSendObj.stepsCacheArr);
             },
             error: function(xhr) {
                 alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
@@ -223,12 +208,12 @@ var ajaxSendObj = {
         $('#argComplSelect').slideDown(400);
         $('#argComplSelect .current-option span').text('Жалоба на положения документации');
         $('#argComplSelect .custom-options li').remove();
-        for (var i = 0; i < readyDataCatArg.length; i++) {
+        for (var i = 0; i < readyDataCatArg.cat_arguments.length; i++) {
             $('#argComplSelect .custom-options div div:first').append(
                 '<li class="argo"' +
-                ' data-value="' + readyDataCatArg[i].id +
-                '" data-parent="' + readyDataCatArg[i].parent_id +
-                '">' + readyDataCatArg[i].name + '</li>'
+                ' data-value="' + readyDataCatArg.cat_arguments[i].id +
+                '" data-parent="' + readyDataCatArg.cat_arguments[i].parent_id +
+                '">' + readyDataCatArg.cat_arguments[i].name + '</li>'
             );
         }
         ajaxSendObj.reclassStepsLine(1);
