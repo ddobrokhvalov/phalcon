@@ -655,6 +655,7 @@ class ComplaintController extends ControllerBase
                         'id'            => $argument->id,
                         'name'          => $argument->name,
                         'category_id'   => $argument->category_id,
+                        'comment'          => $argument->comment,
                         'type'          => $type,
                     );
                 }
@@ -697,6 +698,7 @@ class ComplaintController extends ControllerBase
                         'id'        => $argument->id,
                         'name'      => $argument->name,
                         'category_id' => $argument->category_id,
+                        'comment'          => $argument->comment,
                         'type'        => $type
                     );
                 }
@@ -739,6 +741,7 @@ class ComplaintController extends ControllerBase
                         'id'            => $argument->id,
                         'name'          => $argument->name,
                         'category_id'   => $argument->category_id,
+                        'comment'          => $argument->comment,
                         'type'          => $type
                     );
                 }
