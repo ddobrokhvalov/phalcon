@@ -8,10 +8,12 @@ class Arguments extends Model
     public $name;
     public $argument_status;
     public $type;
+    public $comment;
 
     public function initialize()
     {
         $this->setSource('arguments');
+        $this->allowEmptyStringValues(['comment']);
     }
 
     public function getSource()

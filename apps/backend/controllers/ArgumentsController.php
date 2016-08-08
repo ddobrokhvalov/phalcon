@@ -343,22 +343,31 @@ class ArgumentsController  extends ControllerBase
                 exit;
             }
 
+            $comment = isset($data['comment']) ? trim($data['comment']) : '';
+            if(strlen($comment) > 1000){
+                echo json_encode(array( 'status' => 'bad length comment' ));
+                exit;
+            }
 
             $errors = FALSE;
             $err_arr = array();
             if ($data) {
                 $argument = new Arguments();
                 foreach ($data as $field => $value) {
-                    if ($value) {
-                        $argument->$field = $value;
-                    } else {
-                        $err_arr[] = $this->getFieldName($field) . ' не может быть пустым';
-                        $errors = TRUE;
+                    if ($field != 'comment' && $field != 'type'){
+                        if ($value) {
+                            $argument->$field = $value;
+                        } else {
+                            $err_arr[] = $this->getFieldName($field) . ' не может быть пустым';
+                            $errors = TRUE;
+                        }
                     }
                 }
                 if (!$errors) {
                     $argument->argument_status = 1;
                     $argument->date = date('Y-m-d H:i:s');
+                    $argument->comment = $comment;
+                    $argument->type = $data['type'];
                     $argument->save();
                     echo json_encode(array(
                         'id'            => $argument->id,
