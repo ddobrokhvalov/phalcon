@@ -525,7 +525,8 @@ class ComplaintController extends ControllerBase
         }
         $result = array(
             "cat_arguments" => array(),
-            "arguments"     => array()
+            "arguments"     => array(),
+            "date"          => 0
         );
         switch($step){
             case 1:
@@ -541,7 +542,7 @@ class ComplaintController extends ControllerBase
                 $nowTime = date("m.d.Y H:m");
 
                 if($nowTime > $dateOff){
-                    true;
+                    $result['date'] = 1;
                 }
 
                 if(!isset($type) || ($type = $this->checkType($type)) == -1){
@@ -558,6 +559,7 @@ class ComplaintController extends ControllerBase
                         $result['cat_arguments'][] = array(
                             'id' => $cat->lvl1_id,
                             'name' => $cat->lvl1,
+                            'required' => $cat->required,
                             'parent_id' => 0
                         );
                     }
@@ -568,7 +570,6 @@ class ComplaintController extends ControllerBase
                 $parent_id  = $this->request->get('id');
                 $type       = $this->request->get('type');
                 $dateOff    = $this->request->get('dateoff');
-                $checkRequired = $this->request->get('checkrequired');
 
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
@@ -579,7 +580,7 @@ class ComplaintController extends ControllerBase
                 $nowTime = date("m.d.Y H:m");
 
                 if($nowTime > $dateOff){
-                    true;
+                    $result['date'] = 1;
                 }
 
 
@@ -603,6 +604,7 @@ class ComplaintController extends ControllerBase
                             $result["cat_arguments"][] = array(
                                 "id" => $cat->lvl2_id,
                                 "name" => $cat->lvl2,
+                                'required' => $cat->required,
                                 "parent_id" => $cat->lvl1_id,
                             );
                         }
@@ -614,7 +616,6 @@ class ComplaintController extends ControllerBase
                 $id         = $this->request->get('id');
                 $type       = $this->request->get('type');
                 $dateOff    = $this->request->get('dateoff');
-                $checkRequired  = $this->request->get('checkrequired');
 
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
@@ -625,7 +626,7 @@ class ComplaintController extends ControllerBase
                 $nowTime = date("m.d.Y H:m");
 
                 if($nowTime > $dateOff){
-                    true;
+                    $result['date'] = 1;
                 }
 
                 $parent_id  = ArgumentsCategory::findFirst($id);
@@ -659,6 +660,7 @@ class ComplaintController extends ControllerBase
                     $result['cat_arguments'][] = array(
                         'id'        => $cat->id,
                         'name'      => $cat->name,
+                        'required' => $cat->required,
                         'parent_id' => $cat->parent_id,
                     );
                 }
@@ -676,7 +678,6 @@ class ComplaintController extends ControllerBase
                 $id         = $this->request->get('id');
                 $type       = $this->request->get('type');
                 $dateOff    = $this->request->get('dateoff');
-                $checkRequired = $this->request->get('checkrequired');
 
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
@@ -687,7 +688,7 @@ class ComplaintController extends ControllerBase
                 $nowTime = date("m.d.Y H:m");
 
                 if($nowTime > $dateOff){
-                    true;
+                    $result['date'] = 1;
                 }
 
                 if(!is_numeric($id)){
@@ -713,7 +714,6 @@ class ComplaintController extends ControllerBase
                 $search     = (isset($search)) ? trim($search) : '';
                 $type       = $this->request->get('type');
                 $dateOff   = $this->request->get('dateOff');
-                $checkRequired = $this->request->get('checkrequired');
 
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
@@ -724,7 +724,7 @@ class ComplaintController extends ControllerBase
                 $nowTime = date("m.d.Y H:m");
 
                 if($nowTime > $dateOff){
-                    true;
+                    $result['date'] = 1;
                 }
 
                 if(empty($search)){
@@ -782,7 +782,8 @@ class ComplaintController extends ControllerBase
                 'id'            => $argument->id,
                 'name'          => $argument->name,
                 'category_id'   => $argument->category_id,
-                'comment'          => $argument->comment,
+                'comment'       => $argument->comment,
+                'required'      => $argument->required,
                 'type'          => $type
             );
         }
