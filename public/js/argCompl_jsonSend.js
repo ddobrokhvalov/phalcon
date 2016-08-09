@@ -172,8 +172,6 @@ var ajaxSendObj = {
             $('#argComplSelect .custom-options').on('click', 'li', function() {
                 $('.btn-div').slideUp(400);
             });
-        } else if ( ajaxSendObj.step == 4) {
-            $('#argComplSelect').slideUp(400);
         }
     },
     showHideBtn: function(obj) {
