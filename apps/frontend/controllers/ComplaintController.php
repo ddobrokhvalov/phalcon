@@ -530,23 +530,28 @@ class ComplaintController extends ControllerBase
         switch($step){
             case 1:
                 $type       = $this->request->get('type');
-                $type = trim($type);
-                $type = mb_strtolower($type);
-                if(preg_match  ('/электронный/', $type)){
-                    $type = 0;
-                }elseif(preg_match  ('/конкурс/', $type)){
-                    $type = 1;
-                }elseif(preg_match  ('/котировок/', $type)){
-                    $type = 2;
-                }elseif(preg_match  ('/предложений/', $type)){
-                    $type = 3;
-                }else{
+                $dateOff    = $this->request->get('dateoff');
+                $checkRequired = $this->request->get('checkrequired');
+
+                if(!isset($dateOff) || trim($dateOff) != ''){
+                    echo json_encode(array('error' => 'bad date'));
+                    exit;
+                }
+
+                $dateOff = date($dateOff);
+                $nowTime = date("m.d.Y H:m");
+
+                if($nowTime > $dateOff){
+                    true;
+                }
+
+                if(!isset($type) || ($type = $this->checkType($type)) == -1){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
 
                 $cat = new ArgumentsCategory();
-                $cat_arguments = $cat->getCategoryNotEmpty($type);
+                $cat_arguments = $cat->getCategoryNotEmpty( $type );
                 foreach($cat_arguments as $val){
                     $result['cat_arguments'][] = array(
                         'id' => $val->lvl1_id,
@@ -557,34 +562,35 @@ class ComplaintController extends ControllerBase
                 echo json_encode($result);
             break;
             case 2:
-                $parent_id = $this->request->get('id');
+                $parent_id  = $this->request->get('id');
                 $type       = $this->request->get('type');
+                $dateOff    = $this->request->get('dateoff');
+                $checkRequired = $this->request->get('checkrequired');
+
+                if(!isset($dateOff) || trim($dateOff) != ''){
+                    echo json_encode(array('error' => 'bad date'));
+                    exit;
+                }
+
+                $dateOff = date($dateOff);
+                $nowTime = date("m.d.Y H:m");
+
+                if($nowTime > $dateOff){
+                    true;
+                }
+
+
                 if(!is_numeric($parent_id)){
                     echo json_encode(array('error' => 'bad data'));
                     exit;
                 }
-                if(!isset($type) || trim($type) == ''){
-                    echo json_encode(array('error' => 'bad type'));
-                    exit;
-                }
-
-                $type = trim($type);
-                $type = mb_strtolower($type);
-                if(preg_match  ('/электронный/', $type)){
-                    $type = 0;
-                }elseif(preg_match  ('/конкурс/', $type)){
-                    $type = 1;
-                }elseif(preg_match  ('/котировок/', $type)){
-                    $type = 2;
-                }elseif(preg_match  ('/предложений/', $type)){
-                    $type = 3;
-                }else{
+                if(!isset($type) || ($type = $this->checkType($type)) == -1){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
 
                 $cat = new ArgumentsCategory();
-                $cat_arguments = $cat->getCategoryNotEmpty($type);
+                $cat_arguments = $cat->getCategoryNotEmpty( $type );
 
                 foreach($cat_arguments as $cat){
                     if($cat->lvl1_id == $parent_id) {
@@ -598,35 +604,41 @@ class ComplaintController extends ControllerBase
                 echo json_encode($result);
             break;
             case 3:
-                $id  = $this->request->get('id');
+                $id         = $this->request->get('id');
                 $type       = $this->request->get('type');
+                $dateOff    = $this->request->get('dateoff');
+                $checkRequired  = $this->request->get('checkrequired');
 
-                if(!isset($type) || trim($type) == ''){
-                    echo json_encode(array('error' => 'bad type'));
+                if(!isset($dateOff) || trim($dateOff) != ''){
+                    echo json_encode(array('error' => 'bad date'));
                     exit;
                 }
+
+                $dateOff = date($dateOff);
+                $nowTime = date("m.d.Y H:m");
+
+                if($nowTime > $dateOff){
+                    true;
+                }
+
+                $parent_id  = ArgumentsCategory::findFirst($id);
+                if($parent_id == false){
+                    echo json_encode(array('error' => 'no cat'));
+                    exit;
+                }
+                $parent_id  = $parent_id->parent_id;
+
                 if(!is_numeric($id)){
                     echo json_encode(array('error' => 'bad data'));
                     exit;
                 }
 
-                $type = trim($type);
-                $type = mb_strtolower($type);
-                if(preg_match  ('/электронный/', $type)){
-                    $type = 0;
-                }elseif(preg_match  ('/конкурс/', $type)){
-                    $type = 1;
-                }elseif(preg_match  ('/котировок/', $type)){
-                    $type = 2;
-                }elseif(preg_match  ('/предложений/', $type)){
-                    $type = 3;
-                }else{
+                if(!isset($type) || ($type = $this->checkType($type)) == -1){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
 
-                $parent_id  = ArgumentsCategory::findFirst($id);
-                $parent_id  = $parent_id->parent_id;
+
 
                 $cat_arguments = new Builder();
                 $cat_arguments->getDistinct();
@@ -650,41 +662,33 @@ class ComplaintController extends ControllerBase
                     ->andWhere("type = {$type}")
                     ->execute();
 
-                foreach($arguments as $argument){
-                    $result['arguments'][] = array(
-                        'id'            => $argument->id,
-                        'name'          => $argument->name,
-                        'category_id'   => $argument->category_id,
-                        'comment'          => $argument->comment,
-                        'type'          => $type,
-                    );
-                }
+                $this->getArguments($arguments, $type, $result);
                 echo json_encode($result);
             break;
             case 4:
                 $id         = $this->request->get('id');
                 $type       = $this->request->get('type');
+                $dateOff    = $this->request->get('dateoff');
+                $checkRequired = $this->request->get('checkrequired');
+
+                if(!isset($dateOff) || trim($dateOff) != ''){
+                    echo json_encode(array('error' => 'bad date'));
+                    exit;
+                }
+
+                $dateOff = date($dateOff);
+                $nowTime = date("m.d.Y H:m");
+
+                if($nowTime > $dateOff){
+                    true;
+                }
 
                 if(!is_numeric($id)){
                     echo json_encode(array('error' => 'bad data'));
                     exit;
                 }
-                if(!isset($type) || trim($type) == ''){
-                    echo json_encode(array('error' => 'bad type'));
-                    exit;
-                }
 
-                $type = trim($type);
-                $type = mb_strtolower($type);
-                if(preg_match  ('/электронный/', $type)){
-                    $type = 0;
-                }elseif(preg_match  ('/конкурс/', $type)){
-                    $type = 1;
-                }elseif(preg_match  ('/котировок/', $type)){
-                    $type = 2;
-                }elseif(preg_match  ('/предложений/', $type)){
-                    $type = 3;
-                }else{
+                if(!isset($type) || ($type = $this->checkType($type)) == -1){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
@@ -693,58 +697,44 @@ class ComplaintController extends ControllerBase
                     ->where("category_id = {$id}")
                     ->andWhere("type = {$type}")
                     ->execute();
-                foreach($arguments as $argument){
-                    $result['arguments'][] = array(
-                        'id'        => $argument->id,
-                        'name'      => $argument->name,
-                        'category_id' => $argument->category_id,
-                        'comment'          => $argument->comment,
-                        'type'        => $type
-                    );
-                }
+
+                $this->getArguments($arguments, $type, $result);
                 echo json_encode($result);
             break;
             case 6:
-                $search = $this->request->get('search');
-                $search = (isset($search)) ? trim($search) : '';
+                $search     = $this->request->get('search');
+                $search     = (isset($search)) ? trim($search) : '';
                 $type       = $this->request->get('type');
+                $dateOff   = $this->request->get('dateOff');
+                $checkRequired = $this->request->get('checkrequired');
+
+                if(!isset($dateOff) || trim($dateOff) != ''){
+                    echo json_encode(array('error' => 'bad date'));
+                    exit;
+                }
+
+                $dateOff = date($dateOff);
+                $nowTime = date("m.d.Y H:m");
+
+                if($nowTime > $dateOff){
+                    true;
+                }
 
                 if(empty($search)){
                     echo json_encode($result);
                     exit;
                 }
-                if(!isset($type) || trim($type) == ''){
+                if(!isset($type) || ($type = $this->checkType($type)) == -1){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
-                }
-
-                $type = trim($type);
-                $type = mb_strtolower($type);
-                if(preg_match  ('/электронный/', $type)){
-                    $type = 0;
-                }elseif(preg_match  ('/конкурс/', $type)){
-                    $type = 1;
-                }elseif(preg_match  ('/котировок/', $type)){
-                    $type = 2;
-                }elseif(preg_match  ('/предложений/', $type)){
-                    $type = 3;
-                }else{
-                    $type = -1;
                 }
 
                 $arguments = Arguments::query()
                     ->where('name LIKE :name:', array('name' => '%' . $search . '%'))
                     ->andWhere("type = {$type}")
                     ->execute();
-                foreach($arguments as $argument){
-                    $result['arguments'][] = array(
-                        'id'            => $argument->id,
-                        'name'          => $argument->name,
-                        'category_id'   => $argument->category_id,
-                        'comment'          => $argument->comment,
-                        'type'          => $type
-                    );
-                }
+
+                $this->getArguments($arguments, $type, $result);
                 echo json_encode($result);
             break;
         }
@@ -757,4 +747,36 @@ class ComplaintController extends ControllerBase
         return str_replace($rus, $lat, $str);
     }
 
+
+    private function checkType( $type ){
+        $type = trim( $type );
+        if($type == ''){
+            return $type;
+        }
+        $types = array(
+            'электронный'   => 0,
+            'конкурс'       => 1,
+            'котировок'     => 2,
+            'предложений'   => 3,
+        );
+        $temp = -1;
+        foreach($types as $key => $val){
+            if(preg_match('/'.$key.'/', $type)){
+                $temp = $val;
+            }
+        }
+        return $temp;
+    }
+
+    private function getArguments( $arguments, $type, &$result ){
+        foreach($arguments as $argument){
+            $result['arguments'][] = array(
+                'id'            => $argument->id,
+                'name'          => $argument->name,
+                'category_id'   => $argument->category_id,
+                'comment'          => $argument->comment,
+                'type'          => $type
+            );
+        }
+    }
 }
