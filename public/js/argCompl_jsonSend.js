@@ -119,24 +119,38 @@ var ajaxSendObj = {
     writeListLi: function(data) {
         if (ajaxSendObj.step == 3 || ajaxSendObj.step == 4) {
             $('.argCompl-review li').remove();
-            for (var i = 0; i < data.arguments.length; i++) {
-                $('.argCompl-review ul').append(
-                    '<li data-value="' + data.arguments[i].id +
-                    '" data-parent="' + data.arguments[i].category_id +
-                    '">' + data.arguments[i].name + '</li>'
-                );
+            if (data.arguments.length != 0) {
+                $('.last-argComplList').slideDown(400);
+                for (var i = 0; i < data.arguments.length; i++) {
+                    $('.argCompl-review ul').append(
+                        '<li data-value="' + data.arguments[i].id +
+                        '" data-parent="' + data.arguments[i].category_id +
+                        '">' + data.arguments[i].name + '</li>'
+                    );
+                }
+            } else {
+                $('.last-argComplList').slideUp(400);
             }
         }
     },
     writeSelectLi: function(data) {
         $('#argComplSelect .custom-options li').remove();
-        for (var i = 0; i < data.cat_arguments.length; i++) {
-            $('#argComplSelect .custom-options div div:first').append(
-                '<li class="argo"' +
-                ' data-value="' + data.cat_arguments[i].id +
-                '" data-parent="' + data.cat_arguments[i].parent_id +
-                '">' + data.cat_arguments[i].name + '</li>'
-            );
+        if (ajaxSendObj.step == 3 && data.arguments.length != 0) {
+            $('#argComplSelect').slideUp(400);
+        } else {
+            if (data.cat_arguments.length != 0) {
+                $('#argComplSelect').slideDown(400);
+            } else {
+                $('#argComplSelect').slideUp(400);
+            }
+            for (var i = 0; i < data.cat_arguments.length; i++) {
+                $('#argComplSelect .custom-options div div:first').append(
+                    '<li class="argo"' +
+                    ' data-value="' + data.cat_arguments[i].id +
+                    '" data-parent="' + data.cat_arguments[i].parent_id +
+                    '">' + data.cat_arguments[i].name + '</li>'
+                );
+            }
         }
     },
     withoutCatArg: function(data) {
@@ -155,8 +169,6 @@ var ajaxSendObj = {
             $('#argComplSelect').slideDown(400);
             $('.btn-div').fadeOut(400);
         } else if (ajaxSendObj.step == 3) {
-            $('.last-argComplList').slideDown(400);
-            $('#argComplSelect').slideDown(400);
             $('#argComplSelect .custom-options').on('click', 'li', function() {
                 $('.btn-div').slideUp(400);
             });
@@ -220,6 +232,7 @@ var ajaxSendObj = {
         $('.steps-line:first span').removeClass('stepBack back1');
     },
     stepsRewriteData: function(obj) {
+        obj.parent().find('div').removeClass('stepBack-hover');
         if ($(obj).hasClass('back1')) {
             ajaxSendObj.firstStepRewriteData();
         }
@@ -246,23 +259,21 @@ var ajaxSendObj = {
         function fillingItems(num) {
             ajaxSendObj.stepsCacheArr.splice(num, ajaxSendObj.stepsCacheArr.length - num);
             ajaxSendObj.step = num + 2;
-            if (num == 1) {
+            if (num == 1 || num == 2) {
                 $('.last-argComplList').slideUp(400);
-            } else if (num == 2) {
-                $('.last-argComplList').slideDown(400);
             }
-            $('#argComplSelect').slideDown(400);
             $('#argComplSelect .current-option span').text(lookingParentId(num - 1));
+            $('#argComplSelect').slideDown(400);
             $('#argComplSelect .custom-options li').remove();
         }
         function lookingParentId(num) {
             var behindParId = ajaxSendObj.stepsCacheArr[num].cat_arguments[0].parent_id,
                 behindName = '';
             if (num == 0) {
-                for (var i = 0; i < readyDataCatArg.length; i++) {
-                    var saveArr = readyDataCatArg[i].id;
+                for (var i = 0; i < readyDataCatArg.cat_arguments.length; i++) {
+                    var saveArr = readyDataCatArg.cat_arguments[i].id;
                     if (saveArr == behindParId) {
-                        behindName = readyDataCatArg[i].name;
+                        behindName = readyDataCatArg.cat_arguments[i].name;
                     }
                 }
             } else if (num == 1) {
