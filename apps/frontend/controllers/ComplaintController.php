@@ -551,12 +551,16 @@ class ComplaintController extends ControllerBase
 
                 $cat = new ArgumentsCategory();
                 $cat_arguments = $cat->getCategoryNotEmpty( $type );
-                foreach($cat_arguments as $val){
-                    $result['cat_arguments'][] = array(
-                        'id' => $val->lvl1_id,
-                        'name' => $val->lvl1,
-                        'parent_id' => 0
-                    );
+                $temp_name = array();
+                foreach($cat_arguments as $cat){
+                    if(!in_array($cat->lvl1, $temp_name)){
+                        $temp_name[] = $cat->lvl1;
+                        $result['cat_arguments'][] = array(
+                            'id' => $cat->lvl1_id,
+                            'name' => $cat->lvl1,
+                            'parent_id' => 0
+                        );
+                    }
                 }
                 echo json_encode($result);
             break;
@@ -591,13 +595,17 @@ class ComplaintController extends ControllerBase
                 $cat = new ArgumentsCategory();
                 $cat_arguments = $cat->getCategoryNotEmpty( $type );
 
+                $temp_name = array();
                 foreach($cat_arguments as $cat){
                     if($cat->lvl1_id == $parent_id) {
-                        $result["cat_arguments"][] = array(
-                            "id" => $cat->lvl2_id,
-                            "name" => $cat->lvl2,
-                            "parent_id" => $cat->lvl1_id,
-                        );
+                        if(!in_array($cat->lvl2, $temp_name)) {
+                            $temp_name[] = $cat->lvl2;
+                            $result["cat_arguments"][] = array(
+                                "id" => $cat->lvl2_id,
+                                "name" => $cat->lvl2,
+                                "parent_id" => $cat->lvl1_id,
+                            );
+                        }
                     }
                 }
                 echo json_encode($result);
