@@ -35,16 +35,18 @@ $(document).ready(function() {
     // 0372100047315000207
 });
 
-var typeComplicant;
+var typeComplicant, datCome;
 function methodProcurement() {
     typeComplicant = $('.type_complicant').val();
-    var data = '&step=' + startSend.step + '&type=' + typeComplicant;
+    datCome = $('.dateoff').val();
+    console.log(datCome);
+    var data = '&step=' + startSend.step + '&type=' + typeComplicant + '&dateoff=' + datCome;
     startSend.sendRequest(data);
 }
 function searchStep(e) {
     ajaxSendObj.step = 6;
     var searchValue = $('.word-argCompl-input input').val(),
-        data = '?search=' + searchValue + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant;
+        data = '?search=' + searchValue + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant + '&dateoff=' + datCome;
     ajaxSendObj.sendRequest(data);
     e.preventDefault();
 }
@@ -53,7 +55,7 @@ function nextStep(e) {
         ajaxSendObj.step = 2;
     }
     var id = $('#argComplSelect .current-option').attr('data-value'),
-        data = '?id=' + id + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant;
+        data = '?id=' + id + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant + '&dateoff=' + datCome;
     ajaxSendObj.sendRequest(data);
     $('#argComplBtn').slideUp(400);
     e.preventDefault();
@@ -78,6 +80,7 @@ var startSend = {
             url: "http://fas/complaint/ajaxStepsAddComplaint" + data,
             dataType: 'json',
             success: function(value) {
+                console.log(value);
                 readyDataCatArg = value;
                 ajaxSendObj.writeSelectLi(value);
             },
