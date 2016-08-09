@@ -531,7 +531,6 @@ class ComplaintController extends ControllerBase
             case 1:
                 $type       = $this->request->get('type');
                 $dateOff    = $this->request->get('dateoff');
-                $checkRequired = $this->request->get('checkrequired');
 
                 if(!isset($dateOff) || trim($dateOff) != ''){
                     echo json_encode(array('error' => 'bad date'));

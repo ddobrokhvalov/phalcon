@@ -423,7 +423,7 @@ var auction = {
         setData: function () {
             $('#type').html(this.data.type);
             $('.addArguments .type_complicant').val(this.data.type);
-            $('.addArguments .dateoff').val(this.data.okonchanie_podach);
+            $('.addArguments .dateoff').val(this.data.okonchanie_podachi);
             $('#purchases_made').html(this.data.purchases_made);
             $('#purchases_name').html(this.data.purchases_name);
             $('#contact').html(this.data.contact);
