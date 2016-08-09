@@ -291,7 +291,9 @@ var ajaxSendObj = {
     reclassStepsLine: function(num) {
         $('.steps-line').removeClass('arg-dunStep arg-nextStep');
         $('.steps-line:nth-child(' + num + ')').addClass('arg-nextStep');
-        if (num == 2) {
+        if (num == 1) {
+            $('.steps-line span').attr('class', '');
+        } else if (num == 2) {
             $('.steps-line:nth-child(1)').addClass('arg-dunStep');
             $('.steps-line:nth-child(2) span, .steps-line:nth-child(3) span').attr('class', '');
         } else if (num == 3) {
