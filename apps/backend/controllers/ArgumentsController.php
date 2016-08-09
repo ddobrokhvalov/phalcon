@@ -286,6 +286,7 @@ class ArgumentsController  extends ControllerBase
             $result["cat_arguments"][] = array(
                 "id"        => $cat->id,
                 "name"      => $cat->name,
+                "required"   => $cat->required,
                 "parent_id" => $cat->parent_id,
             );
         }
@@ -309,6 +310,8 @@ class ArgumentsController  extends ControllerBase
             $parent_id = $this->request->get('parent_id');
             $parent_id = (isset($parent_id)) ? $parent_id : 0;
             $category_name = $this->request->get("name");
+            $required = $this->request->get("required");
+
             if(strlen($category_name) > 50){
                 echo json_encode(array( 'status' => 'bad length name' ));
                 exit;
@@ -317,12 +320,13 @@ class ArgumentsController  extends ControllerBase
                 $category = new ArgumentsCategory();
                 $category->name = $category_name;
                 $category->parent_id = $parent_id;
+                $category->required = (isset($required) && $required == 1) ? 1 : 0;
                 $category->create();
-
                 echo json_encode(array(
                     'id'   => $category->id,
                     'name' => $category->name,
                     'parent_id' => $category->parent_id,
+                    'required'  => $category->required
                 ));
             }
         }
@@ -358,7 +362,7 @@ class ArgumentsController  extends ControllerBase
             if ($data) {
                 $argument = new Arguments();
                 foreach ($data as $field => $value) {
-                    if ($field != 'comment' && $field != 'type'){
+                    if ($field != 'comment' && $field != 'type' && $field != 'required'){
                         if ($value) {
                             $argument->$field = $value;
                         } else {
@@ -371,13 +375,15 @@ class ArgumentsController  extends ControllerBase
                     $argument->argument_status = 1;
                     $argument->date = date('Y-m-d H:i:s');
                     $argument->comment = $comment;
-                    $argument->type = $data['type'];
+                    $argument->requred = (isset($data['required']) && $data['required'] == true) ? 1 : 0;
+                    $argument->type =   (isset($data['type']) && is_numeric($data['type'])) ? $data['type'] : 0;
                     $argument->save();
                     echo json_encode(array(
                         'id'            => $argument->id,
                         'category_id'   => $argument->category_id,
                         'name'          => $argument->name,
-                        'text'          => $argument->text
+                        'text'          => $argument->text,
+                        'type'          => $argument->type
                     ));
                     exit;
                 } else {

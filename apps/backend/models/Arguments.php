@@ -9,6 +9,7 @@ class Arguments extends Model
     public $argument_status;
     public $type;
     public $comment;
+    public $required;
 
     public function initialize()
     {

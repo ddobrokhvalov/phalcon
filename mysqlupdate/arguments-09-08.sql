@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Авг 09 2016 г., 14:35
+-- Время создания: Авг 09 2016 г., 16:18
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.6.19
 
@@ -34,8 +34,7 @@ CREATE TABLE IF NOT EXISTS `arguments` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `argument_status` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `type` int(11) NOT NULL,
-  `comment` text NOT NULL,
-  `required` tinyint(11) NOT NULL DEFAULT '0'
+  `comment` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
