@@ -532,7 +532,7 @@ class ComplaintController extends ControllerBase
                 $type       = $this->request->get('type');
                 $dateOff    = $this->request->get('dateoff');
 
-                if(!isset($dateOff) || trim($dateOff) != ''){
+                if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
                     exit;
                 }
@@ -566,7 +566,7 @@ class ComplaintController extends ControllerBase
                 $dateOff    = $this->request->get('dateoff');
                 $checkRequired = $this->request->get('checkrequired');
 
-                if(!isset($dateOff) || trim($dateOff) != ''){
+                if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
                     exit;
                 }
@@ -608,7 +608,7 @@ class ComplaintController extends ControllerBase
                 $dateOff    = $this->request->get('dateoff');
                 $checkRequired  = $this->request->get('checkrequired');
 
-                if(!isset($dateOff) || trim($dateOff) != ''){
+                if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
                     exit;
                 }
@@ -670,7 +670,7 @@ class ComplaintController extends ControllerBase
                 $dateOff    = $this->request->get('dateoff');
                 $checkRequired = $this->request->get('checkrequired');
 
-                if(!isset($dateOff) || trim($dateOff) != ''){
+                if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
                     exit;
                 }
@@ -707,7 +707,7 @@ class ComplaintController extends ControllerBase
                 $dateOff   = $this->request->get('dateOff');
                 $checkRequired = $this->request->get('checkrequired');
 
-                if(!isset($dateOff) || trim($dateOff) != ''){
+                if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
                     exit;
                 }
@@ -752,6 +752,7 @@ class ComplaintController extends ControllerBase
         if($type == ''){
             return $type;
         }
+        $type = mb_strtolower($type);
         $types = array(
             'электронный'   => 0,
             'конкурс'       => 1,
