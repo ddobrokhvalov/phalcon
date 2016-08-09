@@ -309,6 +309,10 @@ class ArgumentsController  extends ControllerBase
             $parent_id = $this->request->get('parent_id');
             $parent_id = (isset($parent_id)) ? $parent_id : 0;
             $category_name = $this->request->get("name");
+            if(strlen($category_name) > 50){
+                echo json_encode(array( 'status' => 'bad length name' ));
+                exit;
+            }
             if ($category_name) {
                 $category = new ArgumentsCategory();
                 $category->name = $category_name;
