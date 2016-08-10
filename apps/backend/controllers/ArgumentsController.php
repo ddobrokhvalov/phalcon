@@ -11,39 +11,41 @@ use Multiple\Backend\Models\Arguments;
 class ArgumentsController  extends ControllerBase
 {
 
-    public function indexAction(){
+    public function indexAction()
+    {
         /*$perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'index')) {
            $this->view->pick("access/denied");
            $this->setMenu();
         } else {*/
-            $Arguments = $this->modelsManager->createBuilder()
-                ->columns(
-                    'Multiple\Backend\Models\Arguments.id,
+        $Arguments = $this->modelsManager->createBuilder()
+            ->columns(
+                'Multiple\Backend\Models\Arguments.id,
                     Multiple\Backend\Models\Arguments.argument_status,
                     Multiple\Backend\Models\Arguments.date,
                     Multiple\Backend\Models\Arguments.name,
                     Multiple\Backend\Models\ArgumentsCategory.name as catname'
-                )
-                ->from('Multiple\Backend\Models\Arguments')
-                ->join('Multiple\Backend\Models\ArgumentsCategory', 'Multiple\Backend\Models\ArgumentsCategory.id = Multiple\Backend\Models\Arguments.category_id')
-                ->getQuery()
-                ->execute();
-            $this->view->Arguments = $Arguments;
-            $this->view->ArgumentsCategory = ArgumentsCategory::find(
-                array(
-                    "parent_id = 0",
-                )
-            );
-            $this->setMenu();
+            )
+            ->from('Multiple\Backend\Models\Arguments')
+            ->join('Multiple\Backend\Models\ArgumentsCategory', 'Multiple\Backend\Models\ArgumentsCategory.id = Multiple\Backend\Models\Arguments.category_id')
+            ->getQuery()
+            ->execute();
+        $this->view->Arguments = $Arguments;
+        $this->view->ArgumentsCategory = ArgumentsCategory::find(
+            array(
+                "parent_id = 0",
+            )
+        );
+        $this->setMenu();
         //}
     }
 
-    public function addAction(){
+    public function addAction()
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
-           $this->view->pick("access/denied");
-           $this->setMenu();
+            $this->view->pick("access/denied");
+            $this->setMenu();
         } else {
             $data = $this->request->getPost("arguments");
             $errors = FALSE;
@@ -65,13 +67,14 @@ class ArgumentsController  extends ControllerBase
                     $this->flashSession->success('Довод успешно сохранен');
                 }
             }
-            
+
             $this->setMenu();
             $this->view->ArgumentsCategory = ArgumentsCategory::find();
         }
     }
 
-    public function getFieldName($database_name){
+    public function getFieldName($database_name)
+    {
         $fields = array(
             'name' => 'Заголовок довода',
             'text' => 'Текст довода',
@@ -80,14 +83,15 @@ class ArgumentsController  extends ControllerBase
         return $fields[$database_name];
     }
 
-    public function deleteAction(){
+    public function deleteAction()
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
-           $data = "access_denied";
+            $data = "access_denied";
         } else {
             $argument_ids = $this->request->getPost("ids");
-            
-            if(count($argument_ids)){
+
+            if (count($argument_ids)) {
                 $arguments = Arguments::find(
                     array(
                         'id IN ({ids:array})',
@@ -104,13 +108,14 @@ class ArgumentsController  extends ControllerBase
         echo json_encode($data);
     }
 
-    public function deleteCategoryAction(){
+    public function deleteCategoryAction()
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
-           $data = "access_denied";
+            $data = "access_denied";
         } else {
             $argument_ids = $this->request->getPost("ids");
-            if(count($argument_ids)){
+            if (count($argument_ids)) {
                 $arguments = Arguments::find(
                     array(
                         'category_id IN ({ids:array})',
@@ -123,26 +128,27 @@ class ArgumentsController  extends ControllerBase
                     $data = "false";
                 } else {
                     $categories = ArgumentsCategory::find(
-                    array(
-                        'id IN ({ids:array})',
-                        'bind' => array(
-                            'ids' => $argument_ids
+                        array(
+                            'id IN ({ids:array})',
+                            'bind' => array(
+                                'ids' => $argument_ids
+                            )
                         )
-                    )
-                )->delete();
-                $this->flashSession->success('Категория удалена');
-                $data = "ok";
+                    )->delete();
+                    $this->flashSession->success('Категория удалена');
+                    $data = "ok";
                 }
             }
         }
         $this->view->disable();
         echo json_encode($data);
     }
-    
-    public function addCategoryAction(){
+
+    public function addCategoryAction()
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
-           $data = "access_denied";
+            $data = "access_denied";
         } else {
             $parent_id = $this->request->getPost('parent_id');
             $parent_id = (isset($parent_id)) ? $parent_id : 0;
@@ -160,15 +166,16 @@ class ArgumentsController  extends ControllerBase
         echo json_encode($data);
     }
 
-    public function hideShowAction(){
+    public function hideShowAction()
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
-           $data = "access_denied";
+            $data = "access_denied";
         } else {
             $argument_ids = $this->request->getPost("ids");
             $hide = $this->request->getPost("hide");
-            
-            if(count($argument_ids)){
+
+            if (count($argument_ids)) {
                 $arguments = Arguments::find(
                     array(
                         'id IN ({ids:array})',
@@ -212,7 +219,8 @@ class ArgumentsController  extends ControllerBase
 //    }
 
 
-    public function ajaxRemoveAction(){
+    public function ajaxRemoveAction()
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
             $this->view->pick("access/denied");
@@ -242,7 +250,8 @@ class ArgumentsController  extends ControllerBase
         exit;
     }
 
-    private function deleteTrees($id){
+    private function deleteTrees($id)
+    {
         Arguments::find(
             array(
                 "category_id = {$id}",
@@ -253,7 +262,7 @@ class ArgumentsController  extends ControllerBase
                 "parent_id = {$id}"
             )
         );
-        if(count($categories)) {
+        if (count($categories)) {
             foreach ($categories as $key) {
                 $this->deleteTrees($key->id);
             }
@@ -265,16 +274,17 @@ class ArgumentsController  extends ControllerBase
         )->delete();
     }
 
-    public function ajaxGetCatArgumentsAction(){
+    public function ajaxGetCatArgumentsAction()
+    {
         $id = $this->request->get('id');
-        if(!is_numeric($id)){
+        if (!is_numeric($id)) {
             echo json_encode(array('error' => 'bad data'));
             exit;
         }
 
         $result = array(
             "cat_arguments" => array(),
-            "arguments"     => array()
+            "arguments" => array()
         );
 
         $cat_arguments = ArgumentsCategory::find("parent_id = {$id}");
@@ -282,19 +292,19 @@ class ArgumentsController  extends ControllerBase
             ->where("category_id = {$id}")
             ->execute();
 
-        foreach($cat_arguments as $cat){
+        foreach ($cat_arguments as $cat) {
             $result["cat_arguments"][] = array(
-                "id"        => $cat->id,
-                "name"      => $cat->name,
-                "required"   => $cat->required,
+                "id" => $cat->id,
+                "name" => $cat->name,
+                "required" => $cat->required,
                 "parent_id" => $cat->parent_id,
             );
         }
-        foreach($arguments as $argument){
+        foreach ($arguments as $argument) {
             $result['arguments'][] = array(
-                'id'        => $argument->id,
-                'name'      => $argument->name,
-                'text'      => $argument->text,
+                'id' => $argument->id,
+                'name' => $argument->name,
+                'text' => $argument->text,
                 'category_id' => $argument->category_id,
             );
         }
@@ -302,7 +312,8 @@ class ArgumentsController  extends ControllerBase
         echo json_encode($result);
     }
 
-    public function ajaxAddCategoryAction(){
+    public function ajaxAddCategoryAction()
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
             echo json_encode(array('status' => 'permission denied'));
@@ -312,48 +323,58 @@ class ArgumentsController  extends ControllerBase
             $category_name = $this->request->get("name");
             $required = $this->request->get("required");
 
-            if(strlen($category_name) > 50){
-                echo json_encode(array( 'status' => 'bad length name' ));
+            if (strlen($category_name) > 50) {
+                echo json_encode(array('status' => 'bad length name'));
                 exit;
             }
             if ($category_name) {
+                $required_parent = 0;
+                if ($parent_id != 0) {
+                    $required_parent = ArgumentsCategory::findFirst($parent_id);
+                    if ($required_parent != false) {
+                        $required_parent = $required_parent->required;
+                    }
+                }
+
+
                 $category = new ArgumentsCategory();
                 $category->name = $category_name;
                 $category->parent_id = $parent_id;
-                $category->required = (isset($required) && $required == 1) ? 1 : 0;
+                $category->required = (isset($required) && $required == 1) ? 1 : $required_parent;
                 $category->create();
                 echo json_encode(array(
-                    'id'   => $category->id,
+                    'id' => $category->id,
                     'name' => $category->name,
                     'parent_id' => $category->parent_id,
-                    'required'  => $category->required
+                    'required' => $category->required
                 ));
             }
         }
     }
 
 
-    public function ajaxAddArgumentsAction(){
+    public function ajaxAddArgumentsAction()
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
             $this->view->pick("access/denied");
             $this->setMenu();
         } else {
             $data = $this->request->get("arguments");
-            if(!isset($data)){
-                echo json_encode(array( 'status' => 'non data' ));
+            if (!isset($data)) {
+                echo json_encode(array('status' => 'non data'));
                 exit;
-            } else if(!isset($data['category_id']) || !is_numeric($data['category_id'])){
-                echo json_encode(array( 'status' => 'bad id' ));
+            } else if (!isset($data['category_id']) || !is_numeric($data['category_id'])) {
+                echo json_encode(array('status' => 'bad id'));
                 exit;
-            } else if(!isset($data['type']) || !is_numeric($data['type'])){
-                echo json_encode(array( 'status' => 'bad type' ));
+            } else if (!isset($data['type']) || !is_numeric($data['type'])) {
+                echo json_encode(array('status' => 'bad type'));
                 exit;
             }
 
             $comment = isset($data['comment']) ? trim($data['comment']) : '';
-            if(strlen($comment) > 1000){
-                echo json_encode(array( 'status' => 'bad length comment' ));
+            if (strlen($comment) > 1000) {
+                echo json_encode(array('status' => 'bad length comment'));
                 exit;
             }
 
@@ -362,7 +383,7 @@ class ArgumentsController  extends ControllerBase
             if ($data) {
                 $argument = new Arguments();
                 foreach ($data as $field => $value) {
-                    if ($field != 'comment' && $field != 'type' && $field != 'required'){
+                    if ($field != 'comment' && $field != 'type' && $field != 'required') {
                         if ($value) {
                             $argument->$field = $value;
                         } else {
@@ -376,18 +397,18 @@ class ArgumentsController  extends ControllerBase
                     $argument->date = date('Y-m-d H:i:s');
                     $argument->comment = $comment;
                     $argument->requred = (isset($data['required']) && $data['required'] == true) ? 1 : 0;
-                    $argument->type =   (isset($data['type']) && is_numeric($data['type'])) ? $data['type'] : 0;
+                    $argument->type = (isset($data['type']) && is_numeric($data['type'])) ? $data['type'] : 0;
                     $argument->save();
                     echo json_encode(array(
-                        'id'            => $argument->id,
-                        'category_id'   => $argument->category_id,
-                        'name'          => $argument->name,
-                        'text'          => $argument->text,
-                        'type'          => $argument->type
+                        'id' => $argument->id,
+                        'category_id' => $argument->category_id,
+                        'name' => $argument->name,
+                        'text' => $argument->text,
+                        'type' => $argument->type
                     ));
                     exit;
                 } else {
-                    echo json_encode(array( 'status' => $err_arr ));
+                    echo json_encode(array('status' => $err_arr));
                     exit;
                 }
             }
@@ -395,29 +416,30 @@ class ArgumentsController  extends ControllerBase
     }
 
 
-    public function ajaxEditAction(){
+    public function ajaxEditAction()
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
             $this->view->pick("access/denied");
             $this->setMenu();
         } else {
             $edit = $this->request->get("edit");
-            if(!isset($edit['id']) || !is_numeric($edit['id'])){
+            if (!isset($edit['id']) || !is_numeric($edit['id'])) {
                 echo json_encode(array('err' => 'bad id'));
                 exit;
             }
-            if(!isset($edit['name']) || trim($edit['name']) == ''){
+            if (!isset($edit['name']) || trim($edit['name']) == '') {
                 echo json_encode(array('err' => 'bad name'));
                 exit;
             }
-            if(isset($edit['arg']) && $edit['arg'] == true){
-                if(!isset($edit['text']) && trim($edit['text']) == ''){
+            if (isset($edit['arg']) && $edit['arg'] == true) {
+                if (!isset($edit['text']) && trim($edit['text']) == '') {
                     echo json_encode(array('err' => 'bad text'));
                     exit;
                 }
                 $id = $edit['id'];
                 $argument = Arguments::findFirst($id);
-                if(!$argument){
+                if (!$argument) {
                     echo json_encode(array('err' => 'bad id'));
                     exit;
                 }
@@ -425,15 +447,15 @@ class ArgumentsController  extends ControllerBase
                 $argument->text = trim($edit['text']);
                 $argument->save();
                 echo json_encode(array(
-                    'id'            => $argument->id,
-                    'category_id'   => $argument->category_id,
-                    'name'          => $argument->name,
-                    'text'          => $argument->text
+                    'id' => $argument->id,
+                    'category_id' => $argument->category_id,
+                    'name' => $argument->name,
+                    'text' => $argument->text
                 ));
             } else {
                 $id = $edit['id'];
                 $category = ArgumentsCategory::findFirst($id);
-                if(!$category){
+                if (!$category) {
                     echo json_encode(array('err' => 'bad id'));
                     exit;
                 }
@@ -441,12 +463,47 @@ class ArgumentsController  extends ControllerBase
                 $category->required = (isset($edit['required']) && $edit['required'] == 1) ? 1 : 0;
                 $category->save();
                 echo json_encode(array(
-                    'id'        => $category->id,
-                    'name'      => $category->name,
-                    'required'  => $category->required,
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'required' => $category->required,
                     'parent_id' => $category->parent_id
                 ));
             }
+        }
+    }
+
+    private function checkRequired($id, $required)
+    {
+        $args = Arguments::find(
+            array(
+                "category_id = {$id}",
+            )
+        );
+        foreach ($args as $key) {
+            $key->required = $required;
+            $key->save();
+        }
+
+        $categories = ArgumentsCategory::find(
+            array(
+                "parent_id = {$id}"
+            )
+        );
+
+        if (count($categories)) {
+            foreach ($categories as $key) {
+                $this->checkRequired($key->id, $required);
+            }
+        }
+        $cats = ArgumentsCategory::find(
+            array(
+                "id = {$id}"
+            )
+        );
+
+        foreach ($cats as $key) {
+            $key->required = $required;
+            $key->save();
         }
     }
 }
