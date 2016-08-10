@@ -166,9 +166,9 @@ var createNewCategory = {
                     case 3:
                         createNewCategory.createSubCategory_3();
                         break;
-                    case 4:
-                        createNewCategory.createSubCategory_4();
-                        break;
+                    // case 4:
+                    //     createNewCategory.createSubCategory_4();
+                    //     break;
                     default:
                         createNewCategory.createCategory();
                 }
@@ -195,9 +195,9 @@ var createNewCategory = {
     createSubCategory_3: function() {
         createNewCategory.boxCreateSub(writeGetData.subCategory_3(), catNum);
     },
-    createSubCategory_4: function() {
-        createNewCategory.boxCreateSub(writeGetData.subCategory_4(), catNum);
-    },
+    // createSubCategory_4: function() {
+    //     createNewCategory.boxCreateSub(writeGetData.subCategory_4(), catNum);
+    // },
     boxCreateSub: function(valData, num) {
         num -= 1;
         $('.subWrap_' + num + ' .category').each(function() {
@@ -222,7 +222,7 @@ var addArgument = {
                 popupCancel();
                 $('.subWrap_' + catNum + ' .category').each(function() {
                     if ($(this).attr('data-id') == parentId) {
-                        $(this).parent().append(writeGetData.subCategory_4());
+                        $(this).parent().append(writeGetData.subCategory_3());
                     }
                 });
             },
@@ -249,16 +249,16 @@ var receivingData = {
                         break;
                     case 2:
                         cycleDataCat(num, writeGetData.subCategory_2);
+                        if (value.arguments.length != 0) {
+                            cycleDataArg(num, writeGetData.subCategory_3);
+                        }
                         break;
                     case 3:
                         cycleDataCat(num, writeGetData.subCategory_3);
-                        if (value.arguments.length != 0) {
-                            cycleDataArg(num, writeGetData.subCategory_4);
-                        }
                         break;
-                    case 4:
-                        cycleDataArg(num, writeGetData.subCategory_4);
-                        break;
+                    // case 4:
+                    //     cycleDataArg(num, writeGetData.subCategory_4);
+                    //     break;
                 }
                 if (obj.next().length == 0) {
                     alert('неты данных!');
@@ -368,7 +368,8 @@ var writeGetData = {
             shell.box2 +
             shell.arrow +
             shell.title2 +
-            shell.catAdd +
+            shell.catAdd2 +
+            shell.argAdd +
             shell.catEdit +
             shell.catDel +
             '</ul></li>'
@@ -379,24 +380,12 @@ var writeGetData = {
             shell.box2 +
             shell.arrow +
             shell.title2 +
-            shell.catAdd2 +
-            shell.argAdd +
-            shell.catEdit +
-            shell.catDel +
-            '</ul></li>'
-    },
-    subCategory_3: function() {
-        return '<li>' +
-            shell.holder +
-            shell.box2 +
-            shell.arrow +
-            shell.title2 +
             shell.argAddCross +
             shell.catEdit +
             shell.catDel +
             '</ul></li>'
     },
-    subCategory_4: function() {
+    subCategory_3: function() {
         return '<li>' +
             shell.holder +
             shell.box3 +
@@ -405,5 +394,15 @@ var writeGetData = {
             shell.catEdit +
             shell.catDel +
             '</ul></li>'
-    }
+    } // ,
+    // subCategory_4: function() {
+    //     return '<li>' +
+    //         shell.holder +
+    //         shell.box3 +
+    //         shell.title2 +
+    //         shell.argText +
+    //         shell.catEdit +
+    //         shell.catDel +
+    //         '</ul></li>'
+    // }
 };
