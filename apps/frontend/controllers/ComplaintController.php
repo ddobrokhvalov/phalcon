@@ -783,7 +783,6 @@ class ComplaintController extends ControllerBase
                 'name'          => $argument->name,
                 'category_id'   => $argument->category_id,
                 'comment'       => $argument->comment,
-                'required'      => $argument->required,
                 'type'          => $type
             );
         }
