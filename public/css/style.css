@@ -4478,6 +4478,43 @@ body#backend-login {
   background-color: #10b8f7;
 }
 
+/* line 353, ../sass/_arguments_complaints_popup.scss */
+.required {
+  position: relative;
+  padding-left: 30px !important;
+}
+/* line 356, ../sass/_arguments_complaints_popup.scss */
+.required:before {
+  position: absolute;
+  content: '*';
+  top: 0;
+  left: 10px;
+  font-size: 20px;
+  line-height: inherit;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #f26d7d;
+}
+
+/* line 368, ../sass/_arguments_complaints_popup.scss */
+.withoutArgOnBase {
+  position: relative;
+}
+/* line 370, ../sass/_arguments_complaints_popup.scss */
+.withoutArgOnBase:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+/* line 378, ../sass/_arguments_complaints_popup.scss */
+.withoutArgOnBase li {
+  font-weight: 600;
+  color: #f26d7d;
+}
+
 /* line 1, ../sass/_complaint_add.scss */
 .opacity-cap-compl {
   position: absolute;

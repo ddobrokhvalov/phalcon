@@ -697,7 +697,7 @@ class ComplaintController extends ControllerBase
                 $search     = $this->request->get('search');
                 $search     = (isset($search)) ? trim($search) : '';
                 $type       = $this->request->get('type');
-                $dateOff   = $this->request->get('dateOff');
+                $dateOff   = $this->request->get('dateoff');
 
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
