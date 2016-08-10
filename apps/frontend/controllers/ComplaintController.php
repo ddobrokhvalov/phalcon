@@ -538,17 +538,12 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $dateOff = date($dateOff);
-                $nowTime = date("m.d.Y H:m");
-
-                if($nowTime > $dateOff){
-                    $result['date'] = 1;
-                }
-
                 if(!isset($type) || ($type = $this->checkType($type)) == -1){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
+
+                $this->checkDate($dateOff, $result);
 
                 $cat = new ArgumentsCategory();
                 $cat_arguments = $cat->getCategoryNotEmpty( $type );
@@ -559,7 +554,7 @@ class ComplaintController extends ControllerBase
                         $result['cat_arguments'][] = array(
                             'id' => $cat->lvl1_id,
                             'name' => $cat->lvl1,
-                            'required' => $cat->required,
+                            'required' => $cat->lvl1_required,
                             'parent_id' => 0
                         );
                     }
@@ -571,18 +566,17 @@ class ComplaintController extends ControllerBase
                 $type       = $this->request->get('type');
                 $dateOff    = $this->request->get('dateoff');
 
+//                $parent_id  = ArgumentsCategory::findFirst($id);
+//                if($parent_id == false){
+//                    echo json_encode(array('error' => 'no cat'));
+//                    exit;
+//                }
+//                $parent_id  = $parent_id->parent_id;
+
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
                     exit;
                 }
-
-                $dateOff = date($dateOff);
-                $nowTime = date("m.d.Y H:m");
-
-                if($nowTime > $dateOff){
-                    $result['date'] = 1;
-                }
-
 
                 if(!is_numeric($parent_id)){
                     echo json_encode(array('error' => 'bad data'));
@@ -592,6 +586,8 @@ class ComplaintController extends ControllerBase
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
+
+                $this->checkDate($dateOff, $result);
 
                 $cat = new ArgumentsCategory();
                 $cat_arguments = $cat->getCategoryNotEmpty( $type );
@@ -604,7 +600,7 @@ class ComplaintController extends ControllerBase
                             $result["cat_arguments"][] = array(
                                 "id" => $cat->lvl2_id,
                                 "name" => $cat->lvl2,
-                                'required' => $cat->required,
+                                'required' => $cat->lvl2_required,
                                 "parent_id" => $cat->lvl1_id,
                             );
                         }
@@ -622,12 +618,7 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $dateOff = date($dateOff);
-                $nowTime = date("m.d.Y H:m");
-
-                if($nowTime > $dateOff){
-                    $result['date'] = 1;
-                }
+                $this->checkDate($dateOff, $result);
 
                 $parent_id  = ArgumentsCategory::findFirst($id);
                 if($parent_id == false){
@@ -645,8 +636,6 @@ class ComplaintController extends ControllerBase
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
-
-
 
                 $cat_arguments = new Builder();
                 $cat_arguments->getDistinct();
@@ -683,23 +672,18 @@ class ComplaintController extends ControllerBase
                     echo json_encode(array('error' => 'bad date'));
                     exit;
                 }
-
-                $dateOff = date($dateOff);
-                $nowTime = date("m.d.Y H:m");
-
-                if($nowTime > $dateOff){
-                    $result['date'] = 1;
-                }
-
                 if(!is_numeric($id)){
                     echo json_encode(array('error' => 'bad data'));
                     exit;
                 }
-
                 if(!isset($type) || ($type = $this->checkType($type)) == -1){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
+
+                $this->checkDate($dateOff, $result);
+
+
 
                 $arguments = Arguments::query()
                     ->where("category_id = {$id}")
@@ -719,14 +703,6 @@ class ComplaintController extends ControllerBase
                     echo json_encode(array('error' => 'bad date'));
                     exit;
                 }
-
-                $dateOff = date($dateOff);
-                $nowTime = date("m.d.Y H:m");
-
-                if($nowTime > $dateOff){
-                    $result['date'] = 1;
-                }
-
                 if(empty($search)){
                     echo json_encode($result);
                     exit;
@@ -736,6 +712,7 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
+                $this->checkDate($dateOff, $result);
                 $arguments = Arguments::query()
                     ->where('name LIKE :name:', array('name' => '%' . $search . '%'))
                     ->andWhere("type = {$type}")
@@ -785,6 +762,16 @@ class ComplaintController extends ControllerBase
                 'comment'       => $argument->comment,
                 'type'          => $type
             );
+        }
+    }
+
+    private function checkDate($dateOff, &$result){
+        $dateOff = strtotime($dateOff);
+        $nowTime = date("m.d.Y H:m");
+        $nowTime = strtotime($nowTime);
+
+        if($nowTime > $dateOff){
+            $result['date'] = 1;
         }
     }
 }
