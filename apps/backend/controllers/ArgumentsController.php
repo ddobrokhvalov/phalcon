@@ -438,10 +438,12 @@ class ArgumentsController  extends ControllerBase
                     exit;
                 }
                 $category->name = trim($edit['name']);
+                $category->required = (isset($edit['required']) && $edit['required'] == 1) ? 1 : 0;
                 $category->save();
                 echo json_encode(array(
                     'id'        => $category->id,
                     'name'      => $category->name,
+                    'required'  => $category->required,
                     'parent_id' => $category->parent_id
                 ));
             }
