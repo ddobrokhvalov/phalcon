@@ -459,6 +459,7 @@ class ArgumentsController  extends ControllerBase
                     echo json_encode(array('err' => 'bad id'));
                     exit;
                 }
+                $this->checkRequired($id, $edit['required']);
                 $category->name = trim($edit['name']);
                 $category->required = (isset($edit['required']) && $edit['required'] == 1) ? 1 : 0;
                 $category->save();
