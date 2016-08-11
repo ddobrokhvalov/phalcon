@@ -340,7 +340,11 @@
             var arr_sub = {};
             {% for argument in arguments  %}
                 {% for template in argument['templates']  %}
-                   templates[{{template.id}}] = '{{template.text}}';
+                    {% if arr_users_arg[template.id] is defined %}
+                        templates[{{template.id}}] = '{{ arr_users_arg[template.id] }}';
+                    {% else %}
+                        templates[{{template.id}}] = '{{ arr_users_arg[template.text] }}';
+                    {% endif %}
                 {% endfor %}
             {% endfor %}
             {% if arr_sub_cat is defined  %}
