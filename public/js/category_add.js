@@ -28,26 +28,30 @@ $(document).ready(function() {
     });
 });
 
-var catNum = '', parentId, shell, catArgObj, requiredCat, argType, argComm;
+var catNum = '', parentId, shell, catArgObj, requiredCat;
 function categorySend() {
     var catName = $('.inputBox input').val(),
         data;
     if ($('.saveCat').hasClass('subChild')) {
         catNum++;
-        data = 'parent_id=' + parentId +
+    data = 'parent_id=' + parentId +
             '&name=' + catName +
             '&required=' + requiredCat;
-        createNewCategory.newCategorySend(data);
     } else if ($('.saveCat').hasClass('createArgumentStart')) {
         $('.saveCat').text('Сохранить');
-        $('.saveCat').removeClass('createArgumentStart').addClass('createArgument');
-        $('.argumentComment textarea').val('');
+        $('.saveCat').removeClass('createArgumentStart');
+        if ($('.saveCat').hasClass('editAlso')) {
+            $('.saveCat').addClass('editArgCat');
+        } else {
+            $('.saveCat').addClass('createArgument');
+        }
+        $('.argumentComments textarea').val('');
         $('.add-ArgumentsCategory').slideUp(400);
         $('.add-ArgumentsType').slideDown(400);
     } else if ($('.saveCat').hasClass('createArgument')) {
         var argumentName = $('.inputBox input').val(),
             argumentText = $('.argumentText textarea').val(),
-            argumentComm = $('.argumentComment textarea').val(),
+            argumentComm = $('.argumentComments textarea').val(),
             argumentTypeVal = $('.add-ArgumentsType .current-option').attr('data-value');
         data = 'arguments[category_id]=' + parentId +
             '&arguments[name]=' + argumentName +
@@ -62,8 +66,8 @@ function categorySend() {
             data = 'edit[id]=' + catArgObj.id +
                 '&edit[name]=' + catArgObj.name +
                 '&edit[arg]=true&edit[text]=' + catArgObj.text +
-                '&arguments[type]=' + argType +
-                '&arguments[comment]=' + argComm;
+                '&arguments[type]=' + catArgObj.type +
+                '&arguments[comment]=' + catArgObj.comment;
             editCategoryArgument.editCatArg(data, catArgObj.descr);
         } else {
             catArgObj.name = $('.inputBox input').val();
@@ -77,6 +81,7 @@ function categorySend() {
             '&required=' + requiredCat;
         createNewCategory.newCategorySend(data);
     }
+    createNewCategory.newCategorySend(data);
 }
 function toggleClick(objClick) {
     if (objClick.parent().attr('data-toggle') == 'true') {
@@ -135,18 +140,33 @@ function editCatArg(obj) {
     if (obj.attr('id') == 'argument') {
         $('.saveCat').text('Добавить тип');
         $('.saveCat').addClass('createArgumentStart').removeClass('createArgument');
-        $('.add-ArgumentsCategory').show(400);
-        $('.add-ArgumentsType').hide(400);
+        $('.add-ArgumentsCategory').show();
+        $('.add-ArgumentsType').hide();
         $('.argumentText').show();
         catArgObj = {
             descr: obj.attr('id'),
             name: obj.find('h3').text(),
-            text: obj.find('p').text(),
-            id: parseInt(obj.attr('data-id'))
+            text: obj.find('.argumText').text(),
+            id: parseInt(obj.attr('data-id')),
+            type: obj.find('.argumentType').text(),
+            comment: obj.find('.argumentComment').text()
         };
         $('.inputBox input').val(catArgObj.name);
         $('.argumentText textarea').text(catArgObj.text).val(catArgObj.text);
         $('.add-Arguments_category h6').text('Редактирование довода');
+        $('.selectArgType_item').each(function() {
+            if ($(this).attr('data-value') == catArgObj.comment) {
+                var thisType = $(this).text(),
+                    thisTypeVal = $(this).attr('data-value');
+                $('.add-ArgumentsType .current-option span').text(thisType);
+                $('.add-ArgumentsType .current-option').attr('data-value', thisTypeVal);
+            }
+        });
+        if (catArgObj.comment != '') {
+            $('.argumentComments textarea').val(catArgObj.comment);
+            $('.addArgComments').addClass('toggleArgComment');
+            $('#addArgComments').prop('checked', true);
+        }
     } else {
         $('.argumentText').hide();
         catArgObj = {
@@ -158,19 +178,19 @@ function editCatArg(obj) {
         $('.add-Arguments_category h6').text('Редактирование категории');
     }
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
-    $('.saveCat').removeClass('subChild createArgument').addClass('editArgCat');
+    $('.saveCat').removeClass('subChild createArgument').addClass('createArgumentStart editAlso');
 }
 function showArgComment(obj) {
     if ($('#addArgComments').prop('checked') == false) {
         obj.addClass('toggleArgComment');
-        $('.argumentComment').slideDown(400);
+        $('.argumentComments').slideDown(400);
     } else {
         obj.removeClass('toggleArgComment');
-        $('.argumentComment').slideUp(400);
-        $('.argumentComment textarea').val('');
+        $('.argumentComments').slideUp(400);
+        $('.argumentComments textarea').val('');
     }
 }
-function ShellToFill(step, titleText, id, parent_id, dataRequired, text) {
+function ShellToFill(step, titleText, id, parent_id, dataRequired, text, comment, argumentType) {
     this.wrapp = '<li class="catArguments">';
     this.holder = '<ul class="subWrap_' + step + '">';
     this.box = '<div class="category" id="category" data-value="" data-id="' + id + '" data-parent_id="' + parent_id + '" data-required="' + dataRequired + '" data-toggle="true">';
@@ -183,7 +203,9 @@ function ShellToFill(step, titleText, id, parent_id, dataRequired, text) {
     this.catAdd2 = '<div class="category_add withoutText"></div>';
     this.argAdd = '<div class="category_argumentAdd"></div>';
     this.argAddCross = '<div class="category_argumentAdd crossView">Довод</div>';
-    this.argText = '<p>' + text + '</p>';
+    this.argText = '<p class="argumText">' + text + '</p>';
+    this.argComment = '<p class="argumentComment">' + comment + '</p>';
+    this.argType = '<p class="argumentType">' + argumentType + '</p>';
     this.catEdit = '<div class="category_edit"></div>';
     this.catDel = '<div class="category_delete"></div>';
 }
@@ -332,7 +354,9 @@ var receivingData = {
                             value.arguments[i].id,
                             value.arguments[i].category_id,
                             value.arguments[i].required,
-                            value.arguments[i].text
+                            value.arguments[i].text,
+                            value.arguments[i].comment,
+                            value.arguments[i].type
                         );
                         obj.parent().append(func());
                     }
@@ -451,6 +475,8 @@ var writeGetData = {
             shell.box3 +
             shell.title2 +
             shell.argText +
+            shell.argComment +
+            shell.argType +
             shell.catEdit +
             shell.catDel +
             '</ul></li>'
