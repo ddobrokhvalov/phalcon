@@ -437,6 +437,11 @@ class ArgumentsController  extends ControllerBase
                 exit;
             }
             if (isset($edit['arg']) && $edit['arg'] == true) {
+                $comment = isset($edit['comment']) ? trim($edit['comment']) : '';
+                if (strlen($comment) > 1000) {
+                    echo json_encode(array('status' => 'bad length comment'));
+                    exit;
+                }
                 if (!isset($edit['text']) && trim($edit['text']) == '') {
                     echo json_encode(array('err' => 'bad text'));
                     exit;
