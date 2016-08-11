@@ -442,6 +442,10 @@ class ArgumentsController  extends ControllerBase
                     echo json_encode(array('status' => 'bad length comment'));
                     exit;
                 }
+                if (!isset($edit['type']) || !is_numeric($edit['type'])) {
+                    echo json_encode(array('status' => 'bad type'));
+                    exit;
+                }
                 if (!isset($edit['text']) && trim($edit['text']) == '') {
                     echo json_encode(array('err' => 'bad text'));
                     exit;
@@ -454,6 +458,8 @@ class ArgumentsController  extends ControllerBase
                 }
                 $argument->name = trim($edit['name']);
                 $argument->text = trim($edit['text']);
+                $argument->type = $edit['type'];
+                $argument->comment = $comment;
                 $argument->save();
                 echo json_encode(array(
                     'id' => $argument->id,
