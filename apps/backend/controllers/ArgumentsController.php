@@ -471,7 +471,9 @@ class ArgumentsController  extends ControllerBase
                     'id' => $category->id,
                     'name' => $category->name,
                     'required' => $category->required,
-                    'parent_id' => $category->parent_id
+                    'parent_id' => $category->parent_id,
+                    'type'      => $category->type,
+                    'comment'   => $category->comment
                 ));
             }
         }
