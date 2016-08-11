@@ -759,6 +759,7 @@ class ComplaintController extends ControllerBase
         foreach($arguments as $argument){
             $result['arguments'][] = array(
                 'id'            => $argument->id,
+                'text'          => $argument->text,
                 'name'          => $argument->name,
                 'category_id'   => $argument->category_id,
                 'comment'       => $argument->comment,
