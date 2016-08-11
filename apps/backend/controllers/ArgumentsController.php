@@ -306,6 +306,8 @@ class ArgumentsController  extends ControllerBase
                 'name' => $argument->name,
                 'text' => $argument->text,
                 'required' => $argument->required,
+                'type'      => $argument->type,
+                'comment'   => $argument->comment,
                 'category_id' => $argument->category_id,
             );
         }
