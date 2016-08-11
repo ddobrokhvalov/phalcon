@@ -816,6 +816,35 @@ function show_confirm_changing_status_popup(complaint_id, status) {
     }
 }
 
+function show_confirm_delete_ufas_popup(ufas_id) {
+    if (ufas_id) {
+        showStyledPopupMessageWithButtons(
+            "#pop-confirm-delete-ufas",
+            "Подтвердите действие",
+            "Вы действительно хотите удалить данные по УФАС?",
+            "delete_ufas(" + ufas_id + ");"
+        );
+    }
+}
+
+function delete_ufas(ufas_id) {
+    if (ufas_id) {
+        $.ajax({
+            url: "/admin/ufas/delete",
+            type:'POST',
+            data: { id: ufas_id },
+            dataType: 'json',
+            success: function(data){
+                if (data.success == 'reload') {
+                   window.location.href = "/admin/ufas/detail/" + ufas_id;
+                } else {
+                    window.location.href = "/admin/ufas/index";
+                }
+            }
+        });
+    }
+}
+
 function change_complaint_status(complaint_id, st) {
     if (complaint_id && st.length) {
         $.ajax({

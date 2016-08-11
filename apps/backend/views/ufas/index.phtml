@@ -1,0 +1,65 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - АДМИНИСТРАТОРЫ{% endblock %}
+{% block body %}
+<div class="admin-main-wrap list-ufas">
+<h1>Данные УФАС</h1>
+<a href="/admin/ufas/add" class="admin-add ufasAdd">Добавить данные УФАС</a>
+<div class="admin-lt-content" id="sort-table">
+    <ul class="lt-content-top">
+        <li sort-field="sort-name"><span class="sortable">Наименование</span></li>
+        <li sort-field="sort-num"><span class="sortable">Налог. ном.</span></li>
+        <li sort-field="sort-address"><span class="sortable">Адрес</span></li>
+        <li sort-field="sort-phone"><span class="sortable">Телефон/факс</span></li>
+        <li sort-field="sort-email"><span class="sortable">Имейл</span></li>
+    </ul>
+    {% for ufas in page.items %}
+    <ul class="lt-content-main" sort-name="{{ufas.name}}" sort-num="{{ufas.number}}" sort-address="{{ufas.address}}" sort-phone="{{ufas.phone}}" sort-email="{{ufas.email}}">
+        <li><a title="Посмотреть детально" href="/admin/ufas/detail/{{ ufas.id }}">{{ ufas.name }}</a></li>
+        <li>{{ ufas.number }}</li>
+        <li>{{ ufas.address }}</li>
+        <li>{{ ufas.phone }}</li>
+        <li>{{ ufas.email }}</li>
+    </ul>
+    {% endfor %}
+</div>
+
+{% if page.total_items > item_per_page %}
+    <div class="admin-table-footer">
+        {% if page.current * item_per_page < page.total_items %}
+            {% set cnt = page.total_items - (page.current * item_per_page) %}
+            <a href="#" onclick="$('#next_items').submit()">Еще <span>{{ cnt > item_per_page ? 20 : cnt}} данных УФАС</span></a><!--todo: -->
+            {% else %}
+                <div></div>
+        {% endif %}
+        <a href="/admin/ufas/index?all-portions-items=all_items">Показать все данные УФАС (<span>{{page.total_items}}</span>)</a><!--todo: -->
+    </div>
+    <form id="next_items" method="post">
+        {{hidden_field('next-portions-items', 'value':20)}}
+    </form>
+{% endif %}
+<div class="admin-pagination-box">
+    {% if page.current>1 %}{{ link_to("admin/ufas/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
+    {% if page.total_items > 0 %}
+        <ul>
+            {% for page_item in paginator_builder %}
+            <li>
+                {% if page_item['type'] == 'page' %}
+                {{ link_to("admin/ufas/index?page=" ~ page_item['num'], page_item['num']) }}
+                {% elseif page_item['type'] == 'delimer' %}
+                <span>...</span>
+                {% elseif page_item['type'] == 'current' %}
+                <span class="active-pag-page">{{page_item['num']}}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if page.total_pages > page.current %}{{ link_to("admin/ufas/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
+</div>
+{% if scroll_to_down %}
+    <script type="text/javascript">
+        $("html, body").animate({ scrollTop: $(document).height() - 310 }, 1)
+    </script>
+{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - РЕДАКТИРОВАНИЕ ЗАЯВИТЕЛЯ{% endblock %}
+{% block body %}
+<div class="admin-main-wrap ufas-details">
+    <div class="bread-crumbs-holder">
+        <a href="/admin/ufas/index">Вернуться на страницу со списком</a>
+    </div>
+    {{flashSession.output()}}
+    <h1>Редактировать данные</h1>
+    <button onclick="show_confirm_delete_ufas_popup({{ufas.id}});" class="delete-btn">Удалить данные УФАС</button>
+    <div class="form-wrap">
+        <form action="/admin/ufas/save" method="POST" enctype="multipart/form-data" id="ufas-form">
+            {{hidden_field('ufas-id', 'value':ufas.id)}}
+            <label for="name">
+                <div>Наименование территориального органа</div>
+                {{text_field("name", "value":ufas.name, "id":"name", "style": "width: 810px;")}}
+            </label>
+            <label for="number">
+                <div>Налоговый номер</div>
+                {{text_field("number", "value":ufas.number, "id":"number", "style": "width: 200px;")}}
+            </label>
+            <label for="address">
+                <div>Адрес</div>
+                {{text_field('address', 'value':ufas.address, "id":"address", "style": "width: 810px;")}}
+            </label>
+            <label for="phone">
+                <div>Телефон/факс</div>
+                {{text_field('phone', 'value':ufas.phone, "id":"phone", "style": "width: 480px;")}}
+            </label>
+            <label for="email">
+                <div>E-mail</div>
+                {{text_field('email', 'value':ufas.email, "id":"email", "style": "width: 480px;")}}
+            </label>
+            <button class="save-btn">Сохранить изменения</button>
+        </form>
+    </div>
+</div>
+<div id="pop-confirm-delete-ufas" class="modal_div">
+    <h2></h2>
+    <div class="pop-done-txt">
+        <div class="popup-content"></div>
+        <div class="action-buttons">
+            <div class="popup-button cnc popup-close">Отменить</div>
+            <div class="popup-button apr">Да</div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div class="modal-close"></div>
+</div>
+<script type="text/javascript">
+    $("head").append("<script type=\"text\/javascript\" src=\"\/js\/ufas.js\"><\/script>");
+</script>
+{% endblock %}

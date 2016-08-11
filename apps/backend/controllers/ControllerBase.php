@@ -8,6 +8,7 @@ use Multiple\Backend\Models\Complaint;
 use Multiple\Backend\Models\Arguments;
 use Multiple\Backend\Models\Log;
 use Multiple\Backend\Models\Question;
+use Multiple\Backend\Models\Ufas;
 
 class ControllerBase extends Controller
 {
@@ -58,6 +59,7 @@ class ControllerBase extends Controller
             'Log'=>Log::count(),
             'Question'=> Question::countNonRead(),
             'Admin'=> Admin::count(),
+            'Ufas'=> Ufas::count(),
         ];
     }
 }
