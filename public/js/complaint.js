@@ -264,7 +264,6 @@ var currTextArea = 0;
 var argument = {
     argumentList: [],
     addArgument: function (id, cat_id, complaint_text) {
-
         complaint_text = complaint_text || "";
         //templates["just_text"] = "Вы можете ввести свой текст здесь";
         templates["just_text"] = "";
@@ -294,7 +293,7 @@ var argument = {
             '<span>' + templateName + '</span>' +
             '<div class="c-edit-j-h-ctr">' +
             '<a  class="template-edit-control down c-edit-j-h-ctr1">Переместить ниже</a> <a class="template-edit-control up c-edit-j-h-ctr2">Переместить выше</a>' +
-            //'<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' +
+            (( id != 'just_text' ) ? '<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' : '') +
             '</div>' +
             '</div>' +
             '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" >' +
@@ -326,6 +325,9 @@ var argument = {
         $('.argument_text_container_' + id).remove();
         $('#template_edit_' + id).remove();
         $('#jd2cbb' + id).prop('checked', false);
+        if($(".template_edit").length <= 1){
+            $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").hide();
+        }
     }
 
 };
@@ -375,7 +377,7 @@ var auction = {
                 //complaint.setHeader();
                 $('.loading-gif').hide();
                 auction.auctionReady = true;
-                argument.addArgument("just_text", "just_text");
+                //argument.addArgument("just_text", "just_text");
             } else {
                 $('#auction_id').addClass('c-inp-error');
                 $('#result_container').append('<b style="color:red!important;" class="msg_status_parser">Ошибка!</b>');
