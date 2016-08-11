@@ -106,6 +106,7 @@ class ComplaintController extends ControllerBase
         foreach ($arguments as $argument) {
             $categories_id[] = $argument->argument_category_id;
             $arguments_id[] = $argument->argument_id;
+            $arr_users_arg[$argument->argument_id] = $argument->text;
             if ($argument_order == $complaint->complaint_text_order) {
                 $user_arguments .= $complaint->complaint_text . '</br>';
                 $user_arguments .= $argument->text . '</br>';
@@ -121,6 +122,7 @@ class ComplaintController extends ControllerBase
         if(!empty($arr_sub_cat)){
             $this->view->arr_sub_cat = $arr_sub_cat;
         }
+        $this->view->arr_users_arg = $arr_users_arg;
         $this->view->categories_id = implode(',', $categories_id);
         $this->view->arguments_id = implode(',', $arguments_id);
         $this->view->complaint_text_order = $complaint->complaint_text_order;
@@ -757,9 +759,11 @@ class ComplaintController extends ControllerBase
         foreach($arguments as $argument){
             $result['arguments'][] = array(
                 'id'            => $argument->id,
+                'text'          => $argument->text,
                 'name'          => $argument->name,
                 'category_id'   => $argument->category_id,
                 'comment'       => $argument->comment,
+                'required'      => $argument->required,
                 'type'          => $type
             );
         }

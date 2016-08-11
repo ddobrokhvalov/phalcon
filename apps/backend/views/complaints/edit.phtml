@@ -326,7 +326,7 @@
 {% else %}
 <input type="hidden" name="is_edit_now" id="is_edit_now" value="">
 {% endif %}
-
+{{ arr_users_arg[2] }}
 <script>
     //$(document).ready(function(){
     auction.data['complaint_id'] = '{{complaint.id }}';
@@ -349,7 +349,11 @@
     debugger;
     {% for argument in arguments  %}
         {% for template in argument['templates']  %}
-            templates[{{template.id}}] = '{{template.text}}';
+            {% if arr_users_arg[template.id] is defined %}
+                templates[{{template.id}}] = '{{ arr_users_arg[template.id] }}';
+            {% else %}
+                templates[{{template.id}}] = '{{ arr_users_arg[template.text] }}';
+            {% endif %}
         {% endfor %}
     {% endfor %}
     {% if arr_sub_cat is defined  %}
@@ -363,16 +367,15 @@
             if (index == {{ complaint_text_order }}) {
                 argument.addArgument("just_text", "just_text", "{{complaint.complaint_text}}");
             }
-        /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
-        $(".category-container input#jd2cbb" + value).prop('checked', true);
-        var cat = $(".category-container input#jd2cbb" + value).attr("category");
-        if(Object.keys(arr_sub).length){
-            argument.addArgument(value, cat, arr_sub[cat]);
-        } else {
-            argument.addArgument(value, cat);
-        }
-
-    });
+            /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
+            $(".category-container input#jd2cbb" + value).prop('checked', true);
+            var cat = $(".category-container input#jd2cbb" + value).attr("category");
+            if(Object.keys(arr_sub).length){
+                argument.addArgument(value, cat, arr_sub[cat]);
+            } else {
+                argument.addArgument(value, cat);
+            }
+        });
     setTimeout(function(){
         applicant.id = ["{{complaint.applicant_id}}"];
     }, 500);
