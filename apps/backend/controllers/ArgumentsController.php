@@ -305,6 +305,7 @@ class ArgumentsController  extends ControllerBase
                 'id' => $argument->id,
                 'name' => $argument->name,
                 'text' => $argument->text,
+                'required' => $argument->required,
                 'category_id' => $argument->category_id,
             );
         }
@@ -396,7 +397,7 @@ class ArgumentsController  extends ControllerBase
                     $argument->argument_status = 1;
                     $argument->date = date('Y-m-d H:i:s');
                     $argument->comment = $comment;
-                    $argument->requred = (isset($data['required']) && $data['required'] == true) ? 1 : 0;
+                    $argument->required = (isset($data['required']) && $data['required'] == true) ? 1 : 0;
                     $argument->type = (isset($data['type']) && is_numeric($data['type'])) ? $data['type'] : 0;
                     $argument->save();
                     echo json_encode(array(
@@ -404,6 +405,7 @@ class ArgumentsController  extends ControllerBase
                         'category_id' => $argument->category_id,
                         'name' => $argument->name,
                         'text' => $argument->text,
+                        'required' => $argument->required,
                         'type' => $argument->type
                     ));
                     exit;
