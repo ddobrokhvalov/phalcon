@@ -181,10 +181,26 @@ class ComplaintController extends ControllerBase
         unset($data);
     }
 
+    public function saveBlobFileAction() {
+        if ($this->request->hasFiles() == true) {
+            $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
+            foreach ($this->request->getUploadedFiles() as $file) {
+                if (strlen($file->getName())) {
+                    if (!file_exists($baseLocation)) {
+                        mkdir($baseLocation, 0777, true);
+                    }
+                    $name = 'complaint_' . time() . '.docx';
+                    $file->moveTo($baseLocation . $name);
+                }
+            }
+        }
+        $this->view->disable();
+        die();
+    }
 
     public function addAction()
     {
-        //TrustedLibrary::trusted_library_init();
+        //TrustedLibrary::trusted_library_init();        
         $this->setMenu();
         $category = new Category();
         $arguments = $category->getArguments();

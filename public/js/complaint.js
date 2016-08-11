@@ -229,8 +229,8 @@ var complaint = {
                     type: 'POST',
                     url: '/applicant/ajaxSetApplicantId',
                     data: 'applicant_id=' + applicant_id.join(","),
-                    success: function (msg) {
-                        console.log(msg)
+                    success: function (msg) {debugger;
+                        applicant.applicant_info = msg.applicant_info;
                     },
                     error: function (msg) {
                         console.log(msg);
@@ -243,8 +243,8 @@ var complaint = {
                     type: 'POST',
                     url: '/applicant/ajaxSetApplicantId',
                     data: 'applicant_id=' + applicant_id.join(","),
-                    success: function (msg) {
-                        console.log(msg)
+                    success: function (msg) {debugger;
+                        applicant.applicant_info = msg.applicant_info;
                     },
                     error: function (msg) {
                         console.log(msg);
@@ -352,6 +352,8 @@ var auction = {
                 success: function (msg) {
 
                     var data = $.parseJSON(msg);
+                    zakupka.info.type = data.info.type;
+                    procedura.info.okonchanie = data.procedura.okonchanie_podachi;
                     console.log(data);
                     auction.succesRequest(data,auction_id);
 
@@ -363,7 +365,7 @@ var auction = {
             });
         },
         succesRequest: function (data,auction_id) {
-            if (auction.processData(data, auction_id)) {
+            if (auction.processData(data, auction_id)) {debugger;
                 $('#auction_id').addClass('c-inp-done');
                 $('#notice_button').css('display', 'none');
                 $('#result_container').append('<b class="msg_status_parser">Данные Получены!</b>');
@@ -541,7 +543,8 @@ function initEditor(id) {
             {name: 'colors', groups: ['colors']},
             {name: 'about', groups: ['about']}
         ],
-        removeButtons: 'Underline,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source',
+        removeButtons: 'Blockquote,Indent,Outdent,About,RemoveFormat,Format,Styles,Strike,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source',
+        removePlugins: 'Styles,Format',
         sharedSpaces: {
             top: 'itselem',
             left: 'itselem'

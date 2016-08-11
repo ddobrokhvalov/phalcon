@@ -351,7 +351,31 @@ class ApplicantController extends ControllerBase
     }
 
     public function ajaxSetApplicantIdAction(){
-        if(isset($_POST['applicant_id']))
+        $response = array();
+        $response['applicant_info'] = array();
+        if(isset($_POST['applicant_id'])) {
             $this->session->set('applicant', array('applicant_id' => $_POST['applicant_id']));
+            if ($_POST['applicant_id'] != 'All') {
+                $response['applicant_info'] = Applicant::findFirstById($_POST['applicant_id'])->toArray();
+            }
+        }
+        $this->view->disable();
+        header('Content-type: application/json');
+        echo json_encode($response);
+        die();
+    }
+
+    public function getApplicantInfoAction(){
+        $response = array();
+        $response['applicant_info'] = array();
+        if(isset($_POST['applicant_id'])) {
+            if ($_POST['applicant_id'] != 'All') {
+                $response['applicant_info'] = Applicant::findFirstById($_POST['applicant_id'])->toArray();
+            }
+        }
+        $this->view->disable();
+        header('Content-type: application/json');
+        echo json_encode($response);
+        die();
     }
 }

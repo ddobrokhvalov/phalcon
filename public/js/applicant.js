@@ -79,10 +79,19 @@ function validateApplicantform() {
     }
 }
 
+var zakupka = {
+    info: [],
+};
+
+var procedura = {
+    info: [],
+};
+
 var applicant = {
     id: [],
     type:false,
     save:false,
+    applicant_info: [],
     checkInn: function(inn){
         if (!validator.numeric($('#czvr3').val(), 10, 10)) {
             applicantValidator.showError('#czvr3', 'Ошибка! ИНН состоит из 10 цифр');
