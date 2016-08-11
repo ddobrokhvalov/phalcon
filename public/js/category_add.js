@@ -413,7 +413,9 @@ var editCategoryArgument = {
             var thisId = $(this).attr('data-id');
             if (thisId == val.id) {
                 $(this).find('h3').text(val.name);
-                $(this).find('p').text(val.text);
+                $(this).find('.argumText').text(val.text);
+                $(this).find('.argumentComment').text(val.comment);
+                $(this).find('.argumentType').text(val.type);
             }
         });
     },
