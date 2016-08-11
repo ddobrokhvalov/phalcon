@@ -41,6 +41,7 @@ function categorySend() {
     } else if ($('.saveCat').hasClass('createArgumentStart')) {
         $('.saveCat').text('Сохранить');
         $('.saveCat').removeClass('createArgumentStart').addClass('createArgument');
+        $('.argumentComment textarea').val('');
         $('.add-ArgumentsCategory').slideUp(400);
         $('.add-ArgumentsType').slideDown(400);
     } else if ($('.saveCat').hasClass('createArgument')) {
@@ -132,6 +133,10 @@ function addArgumentFunc(obj) {
 function editCatArg(obj) {
     parentId = obj.attr('data-parent_id');
     if (obj.attr('id') == 'argument') {
+        $('.saveCat').text('Добавить тип');
+        $('.saveCat').addClass('createArgumentStart').removeClass('createArgument');
+        $('.add-ArgumentsCategory').show(400);
+        $('.add-ArgumentsType').hide(400);
         $('.argumentText').show();
         catArgObj = {
             descr: obj.attr('id'),
@@ -155,6 +160,16 @@ function editCatArg(obj) {
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
     $('.saveCat').removeClass('subChild createArgument').addClass('editArgCat');
 }
+function showArgComment(obj) {
+    if ($('#addArgComments').prop('checked') == false) {
+        obj.addClass('toggleArgComment');
+        $('.argumentComment').slideDown(400);
+    } else {
+        obj.removeClass('toggleArgComment');
+        $('.argumentComment').slideUp(400);
+        $('.argumentComment textarea').val('');
+    }
+}
 function ShellToFill(step, titleText, id, parent_id, dataRequired, text) {
     this.wrapp = '<li class="catArguments">';
     this.holder = '<ul class="subWrap_' + step + '">';
@@ -173,17 +188,6 @@ function ShellToFill(step, titleText, id, parent_id, dataRequired, text) {
     this.catDel = '<div class="category_delete"></div>';
 }
 
-function showArgComment(obj) {
-    if ($('#addArgComments').prop('checked') == false) {
-        obj.addClass('toggleArgComment');
-        $('.argumentComment').slideDown(400);
-    } else {
-        obj.removeClass('toggleArgComment');
-        $('.argumentComment').slideUp(400);
-        $('.argumentComment textarea').val('');
-    }
-}
-
 var createNewCategory = {
     newCategorySend: function(data) {
             $.ajax({
@@ -192,7 +196,13 @@ var createNewCategory = {
             data: data,
             dataType: 'json',
             success: function(value) {
-                shell = new ShellToFill(catNum, value.name, value.id, value.parent_id, value.required);
+                shell = new ShellToFill(
+                    catNum,
+                    value.name,
+                    value.id,
+                    value.parent_id,
+                    value.required
+                );
                 popupCancel();
                 switch(catNum) {
                     case 1:
@@ -250,7 +260,14 @@ var addArgument = {
             success: function(value) {
                 var argNum = catNum;
                 argNum++;
-                shell = new ShellToFill(argNum, value.name, value.id, value.category_id, value.required, value.text);
+                shell = new ShellToFill(
+                    argNum,
+                    value.name,
+                    value.id,
+                    value.category_id,
+                    value.required,
+                    value.text
+                );
                 popupCancel();
                 $('.subWrap_' + catNum + ' .category').each(function() {
                     if ($(this).attr('data-id') == parentId) {
@@ -297,13 +314,26 @@ var receivingData = {
                 }
                 function cycleDataCat(numb, func) {
                     for (var i = 0; i < value.cat_arguments.length; i++) {
-                        shell = new ShellToFill(numb, value.cat_arguments[i].name, value.cat_arguments[i].id, value.cat_arguments[i].parent_id, value.cat_arguments[i].required);
+                        shell = new ShellToFill(
+                            numb,
+                            value.cat_arguments[i].name,
+                            value.cat_arguments[i].id,
+                            value.cat_arguments[i].parent_id,
+                            value.cat_arguments[i].required
+                        );
                         obj.parent().append(func());
                     }
                 }
                 function cycleDataArg(numb, func) {
                     for (var i = 0; i < value.arguments.length; i++) {
-                        shell = new ShellToFill(numb, value.arguments[i].name, value.arguments[i].id, value.arguments[i].category_id, value.arguments[i].required, value.arguments[i].text);
+                        shell = new ShellToFill(
+                            numb,
+                            value.arguments[i].name,
+                            value.arguments[i].id,
+                            value.arguments[i].category_id,
+                            value.arguments[i].required,
+                            value.arguments[i].text
+                        );
                         obj.parent().append(func());
                     }
                 }
