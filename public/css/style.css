@@ -2780,12 +2780,12 @@ a:focus {
   background-position: 0 -16px;
 }
 /* line 394, ../sass/_list_arguments.scss */
-.add-ArgumentsType .argumentComment {
+.add-ArgumentsType .argumentsComment {
   display: none;
   margin: 0 auto;
 }
 /* line 397, ../sass/_list_arguments.scss */
-.add-ArgumentsType .argumentComment h4 {
+.add-ArgumentsType .argumentsComment h4 {
   margin-bottom: 0;
   padding-top: 10px;
   font-size: 22px;
