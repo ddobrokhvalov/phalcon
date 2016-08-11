@@ -23,36 +23,57 @@ $(document).ready(function() {
     $('.argCatTree').on('click', '.category_edit', function() {
         editCatArg($(this).parent());
     });
+    $('.addArgComment').click(function() {
+        showArgComment($(this));
+    });
 });
 
-var catNum = '', parentId, shell, catArgObj;
+var catNum = '', parentId, shell, catArgObj, requiredCat, argType, argComm;
 function categorySend() {
     var catName = $('.inputBox input').val(),
         data;
     if ($('.saveCat').hasClass('subChild')) {
         catNum++;
-        data = 'parent_id=' + parentId + '&name=' + catName;
+        data = 'parent_id=' + parentId +
+            '&name=' + catName +
+            '&required=' + requiredCat;
         createNewCategory.newCategorySend(data);
+    } else if ($('.saveCat').hasClass('createArgumentStart')) {
+        $('.saveCat').text('Сохранить');
+        $('.saveCat').removeClass('createArgumentStart').addClass('createArgument');
+        $('.add-ArgumentsCategory').slideUp(400);
+        $('.add-ArgumentsType').slideDown(400);
     } else if ($('.saveCat').hasClass('createArgument')) {
         var argumentName = $('.inputBox input').val(),
-            argumentText = $('.inputBox textarea').val();
-        data = 'arguments[category_id]=' + parentId + '&arguments[name]=' + argumentName + '&arguments[text]=' + argumentText;
+            argumentText = $('.argumentText textarea').val(),
+            argumentComm = $('.argumentComment textarea').val(),
+            argumentTypeVal = $('.add-ArgumentsType .current-option').attr('data-value');
+        data = 'arguments[category_id]=' + parentId +
+            '&arguments[name]=' + argumentName +
+            '&arguments[text]=' + argumentText +
+            '&arguments[type]=' + argumentTypeVal +
+            '&arguments[comment]=' + argumentComm;
         addArgument.addData(data);
     } else if ($('.saveCat').hasClass('editArgCat')) {
         if (catArgObj.descr == 'argument') {
             catArgObj.name = $('.inputBox input').val();
-            catArgObj.text = $('.inputBox textarea').val();
+            catArgObj.text = $('.argumentText textarea').val();
             data = 'edit[id]=' + catArgObj.id +
                 '&edit[name]=' + catArgObj.name +
-                '&edit[arg]=true&edit[text]=' + catArgObj.text;
+                '&edit[arg]=true&edit[text]=' + catArgObj.text +
+                '&arguments[type]=' + argType +
+                '&arguments[comment]=' + argComm;
             editCategoryArgument.editCatArg(data, catArgObj.descr);
         } else {
             catArgObj.name = $('.inputBox input').val();
-            data = 'edit[id]=' + catArgObj.id + '&edit[name]=' + catArgObj.name;
+            data = 'edit[id]=' + catArgObj.id +
+                '&edit[name]=' + catArgObj.name;
             editCategoryArgument.editCatArg(data, catArgObj.descr);
         }
     } else {
-        data = 'parent_id=' + 0 + '&name=' + catName;
+        data = 'parent_id=' + 0 +
+            '&name=' + catName +
+            '&required=' + requiredCat;
         createNewCategory.newCategorySend(data);
     }
 }
@@ -73,6 +94,7 @@ function addNewCat() {
     }
     catNum = '';
     $('.argumentText').hide();
+    $('.add-Arguments_category h6').text('Добавление категории');
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
 }
 function createSubCat_Arg(obj) {
@@ -80,6 +102,7 @@ function createSubCat_Arg(obj) {
     $('.saveCat').addClass('subChild');
     catNum = obj.parent().attr('data-value');
     parentId = obj.parent().attr('data-id');
+    $('.add-Arguments_category h6').text('Добавление категории');
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
 }
 function popupCancel() {
@@ -101,8 +124,10 @@ function addArgumentFunc(obj) {
     catNum = obj.parent().attr('data-value');
     $('.argumentText textarea').val('').text('');
     $('.argumentText').show();
+    $('.add-Arguments_category h6').text('Добавление довода');
+    $('.saveCat').text('Добавить тип');
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
-    $('.saveCat').removeClass('subChild').addClass('createArgument');
+    $('.saveCat').removeClass('subChild').addClass('createArgumentStart');
 }
 function editCatArg(obj) {
     parentId = obj.attr('data-parent_id');
@@ -116,6 +141,7 @@ function editCatArg(obj) {
         };
         $('.inputBox input').val(catArgObj.name);
         $('.argumentText textarea').text(catArgObj.text).val(catArgObj.text);
+        $('.add-Arguments_category h6').text('Редактирование довода');
     } else {
         $('.argumentText').hide();
         catArgObj = {
@@ -124,16 +150,17 @@ function editCatArg(obj) {
             id: parseInt(obj.attr('data-id'))
         };
         $('.inputBox input').val(catArgObj.name);
+        $('.add-Arguments_category h6').text('Редактирование категории');
     }
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
     $('.saveCat').removeClass('subChild createArgument').addClass('editArgCat');
 }
-function ShellToFill(step, titleText, id, parent_id, text) {
+function ShellToFill(step, titleText, id, parent_id, dataRequired, text) {
     this.wrapp = '<li class="catArguments">';
     this.holder = '<ul class="subWrap_' + step + '">';
-    this.box = '<div class="category" id="category" data-value="" data-id="' + id + '" data-parent_id="' + parent_id + '" data-toggle="true">';
-    this.box2 = '<li class="category" id="category" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '" data-toggle="true">';
-    this.box3 = '<li class="category" id="argument" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '" data-toggle="true">';
+    this.box = '<div class="category" id="category" data-value="" data-id="' + id + '" data-parent_id="' + parent_id + '" data-required="' + dataRequired + '" data-toggle="true">';
+    this.box2 = '<li class="category" id="category" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '" data-required="' + dataRequired + '" data-toggle="true">';
+    this.box3 = '<li class="category" id="argument" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '" data-required="' + dataRequired + '" data-toggle="true">';
     this.arrow = '<div class="category_arrow"></div>';
     this.title = '<h2>' + titleText + '</h2>';
     this.title2 = '<h3>' + titleText + '</h3>';
@@ -146,6 +173,17 @@ function ShellToFill(step, titleText, id, parent_id, text) {
     this.catDel = '<div class="category_delete"></div>';
 }
 
+function showArgComment(obj) {
+    if ($('#addArgComments').prop('checked') == false) {
+        obj.addClass('toggleArgComment');
+        $('.argumentComment').slideDown(400);
+    } else {
+        obj.removeClass('toggleArgComment');
+        $('.argumentComment').slideUp(400);
+        $('.argumentComment textarea').val('');
+    }
+}
+
 var createNewCategory = {
     newCategorySend: function(data) {
             $.ajax({
@@ -154,7 +192,7 @@ var createNewCategory = {
             data: data,
             dataType: 'json',
             success: function(value) {
-                shell = new ShellToFill(catNum, value.name, value.id, value.parent_id);
+                shell = new ShellToFill(catNum, value.name, value.id, value.parent_id, value.required);
                 popupCancel();
                 switch(catNum) {
                     case 1:
@@ -166,9 +204,6 @@ var createNewCategory = {
                     case 3:
                         createNewCategory.createSubCategory_3();
                         break;
-                    // case 4:
-                    //     createNewCategory.createSubCategory_4();
-                    //     break;
                     default:
                         createNewCategory.createCategory();
                 }
@@ -195,9 +230,6 @@ var createNewCategory = {
     createSubCategory_3: function() {
         createNewCategory.boxCreateSub(writeGetData.subCategory_3(), catNum);
     },
-    // createSubCategory_4: function() {
-    //     createNewCategory.boxCreateSub(writeGetData.subCategory_4(), catNum);
-    // },
     boxCreateSub: function(valData, num) {
         num -= 1;
         $('.subWrap_' + num + ' .category').each(function() {
@@ -218,7 +250,7 @@ var addArgument = {
             success: function(value) {
                 var argNum = catNum;
                 argNum++;
-                shell = new ShellToFill(argNum, value.name, value.id, value.category_id, value.text);
+                shell = new ShellToFill(argNum, value.name, value.id, value.category_id, value.required, value.text);
                 popupCancel();
                 $('.subWrap_' + catNum + ' .category').each(function() {
                     if ($(this).attr('data-id') == parentId) {
@@ -242,6 +274,7 @@ var receivingData = {
             data: data,
             dataType: 'json',
             success: function(value) {
+                console.log(value);
                 num++;
                 switch (num) {
                     case 1:
@@ -254,11 +287,8 @@ var receivingData = {
                         }
                         break;
                     case 3:
-                        cycleDataCat(num, writeGetData.subCategory_3);
+                        cycleDataArg(num, writeGetData.subCategory_3);
                         break;
-                    // case 4:
-                    //     cycleDataArg(num, writeGetData.subCategory_4);
-                    //     break;
                 }
                 if (obj.next().length == 0) {
                     alert('неты данных!');
@@ -267,13 +297,13 @@ var receivingData = {
                 }
                 function cycleDataCat(numb, func) {
                     for (var i = 0; i < value.cat_arguments.length; i++) {
-                        shell = new ShellToFill(numb, value.cat_arguments[i].name, value.cat_arguments[i].id, value.cat_arguments[i].parent_id);
+                        shell = new ShellToFill(numb, value.cat_arguments[i].name, value.cat_arguments[i].id, value.cat_arguments[i].parent_id, value.cat_arguments[i].required);
                         obj.parent().append(func());
                     }
                 }
                 function cycleDataArg(numb, func) {
                     for (var i = 0; i < value.arguments.length; i++) {
-                        shell = new ShellToFill(numb, value.arguments[i].name, value.arguments[i].id, value.arguments[i].category_id, value.arguments[i].text);
+                        shell = new ShellToFill(numb, value.arguments[i].name, value.arguments[i].id, value.arguments[i].category_id, value.arguments[i].required, value.arguments[i].text);
                         obj.parent().append(func());
                     }
                 }
@@ -394,15 +424,5 @@ var writeGetData = {
             shell.catEdit +
             shell.catDel +
             '</ul></li>'
-    } // ,
-    // subCategory_4: function() {
-    //     return '<li>' +
-    //         shell.holder +
-    //         shell.box3 +
-    //         shell.title2 +
-    //         shell.argText +
-    //         shell.catEdit +
-    //         shell.catDel +
-    //         '</ul></li>'
-    // }
+    }
 };
