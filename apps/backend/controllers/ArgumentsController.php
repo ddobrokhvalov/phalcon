@@ -454,7 +454,9 @@ class ArgumentsController  extends ControllerBase
                     'id' => $argument->id,
                     'category_id' => $argument->category_id,
                     'name' => $argument->name,
-                    'text' => $argument->text
+                    'text' => $argument->text,
+                    'type'      => $argument->type,
+                    'comment'   => $argument->comment
                 ));
             } else {
                 $id = $edit['id'];
@@ -472,8 +474,6 @@ class ArgumentsController  extends ControllerBase
                     'name' => $category->name,
                     'required' => $category->required,
                     'parent_id' => $category->parent_id,
-                    'type'      => $category->type,
-                    'comment'   => $category->comment
                 ));
             }
         }
