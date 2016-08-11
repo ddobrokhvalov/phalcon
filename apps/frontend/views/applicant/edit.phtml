@@ -55,12 +55,12 @@
                     <div class="file-attachment tab1">
                         <div class="file-wrapper"  style="margin-bottom: 20px; height: 30px">
                             <div class="text-above">Прикрепить файлы</div>
-                            <input id="upload-files" type="file" multiple name="upload-files[]" style="width:100%; height 100%">
+                            <input id="upload-files" type="file" class="upload_f" multiple name="upload-files[]" style="width:100%; height 100%">
                         </div>
                         <div class="file-names"></div>
                         <script type="text/javascript">
                             jQuery(document).ready(function(){
-                                jQuery('body').on('change','.upload_f', function(){
+                                jQuery('body').on('change','.tab1 .upload_f', function(){
                                     debugger;
                                     var cnt = jQuery(this)[0].files.length;
                                     if(cnt > 0){
@@ -137,7 +137,7 @@
                         <div class="file-names"></div>
                         <script type="text/javascript">
                             jQuery(document).ready(function(){
-                                jQuery('body').on('change','.upload_f', function(){
+                                jQuery('body').on('change','.tab2 .upload_f', function(){
                                     debugger;
                                     var cnt = jQuery(this)[0].files.length;
                                     if(cnt > 0){
@@ -197,12 +197,12 @@
                     <div class="file-attachment tab3">
                         <div class="file-wrapper" style="margin-bottom: 20px; height: 30px">
                             <div class="text-above">Прикрепить файлы</div>
-                            <input id="upload-files" type="file" multiple name="upload-files[]" style="width:100%; height 100%">
+                            <input id="upload-files" type="file" class="upload_f" multiple name="upload-files[]" style="width:100%; height 100%">
                         </div>
                         <div class="file-names"></div>
                         <script type="text/javascript">
                             jQuery(document).ready(function(){
-                                jQuery('body').on('change','.upload_f', function(){
+                                jQuery('body').on('change','.tab3 .upload_f', function(){
                                     debugger;
                                     var cnt = jQuery(this)[0].files.length;
                                     if(cnt > 0){
@@ -240,22 +240,6 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
-        $('.aplicant-tabs-label div').on('click', function(){
-            var stat = $(".active-tabs-label").attr('data-tabslabel');
-            $('.tab1, .tab2, .tab3').hide();
-            switch(stat){
-                case 'legal-entity':
-                    $('.tab1').show();
-                break;
-                case 'individual-entrepreneur':
-                    $('.tab2').show();
-                break;
-                case 'physical-face':
-                    $('.tab3').show();
-                break;
-            }
-        });
-
         var active_tab = $(".tabs-content.active-tabs-content form").attr("id");
         switch (active_tab) {
             case "urlico":
