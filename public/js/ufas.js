@@ -3,22 +3,26 @@ $(document).ready(function(){
         event.preventDefault();
         ufasValidator.start();
         if (ufasValidator.result) {
-            $.when(
-                $.ajax({
-                    url: "/admin/ufas/checkInn",
-                    type:'POST',
-                    data: { inn: $("#number").val() },
-                    dataType: 'json'
-                })
-            ).done(function(data) {
-                if (data.success == 'ok') {
-                   ufasValidator.done("#number");
-                   $('#ufas-form').submit();
-                } else {
-                    ufasValidator.showError("#number", 'Ошибка! Такой налоговый номер уже существует');
-                    return false;
-                }
-            });
+            if ($("#ufas-id").length == 0) {
+                $.when(
+                    $.ajax({
+                        url: "/admin/ufas/checkInn",
+                        type:'POST',
+                        data: { inn: $("#number").val() },
+                        dataType: 'json'
+                    })
+                ).done(function(data) {
+                    if (data.success == 'ok') {
+                       ufasValidator.done("#number");
+                       $('#ufas-form').submit();
+                    } else {
+                        ufasValidator.showError("#number", 'Ошибка! Такой налоговый номер уже существует');
+                        return false;
+                    }
+                });
+            } else {
+                $('#ufas-form').submit();
+            }
         } else {
             event.preventDefault();
             return false;

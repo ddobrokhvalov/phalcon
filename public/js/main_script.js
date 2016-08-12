@@ -1174,7 +1174,6 @@ function changeAdminButtonsBackground() {
 }
 
 function changeComplaintButtonsBackground() {
-    debugger;
     $(".copy-complaint").addClass('disabled-btn').removeClass('enabled-btn');
     $(".archive-complaint").addClass('disabled-btn').removeClass('enabled-btn');
     $(".recall-complaint").addClass('disabled-btn').removeClass('enabled-btn');
