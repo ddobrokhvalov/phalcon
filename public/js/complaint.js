@@ -426,20 +426,16 @@ var auction = {
         ,
         setData: function () {
             var str_type = this.data.type;
-            str_type = str_type.toLowerCase;
-            switch(str_type){
-                case str_type.indexOf('электронный'):
-                    $('.addArguments .type_complicant').val(0);
-                    break;
-                case str_type.indexOf('конкурс'):
-                    $('.addArguments .type_complicant').val(1);
-                    break;
-                case str_type.indexOf('котировок'):
-                    $('.addArguments .type_complicant').val(2);
-                    break;
-                case str_type.indexOf('предложений'):
-                    $('.addArguments .type_complicant').val(3);
-                    break;
+            str_type = str_type.toLowerCase();
+
+            if(str_type.indexOf('электронный') != -1){
+                $('.addArguments .type_complicant').val(0);
+            } else if(str_type.indexOf('конкурс') != -1){
+                $('.addArguments .type_complicant').val(1);
+            } else if(tr_type.indexOf('котировок') != -1){
+                $('.addArguments .type_complicant').val(2);
+            } else if(str_type.indexOf('предложений') != -1){
+                $('.addArguments .type_complicant').val(3);
             }
 
             $('#type').html(this.data.type);
