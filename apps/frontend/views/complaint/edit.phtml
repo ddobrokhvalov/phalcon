@@ -1,3 +1,4 @@
+<script type="application/javascript" src="/js/argCompl_jsonSend.js"></script>
 <div class="content edit-complaint-page {% if complaint.status == 'draft' and action_edit === true %}edit-now {% endif %}">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
@@ -119,6 +120,7 @@
                         <span class="c-jadd2-f-z">Сокращенное имя жалобы (для идинтификации внутри системы)</span>
                         <input id="complaint_name" type="text" name="complaint_name" value="{{ complaint.complaint_name }}">
                         <div class="c-jd2-f-dov-b">
+                            <div class="opacity-cap-compl"></div>
                             <div class="c-jd2-f-dov">
                                 Доводы жалобы
                             </div>
@@ -317,6 +319,75 @@
 {% else %}
     <input type="hidden" name="is_edit_now" id="is_edit_now" value="">
 {% endif %}
+
+<article class="admin-popup-wrap addArguments">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content argComp">
+        <div class="admin-popup-close"></div>
+        <h6>Доводы жалоб</h6>
+        <div class="argumentsComplaints">
+            <div class="word-argCompl-find">
+                <p>Поиск</p>
+                <div class="word-argCompl-input">
+                    <input type="text" placeholder="Искать">
+                    <button></button>
+                </div>
+            </div>
+            <ul class="arguments-steps">
+                <li class="steps-line arg-nextStep"> <!-- arg-dunStep-->
+                    <div></div>
+                    <span data-step="1">шаг 1</span>
+                </li>
+                <li class="steps-line">
+                    <div></div>
+                    <span data-step="2">шаг 2</span>
+                </li>
+                <li class="steps-line">
+                    <div></div>
+                    <span data-step="3">шаг 3</span>
+                </li>
+                <li class="steps-line">
+                    <div></div>
+                    <span data-step="4">Список доводов</span>
+                </li>
+            </ul>
+            <div id="argComplSelect" class="select-holder">
+                <div class="title-info-box">Выберите тип жалобы</div>
+                <div class="custom_select">
+                    <div class="current-option" data-value="">
+                        <span>Жалоба на положения документации</span>
+                        <div></div>
+                    </div>
+                    <ul class="custom-options mCustomScrollbar">
+                        <!--                        {% for key, val in categories%}-->
+                        <!--                            <li class="argo" data-value="{{val['id']}}" data-parent="{{val['parent_id']}}">{{val['name']}}</li>-->
+                        <!--                        {% endfor %}-->
+                    </ul>
+                </div>
+            </div>
+            <section class="last-argComplList">
+                <div class="title-info-box">Доводы</div>
+                <div class="argCompl-review mCustomScrollbar">
+                    <ul>
+                        <li>Lorem ipsum dolor sit.</li>
+                        <li>Lorem ipsum dolor sit amet, consectetur.</li>
+                        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur error esse, molestias perferendis quaerat sint.</li>
+                        <li>Lorem ipsum dolor.</li>
+                        <li>Lorem ipsum dolor sit amet.</li>
+                    </ul>
+                </div>
+            </section>
+            <div class="btn-div">Добавить довод</div>
+            <button id="argComplBtn">Дальше</button>
+        </div>
+        <input type="hidden" class="type_complicant" value="">
+        <input type="hidden" class="dateoff" value="">
+    </div>
+</article>
+
+
+
+
 <script>
         var edit = 'true';
     //$(document).ready(function(){
