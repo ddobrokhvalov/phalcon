@@ -3,10 +3,10 @@ $(document).ready(function() {
         addNewCat();
     });
     $('.cancel').click(function() {
-        popupCancel();
+        popupCancel($(this));
     });
-    $('.saveCat').click(function() {
-        categorySend();
+    $('.saveCat').click(function(e) {
+        categorySend(e);
     });
     $('.argCatTree').on('click', '.category_delete', function() {
         deleteCatBlock($(this));
@@ -34,7 +34,7 @@ $(document).ready(function() {
 
 var base_url = window.location.origin;
 var catNum = '', parentId, shell, catArgObj, requiredCat, argId;
-function categorySend() {
+function categorySend(e) {
     var catName = $('.inputBox input').val(),
         data;
     if ($('.saveCat').hasClass('subChild')) {
@@ -43,7 +43,13 @@ function categorySend() {
         data = 'parent_id=' + parentId +
             '&name=' + catName +
             '&required=' + requiredCat;
-        createNewCategory.newCategorySend(data);
+        if (catName == '' || requiredCat == '') {
+            e.preventDefault();
+            alert('Не все обязательные поля заполненны!');
+        } else {
+            createNewCategory.newCategorySend(data);
+            $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
+        }
     } else if ($('.saveCat').hasClass('createArgumentStart')) {
         $('.saveCat').text('Сохранить');
         $('.popupBtn.cancel').addClass('backPopupLevel').text('Назад');
@@ -66,7 +72,13 @@ function categorySend() {
             '&arguments[text]=' + argumentText +
             '&arguments[type]=' + argumentTypeVal +
             '&arguments[comment]=' + argumentComm;
-        addArgument.addData(data);
+        if (argumentTypeVal == '' || argumentText == '' || argumentName == '') {
+            e.preventDefault();
+            alert('Не все обязательные поля заполненны!');
+        } else {
+            addArgument.addData(data);
+            $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
+        }
     } else if ($('.saveCat').hasClass('editArgCat')) {
         console.log(catArgObj.descr);
         if (catArgObj.descr == 'argument') {
@@ -79,21 +91,38 @@ function categorySend() {
                 '&edit[arg]=true&edit[text]=' + catArgObj.text +
                 '&edit[type]=' + catArgObj.type +
                 '&edit[comment]=' + catArgObj.comment;
-            editCategoryArgument.editCatArg(data, catArgObj.descr);
+            if (catArgObj.name == '' || catArgObj.text == '' || catArgObj.type == '') {
+                e.preventDefault();
+                alert('Не все обязательные поля заполненны!');
+            } else {
+                editCategoryArgument.editCatArg(data, catArgObj.descr);
+                $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
+            }
         } else {
             catArgObj.name = $('.inputBox input').val();
             catArgObj.required = $('.requiredOrNot').attr('data-value');
             data = 'edit[id]=' + catArgObj.id +
                 '&edit[name]=' + catArgObj.name +
                 '&edit[required]=' + catArgObj.required;
-            editCategoryArgument.editCatArg(data, catArgObj.descr);
+            if (catArgObj.name == '' || catArgObj.required == '') {
+                e.preventDefault();
+                alert('Не все обязательные поля заполненны!');
+            } else {
+                editCategoryArgument.editCatArg(data, catArgObj.descr);
+                $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
+            }
         }
     } else {
         requiredCat = $('.requiredOrNot').attr('data-value');
         data = 'parent_id=' + 0 +
             '&name=' + catName +
             '&required=' + requiredCat;
-        createNewCategory.newCategorySend(data);
+        if (catName == '' || requiredCat == '') {
+            e.preventDefault();
+            alert('Не все обязательные поля заполненны!');
+        } else {
+            createNewCategory.newCategorySend(data);
+        }
     }
 }
 function toggleClick(objClick) {
@@ -108,6 +137,7 @@ function toggleClick(objClick) {
     }
 }
 function addNewCat() {
+    $('.add-Arguments_category .admin-popup-content').removeClass('hiddenSaveBtn');
     $('.saveCat').attr('class', 'popupBtn saveCat');
     $('.add-Arguments_category input').text('').val('');
     $('.add-Arguments_category textarea').val('');
@@ -123,6 +153,7 @@ function addNewCat() {
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
 }
 function createSubCat_Arg(obj) {
+    $('.add-Arguments_category .admin-popup-content').removeClass('hiddenSaveBtn');
     if (obj.parent().parent().hasClass('subWrap_1')) {
         $('.requiredOrNot').hide();
     } else {
@@ -164,6 +195,7 @@ function deleteCatBlock(obj) {
     deleteCategory.deleteCategorySend(data, obj.parent().parent());
 }
 function addArgumentFunc(obj) {
+    $('.add-Arguments_category .admin-popup-content').removeClass('hiddenSaveBtn');
     $('.saveCat').attr('class', 'popupBtn saveCat');
     $('.add-Arguments_category input').text('').val('');
     $('.add-Arguments_category textarea, .argumentText textarea').val('');
@@ -180,6 +212,7 @@ function addArgumentFunc(obj) {
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
 }
 function editCatArg(obj) {
+    $('.add-Arguments_category .admin-popup-content').removeClass('hiddenSaveBtn');
     $('.saveCat').attr('class', 'popupBtn saveCat');
     $('.add-Arguments_category input').text('').val('');
     $('.add-Arguments_category textarea').val('');
