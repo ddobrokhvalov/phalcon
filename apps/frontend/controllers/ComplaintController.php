@@ -741,7 +741,7 @@ class ComplaintController extends ControllerBase
         if($type == ''){
             return $type;
         }
-        $type = strtolower($type);
+        $type = mb_strtolower($type);
         $types = array(
             'электронный'   => 0,
             'конкурс'       => 1,
