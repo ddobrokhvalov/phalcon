@@ -1,8 +1,24 @@
 $(document).ready(function(){
     $(".save-btn").click(function(event){
+        event.preventDefault();
         ufasValidator.start();
         if (ufasValidator.result) {
-            $('#ufas-form').submit();
+            $.when(
+                $.ajax({
+                    url: "/admin/ufas/checkInn",
+                    type:'POST',
+                    data: { inn: $("#number").val() },
+                    dataType: 'json'
+                })
+            ).done(function(data) {debugger;
+                if (data.success == 'ok') {
+                   ufasValidator.done("#number");
+                   $('#ufas-form').submit();
+                } else {
+                    ufasValidator.showError("#number", 'Ошибка! Такой налоговый номер уже существует');
+                    return false;
+                }
+            });
         } else {
             event.preventDefault();
             return false;

@@ -35,6 +35,21 @@ class UfasController extends ControllerBase {
         $this->setMenu();
     }
 
+    function checkInnAction() {
+        $number = $this->request->getPost("inn");
+        $ufas = Ufas::findFirstByNumber($number);
+        if (!$ufas) {
+            $success = 'ok';
+        } else {
+            $success = 'no';
+        }
+        $this->view->disable();
+        echo json_encode([
+            'success' => $success,
+        ]);
+        exit();
+    }
+
     public function detailAction($id) {
         $ufas = Ufas::findFirstById($id);
         if (!$ufas) {

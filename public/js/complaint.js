@@ -81,6 +81,7 @@ var complaint = {
     cat3: false,
     needCat3: false,
     selectCat3: false,
+    inn: '',
     arguments_data: '',
 
     setHeader: function () {
@@ -364,6 +365,7 @@ var auction = {
         },
         succesRequest: function (data,auction_id) {
             if (auction.processData(data, auction_id)) {
+                complaint.inn = data.info.zakupku_osushestvlyaet_inn.substr(0, 2);
                 $('#auction_id').addClass('c-inp-done');
                 $('#notice_button').css('display', 'none');
                 $('#result_container').append('<b class="msg_status_parser">Данные Получены!</b>');
@@ -376,6 +378,7 @@ var auction = {
                 $('.loading-gif').hide();
                 auction.auctionReady = true;
                 argument.addArgument("just_text", "just_text");
+                
             } else {
                 $('#auction_id').addClass('c-inp-error');
                 $('#result_container').append('<b style="color:red!important;" class="msg_status_parser">Ошибка!</b>');
@@ -428,7 +431,11 @@ var auction = {
             $('#purchases_name').html(this.data.purchases_name);
             $('#contact').html(this.data.contact);
 
-            var html = '<div class="c-jadd-lr-row"><span>Наименование закупки</span><div class="c-jadd-lr-sel"><select><option>УФАС по г. Санкт-Петербургу</option><option>УФАС по г. Санкт-Петербургу</option><option>УФАС по г. Санкт-Петербургу</option></select></div></div>';
+            var ufas_name = $("#ufas-list li[ufas-number='" + complaint.inn + "']").text();
+            if (ufas_name.length == 0) {
+                ufas_name = "УФАС не определен";
+            }
+            var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel">' + ufas_name + '</div></div>';
             if (this.data.type == 'Открытый конкурс') {
                 html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
                 html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);

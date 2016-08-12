@@ -10,6 +10,11 @@
             <input type="hidden" name="arguments_data" id="arguments_data" value="">
             <input type="hidden" name="complaint_text" id="complaint_text" value="">
             <input type="hidden" name="applicant_id" id="applicant_id" value="">
+            <ul id="ufas-list" style="display: none;">
+                {% for uf in ufas %}
+                    <li ufas-id="{{ uf.id }}" ufas-number="{{ uf.number }}">{{ uf.name }}</li>
+                {% endfor %}
+            </ul>
             <div class="c-jadd1">
                 <div class="c-jadd1-z">
                     <span>Номер извещения</span><br>
