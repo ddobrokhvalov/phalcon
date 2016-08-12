@@ -104,10 +104,11 @@ var startSend = {
 var ajaxSendObj = {
     step: 2,
     stepsCacheArr: [],
+    base_url: window.location.origin,
     sendRequest: function(data) {
         $.ajax({
             type: "GET",
-            url: "http://fas/complaint/ajaxStepsAddComplaint" + data,
+            url: ajaxSendObj.base_url + "/complaint/ajaxStepsAddComplaint" + data,
             dataType: 'json',
             success: function(value) {
                 if (ajaxSendObj.step != 6) {
