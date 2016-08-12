@@ -214,7 +214,7 @@ var ajaxSendObj = {
         } else if (ajaxSendObj.step == 3) {
             if (data.arguments.length != 0) {
                 changeLine(3, 4);
-                changeSteps(3);
+                changeSteps(2);
                 $('.steps-line:nth-child(2)').removeClass('arg-nextStep');
                 $('.steps-line:nth-child(2)').addClass('arg-dunStep');
             } else {
