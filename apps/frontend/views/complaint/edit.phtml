@@ -414,7 +414,7 @@
                     {% if arr_users_arg[template.id] is defined %}
                         templates[{{template.id}}] = '{{ arr_users_arg[template.id] }}';
                     {% else %}
-                        templates[{{template.id}}] = '{{ arr_users_arg[template.text] }}';
+                        templates[{{template.id}}] = '{{ template.text }}';
                     {% endif %}
                 {% endfor %}
             {% endfor %}
@@ -425,7 +425,7 @@
             {% endif %}
             var categories_id = $("#arguments_id").val().split(",");
             $.each(categories_id, function( index, value ) {
-                if (index == {{ complaint_text_order }}) {
+                if (index == '{{ complaint_text_order }}') {
                     argument.addArgument("just_text", "just_text", '{{complaint.complaint_text}}');
                 }
                 /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
