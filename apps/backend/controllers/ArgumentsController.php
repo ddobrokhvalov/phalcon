@@ -396,10 +396,15 @@ class ArgumentsController  extends ControllerBase
                     }
                 }
                 if (!$errors) {
+                    $required_parent = 0;
+                    $required_parent = ArgumentsCategory::findFirst($argument->category_id);
+                    if ($required_parent != false) {
+                        $required_parent = $required_parent->required;
+                    }
                     $argument->argument_status = 1;
                     $argument->date = date('Y-m-d H:i:s');
                     $argument->comment = $comment;
-                    $argument->required = (isset($data['required']) && $data['required'] == true) ? 1 : 0;
+                    $argument->required = (isset($data['required']) && $data['required'] == true) ? 1 : $required_parent;
                     $argument->type = (isset($data['type']) && is_numeric($data['type'])) ? $data['type'] : 0;
                     $argument->save();
                     echo json_encode(array(
