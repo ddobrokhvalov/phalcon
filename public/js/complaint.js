@@ -425,8 +425,25 @@ var auction = {
         }
         ,
         setData: function () {
+            var str_type = this.data.type;
+            str_type = str_type.toLowerCase;
+            switch(str_type){
+                case str_type.indexOf('электронный'):
+                    $('.addArguments .type_complicant').val(0);
+                    break;
+                case str_type.indexOf('конкурс'):
+                    $('.addArguments .type_complicant').val(1);
+                    break;
+                case str_type.indexOf('котировок'):
+                    $('.addArguments .type_complicant').val(2);
+                    break;
+                case str_type.indexOf('предложений'):
+                    $('.addArguments .type_complicant').val(3);
+                    break;
+            }
+
             $('#type').html(this.data.type);
-            $('.addArguments .type_complicant').val(this.data.type);
+            //$('.addArguments .type_complicant').val(this.data.type);
             $('.addArguments .dateoff').val(this.data.okonchanie_podachi);
             $('#purchases_made').html(this.data.purchases_made);
             $('#purchases_name').html(this.data.purchases_name);
