@@ -112,6 +112,7 @@ var ajaxSendObj = {
             url: ajaxSendObj.base_url + "/complaint/ajaxStepsAddComplaint" + data,
             dataType: 'json',
             success: function(value) {
+                console.log(value);
                 if (ajaxSendObj.step != 6) {
                     ajaxSendObj.stepsCacheArr.push(value);
                     ajaxSendObj.showDopBlocks();
@@ -158,7 +159,7 @@ var ajaxSendObj = {
                 $('#argComplSelect').slideUp(400);
             }
             for (var i = 0; i < data.cat_arguments.length; i++) {
-                if (data.date == 1 && readyDataCatArg.cat_arguments[i].required == 1) {
+                if (data.date == 1 && data.cat_arguments[i].required == 1) {
                     $('#argComplSelect .custom-options div div:first').append(
                         '<li class="argo required"' +
                         ' data-value="' + data.cat_arguments[i].id +
