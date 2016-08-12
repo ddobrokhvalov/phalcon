@@ -419,6 +419,42 @@
     font-size: 22px;
   }
 }
+.requiredOrNot {
+  display: block;
+  margin: -40px auto 66px;
+  width: 580px;
+  color: #2c2f32;
+  label {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding-left: 30px;
+    font-size: 20px;
+    line-height: 1.6;
+    &:after {
+      position: absolute;
+      content: '';
+      top: 5px;
+      left: 0;
+      width: 22px;
+      height: 22px;
+      background: url(../images/radio_button.png) -26px -1px no-repeat;
+    }
+  }
+  .reqRadio {
+    display: none;
+    &:checked {
+      + label {
+        background-color: transparent;
+        color: #2c2f32;
+        font-weight: 100;
+        &:after {
+          background-position: -1px -1px;
+        }
+      }
+    }
+  }
+}
 #addArgComments {
   display: none;
 }

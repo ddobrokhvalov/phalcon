@@ -26,6 +26,9 @@ $(document).ready(function() {
     $('.addArgComment').click(function() {
         showArgComment($(this));
     });
+    $('.requiredOrNot label').click(function() {
+        changeRequired($(this).attr('data-required'));
+    });
     requiredStartSearch();
 });
 
@@ -231,6 +234,9 @@ function requiredStartSearch() {
             $(this).addClass('dataRequired');
         }
     });
+}
+function changeRequired(objNumb) {
+    $('.requiredOrNot').attr('data-value', objNumb);
 }
 function ShellToFill(step, titleText, id, parent_id, dataRequired, text, comment, argumentType) {
     this.wrapp = '<li class="catArguments">';

@@ -2811,6 +2811,47 @@ a:focus {
 }
 
 /* line 422, ../sass/_list_arguments.scss */
+.requiredOrNot {
+  display: block;
+  margin: -40px auto 66px;
+  width: 580px;
+  color: #2c2f32;
+}
+/* line 427, ../sass/_list_arguments.scss */
+.requiredOrNot label {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding-left: 30px;
+  font-size: 20px;
+  line-height: 1.6;
+}
+/* line 434, ../sass/_list_arguments.scss */
+.requiredOrNot label:after {
+  position: absolute;
+  content: '';
+  top: 5px;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  background: url(../images/radio_button.png) -26px -1px no-repeat;
+}
+/* line 444, ../sass/_list_arguments.scss */
+.requiredOrNot .reqRadio {
+  display: none;
+}
+/* line 447, ../sass/_list_arguments.scss */
+.requiredOrNot .reqRadio:checked + label {
+  background-color: transparent;
+  color: #2c2f32;
+  font-weight: 100;
+}
+/* line 451, ../sass/_list_arguments.scss */
+.requiredOrNot .reqRadio:checked + label:after {
+  background-position: -1px -1px;
+}
+
+/* line 458, ../sass/_list_arguments.scss */
 #addArgComments {
   display: none;
 }
