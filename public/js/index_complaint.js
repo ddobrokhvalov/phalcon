@@ -1,7 +1,6 @@
 $(document).ready(function () {
     initialize();
     $('.select_all_complaint').click(function () {
-        debugger;
         console.log(this)
         if ($(this).is(':checked')) {
             indexComplaint.selectAll();
@@ -19,7 +18,6 @@ $(document).ready(function () {
     });
 
     $('.change-status').click(function () {
-        debugger;
         var status = $(this).attr("value");
 
         if(!$(this).hasClass("button_copy_deactive")){
@@ -27,7 +25,6 @@ $(document).ready(function () {
         }
     });
     $('.button-copy').click(function(){
-        debugger;
         if(indexComplaint.copyButton === true && indexComplaint.selectedComplaint.length == 1){
             indexComplaint.changeStatus('copy');
         }
@@ -133,7 +130,6 @@ var indexComplaint = {
         $(button).addClass('button_copy_deactive');
     },
     changeStatus: function (status) {
-        debugger;
         console.log(this);
         var data = JSON.stringify(this.selectedComplaint);
         var edit = $(".c-jadd1-1-b").attr("edit");
@@ -147,7 +143,6 @@ var indexComplaint = {
             url: '/complaint/status',
             data: 'status=' + status + '&complaints=' + data,
             success: function (msg) {
-                debugger;
                 console.log(msg);
                 switch(status){
                     case 'copy':
@@ -321,7 +316,6 @@ var indexComplaint = {
                 }
             break;
             default:
-                debugger;
                 var checkSame = true;
                 var current = this.arrComplaint[0].status;
                 this.deActiveButton('.button-copy');
@@ -411,7 +405,6 @@ var indexComplaint = {
 
     },
     removeComplain: function (id) {
-        debugger;
         var index = this.selectedComplaint.indexOf(id);
         if (index > -1) {
             this.selectedComplaint.splice(index, 1);
@@ -516,7 +509,6 @@ var indexComplaint = {
                 }
             break;
             default:
-                debugger;
                 var checkSame = true;
                 var current = this.arrComplaint[0].status;
                 this.deActiveButton('.button-copy');
@@ -598,7 +590,6 @@ var indexComplaint = {
         }
     },
     selectAll: function () {
-        debugger;
         var self = this;
         var count = 0;
         self.activeButton('.to-archive');
@@ -608,7 +599,6 @@ var indexComplaint = {
         var arrStatus = new Array();
         var same = true;
         $('.complaint-checkbox').each(function () {
-            debugger;
             var id = $(this).val();
             var status = jQuery("input[name=jlist" + id + "]").parent().find('#current-status').val();
             self.arrComplaint.push({
@@ -665,7 +655,6 @@ var indexComplaint = {
 
 
 function initialize( ){
-    // debugger;
     if(typeof edit == "undefined") {
         var self = indexComplaint;
         var count = 0;
@@ -678,7 +667,6 @@ function initialize( ){
         var arrStatus = new Array;
         var same = true;
         $('.complaint-checkbox:checked').each(function () {
-            // debugger;
             self.activeButton('.to-archive');
             self.activeButton('.to-delete');
             self.deActiveButton('.button-recall');
