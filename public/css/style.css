@@ -2582,7 +2582,7 @@ a:focus {
 }
 
 /* line 227, ../sass/_list_arguments.scss */
-.add-Arguments_category .inputBox input, .add-Arguments_category .inputBox textarea, .add-ArgumentsType .inputBox textarea {
+.add-Arguments_category .inputBox input, .add-Arguments_category .inputBox textarea {
   width: 100%;
   font-size: 20px;
   font-weight: 100;
@@ -2608,11 +2608,21 @@ a:focus {
   clear: both;
 }
 /* line 244, ../sass/_list_arguments.scss */
+.add-Arguments_category .admin-popup-content.hiddenSaveBtn:before {
+  position: absolute;
+  content: '';
+  bottom: 43px;
+  z-index: 100;
+  right: 86px;
+  width: 204px;
+  height: 52px;
+}
+/* line 253, ../sass/_list_arguments.scss */
 .add-Arguments_category .admin-popup-content h6 {
   margin-bottom: 34px;
   font-size: 48px;
 }
-/* line 247, ../sass/_list_arguments.scss */
+/* line 256, ../sass/_list_arguments.scss */
 .add-Arguments_category .admin-popup-content h6:before {
   top: -27px;
   left: -9px;
@@ -2622,7 +2632,7 @@ a:focus {
   -o-transform: rotate(-4deg);
   transform: rotate(-4deg);
 }
-/* line 254, ../sass/_list_arguments.scss */
+/* line 263, ../sass/_list_arguments.scss */
 .add-Arguments_category .popupBtn {
   float: left;
   margin-left: 87px;
@@ -2638,50 +2648,50 @@ a:focus {
   background-color: #00aeef;
   cursor: pointer;
 }
-/* line 268, ../sass/_list_arguments.scss */
+/* line 277, ../sass/_list_arguments.scss */
 .add-Arguments_category .popupBtn:last-child {
   float: right;
   margin-right: 87px;
   margin-left: 0;
 }
-/* line 273, ../sass/_list_arguments.scss */
+/* line 282, ../sass/_list_arguments.scss */
 .add-Arguments_category .popupBtn:hover {
   background-color: #10b8f7;
 }
-/* line 277, ../sass/_list_arguments.scss */
+/* line 286, ../sass/_list_arguments.scss */
 .add-Arguments_category .inputBox {
   margin: 0 auto 66px;
   width: 580px;
 }
-/* line 280, ../sass/_list_arguments.scss */
+/* line 289, ../sass/_list_arguments.scss */
 .add-Arguments_category .inputBox h4 {
   font-size: 24px;
   font-weight: 100;
   line-height: 60px;
   color: #2c2f32;
 }
-/* line 286, ../sass/_list_arguments.scss */
+/* line 295, ../sass/_list_arguments.scss */
 .add-Arguments_category .inputBox input {
   padding: 0 40px;
   height: 66px;
 }
-/* line 291, ../sass/_list_arguments.scss */
+/* line 300, ../sass/_list_arguments.scss */
 .add-Arguments_category .inputBox textarea {
   padding: 10px 40px;
   height: 250px;
   resize: none;
 }
-/* line 298, ../sass/_list_arguments.scss */
+/* line 307, ../sass/_list_arguments.scss */
 .add-Arguments_category .argumentText {
   display: none;
   margin-top: -40px;
 }
-/* line 302, ../sass/_list_arguments.scss */
+/* line 311, ../sass/_list_arguments.scss */
 .add-Arguments_category .select-holder {
   margin: 0 auto 66px;
   width: 580px;
 }
-/* line 307, ../sass/_list_arguments.scss */
+/* line 316, ../sass/_list_arguments.scss */
 .add-Arguments_category .current-option span {
   padding: 0 24px;
   height: 66px;
@@ -2693,12 +2703,12 @@ a:focus {
   -moz-border-radius: 8px;
   border-radius: 8px;
 }
-/* line 317, ../sass/_list_arguments.scss */
+/* line 326, ../sass/_list_arguments.scss */
 .add-Arguments_category .current-option span:after {
   top: 16px;
   right: 24px;
 }
-/* line 323, ../sass/_list_arguments.scss */
+/* line 332, ../sass/_list_arguments.scss */
 .add-Arguments_category .custom-options {
   overflow: hidden;
   top: 65px;
@@ -2708,7 +2718,7 @@ a:focus {
   -moz-border-radius: 8px;
   border-radius: 8px;
 }
-/* line 331, ../sass/_list_arguments.scss */
+/* line 340, ../sass/_list_arguments.scss */
 .add-Arguments_category .custom-options li {
   padding: 0 24px;
   font-size: 20px;
@@ -2716,30 +2726,17 @@ a:focus {
   color: #2c2f32;
 }
 
-/* line 339, ../sass/_list_arguments.scss */
+/* line 348, ../sass/_list_arguments.scss */
 .add-ArgumentsType {
   display: none;
   margin-bottom: 20px;
 }
-/* line 342, ../sass/_list_arguments.scss */
-.add-ArgumentsType .popupBtn {
-  float: right;
-  margin: 60px 88px 44px 0;
-}
-/* line 346, ../sass/_list_arguments.scss */
-.add-ArgumentsType .inputBox {
-  margin: 0 auto 66px;
-}
-/* line 348, ../sass/_list_arguments.scss */
-.add-ArgumentsType .inputBox textarea {
-  padding: 10px 24px;
-}
-/* line 353, ../sass/_list_arguments.scss */
+/* line 351, ../sass/_list_arguments.scss */
 .add-ArgumentsType .select-holder {
   margin: 0 auto;
   width: 580px;
 }
-/* line 358, ../sass/_list_arguments.scss */
+/* line 356, ../sass/_list_arguments.scss */
 .add-ArgumentsType .current-option span {
   padding: 0 24px;
   height: 66px;
@@ -2751,12 +2748,12 @@ a:focus {
   -moz-border-radius: 8px;
   border-radius: 8px;
 }
-/* line 368, ../sass/_list_arguments.scss */
+/* line 366, ../sass/_list_arguments.scss */
 .add-ArgumentsType .current-option span:after {
   top: 16px;
   right: 24px;
 }
-/* line 374, ../sass/_list_arguments.scss */
+/* line 372, ../sass/_list_arguments.scss */
 .add-ArgumentsType .custom-options {
   overflow: hidden;
   top: 65px;
@@ -2766,21 +2763,21 @@ a:focus {
   -moz-border-radius: 8px;
   border-radius: 8px;
 }
-/* line 382, ../sass/_list_arguments.scss */
+/* line 380, ../sass/_list_arguments.scss */
 .add-ArgumentsType .custom-options li {
   padding: 0 24px;
   font-size: 20px;
   line-height: 66px;
   color: #2c2f32;
 }
-/* line 389, ../sass/_list_arguments.scss */
+/* line 387, ../sass/_list_arguments.scss */
 .add-ArgumentsType .addArgComment {
   position: relative;
   margin: 0 0 0 87px;
   padding-left: 27px;
   font-size: 20px;
 }
-/* line 394, ../sass/_list_arguments.scss */
+/* line 392, ../sass/_list_arguments.scss */
 .add-ArgumentsType .addArgComment:after {
   position: absolute;
   content: '';
@@ -2790,34 +2787,34 @@ a:focus {
   height: 16px;
   background: url(../images/checkbx1.png) 0 0 no-repeat;
 }
-/* line 404, ../sass/_list_arguments.scss */
+/* line 402, ../sass/_list_arguments.scss */
 .add-ArgumentsType .addArgComment.toggleArgComment:after {
   background-position: 0 -16px;
 }
-/* line 409, ../sass/_list_arguments.scss */
+/* line 407, ../sass/_list_arguments.scss */
 .add-ArgumentsType .argumentsComment {
   display: none;
   margin: 0 auto;
 }
-/* line 412, ../sass/_list_arguments.scss */
+/* line 410, ../sass/_list_arguments.scss */
 .add-ArgumentsType .argumentsComment h4 {
   margin-bottom: 0;
   padding-top: 10px;
   font-size: 22px;
 }
-/* line 418, ../sass/_list_arguments.scss */
+/* line 416, ../sass/_list_arguments.scss */
 .add-ArgumentsType .title-info-box {
   font-size: 22px;
 }
 
-/* line 422, ../sass/_list_arguments.scss */
+/* line 420, ../sass/_list_arguments.scss */
 .requiredOrNot {
   display: block;
   margin: -40px auto 66px;
   width: 580px;
   color: #2c2f32;
 }
-/* line 427, ../sass/_list_arguments.scss */
+/* line 425, ../sass/_list_arguments.scss */
 .requiredOrNot label {
   display: block;
   width: 100%;
@@ -2826,7 +2823,7 @@ a:focus {
   font-size: 20px;
   line-height: 1.6;
 }
-/* line 434, ../sass/_list_arguments.scss */
+/* line 432, ../sass/_list_arguments.scss */
 .requiredOrNot label:after {
   position: absolute;
   content: '';
@@ -2836,22 +2833,22 @@ a:focus {
   height: 22px;
   background: url(../images/radio_button.png) -26px -1px no-repeat;
 }
-/* line 444, ../sass/_list_arguments.scss */
+/* line 442, ../sass/_list_arguments.scss */
 .requiredOrNot .reqRadio {
   display: none;
 }
-/* line 447, ../sass/_list_arguments.scss */
+/* line 445, ../sass/_list_arguments.scss */
 .requiredOrNot .reqRadio:checked + label {
   background-color: transparent;
   color: #2c2f32;
   font-weight: 100;
 }
-/* line 451, ../sass/_list_arguments.scss */
+/* line 449, ../sass/_list_arguments.scss */
 .requiredOrNot .reqRadio:checked + label:after {
   background-position: -1px -1px;
 }
 
-/* line 458, ../sass/_list_arguments.scss */
+/* line 456, ../sass/_list_arguments.scss */
 #addArgComments {
   display: none;
 }
@@ -4764,33 +4761,163 @@ body#backend-login {
   display: none;
 }
 
+/* line 5, ../sass/_ufas_page.scss */
+.list-ufas h1 {
+  display: inline-block;
+  margin-bottom: 32px;
+}
+/* line 9, ../sass/_ufas_page.scss */
+.list-ufas .admin-add.ufasAdd {
+  width: 250px;
+}
+/* line 12, ../sass/_ufas_page.scss */
+.list-ufas .admin-lt-content .lt-content-main li:first-child {
+  padding-left: 11px;
+}
+/* line 16, ../sass/_ufas_page.scss */
+.list-ufas .admin-lt-content li:first-child {
+  width: 235px;
+}
+/* line 19, ../sass/_ufas_page.scss */
+.list-ufas .admin-lt-content li:nth-child(2) {
+  width: 115px;
+}
+/* line 22, ../sass/_ufas_page.scss */
+.list-ufas .admin-lt-content li:nth-child(3) {
+  width: 280px;
+}
+/* line 25, ../sass/_ufas_page.scss */
+.list-ufas .admin-lt-content li:nth-child(4) {
+  width: 135px;
+}
+/* line 28, ../sass/_ufas_page.scss */
+.list-ufas .admin-lt-content li:nth-child(5) {
+  width: 200px;
+}
+/* line 32, ../sass/_ufas_page.scss */
+.list-ufas .lt-content-main:hover li {
+  font-weight: normal;
+}
+/* line 36, ../sass/_ufas_page.scss */
+.list-ufas .lt-content-main li:nth-child(1), .list-ufas .lt-content-main li:nth-child(3) {
+  line-height: 20px;
+  padding-top: 20px;
+  overflow: hidden;
+}
+/* line 41, ../sass/_ufas_page.scss */
+.list-ufas .lt-content-main li:nth-child(2), .list-ufas .lt-content-main li:nth-child(4), .list-ufas .lt-content-main li:nth-child(5) {
+  line-height: 65px;
+  overflow: hidden;
+}
+/* line 46, ../sass/_ufas_page.scss */
+.list-ufas .lt-content-main li a {
+  color: #34383e;
+}
+/* line 53, ../sass/_ufas_page.scss */
+.list-ufas .lt-content-top li span {
+  background: #f9f9fa url("../images/arrow-to-down.png") no-repeat scroll 100% 50%;
+  cursor: pointer;
+  padding-right: 16px;
+}
+
+/* line 62, ../sass/_ufas_page.scss */
+.ufas-details h1 {
+  display: inline-block;
+}
+/* line 65, ../sass/_ufas_page.scss */
+.ufas-details .delete-btn {
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  float: right;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 62px;
+  outline: medium none;
+  padding: 0 34px;
+  text-transform: uppercase;
+}
+/* line 77, ../sass/_ufas_page.scss */
+.ufas-details .delete-btn:hover {
+  background-color: #fef0f2;
+}
+/* line 81, ../sass/_ufas_page.scss */
+.ufas-details .form-wrap {
+  border-top: 3px solid #00aeef;
+  background-color: #f7f8fa;
+  margin-left: 0;
+  padding-left: 40px;
+  padding-top: 36px;
+  width: 100%;
+}
+/* line 88, ../sass/_ufas_page.scss */
+.ufas-details .form-wrap label {
+  display: block;
+  margin-bottom: 36px;
+}
+/* line 91, ../sass/_ufas_page.scss */
+.ufas-details .form-wrap label div {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+/* line 95, ../sass/_ufas_page.scss */
+.ufas-details .form-wrap label input {
+  -moz-appearance: textfield;
+  border: 1px solid #e0e3ea;
+  border-radius: 2px;
+  box-sizing: border-box;
+  color: #34383e;
+  font: 100 18px/55px "Open Sans",sans-serif;
+  padding: 0 17px;
+}
+/* line 105, ../sass/_ufas_page.scss */
+.ufas-details .form-wrap .save-btn {
+  background-color: #00aeef;
+  border: medium none;
+  border-radius: 6px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 73px;
+  margin-bottom: 20px;
+  outline: medium none;
+  text-transform: uppercase;
+  width: 482px;
+}
+/* line 118, ../sass/_ufas_page.scss */
+.ufas-details .form-wrap .save-btn:hover {
+  background-color: #10b8f7;
+}
+
 @media (max-width: 1640px) {
-  /* line 118, ../sass/style.scss */
+  /* line 119, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: 330px;
     margin-right: 0;
   }
 }
 @media (max-width: 1282px) {
-  /* line 124, ../sass/style.scss */
+  /* line 125, ../sass/style.scss */
   .lm-logo {
     width: 70% !important;
     margin-left: 40px;
   }
 }
 @media (max-width: 1325px) {
-  /* line 130, ../sass/style.scss */
+  /* line 131, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* line 134, ../sass/style.scss */
+  /* line 135, ../sass/style.scss */
   .admin-lm-wrap {
     left: -242px;
   }
 
-  /* line 137, ../sass/style.scss */
+  /* line 138, ../sass/style.scss */
   .lm-burger {
     display: block;
   }
