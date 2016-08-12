@@ -1,12 +1,6 @@
 <?php
 
-
 namespace Multiple\Library;
-/*
- * use
- * $p = new Parser();
-		print_r($p->parseAuction('0340300022416000001'));
- */
 class Parser {
     function Parser() {
         libxml_use_internal_errors(true);
@@ -25,6 +19,20 @@ class Parser {
         $auction['info']['type'] = trim($xpath->evaluate('string(//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Способ определения поставщика")]/following-sibling::td[1]/text()[1])'));
         $auction['info']['platform'] = trim($xpath->evaluate('string(//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Наименование электронной площадки")]/following-sibling::td[1]/text()[1])'));
         $auction['info']['zakupku_osushestvlyaet'] = trim($xpath->evaluate('string(//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Закупку осуществляет") or contains(text(),"Размещение осуществляет")]/following-sibling::td[1]/text()[1])'));
+		if($xpath->query('//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Закупку осуществляет") or contains(text(),"Размещение осуществляет")]/following-sibling::td[1]/a')) {
+            $zakupku_osushestvlyaet_url= trim($xpath->evaluate('string(//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Закупку осуществляет") or contains(text(),"Размещение осуществляет")]/following-sibling::td[1]/a/@href)'));
+            //echo "$zakupku_osushestvlyaet_url\n";
+            $inn_data = $this->getUrl($zakupku_osushestvlyaet_url);
+            //file_put_contents('inn_data.html', $inn_data);
+
+            //echo "$inn_data\n";
+            $doc2 = new \DOMDocument();
+            $doc2->loadHTML('<?xml encoding="UTF-8">' . $inn_data);
+            $xpath2 = new \DOMXpath($doc2);
+            $auction['info']['zakupku_osushestvlyaet_inn'] = trim($xpath2->evaluate('string(//table[@class="noticeTable"]//td/span[text()="ИНН"]/../following-sibling::td[1]/span/text())'));
+            //$auction['info']['zakupku_osushestvlyaet_inn'] = trim($xpath2->evaluate('string(//table[@class="noticeTable"]//td/span[text()="ИНН"]/text())'));
+            //$auction['info']['zakupku_osushestvlyaet_inn'] = trim($xpath2->evaluate('string(//title/text())'));
+        }
         $auction['info']['object_zakupki'] = trim($xpath->evaluate('string(//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Объект закупки")]/following-sibling::td[1]/span[@id="notice_orderName"]/text())'));
 
 //        $auction['contact']['name'] = trim($xpath->evaluate('string(//h2[text()="Контактная информация"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Наименование организации")]/following-sibling::td[1]/text())'));

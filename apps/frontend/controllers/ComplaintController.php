@@ -10,6 +10,7 @@ use Multiple\Frontend\Models\ComplaintMovingHistory;
 use Multiple\Frontend\Models\Question;
 use Multiple\Frontend\Models\UsersArguments;
 use Multiple\Frontend\Models\Files;
+use Multiple\Backend\Models\Ufas;
 use Multiple\Library\Parser;
 use Phalcon\Mvc\Controller;
 use \Phalcon\Paginator\Adapter\NativeArray as Paginator;
@@ -190,7 +191,7 @@ class ComplaintController extends ControllerBase
         $this->setMenu();
         $category = new Category();
         $arguments = $category->getArguments();
-
+        $ufas = Ufas::find();
 
         //if (isset($_SESSION['TRUSTEDNET']['OAUTH'])) $OAuth2 = unserialize($_SESSION['TRUSTEDNET']['OAUTH']);
 //        if (isset($OAuth2)){
@@ -226,6 +227,7 @@ class ComplaintController extends ControllerBase
 
         //$arg = new ArgumentsCategory();
         //$this->view->categories = $temp;
+        $this->view->ufas = $ufas;
         $this->view->arguments = $arguments;
     }
 

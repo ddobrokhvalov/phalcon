@@ -38,6 +38,10 @@
                 <label for="lm-logs"><input type="checkbox" id="lm-logs"></label>
                 <a href="/admin/log/index">Логи<span>{{menuItemsCount['Log']}}</span></a>
             </li>
+            <li{% if cur_controller == 'ufas' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
+                <label for="lm-ufas"><input type="checkbox" id="lm-ufas"></label>
+                <a href="/admin/ufas/index">Данные УФАС<span>{{menuItemsCount['Ufas']}}</span></a>
+            </li>
         </ul>
         <div class="lm-search-title">
             <p>Поиск по выбранному</p>

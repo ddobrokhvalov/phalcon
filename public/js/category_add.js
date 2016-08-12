@@ -3,7 +3,7 @@ $(document).ready(function() {
         addNewCat();
     });
     $('.cancel').click(function() {
-        popupCancel($(this));
+        popupCancel();
     });
     $('.saveCat').click(function() {
         categorySend();
@@ -32,6 +32,8 @@ $(document).ready(function() {
     requiredStartSearch();
 });
 
+var catNum = '', parentId, shell, catArgObj;
+var base_url = window.location.origin;
 var catNum = '', parentId, shell, catArgObj, requiredCat, argId;
 function categorySend() {
     var catName = $('.inputBox input').val(),
@@ -262,7 +264,7 @@ var createNewCategory = {
     newCategorySend: function(data) {
             $.ajax({
             type: "GET",
-            url: "http://fas/admin/arguments/ajaxAddCategory",
+            url: base_url + "/admin/arguments/ajaxAddCategory",
             data: data,
             dataType: 'json',
             success: function(value) {
@@ -324,7 +326,7 @@ var addArgument = {
     addData: function(data) {
         $.ajax({
             type: "GET",
-            url: "http://fas/admin/arguments/ajaxAddArguments",
+            url: base_url + "/admin/arguments/ajaxAddArguments",
             data: data,
             dataType: 'json',
             success: function(value) {
@@ -359,7 +361,7 @@ var receivingData = {
     getSomeData: function(data, obj, num) {
         $.ajax({
             type: "GET",
-            url: "http://fas/admin/arguments/ajaxGetCatArguments",
+            url: base_url + "/admin/arguments/ajaxGetCatArguments",
             data: data,
             dataType: 'json',
             context: obj.parent(),
@@ -428,7 +430,7 @@ var editCategoryArgument = {
     editCatArg: function(data, name) {
         $.ajax({
             type: "GET",
-            url: "http://fas/admin/arguments/ajaxEdit",
+            url: base_url + "/admin/arguments/ajaxEdit",
             data: data,
             dataType: 'json',
             success: function(value) {
@@ -471,7 +473,7 @@ var deleteCategory = {
     deleteCategorySend: function(data, obj) {
         $.ajax({
             type: "GET",
-            url: "http://fas/admin/arguments/ajaxRemove",
+            url: base_url + "/admin/arguments/ajaxRemove",
             data: data,
             dataType: 'json',
             context: obj,
