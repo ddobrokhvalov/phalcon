@@ -111,6 +111,7 @@ function addNewCat() {
     $('.saveCat').attr('class', 'popupBtn saveCat');
     $('.add-Arguments_category input').text('').val('');
     $('.add-Arguments_category textarea').val('');
+    $('.saveCat').text('Сохранить');
     if ($('.saveCat').hasClass('subChild')) {
         $('.saveCat').removeClass('subChild');
     }
