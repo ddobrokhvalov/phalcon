@@ -3,7 +3,7 @@ $(document).ready(function() {
         addNewCat();
     });
     $('.cancel').click(function() {
-        popupCancel();
+        popupCancel($(this));
     });
     $('.saveCat').click(function() {
         categorySend();
@@ -26,6 +26,7 @@ $(document).ready(function() {
     $('.addArgComment').click(function() {
         showArgComment($(this));
     });
+    requiredStartSearch();
 });
 
 var catNum = '', parentId, shell, catArgObj, requiredCat, argId;
@@ -40,6 +41,7 @@ function categorySend() {
         createNewCategory.newCategorySend(data);
     } else if ($('.saveCat').hasClass('createArgumentStart')) {
         $('.saveCat').text('Сохранить');
+        $('.popupBtn.cancel').addClass('backPopupLevel').text('Назад');
         $('.saveCat').removeClass('createArgumentStart');
         if ($('.saveCat').hasClass('editAlso')) {
             $('.saveCat').addClass('editArgCat');
@@ -52,7 +54,7 @@ function categorySend() {
     } else if ($('.saveCat').hasClass('createArgument')) {
         var argumentName = $('.inputBox input').val(),
             argumentText = $('.argumentText textarea').val(),
-            argumentComm = $('.argumentComments textarea').val(),
+            argumentComm = $('.argumentsComment textarea').val(),
             argumentTypeVal = $('.add-ArgumentsType .current-option').attr('data-value');
         data = 'arguments[category_id]=' + parentId +
             '&arguments[name]=' + argumentName +
@@ -69,8 +71,8 @@ function categorySend() {
             data = 'edit[id]=' + argId +
                 '&edit[name]=' + catArgObj.name +
                 '&edit[arg]=true&edit[text]=' + catArgObj.text +
-                '&arguments[type]=' + catArgObj.type +
-                '&arguments[comment]=' + catArgObj.comment;
+                '&edit[type]=' + catArgObj.type +
+                '&edit[comment]=' + catArgObj.comment;
             editCategoryArgument.editCatArg(data, catArgObj.descr);
         } else {
             catArgObj.name = $('.inputBox input').val();
@@ -107,23 +109,35 @@ function addNewCat() {
     catNum = '';
     $('.argumentText').hide();
     $('.add-Arguments_category h6').text('Добавление категории');
+    $('.add-ArgumentsCategory .inputBox:first h4').text('Название категории');
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
 }
 function createSubCat_Arg(obj) {
     $('.saveCat').attr('class', 'popupBtn saveCat');
     $('.add-Arguments_category input').text('').val('');
     $('.add-Arguments_category textarea').val('');
-    $('.argumentText').hide();
-    $('.saveCat').addClass('subChild');
+    $('.add-ArgumentsCategory').show();
+    $('.add-ArgumentsType, .argumentText').hide();
+    $('.saveCat').removeClass('editArgCat createArgumentStart').addClass('subChild').text('Сохранить');
+    $('.popupBtn.cancel').removeClass('backPopupLevel').text('Отмена');
     catNum = obj.parent().attr('data-value');
     parentId = obj.parent().attr('data-id');
     $('.add-Arguments_category h6').text('Добавление категории');
+    $('.add-ArgumentsCategory .inputBox:first h4').text('Название категории');
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
 }
-function popupCancel() {
-    $('.admin-popup-wrap').fadeOut();
-    $('.inputBox input').val('');
-    $('.argumentText').hide();
+function popupCancel(obj) {
+    if ($(obj).hasClass('backPopupLevel')) {
+        $('.add-ArgumentsCategory').slideDown(400);
+        $('.add-ArgumentsType').slideUp(400);
+        $('.saveCat').removeClass('editArgCat').addClass('createArgumentStart');
+        $('.saveCat').text('Добавить тип');
+        $('.popupBtn.cancel').removeClass('backPopupLevel').text('Отмена');
+    } else {
+        $('.admin-popup-wrap').fadeOut();
+        $('.inputBox input').val('');
+        $('.argumentText').hide();
+    }
 }
 function deleteCatBlock(obj) {
     var thisId = obj.parent().attr('data-id'), data;
@@ -137,15 +151,19 @@ function deleteCatBlock(obj) {
 function addArgumentFunc(obj) {
     $('.saveCat').attr('class', 'popupBtn saveCat');
     $('.add-Arguments_category input').text('').val('');
-    $('.add-Arguments_category textarea').val('');
+    $('.add-Arguments_category textarea, .argumentText textarea').val('');
+    $('.addArgComment').removeClass('toggleArgComment');
+    $('#addArgComments').prop('checked', false);
+    $('.argumentsComment, .add-ArgumentsType').hide();
+    $('.add-ArgumentsCategory, .argumentText').show();
+    $('.saveCat').removeClass('editArgCat').addClass('createArgumentStart').text('Добавить тип');
+    $('.popupBtn.cancel').removeClass('backPopupLevel').text('Отмена');
     parentId = obj.parent().attr('data-id');
     catNum = obj.parent().attr('data-value');
-    $('.argumentText textarea').val('').text('');
-    $('.argumentText').show();
     $('.add-Arguments_category h6').text('Добавление довода');
-    $('.saveCat').text('Добавить тип');
+    $('.add-ArgumentsCategory .inputBox:first h4').text('Название довода');
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
-    $('.saveCat').removeClass('subChild').addClass('createArgumentStart');
+    $('.saveCat').removeClass('subChild').addClass('createArgumentStart').text('Добавить тип');
 }
 function editCatArg(obj) {
     $('.saveCat').attr('class', 'popupBtn saveCat');
@@ -155,9 +173,8 @@ function editCatArg(obj) {
     if (obj.attr('id') == 'argument') {
         $('.saveCat').text('Добавить тип');
         $('.saveCat').addClass('createArgumentStart');
-        $('.add-ArgumentsCategory').show();
+        $('.add-ArgumentsCategory, .argumentText').show();
         $('.add-ArgumentsType').hide();
-        $('.argumentText').show();
         catArgObj = {
             descr: obj.attr('id'),
             name: obj.find('h3').text(),
@@ -169,6 +186,7 @@ function editCatArg(obj) {
         $('.inputBox input').val(catArgObj.name);
         $('.argumentText textarea').text(catArgObj.text).val(catArgObj.text);
         $('.add-Arguments_category h6').text('Редактирование довода');
+        $('.add-ArgumentsCategory .inputBox:first h4').text('Название довода');
         $('.selectArgType_item').each(function() {
             if ($(this).attr('data-value') == catArgObj.type) {
                 var thisType = $(this).text(),
@@ -192,6 +210,7 @@ function editCatArg(obj) {
         };
         $('.inputBox input').val(catArgObj.name);
         $('.add-Arguments_category h6').text('Редактирование категории');
+        $('.add-ArgumentsCategory .inputBox:first h4').text('Название категории');
     }
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
     $('.saveCat').removeClass('subChild createArgument').addClass('createArgumentStart editAlso');
@@ -205,6 +224,13 @@ function showArgComment(obj) {
         $('.argumentsComment').slideUp(400);
         $('.argumentsComment textarea').val('');
     }
+}
+function requiredStartSearch() {
+    $('.argCatTree > .catArguments .category').each(function() {
+        if ($(this).attr('data-required') == 1) {
+            $(this).addClass('dataRequired');
+        }
+    });
 }
 function ShellToFill(step, titleText, id, parent_id, dataRequired, text, comment, argumentType) {
     this.wrapp = '<li class="catArguments">';

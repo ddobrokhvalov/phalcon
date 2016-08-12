@@ -181,6 +181,21 @@
       background-position: -113px 0;
     }
   }
+  &.dataRequired {
+    h2, h3 {
+      position: relative;
+      padding-left: 20px;
+      &:after {
+        position: absolute;
+        content: '*';
+        top: 0;
+        left: 4px;
+        font-size: 20px;
+        line-height: 80px;
+        color: #f26d7d;
+      }
+    }
+  }
 }
 .argument {
   h3 {
