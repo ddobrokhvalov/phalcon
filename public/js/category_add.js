@@ -330,7 +330,9 @@ var addArgument = {
                     value.id,
                     value.category_id,
                     value.required,
-                    value.text
+                    value.text,
+                    value.comment,
+                    value.type
                 );
                 popupCancel();
                 $('.subWrap_' + catNum + ' .category').each(function() {
@@ -354,8 +356,8 @@ var receivingData = {
             url: "http://fas/admin/arguments/ajaxGetCatArguments",
             data: data,
             dataType: 'json',
+            context: obj.parent(),
             success: function(value) {
-                console.log(value);
                 num++;
                 switch (num) {
                     case 1:
@@ -386,6 +388,7 @@ var receivingData = {
                             value.cat_arguments[i].required
                         );
                         obj.parent().append(func());
+
                     }
                 }
                 function cycleDataArg(numb, func) {
@@ -403,6 +406,9 @@ var receivingData = {
                         obj.parent().append(func());
                     }
                 }
+                $(this).children().each(function() {
+                    $(this).find('.category').addClass('dataRequired');
+                });
             },
             error: function(xhr) {
                 alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
