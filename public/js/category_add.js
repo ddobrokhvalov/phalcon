@@ -68,6 +68,7 @@ function categorySend() {
             '&arguments[comment]=' + argumentComm;
         addArgument.addData(data);
     } else if ($('.saveCat').hasClass('editArgCat')) {
+        console.log(catArgObj.descr);
         if (catArgObj.descr == 'argument') {
             catArgObj.name = $('.add-ArgumentsCategory .inputBox input').val();
             catArgObj.text = $('.add-ArgumentsCategory .argumentText textarea').val();
@@ -81,10 +82,11 @@ function categorySend() {
             editCategoryArgument.editCatArg(data, catArgObj.descr);
         } else {
             catArgObj.name = $('.inputBox input').val();
+            catArgObj.required = $('.requiredOrNot').attr('data-value');
             data = 'edit[id]=' + catArgObj.id +
-                '&edit[name]=' + catArgObj.name;
+                '&edit[name]=' + catArgObj.name +
+                '&edit[required]=' + catArgObj.required;
             editCategoryArgument.editCatArg(data, catArgObj.descr);
-            createNewCategory.newCategorySend(data);
         }
     } else {
         requiredCat = $('.requiredOrNot').attr('data-value');
@@ -168,14 +170,13 @@ function addArgumentFunc(obj) {
     $('#addArgComments').prop('checked', false);
     $('.argumentsComment, .add-ArgumentsType, .requiredOrNot').hide();
     $('.add-ArgumentsCategory, .argumentText').show();
-    $('.saveCat').removeClass('editArgCat').addClass('createArgumentStart').text('Добавить тип');
+    $('.saveCat').removeClass('editArgCat subChild').addClass('createArgumentStart').text('Добавить тип');
     $('.popupBtn.cancel').removeClass('backPopupLevel').text('Отмена');
     parentId = obj.parent().attr('data-id');
     catNum = obj.parent().attr('data-value');
     $('.add-Arguments_category h6').text('Добавление довода');
     $('.add-ArgumentsCategory .inputBox:first h4').text('Название довода');
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
-    $('.saveCat').removeClass('subChild').addClass('createArgumentStart').text('Добавить тип');
 }
 function editCatArg(obj) {
     $('.saveCat').attr('class', 'popupBtn saveCat');
@@ -185,7 +186,7 @@ function editCatArg(obj) {
     if (obj.attr('id') == 'argument') {
         $('.requiredOrNot').hide();
         $('.saveCat').text('Добавить тип');
-        $('.saveCat').addClass('createArgumentStart');
+        $('.saveCat').addClass('createArgumentStart editAlso');
         $('.add-ArgumentsCategory, .argumentText').show();
         $('.add-ArgumentsType').hide();
         catArgObj = {
@@ -219,9 +220,10 @@ function editCatArg(obj) {
         catArgObj = {
             descr: obj.attr('id'),
             name: obj.find('h3, h2').text(),
-            id: parseInt(obj.attr('data-id'))
+            id: parseInt(obj.attr('data-id')),
         };
         $('.inputBox input').val(catArgObj.name);
+        $('.saveCat').addClass('editArgCat');
         $('.add-Arguments_category h6').text('Редактирование категории');
         $('.add-ArgumentsCategory .inputBox:first h4').text('Название категории');
         if (obj.parent().hasClass('subWrap_2')) {
@@ -231,7 +233,6 @@ function editCatArg(obj) {
         }
     }
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
-    $('.saveCat').removeClass('subChild createArgument').addClass('createArgumentStart editAlso');
 }
 function showArgComment(obj) {
     if ($('#addArgComments').prop('checked') == false) {
@@ -379,6 +380,10 @@ var receivingData = {
             dataType: 'json',
             context: obj.parent(),
             success: function(value) {
+                console.log(value);
+                if (value.cat_arguments.length == 0 && value.arguments.length == 0) {
+                    alert('нету данных!');
+                }
                 num++;
                 switch (num) {
                     case 1:
@@ -393,11 +398,6 @@ var receivingData = {
                     case 3:
                         cycleDataArg(num, writeGetData.subCategory_3);
                         break;
-                }
-                if (obj.next().length == 0) {
-                    alert('неты данных!');
-                } else {
-
                 }
                 function cycleDataCat(numb, func) {
                     for (var i = 0; i < value.cat_arguments.length; i++) {
@@ -427,8 +427,10 @@ var receivingData = {
                         obj.parent().append(func());
                     }
                 }
-                $(this).children().each(function() {
-                    $(this).find('.category').addClass('dataRequired');
+                $(this).children().each(function () {
+                    if ($(this).find('.category').attr('data-required') == 1) {
+                        $(this).find('.category').addClass('dataRequired');
+                    }
                 });
             },
             error: function(xhr) {
