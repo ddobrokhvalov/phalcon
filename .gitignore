@@ -1,8 +1,7 @@
 *.ini
 *.phtml.php
 base-template.phtml%*
-/public/files/documents
-/public/files/avatars
+/public/files
 public/.sass-cache/
 public/config.rb
 .idea/
