@@ -542,7 +542,7 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                if(!isset($type) || ($type = $this->checkType($type)) == -1){
+                if(!isset($type) || !is_numeric($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
@@ -586,7 +586,7 @@ class ComplaintController extends ControllerBase
                     echo json_encode(array('error' => 'bad data'));
                     exit;
                 }
-                if(!isset($type) || ($type = $this->checkType($type)) == -1){
+                if(!isset($type) || !is_numeric($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
@@ -636,7 +636,7 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                if(!isset($type) || ($type = $this->checkType($type)) == -1){
+                if(!isset($type) || !is_numeric($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
@@ -680,7 +680,7 @@ class ComplaintController extends ControllerBase
                     echo json_encode(array('error' => 'bad data'));
                     exit;
                 }
-                if(!isset($type) || ($type = $this->checkType($type)) == -1){
+                if(!isset($type) || !is_numeric($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
@@ -711,7 +711,7 @@ class ComplaintController extends ControllerBase
                     echo json_encode($result);
                     exit;
                 }
-                if(!isset($type) || ($type = $this->checkType($type)) == -1){
+                if(!isset($type) || !is_numeric($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
