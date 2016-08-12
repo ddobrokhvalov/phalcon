@@ -1,6 +1,6 @@
 $(document).ready(function () {
     
-    /*$(".active-tabs-content form").submit(function( event ) {debugger;
+    /*$(".active-tabs-content form").submit(function( event ) {
       alert("Handler for .submit() called.");
       if (!applicantValidator.result) {
         event.preventDefault();
@@ -31,7 +31,6 @@ $(document).ready(function () {
     });
 
     $('.select_applicant').click(function () {
-        debugger;
         /*if (applicant.id) {
             $('#cl' + applicant.id).prop('checked', false);
         }*/
@@ -59,7 +58,6 @@ $(document).ready(function () {
     });
 
     $('.c-content input[type="checkbox"]').click(function() {
-        debugger;
         if ($(this).prop('checked')) {
             $('.c-cs-btns').addClass('c-cs-btns-after');
         } else {
@@ -119,7 +117,6 @@ var applicant = {
         this.type = 'fizlico';
     },
     selectApplicant: function (id, name, redirect, is_remove, is_select_first) {
-        debugger;
         if (!is_remove) {
             this.id.push(id);
             if ($('.applicant-name-container').html().length) {

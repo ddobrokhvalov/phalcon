@@ -10,7 +10,7 @@ $(document).ready(function(){
                     data: { inn: $("#number").val() },
                     dataType: 'json'
                 })
-            ).done(function(data) {debugger;
+            ).done(function(data) {
                 if (data.success == 'ok') {
                    ufasValidator.done("#number");
                    $('#ufas-form').submit();
