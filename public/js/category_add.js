@@ -396,8 +396,6 @@ var receivingData = {
                 }
                 if (obj.next().length == 0) {
                     alert('неты данных!');
-                } else {
-
                 }
                 function cycleDataCat(numb, func) {
                     for (var i = 0; i < value.cat_arguments.length; i++) {
@@ -427,8 +425,10 @@ var receivingData = {
                         obj.parent().append(func());
                     }
                 }
-                $(this).children().each(function() {
-                    $(this).find('.category').addClass('dataRequired');
+                $(this).children().each(function () {
+                    if ($(this).find('.category').attr('data-required') == 1) {
+                        $(this).find('.category').addClass('dataRequired');
+                    }
                 });
             },
             error: function(xhr) {
