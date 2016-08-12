@@ -408,7 +408,8 @@ class ArgumentsController  extends ControllerBase
                         'name' => $argument->name,
                         'text' => $argument->text,
                         'required' => $argument->required,
-                        'type' => $argument->type
+                        'type' => $argument->type,
+                        'comment' => $argument->comment
                     ));
                     exit;
                 } else {
