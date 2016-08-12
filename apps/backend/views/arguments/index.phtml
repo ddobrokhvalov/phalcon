@@ -11,7 +11,7 @@
 <ul class="argCatTree">
     {% for cat in ArgumentsCategory %}
     <li class="catArguments">
-        <div class="category" id="category" data-value="0" data-id="{{ cat.id }}" data-parent_id="{{ cat.parent_id }}" data-toggle="true">
+        <div class="category" id="category" data-value="0" data-id="{{ cat.id }}" data-parent_id="{{ cat.parent_id }}" data-required="{{ cat.required }}" data-toggle="true">
             <div class="category_arrow"></div>
             <h2>{{ cat.name }}</h2>
             <div class="category_add">Добавить категорию</div>
@@ -26,15 +26,46 @@
     <div class="admin-popup-bg"></div>
     <div class="admin-popup-content">
         <div class="admin-popup-close"></div>
-        <h6>Добавить новую категорию</h6>
-        <div class="inputBox">
-            <h4>Название категори</h4>
-            <input type="text">
-        </div>
-        <div class="inputBox argumentText">
-            <h4>Текст довода</h4>
-            <textarea class="mCustomScrollbar"></textarea>
-        </div>
+        <h6></h6>
+        <section class="add-ArgumentsCategory">
+            <div class="inputBox">
+                <h4></h4>
+                <input type="text">
+            </div>
+            <div class="inputBox argumentText">
+                <h4>Текст довода</h4>
+                <textarea></textarea>
+            </div>
+            <div class="requiredOrNot" data-value="0">
+                <input type="radio" name="requiredOrNot" class="reqRadio" id="requiredOrNot_item1">
+                <label for="requiredOrNot_item1" data-required="0">Не обязательная категория</label>
+                <input type="radio" name="requiredOrNot" class="reqRadio" id="requiredOrNot_item2">
+                <label for="requiredOrNot_item2" data-required="1">Обязательная категория</label>
+            </div>
+        </section>
+        <section class="add-ArgumentsType">
+            <div id="selectArgType" class="select-holder">
+                <div class="title-info-box">Выберите тип довода</div>
+                <div class="custom_select">
+                    <div class="current-option" data-value="">
+                        <span>Тип довода</span>
+                        <div></div>
+                    </div>
+                    <ul class="custom-options">
+                        <li class="selectArgType_item" data-value="0">Электронный аукцион</li>
+                        <li class="selectArgType_item" data-value="1">Конкурс</li>
+                        <li class="selectArgType_item" data-value="2">Запрос котировок</li>
+                        <li class="selectArgType_item" data-value="3">Запрос предложений</li>
+                    </ul>
+                </div>
+                <div class="inputBox argumentsComment">
+                    <h4>Комментарий к доводу</h4>
+                    <textarea></textarea>
+                </div>
+            </div>
+            <label for="addArgComments" class="addArgComment">Добавить комментарий</label>
+            <input type="checkbox" id="addArgComments">
+        </section>
         <div class="popupBtn cancel">Отмена</div>
         <div class="popupBtn saveCat">Сохранить</div>
     </div>
