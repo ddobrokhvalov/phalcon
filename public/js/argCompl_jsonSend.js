@@ -50,6 +50,7 @@ function methodProcurement() {
     var data = '&step=' + startSend.step + '&type=' + typeComplicant + '&dateoff=' + datCome;
     startSend.sendRequest(data);
     $('.argComp').removeClass('argComp-descr');
+    $('.btn-div, #argComplBtn').hide();
     $('.btn-div-showArgDescr').removeClass('hideArgDescr').text('Просмотреть').hide();
     $('.addArguments').fadeIn().css('display', 'flex');
 }

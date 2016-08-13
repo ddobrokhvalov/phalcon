@@ -4799,55 +4799,53 @@ body#backend-login {
 
 /* line 1, ../sass/_complaint_add.scss */
 .opacity-cap-compl {
-  position: absolute;
-  top: 0;
-  right: 1px;
-  z-index: 1;
-  width: 100%;
-  height: 77px;
+  float: left;
+  width: 202px;
+  font-size: 16px;
+  line-height: 50px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 6px;
+  background-color: #00aeef;
   cursor: pointer;
 }
-/* line 9, ../sass/_complaint_add.scss */
-.opacity-cap-compl:after {
-  position: absolute;
-  content: '';
-  top: 1px;
-  right: 0;
-  z-index: 1;
-  height: 75px;
-  width: 100px;
-  background-color: #ffffff;
-}
-/* line 19, ../sass/_complaint_add.scss */
-.opacity-cap-compl:before {
-  position: absolute;
-  content: '';
-  top: 26px;
-  right: 30px;
-  z-index: 2;
-  width: 22px;
-  height: 22px;
-  background: url(../images/icon-jl-rassmotr.png) 0 0 no-repeat;
+/* line 14, ../sass/_complaint_add.scss */
+.opacity-cap-compl:hover {
+  background-color: #10b8f7;
 }
 
-/* line 31, ../sass/_complaint_add.scss */
+/* line 18, ../sass/_complaint_add.scss */
+.c-jd2-f-dov-b.addArgContainer {
+  width: auto;
+}
+
+/* line 21, ../sass/_complaint_add.scss */
+.c-jd2-f-save.addArgContainer {
+  width: auto;
+  float: right;
+}
+
+/* line 26, ../sass/_complaint_add.scss */
 .add-complaint-page .c-jadd1 {
   padding: 30px 40px 22px 40px;
 }
-/* line 34, ../sass/_complaint_add.scss */
+/* line 29, ../sass/_complaint_add.scss */
 .add-complaint-page input[type="checkbox"] + label {
   line-height: unset;
 }
-/* line 37, ../sass/_complaint_add.scss */
+/* line 32, ../sass/_complaint_add.scss */
 .add-complaint-page .c-cs-cb {
   margin-top: 35px;
 }
-/* line 39, ../sass/_complaint_add.scss */
+/* line 34, ../sass/_complaint_add.scss */
 .add-complaint-page .c-cs-cb label {
   margin-bottom: 0;
   text-transform: none;
 }
-/* line 44, ../sass/_complaint_add.scss */
+/* line 39, ../sass/_complaint_add.scss */
 .add-complaint-page .c-jadd3 {
   display: none;
 }
