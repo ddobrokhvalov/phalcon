@@ -21,10 +21,10 @@ $(document).ready(function() {
         $('.btn-div-showArgDescr').removeClass('hideArgDescr').text('Просмотреть').hide();
     });
     $('.btn-div').click(function() {
-        if($('#template_edit_just_text').length == 0) {
+        /* if($('#template_edit_just_text').length == 0) {
             argument.addArgument("just_text", "just_text");
         }
-        $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").show();
+        $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").show(); */
         argument.addArgument(argObjSend.id, argObjSend.cat_id, argObjSend.complaint_text);
         $('.admin-popup-wrap').fadeOut();
     });
