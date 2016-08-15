@@ -278,7 +278,7 @@ var argument = {
             this.argumentList.push(id);
         }
         if (id != "just_text") {
-            var templateName = $('#template_' + id).html();
+            var templateName = temp_name[id];
         } else {
             var templateName = "Пользовательский текст";
         }

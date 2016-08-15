@@ -135,26 +135,27 @@
                     <div class="c-jadd2-f">
                         <span class="c-jadd2-f-z">Сокращенное имя жалобы (для идинтификации внутри системы)</span>
                         <input id="complaint_name" type="text" name="complaint_name" value="{{ complaint.complaint_name }}">
-                        <div class="c-jd2-f-dov-b">
-                            <div class="opacity-cap-compl"></div>
-                            <div class="c-jd2-f-dov">
-                                Доводы жалобы
-                            </div>
-                            <div class="argument_text_container c-jd2-f-dov-dd-t2" >
-
-                            </div>
-                            <div class="c-jd2-f-dov-dd">
-                                <div class="c-jd2-f-dov-dd-z">
-                                    Доводы жалобы
-                                </div>
-                                <div id="argument_text_container" class="argument_text_container c-jd2-f-dov-dd-t" >
-
-                                </div>
-                                <div class="c-jd2-f-dov-dd-pick mCustomScrollbar">
-                                    <div class="c-jd2-f-dov-dd-pick-b category-container">
+                        <div class="opacity-cap-compl">Добавить довод</div>
+<!--                        <div class="c-jd2-f-dov-b">-->
+<!--                            <div class="opacity-cap-compl"></div>-->
+<!--                            <div class="c-jd2-f-dov">-->
+<!--                                Доводы жалобы-->
+<!--                            </div>-->
+<!--                            <div class="argument_text_container c-jd2-f-dov-dd-t2" >-->
+<!---->
+<!--                            </div>-->
+<!--                            <div class="c-jd2-f-dov-dd">-->
+<!--                                <div class="c-jd2-f-dov-dd-z">-->
+<!--                                    Доводы жалобы-->
+<!--                                </div>-->
+<!--                                <div id="argument_text_container" class="argument_text_container c-jd2-f-dov-dd-t" >-->
+<!---->
+<!--                                </div>-->
+                                <div class="c-jd2-f-dov-dd-pick mCustomScrollbar" style="display: none">
+                                    <div class="c-jd2-f-dov-dd-pick-b category-container" >
                                         {% for argument in arguments  %}
                                         {% if argument['category'].cnt > 0 %}
-                                        <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}" style="display: block !important;">
+                                        <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}" style="display: none !important;">
                                             <span>{{ argument['category'].name }}</span>
                                             {% for template in argument['templates']  %}
                                             <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>
@@ -165,9 +166,9 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-                            </div>
+<!--                            </div>-->
                         </div>
-                        <span class="c-jadd2-f-z">Текст жалобы</span>
+                        <span class="c-jadd2-f-z" style="margin-top: 30px;">Текст жалобы</span>
                         <div class="c-jd2-f-edit">
                             <div class="c-jd2-f-edit-h">
                                 <div style="float: left; padding-top: 8px;" id="itselem"></div>
@@ -217,7 +218,7 @@
                                     <div class="attached-files-wrap"></div>
                                 </div>
                             </div>
-                            <div class="c-jd2-f-edit-text mCustomScrollbar">
+                            <div class="c-jd2-f-edit-text"><!-- c-jd2-f-edit-text mCustomScrollbar -->
                                 <div id="edit_container" class="c-jd2-f-edit-t">
                                 </div>
                             </div>
@@ -415,15 +416,17 @@
     auction.setData();
     {% if complaint.status == 'draft' and action_edit === true %}
     var templates = {};
+    var temp_name = {};
     var arr_sub = {};
     {% for argument in arguments  %}
         {% for template in argument['templates']  %}
             {% if arr_users_arg[template.id] is defined %}
-                templates[{{template.id}}] = "{{ arr_users_arg[template.id] }}";
-            {% else %}
-                templates[{{template.id}}] = "{{ template.text }}";
-            {% endif %}
-        {% endfor %}
+            templates[{{template.id}}] = "{{arr_users_arg[template.id]}}";
+        {% else %}
+        templates[{{template.id}}] = '{{template.text}}';
+        {% endif %}
+            temp_name[{{template.id}}] = '{{template.name}}';
+            {% endfor %}
     {% endfor %}
     {% if arr_sub_cat is defined  %}
         {% for sub in arr_sub_cat %}

@@ -13,12 +13,12 @@ $(document).ready(function() {
     });
     $('.argCompl-review').on('click', 'li', function() {
         ajaxSendObj.showHideBtn($(this));
+        argObjSend.choosenArgFunc($(this));
     });
     $('.steps-line span').click(function() {
         ajaxSendObj.stepsRewriteData($(this));
-    });
-    $('.argCompl-review').on('click', 'li', function() {
-        argObjSend.choosenArgFunc($(this));
+        $('.argComp').removeClass('argComp-descr');
+        $('.btn-div-showArgDescr').removeClass('hideArgDescr').text('Просмотреть').hide();
     });
     $('.btn-div').click(function() {
         if($('#template_edit_just_text').length == 0) {
@@ -33,6 +33,9 @@ $(document).ready(function() {
             $(this).parent().find('div').toggleClass('stepBack-hover');
         }
     });
+    $('.btn-div-showArgDescr').click(function() {
+        showArgDescr($(this));
+    });
 
     // 0372100047315000207
 });
@@ -46,6 +49,9 @@ function methodProcurement() {
     datCome = $('.dateoff').val();
     var data = '&step=' + startSend.step + '&type=' + typeComplicant + '&dateoff=' + datCome;
     startSend.sendRequest(data);
+    $('.argComp').removeClass('argComp-descr');
+    $('.btn-div, #argComplBtn').hide();
+    $('.btn-div-showArgDescr').removeClass('hideArgDescr').text('Просмотреть').hide();
     $('.addArguments').fadeIn().css('display', 'flex');
 }
 function searchStep(e) {
@@ -71,15 +77,33 @@ function clickSelectLi(obj) {
     }
     $('#argComplBtn').slideDown(400);
 }
+function showArgDescr(obj) {
+    if (obj.hasClass('hideArgDescr')) {
+        $('.argComp').removeClass('argComp-descr');
+        obj.removeClass('hideArgDescr');
+        obj.text('Просмотреть');
+    } else {
+        $('.argDescrBox_descr').text(argObjSend.complaint_descr);
+        $('.argDescrBox_comment').text(argObjSend.complaint_comment);
+        $('.argComp').addClass('argComp-descr');
+        obj.addClass('hideArgDescr');
+        obj.text('Скрыть');
+    }
+
+}
 
 var argObjSend = {
     id: 0,
     cat_id: 0,
     complaint_text: '',
+    complaint_descr: '',
+    complaint_comment: '',
     choosenArgFunc: function(data) {
         this.id = data.attr('data-value');
         this.cat_id = data.attr('data-parent');
-        this.complaint_text = data.text();
+        this.complaint_text = data[0].innerText;
+        this.complaint_descr = data.find('.argTextCome').text();
+        this.complaint_comment = data.find('.argCommentCome').text();
     }
 };
 var readyDataCatArg;
@@ -139,8 +163,10 @@ var ajaxSendObj = {
                 for (var i = 0; i < data.arguments.length; i++) {
                     $('.argCompl-review ul').append(
                         '<li data-value="' + data.arguments[i].id +
-                        '" data-parent="' + data.arguments[i].category_id +
-                        '">' + data.arguments[i].name + '</li>'
+                        '" data-parent="' + data.arguments[i].category_id + '">' +
+                        data.arguments[i].name +
+                        '<p class="argTextCome">Описание: ' + data.arguments[i].text + '</p>' +
+                        '<p class="argCommentCome">Комментарий юриста: ' + data.arguments[i].comment + '</p></li>'
                     );
                 }
             } else {
@@ -200,7 +226,7 @@ var ajaxSendObj = {
     showHideBtn: function(obj) {
         $('.argCompl-review li').css('color', '#000');
         obj.css('color', '#00aeef');
-        $('.btn-div').slideDown(400);
+        $('.btn-div, .btn-div-showArgDescr').slideDown(400);
         $('#argComplBtn').slideUp(400);
         $('#argComplSelect .custom-options').slideUp();
         $('#argComplSelect .current-option span').removeClass('rotate-icon');
@@ -214,7 +240,7 @@ var ajaxSendObj = {
         } else if (ajaxSendObj.step == 3) {
             if (data.arguments.length != 0) {
                 changeLine(3, 4);
-                changeSteps(3);
+                changeSteps(2);
                 $('.steps-line:nth-child(2)').removeClass('arg-nextStep');
                 $('.steps-line:nth-child(2)').addClass('arg-dunStep');
             } else {

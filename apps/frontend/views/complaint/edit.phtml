@@ -120,8 +120,8 @@
                         <span class="c-jadd2-f-z">Сокращенное имя жалобы (для идинтификации внутри системы)</span>
                         <input id="complaint_name" type="text" name="complaint_name" value="{{ complaint.complaint_name }}">
                         <div class="c-jd2-f-dov-b">
-                            <div class="opacity-cap-compl"></div>
-                            <div class="c-jd2-f-dov">
+                            <div class="opacity-cap-compl">Добавить довод</div>
+                            <!-- <div class="c-jd2-f-dov">
                                 Доводы жалобы
                             </div>
                             <div class="argument_text_container c-jd2-f-dov-dd-t2" >
@@ -148,6 +148,18 @@
                                             {% endif %}
                                         {% endfor %}
                                     </div>
+                                </div>
+                            </div> -->
+                            <div class="c-jd2-f-dov-dd-pick mCustomScrollbar" style="display:none">
+                                <div class="c-jd2-f-dov-dd-pick-b category-container" style="display:none">
+                                    {% for argument in arguments  %}
+                                    {% if argument['category'].cnt > 0 %}
+                                        {% for template in argument['templates']  %}
+                                            <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}" style="display: none !important;"></div>
+                                            <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
@@ -334,7 +346,7 @@
                 </div>
             </div>
             <ul class="arguments-steps">
-                <li class="steps-line arg-nextStep"> <!-- arg-dunStep-->
+                <li class="steps-line arg-nextStep">
                     <div></div>
                     <span data-step="1">шаг 1</span>
                 </li>
@@ -352,29 +364,19 @@
                 </li>
             </ul>
             <div id="argComplSelect" class="select-holder">
-                <div class="title-info-box">Выберите тип жалобы</div>
+                <div class="title-info-box">Выберите категорию</div>
                 <div class="custom_select">
                     <div class="current-option" data-value="">
                         <span>Жалоба на положения документации</span>
                         <div></div>
                     </div>
-                    <ul class="custom-options mCustomScrollbar">
-                        <!--                        {% for key, val in categories%}-->
-                        <!--                            <li class="argo" data-value="{{val['id']}}" data-parent="{{val['parent_id']}}">{{val['name']}}</li>-->
-                        <!--                        {% endfor %}-->
-                    </ul>
+                    <ul class="custom-options mCustomScrollbar"></ul>
                 </div>
             </div>
             <section class="last-argComplList">
-                <div class="title-info-box">Доводы</div>
+                <div class="title-info-box">Выберите довод</div>
                 <div class="argCompl-review mCustomScrollbar">
-                    <ul>
-                        <li>Lorem ipsum dolor sit.</li>
-                        <li>Lorem ipsum dolor sit amet, consectetur.</li>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur error esse, molestias perferendis quaerat sint.</li>
-                        <li>Lorem ipsum dolor.</li>
-                        <li>Lorem ipsum dolor sit amet.</li>
-                    </ul>
+                    <ul></ul>
                 </div>
             </section>
             <div class="btn-div">Добавить довод</div>
@@ -408,14 +410,16 @@
         auction.setData();
         {% if complaint.status == 'draft' and action_edit === true %}
             var templates = {};
+            var temp_name = {};
             var arr_sub = {};
             {% for argument in arguments  %}
                 {% for template in argument['templates']  %}
                     {% if arr_users_arg[template.id] is defined %}
-                        templates[{{template.id}}] = '{{ arr_users_arg[template.id] }}';
+                        templates[{{template.id}}] = "{{arr_users_arg[template.id]}}";
                     {% else %}
-                        templates[{{template.id}}] = '{{ template.text }}';
+                        templates[{{template.id}}] = '{{template.text}}';
                     {% endif %}
+                        temp_name[{{template.id}}] = '{{template.name}}';
                 {% endfor %}
             {% endfor %}
             {% if arr_sub_cat is defined  %}
@@ -425,9 +429,11 @@
             {% endif %}
             var categories_id = $("#arguments_id").val().split(",");
             $.each(categories_id, function( index, value ) {
-                if (index == '{{ complaint_text_order }}') {
+                debugger;
+                if (index == {{ complaint_text_order }}) {
                     argument.addArgument("just_text", "just_text", '{{complaint.complaint_text}}');
                 }
+            debugger;
                 /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
                 $(".category-container input#jd2cbb" + value).prop('checked', true);
                 var cat = $(".category-container input#jd2cbb" + value).attr("category");
