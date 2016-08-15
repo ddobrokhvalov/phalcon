@@ -291,7 +291,7 @@ var argument = {
             c_text = complaint_text;
         }
         var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" class="template_edit" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
-            '<span>' + templateName + '</span>' +
+            (( id != 'just_text' ) ? '<span>' + templateName + '</span>' : '') +
             '<div class="c-edit-j-h-ctr">' +
             '<a  class="template-edit-control down c-edit-j-h-ctr1">Переместить ниже</a> <a class="template-edit-control up c-edit-j-h-ctr2">Переместить выше</a>' +
             (( id != 'just_text' ) ? '<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' : '') +
@@ -326,9 +326,9 @@ var argument = {
         $('.argument_text_container_' + id).remove();
         $('#template_edit_' + id).remove();
         $('#jd2cbb' + id).prop('checked', false);
-        if($(".template_edit").length <= 1){
+        /* if($(".template_edit").length <= 1){
             $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").hide();
-        }
+        } */
     }
 
 };
@@ -353,17 +353,44 @@ var auction = {
                 url: '/purchase/get',
                 data: 'auction_id=' + auction_id,
                 success: function (msg) {
-
                     var data = $.parseJSON(msg);
-                    console.log(data);
                     auction.succesRequest(data,auction_id);
-
+                    auction.overdueData(data.procedura.okonchanie_podachi);
                 },
                 error: function (msg) {
                     console.log(msg);
                 }
 
             });
+        },
+        overdueData: function(overdue) {
+            var now = new Date(), mainArr = [], setTodayDate = [], flag = false;
+            var getDateSplit = overdue.split(' '),
+                getDateSplit1 = getDateSplit[0].split('.'),
+                getDateSplit2 = getDateSplit[1].split(':');
+            pushArr(getDateSplit1);
+            pushArr(getDateSplit2);
+            function pushArr(arr) {
+                for (var i = 0; i < arr.length; i++) {
+                    var newKey = parseInt(arr[i]);
+                    mainArr.push(newKey);
+                }
+            }
+            var day = mainArr[0], year = mainArr[2];
+            mainArr[0] = year, mainArr[2] = day;
+            setTodayDate.push(now.getFullYear());
+            setTodayDate.push(now.getMonth());
+            setTodayDate.push(now.getDate());
+            setTodayDate.push(now.getHours());
+            setTodayDate.push(now.getMinutes());
+            for (var i = 0; i < 5; i++) {
+                if (mainArr[i] < setTodayDate[i]) flag = true;
+            }
+            if (flag) {
+                setTimeout(function() {
+                    $('.c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
+                }, 1000);
+            }
         },
         succesRequest: function (data,auction_id) {
             if (auction.processData(data, auction_id)) {
@@ -379,7 +406,7 @@ var auction = {
                 //complaint.setHeader();
                 $('.loading-gif').hide();
                 auction.auctionReady = true;
-                //argument.addArgument("just_text", "just_text");
+                argument.addArgument("just_text", "just_text");
             } else {
                 $('#auction_id').addClass('c-inp-error');
                 $('#result_container').append('<b style="color:red!important;" class="msg_status_parser">Ошибка!</b>');
