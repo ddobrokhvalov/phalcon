@@ -150,6 +150,18 @@
                                     </div>
                                 </div>
                             </div> -->
+                            <div class="c-jd2-f-dov-dd-pick mCustomScrollbar" style="display:none">
+                                <div class="c-jd2-f-dov-dd-pick-b category-container" style="display:none">
+                                    {% for argument in arguments  %}
+                                    {% if argument['category'].cnt > 0 %}
+                                        {% for template in argument['templates']  %}
+                                            <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}" style="display: none !important;"></div>
+                                            <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </div>
                         <span class="c-jadd2-f-z">Текст жалобы</span>
                         <div class="c-jd2-f-edit">
@@ -398,14 +410,16 @@
         auction.setData();
         {% if complaint.status == 'draft' and action_edit === true %}
             var templates = {};
+            var temp_name = {};
             var arr_sub = {};
             {% for argument in arguments  %}
                 {% for template in argument['templates']  %}
                     {% if arr_users_arg[template.id] is defined %}
-                        templates[{{template.id}}] = '{{ arr_users_arg[template.id] }}';
+                        templates[{{template.id}}] = "{{arr_users_arg[template.id]}}";
                     {% else %}
-                        templates[{{template.id}}] = '{{ template.text }}';
+                        templates[{{template.id}}] = '{{template.text}}';
                     {% endif %}
+                        temp_name[{{template.id}}] = '{{template.name}}';
                 {% endfor %}
             {% endfor %}
             {% if arr_sub_cat is defined  %}
@@ -415,9 +429,11 @@
             {% endif %}
             var categories_id = $("#arguments_id").val().split(",");
             $.each(categories_id, function( index, value ) {
-                if (index == '{{ complaint_text_order }}') {
+                debugger;
+                if (index == {{ complaint_text_order }}) {
                     argument.addArgument("just_text", "just_text", '{{complaint.complaint_text}}');
                 }
+            debugger;
                 /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
                 $(".category-container input#jd2cbb" + value).prop('checked', true);
                 var cat = $(".category-container input#jd2cbb" + value).attr("category");

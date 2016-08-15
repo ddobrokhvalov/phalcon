@@ -326,7 +326,7 @@ class ArgumentsController  extends ControllerBase
             $category_name = $this->request->get("name");
             $required = $this->request->get("required");
 
-            if (strlen($category_name) > 50) {
+            if (mb_strlen($category_name, 'UTF-8') > 50) {
                 echo json_encode(array('status' => 'bad length name'));
                 exit;
             }
@@ -376,7 +376,7 @@ class ArgumentsController  extends ControllerBase
             }
 
             $comment = isset($data['comment']) ? trim($data['comment']) : '';
-            if (strlen($comment) > 1000) {
+            if (mb_strlen($comment, 'utf-8') > 1000) {
                 echo json_encode(array('status' => 'bad length comment'));
                 exit;
             }
@@ -444,7 +444,7 @@ class ArgumentsController  extends ControllerBase
             }
             if (isset($edit['arg']) && $edit['arg'] == true) {
                 $comment = isset($edit['comment']) ? trim($edit['comment']) : '';
-                if (strlen($comment) > 1000) {
+                if (mb_strlen($comment, 'utf-8') > 1000) {
                     echo json_encode(array('status' => 'bad length comment'));
                     exit;
                 }

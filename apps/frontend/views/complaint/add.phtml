@@ -90,7 +90,7 @@
                                                     <!--<span>{{ argument['category'].name }}</span>-->
                                                     <!--{% for template in argument['templates']  %}-->
                                                       <!--<input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>-->
-                                                      <!--<label id="template_{{ template.id }}" for="jd2cbb{{ template.id }}">{{ template.name }}</label>-->
+<!--                                                      <label id="template_{{ template.id }}" for="jd2cbb{{ template.id }}">{{ template.name }}</label>-->
                                                     <!--{% endfor %}-->
                                                 <!--</div>-->
                                             <!--{% endif %}-->
@@ -337,9 +337,11 @@
 
 <script>
     var templates = {};
+    var temp_name = {};
     {% for argument in arguments  %}
         {% for template in argument['templates']  %}
             templates[{{template.id}}] = '{{template.text}}';
+            temp_name[{{template.id}}] = '{{template.name}}';
         {% endfor %}
     {% endfor %}
 </script>
