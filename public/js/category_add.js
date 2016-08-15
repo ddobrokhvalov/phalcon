@@ -27,7 +27,10 @@ $(document).ready(function() {
         showArgComment($(this));
     });
     $('.requiredOrNot label').click(function() {
-        changeRequired($(this).attr('data-required'));
+        $('.requiredOrNot').attr('data-value', $(this).attr('data-required'));
+    });
+    $('.argumentsComment textarea').keyup(function() {
+        maxStrLength($(this));
     });
     requiredStartSearch();
 });
@@ -80,7 +83,6 @@ function categorySend(e) {
             $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
         }
     } else if ($('.saveCat').hasClass('editArgCat')) {
-        console.log(catArgObj.descr);
         if (catArgObj.descr == 'argument') {
             catArgObj.name = $('.add-ArgumentsCategory .inputBox input').val();
             catArgObj.text = $('.add-ArgumentsCategory .argumentText textarea').val();
@@ -285,8 +287,11 @@ function requiredStartSearch() {
         }
     });
 }
-function changeRequired(objNumb) {
-    $('.requiredOrNot').attr('data-value', objNumb);
+function maxStrLength(obj) {
+    if (obj.val().length > 1000) {
+        obj.val(obj.val().substr(0, 1000));
+        alert('Комментарий не должен привышать 1000 символов!')
+    }
 }
 function ShellToFill(step, titleText, id, parent_id, dataRequired, text, comment, argumentType) {
     this.wrapp = '<li class="catArguments">';
@@ -414,7 +419,6 @@ var receivingData = {
             dataType: 'json',
             context: obj.parent(),
             success: function(value) {
-                console.log(value);
                 if (value.cat_arguments.length == 0 && value.arguments.length == 0) {
                     alert('нету данных!');
                 }
@@ -483,7 +487,6 @@ var editCategoryArgument = {
             data: data,
             dataType: 'json',
             success: function(value) {
-                console.log(value);
                 if (name == 'argument') {
                     editCategoryArgument.renameArg(value);
                 } else {

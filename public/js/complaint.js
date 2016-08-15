@@ -365,9 +365,7 @@ var auction = {
         },
         overdueData: function(overdue) {
             var now = new Date(), mainArr = [], setTodayDate = [], flag = false;
-            var getDateSplit = overdue.split(' '),
-                getDateSplit1 = getDateSplit[0].split('.'),
-                getDateSplit2 = getDateSplit[1].split(':');
+            var getDateSplit = overdue.split(' '), getDateSplit1 = getDateSplit[0].split('.'), getDateSplit2 = getDateSplit[1].split(':');
             pushArr(getDateSplit1);
             pushArr(getDateSplit2);
             function pushArr(arr) {
@@ -386,11 +384,9 @@ var auction = {
             for (var i = 0; i < 5; i++) {
                 if (mainArr[i] < setTodayDate[i]) flag = true;
             }
-            if (flag) {
-                setTimeout(function() {
-                    $('.c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
-                }, 1000);
-            }
+            if (flag) setTimeout(function() {
+                $('.c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
+            }, 1000);
         },
         succesRequest: function (data,auction_id) {
             if (auction.processData(data, auction_id)) {
