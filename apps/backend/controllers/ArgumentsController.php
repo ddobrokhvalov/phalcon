@@ -326,7 +326,7 @@ class ArgumentsController  extends ControllerBase
             $category_name = $this->request->get("name");
             $required = $this->request->get("required");
 
-            if (mb_strlen($category_name) > 50) {
+            if (mb_strlen($category_name) > 100) {
                 echo json_encode(array('status' => 'bad length name'));
                 exit;
             }
