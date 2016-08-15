@@ -773,8 +773,7 @@ class ComplaintController extends ControllerBase
 
     private function checkDate($dateOff, &$result){
         $dateOff = strtotime($dateOff);
-        $nowTime = date("m.d.Y H:m");
-        $nowTime = strtotime($nowTime);
+        $nowTime = strtotime("now");
 
         if($nowTime > $dateOff){
             $result['date'] = 1;
