@@ -376,7 +376,7 @@ class ArgumentsController  extends ControllerBase
             }
 
             $comment = isset($data['comment']) ? trim($data['comment']) : '';
-            if (strlen($comment) > 1000) {
+            if (mb_strlen($comment, 'utf-8') > 1000) {
                 echo json_encode(array('status' => 'bad length comment'));
                 exit;
             }
@@ -444,7 +444,7 @@ class ArgumentsController  extends ControllerBase
             }
             if (isset($edit['arg']) && $edit['arg'] == true) {
                 $comment = isset($edit['comment']) ? trim($edit['comment']) : '';
-                if (strlen($comment) > 1000) {
+                if (mb_strlen($comment, 'utf-8') > 1000) {
                     echo json_encode(array('status' => 'bad length comment'));
                     exit;
                 }
