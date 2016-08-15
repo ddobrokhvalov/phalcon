@@ -374,6 +374,10 @@ class ArgumentsController  extends ControllerBase
                 echo json_encode(array('status' => 'bad type'));
                 exit;
             }
+            if (mb_strlen($data['text'], 'UTF-8') > 6000) {
+                echo json_encode(array('status' => 'bad length name'));
+                exit;
+            }
 
             $comment = isset($data['comment']) ? trim($data['comment']) : '';
             if (mb_strlen($comment, 'utf-8') > 1000) {
@@ -456,6 +460,12 @@ class ArgumentsController  extends ControllerBase
                     echo json_encode(array('err' => 'bad text'));
                     exit;
                 }
+
+                if (mb_strlen($edit['text'], 'UTF-8') > 6000) {
+                    echo json_encode(array('status' => 'bad length name'));
+                    exit;
+                }
+
                 $id = $edit['id'];
                 $argument = Arguments::findFirst($id);
                 if (!$argument) {
