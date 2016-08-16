@@ -452,13 +452,15 @@ var auction = {
             str_type = str_type.toLowerCase();
 
             if(str_type.indexOf('электронный') != -1){
-                $('.addArguments .type_complicant').val(0);
+                $('.addArguments .type_complicant').val('electr_auction');
             } else if(str_type.indexOf('конкурс') != -1){
-                $('.addArguments .type_complicant').val(1);
+                $('.addArguments .type_complicant').val('concurs');
             } else if(tr_type.indexOf('котировок') != -1){
-                $('.addArguments .type_complicant').val(2);
+                $('.addArguments .type_complicant').val('kotirovok');
             } else if(str_type.indexOf('предложений') != -1){
-                $('.addArguments .type_complicant').val(3);
+                $('.addArguments .type_complicant').val('offer');
+            } else{
+                $('.addArguments .type_complicant').val('error');
             }
 
             $('#type').html(this.data.type);
