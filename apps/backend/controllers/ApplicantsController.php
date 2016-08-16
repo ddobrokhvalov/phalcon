@@ -387,13 +387,16 @@ class ApplicantsController  extends ControllerBase
             $this->flashSession->success('Заявитель сохранен');
             $form->clear();
         }
-        return $this->dispatcher->forward(array(
-            'module' => 'backend',
-            'controller' => 'applicants',
-            'action'    => 'index'
+
+        return $this->response->redirect('/admin/applicants/edit/'.$applicant->id);
+
+//        return $this->dispatcher->forward(array(
+//            'module' => 'backend',
+//            'controller' => 'applicants',
+//            'action'    => 'index'
 //            'action' => 'edit',
 //            'params' => ['id' => $id],
-        ));
+       // ));
 
     }
 
