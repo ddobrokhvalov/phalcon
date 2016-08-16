@@ -649,6 +649,15 @@ class ComplaintController extends ControllerBase
                 $cat_arguments->groupBy('ArgumentsCategory.id');
                 $cat_arguments = $cat_arguments->getQuery()->execute();
 
+                $arr_id = array();
+
+
+                $arguments = Arguments::query()
+                    ->where("category_id = {$id}")
+                    ->andWhere("type = {$type}")
+                    ->execute();
+
+
                 foreach($cat_arguments as $cat){
                     $result['cat_arguments'][] = array(
                         'id'        => $cat->id,
@@ -656,13 +665,20 @@ class ComplaintController extends ControllerBase
                         'required' => $cat->required,
                         'parent_id' => $cat->parent_id,
                     );
+                    $arr_id[] = $cat->id;
                 }
 
-                $arguments = Arguments::query()
-                    ->where("category_id = {$id}")
-                    ->orWhere("category_id = {$parent_id}")
-                    ->andWhere("type = {$type}")
-                    ->execute();
+
+
+                if(!empty($arr_id) && count($arguments) > 0){
+                    $arguments = Arguments::query()
+                        ->where("category_id IN ({arr_id:array})")
+                        ->orWhere("category_id = {$id}")
+                        ->andWhere("type = {$type}")
+                        ->bind(array("arr_id" => $arr_id))
+                        ->execute();
+                }
+
 
                 $this->getArguments($arguments, $type, $result);
                 echo json_encode($result);
