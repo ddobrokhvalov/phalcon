@@ -594,7 +594,7 @@ var writeGetData = {
             '</ul></li>'
     }
 };
-function initEditor(id) {debugger;
+function initEditor(id) {
     if ( CKEDITOR.instances[id] ) {
         CKEDITOR.instances[id].destroy();
         //CKEDITOR.remove(CKEDITOR.instances[id]);
