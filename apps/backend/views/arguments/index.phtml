@@ -2,6 +2,7 @@
 {% block title %}ФАС ОНЛАЙН - Доводы{% endblock %}
 {% block body %}
 
+<script type="application/javascript" src="/js/ckeditor/ckeditor.js"></script>
 <script type="application/javascript" src="/js/category_add.js"></script>
 <script type="application/javascript" src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <div class="admin-main-wrap listArguments">
@@ -34,7 +35,8 @@
             </div>
             <div class="inputBox argumentText">
                 <h4>Текст довода</h4>
-                <textarea></textarea>
+                <div style="width: 110px;" id="itselem"></div>
+                <textarea id="argument-text"></textarea>
             </div>
             <div class="requiredOrNot" data-value="0">
                 <input type="radio" name="requiredOrNot" class="reqRadio" id="requiredOrNot_item1">

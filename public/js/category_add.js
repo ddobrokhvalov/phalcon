@@ -268,6 +268,7 @@ function editCatArg(obj) {
             $('.requiredOrNot').show();
         }
     }
+    initEditor("argument-text");
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
 }
 function showArgComment(obj) {
@@ -593,3 +594,41 @@ var writeGetData = {
             '</ul></li>'
     }
 };
+function initEditor(id) {debugger;
+    if ( CKEDITOR.instances[id] ) {
+        CKEDITOR.instances[id].destroy();
+        //CKEDITOR.remove(CKEDITOR.instances[id]);
+    }
+    var editor = CKEDITOR.inline(document.getElementById(id), {
+        toolbarGroups: [
+            {name: 'clipboard', groups: ['clipboard', 'undo']},
+            {name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing']},
+            {name: 'links', groups: ['links']},
+            {name: 'insert', groups: ['insert']},
+            {name: 'forms', groups: ['forms']},
+            {name: 'tools', groups: ['tools']},
+            {name: 'document', groups: ['mode', 'document', 'doctools']},
+            {name: 'others', groups: ['others']},
+            '/',
+            {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
+            {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
+            {name: 'styles', groups: ['styles']},
+            {name: 'colors', groups: ['colors']},
+            {name: 'about', groups: ['about']}
+        ],
+        removeButtons: 'Blockquote,Indent,Outdent,About,RemoveFormat,Format,Styles,Strike,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source,NumberedList,BulletedList',
+        removePlugins: 'Styles,Format',
+
+        sharedSpaces: {
+            top: 'itselem',
+            left: 'itselem'
+        }
+    });
+    // };
+    editor.disableAutoInline = true;
+    editor.config.extraPlugins = 'sharedspace';
+
+    CKEDITOR.instances[id].on('blur', function() {
+        $("#argument-text").val($(".cke_textarea_inline.cke_editable").html());
+    });
+}
