@@ -250,6 +250,45 @@ class ArgumentsController  extends ControllerBase
         exit;
     }
 
+    public function ajaxGetCountCatArgAction(){
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
+            $this->view->pick("access/denied");
+            $this->setMenu();
+        } else {
+            $id = $this->request->get('id');
+            if (!is_numeric($id)) {
+                echo "bad data";
+                exit;
+            }
+
+            $result = array('cat_arguments' => array(), 'arg_count' => 0, 'cat_count' => 0);
+            $this->CountElementTrees($id, $result);
+            echo json_encode($result);
+        }
+    }
+
+    private function CountElementTrees($id, &$arr){
+        $arg =  Arguments::find(
+            array(
+                "category_id = {$id}",
+            )
+        );
+        $cat = ArgumentsCategory::find(
+            array(
+                "parent_id = {$id}"
+            )
+        );
+        $arr['arg_count'] = $arr['arg_count'] + count($arg);
+        $arr['cat_count'] = $arr['cat_count'] + count($cat);
+        if (count($cat)) {
+            foreach ($cat as $key) {
+                $arr['cat_arguments'][] = $key->name;
+                $this->CountElementTrees($key->id, $arr);
+            }
+        }
+    }
+
     private function deleteTrees($id)
     {
         Arguments::find(
@@ -375,9 +414,10 @@ class ArgumentsController  extends ControllerBase
                 exit;
             }
 
-            if (mb_strlen($data['text'], 'UTF-8') > 6000) {
-                echo json_encode(array('status' => 'bad length name'));
-                exit;
+            $text = strip_tags($data['text']);
+
+            if (mb_strlen($text, 'UTF-8') > 6000) {
+                echo json_encode(array('status' => 'bad length text'));
             }
 
             $comment = isset($data['comment']) ? trim($data['comment']) : '';
@@ -464,8 +504,10 @@ class ArgumentsController  extends ControllerBase
                     exit;
                 }
 
-                if (mb_strlen($edit['text'], 'UTF-8') > 6000) {
-                    echo json_encode(array('status' => 'bad length name'));
+                $text = strip_tags($edit['text']);
+
+                if (mb_strlen($text, 'UTF-8') > 6000) {
+                    echo json_encode(array('status' => 'bad length text'));
                     exit;
                 }
 
