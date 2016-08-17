@@ -9,7 +9,8 @@ $(document).ready(function() {
         categorySend(e);
     });
     $('.argCatTree').on('click', '.category_delete', function() {
-        deleteCatBlock($(this));
+        prevDelCatBlock($(this));
+        // deleteCatBlock($(this));
     });
     $('.argCatTree').on('click', '.category_add', function() {
         createSubCat_Arg($(this));
@@ -36,7 +37,7 @@ $(document).ready(function() {
 });
 
 var base_url = window.location.origin;
-var catNum = '', parentId, shell, catArgObj, requiredCat, argId;
+var catNum = '', parentId, shell, catArgObj, requiredCat, argId, thisIdDel;
 function categorySend(e) {
     var catName = $('.inputBox input').val(),
         data;
@@ -187,12 +188,17 @@ function popupCancel(obj) {
         $('.argumentText').hide();
     }
 }
+function prevDelCatBlock(obj) {
+    thisIdDel = obj.parent().attr('data-id');
+    var data = 'id=' + thisIdDel;
+    deleteCatArgPreview.deleteCatArgSend(data);
+}
 function deleteCatBlock(obj) {
-    var thisId = obj.parent().attr('data-id'), data;
+    var data;
     if (obj.parent().attr('id') == 'argument') {
-        data = 'id=' + thisId + '&argument=true';
+        data = 'id=' + thisIdDel + '&argument=true';
     } else {
-        data = 'id=' + thisId;
+        data = 'id=' + thisIdDel;
     }
     deleteCategory.deleteCategorySend(data, obj.parent().parent());
 }
@@ -516,6 +522,24 @@ var editCategoryArgument = {
             var thisId = $(this).attr('data-id');
             if (thisId == val.id) {
                 $(this).find('h2, h3').text(val.name);
+            }
+        });
+    }
+};
+
+var deleteCatArgPreview = {
+    deleteCatArgSend: function(data) {
+        $.ajax({
+            type: "GET",
+            url: base_url + "/admin/arguments/ajaxGetCountCatArg",
+            data: data,
+            dataType: 'json',
+            success: function(value) {
+                console.log(value);
+            },
+            error: function(xhr) {
+                alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
+                    + xhr.statusText + ' ResponseText:' + xhr.responseText);
             }
         });
     }
