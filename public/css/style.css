@@ -2207,7 +2207,7 @@ a:focus {
   padding-left: 195px; }
 
 /* line 227, ../sass/_list_arguments.scss */
-.add-Arguments_category .cke_textarea_inline.cke_editable, .add-Arguments_category .inputBox input {
+.add-Arguments_category .cke_textarea_inline.cke_editable, .add-Arguments_category .inputBox input, .add-ArgumentsType .argumentsComment textarea {
   width: 100%;
   font-size: 20px;
   font-weight: 100;
@@ -2399,17 +2399,24 @@ a:focus {
       margin-bottom: 0;
       padding-top: 10px;
       font-size: 22px; }
-  /* line 419, ../sass/_list_arguments.scss */
+    /* line 418, ../sass/_list_arguments.scss */
+    .add-ArgumentsType .argumentsComment textarea {
+      padding: 10px 40px;
+      height: 200px;
+      resize: none;
+      margin-top: 10px;
+      max-height: 200px; }
+  /* line 427, ../sass/_list_arguments.scss */
   .add-ArgumentsType .title-info-box {
     font-size: 22px; }
 
-/* line 423, ../sass/_list_arguments.scss */
+/* line 431, ../sass/_list_arguments.scss */
 .requiredOrNot {
   display: block;
   margin: -40px auto 66px;
   width: 580px;
   color: #2c2f32; }
-  /* line 428, ../sass/_list_arguments.scss */
+  /* line 436, ../sass/_list_arguments.scss */
   .requiredOrNot label {
     display: block;
     width: 100%;
@@ -2417,7 +2424,7 @@ a:focus {
     padding-left: 30px;
     font-size: 20px;
     line-height: 1.6; }
-    /* line 435, ../sass/_list_arguments.scss */
+    /* line 443, ../sass/_list_arguments.scss */
     .requiredOrNot label:after {
       position: absolute;
       content: '';
@@ -2426,19 +2433,19 @@ a:focus {
       width: 22px;
       height: 22px;
       background: url(../images/radio_button.png) -26px -1px no-repeat; }
-  /* line 445, ../sass/_list_arguments.scss */
+  /* line 453, ../sass/_list_arguments.scss */
   .requiredOrNot .reqRadio {
     display: none; }
-    /* line 448, ../sass/_list_arguments.scss */
+    /* line 456, ../sass/_list_arguments.scss */
     .requiredOrNot .reqRadio:checked + label {
       background-color: transparent;
       color: #2c2f32;
       font-weight: 100; }
-      /* line 452, ../sass/_list_arguments.scss */
+      /* line 460, ../sass/_list_arguments.scss */
       .requiredOrNot .reqRadio:checked + label:after {
         background-position: -1px -1px; }
 
-/* line 459, ../sass/_list_arguments.scss */
+/* line 467, ../sass/_list_arguments.scss */
 #addArgComments {
   display: none; }
 
