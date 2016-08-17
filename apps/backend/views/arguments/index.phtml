@@ -14,7 +14,7 @@
     <li class="catArguments">
         <div class="category" id="category" data-value="0" data-id="{{ cat.id }}" data-parent_id="{{ cat.parent_id }}" data-required="{{ cat.required }}" data-toggle="true">
             <div class="category_arrow"></div>
-            <h2>{{ cat.name }}</h2>
+            <h2 class="itemTitle">{{ cat.name }}</h2>
             <div class="category_add">Добавить категорию</div>
             <div class="category_edit"></div>
             <div class="category_delete"></div>
@@ -70,6 +70,18 @@
         </section>
         <div class="popupBtn cancel">Отмена</div>
         <div class="popupBtn saveCat">Сохранить</div>
+    </div>
+</article>
+
+<article class="admin-popup-wrap deleteChoosenItem">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content delChoosenCatArg">
+        <div class="admin-popup-close"></div>
+        <h6>Внимание!</h6>
+        <p class="delChoosenCatArg__name"></p>
+        <p class="delChoosenCatArg__catNames"></p>
+        <div class="popupBtn cancelDel">Отмена</div>
+        <div class="popupBtn delChoosen">Подтвердить</div>
     </div>
 </article>
 

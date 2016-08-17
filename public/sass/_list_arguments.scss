@@ -234,6 +234,29 @@
   -moz-border-radius: 8px;
   border-radius: 8px;
 }
+.popupBtn {
+  float: left;
+  margin-left: 87px;
+  margin-bottom: 44px;
+  width: 202px;
+  font-size: 16px;
+  line-height: 50px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 6px;
+  background-color: $blue;
+  cursor: pointer;
+  &:last-child {
+    float: right;
+    margin-right: 87px;
+    margin-left: 0;
+  }
+  &:hover {
+    background-color: $h-blue;
+  }
+}
 .add-Arguments_category {
   display: none;
   .cke_textarea_inline.cke_editable {
@@ -270,27 +293,7 @@
     }
   }
   .popupBtn {
-    float: left;
-    margin-left: 87px;
-    margin-bottom: 44px;
-    width: 202px;
-    font-size: 16px;
-    line-height: 50px;
-    font-weight: 600;
-    color: #fff;
-    text-align: center;
-    text-transform: uppercase;
-    border-radius: 6px;
-    background-color: $blue;
-    cursor: pointer;
-    &:last-child {
-      float: right;
-      margin-right: 87px;
-      margin-left: 0;
-    }
-    &:hover {
-      background-color: $h-blue;
-    }
+    @extend .popupBtn;
   }
   .inputBox {
     margin: 0 auto 66px;
@@ -464,6 +467,20 @@
     }
   }
 }
-#addArgComments {
+#addArgComments,
+.deleteChoosenItem {
   display: none;
+}
+.delChoosenCatArg {
+  p {
+    margin: 30px auto;
+    max-width: 526px;
+    font-size: 22px;
+    font-weight: 100;
+    line-height: 1.2;
+    color: #2c2f32;
+  }
+  &__catNames {
+    display: none;
+  }
 }
