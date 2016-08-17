@@ -585,7 +585,8 @@ function initEditor(id) {
             {name: 'colors', groups: ['colors']},
             {name: 'about', groups: ['about']}
         ],
-        removeButtons: 'Underline,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source',
+        removeButtons: 'Blockquote,Indent,Outdent,About,RemoveFormat,Format,Styles,Strike,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source,NumberedList,BulletedList',
+        removePlugins: 'Styles,Format',
         sharedSpaces: {
             top: 'itselem',
             left: 'itselem'

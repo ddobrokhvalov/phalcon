@@ -47,7 +47,7 @@
     font-weight: 100;
     cursor: pointer;
   }
-  p {
+  p, .argumText {
     display: none;
   }
   &_arrow {
@@ -236,6 +236,15 @@
 }
 .add-Arguments_category {
   display: none;
+  .cke_textarea_inline.cke_editable {
+      @extend %popupBorder;
+      padding: 10px 40px;
+      height: 250px;
+      resize: none;
+      margin-top: 10px;
+      max-height: 250px;
+      overflow-y: scroll;
+    }
   .admin-popup-content {
     width: 755px;
     &:after {
@@ -297,16 +306,10 @@
       padding: 0 40px;
       height: 66px;
     }
-    textarea {
-      @extend %popupBorder;
-      padding: 10px 40px;
-      height: 250px;
-      resize: none;
-    }
   }
   .argumentText {
     display: none;
-    margin-top: -40px;
+    margin-top: -65px;
   }
   .select-holder {
     margin: 0 auto 66px;
@@ -411,6 +414,14 @@
       margin-bottom: 0;
       padding-top: 10px;
       font-size: 22px;
+    }
+    textarea {
+        @extend %popupBorder;
+          padding: 10px 40px;
+          height: 200px;
+          resize: none;
+          margin-top: 10px;
+          max-height: 200px;
     }
   }
   .title-info-box {

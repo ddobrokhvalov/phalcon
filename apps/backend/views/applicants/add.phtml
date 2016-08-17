@@ -57,21 +57,32 @@
                     <input type="text" name="email" id="entity-email" style="width: 480px;">
                 </label>
                 <div class="file-attachment tab1">
-                    <div class="file-wrapper">
+                    <div class="file-wrapper" style="margin-bottom: 20px; height: 30px">
                         <div class="text-above">Прикрепить файлы</div>
-                        <input id="upload-files" type="file" multiple name="upload-files[]">
+                        <input id="upload-files" class="upload_f" type="file" multiple name="upload-files[]" style="width:100%; height 100%">
                     </div>
                     <div class="file-names"></div>
                     <script type="text/javascript">
                         jQuery(document).ready(function(){
-                            jQuery('.tab1 #upload-files').change(function(){
-                                var cnt = jQuery('.tab1 #upload-files')[0].files.length;
-                                var i = 0;
-                                var html = '';
-                                for (i = 0; i < cnt; i++) {
-                                    html = html + '<p>' + jQuery('.tab1 #upload-files')[0].files[i]['name'] + '</p>';
+                            jQuery('body').on('change','.tab1 .upload_f', function(){
+                                debugger;
+                                var cnt = jQuery(this)[0].files.length;
+                                if(cnt > 0){
+                                    var count = jQuery('.tab1 .upload_f').length + 1;
+                                    jQuery(".tab1 .file-wrapper").append('<input id="upload-files" class="upload_f" type="file" multiple="multiple" name="upload-files[]">');
+                                    jQuery(this).off('change');
                                 }
-                                jQuery('.tab1 .file-names').html(html);
+                                var html = '';
+                                var upload_file = jQuery(this);
+                                for(var i = 0; i < upload_file.length; i++){
+                                    for(var j = 0; j < jQuery(upload_file[i])[0].files.length; j++){
+                                        var file_data = jQuery(upload_file[i])[0].files[j]['name'].split('.');
+                                        var file_type = file_data[file_data.length - 1];
+                                        var file_size = jQuery(upload_file[i])[0].files[j]['size'] / 1024;
+                                        var html = html + '<p>' + jQuery(upload_file[i])[0].files[j]['name'] + '</p>';
+                                    }
+                                }
+                                jQuery('.tab1 .file-names').append(html);
                             });
                         });
                     </script>
@@ -116,21 +127,33 @@
                     <input type="text" name="fio-kontakt-face" id="entity-fio-k" style="width: 480px;">
                 </label>
                 <div class="file-attachment tab2">
-                    <div class="file-wrapper">
+                    <div class="file-wrapper" style="margin-bottom: 20px; height: 30px">
                         <div class="text-above">Прикрепить файлы</div>
-                        <input id="upload-files" type="file" multiple name="upload-files[]">
+                        <input id="upload-files" class="upload_f" type="file" multiple name="upload-files[]" style="width:100%; height 100%">
                     </div>
                     <div class="file-names"></div>
                     <script type="text/javascript">
                         jQuery(document).ready(function(){
-                            jQuery('.tab2 #upload-files').change(function(){
-                                var cnt = jQuery('.tab2 #upload-files')[0].files.length;
-                                var i = 0;
-                                var html = '';
-                                for (i = 0; i < cnt; i++) {
-                                    html = html + '<p>' + jQuery('.tab2 #upload-files')[0].files[i]['name'] + '</p>';
+                            jQuery('body').on('change','.tab2 .upload_f', function(){
+                                console.log(this);
+                                var cnt = jQuery('.tab2 .upload_f')[0].files.length;
+                                if(cnt > 0){
+                                    var count = jQuery('.tab2 .upload_f').length + 1;
+                                    jQuery(".tab1 .file-wrapper").append('<input id="upload-files" class="upload_f" type="file" multiple="multiple" name="upload-files[]">');
+                                    jQuery(this).off('change');
                                 }
-                                jQuery('.tab2 .file-names').html(html);
+                                var html = '';
+                                var upload_file = jQuery('.tab2 .upload_f');
+                                debugger;
+                                for(var i = 0; i < upload_file.length; i++){
+                                    for(var j = 0; j < jQuery(upload_file[i])[0].files.length; j++){
+                                        var file_data = jQuery(upload_file[i])[0].files[j]['name'].split('.');
+                                        var file_type = file_data[file_data.length - 1];
+                                        var file_size = jQuery(upload_file[i])[0].files[j]['size'] / 1024;
+                                        var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery(upload_file[i])[0].files[j]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
+                                    }
+                                }
+                                jQuery('.tab2 .file-names .attached-files').html(html);
                             });
                         });
                     </script>
@@ -163,21 +186,33 @@
                     <input type="text" name="fio-kontakt-face" id="entity-fio-k" style="width: 480px;">
                 </label>
                 <div class="file-attachment tab3">
-                    <div class="file-wrapper">
+                    <div class="file-wrapper" style="margin-bottom: 20px; height: 30px">
                         <div class="text-above">Прикрепить файлы</div>
-                        <input id="upload-files" type="file" multiple name="upload-files[]">
+                        <input id="upload-files" class="upload_f" type="file" multiple name="upload-files[]" style="width:100%; height 100%">
                     </div>
                     <div class="file-names"></div>
                     <script type="text/javascript">
                         jQuery(document).ready(function(){
-                            jQuery('.tab3 #upload-files').change(function(){
-                                var cnt = jQuery('.tab3 #upload-files')[0].files.length;
-                                var i = 0;
-                                var html = '';
-                                for (i = 0; i < cnt; i++) {
-                                    html = html + '<p>' + jQuery('.tab3 #upload-files')[0].files[i]['name'] + '</p>';
+                            jQuery('body').on('change','.tab3 .upload_f', function(){
+                                console.log(this);
+                                var cnt = jQuery('.tab3 .upload_f')[0].files.length;
+                                if(cnt > 0){
+                                    var count = jQuery('.tab3 .upload_f').length + 1;
+                                    jQuery(".tab3 .file-wrapper").append('<input id="upload-files" class="upload_f" type="file" multiple="multiple" name="upload-files[]">');
+                                    jQuery(this).off('change');
                                 }
-                                jQuery('.tab3 .file-names').html(html);
+                                var html = '';
+                                var upload_file = jQuery('.tab3 .upload_f');
+                                debugger;
+                                for(var i = 0; i < upload_file.length; i++){
+                                    for(var j = 0; j < jQuery(upload_file[i])[0].files.length; j++){
+                                        var file_data = jQuery(upload_file[i])[0].files[j]['name'].split('.');
+                                        var file_type = file_data[file_data.length - 1];
+                                        var file_size = jQuery(upload_file[i])[0].files[j]['size'] / 1024;
+                                        var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery(upload_file[i])[0].files[j]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
+                                    }
+                                }
+                                jQuery('.tab3 .file-names .attached-files').html(html);
                             });
                         });
                     </script>

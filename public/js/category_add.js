@@ -234,7 +234,7 @@ function editCatArg(obj) {
         catArgObj = {
             descr: obj.attr('id'),
             name: obj.find('h3').text(),
-            text: obj.find('.argumText').text(),
+            text: obj.find('.argumText').html(),
             type: obj.find('.argumentType').text(),
             comment: obj.find('.argumentComment').text()
         };
@@ -274,6 +274,7 @@ function editCatArg(obj) {
             $('.requiredOrNot').show();
         }
     }
+    initEditor("argument-text");
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
 }
 function showArgComment(obj) {
@@ -312,7 +313,7 @@ function ShellToFill(step, titleText, id, parent_id, dataRequired, text, comment
     this.catAdd2 = '<div class="category_add withoutText"></div>';
     this.argAdd = '<div class="category_argumentAdd"></div>';
     this.argAddCross = '<div class="category_argumentAdd crossView">Довод</div>';
-    this.argText = '<p class="argumText">' + text + '</p>';
+    this.argText = '<div class="argumText">' + text + '</div>';
     this.argComment = '<p class="argumentComment">' + comment + '</p>';
     this.argType = '<p class="argumentType">' + argumentType + '</p>';
     this.catEdit = '<div class="category_edit"></div>';
@@ -322,7 +323,7 @@ function ShellToFill(step, titleText, id, parent_id, dataRequired, text, comment
 var createNewCategory = {
     newCategorySend: function(data) {
             $.ajax({
-            type: "GET",
+            type: "POST",
             url: base_url + "/admin/arguments/ajaxAddCategory",
             data: data,
             dataType: 'json',
@@ -384,7 +385,7 @@ var createNewCategory = {
 var addArgument = {
     addData: function(data) {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: base_url + "/admin/arguments/ajaxAddArguments",
             data: data,
             dataType: 'json',
@@ -488,7 +489,7 @@ var receivingData = {
 var editCategoryArgument = {
     editCatArg: function(data, name) {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: base_url + "/admin/arguments/ajaxEdit",
             data: data,
             dataType: 'json',
@@ -548,7 +549,7 @@ var deleteCatArgPreview = {
 var deleteCategory = {
     deleteCategorySend: function(data, obj) {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: base_url + "/admin/arguments/ajaxRemove",
             data: data,
             dataType: 'json',
@@ -617,3 +618,41 @@ var writeGetData = {
             '</ul></li>'
     }
 };
+function initEditor(id) {
+    if ( CKEDITOR.instances[id] ) {
+        CKEDITOR.instances[id].destroy();
+        //CKEDITOR.remove(CKEDITOR.instances[id]);
+    }
+    var editor = CKEDITOR.inline(document.getElementById(id), {
+        toolbarGroups: [
+            {name: 'clipboard', groups: ['clipboard', 'undo']},
+            {name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing']},
+            {name: 'links', groups: ['links']},
+            {name: 'insert', groups: ['insert']},
+            {name: 'forms', groups: ['forms']},
+            {name: 'tools', groups: ['tools']},
+            {name: 'document', groups: ['mode', 'document', 'doctools']},
+            {name: 'others', groups: ['others']},
+            '/',
+            {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
+            {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
+            {name: 'styles', groups: ['styles']},
+            {name: 'colors', groups: ['colors']},
+            {name: 'about', groups: ['about']}
+        ],
+        removeButtons: 'Blockquote,Indent,Outdent,About,RemoveFormat,Format,Styles,Strike,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source,NumberedList,BulletedList',
+        removePlugins: 'Styles,Format',
+
+        sharedSpaces: {
+            top: 'itselem',
+            left: 'itselem'
+        }
+    });
+    // };
+    editor.disableAutoInline = true;
+    editor.config.extraPlugins = 'sharedspace';
+
+    CKEDITOR.instances[id].on('blur', function() {
+        $("#argument-text").val($(".cke_textarea_inline.cke_editable").html());
+    });
+}
