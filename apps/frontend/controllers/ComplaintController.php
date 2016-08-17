@@ -622,7 +622,7 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $this->checkDate($dateOff, $result);
+                $required = $this->checkDate($dateOff, $result);
 
                 $parent_id  = ArgumentsCategory::findFirst($id);
                 if($parent_id == false){
@@ -646,6 +646,10 @@ class ComplaintController extends ControllerBase
                 $cat_arguments->addFrom('Multiple\Frontend\Models\ArgumentsCategory', 'ArgumentsCategory');
                 $cat_arguments->rightJoin('Multiple\Frontend\Models\Arguments', "ArgumentsCategory.id = category_id AND type = {$type}");
                 $cat_arguments->where("parent_id = {$id}");
+                if($required == 1){
+                    $cat_arguments->andWhere("ArgumentsCategory.required = {$required}");
+                    $cat_arguments->andWhere("Multiple\Frontend\Models\Arguments.required = {$required}");
+                }
                 $cat_arguments->groupBy('ArgumentsCategory.id');
                 $cat_arguments = $cat_arguments->getQuery()->execute();
 
@@ -655,6 +659,7 @@ class ComplaintController extends ControllerBase
                 $arguments = Arguments::query()
                     ->where("category_id = {$id}")
                     ->andWhere("type = {$type}")
+                    ->andWhere("required = {$required}")
                     ->execute();
 
 
@@ -675,6 +680,7 @@ class ComplaintController extends ControllerBase
                         ->where("category_id IN ({arr_id:array})")
                         ->orWhere("category_id = {$id}")
                         ->andWhere("type = {$type}")
+                        ->andWhere("required = {$required}")
                         ->bind(array("arr_id" => $arr_id))
                         ->execute();
                 }
@@ -701,13 +707,14 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $this->checkDate($dateOff, $result);
+                $required = $this->checkDate($dateOff, $result);
 
 
 
                 $arguments = Arguments::query()
                     ->where("category_id = {$id}")
                     ->andWhere("type = {$type}")
+                    ->andWhere("required = {$required}")
                     ->execute();
 
                 $this->getArguments($arguments, $type, $result);
@@ -732,10 +739,11 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $this->checkDate($dateOff, $result);
+                $required = $this->checkDate($dateOff, $result);
                 $arguments = Arguments::query()
                     ->where('name LIKE :name:', array('name' => '%' . $search . '%'))
                     ->andWhere("type = {$type}")
+                    ->andWhere("required = {$required}")
                     ->execute();
 
                 $this->getArguments($arguments, $type, $result);
