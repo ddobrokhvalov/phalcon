@@ -321,10 +321,10 @@ class ArgumentsController  extends ControllerBase
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
             echo json_encode(array('status' => 'permission denied'));
         } else {
-            $parent_id = $this->request->get('parent_id');
+            $parent_id = $this->request->getPost('parent_id');
             $parent_id = (isset($parent_id)) ? $parent_id : 0;
-            $category_name = $this->request->get("name");
-            $required = $this->request->get("required");
+            $category_name = $this->request->getPost("name");
+            $required = $this->request->getPost("required");
 
             if (mb_strlen($category_name, 'UTF-8') > 50 || trim($category_name) == "") {
                 echo json_encode(array('status' => 'bad length name'));
@@ -363,7 +363,7 @@ class ArgumentsController  extends ControllerBase
             $this->view->pick("access/denied");
             $this->setMenu();
         } else {
-            $data = $this->request->get("arguments");
+            $data = $this->request->getPost("arguments");
             if (!isset($data)) {
                 echo json_encode(array('status' => 'non data'));
                 exit;
@@ -440,7 +440,7 @@ class ArgumentsController  extends ControllerBase
             $this->view->pick("access/denied");
             $this->setMenu();
         } else {
-            $edit = $this->request->get("edit");
+            $edit = $this->request->getPost("edit");
             if (!isset($edit['id']) || !is_numeric($edit['id'])) {
                 echo json_encode(array('err' => 'bad id'));
                 exit;
