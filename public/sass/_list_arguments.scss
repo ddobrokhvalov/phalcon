@@ -472,15 +472,27 @@
   display: none;
 }
 .delChoosenCatArg {
+  h6 {
+    margin-bottom: 30px;
+  }
   p {
-    margin: 30px auto;
+    margin: 10px auto;
     max-width: 526px;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 100;
     line-height: 1.2;
     color: #2c2f32;
+    &:last-of-type {
+      margin-bottom: 40px;
+    }
+    span {
+      font-weight: 600;
+    }
   }
   &__catNames {
+    display: none;
+  }
+  &__argNumber {
     display: none;
   }
 }

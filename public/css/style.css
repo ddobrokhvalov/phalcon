@@ -2867,16 +2867,32 @@ a:focus {
 }
 
 /* line 475, ../sass/_list_arguments.scss */
+.delChoosenCatArg h6 {
+  margin-bottom: 30px;
+}
+/* line 478, ../sass/_list_arguments.scss */
 .delChoosenCatArg p {
-  margin: 30px auto;
+  margin: 10px auto;
   max-width: 526px;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 100;
   line-height: 1.2;
   color: #2c2f32;
 }
-/* line 483, ../sass/_list_arguments.scss */
+/* line 485, ../sass/_list_arguments.scss */
+.delChoosenCatArg p:last-of-type {
+  margin-bottom: 40px;
+}
+/* line 488, ../sass/_list_arguments.scss */
+.delChoosenCatArg p span {
+  font-weight: 600;
+}
+/* line 492, ../sass/_list_arguments.scss */
 .delChoosenCatArg__catNames {
+  display: none;
+}
+/* line 495, ../sass/_list_arguments.scss */
+.delChoosenCatArg__argNumber {
   display: none;
 }
 

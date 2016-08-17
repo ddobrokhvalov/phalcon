@@ -10,7 +10,12 @@ $(document).ready(function() {
     });
     $('.argCatTree').on('click', '.category_delete', function() {
         prevDelCatBlock($(this));
-        // deleteCatBlock($(this));
+    });
+    $('.delChoosen').click(function() {
+        deleteCatBlock();
+    });
+    $('.cancelDel').click(function() {
+        $('.deleteChoosenItem').fadeOut();
     });
     $('.argCatTree').on('click', '.category_add', function() {
         createSubCat_Arg($(this));
@@ -32,9 +37,6 @@ $(document).ready(function() {
     });
     $('.argumentsComment textarea').keyup(function() {
         maxStrLength($(this));
-    });
-    $('.delChoosen').click(function() {
-        deleteCatBlock();
     });
     requiredStartSearch();
 });
@@ -554,30 +556,37 @@ var deleteCatArgPreview = {
         var objDatas = objData.parent().attr('id'),
             objName = objData.parent().find('.itemTitle')[0].innerText,
             catItemsArr = [];
-        $('.delChoosenCatArg__name').text(function() {
+        $('.delChoosenCatArg__name').html(function() {
             if (objDatas == 'category') {
-                return 'Вы уверены, что хотите удалить категорию "' + objName + '"?';
+                return 'Вы уверены, что хотите удалить категорию <span>' + objName + '</span> ?';
             } else {
-                return 'Вы уверены, что хотите удалить довод "' + objName + '"?';
+                return 'Вы уверены, что хотите удалить довод <span>' + objName + '</span> ?';
             }
         });
         if (val.cat_arguments.length != 0) {
             for (var i = 0; i < val.cat_arguments.length; i++) {
                 catItemsArr.push(' ' + val.cat_arguments[i]);
             }
-            $('.delChoosenCatArg__catNames').text(function() {
+            $('.delChoosenCatArg__catNames').html(function() {
                 if (catItemsArr.length > 1) {
-                    return 'В нее также входят подкатегории:' + catItemsArr;
+                    return 'В нее также входят подкатегории:<span>' + catItemsArr + '</span>';
                 } else {
-                    return 'В нее также входит подкатегория' + catItemsArr;
+                    return 'В нее также входит подкатегория<span>' + catItemsArr + '</span>';
                 }
             });
             $('.delChoosenCatArg__catNames').show();
         } else {
             $('.delChoosenCatArg__catNames').hide();
         }
+        if (val.cat_count != 0) {
+            $('.delChoosenCatArg__argNumber').html(
+                'C общим количеством доводов: <span>' + val.cat_count + '</span>'
+            ).show();
+        } else {
+            $('.delChoosenCatArg__argNumber').hide();
+        }
         $('.deleteChoosenItem').fadeIn().css('display', 'flex');
-    },
+    }
 };
 
 var deleteCategory = {
