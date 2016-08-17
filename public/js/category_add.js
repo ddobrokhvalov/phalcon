@@ -317,7 +317,7 @@ function ShellToFill(step, titleText, id, parent_id, dataRequired, text, comment
 var createNewCategory = {
     newCategorySend: function(data) {
             $.ajax({
-            type: "GET",
+            type: "POST",
             url: base_url + "/admin/arguments/ajaxAddCategory",
             data: data,
             dataType: 'json',
@@ -379,7 +379,7 @@ var createNewCategory = {
 var addArgument = {
     addData: function(data) {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: base_url + "/admin/arguments/ajaxAddArguments",
             data: data,
             dataType: 'json',
@@ -483,7 +483,7 @@ var receivingData = {
 var editCategoryArgument = {
     editCatArg: function(data, name) {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: base_url + "/admin/arguments/ajaxEdit",
             data: data,
             dataType: 'json',
@@ -525,7 +525,7 @@ var editCategoryArgument = {
 var deleteCategory = {
     deleteCategorySend: function(data, obj) {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: base_url + "/admin/arguments/ajaxRemove",
             data: data,
             dataType: 'json',
