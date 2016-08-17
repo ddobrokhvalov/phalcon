@@ -10,6 +10,7 @@ use Multiple\Frontend\Models\ComplaintMovingHistory;
 use Multiple\Frontend\Models\Question;
 use Multiple\Frontend\Models\UsersArguments;
 use Multiple\Frontend\Models\Files;
+use Multiple\Backend\Models\Ufas;
 use Multiple\Library\Parser;
 use Phalcon\Mvc\Controller;
 use \Phalcon\Paginator\Adapter\NativeArray as Paginator;
@@ -106,6 +107,7 @@ class ComplaintController extends ControllerBase
         foreach ($arguments as $argument) {
             $categories_id[] = $argument->argument_category_id;
             $arguments_id[] = $argument->argument_id;
+            $arr_users_arg[$argument->argument_id] = $argument->text;
             if ($argument_order == $complaint->complaint_text_order) {
                 $user_arguments .= $complaint->complaint_text . '</br>';
                 $user_arguments .= $argument->text . '</br>';
@@ -121,6 +123,7 @@ class ComplaintController extends ControllerBase
         if(!empty($arr_sub_cat)){
             $this->view->arr_sub_cat = $arr_sub_cat;
         }
+        $this->view->arr_users_arg = $arr_users_arg;
         $this->view->categories_id = implode(',', $categories_id);
         $this->view->arguments_id = implode(',', $arguments_id);
         $this->view->complaint_text_order = $complaint->complaint_text_order;
@@ -204,7 +207,7 @@ class ComplaintController extends ControllerBase
         $this->setMenu();
         $category = new Category();
         $arguments = $category->getArguments();
-
+        $ufas = Ufas::find();
 
         //if (isset($_SESSION['TRUSTEDNET']['OAUTH'])) $OAuth2 = unserialize($_SESSION['TRUSTEDNET']['OAUTH']);
 //        if (isset($OAuth2)){
@@ -240,6 +243,7 @@ class ComplaintController extends ControllerBase
 
         //$arg = new ArgumentsCategory();
         //$this->view->categories = $temp;
+        $this->view->ufas = $ufas;
         $this->view->arguments = $arguments;
     }
 
@@ -554,20 +558,15 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $dateOff = date($dateOff);
-                $nowTime = date("m.d.Y H:m");
-
-                if($nowTime > $dateOff){
-                    $result['date'] = 1;
-                }
-
-                if(!isset($type) || ($type = $this->checkType($type)) == -1){
+                if(!isset($type) || !is_numeric($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
 
+                $requred = $this->checkDate($dateOff, $result);
+
                 $cat = new ArgumentsCategory();
-                $cat_arguments = $cat->getCategoryNotEmpty( $type );
+                $cat_arguments = $cat->getCategoryNotEmpty( $type, $requred );
                 $temp_name = array();
                 foreach($cat_arguments as $cat){
                     if(!in_array($cat->lvl1, $temp_name)){
@@ -575,7 +574,7 @@ class ComplaintController extends ControllerBase
                         $result['cat_arguments'][] = array(
                             'id' => $cat->lvl1_id,
                             'name' => $cat->lvl1,
-                            'required' => $cat->required,
+                            'required' => $cat->lvl1_required,
                             'parent_id' => 0
                         );
                     }
@@ -587,30 +586,31 @@ class ComplaintController extends ControllerBase
                 $type       = $this->request->get('type');
                 $dateOff    = $this->request->get('dateoff');
 
+//                $parent_id  = ArgumentsCategory::findFirst($id);
+//                if($parent_id == false){
+//                    echo json_encode(array('error' => 'no cat'));
+//                    exit;
+//                }
+//                $parent_id  = $parent_id->parent_id;
+
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
                     exit;
                 }
 
-                $dateOff = date($dateOff);
-                $nowTime = date("m.d.Y H:m");
-
-                if($nowTime > $dateOff){
-                    $result['date'] = 1;
-                }
-
-
                 if(!is_numeric($parent_id)){
                     echo json_encode(array('error' => 'bad data'));
                     exit;
                 }
-                if(!isset($type) || ($type = $this->checkType($type)) == -1){
+                if(!isset($type) || !is_numeric($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
 
+                $required = $this->checkDate($dateOff, $result);
+
                 $cat = new ArgumentsCategory();
-                $cat_arguments = $cat->getCategoryNotEmpty( $type );
+                $cat_arguments = $cat->getCategoryNotEmpty( $type, $required );
 
                 $temp_name = array();
                 foreach($cat_arguments as $cat){
@@ -620,7 +620,7 @@ class ComplaintController extends ControllerBase
                             $result["cat_arguments"][] = array(
                                 "id" => $cat->lvl2_id,
                                 "name" => $cat->lvl2,
-                                'required' => $cat->required,
+                                'required' => $cat->lvl2_required,
                                 "parent_id" => $cat->lvl1_id,
                             );
                         }
@@ -638,12 +638,7 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $dateOff = date($dateOff);
-                $nowTime = date("m.d.Y H:m");
-
-                if($nowTime > $dateOff){
-                    $result['date'] = 1;
-                }
+                $required = $this->checkDate($dateOff, $result);
 
                 $parent_id  = ArgumentsCategory::findFirst($id);
                 if($parent_id == false){
@@ -657,20 +652,32 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                if(!isset($type) || ($type = $this->checkType($type)) == -1){
+                if(!isset($type) || !is_numeric($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
-
-
 
                 $cat_arguments = new Builder();
                 $cat_arguments->getDistinct();
                 $cat_arguments->addFrom('Multiple\Frontend\Models\ArgumentsCategory', 'ArgumentsCategory');
                 $cat_arguments->rightJoin('Multiple\Frontend\Models\Arguments', "ArgumentsCategory.id = category_id AND type = {$type}");
                 $cat_arguments->where("parent_id = {$id}");
+                if($required == 1){
+                    $cat_arguments->andWhere("ArgumentsCategory.required = {$required}");
+                    $cat_arguments->andWhere("Multiple\Frontend\Models\Arguments.required = {$required}");
+                }
                 $cat_arguments->groupBy('ArgumentsCategory.id');
                 $cat_arguments = $cat_arguments->getQuery()->execute();
+
+                $arr_id = array();
+
+
+                $arguments = Arguments::query()
+                    ->where("category_id = {$id}")
+                    ->andWhere("type = {$type}")
+                    ->andWhere("required = {$required}")
+                    ->execute();
+
 
                 foreach($cat_arguments as $cat){
                     $result['cat_arguments'][] = array(
@@ -679,13 +686,21 @@ class ComplaintController extends ControllerBase
                         'required' => $cat->required,
                         'parent_id' => $cat->parent_id,
                     );
+                    $arr_id[] = $cat->id;
                 }
 
-                $arguments = Arguments::query()
-                    ->where("category_id = {$id}")
-                    ->orWhere("category_id = {$parent_id}")
-                    ->andWhere("type = {$type}")
-                    ->execute();
+
+
+                if(!empty($arr_id) && count($arguments) > 0){
+                    $arguments = Arguments::query()
+                        ->where("category_id IN ({arr_id:array})")
+                        ->orWhere("category_id = {$id}")
+                        ->andWhere("type = {$type}")
+                        ->andWhere("required = {$required}")
+                        ->bind(array("arr_id" => $arr_id))
+                        ->execute();
+                }
+
 
                 $this->getArguments($arguments, $type, $result);
                 echo json_encode($result);
@@ -699,27 +714,23 @@ class ComplaintController extends ControllerBase
                     echo json_encode(array('error' => 'bad date'));
                     exit;
                 }
-
-                $dateOff = date($dateOff);
-                $nowTime = date("m.d.Y H:m");
-
-                if($nowTime > $dateOff){
-                    $result['date'] = 1;
-                }
-
                 if(!is_numeric($id)){
                     echo json_encode(array('error' => 'bad data'));
                     exit;
                 }
-
-                if(!isset($type) || ($type = $this->checkType($type)) == -1){
+                if(!isset($type) || !is_numeric($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
 
+                $required = $this->checkDate($dateOff, $result);
+
+
+
                 $arguments = Arguments::query()
                     ->where("category_id = {$id}")
                     ->andWhere("type = {$type}")
+                    ->andWhere("required = {$required}")
                     ->execute();
 
                 $this->getArguments($arguments, $type, $result);
@@ -729,32 +740,26 @@ class ComplaintController extends ControllerBase
                 $search     = $this->request->get('search');
                 $search     = (isset($search)) ? trim($search) : '';
                 $type       = $this->request->get('type');
-                $dateOff   = $this->request->get('dateOff');
+                $dateOff   = $this->request->get('dateoff');
 
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
                     exit;
                 }
-
-                $dateOff = date($dateOff);
-                $nowTime = date("m.d.Y H:m");
-
-                if($nowTime > $dateOff){
-                    $result['date'] = 1;
-                }
-
                 if(empty($search)){
                     echo json_encode($result);
                     exit;
                 }
-                if(!isset($type) || ($type = $this->checkType($type)) == -1){
+                if(!isset($type) || !is_numeric($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
 
+                $required = $this->checkDate($dateOff, $result);
                 $arguments = Arguments::query()
                     ->where('name LIKE :name:', array('name' => '%' . $search . '%'))
                     ->andWhere("type = {$type}")
+                    ->andWhere("required = {$required}")
                     ->execute();
 
                 $this->getArguments($arguments, $type, $result);
@@ -796,6 +801,7 @@ class ComplaintController extends ControllerBase
         foreach($arguments as $argument){
             $result['arguments'][] = array(
                 'id'            => $argument->id,
+                'text'          => $argument->text,
                 'name'          => $argument->name,
                 'category_id'   => $argument->category_id,
                 'comment'       => $argument->comment,
@@ -803,5 +809,16 @@ class ComplaintController extends ControllerBase
                 'type'          => $type
             );
         }
+    }
+
+    private function checkDate($dateOff, &$result){
+        $dateOff = strtotime($dateOff);
+        $nowTime = strtotime("now");
+
+        if($nowTime > $dateOff){
+            $result['date'] = 1;
+            return 1;
+        }
+        return 0;
     }
 }

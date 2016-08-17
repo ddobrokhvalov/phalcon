@@ -1,7 +1,7 @@
 <?php
 namespace Multiple\Backend\Models;
 use Phalcon\Mvc\Model;
-use Phalcon\Mvc\Model\Resultset;
+use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 
 class ArgumentsCategory extends Model
 {
@@ -10,6 +10,7 @@ class ArgumentsCategory extends Model
     private $_categories;
     public $getCat = array();
     public $currentCat;
+    public $required;
 
     public function initialize()
     {
@@ -53,6 +54,4 @@ class ArgumentsCategory extends Model
         }
         return $childs[0];
     }
-
-
 }

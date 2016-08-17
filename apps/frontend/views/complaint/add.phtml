@@ -13,165 +13,170 @@
                 Добавление жалобы
             </div>
             <form action="/complaint/create" id="add-complaint-form" enctype="multipart/form-data" method="POST">
-            <input type="hidden" name="auctionData" id="auctionData" value="">
-            <input type="hidden" name="arguments_data" id="arguments_data" value="">
-            <input type="hidden" name="complaint_text" id="complaint_text" value="">
-            <input type="hidden" name="applicant_id" id="applicant_id" value="">
-            <div class="c-jadd1">
-                <div class="c-jadd1-z">
-                    <span>Номер извещения</span><br>
-                    <i>После ввода номера извещения, все данные о закупке заполнятся автоматически</i>
-                </div>
-                <div class="c-jadd1-f" id="result_container">
-                    №<input id="auction_id" type="text" value="" >
-                    <input id="notice_button" type="submit" value="Получить данные">
-                    <span class="loading-gif">
-                        <img width="30px" height="30px" src="/img/loading.gif">
-
-                     </span>
-                </div>
-                <div class="c-cs-cb">
-                    <input class="operator_etp" id="operator_etp" type="checkbox" name="operator_etp" hidden>
-                    <label for="operator_etp">Жалоба на оператора ЭТП</label>
-                </div>
-            </div>
-            
-            <div class="c-jadd-sp more-information-block">
-                <div class="c-jadd-text">
+                <input type="hidden" name="auctionData" id="auctionData" value="">
+                <input type="hidden" name="arguments_data" id="arguments_data" value="">
+                <input type="hidden" name="complaint_text" id="complaint_text" value="">
+                <input type="hidden" name="applicant_id" id="applicant_id" value="">
+                <ul id="ufas-list" style="display: none;">
+                    {% for uf in ufas %}
+                        <li ufas-id="{{ uf.id }}" ufas-number="{{ uf.number }}">{{ uf.name }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="c-jadd1">
                     <div class="c-jadd1-z">
-                        <span >Данные о закупке</span>
+                        <span>Номер извещения</span><br>
+                        <i>После ввода номера извещения, все данные о закупке заполнятся автоматически</i>
                     </div>
-                    <div class="c-jadd-l">
-                        <div class="c-jadd-lr-row">
-                            <span>Способ проведения закупки</span>
-                            <span class="auction-data" id="type"></span>
-                        </div>
-                        <div class="c-jadd-lr-row">
-                            <span>Закупку осуществляет</span>
-                            <span class="auction-data" id="purchases_made"></span>
-                        </div>
-                        <div class="c-jadd-lr-row">
-                            <span>Наименование закупки</span>
-                            <span class="auction-data" id="purchases_name"></span>
-                        </div>
-                        <div class="c-jadd-lr-row">
-                            <span>Контакты</span>
-                            <span class="auction-data" id="contact"></span>
-                        </div>
+                    <div class="c-jadd1-f" id="result_container">
+                        №<input id="auction_id" type="text" value="" >
+                        <input id="notice_button" type="submit" value="Получить данные">
+                        <span class="loading-gif">
+                            <img width="30px" height="30px" src="/img/loading.gif">
+
+                         </span>
                     </div>
-                    <div class="c-jadd-r date-container"></div>
+                    <div class="c-cs-cb">
+                        <input class="operator_etp" id="operator_etp" type="checkbox" name="operator_etp" hidden>
+                        <label for="operator_etp">Жалоба на оператора ЭТП</label>
+                    </div>
                 </div>
-                <div class="c-jadd-spoiler folded">
-                    <span style="text-transform: uppercase;">Показать подробно</span>
-                </div>
-            </div>
 
-            <div class="c-jadd2 complaint-main-container">
-                <div class="c-jadd2-z complaint-header">
-
-                </div>
-                <div class="c-jadd2-f">
-                    <span class="c-jadd2-f-z">Сокращенное имя жалобы (для идинтификации внутри системы)</span>
-                    <input id="complaint_name" type="text" name="complaint_name" value="">
-                    <div class="c-jd2-f-dov-b">
-                        <div class="opacity-cap-compl"></div>
-                        <div class="c-jd2-f-dov">Доводы жалобы</div>
-                        <div class="argument_text_container c-jd2-f-dov-dd-t2" ></div>
-                        <div class="c-jd2-f-dov-dd">
-                            <div class="c-jd2-f-dov-dd-z">
-                                Доводы жалобы
+                <div class="c-jadd-sp more-information-block">
+                    <div class="c-jadd-text">
+                        <div class="c-jadd1-z">
+                            <span >Данные о закупке</span>
+                        </div>
+                        <div class="c-jadd-l">
+                            <div class="c-jadd-lr-row">
+                                <span>Способ проведения закупки</span>
+                                <span class="auction-data" id="type"></span>
                             </div>
-                            <div id="argument_text_container" class="argument_text_container c-jd2-f-dov-dd-t" >
-
+                            <div class="c-jadd-lr-row">
+                                <span>Закупку осуществляет</span>
+                                <span class="auction-data" id="purchases_made"></span>
                             </div>
-                            <div class="c-jd2-f-dov-dd-pick mCustomScrollbar">
-                                <div class="c-jd2-f-dov-dd-pick-b category-container">
-                                    {% for argument in arguments  %}
-                                        {% if argument['category'].cnt > 0 %}
-                                            <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}">
-                                                <span>{{ argument['category'].name }}</span>
-                                                {% for template in argument['templates']  %}
-                                                  <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>
-                                                  <label id="template_{{ template.id }}" for="jd2cbb{{ template.id }}">{{ template.name }}</label>
-                                                {% endfor %}
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
+                            <div class="c-jadd-lr-row">
+                                <span>Наименование закупки</span>
+                                <span class="auction-data" id="purchases_name"></span>
+                            </div>
+                            <div class="c-jadd-lr-row">
+                                <span>Контакты</span>
+                                <span class="auction-data" id="contact"></span>
                             </div>
                         </div>
+                        <div class="c-jadd-r date-container"></div>
                     </div>
-                    <span class="c-jadd2-f-z">Текст жалобы</span>
+                    <div class="c-jadd-spoiler folded">
+                        <span style="text-transform: uppercase;">Показать подробно</span>
+                    </div>
+                </div>
 
-                    <div class="c-jd2-f-edit">
-                        <div class="c-jd2-f-edit-h">
-                            <div style="float: left; padding-top: 8px;" id="itselem"></div>
-                            <div class="complaint-attachment">
-                                <div class="file-wrapper">
-                                    <div class="text-above">Прикрепить файлы</div>
-                                    <input id="upload-files" class="upload_f" type="file" multiple name="upload-files[]">
-                                </div>
-                                
-                                <script type="text/javascript">
-                                    jQuery(document).ready(function(){
-                                        jQuery('body').on('change','.upload_f', function(){
-                                            console.log(this);
-                                            var cnt = jQuery('.upload_f')[0].files.length;
-                                            if(cnt > 0){
-                                                var count = jQuery('.upload_f').length + 1;
-                                                jQuery(".file-wrapper").append('<input id="upload-files" class="upload_f" type="file" multiple="multiple" name="upload-files[]">');
-                                                jQuery(this).off('change');
-                                            }
-                                            var html = '';
-                                            var upload_file = jQuery('.upload_f');
-                                            debugger;
-                                            for(var i = 0; i < upload_file.length; i++){
-                                                for(var j = 0; j < jQuery(upload_file[i])[0].files.length; j++){
-                                                    var file_data = jQuery(upload_file[i])[0].files[j]['name'].split('.');
-                                                    var file_type = file_data[file_data.length - 1];
-                                                    var file_size = jQuery(upload_file[i])[0].files[j]['size'] / 1024;
-                                                    var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery(upload_file[i])[0].files[j]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
+                <div class="c-jadd2 complaint-main-container">
+                    <div class="c-jadd2-z complaint-header">
+
+                    </div>
+                    <div class="c-jadd2-f">
+                        <span class="c-jadd2-f-z">Сокращенное имя жалобы (для идинтификации внутри системы)</span>
+                        <input id="complaint_name" type="text" name="complaint_name" value="">
+                        <div class="c-jd2-f-dov-b addArgContainer">
+                            <div class="opacity-cap-compl">Добавить довод</div>
+                            <!--<div class="c-jd2-f-dov">Доводы жалобы</div>-->
+                            <!--<div class="argument_text_container c-jd2-f-dov-dd-t2" ></div>-->
+                            <!--<div class="c-jd2-f-dov-dd">-->
+                                <!--<div class="c-jd2-f-dov-dd-z">-->
+                                    <!--Доводы жалобы-->
+                                <!--</div>-->
+                                <!--<div id="argument_text_container" class="argument_text_container c-jd2-f-dov-dd-t" >-->
+
+                                <!--</div>-->
+                                <!--<div class="c-jd2-f-dov-dd-pick mCustomScrollbar">-->
+                                    <!--<div class="c-jd2-f-dov-dd-pick-b category-container">-->
+                                        <!--{% for argument in arguments  %}-->
+                                            <!--{% if argument['category'].cnt > 0 %}-->
+                                                <!--<div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}">-->
+                                                    <!--<span>{{ argument['category'].name }}</span>-->
+                                                    <!--{% for template in argument['templates']  %}-->
+                                                      <!--<input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>-->
+<!--                                                      <label id="template_{{ template.id }}" for="jd2cbb{{ template.id }}">{{ template.name }}</label>-->
+                                                    <!--{% endfor %}-->
+                                                <!--</div>-->
+                                            <!--{% endif %}-->
+                                        <!--{% endfor %}-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                        <span class="c-jadd2-f-z">Текст жалобы</span>
+
+                        <div class="c-jd2-f-edit">
+                            <div class="c-jd2-f-edit-h">
+                                <div style="float: left; padding-top: 8px;" id="itselem"></div>
+                                <div class="complaint-attachment">
+                                    <div class="file-wrapper">
+                                        <div class="text-above">Прикрепить файлы</div>
+                                        <input id="upload-files" class="upload_f" type="file" multiple name="upload-files[]">
+                                    </div>
+
+                                    <script type="text/javascript">
+                                        jQuery(document).ready(function(){
+                                            jQuery('body').on('change','.upload_f', function(){
+                                                console.log(this);
+                                                var cnt = jQuery('.upload_f')[0].files.length;
+                                                if(cnt > 0){
+                                                    var count = jQuery('.upload_f').length + 1;
+                                                    jQuery(".file-wrapper").append('<input id="upload-files" class="upload_f" type="file" multiple="multiple" name="upload-files[]">');
+                                                    jQuery(this).off('change');
                                                 }
-                                            }
-//                                                for (i = 0; i < cnt; i++) {
-//                                                    var file_data = jQuery('#upload-files')[0].files[i]['name'].split('.');
-//                                                    var file_type = file_data[file_data.length - 1];
-//                                                    var file_size = jQuery('#upload-files')[0].files[i]['size'] / 1024;
-//                                                    var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery('#upload-files')[0].files[i]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
-//                                                }
-                                            jQuery('.attached-files').html(html);
+                                                var html = '';
+                                                var upload_file = jQuery('.upload_f');
+                                                debugger;
+                                                for(var i = 0; i < upload_file.length; i++){
+                                                    for(var j = 0; j < jQuery(upload_file[i])[0].files.length; j++){
+                                                        var file_data = jQuery(upload_file[i])[0].files[j]['name'].split('.');
+                                                        var file_type = file_data[file_data.length - 1];
+                                                        var file_size = jQuery(upload_file[i])[0].files[j]['size'] / 1024;
+                                                        var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery(upload_file[i])[0].files[j]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
+                                                    }
+                                                }
+    //                                                for (i = 0; i < cnt; i++) {
+    //                                                    var file_data = jQuery('#upload-files')[0].files[i]['name'].split('.');
+    //                                                    var file_type = file_data[file_data.length - 1];
+    //                                                    var file_size = jQuery('#upload-files')[0].files[i]['size'] / 1024;
+    //                                                    var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery('#upload-files')[0].files[i]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
+    //                                                }
+                                                jQuery('.attached-files').html(html);
+                                            });
                                         });
-                                    });
-//                                    jQuery(document).ready(function(){
-//                                        jQuery('#upload-files').change(function(){
-//                                            var cnt = jQuery('#upload-files')[0].files.length;
-//                                            var i = 0;
-//                                            var html = '';
-//                                            for (i = 0; i < cnt; i++) {
-//                                                var file_data = jQuery('#upload-files')[0].files[i]['name'].split('.');
-//                                                var file_type = file_data[file_data.length - 1];
-//                                                var file_size = jQuery('#upload-files')[0].files[i]['size'] / 1024;
-//                                                var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery('#upload-files')[0].files[i]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display:none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
-//                                            }
-//                                            jQuery('.attached-files').html(html);
-//                                        });
-//                                    });
-                                </script>
+    //                                    jQuery(document).ready(function(){
+    //                                        jQuery('#upload-files').change(function(){
+    //                                            var cnt = jQuery('#upload-files')[0].files.length;
+    //                                            var i = 0;
+    //                                            var html = '';
+    //                                            for (i = 0; i < cnt; i++) {
+    //                                                var file_data = jQuery('#upload-files')[0].files[i]['name'].split('.');
+    //                                                var file_type = file_data[file_data.length - 1];
+    //                                                var file_size = jQuery('#upload-files')[0].files[i]['size'] / 1024;
+    //                                                var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery('#upload-files')[0].files[i]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display:none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
+    //                                            }
+    //                                            jQuery('.attached-files').html(html);
+    //                                        });
+    //                                    });
+                                    </script>
+                                </div>
+                                <input type="file" id="cjd2file" hidden />
                             </div>
-                            <input type="file" id="cjd2file" hidden />
+                            <div class="file-names">
+                                <div class="attached-files"></div>
+                            </div>
+                            <div class="c-jd2-f-edit-text mCustomScrollbar">
+                                <div id="edit_container" class="c-jd2-f-edit-t">
+                               </div>
+                            </div>
                         </div>
-                        <div class="file-names">
-                            <div class="attached-files"></div>
-                        </div>
-                        <div class="c-jd2-f-edit-text mCustomScrollbar">
-                            <div id="edit_container" class="c-jd2-f-edit-t">
-                           </div>
-                        </div>
-                    </div>
 
-                    <div class="c-jd2-f-save">
-                        <input id="complaint_save" class="complaint_save-blue" type="submit" value="Сохранить черновик">
-                    </div>
+                        <div class="c-jd2-f-save addArgContainer">
+                            <input id="complaint_save" class="complaint_save-blue" type="submit" value="Сохранить черновик">
+                        </div>
                     </form>
                     <div class="c-jd2-f-cat">
                         <script type="text/javascript">
@@ -228,7 +233,6 @@
                 </div>
             </div>
 
-
         </div>
     </div>
 </div>
@@ -236,65 +240,74 @@
 <article class="admin-popup-wrap addArguments">
     <div class="admin-popup-bg"></div>
     <div class="admin-popup-content argComp">
-        <div class="admin-popup-close"></div>
-        <h6>Доводы жалоб</h6>
-        <div class="argumentsComplaints">
-            <div class="word-argCompl-find">
-                <p>Поиск</p>
-                <div class="word-argCompl-input">
-                    <input type="text" placeholder="Искать">
-                    <button></button>
-                </div>
-            </div>
-            <ul class="arguments-steps">
-                <li class="steps-line arg-nextStep"> <!-- arg-dunStep-->
-                    <div></div>
-                    <span data-step="1">шаг 1</span>
-                </li>
-                <li class="steps-line">
-                    <div></div>
-                    <span data-step="2">шаг 2</span>
-                </li>
-                <li class="steps-line">
-                    <div></div>
-                    <span data-step="3">шаг 3</span>
-                </li>
-                <li class="steps-line">
-                    <div></div>
-                    <span data-step="4">Список доводов</span>
-                </li>
-            </ul>
-            <div id="argComplSelect" class="select-holder">
-                <div class="title-info-box">Выберите тип жалобы</div>
-                <div class="custom_select">
-                    <div class="current-option" data-value="">
-                        <span>Жалоба на положения документации</span>
-                        <div></div>
+        <section class="argCompHolder">
+            <div class="admin-popup-close"></div>
+            <h6>Доводы жалоб</h6>
+            <div class="argumentsComplaints">
+                <div class="word-argCompl-find">
+                    <p>Поиск</p>
+                    <div class="word-argCompl-input">
+                        <input type="text" placeholder="Искать">
+                        <button></button>
                     </div>
-                    <ul class="custom-options mCustomScrollbar">
-<!--                        {% for key, val in categories%}-->
-<!--                            <li class="argo" data-value="{{val['id']}}" data-parent="{{val['parent_id']}}">{{val['name']}}</li>-->
-<!--                        {% endfor %}-->
-                    </ul>
                 </div>
+                <ul class="arguments-steps">
+                    <li class="steps-line arg-nextStep">
+                        <div></div>
+                        <span data-step="1">шаг 1</span>
+                    </li>
+                    <li class="steps-line">
+                        <div></div>
+                        <span data-step="2">шаг 2</span>
+                    </li>
+                    <li class="steps-line">
+                        <div></div>
+                        <span data-step="3">шаг 3</span>
+                    </li>
+                    <li class="steps-line">
+                        <div></div>
+                        <span data-step="4">Список доводов</span>
+                    </li>
+                </ul>
+                <div id="argComplSelect" class="select-holder">
+                    <div class="title-info-box">Выберите категорию</div>
+                    <div class="custom_select">
+                        <div class="current-option" data-value="">
+                            <span>Жалоба на положения документации</span>
+                            <div></div>
+                        </div>
+                        <ul class="custom-options mCustomScrollbar"></ul>
+                    </div>
+                </div>
+                <section class="last-argComplList">
+                    <div class="title-info-box">Выберите довод</div>
+                    <div class="argCompl-review mCustomScrollbar">
+                        <ul></ul>
+                    </div>
+                </section>
+                <div class="btn-div">Добавить довод</div>
+                <div class="btn-div-showArgDescr">Просмотреть</div>
+                <button id="argComplBtn">Дальше</button>
             </div>
-            <section class="last-argComplList">
-                <div class="title-info-box">Доводы</div>
-                <div class="argCompl-review mCustomScrollbar">
-                    <ul>
-                        <li>Lorem ipsum dolor sit.</li>
-                        <li>Lorem ipsum dolor sit amet, consectetur.</li>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur error esse, molestias perferendis quaerat sint.</li>
-                        <li>Lorem ipsum dolor.</li>
-                        <li>Lorem ipsum dolor sit amet.</li>
-                    </ul>
-                </div>
-            </section>
-            <div class="btn-div">Добавить довод</div>
-            <button id="argComplBtn">Дальше</button>
+            <input type="hidden" class="type_complicant" value="">
+            <input type="hidden" class="dateoff" value="">
+        </section>
+        <div class="argDescrBox">
+            <h5>Описание довода</h5>
+            <div class="argDescrBoxHolder mCustomScrollbar">
+                <p class="argDescrBox_descr"></p>
+                <p class="argDescrBox_comment"></p>
+            </div>
         </div>
-        <input type="hidden" class="type_complicant" value="">
-        <input type="hidden" class="dateoff" value="">
+    </div>
+</article>
+
+<article class="admin-popup-wrap add-popup-wrap" style="display:none;">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content add-popup">
+        <div class="admin-popup-close"></div>
+        <h6>Успех!</h6>
+        <p></p>
     </div>
 </article>
 <div id="zzz" style="width: 500px; height: 50px; background-color: #ff0000; position: absolute;">zzz</div>
@@ -304,15 +317,10 @@
     <div class="modal-close"></div>
 </div>
 
-<script>
-var templates = {};
-{% for argument in arguments  %}
-    {% for template in argument['templates']  %}
-       templates[{{template.id}}] = '{{template.text}}';
-    {% endfor %}
-{% endfor %}
-</script>
 <style>
+    /* .c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z{
+        display: none;
+    } */
     .admin-popup-content.add-popup{
         text-align: center;
     }
@@ -333,14 +341,6 @@ var templates = {};
         width: 500px;
     }
 </style>
-<article class="admin-popup-wrap add-popup-wrap" style="display:none;">
-    <div class="admin-popup-bg"></div>
-    <div class="admin-popup-content add-popup">
-        <div class="admin-popup-close"></div>
-        <h6>Успех!</h6>
-        <p></p>
-    </div>
-</article>
 <script>
     $(document).ready(function(){
         if (applicant.applicant_info.length == 0) {
@@ -409,5 +409,14 @@ var templates = {};
             });
         });
     });
-    
+    </script>
+<script>
+    var templates = {};
+    var temp_name = {};
+    {% for argument in arguments  %}
+        {% for template in argument['templates']  %}
+            templates[{{template.id}}] = '{{template.text}}';
+            temp_name[{{template.id}}] = '{{template.name}}';
+        {% endfor %}
+    {% endfor %}
 </script>

@@ -47,7 +47,7 @@
     font-weight: 100;
     cursor: pointer;
   }
-  p {
+  p, .argumText {
     display: none;
   }
   &_arrow {
@@ -181,6 +181,21 @@
       background-position: -113px 0;
     }
   }
+  &.dataRequired {
+    h2, h3 {
+      position: relative;
+      padding-left: 20px;
+      &:after {
+        position: absolute;
+        content: '*';
+        top: 0;
+        left: 4px;
+        font-size: 20px;
+        line-height: 80px;
+        color: #f26d7d;
+      }
+    }
+  }
 }
 .argument {
   h3 {
@@ -221,10 +236,28 @@
 }
 .add-Arguments_category {
   display: none;
+  .cke_textarea_inline.cke_editable {
+      @extend %popupBorder;
+      padding: 10px 40px;
+      height: 250px;
+      resize: none;
+      margin-top: 10px;
+      max-height: 250px;
+      overflow-y: scroll;
+    }
   .admin-popup-content {
     width: 755px;
     &:after {
       @include hasla;
+    }
+    &.hiddenSaveBtn:before {
+      position: absolute;
+      content: '';
+      bottom: 43px;
+      z-index: 100;
+      right: 86px;
+      width: 204px;
+      height: 52px;
     }
     h6 {
       margin-bottom: 34px;
@@ -273,14 +306,164 @@
       padding: 0 40px;
       height: 66px;
     }
-    textarea {
-      @extend %popupBorder;
-      padding: 10px 40px;
-      height: 250px;
-      resize: none;
+  }
+  .argumentText {
+    display: none;
+    margin-top: -65px;
+  }
+  .select-holder {
+    margin: 0 auto 66px;
+    width: 580px;
+  }
+  .current-option {
+    span {
+      padding: 0 24px;
+      height: 66px;
+      font-size: 20px;
+      line-height: 66px;
+      color: #2c2f32;
+      border-color: #d3d3d3;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      border-radius: 8px;
+      &:after {
+        top: 16px;
+        right: 24px;
+      }
+    }
+  }
+  .custom-options {
+    overflow: hidden;
+    top: 65px;
+    margin-top: 0;
+    border-color: #d3d3d3;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    li {
+      padding: 0 24px;
+      font-size: 20px;
+      line-height: 66px;
+      color: #2c2f32;
     }
   }
 }
-.argumentText {
+.add-ArgumentsType {
+  display: none;
+  margin-bottom: 20px;
+  .select-holder {
+    margin: 0 auto;
+    width: 580px;
+  }
+  .current-option {
+    span {
+      padding: 0 24px;
+      height: 66px;
+      font-size: 20px;
+      line-height: 66px;
+      color: #2c2f32;
+      border-color: #d3d3d3;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      border-radius: 8px;
+      &:after {
+        top: 16px;
+        right: 24px;
+      }
+    }
+  }
+  .custom-options {
+    overflow: hidden;
+    top: 65px;
+    margin-top: 0;
+    border-color: #d3d3d3;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    li {
+      padding: 0 24px;
+      font-size: 20px;
+      line-height: 66px;
+      color: #2c2f32;
+    }
+  }
+  .addArgComment {
+    position: relative;
+    margin: 0 0 0 87px;
+    padding-left: 27px;
+    font-size: 20px;
+    &:after {
+      position: absolute;
+      content: '';
+      top: 19px;
+      left: 0;
+      width: 16px;
+      height: 16px;
+      background: url(../images/checkbx1.png) 0 0 no-repeat;
+    }
+    &.toggleArgComment {
+      &:after {
+        background-position: 0 -16px;
+      }
+    }
+  }
+  .argumentsComment {
+    display: none;
+    margin: 0 auto;
+    h4 {
+      margin-bottom: 0;
+      padding-top: 10px;
+      font-size: 22px;
+    }
+    textarea {
+        @extend %popupBorder;
+          padding: 10px 40px;
+          height: 200px;
+          resize: none;
+          margin-top: 10px;
+          max-height: 200px;
+    }
+  }
+  .title-info-box {
+    font-size: 22px;
+  }
+}
+.requiredOrNot {
+  display: block;
+  margin: -40px auto 66px;
+  width: 580px;
+  color: #2c2f32;
+  label {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding-left: 30px;
+    font-size: 20px;
+    line-height: 1.6;
+    &:after {
+      position: absolute;
+      content: '';
+      top: 5px;
+      left: 0;
+      width: 22px;
+      height: 22px;
+      background: url(../images/radio_button.png) -26px -1px no-repeat;
+    }
+  }
+  .reqRadio {
+    display: none;
+    &:checked {
+      + label {
+        background-color: transparent;
+        color: #2c2f32;
+        font-weight: 100;
+        &:after {
+          background-position: -1px -1px;
+        }
+      }
+    }
+  }
+}
+#addArgComments {
   display: none;
 }

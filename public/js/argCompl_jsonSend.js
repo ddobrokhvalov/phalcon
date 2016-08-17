@@ -1,13 +1,9 @@
 $(document).ready(function() {
-    startCatArguments($('#argComplSelect .custom-options li'));
     $('.opacity-cap-compl').click(function() {
         methodProcurement();
-        ajaxSendObj.firstStepRewriteData();
-        $('.addArguments').fadeIn().css('display', 'flex');
     });
     $('#argComplSelect .custom-options').on('click', 'li', function() {
-        $('#argComplBtn').slideDown(400);
-        $('.argCompl-review li').css('color', '#000');
+        clickSelectLi($(this));
     });
     $('#argComplBtn').click(function(e) {
         nextStep(e);
@@ -17,14 +13,18 @@ $(document).ready(function() {
     });
     $('.argCompl-review').on('click', 'li', function() {
         ajaxSendObj.showHideBtn($(this));
+        argObjSend.choosenArgFunc($(this));
     });
     $('.steps-line span').click(function() {
         ajaxSendObj.stepsRewriteData($(this));
-    });
-    $('.argCompl-review').on('click', 'li', function() {
-        argObjSend.choosenArgFunc($(this));
+        $('.argComp').removeClass('argComp-descr');
+        $('.btn-div-showArgDescr').removeClass('hideArgDescr').text('Просмотреть').hide();
     });
     $('.btn-div').click(function() {
+        /* if($('#template_edit_just_text').length == 0) {
+            argument.addArgument("just_text", "just_text");
+        }
+        $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").show(); */
         argument.addArgument(argObjSend.id, argObjSend.cat_id, argObjSend.complaint_text);
         $('.admin-popup-wrap').fadeOut();
     });
@@ -33,19 +33,31 @@ $(document).ready(function() {
             $(this).parent().find('div').toggleClass('stepBack-hover');
         }
     });
+    $('.btn-div-showArgDescr').click(function() {
+        showArgDescr($(this));
+    });
 
     // 0372100047315000207
 });
 
-var typeComplicant = $('.type_complicant').val();
+var typeComplicant, datCome;
 function methodProcurement() {
-    var data = '&step=' + startSend.step + '&type=' + typeComplicant;
+    if (readyDataCatArg != undefined) {
+        ajaxSendObj.firstStepRewriteData();
+    }
+    typeComplicant = $('.type_complicant').val();
+    datCome = $('.dateoff').val();
+    var data = '&step=' + startSend.step + '&type=' + typeComplicant + '&dateoff=' + datCome;
     startSend.sendRequest(data);
+    $('.argComp').removeClass('argComp-descr');
+    $('.btn-div, #argComplBtn').hide();
+    $('.btn-div-showArgDescr').removeClass('hideArgDescr').text('Просмотреть').hide();
+    $('.addArguments').fadeIn().css('display', 'flex');
 }
 function searchStep(e) {
     ajaxSendObj.step = 6;
-    var searchValue = $('.word-argCompl-input input').val(),
-        data = '?search=' + searchValue + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant;
+    var searchValue = $('.word-argCompl-input input').val();
+        data = '?search=' + searchValue + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant + '&dateoff=' + datCome;
     ajaxSendObj.sendRequest(data);
     e.preventDefault();
 }
@@ -54,47 +66,58 @@ function nextStep(e) {
         ajaxSendObj.step = 2;
     }
     var id = $('#argComplSelect .current-option').attr('data-value'),
-        data = '?id=' + id + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant;
+        data = '?id=' + id + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant + '&dateoff=' + datCome;
     ajaxSendObj.sendRequest(data);
     $('#argComplBtn').slideUp(400);
     e.preventDefault();
 }
-var readyDataCatArg = [];
-function startCatArguments(objLi) {
-    $(objLi).each(function() {
-        var loadDataObj = new LoadData(
-            $(this).attr('data-value'),
-            $(this).attr('data-parent'),
-            $(this).text()
-        );
-        readyDataCatArg.push(loadDataObj);
-    });
-    function LoadData(id, parent_id, name) {
-        this.id = id;
-        this.name = name;
-        this.parent_id = parent_id;
+function clickSelectLi(obj) {
+    if (obj.hasClass('required')) {
+        obj.parent().parent().parent().parent().find('.current-option span').addClass('required');
     }
+    $('#argComplBtn').slideDown(400);
+}
+function showArgDescr(obj) {
+    if (obj.hasClass('hideArgDescr')) {
+        $('.argComp').removeClass('argComp-descr');
+        obj.removeClass('hideArgDescr');
+        obj.text('Просмотреть');
+    } else {
+        $('.argDescrBox_descr').html(argObjSend.complaint_descr);
+        $('.argDescrBox_comment').text(argObjSend.complaint_comment);
+        $('.argComp').addClass('argComp-descr');
+        obj.addClass('hideArgDescr');
+        obj.text('Скрыть');
+    }
+
 }
 
 var argObjSend = {
     id: 0,
     cat_id: 0,
     complaint_text: '',
+    complaint_descr: '',
+    complaint_comment: '',
     choosenArgFunc: function(data) {
         this.id = data.attr('data-value');
         this.cat_id = data.attr('data-parent');
-        this.complaint_text = data.text();
+        //this.complaint_text = data.find('.argTextCome').html();
+        this.complaint_text = data[0].innerText;
+        this.complaint_descr = data.find('.argTextCome').html();
+        this.complaint_comment = data.find('.argCommentCome').text();
     }
 };
+var readyDataCatArg;
 var startSend = {
     step: 1,
+    base_url: window.location.origin,
     sendRequest: function(data) {
         $.ajax({
-            type: "GET",
-            url: "http://fas/complaint/ajaxStepsAddComplaint" + data,
+            type: "POST",
+            url: ajaxSendObj.base_url + "/complaint/ajaxStepsAddComplaint" + data,
             dataType: 'json',
             success: function(value) {
-                console.log(value);
+                readyDataCatArg = value;
                 ajaxSendObj.writeSelectLi(value);
             },
             error: function(xhr) {
@@ -107,19 +130,21 @@ var startSend = {
 var ajaxSendObj = {
     step: 2,
     stepsCacheArr: [],
+    base_url: window.location.origin,
     sendRequest: function(data) {
         $.ajax({
-            type: "GET",
-            url: "http://fas/complaint/ajaxStepsAddComplaint" + data,
+            type: "POST",
+            url: ajaxSendObj.base_url + "/complaint/ajaxStepsAddComplaint" + data,
             dataType: 'json',
             success: function(value) {
+                console.log(value);
                 if (ajaxSendObj.step != 6) {
                     ajaxSendObj.stepsCacheArr.push(value);
                     ajaxSendObj.showDopBlocks();
                     ajaxSendObj.withoutCatArg(value);
                     ajaxSendObj.writeSelectLi(value);
                     ajaxSendObj.writeListLi(value);
-                    ajaxSendObj.changeLineSteps();
+                    ajaxSendObj.changeLineSteps(value);
                     ajaxSendObj.stepIncrease();
                 } else {
                     ajaxSendObj.searchWriteStep(value);
@@ -134,24 +159,49 @@ var ajaxSendObj = {
     writeListLi: function(data) {
         if (ajaxSendObj.step == 3 || ajaxSendObj.step == 4) {
             $('.argCompl-review li').remove();
-            for (var i = 0; i < data.arguments.length; i++) {
-                $('.argCompl-review ul').append(
-                    '<li data-value="' + data.arguments[i].id +
-                    '" data-parent="' + data.arguments[i].category_id +
-                    '">' + data.arguments[i].name + '</li>'
-                );
+            if (data.arguments.length != 0) {
+                $('.last-argComplList').slideDown(400);
+                for (var i = 0; i < data.arguments.length; i++) {
+                    $('.argCompl-review ul').append(
+                        '<li data-value="' + data.arguments[i].id +
+                        '" data-parent="' + data.arguments[i].category_id + '">' +
+                        data.arguments[i].name +
+                        '<div class="argTextCome">Описание: ' + data.arguments[i].text + '</div>' +
+                        '<p class="argCommentCome">Комментарий юриста: ' + data.arguments[i].comment + '</p></li>'
+                    );
+                }
+            } else {
+                $('.last-argComplList').slideUp(400);
             }
         }
     },
     writeSelectLi: function(data) {
         $('#argComplSelect .custom-options li').remove();
-        for (var i = 0; i < data.cat_arguments.length; i++) {
-            $('#argComplSelect .custom-options div div:first').append(
-                '<li class="argo"' +
-                ' data-value="' + data.cat_arguments[i].id +
-                '" data-parent="' + data.cat_arguments[i].parent_id +
-                '">' + data.cat_arguments[i].name + '</li>'
-            );
+        if (ajaxSendObj.step == 3 && data.arguments.length != 0) {
+            $('#argComplSelect').slideUp(400);
+        } else {
+            if (data.cat_arguments.length != 0) {
+                $('#argComplSelect').slideDown(400);
+            } else {
+                $('#argComplSelect').slideUp(400);
+            }
+            for (var i = 0; i < data.cat_arguments.length; i++) {
+                if (data.date == 1 && data.cat_arguments[i].required == 1) {
+                    $('#argComplSelect .custom-options div div:first').append(
+                        '<li class="argo required"' +
+                        ' data-value="' + data.cat_arguments[i].id +
+                        '" data-parent="' + data.cat_arguments[i].parent_id +
+                        '">' + data.cat_arguments[i].name + '</li>'
+                    );
+                } else {
+                    $('#argComplSelect .custom-options div div:first').append(
+                        '<li class="argo"' +
+                        ' data-value="' + data.cat_arguments[i].id +
+                        '" data-parent="' + data.cat_arguments[i].parent_id +
+                        '">' + data.cat_arguments[i].name + '</li>'
+                    );
+                }
+            }
         }
     },
     withoutCatArg: function(data) {
@@ -168,34 +218,36 @@ var ajaxSendObj = {
         if (ajaxSendObj.step < 3 && ajaxSendObj.step > 0) {
             $('.last-argComplList').slideUp(400);
             $('#argComplSelect').slideDown(400);
-            $('.btn-div').fadeOut(400);
         } else if (ajaxSendObj.step == 3) {
-            $('.last-argComplList').slideDown(400);
-            $('#argComplSelect').slideDown(400);
             $('#argComplSelect .custom-options').on('click', 'li', function() {
                 $('.btn-div').slideUp(400);
             });
-        } else if ( ajaxSendObj.step == 4) {
-            $('#argComplSelect').slideUp(400);
         }
     },
     showHideBtn: function(obj) {
         $('.argCompl-review li').css('color', '#000');
         obj.css('color', '#00aeef');
-        $('.btn-div').slideDown(400);
+        $('.btn-div, .btn-div-showArgDescr').slideDown(400);
         $('#argComplBtn').slideUp(400);
         $('#argComplSelect .custom-options').slideUp();
         $('#argComplSelect .current-option span').removeClass('rotate-icon');
         $('#argComplSelect .current-option div').removeClass('transDiv');
     },
-    changeLineSteps: function() {
+    changeLineSteps: function(data) {
         if (ajaxSendObj.step == 2) {
             changeLine(1, 2);
             changeSteps(1);
             ajaxSendObj.behindParentSelect = $('.argo').attr('data-parent');
         } else if (ajaxSendObj.step == 3) {
-            changeLine(2, 3);
-            changeSteps(2);
+            if (data.arguments.length != 0) {
+                changeLine(3, 4);
+                changeSteps(2);
+                $('.steps-line:nth-child(2)').removeClass('arg-nextStep');
+                $('.steps-line:nth-child(2)').addClass('arg-dunStep');
+            } else {
+                changeLine(2, 3);
+                changeSteps(2);
+            }
         } else if (ajaxSendObj.step == 4) {
             changeLine(3, 4);
             changeSteps(3);
@@ -221,20 +273,32 @@ var ajaxSendObj = {
         ajaxSendObj.step = 2;
         $('.last-argComplList').slideUp(400);
         $('#argComplSelect').slideDown(400);
-        $('#argComplSelect .current-option span').text('Жалоба на положения документации');
+        $('#argComplSelect .current-option span').removeClass('required').text('Жалоба на положения документации');
         $('#argComplSelect .custom-options li').remove();
-        for (var i = 0; i < readyDataCatArg.length; i++) {
-            $('#argComplSelect .custom-options div div:first').append(
-                '<li class="argo"' +
-                ' data-value="' + readyDataCatArg[i].id +
-                '" data-parent="' + readyDataCatArg[i].parent_id +
-                '">' + readyDataCatArg[i].name + '</li>'
-            );
+        for (var i = 0; i < readyDataCatArg.cat_arguments.length; i++) {
+            if (readyDataCatArg.date == 1 && readyDataCatArg.cat_arguments[i].required == 1) {
+                $('#argComplSelect .custom-options div div:first').append(
+                    '<li class="argo required"' +
+                    ' data-value="' + readyDataCatArg.cat_arguments[i].id +
+                    '" data-parent="' + readyDataCatArg.cat_arguments[i].parent_id +
+                    '">' + readyDataCatArg.cat_arguments[i].name + '</li>'
+                );
+            } else {
+                $('#argComplSelect .custom-options div div:first').append(
+                    '<li class="argo"' +
+                    ' data-value="' + readyDataCatArg.cat_arguments[i].id +
+                    '" data-parent="' + readyDataCatArg.cat_arguments[i].parent_id +
+                    '">' + readyDataCatArg.cat_arguments[i].name + '</li>'
+                );
+            }
         }
         ajaxSendObj.reclassStepsLine(1);
         $('.steps-line:first span').removeClass('stepBack back1');
     },
     stepsRewriteData: function(obj) {
+        $('.argCompl-review ul').removeClass('withoutArgOnBase');
+        obj.parent().find('div').removeClass('stepBack-hover');
+        $('.btn-div').slideUp(400);
         if ($(obj).hasClass('back1')) {
             ajaxSendObj.firstStepRewriteData();
         }
@@ -261,23 +325,21 @@ var ajaxSendObj = {
         function fillingItems(num) {
             ajaxSendObj.stepsCacheArr.splice(num, ajaxSendObj.stepsCacheArr.length - num);
             ajaxSendObj.step = num + 2;
-            if (num == 1) {
+            if (num == 1 || num == 2) {
                 $('.last-argComplList').slideUp(400);
-            } else if (num == 2) {
-                $('.last-argComplList').slideDown(400);
             }
-            $('#argComplSelect').slideDown(400);
             $('#argComplSelect .current-option span').text(lookingParentId(num - 1));
+            $('#argComplSelect').slideDown(400);
             $('#argComplSelect .custom-options li').remove();
         }
         function lookingParentId(num) {
             var behindParId = ajaxSendObj.stepsCacheArr[num].cat_arguments[0].parent_id,
                 behindName = '';
             if (num == 0) {
-                for (var i = 0; i < readyDataCatArg.length; i++) {
-                    var saveArr = readyDataCatArg[i].id;
+                for (var i = 0; i < readyDataCatArg.cat_arguments.length; i++) {
+                    var saveArr = readyDataCatArg.cat_arguments[i].id;
                     if (saveArr == behindParId) {
-                        behindName = readyDataCatArg[i].name;
+                        behindName = readyDataCatArg.cat_arguments[i].name;
                     }
                 }
             } else if (num == 1) {
@@ -294,7 +356,9 @@ var ajaxSendObj = {
     reclassStepsLine: function(num) {
         $('.steps-line').removeClass('arg-dunStep arg-nextStep');
         $('.steps-line:nth-child(' + num + ')').addClass('arg-nextStep');
-        if (num == 2) {
+        if (num == 1) {
+            $('.steps-line span').attr('class', '');
+        } else if (num == 2) {
             $('.steps-line:nth-child(1)').addClass('arg-dunStep');
             $('.steps-line:nth-child(2) span, .steps-line:nth-child(3) span').attr('class', '');
         } else if (num == 3) {
@@ -303,14 +367,22 @@ var ajaxSendObj = {
         }
     },
     searchWriteStep: function(data) {
-        $('#argComplSelect').slideUp(400);
-        $('.last-argComplList').slideDown(400);
         $('.argCompl-review li').remove();
-        for (var i = 0; i < data.arguments.length; i++) {
-            $('.argCompl-review ul').append(
-                '<li data-value="' + data.arguments[i].id +
-                '" data-parent="' + data.arguments[i].category_id +
-                '">' + data.arguments[i].name + '</li>'
+        $('#argComplSelect, #argComplBtn, .btn-div').slideUp(400);
+        $('.last-argComplList').slideDown(400);
+        if (data.arguments.length != 0) {
+            $('.argCompl-review ul').removeClass('withoutArgOnBase');
+            for (var i = 0; i < data.arguments.length; i++) {
+                $('.argCompl-review ul').append(
+                    '<li data-value="' + data.arguments[i].id +
+                    '" data-parent="' + data.arguments[i].category_id +
+                    '">' + data.arguments[i].name + '</li>'
+                );
+            }
+        } else {
+            $('.argCompl-review ul').addClass('withoutArgOnBase');
+            $('.argCompl-review ul.withoutArgOnBase').append(
+                '<li>Данный довод отсутствует в базе!</li>'
             );
         }
         $('.steps-line:first').removeClass('arg-nextStep');

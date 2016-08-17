@@ -1914,7 +1914,7 @@ input[type="radio"]:checked + label {
     width: 100%;
 }
 .c-jadd-lr-sel {
-    background: #fff url("../images/icon-lm-dd.png") no-repeat scroll right 18px center;
+    /*background: #fff url("../images/icon-lm-dd.png") no-repeat scroll right 18px center;*/
     border: 1px solid #d4d7df;
     border-radius: 2px;
     float: left;
@@ -1922,6 +1922,8 @@ input[type="radio"]:checked + label {
     margin: 5px 0 0;
     overflow: hidden;
     width: 100%;
+    padding-left: 10px;
+    padding-top: 5px;
 }
 .c-jadd-lr-sel select {
     background: transparent none repeat scroll 0 0;
@@ -2430,8 +2432,8 @@ input[type="radio"]:checked + label {
     margin: 0 50px 0 0;
 }
 .c-edit-j-h-ctr a:nth-child(2) {
-    /*margin: 0 50px 0 0;*/
-    margin: 0 0px 0 0;
+    margin: 0 50px 0 0;
+    /*margin: 0 0px 0 0;*/
 }
 .c-edit-j-h-ctr1 {
     background: rgba(0, 0, 0, 0) url("../images/icon-ed-arr1.png") no-repeat scroll left center;

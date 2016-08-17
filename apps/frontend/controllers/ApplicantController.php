@@ -271,13 +271,13 @@ class ApplicantController extends ControllerBase
             $this->flashSession->success('Заявитель сохранен');
             $form->clear();
         }
-        return $this->dispatcher->forward(array(
-            'module' => 'frontend',
-            'controller' => 'applicant',
-            'action' => 'edit',
-            'params' => ['id' => $id],
-        ));
-
+//        return $this->dispatcher->forward(array(
+//            'module' => 'frontend',
+//            'controller' => 'applicant',
+//            'action' => 'edit',
+//            'params' => ['id' => $id],
+//        ));
+            $this->response->redirect("applicant/edit/{$id}");
     }
 
     public function delfileAction($id){

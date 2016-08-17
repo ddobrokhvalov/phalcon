@@ -3,7 +3,7 @@
 {% block body %}
 <script type="text/javascript" src="/js/dragula.js"></script>
 <script type="text/javascript" src="/js/main_script.js"></script>
-<script type="text/javascript" src="/js/type_select.js"></script>
+<!--<script type="text/javascript" src="/js/type_select.js"></script>-->
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/tinysort.js"></script>
 <script type="text/javascript" src="/js/sort.extend.tinysort.js"></script>
@@ -12,6 +12,8 @@
 <script type="text/javascript" src="/js/complaint.js"></script>
 <script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="/js/applicant.js"></script>
+<script type="application/javascript" src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script type="application/javascript" src="/js/argCompl_jsonSend.js"></script>
 <style>
     .page-wrap{
         margin: 0px auto;
@@ -133,25 +135,27 @@
                     <div class="c-jadd2-f">
                         <span class="c-jadd2-f-z">Сокращенное имя жалобы (для идинтификации внутри системы)</span>
                         <input id="complaint_name" type="text" name="complaint_name" value="{{ complaint.complaint_name }}">
-                        <div class="c-jd2-f-dov-b">
-                            <div class="c-jd2-f-dov">
-                                Доводы жалобы
-                            </div>
-                            <div class="argument_text_container c-jd2-f-dov-dd-t2" >
-
-                            </div>
-                            <div class="c-jd2-f-dov-dd">
-                                <div class="c-jd2-f-dov-dd-z">
-                                    Доводы жалобы
-                                </div>
-                                <div id="argument_text_container" class="argument_text_container c-jd2-f-dov-dd-t" >
-
-                                </div>
-                                <div class="c-jd2-f-dov-dd-pick mCustomScrollbar">
-                                    <div class="c-jd2-f-dov-dd-pick-b category-container">
+                        <div class="opacity-cap-compl">Добавить довод</div>
+<!--                        <div class="c-jd2-f-dov-b">-->
+<!--                            <div class="opacity-cap-compl"></div>-->
+<!--                            <div class="c-jd2-f-dov">-->
+<!--                                Доводы жалобы-->
+<!--                            </div>-->
+<!--                            <div class="argument_text_container c-jd2-f-dov-dd-t2" >-->
+<!---->
+<!--                            </div>-->
+<!--                            <div class="c-jd2-f-dov-dd">-->
+<!--                                <div class="c-jd2-f-dov-dd-z">-->
+<!--                                    Доводы жалобы-->
+<!--                                </div>-->
+<!--                                <div id="argument_text_container" class="argument_text_container c-jd2-f-dov-dd-t" >-->
+<!---->
+<!--                                </div>-->
+                                <div class="c-jd2-f-dov-dd-pick mCustomScrollbar" style="display: none">
+                                    <div class="c-jd2-f-dov-dd-pick-b category-container" >
                                         {% for argument in arguments  %}
                                         {% if argument['category'].cnt > 0 %}
-                                        <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}" style="display: block !important;">
+                                        <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}" style="display: none !important;">
                                             <span>{{ argument['category'].name }}</span>
                                             {% for template in argument['templates']  %}
                                             <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>
@@ -162,9 +166,9 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-                            </div>
+<!--                            </div>-->
                         </div>
-                        <span class="c-jadd2-f-z">Текст жалобы</span>
+                        <span class="c-jadd2-f-z" style="margin-top: 30px;">Текст жалобы</span>
                         <div class="c-jd2-f-edit">
                             <div class="c-jd2-f-edit-h">
                                 <div style="float: left; padding-top: 8px;" id="itselem"></div>
@@ -214,7 +218,7 @@
                                     <div class="attached-files-wrap"></div>
                                 </div>
                             </div>
-                            <div class="c-jd2-f-edit-text mCustomScrollbar">
+                            <div class="c-jd2-f-edit-text"><!-- c-jd2-f-edit-text mCustomScrollbar -->
                                 <div id="edit_container" class="c-jd2-f-edit-t">
                                 </div>
                             </div>
@@ -327,10 +331,77 @@
 <input type="hidden" name="is_edit_now" id="is_edit_now" value="">
 {% endif %}
 
+
+
+
+<article class="admin-popup-wrap addArguments">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content argComp">
+        <div class="admin-popup-close"></div>
+        <h6>Доводы жалоб</h6>
+        <div class="argumentsComplaints">
+            <div class="word-argCompl-find">
+                <p>Поиск</p>
+                <div class="word-argCompl-input">
+                    <input type="text" placeholder="Искать">
+                    <button></button>
+                </div>
+            </div>
+            <ul class="arguments-steps">
+                <li class="steps-line arg-nextStep"> <!-- arg-dunStep-->
+                    <div></div>
+                    <span data-step="1">шаг 1</span>
+                </li>
+                <li class="steps-line">
+                    <div></div>
+                    <span data-step="2">шаг 2</span>
+                </li>
+                <li class="steps-line">
+                    <div></div>
+                    <span data-step="3">шаг 3</span>
+                </li>
+                <li class="steps-line">
+                    <div></div>
+                    <span data-step="4">Список доводов</span>
+                </li>
+            </ul>
+            <div id="argComplSelect" class="select-holder">
+                <div class="title-info-box">Выберите тип жалобы</div>
+                <div class="custom_select">
+                    <div class="current-option" data-value="">
+                        <span>Жалоба на положения документации</span>
+                        <div></div>
+                    </div>
+                    <ul class="custom-options mCustomScrollbar">
+                    </ul>
+                </div>
+            </div>
+            <section class="last-argComplList">
+                <div class="title-info-box">Доводы</div>
+                <div class="argCompl-review mCustomScrollbar">
+                    <ul>
+                        <li>Lorem ipsum dolor sit.</li>
+                        <li>Lorem ipsum dolor sit amet, consectetur.</li>
+                        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur error esse, molestias perferendis quaerat sint.</li>
+                        <li>Lorem ipsum dolor.</li>
+                        <li>Lorem ipsum dolor sit amet.</li>
+                    </ul>
+                </div>
+            </section>
+            <div class="btn-div">Добавить довод</div>
+            <button id="argComplBtn">Дальше</button>
+        </div>
+        <input type="hidden" class="type_complicant" value="{{complaint.type }}">
+        <input type="hidden" class="dateoff" value="{{complaint.nachalo_podachi }}">
+    </div>
+</article>
+
+
 <script>
     //$(document).ready(function(){
-    auction.data['complaint_id'] = '{{complaint.id }}';
 
+
+    auction.data['complaint_id'] = '{{complaint.id }}';
     auction.data['type'] = '{{complaint.type }}';
     auction.data['purchases_made'] = '{{complaint.purchases_made }}';
     auction.data['purchases_name'] = '{{complaint.purchases_name }}';
@@ -345,12 +416,17 @@
     auction.setData();
     {% if complaint.status == 'draft' and action_edit === true %}
     var templates = {};
+    var temp_name = {};
     var arr_sub = {};
-    debugger;
     {% for argument in arguments  %}
         {% for template in argument['templates']  %}
-            templates[{{template.id}}] = '{{template.text}}';
-        {% endfor %}
+            {% if arr_users_arg[template.id] is defined %}
+            templates[{{template.id}}] = "{{arr_users_arg[template.id]}}";
+        {% else %}
+        templates[{{template.id}}] = '{{template.text}}';
+        {% endif %}
+            temp_name[{{template.id}}] = '{{template.name}}';
+            {% endfor %}
     {% endfor %}
     {% if arr_sub_cat is defined  %}
         {% for sub in arr_sub_cat %}
@@ -359,20 +435,18 @@
     {% endif %}
         var categories_id = $("#arguments_id").val().split(",");
         $.each(categories_id, function( index, value ) {
-            debugger;
-            if (index == {{ complaint_text_order }}) {
+            if (index == '{{ complaint_text_order }}') {
                 argument.addArgument("just_text", "just_text", "{{complaint.complaint_text}}");
             }
-        /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
-        $(".category-container input#jd2cbb" + value).prop('checked', true);
-        var cat = $(".category-container input#jd2cbb" + value).attr("category");
-        if(Object.keys(arr_sub).length){
-            argument.addArgument(value, cat, arr_sub[cat]);
-        } else {
-            argument.addArgument(value, cat);
-        }
-
-    });
+            /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
+            $(".category-container input#jd2cbb" + value).prop('checked', true);
+            var cat = $(".category-container input#jd2cbb" + value).attr("category");
+            if(Object.keys(arr_sub).length){
+                argument.addArgument(value, cat, arr_sub[cat]);
+            } else {
+                argument.addArgument(value, cat);
+            }
+        });
     setTimeout(function(){
         applicant.id = ["{{complaint.applicant_id}}"];
     }, 500);

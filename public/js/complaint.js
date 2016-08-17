@@ -81,6 +81,7 @@ var complaint = {
     cat3: false,
     needCat3: false,
     selectCat3: false,
+    inn: '',
     arguments_data: '',
 
     setHeader: function () {
@@ -264,7 +265,6 @@ var currTextArea = 0;
 var argument = {
     argumentList: [],
     addArgument: function (id, cat_id, complaint_text) {
-
         complaint_text = complaint_text || "";
         //templates["just_text"] = "Вы можете ввести свой текст здесь";
         templates["just_text"] = "";
@@ -278,7 +278,7 @@ var argument = {
             this.argumentList.push(id);
         }
         if (id != "just_text") {
-            var templateName = $('#template_' + id).html();
+            var templateName = temp_name[id];
         } else {
             var templateName = "Пользовательский текст";
         }
@@ -291,10 +291,10 @@ var argument = {
             c_text = complaint_text;
         }
         var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" class="template_edit" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
-            '<span>' + templateName + '</span>' +
+            (( id != 'just_text' ) ? '<span>' + templateName + '</span>' : '') +
             '<div class="c-edit-j-h-ctr">' +
             '<a  class="template-edit-control down c-edit-j-h-ctr1">Переместить ниже</a> <a class="template-edit-control up c-edit-j-h-ctr2">Переместить выше</a>' +
-            //'<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' +
+            (( id != 'just_text' ) ? '<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' : '') +
             '</div>' +
             '</div>' +
             '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" >' +
@@ -326,6 +326,9 @@ var argument = {
         $('.argument_text_container_' + id).remove();
         $('#template_edit_' + id).remove();
         $('#jd2cbb' + id).prop('checked', false);
+        /* if($(".template_edit").length <= 1){
+            $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").hide();
+        } */
     }
 
 };
@@ -350,13 +353,12 @@ var auction = {
                 url: '/purchase/get',
                 data: 'auction_id=' + auction_id,
                 success: function (msg) {
-
                     var data = $.parseJSON(msg);
                     zakupka.info.type = data.info.type;
                     procedura.info.okonchanie = data.procedura.okonchanie_podachi;
                     console.log(data);
                     auction.succesRequest(data,auction_id);
-
+                    auction.overdueData(data.procedura.okonchanie_podachi);
                 },
                 error: function (msg) {
                     console.log(msg);
@@ -364,8 +366,34 @@ var auction = {
 
             });
         },
+        overdueData: function(overdue) {
+            var now = new Date(), mainArr = [], setTodayDate = [], flag = false;
+            var getDateSplit = overdue.split(' '), getDateSplit1 = getDateSplit[0].split('.'), getDateSplit2 = getDateSplit[1].split(':');
+            pushArr(getDateSplit1);
+            pushArr(getDateSplit2);
+            function pushArr(arr) {
+                for (var i = 0; i < arr.length; i++) {
+                    var newKey = parseInt(arr[i]);
+                    mainArr.push(newKey);
+                }
+            }
+            var day = mainArr[0], year = mainArr[2];
+            mainArr[0] = year, mainArr[2] = day;
+            setTodayDate.push(now.getFullYear());
+            setTodayDate.push(now.getMonth());
+            setTodayDate.push(now.getDate());
+            setTodayDate.push(now.getHours());
+            setTodayDate.push(now.getMinutes());
+            for (var i = 0; i < 5; i++) {
+                if (mainArr[i] < setTodayDate[i]) flag = true;
+            }
+            if (flag) setTimeout(function() {
+                $('.c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
+            }, 1000);
+        },
         succesRequest: function (data,auction_id) {
-            if (auction.processData(data, auction_id)) {debugger;
+            if (auction.processData(data, auction_id)) {
+                complaint.inn = data.info.zakupku_osushestvlyaet_inn.substr(0, 2);
                 $('#auction_id').addClass('c-inp-done');
                 $('#notice_button').css('display', 'none');
                 $('#result_container').append('<b class="msg_status_parser">Данные Получены!</b>');
@@ -423,14 +451,31 @@ var auction = {
         }
         ,
         setData: function () {
+            var str_type = this.data.type;
+            str_type = str_type.toLowerCase();
+
+            if(str_type.indexOf('электронный') != -1){
+                $('.addArguments .type_complicant').val(0);
+            } else if(str_type.indexOf('конкурс') != -1){
+                $('.addArguments .type_complicant').val(1);
+            } else if(tr_type.indexOf('котировок') != -1){
+                $('.addArguments .type_complicant').val(2);
+            } else if(str_type.indexOf('предложений') != -1){
+                $('.addArguments .type_complicant').val(3);
+            }
+
             $('#type').html(this.data.type);
-            $('.addArguments .type_complicant').val(this.data.type);
+            //$('.addArguments .type_complicant').val(this.data.type);
             $('.addArguments .dateoff').val(this.data.okonchanie_podachi);
             $('#purchases_made').html(this.data.purchases_made);
             $('#purchases_name').html(this.data.purchases_name);
             $('#contact').html(this.data.contact);
 
-            var html = '<div class="c-jadd-lr-row"><span>Наименование закупки</span><div class="c-jadd-lr-sel"><select><option>УФАС по г. Санкт-Петербургу</option><option>УФАС по г. Санкт-Петербургу</option><option>УФАС по г. Санкт-Петербургу</option></select></div></div>';
+            var ufas_name = $("#ufas-list li[ufas-number='" + complaint.inn + "']").text();
+            if (ufas_name.length == 0) {
+                ufas_name = "УФАС не определен";
+            }
+            var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel">' + ufas_name + '</div></div>';
             if (this.data.type == 'Открытый конкурс') {
                 html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
                 html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
@@ -543,7 +588,7 @@ function initEditor(id) {
             {name: 'colors', groups: ['colors']},
             {name: 'about', groups: ['about']}
         ],
-        removeButtons: 'Blockquote,Indent,Outdent,About,RemoveFormat,Format,Styles,Strike,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source',
+        removeButtons: 'Blockquote,Indent,Outdent,About,RemoveFormat,Format,Styles,Strike,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source,NumberedList,BulletedList',
         removePlugins: 'Styles,Format',
         sharedSpaces: {
             top: 'itselem',
