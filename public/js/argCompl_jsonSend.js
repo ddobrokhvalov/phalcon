@@ -112,7 +112,7 @@ var startSend = {
     base_url: window.location.origin,
     sendRequest: function(data) {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: ajaxSendObj.base_url + "/complaint/ajaxStepsAddComplaint" + data,
             dataType: 'json',
             success: function(value) {
@@ -132,7 +132,7 @@ var ajaxSendObj = {
     base_url: window.location.origin,
     sendRequest: function(data) {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: ajaxSendObj.base_url + "/complaint/ajaxStepsAddComplaint" + data,
             dataType: 'json',
             success: function(value) {
