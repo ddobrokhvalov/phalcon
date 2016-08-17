@@ -262,7 +262,7 @@ class ArgumentsController  extends ControllerBase
                 exit;
             }
 
-            $result = array('cat_arguments' => 0, 'arguments' => 0);
+            $result = array('cat_arguments' => array(), 'arg_count' => 0, 'cat_count' => 0);
             $this->CountElementTrees($id, $result);
             echo json_encode($result);
         }
@@ -279,10 +279,11 @@ class ArgumentsController  extends ControllerBase
                 "parent_id = {$id}"
             )
         );
-        $arr['arguments'] = $arr['arguments'] + count($arg);
-        $arr['cat_arguments'] = $arr['cat_arguments'] + count($cat);
+        $arr['arg_count'] = $arr['arg_count'] + count($arg);
+        $arr['cat_count'] = $arr['cat_count'] + count($cat);
         if (count($cat)) {
             foreach ($cat as $key) {
+                $arr['cat_arguments'][] = $key->name;
                 $this->CountElementTrees($key->id, $arr);
             }
         }
