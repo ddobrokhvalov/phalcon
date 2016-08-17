@@ -83,7 +83,7 @@ function showArgDescr(obj) {
         obj.removeClass('hideArgDescr');
         obj.text('Просмотреть');
     } else {
-        $('.argDescrBox_descr').text(argObjSend.complaint_descr);
+        $('.argDescrBox_descr').html(argObjSend.complaint_descr);
         $('.argDescrBox_comment').text(argObjSend.complaint_comment);
         $('.argComp').addClass('argComp-descr');
         obj.addClass('hideArgDescr');
@@ -101,8 +101,9 @@ var argObjSend = {
     choosenArgFunc: function(data) {
         this.id = data.attr('data-value');
         this.cat_id = data.attr('data-parent');
+        //this.complaint_text = data.find('.argTextCome').html();
         this.complaint_text = data[0].innerText;
-        this.complaint_descr = data.find('.argTextCome').text();
+        this.complaint_descr = data.find('.argTextCome').html();
         this.complaint_comment = data.find('.argCommentCome').text();
     }
 };
@@ -165,7 +166,7 @@ var ajaxSendObj = {
                         '<li data-value="' + data.arguments[i].id +
                         '" data-parent="' + data.arguments[i].category_id + '">' +
                         data.arguments[i].name +
-                        '<p class="argTextCome">Описание: ' + data.arguments[i].text + '</p>' +
+                        '<div class="argTextCome">Описание: ' + data.arguments[i].text + '</div>' +
                         '<p class="argCommentCome">Комментарий юриста: ' + data.arguments[i].comment + '</p></li>'
                     );
                 }
