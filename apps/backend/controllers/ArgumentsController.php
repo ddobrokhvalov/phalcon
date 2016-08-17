@@ -250,6 +250,44 @@ class ArgumentsController  extends ControllerBase
         exit;
     }
 
+    public function ajaxGetCountCatArgAction(){
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
+            $this->view->pick("access/denied");
+            $this->setMenu();
+        } else {
+            $id = $this->request->get('id');
+            if (!is_numeric($id)) {
+                echo "bad data";
+                exit;
+            }
+
+            $result = array('cat_arguments' => 0, 'arguments' => 0);
+            $this->CountElementTrees($id, $result);
+            echo json_encode($result);
+        }
+    }
+
+    private function CountElementTrees($id, &$arr){
+        $arg =  Arguments::find(
+            array(
+                "category_id = {$id}",
+            )
+        );
+        $cat = ArgumentsCategory::find(
+            array(
+                "parent_id = {$id}"
+            )
+        );
+        $arr['arguments'] = $arr['arguments'] + count($arg);
+        $arr['cat_arguments'] = $arr['cat_arguments'] + count($cat);
+        if (count($cat)) {
+            foreach ($cat as $key) {
+                $this->CountElementTrees($key->id, $arr);
+            }
+        }
+    }
+
     private function deleteTrees($id)
     {
         Arguments::find(
