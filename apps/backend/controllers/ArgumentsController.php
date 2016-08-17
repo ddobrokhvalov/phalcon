@@ -378,7 +378,7 @@ class ArgumentsController  extends ControllerBase
             $text = strip_tags($data['text']);
 
             if (mb_strlen($text, 'UTF-8') > 6000) {
-                echo json_encode(array('status' => 'bad length name'));
+                echo json_encode(array('status' => 'bad length text'));
                 exit;
             }
 
@@ -467,7 +467,7 @@ class ArgumentsController  extends ControllerBase
                 $text = strip_tags($edit['text']);
 
                 if (mb_strlen($text, 'UTF-8') > 6000) {
-                    echo json_encode(array('status' => 'bad length name'));
+                    echo json_encode(array('status' => 'bad length text'));
                     exit;
                 }
 
