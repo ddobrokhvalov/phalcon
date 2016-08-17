@@ -374,7 +374,10 @@ class ArgumentsController  extends ControllerBase
                 echo json_encode(array('status' => 'bad type'));
                 exit;
             }
-            if (mb_strlen($data['text'], 'UTF-8') > 6000) {
+
+            $text = strip_tags($data['text']);
+
+            if (mb_strlen($text, 'UTF-8') > 6000) {
                 echo json_encode(array('status' => 'bad length name'));
                 exit;
             }
@@ -461,7 +464,9 @@ class ArgumentsController  extends ControllerBase
                     exit;
                 }
 
-                if (mb_strlen($edit['text'], 'UTF-8') > 6000) {
+                $text = strip_tags($edit['text']);
+
+                if (mb_strlen($text, 'UTF-8') > 6000) {
                     echo json_encode(array('status' => 'bad length name'));
                     exit;
                 }
