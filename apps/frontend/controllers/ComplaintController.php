@@ -547,10 +547,10 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $this->checkDate($dateOff, $result);
+                $requred = $this->checkDate($dateOff, $result);
 
                 $cat = new ArgumentsCategory();
-                $cat_arguments = $cat->getCategoryNotEmpty( $type );
+                $cat_arguments = $cat->getCategoryNotEmpty( $type, $requred );
                 $temp_name = array();
                 foreach($cat_arguments as $cat){
                     if(!in_array($cat->lvl1, $temp_name)){
@@ -591,10 +591,10 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $this->checkDate($dateOff, $result);
+                $required = $this->checkDate($dateOff, $result);
 
                 $cat = new ArgumentsCategory();
-                $cat_arguments = $cat->getCategoryNotEmpty( $type );
+                $cat_arguments = $cat->getCategoryNotEmpty( $type, $required );
 
                 $temp_name = array();
                 foreach($cat_arguments as $cat){
@@ -793,6 +793,8 @@ class ComplaintController extends ControllerBase
 
         if($nowTime > $dateOff){
             $result['date'] = 1;
+            return 1;
         }
+        return 0;
     }
 }
