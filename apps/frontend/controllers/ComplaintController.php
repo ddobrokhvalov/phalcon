@@ -542,15 +542,15 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                if(!isset($type) || !$this->checkType($type)){
+                if(!isset($type) || !is_numeric($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
 
-                $this->checkDate($dateOff, $result);
+                $requred = $this->checkDate($dateOff, $result);
 
                 $cat = new ArgumentsCategory();
-                $cat_arguments = $cat->getCategoryNotEmpty( $type );
+                $cat_arguments = $cat->getCategoryNotEmpty( $type, $requred );
                 $temp_name = array();
                 foreach($cat_arguments as $cat){
                     if(!in_array($cat->lvl1, $temp_name)){
@@ -591,10 +591,10 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $this->checkDate($dateOff, $result);
+                $required = $this->checkDate($dateOff, $result);
 
                 $cat = new ArgumentsCategory();
-                $cat_arguments = $cat->getCategoryNotEmpty( $type );
+                $cat_arguments = $cat->getCategoryNotEmpty( $type, $required );
 
                 $temp_name = array();
                 foreach($cat_arguments as $cat){
@@ -622,7 +622,7 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $this->checkDate($dateOff, $result);
+                $required = $this->checkDate($dateOff, $result);
 
                 $parent_id  = ArgumentsCategory::findFirst($id);
                 if($parent_id == false){
@@ -646,6 +646,10 @@ class ComplaintController extends ControllerBase
                 $cat_arguments->addFrom('Multiple\Frontend\Models\ArgumentsCategory', 'ArgumentsCategory');
                 $cat_arguments->rightJoin('Multiple\Frontend\Models\Arguments', "ArgumentsCategory.id = category_id AND type LIKE '%{$type}%'");
                 $cat_arguments->where("parent_id = {$id}");
+                if($required == 1){
+                    $cat_arguments->andWhere("ArgumentsCategory.required = {$required}");
+                    $cat_arguments->andWhere("Multiple\Frontend\Models\Arguments.required = {$required}");
+                }
                 $cat_arguments->groupBy('ArgumentsCategory.id');
                 $cat_arguments = $cat_arguments->getQuery()->execute();
 
@@ -654,6 +658,8 @@ class ComplaintController extends ControllerBase
 
                 $arguments = Arguments::query()
                     ->where("category_id = {$id}")
+                    ->andWhere("type = {$type}")
+                    ->andWhere("required = {$required}")
                     ->andWhere("type LIKE '%{$type}%'")
                     ->execute();
 
@@ -674,6 +680,8 @@ class ComplaintController extends ControllerBase
                     $arguments = Arguments::query()
                         ->where("category_id IN ({arr_id:array})")
                         ->orWhere("category_id = {$id}")
+                        ->andWhere("type = {$type}")
+                        ->andWhere("required = {$required}")
                         ->andWhere("ttype LIKE '%{$type}%'")
                         ->bind(array("arr_id" => $arr_id))
                         ->execute();
@@ -701,12 +709,14 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $this->checkDate($dateOff, $result);
+                $required = $this->checkDate($dateOff, $result);
 
 
 
                 $arguments = Arguments::query()
                     ->where("category_id = {$id}")
+                    ->andWhere("type = {$type}")
+                    ->andWhere("required = {$required}")
                     ->andWhere("type LIKE '%{$type}%'")
                     ->execute();
 
@@ -732,9 +742,11 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $this->checkDate($dateOff, $result);
+                $required = $this->checkDate($dateOff, $result);
                 $arguments = Arguments::query()
                     ->where('name LIKE :name:', array('name' => '%' . $search . '%'))
+                    ->andWhere("type = {$type}")
+                    ->andWhere("required = {$required}")
                     ->andWhere("type = '%{$type}%'")
                     ->execute();
 
@@ -789,6 +801,8 @@ class ComplaintController extends ControllerBase
 
         if($nowTime > $dateOff){
             $result['date'] = 1;
+            return 1;
         }
+        return 0;
     }
 }

@@ -228,7 +228,7 @@ function editCatArg(obj) {
         catArgObj = {
             descr: obj.attr('id'),
             name: obj.find('h3').text(),
-            text: obj.find('.argumText').text(),
+            text: obj.find('.argumText').html(),
             type: obj.find('.argumentType').text(),
             comment: obj.find('.argumentComment').text()
         };
@@ -307,7 +307,7 @@ function ShellToFill(step, titleText, id, parent_id, dataRequired, text, comment
     this.catAdd2 = '<div class="category_add withoutText"></div>';
     this.argAdd = '<div class="category_argumentAdd"></div>';
     this.argAddCross = '<div class="category_argumentAdd crossView">Довод</div>';
-    this.argText = '<p class="argumText">' + text + '</p>';
+    this.argText = '<div class="argumText">' + text + '</div>';
     this.argComment = '<p class="argumentComment">' + comment + '</p>';
     this.argType = '<p class="argumentType">' + argumentType + '</p>';
     this.catEdit = '<div class="category_edit"></div>';

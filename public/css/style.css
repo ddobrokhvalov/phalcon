@@ -2040,7 +2040,7 @@ a:focus {
     font-weight: 100;
     cursor: pointer; }
   /* line 50, ../sass/_list_arguments.scss */
-  .category p {
+  .category p, .category .argumText {
     display: none; }
   /* line 53, ../sass/_list_arguments.scss */
   .category_arrow {
