@@ -225,6 +225,7 @@ function addArgumentFunc(obj) {
     $('.add-Arguments_category h6').text('Добавление довода');
     $('.add-ArgumentsCategory .inputBox:first h4').text('Название довода');
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
+    initEditor("argument-text");
 }
 function editCatArg(obj) {
     $('.add-Arguments_category .admin-popup-content').removeClass('hiddenSaveBtn');

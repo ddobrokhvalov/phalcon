@@ -39,11 +39,8 @@ $(document).ready(function () {
     });
 
     $('#complaint_save').click(function (evt) {
+        stopSaveCompl();
         evt.preventDefault();
-        if (complaint.prepareData()) {
-            saveComplaintToDocxFile();
-            complaint.saveAsDraft();
-        }
     });
     $('#back_complaint_save').click(function (evt) {
         evt.preventDefault();
@@ -262,11 +259,13 @@ var complaint = {
 
     }
 };
+var regFlags;
 var drake = false;
 var currTextArea = 0;
 var argument = {
     argumentList: [],
-    addArgument: function (id, cat_id, complaint_text) {
+    addArgument: function (id, cat_id, complaint_text, objReq) {
+        regFlags = objReq;
         complaint_text = complaint_text || "";
         //templates["just_text"] = "Вы можете ввести свой текст здесь";
         templates["just_text"] = "";
@@ -292,7 +291,7 @@ var argument = {
         if (complaint_text.length) {
             c_text = complaint_text;
         }
-        var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" class="template_edit" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
+        var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" data-required="' + objReq + '" class="template_edit template_item" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
             (( id != 'just_text' ) ? '<span>' + templateName + '</span>' : '') +
             '<div class="c-edit-j-h-ctr">' +
             '<a  class="template-edit-control down c-edit-j-h-ctr1">Переместить ниже</a> <a class="template-edit-control up c-edit-j-h-ctr2">Переместить выше</a>' +
@@ -315,6 +314,10 @@ var argument = {
             initEditor(currTextArea);
         }, 100);
 
+        if (objReq == 1 && $('#template_edit_just_text .c-edit-j-t p').text() == 'Пользовательский текст' ||
+            $('#template_edit_just_text .c-edit-j-t p').text() == 'Вам необходимо выбрать хотябы одну обязательную жалобу!') {
+            $('#template_edit_just_text .c-edit-j-t p').text('Пользовательский текст');
+        }
     },
     removeArgument: function (id, cat_id) {
         if (complaint.needCat3 === true && cat_id == 3) {
@@ -331,8 +334,19 @@ var argument = {
         /* if($(".template_edit").length <= 1){
             $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").hide();
         } */
+    },
+    removeArgumentReq: function(req) {
+        if (req == 1) {
+            $('.template_item').each(function() {
+                if ($(this).attr('data-required') == 1 &&
+                    $('.c-edit-j-t p').text() == 'Пользовательский текст') {
+                    setTimeout(function() {
+                        $('.c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
+                    }, 1000);
+                }
+            });
+        }
     }
-
 };
 var auction = {
         auctionReady: false,
@@ -370,7 +384,9 @@ var auction = {
         },
         overdueData: function(overdue) {
             var now = new Date(), mainArr = [], setTodayDate = [], flag = false;
-            var getDateSplit = overdue.split(' '), getDateSplit1 = getDateSplit[0].split('.'), getDateSplit2 = getDateSplit[1].split(':');
+            var getDateSplit = overdue.split(' '),
+                getDateSplit1 = getDateSplit[0].split('.'),
+                getDateSplit2 = getDateSplit[1].split(':');
             pushArr(getDateSplit1);
             pushArr(getDateSplit2);
             function pushArr(arr) {
@@ -389,9 +405,15 @@ var auction = {
             for (var i = 0; i < 5; i++) {
                 if (mainArr[i] < setTodayDate[i]) flag = true;
             }
-            if (flag) setTimeout(function() {
-                $('.c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
-            }, 1000);
+            if (flag) {
+                setTimeout(function () {
+                    $('.c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
+                }, 1000);
+            } else {
+                setTimeout(function() {
+                    $('.c-edit-j-t p').text('Пользовательский текст');
+                }, 1000);
+            }
         },
         succesRequest: function (data,auction_id) {
             if (auction.processData(data, auction_id)) {
@@ -608,7 +630,7 @@ function saveComplaintToDocxFile() {
             processData: false,
             success: function(data) {
               //alert("boa!");
-            },    
+            },
             error: function() {
               //alert("not so boa!");
             }
@@ -742,4 +764,22 @@ function ajaxFileUpload(url, fileelementid) {
         }
     });
     return false;
+}
+
+function stopSaveCompl() {
+    var flag;
+    if (regFlags == 1) {
+        flag = false;
+    } else {
+        flag = true;
+    }
+    $('.template_item').each(function() {
+        if ($(this).attr('data-required') == 1) flag = true;
+    });
+    if (flag) {
+        if (complaint.prepareData())
+            complaint.saveAsDraft();
+    } else {
+        showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Необходимо выбрать обязательный довод");
+    }
 }
