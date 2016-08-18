@@ -40,8 +40,10 @@ $(document).ready(function () {
 
     $('#complaint_save').click(function (evt) {
         evt.preventDefault();
-        if (complaint.prepareData())
+        if (complaint.prepareData()) {
+            saveComplaintToDocxFile();
             complaint.saveAsDraft();
+        }
     });
     $('#back_complaint_save').click(function (evt) {
         evt.preventDefault();
@@ -559,7 +561,60 @@ var auction = {
 
     }
     ;
+function saveComplaintToDocxFile() {
+    var loadFile = function(url, callback) {
+        JSZipUtils.getBinaryContent(url, callback);
+    };
+    var custom_text = "";
+    $("#edit_container .edit-textarea.cke_editable").each(function(index, elem){
+        custom_text += replaceWordTags($(elem).html() + "<br>");
+    });
+    //var custom_text = replaceWordTags(jQuery("#edit_textarea_just_text").html());
+    //return false;
+    if ($("#operator_etp").is(":checked")) {
+        $file_to_load = "operator_etp.docx";
+    } else {
+        if (compare_dates(procedura.info.okonchanie)) {
+            $file_to_load = "documentation.docx";
+        } else {
+            $file_to_load = "decline.docx";
+        }
+    }
+    loadFile("/js/docx_generator/docx_templates/" + $file_to_load, function(err, content) {
+        if (err) { console.log("eee"); throw e };
+        doc = new Docxgen(content);
+        doc.setData({
+            "applicant_fio": applicant.applicant_info.fio_applicant,
+            "applicant_address": applicant.applicant_info.address,
+            "applicant_phone": applicant.applicant_info.telefone,
+            "applicant_position": applicant.applicant_info.position,
+            "applicant_email": applicant.applicant_info.email,
+            "tip_zakupki": zakupka.info.type,
+            "ufas": "г. Санкт-Петербургу (тестовое)",
+            /*"myXml": '<w:p><w:pPr><w:rPr><w:color w:val="FF0000"/></w:rPr></w:pPr><w:r><w:rPr><w:color w:val="FF0000"/></w:rPr><w:t>My custom</w:t></w:r><w:r><w:rPr><w:color w:val="00FF00"/></w:rPr><w:t>XML</w:t></w:r></w:p>',*/
+            "dovod": custom_text,
+            }
+        );
+        doc.render();
+        out = doc.getZip().generate({type:"blob"});
+          var data = new FormData();
+          data.append('file', out);
 
+          $.ajax({
+            url :  "/complaint/saveBlobFile",
+            type: 'POST',
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+              //alert("boa!");
+            },    
+            error: function() {
+              //alert("not so boa!");
+            }
+          });
+    });
+}
 function incrementMenuCount() {
     var countAll = $('.menu-status-all').html();
     $('.menu-status-all').html(parseInt(countAll) + 1);
