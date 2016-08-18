@@ -1,4 +1,11 @@
 <script type="application/javascript" src="/js/argCompl_jsonSend.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/docxtemplater.v2.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/FileSaver.min.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/jszip-utils.js"></script>
+
+<!--[if IE]>
+    <script type="text/javascript" src="/js/docx_generator/js/jszip-utils-ie.js"></script>
+<![endif]-->
 <div class="content add-complaint-page">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
@@ -303,7 +310,6 @@
         <p></p>
     </div>
 </article>
-
 <div id="pop-before-ask-question" class="modal_div">
     <h2></h2>
     <div class="pop-done-txt"></div>
@@ -334,7 +340,24 @@
         width: 500px;
     }
 </style>
+<script>
+    $(document).ready(function(){
+        if (applicant.applicant_info.length == 0) {
+            $.ajax({
+                type: 'POST',
+                url: '/applicant/getApplicantInfo',
+                data: 'applicant_id=' + applicant.id[0],
+                success: function (msg) {
+                    applicant.applicant_info = msg.applicant_info;
+                },
+                error: function (msg) {
+                    console.log(msg);
+                }
 
+            });
+        }
+    });
+    </script>
 <script>
     var templates = {};
     var temp_name = {};
