@@ -145,7 +145,6 @@ var ajaxSendObj = {
             data: data,
             dataType: 'json',
             success: function(value) {
-                console.log(value);
                 if (ajaxSendObj.step != 6) {
                     ajaxSendObj.stepsCacheArr.push(value);
                     ajaxSendObj.showDopBlocks();

@@ -40,8 +40,8 @@ $(document).ready(function () {
     });
 
     $('#complaint_save').click(function (evt) {
-        evt.preventDefault();
         stopSaveCompl();
+        evt.preventDefault();
     });
     $('#back_complaint_save').click(function (evt) {
         evt.preventDefault();
@@ -260,11 +260,13 @@ var complaint = {
 
     }
 };
+var regFlags;
 var drake = false;
 var currTextArea = 0;
 var argument = {
     argumentList: [],
     addArgument: function (id, cat_id, complaint_text, objReq) {
+        regFlags = objReq;
         complaint_text = complaint_text || "";
         //templates["just_text"] = "Вы можете ввести свой текст здесь";
         templates["just_text"] = "";
@@ -710,10 +712,19 @@ function ajaxFileUpload(url, fileelementid) {
 }
 
 function stopSaveCompl() {
-    if () {
+    var flag;
+    if (regFlags == 1) {
+        flag = false;
+    } else {
+        flag = true;
+    }
+    $('.template_item').each(function() {
+        if ($(this).attr('data-required') == 1) flag = true;
+    });
+    if (flag) {
         if (complaint.prepareData())
             complaint.saveAsDraft();
     } else {
-
+        showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Необходимо выбрать обязательный довод");
     }
 }
