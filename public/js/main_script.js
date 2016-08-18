@@ -494,7 +494,7 @@ function add_simple_tags_text(text) {
     return text;
 }
 
-function replaceWordTags(text) {debugger;
+function replaceWordTags(text) {
     while(text.search("<br>") >= 0 || text.search("<p>") >= 0 || text.search("</p>") >= 0){
         text = text.replace("<br>", '\r\n');
         text = text.replace("<p>", '');

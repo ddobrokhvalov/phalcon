@@ -232,7 +232,7 @@ var complaint = {
                     type: 'POST',
                     url: '/applicant/ajaxSetApplicantId',
                     data: 'applicant_id=' + applicant_id.join(","),
-                    success: function (msg) {debugger;
+                    success: function (msg) {
                         applicant.applicant_info = msg.applicant_info;
                     },
                     error: function (msg) {
@@ -246,7 +246,7 @@ var complaint = {
                     type: 'POST',
                     url: '/applicant/ajaxSetApplicantId',
                     data: 'applicant_id=' + applicant_id.join(","),
-                    success: function (msg) {debugger;
+                    success: function (msg) {
                         applicant.applicant_info = msg.applicant_info;
                     },
                     error: function (msg) {
