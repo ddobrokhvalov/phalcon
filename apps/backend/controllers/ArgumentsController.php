@@ -323,7 +323,7 @@ class ArgumentsController  extends ControllerBase
 
         $result = array(
             "cat_arguments" => array(),
-            "arguments" => array()
+            "arguments" => array(),
         );
 
         $cat_arguments = ArgumentsCategory::find("parent_id = {$id}");
@@ -332,13 +332,20 @@ class ArgumentsController  extends ControllerBase
             ->execute();
 
         foreach ($cat_arguments as $cat) {
+            $temp_arg = Arguments::query()
+                ->where("category_id = {$cat->id}")
+                ->execute();
+            $temp_cat = ArgumentsCategory::find("parent_id = {$cat->id}");
             $result["cat_arguments"][] = array(
                 "id" => $cat->id,
                 "name" => $cat->name,
                 "required" => $cat->required,
                 "parent_id" => $cat->parent_id,
+                "count_arg" => count($temp_arg),
+                "count_cat" => count($temp_cat)
             );
         }
+
         foreach ($arguments as $argument) {
             $result['arguments'][] = array(
                 'id' => $argument->id,

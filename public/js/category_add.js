@@ -41,6 +41,7 @@ $(document).ready(function() {
     requiredStartSearch();
 });
 
+var addCat = true, addArg = true;
 var base_url = window.location.origin;
 var catNum = '', parentId, shell, catArgObj, requiredCat, argId, thisIdDel, thisObj;
 function categorySend(e) {
@@ -316,8 +317,14 @@ function ShellToFill(step, titleText, id, parent_id, dataRequired, text, comment
     this.title = '<h2 class="itemTitle">' + titleText + '</h2>';
     this.title2 = '<h3 class="itemTitle">' + titleText + '</h3>';
     this.catAdd = '<div class="category_add">Добавить категорию</div>';
-    this.catAdd2 = '<div class="category_add withoutText"></div>';
-    this.argAdd = '<div class="category_argumentAdd"></div>';
+
+    if(addCat == true) {
+        this.catAdd2 = '<div class="category_add withoutText"></div>';
+    }
+    if(addArg == true){
+        this.argAdd = '<div class="category_argumentAdd"></div>';
+    }
+
     this.argAddCross = '<div class="category_argumentAdd crossView">Довод</div>';
     this.argText = '<div class="argumText">' + text + '</div>';
     this.argComment = '<p class="argumentComment">' + comment + '</p>';
@@ -452,6 +459,15 @@ var receivingData = {
                 }
                 function cycleDataCat(numb, func) {
                     for (var i = 0; i < value.cat_arguments.length; i++) {
+                        if(value.cat_arguments[i].count_arg > 0 ){
+                            addCat = false;
+                            addArg = true;
+                        }else if(value.cat_arguments[i].count_cat > 0){
+                            addCat = true;
+                            addArg = false;
+                        }
+
+
                         shell = new ShellToFill(
                             numb,
                             value.cat_arguments[i].name,
@@ -627,13 +643,17 @@ var writeGetData = {
             '</div></li>'
     },
     subCategory_1: function() {
+        var _addCat = addCat;
+        var _addArg = addArg;
+        addCat = true;
+        addArg = true;
         return '<li>' +
             shell.holder +
             shell.box2 +
             shell.arrow +
             shell.title2 +
-            shell.catAdd2 +
-            shell.argAdd +
+            ((_addCat == true) ? shell.catAdd2 : '') +
+            ((_addArg == true) ? shell.argAdd : '') +
             shell.catEdit +
             shell.catDel +
             '</ul></li>'
