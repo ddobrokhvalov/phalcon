@@ -101,8 +101,8 @@ var argObjSend = {
     choosenArgFunc: function(data) {
         this.id = data.attr('data-value');
         this.cat_id = data.attr('data-parent');
-        //this.complaint_text = data.find('.argTextCome').html();
-        this.complaint_text = data[0].innerText;
+        this.complaint_text = data.find('.argTextCome').html();
+        //this.complaint_text = data[0].innerText;
         this.complaint_descr = data.find('.argTextCome').html();
         this.complaint_comment = data.find('.argCommentCome').text();
     }
