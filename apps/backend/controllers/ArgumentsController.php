@@ -484,7 +484,7 @@ class ArgumentsController  extends ControllerBase
                 echo json_encode(array('err' => 'bad id'));
                 exit;
             }
-            if (!isset($edit['name']) || mb_strlen($edit['name'], 'UTF-8') > 50  || trim($edit['name']) == '') {
+            if (!isset($edit['name'])  || trim($edit['name']) == '') {
                 echo json_encode(array('err' => 'bad name'));
                 exit;
             }
@@ -530,6 +530,10 @@ class ArgumentsController  extends ControllerBase
                     'comment'   => $argument->comment
                 ));
             } else {
+                if (mb_strlen($edit['name'], 'UTF-8') > 50 || trim($edit['name']) == "") {
+                    echo json_encode(array('status' => 'bad length name'));
+                    exit;
+                }
                 $id = $edit['id'];
                 $category = ArgumentsCategory::findFirst($id);
                 if (!$category) {
