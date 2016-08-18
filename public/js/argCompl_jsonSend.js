@@ -47,7 +47,7 @@ function methodProcurement() {
     }
     typeComplicant = $('.type_complicant').val();
     datCome = $('.dateoff').val();
-    var data = '&step=' + startSend.step + '&type=' + typeComplicant + '&dateoff=' + datCome;
+    var data = 'step=' + startSend.step + '&type=' + typeComplicant + '&dateoff=' + datCome;
     startSend.sendRequest(data);
     $('.argComp').removeClass('argComp-descr');
     $('.btn-div, #argComplBtn').hide();
@@ -57,7 +57,7 @@ function methodProcurement() {
 function searchStep(e) {
     ajaxSendObj.step = 6;
     var searchValue = $('.word-argCompl-input input').val();
-        data = '?search=' + searchValue + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant + '&dateoff=' + datCome;
+        data = 'search=' + searchValue + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant + '&dateoff=' + datCome;
     ajaxSendObj.sendRequest(data);
     e.preventDefault();
 }
@@ -66,7 +66,7 @@ function nextStep(e) {
         ajaxSendObj.step = 2;
     }
     var id = $('#argComplSelect .current-option').attr('data-value'),
-        data = '?id=' + id + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant + '&dateoff=' + datCome;
+        data = 'id=' + id + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant + '&dateoff=' + datCome;
     ajaxSendObj.sendRequest(data);
     $('#argComplBtn').slideUp(400);
     e.preventDefault();
@@ -114,7 +114,8 @@ var startSend = {
     sendRequest: function(data) {
         $.ajax({
             type: "POST",
-            url: ajaxSendObj.base_url + "/complaint/ajaxStepsAddComplaint" + data,
+            url: ajaxSendObj.base_url + "/complaint/ajaxStepsAddComplaint",
+            data: data,
             dataType: 'json',
             success: function(value) {
                 readyDataCatArg = value;
@@ -134,7 +135,8 @@ var ajaxSendObj = {
     sendRequest: function(data) {
         $.ajax({
             type: "POST",
-            url: ajaxSendObj.base_url + "/complaint/ajaxStepsAddComplaint" + data,
+            url: ajaxSendObj.base_url + "/complaint/ajaxStepsAddComplaint",
+            data: data,
             dataType: 'json',
             success: function(value) {
                 console.log(value);

@@ -9,7 +9,13 @@ $(document).ready(function() {
         categorySend(e);
     });
     $('.argCatTree').on('click', '.category_delete', function() {
-        deleteCatBlock($(this));
+        prevDelCatBlock($(this));
+    });
+    $('.delChoosen').click(function() {
+        deleteCatBlock();
+    });
+    $('.cancelDel').click(function() {
+        $('.deleteChoosenItem').fadeOut();
     });
     $('.argCatTree').on('click', '.category_add', function() {
         createSubCat_Arg($(this));
@@ -36,7 +42,7 @@ $(document).ready(function() {
 });
 
 var base_url = window.location.origin;
-var catNum = '', parentId, shell, catArgObj, requiredCat, argId;
+var catNum = '', parentId, shell, catArgObj, requiredCat, argId, thisIdDel, thisObj;
 function categorySend(e) {
     var catName = $('.inputBox input').val(),
         data;
@@ -187,14 +193,20 @@ function popupCancel(obj) {
         $('.argumentText').hide();
     }
 }
-function deleteCatBlock(obj) {
-    var thisId = obj.parent().attr('data-id'), data;
-    if (obj.parent().attr('id') == 'argument') {
-        data = 'id=' + thisId + '&argument=true';
+function prevDelCatBlock(obj) {
+    thisObj = obj.parent();
+    thisIdDel = obj.parent().attr('data-id');
+    var data = 'id=' + thisIdDel;
+    deleteCatArgPreview.deleteCatArgSend(data, obj);
+}
+function deleteCatBlock() {
+    var data;
+    if (thisObj.attr('id') == 'argument') {
+        data = 'id=' + thisIdDel + '&argument=true';
     } else {
-        data = 'id=' + thisId;
+        data = 'id=' + thisIdDel;
     }
-    deleteCategory.deleteCategorySend(data, obj.parent().parent());
+    deleteCategory.deleteCategorySend(data, thisObj.parent());
 }
 function addArgumentFunc(obj) {
     $('.add-Arguments_category .admin-popup-content').removeClass('hiddenSaveBtn');
@@ -301,8 +313,8 @@ function ShellToFill(step, titleText, id, parent_id, dataRequired, text, comment
     this.box2 = '<li class="category" id="category" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '" data-required="' + dataRequired + '" data-toggle="true">';
     this.box3 = '<li class="category" id="argument" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '" data-required="' + dataRequired + '" data-toggle="true">';
     this.arrow = '<div class="category_arrow"></div>';
-    this.title = '<h2>' + titleText + '</h2>';
-    this.title2 = '<h3>' + titleText + '</h3>';
+    this.title = '<h2 class="itemTitle">' + titleText + '</h2>';
+    this.title2 = '<h3 class="itemTitle">' + titleText + '</h3>';
     this.catAdd = '<div class="category_add">Добавить категорию</div>';
     this.catAdd2 = '<div class="category_add withoutText"></div>';
     this.argAdd = '<div class="category_argumentAdd"></div>';
@@ -522,6 +534,61 @@ var editCategoryArgument = {
     }
 };
 
+var deleteCatArgPreview = {
+    deleteCatArgSend: function(data, obj) {
+        $.ajax({
+            type: "GET",
+            url: base_url + "/admin/arguments/ajaxGetCountCatArg",
+            data: data,
+            dataType: 'json',
+            context: obj,
+            success: function(value) {
+                console.log(value);
+                deleteCatArgPreview.createPopupContent(value, obj);
+            },
+            error: function(xhr) {
+                alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
+                    + xhr.statusText + ' ResponseText:' + xhr.responseText);
+            }
+        });
+    },
+    createPopupContent: function(val, objData) {
+        var objDatas = objData.parent().attr('id'),
+            objName = objData.parent().find('.itemTitle')[0].innerText,
+            catItemsArr = [];
+        $('.delChoosenCatArg__name').html(function() {
+            if (objDatas == 'category') {
+                return 'Вы уверены, что хотите удалить категорию <span>' + objName + '</span> ?';
+            } else {
+                return 'Вы уверены, что хотите удалить довод <span>' + objName + '</span> ?';
+            }
+        });
+        if (val.cat_arguments.length != 0) {
+            for (var i = 0; i < val.cat_arguments.length; i++) {
+                catItemsArr.push(' ' + val.cat_arguments[i]);
+            }
+            $('.delChoosenCatArg__catNames').html(function() {
+                if (catItemsArr.length > 1) {
+                    return 'В нее также входят подкатегории:<span>' + catItemsArr + '</span>';
+                } else {
+                    return 'В нее также входит подкатегория<span>' + catItemsArr + '</span>';
+                }
+            });
+            $('.delChoosenCatArg__catNames').show();
+        } else {
+            $('.delChoosenCatArg__catNames').hide();
+        }
+        if (val.cat_count != 0) {
+            $('.delChoosenCatArg__argNumber').html(
+                'C общим количеством доводов: <span>' + val.cat_count + '</span>'
+            ).show();
+        } else {
+            $('.delChoosenCatArg__argNumber').hide();
+        }
+        $('.deleteChoosenItem').fadeIn().css('display', 'flex');
+    }
+};
+
 var deleteCategory = {
     deleteCategorySend: function(data, obj) {
         $.ajax({
@@ -540,6 +607,7 @@ var deleteCategory = {
         });
     },
     clearDOM: function(obj) {
+        $('.deleteChoosenItem').fadeOut();
         obj.slideUp(400);
         setTimeout(function() {
             obj.remove();

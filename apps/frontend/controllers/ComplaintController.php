@@ -550,8 +550,9 @@ class ComplaintController extends ControllerBase
         );
         switch($step){
             case 1:
-                $type       = $this->request->get('type');
-                $dateOff    = $this->request->get('dateoff');
+                $type       = $this->request->getPost('type');
+                $dateOff    = $this->request->getPost('dateoff');
+                $checkRequired = $this->request->getPost('checkrequired');
 
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
@@ -563,10 +564,13 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                $requred = $this->checkDate($dateOff, $result);
+                $required = $this->checkDate($dateOff, $result);
+                if(isset($checkRequired) && $checkRequired == 1){
+                    $required = 0;
+                }
 
                 $cat = new ArgumentsCategory();
-                $cat_arguments = $cat->getCategoryNotEmpty( $type, $requred );
+                $cat_arguments = $cat->getCategoryNotEmpty( $type, $required );
                 $temp_name = array();
                 foreach($cat_arguments as $cat){
                     if(!in_array($cat->lvl1, $temp_name)){
@@ -582,9 +586,10 @@ class ComplaintController extends ControllerBase
                 echo json_encode($result);
             break;
             case 2:
-                $parent_id  = $this->request->get('id');
-                $type       = $this->request->get('type');
-                $dateOff    = $this->request->get('dateoff');
+                $parent_id  = $this->request->getPost('id');
+                $type       = $this->request->getPost('type');
+                $dateOff    = $this->request->getPost('dateoff');
+                $checkRequired = $this->request->getPost('checkrequired');
 
 //                $parent_id  = ArgumentsCategory::findFirst($id);
 //                if($parent_id == false){
@@ -608,6 +613,9 @@ class ComplaintController extends ControllerBase
                 }
 
                 $required = $this->checkDate($dateOff, $result);
+                if(isset($checkRequired) && $checkRequired == 1){
+                    $required = 0;
+                }
 
                 $cat = new ArgumentsCategory();
                 $cat_arguments = $cat->getCategoryNotEmpty( $type, $required );
@@ -629,9 +637,10 @@ class ComplaintController extends ControllerBase
                 echo json_encode($result);
             break;
             case 3:
-                $id         = $this->request->get('id');
-                $type       = $this->request->get('type');
-                $dateOff    = $this->request->get('dateoff');
+                $id         = $this->request->getPost('id');
+                $type       = $this->request->getPost('type');
+                $dateOff    = $this->request->getPost('dateoff');
+                $checkRequired = $this->request->getPost('checkrequired');
 
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
@@ -639,6 +648,9 @@ class ComplaintController extends ControllerBase
                 }
 
                 $required = $this->checkDate($dateOff, $result);
+                if(isset($checkRequired) && $checkRequired == 1){
+                    $required = 0;
+                }
 
                 $parent_id  = ArgumentsCategory::findFirst($id);
                 if($parent_id == false){
@@ -706,9 +718,10 @@ class ComplaintController extends ControllerBase
                 echo json_encode($result);
             break;
             case 4:
-                $id         = $this->request->get('id');
-                $type       = $this->request->get('type');
-                $dateOff    = $this->request->get('dateoff');
+                $id         = $this->request->getPost('id');
+                $type       = $this->request->getPost('type');
+                $dateOff    = $this->request->getPost('dateoff');
+                $checkRequired = $this->request->getPost('checkrequired');
 
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
@@ -724,7 +737,9 @@ class ComplaintController extends ControllerBase
                 }
 
                 $required = $this->checkDate($dateOff, $result);
-
+                if(isset($checkRequired) && $checkRequired == 1){
+                    $required = 0;
+                }
 
 
                 $arguments = Arguments::query()
@@ -737,10 +752,11 @@ class ComplaintController extends ControllerBase
                 echo json_encode($result);
             break;
             case 6:
-                $search     = $this->request->get('search');
+                $search     = $this->request->getPost('search');
                 $search     = (isset($search)) ? trim($search) : '';
-                $type       = $this->request->get('type');
-                $dateOff   = $this->request->get('dateoff');
+                $type       = $this->request->getPost('type');
+                $dateOff   = $this->request->getPost('dateoff');
+                $checkRequired = $this->request->getPost('checkrequired');
 
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
@@ -756,6 +772,10 @@ class ComplaintController extends ControllerBase
                 }
 
                 $required = $this->checkDate($dateOff, $result);
+                if(isset($checkRequired) && $checkRequired == 1){
+                    $required = 0;
+                }
+
                 $arguments = Arguments::query()
                     ->where('name LIKE :name:', array('name' => '%' . $search . '%'))
                     ->andWhere("type = {$type}")
