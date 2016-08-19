@@ -30,8 +30,8 @@ class ArgumentsCategory extends Model
 FROM `arguments_categoty` as t1
 JOIN `arguments_categoty` as t2 ON t2.parent_id = t1.id
 LEFT JOIN `arguments_categoty` as t3 on t3.parent_id = t2.id
-RIGHT JOIN `arguments` as `arg1` ON (t2.id = `arg1`.`category_id` AND `arg1`.`type` = {$type}) OR (t3.id = `arg1`.`category_id` AND `arg1`.`type` = {$type})
-WHERE t1.parent_id = 0 ".(($req == 1) ? ' AND (t1.required = 1 OR t2.required = 1 OR t3.required = 1)' : '');
+RIGHT JOIN `arguments` as `arg1` ON (t2.id = `arg1`.`category_id` AND `arg1`.`type` LIKE '%{$type}%') OR (t3.id = `arg1`.`category_id` AND `arg1`.`type` LIKE '%{$type}%')
+WHERE t1.parent_id = 0 " .(($req == 1) ? ' AND (t1.required = 1 OR t2.required = 1 OR t3.required = 1)' : '');;
         $arg = new ArgumentsCategory();
         return new Resultset(null, $arg, $arg->getReadConnection()->query($sql));
     }

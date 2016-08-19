@@ -559,7 +559,7 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                if(!isset($type) || !is_numeric($type)){
+                if(!isset($type) || !$this->checkType($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
@@ -607,7 +607,7 @@ class ComplaintController extends ControllerBase
                     echo json_encode(array('error' => 'bad data'));
                     exit;
                 }
-                if(!isset($type) || !is_numeric($type)){
+                if(!isset($type) || !$this->checkType($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
@@ -664,7 +664,7 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                if(!isset($type) || !is_numeric($type)){
+                if(!isset($type) || !$this->checkType($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
@@ -672,7 +672,7 @@ class ComplaintController extends ControllerBase
                 $cat_arguments = new Builder();
                 $cat_arguments->getDistinct();
                 $cat_arguments->addFrom('Multiple\Frontend\Models\ArgumentsCategory', 'ArgumentsCategory');
-                $cat_arguments->rightJoin('Multiple\Frontend\Models\Arguments', "ArgumentsCategory.id = category_id AND type = {$type}");
+                $cat_arguments->rightJoin('Multiple\Frontend\Models\Arguments', "ArgumentsCategory.id = category_id AND type LIKE '%{$type}%'");
                 $cat_arguments->where("parent_id = {$id}");
                 if($required == 1){
                     $cat_arguments->andWhere("ArgumentsCategory.required = {$required}");
@@ -686,8 +686,8 @@ class ComplaintController extends ControllerBase
 
                 $arguments = Arguments::query()
                     ->where("category_id = {$id}")
-                    ->andWhere("type = {$type}")
                     ->andWhere("required = {$required}")
+                    ->andWhere("type LIKE '%{$type}%'")
                     ->execute();
 
 
@@ -707,8 +707,8 @@ class ComplaintController extends ControllerBase
                     $arguments = Arguments::query()
                         ->where("category_id IN ({arr_id:array})")
                         ->orWhere("category_id = {$id}")
-                        ->andWhere("type = {$type}")
                         ->andWhere("required = {$required}")
+                        ->andWhere("type LIKE '%{$type}%'")
                         ->bind(array("arr_id" => $arr_id))
                         ->execute();
                 }
@@ -731,7 +731,7 @@ class ComplaintController extends ControllerBase
                     echo json_encode(array('error' => 'bad data'));
                     exit;
                 }
-                if(!isset($type) || !is_numeric($type)){
+                if(!isset($type) || !$this->checkType($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
@@ -744,8 +744,8 @@ class ComplaintController extends ControllerBase
 
                 $arguments = Arguments::query()
                     ->where("category_id = {$id}")
-                    ->andWhere("type = {$type}")
                     ->andWhere("required = {$required}")
+                    ->andWhere("type LIKE '%{$type}%'")
                     ->execute();
 
                 $this->getArguments($arguments, $type, $result);
@@ -766,7 +766,7 @@ class ComplaintController extends ControllerBase
                     echo json_encode($result);
                     exit;
                 }
-                if(!isset($type) || !is_numeric($type)){
+                if(!isset($type) || !$this->checkType($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
@@ -778,8 +778,8 @@ class ComplaintController extends ControllerBase
 
                 $arguments = Arguments::query()
                     ->where('name LIKE :name:', array('name' => '%' . $search . '%'))
-                    ->andWhere("type = {$type}")
                     ->andWhere("required = {$required}")
+                    ->andWhere("type LIKE '%{$type}%'")
                     ->execute();
 
                 $this->getArguments($arguments, $type, $result);
@@ -797,24 +797,20 @@ class ComplaintController extends ControllerBase
 
 
     private function checkType( $type ){
-        $type = trim( $type );
-        if($type == ''){
-            return $type;
+        $checkType = false;
+        if($type == 'electr_auction'){
+            $checkType = true;
+        } else if( $type == 'concurs'){
+            $checkType = true;
+        } else if( $type == 'kotirovok'){
+            $checkType = true;
+        } else if( $type == 'offer'){
+            $checkType = true;
+        } else {
+            echo json_encode(array('status' => 'bad type'));
+            exit;
         }
-        $type = mb_strtolower($type);
-        $types = array(
-            'электронный'   => 0,
-            'конкурс'       => 1,
-            'котировок'     => 2,
-            'предложений'   => 3,
-        );
-        $temp = -1;
-        foreach($types as $key => $val){
-            if(preg_match('/'.$key.'/', $type)){
-                $temp = $val;
-            }
-        }
-        return $temp;
+        return $checkType;
     }
 
     private function getArguments( $arguments, $type, &$result ){
@@ -826,7 +822,7 @@ class ComplaintController extends ControllerBase
                 'category_id'   => $argument->category_id,
                 'comment'       => $argument->comment,
                 'required'      => $argument->required,
-                'type'          => $type
+                'type'          => ($argument->type != '') ? explode(',', $argument->type) : array()
             );
         }
     }

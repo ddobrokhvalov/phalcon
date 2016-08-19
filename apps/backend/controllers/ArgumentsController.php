@@ -416,7 +416,7 @@ class ArgumentsController  extends ControllerBase
             } else if (!isset($data['category_id']) || !is_numeric($data['category_id'])) {
                 echo json_encode(array('status' => 'bad id'));
                 exit;
-            } else if (!isset($data['type']) || !is_numeric($data['type'])) {
+            } else if (!isset($data['type']) || !is_array($data['type'])) {
                 echo json_encode(array('status' => 'bad type'));
                 exit;
             }
@@ -425,7 +425,6 @@ class ArgumentsController  extends ControllerBase
 
             if (mb_strlen($text, 'UTF-8') > 6000) {
                 echo json_encode(array('status' => 'bad length text'));
-                exit;
             }
 
             $comment = isset($data['comment']) ? trim($data['comment']) : '';
@@ -433,6 +432,8 @@ class ArgumentsController  extends ControllerBase
                 echo json_encode(array('status' => 'bad length comment'));
                 exit;
             }
+
+            $this->checkType($data['type']);
 
             $errors = FALSE;
             $err_arr = array();
@@ -458,7 +459,7 @@ class ArgumentsController  extends ControllerBase
                     $argument->date = date('Y-m-d H:i:s');
                     $argument->comment = $comment;
                     $argument->required = (isset($data['required']) && $data['required'] == true) ? 1 : $required_parent;
-                    $argument->type = (isset($data['type']) && is_numeric($data['type'])) ? $data['type'] : 0;
+                    $argument->type = (isset($data['type']) && is_array($data['type'])) ? implode(',' , $data['type']) : '';
                     $argument->save();
                     echo json_encode(array(
                         'id' => $argument->id,
@@ -466,7 +467,7 @@ class ArgumentsController  extends ControllerBase
                         'name' => $argument->name,
                         'text' => $argument->text,
                         'required' => $argument->required,
-                        'type' => $argument->type,
+                        'type' => $data['type'],
                         'comment' => $argument->comment
                     ));
                     exit;
@@ -501,7 +502,7 @@ class ArgumentsController  extends ControllerBase
                     echo json_encode(array('status' => 'bad length comment'));
                     exit;
                 }
-                if (!isset($edit['type']) || !is_numeric($edit['type'])) {
+                if (!isset($edit['type']) || !is_array($edit['type'])) {
                     echo json_encode(array('status' => 'bad type'));
                     exit;
                 }
@@ -517,6 +518,8 @@ class ArgumentsController  extends ControllerBase
                     exit;
                 }
 
+                $this->checkType($edit['type']);
+
                 $id = $edit['id'];
                 $argument = Arguments::findFirst($id);
                 if (!$argument) {
@@ -525,7 +528,7 @@ class ArgumentsController  extends ControllerBase
                 }
                 $argument->name = trim($edit['name']);
                 $argument->text = trim($edit['text']);
-                $argument->type = $edit['type'];
+                $argument->type = implode(',' , $edit['type']);
                 $argument->comment = $comment;
                 $argument->save();
                 echo json_encode(array(
@@ -533,7 +536,7 @@ class ArgumentsController  extends ControllerBase
                     'category_id' => $argument->category_id,
                     'name' => $argument->name,
                     'text' => $argument->text,
-                    'type'      => $argument->type,
+                    'type'      => $edit['type'],
                     'comment'   => $argument->comment
                 ));
             } else {
@@ -559,6 +562,29 @@ class ArgumentsController  extends ControllerBase
                 ));
             }
         }
+    }
+
+    public function checkType( $arrType ){
+        $checkType = false;
+        foreach($arrType as $key){
+            if($key == 'electr_auction'){
+                $checkType = true;
+                break;
+            } else if( $key == 'concurs'){
+                $checkType = true;
+                break;
+            } else if( $key == 'kotirovok'){
+                $checkType = true;
+                break;
+            } else if( $key == 'offer'){
+                $checkType = true;
+                break;
+            } else {
+                echo json_encode(array('status' => 'bad type'));
+                exit;
+            }
+        }
+        return $checkType;
     }
 
     private function checkRequired($id, $required)
