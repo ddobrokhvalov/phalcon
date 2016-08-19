@@ -76,12 +76,15 @@ function categorySend(e) {
         var argumentName = $('.inputBox input').val(),
             argumentText = $('.argumentText textarea').val(),
             argumentComm = $('.argumentsComment textarea').val(),
-            argumentTypeVal = $('.add-ArgumentsType .current-option').attr('data-value');
+            argumentTypeVal = $('.add-ArgumentsType .current-option').attr('data-value'),
+            argTypeValArray = argumentTypeVal.split(',');
         data = 'arguments[category_id]=' + parentId +
             '&arguments[name]=' + argumentName +
             '&arguments[text]=' + argumentText +
-            '&arguments[type]=' + argumentTypeVal +
             '&arguments[comment]=' + argumentComm;
+        for (var i = 0; i < argTypeValArray.length; i++) {
+            data += ('&arguments[type][]=' + argTypeValArray[i]);
+        }
         if (argumentTypeVal == '' || argumentText == '' || argumentName == '') {
             e.preventDefault();
             alert('Не все обязательные поля заполненны!');
@@ -329,7 +332,7 @@ function ShellToFill(step, titleText, id, parent_id, dataRequired, text, comment
     this.argAddCross = '<div class="category_argumentAdd crossView">Довод</div>';
     this.argText = '<div class="argumText">' + text + '</div>';
     this.argComment = '<p class="argumentComment">' + comment + '</p>';
-    this.argType = '<p class="argumentType">' + argumentType + '</p>';
+    this.argType = '<p class="argumentType">' + argumentType.join(',') + '</p>';
     this.catEdit = '<div class="category_edit"></div>';
     this.catDel = '<div class="category_delete"></div>';
 }
