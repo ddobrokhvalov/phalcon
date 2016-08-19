@@ -184,10 +184,26 @@ class ComplaintController extends ControllerBase
         unset($data);
     }
 
+    public function saveBlobFileAction() {
+        if ($this->request->hasFiles() == true) {
+            $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
+            foreach ($this->request->getUploadedFiles() as $file) {
+                if (strlen($file->getName())) {
+                    if (!file_exists($baseLocation)) {
+                        mkdir($baseLocation, 0777, true);
+                    }
+                    $name = 'complaint_' . time() . '.docx';
+                    $file->moveTo($baseLocation . $name);
+                }
+            }
+        }
+        $this->view->disable();
+        die();
+    }
 
     public function addAction()
     {
-        //TrustedLibrary::trusted_library_init();
+        //TrustedLibrary::trusted_library_init();        
         $this->setMenu();
         $category = new Category();
         $arguments = $category->getArguments();
@@ -534,9 +550,9 @@ class ComplaintController extends ControllerBase
         );
         switch($step){
             case 1:
-                $type       = $this->request->get('type');
-                $dateOff    = $this->request->get('dateoff');
-                $checkRequired = $this->request->get('checkrequired');
+                $type       = $this->request->getPost('type');
+                $dateOff    = $this->request->getPost('dateoff');
+                $checkRequired = $this->request->getPost('checkrequired');
 
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
@@ -570,10 +586,10 @@ class ComplaintController extends ControllerBase
                 echo json_encode($result);
             break;
             case 2:
-                $parent_id  = $this->request->get('id');
-                $type       = $this->request->get('type');
-                $dateOff    = $this->request->get('dateoff');
-                $checkRequired = $this->request->get('checkrequired');
+                $parent_id  = $this->request->getPost('id');
+                $type       = $this->request->getPost('type');
+                $dateOff    = $this->request->getPost('dateoff');
+                $checkRequired = $this->request->getPost('checkrequired');
 
 //                $parent_id  = ArgumentsCategory::findFirst($id);
 //                if($parent_id == false){
@@ -621,10 +637,10 @@ class ComplaintController extends ControllerBase
                 echo json_encode($result);
             break;
             case 3:
-                $id         = $this->request->get('id');
-                $type       = $this->request->get('type');
-                $dateOff    = $this->request->get('dateoff');
-                $checkRequired = $this->request->get('checkrequired');
+                $id         = $this->request->getPost('id');
+                $type       = $this->request->getPost('type');
+                $dateOff    = $this->request->getPost('dateoff');
+                $checkRequired = $this->request->getPost('checkrequired');
 
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
@@ -704,10 +720,10 @@ class ComplaintController extends ControllerBase
                 echo json_encode($result);
             break;
             case 4:
-                $id         = $this->request->get('id');
-                $type       = $this->request->get('type');
-                $dateOff    = $this->request->get('dateoff');
-                $checkRequired = $this->request->get('checkrequired');
+                $id         = $this->request->getPost('id');
+                $type       = $this->request->getPost('type');
+                $dateOff    = $this->request->getPost('dateoff');
+                $checkRequired = $this->request->getPost('checkrequired');
 
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));
@@ -739,11 +755,11 @@ class ComplaintController extends ControllerBase
                 echo json_encode($result);
             break;
             case 6:
-                $search     = $this->request->get('search');
+                $search     = $this->request->getPost('search');
                 $search     = (isset($search)) ? trim($search) : '';
-                $type       = $this->request->get('type');
-                $dateOff   = $this->request->get('dateoff');
-                $checkRequired = $this->request->get('checkrequired');
+                $type       = $this->request->getPost('type');
+                $dateOff   = $this->request->getPost('dateoff');
+                $checkRequired = $this->request->getPost('checkrequired');
 
                 if(!isset($dateOff) || trim($dateOff) == ''){
                     echo json_encode(array('error' => 'bad date'));

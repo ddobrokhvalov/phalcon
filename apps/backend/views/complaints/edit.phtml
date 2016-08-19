@@ -331,72 +331,75 @@
 <input type="hidden" name="is_edit_now" id="is_edit_now" value="">
 {% endif %}
 
-
-
-
 <article class="admin-popup-wrap addArguments">
     <div class="admin-popup-bg"></div>
     <div class="admin-popup-content argComp">
-        <div class="admin-popup-close"></div>
-        <h6>Доводы жалоб</h6>
-        <div class="argumentsComplaints">
-            <div class="word-argCompl-find">
-                <p>Поиск</p>
-                <div class="word-argCompl-input">
-                    <input type="text" placeholder="Искать">
-                    <button></button>
-                </div>
-            </div>
-            <ul class="arguments-steps">
-                <li class="steps-line arg-nextStep"> <!-- arg-dunStep-->
-                    <div></div>
-                    <span data-step="1">шаг 1</span>
-                </li>
-                <li class="steps-line">
-                    <div></div>
-                    <span data-step="2">шаг 2</span>
-                </li>
-                <li class="steps-line">
-                    <div></div>
-                    <span data-step="3">шаг 3</span>
-                </li>
-                <li class="steps-line">
-                    <div></div>
-                    <span data-step="4">Список доводов</span>
-                </li>
-            </ul>
-            <div id="argComplSelect" class="select-holder">
-                <div class="title-info-box">Выберите тип жалобы</div>
-                <div class="custom_select">
-                    <div class="current-option" data-value="">
-                        <span>Жалоба на положения документации</span>
-                        <div></div>
+        <section class="argCompHolder">
+            <div class="admin-popup-close"></div>
+            <h6>Доводы жалоб</h6>
+            <div class="argumentsComplaints">
+                <div class="word-argCompl-find">
+                    <p>Поиск</p>
+                    <div class="word-argCompl-input">
+                        <input type="text" placeholder="Искать">
+                        <button></button>
                     </div>
-                    <ul class="custom-options mCustomScrollbar">
-                    </ul>
                 </div>
+                <ul class="arguments-steps">
+                    <li class="steps-line arg-nextStep">
+                        <div></div>
+                        <span data-step="1">шаг 1</span>
+                    </li>
+                    <li class="steps-line">
+                        <div></div>
+                        <span data-step="2">шаг 2</span>
+                    </li>
+                    <li class="steps-line">
+                        <div></div>
+                        <span data-step="3">шаг 3</span>
+                    </li>
+                    <li class="steps-line">
+                        <div></div>
+                        <span data-step="4">Список доводов</span>
+                    </li>
+                </ul>
+                <div id="argComplSelect" class="select-holder">
+                    <div class="title-info-box">Выберите категорию</div>
+                    <div class="custom_select">
+                        <div class="current-option" data-value="">
+                            <span>Жалоба на положения документации</span>
+                            <div></div>
+                        </div>
+                        <ul class="custom-options mCustomScrollbar"></ul>
+                    </div>
+                </div>
+                <section class="last-argComplList">
+                    <div class="title-info-box">Выберите довод</div>
+                    <div class="argCompl-review mCustomScrollbar">
+                        <ul></ul>
+                    </div>
+                </section>
+                <div class="btn-div">Добавить довод</div>
+                <div class="btn-div-showArgDescr">Просмотреть</div>
+                <button id="argComplBtn">Дальше</button>
             </div>
-            <section class="last-argComplList">
-                <div class="title-info-box">Доводы</div>
-                <div class="argCompl-review mCustomScrollbar">
-                    <ul>
-                        <li>Lorem ipsum dolor sit.</li>
-                        <li>Lorem ipsum dolor sit amet, consectetur.</li>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur error esse, molestias perferendis quaerat sint.</li>
-                        <li>Lorem ipsum dolor.</li>
-                        <li>Lorem ipsum dolor sit amet.</li>
-                    </ul>
-                </div>
-            </section>
-            <div class="btn-div">Добавить довод</div>
-            <button id="argComplBtn">Дальше</button>
+            <input type="hidden" class="type_complicant" value="{{complaint.type }}">
+            <input type="hidden" class="dateoff" value="{{complaint.nachalo_podachi }}">
+        </section>
+        <div class="argDescrBox">
+            <h5>Описание довода</h5>
+            <div class="argDescrBoxHolder mCustomScrollbar">
+                <p class="argDescrBox_descr"></p>
+                <p class="argDescrBox_comment"></p>
+            </div>
         </div>
-        <input type="hidden" class="type_complicant" value="{{complaint.type }}">
-        <input type="hidden" class="dateoff" value="{{complaint.nachalo_podachi }}">
     </div>
 </article>
-
-
+<style>
+    div#mCSB_4_container{
+        top: 0 !important;
+    }
+</style>
 <script>
     //$(document).ready(function(){
 

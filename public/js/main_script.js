@@ -455,6 +455,140 @@ function delete_complaint_file_edit_form(complaint_id, file_id) {
     }
 }
 
+function get_last_closing_sign_position(text) {
+    var position = 0;
+    for (var u = text.length; u >= 0; u--) {
+        if (text[u] == ">") {
+            position = u;
+            break;
+        }
+    }
+    return position;
+}
+
+function add_simple_tags_text(text) {
+    var no_styles_text = text.match(/<\/w:r>[\s\S]*?<w:r>/g);
+    if (no_styles_text == null) {
+        return text;
+    }
+    for (var i = 0; i < no_styles_text.length; i++) {
+        if(no_styles_text[i] != "</w:r><w:r>" && no_styles_text[i] != ""){
+            var clone_text = no_styles_text[i];
+            clone_text = clone_text.substr(6, clone_text.length - 11);
+            text = text.replace(no_styles_text[i], "</w:r><w:r><w:t>" + clone_text + "</w:t></w:r><w:r>");
+        }
+        
+    }
+    /*var no_styles_text = text.match(/\<\/w:r>(.*?)\<w:r>/);
+    if (no_styles_text.length > 1) {
+        if (no_styles_text[1].length > 0) {
+            text = text.replace(no_styles_text[1], '<w:r><w:t>' + no_styles_text[1] + '</w:t></w:r>');
+        }
+    }
+    no_styles_text = text.match(/\<\/w:r>(.*?)\<w:r>/);
+    if (no_styles_text.length > 1) {
+        if (no_styles_text[1].length > 0) {
+            text = add_simple_tags_text(text);
+        }
+    }*/
+    return text;
+}
+
+function replaceWordTags(text) {
+    while(text.search("<br>") >= 0 || text.search("<p>") >= 0 || text.search("</p>") >= 0){
+        text = text.replace("<br>", '\r\n');
+        text = text.replace("<p>", '');
+        text = text.replace("</p>", '');
+    }
+
+    /* 3 style selected */
+    while (text.search("<strong><em><u>") >= 0) {
+        text = text.replace("<strong><em><u>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("</u></em></strong>", '</w:t></w:r>');
+    }
+    while (text.search("<strong><u><em>") >= 0) {
+        text = text.replace("<strong><u><em>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("</em></u></strong>", '</w:t></w:r>');
+    }
+    while (text.search("<u><strong><em>") >= 0) {
+        text = text.replace("<u><strong><em>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("</em></strong></u>", '</w:t></w:r>');
+    }
+    while (text.search("<u><em><strong>") >= 0) {
+        text = text.replace("<u><em><strong>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("</strong></em></u>", '</w:t></w:r>');
+    }
+    while (text.search("<em><u><strong>") >= 0) {
+        text = text.replace("<em><u><strong>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("</strong></u></em>", '</w:t></w:r>');
+    }
+    while (text.search("<em><strong><u>") >= 0) {
+        text = text.replace("<em><strong><u>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("</u></strong></em>", '</w:t></w:r>');
+    }
+
+    /* 2 style selected */
+    while (text.search("<strong><em>") >= 0) {
+        text = text.replace("<strong><em>", '<w:r><w:rPr><w:b/><w:i/></w:rPr><w:t>');
+        text = text.replace("</em></strong>", '</w:t></w:r>');
+    }
+    while (text.search("<em><strong>") >= 0) {
+        text = text.replace("<em><strong>", '<w:r><w:rPr><w:b/><w:i/></w:rPr><w:t>');
+        text = text.replace("</strong></em>", '</w:t></w:r>');
+    }
+    while (text.search("<u><strong>") >= 0) {
+        text = text.replace("<u><strong>", '<w:r><w:rPr><w:b/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("</strong></u>", '</w:t></w:r>');
+    }
+    while (text.search("<strong><u>") >= 0) {
+        text = text.replace("<strong><u>", '<w:r><w:rPr><w:b/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("</u></strong>", '</w:t></w:r>');
+    }
+    while (text.search("<em><u>") >= 0) {
+        text = text.replace("<em><u>", '<w:r><w:rPr><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("</u></em>", '</w:t></w:r>');
+    }
+    while (text.search("<u><em>") >= 0) {
+        text = text.replace("<u><em>", '<w:r><w:rPr><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("</em></u>", '</w:t></w:r>');
+    }
+    while (text.search("<u>") >= 0) {
+        text = text.replace("<u>", '<w:r><w:rPr><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("</u>", '</w:t></w:r>');
+    }
+    while (text.search("<em>") >= 0) {
+        text = text.replace("<em>", '<w:r><w:rPr><w:i/></w:rPr><w:t>');
+        text = text.replace("</em>", '</w:t></w:r>');
+    }
+    while (text.search("<strong>") >= 0) {
+        text = text.replace("<strong>", '<w:r><w:rPr><w:b/></w:rPr><w:t>');
+        text = text.replace("</strong>", '</w:t></w:r>');
+    }
+    text = add_simple_tags_text(text);
+    var start_sign = text.search("<");
+    if (start_sign >= 0) {
+        var start_text = text.substr(0, start_sign);
+        var text_to_end = text.substr(start_sign, text.length);
+        text = '<w:r><w:t>' + start_text + '</w:t></w:r>' + text_to_end;
+        var position = (get_last_closing_sign_position(text)) + 1;
+        start_text = text.substr(0, position);
+        text_to_end = text.substr(position, text.length);
+        text = start_text + '<w:r><w:t>' + text_to_end + '</w:t></w:r>';
+    } else {
+        text = '<w:r><w:t>' + text + '</w:t></w:r>';
+    }
+    return "<w:p>" + text + "</w:p>";
+}
+
+function compare_dates(date_response) {
+    var current_date = new Date();
+    date_response = date_response.split(" ");
+    date_response[0] = date_response[0].split(".");
+    date_response = date_response[0][2] + "-" + date_response[0][1] + "-" + date_response[0][0] + " " + date_response[1] + ":00";
+    date_response = new Date(date_response);
+    return current_date.getTime() > date_response.getTime();
+}
+
 function delete_applicant_file() {
     var applicant_id = $('#delete-applicant-id').val();
     var file_id = $('#delete-file-id').val();
