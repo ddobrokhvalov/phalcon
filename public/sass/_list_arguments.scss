@@ -360,11 +360,14 @@
   }
   .current-option {
     span {
-      padding: 0 24px;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0 76px 0 24px;
       height: 66px;
       font-size: 20px;
       line-height: 66px;
       color: #2c2f32;
+      text-overflow: ellipsis;
       border-color: #d3d3d3;
       -webkit-border-radius: 8px;
       -moz-border-radius: 8px;
@@ -494,5 +497,18 @@
   }
   &__argNumber {
     display: none;
+  }
+}
+.choosenArgType {
+  position: relative;
+  &:after {
+    position: absolute;
+    content: '';
+    top: 50%;
+    right: 22px;
+    margin-top: -11px;
+    width: 22px;
+    height: 22px;
+    background: url(../images/icon-jl-done.png) 0 0 no-repeat;
   }
 }
