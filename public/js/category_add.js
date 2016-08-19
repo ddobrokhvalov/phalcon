@@ -20,8 +20,11 @@ $(document).ready(function() {
     $('.argCatTree').on('click', '.category_add', function() {
         createSubCat_Arg($(this));
     });
-    $('.argCatTree').on('click', '.category_arrow, .category h2, .category h3', function() {
+    $('.argCatTree').on('click', '.category_arrow, .category h2, #category h3', function() {
         toggleClick($(this));
+    });
+    $('.argCatTree').on('click', '.subWrap_3 #argument .itemTitle', function() {
+        $(this).parent().find('.category_edit').click();
     });
     $('.argCatTree').on('click', '.category_argumentAdd', function() {
         addArgumentFunc($(this));
@@ -38,6 +41,7 @@ $(document).ready(function() {
     $('.argumentsComment textarea').keyup(function() {
         maxStrLength($(this));
     });
+    
     requiredStartSearch();
 });
 
