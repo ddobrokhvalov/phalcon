@@ -18,6 +18,9 @@ $(document).ready(function() {
         $('.deleteChoosenItem').fadeOut();
     });
     $('.argCatTree').on('click', '.category_add', function() {
+        if($(this).parent().find('.category_argumentAdd').length > 0) {
+            $(this).parent().addClass('delete_category_argumentAdd');
+        }
         createSubCat_Arg($(this));
     });
     $('.argCatTree').on('click', '.category_arrow, .category h2, #category h3', function() {
@@ -27,6 +30,9 @@ $(document).ready(function() {
         $(this).parent().find('.category_edit').click();
     });
     $('.argCatTree').on('click', '.category_argumentAdd', function() {
+        if($(this).parent().find('.category_add').length > 0) {
+            $(this).parent().addClass('delete_category_add');
+        }
         addArgumentFunc($(this));
     });
     $('.argCatTree').on('click', '.category_edit', function() {
@@ -45,6 +51,15 @@ $(document).ready(function() {
     requiredStartSearch();
 });
 
+function removeSecondActionButton() {
+    if($('.delete_category_argumentAdd').length) {
+        $('.delete_category_argumentAdd').find('.category_argumentAdd').remove();
+    } else if($('.delete_category_add').length) {
+        $('.delete_category_add').find('.category_add').remove();
+    }
+    deleteOldClasses();
+}
+
 var addCat = true, addArg = true;
 var base_url = window.location.origin;
 var catNum = '', parentId, shell, catArgObj, requiredCat, argId, thisIdDel, thisObj;
@@ -61,6 +76,7 @@ function categorySend(e) {
             e.preventDefault();
             alert('Не все обязательные поля заполненны!');
         } else {
+            removeSecondActionButton();
             createNewCategory.newCategorySend(data);
             $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
         }
@@ -125,6 +141,7 @@ function categorySend(e) {
             e.preventDefault();
             alert('Не все обязательные поля заполненны!');
         } else {
+            removeSecondActionButton();
             addArgument.addData(data);
             $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
         }
@@ -224,6 +241,7 @@ function createSubCat_Arg(obj) {
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
 }
 function popupCancel(obj) {
+    deleteOldClasses();
     if ($(obj).hasClass('backPopupLevel')) {
         $('.add-ArgumentsCategory').slideDown(400);
         $('.add-ArgumentsType').slideUp(400);

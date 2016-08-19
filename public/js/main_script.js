@@ -175,6 +175,7 @@ jQuery(document).ready(function($) {
 	});*/
 	// close admin popup
 	$('.admin-popup-bg, .admin-popup-close').click(function() {
+        deleteOldClasses();
 		$('.admin-popup-wrap').fadeOut();
 	});
 	// show complain details
@@ -606,6 +607,11 @@ function delete_applicant_file() {
             }
         });
     }
+}
+
+function deleteOldClasses() {
+    $('li.delete_category_argumentAdd').removeClass('delete_category_argumentAdd');
+    $('li.delete_category_add').removeClass('delete_category_add');
 }
 
 function setMessageRed(message_id) {
