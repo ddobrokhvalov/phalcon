@@ -559,7 +559,7 @@ class ComplaintController extends ControllerBase
                     exit;
                 }
 
-                if(!isset($type) || !is_numeric($type)){
+                if(!isset($type) || !$this->checkType($type)){
                     echo json_encode(array('error' => 'bad type'));
                     exit;
                 }
@@ -686,7 +686,6 @@ class ComplaintController extends ControllerBase
 
                 $arguments = Arguments::query()
                     ->where("category_id = {$id}")
-                    ->andWhere("type = {$type}")
                     ->andWhere("required = {$required}")
                     ->andWhere("type LIKE '%{$type}%'")
                     ->execute();
@@ -708,9 +707,8 @@ class ComplaintController extends ControllerBase
                     $arguments = Arguments::query()
                         ->where("category_id IN ({arr_id:array})")
                         ->orWhere("category_id = {$id}")
-                        ->andWhere("type = {$type}")
                         ->andWhere("required = {$required}")
-                        ->andWhere("ttype LIKE '%{$type}%'")
+                        ->andWhere("type LIKE '%{$type}%'")
                         ->bind(array("arr_id" => $arr_id))
                         ->execute();
                 }
@@ -746,7 +744,6 @@ class ComplaintController extends ControllerBase
 
                 $arguments = Arguments::query()
                     ->where("category_id = {$id}")
-                    ->andWhere("type = {$type}")
                     ->andWhere("required = {$required}")
                     ->andWhere("type LIKE '%{$type}%'")
                     ->execute();
@@ -781,9 +778,8 @@ class ComplaintController extends ControllerBase
 
                 $arguments = Arguments::query()
                     ->where('name LIKE :name:', array('name' => '%' . $search . '%'))
-                    ->andWhere("type = {$type}")
                     ->andWhere("required = {$required}")
-                    ->andWhere("type = '%{$type}%'")
+                    ->andWhere("type LIKE '%{$type}%'")
                     ->execute();
 
                 $this->getArguments($arguments, $type, $result);
