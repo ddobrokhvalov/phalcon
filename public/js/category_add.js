@@ -70,6 +70,38 @@ function categorySend(e) {
             $('.saveCat').addClass('createArgument');
         }
         $('.argumentComments textarea').val('');
+        if (catArgObj != undefined && catArgObj.type != undefined) {
+            $('.add-ArgumentsType .current-option span').text('');
+            $('.add-ArgumentsType .current-option').attr('data-value', catArgObj.type)
+            var catArgObjType = catArgObj.type.split(',');
+            for (var i = 0; i < catArgObjType.length; i++) {
+                switch(catArgObjType[i]) {
+                    case 'electr_auction':
+                        catArgObjType[i] = 'Электронный аукцион';
+                        break;
+                    case 'concurs':
+                        catArgObjType[i] = 'Конкурс';
+                        break;
+                    case 'kotirovok':
+                        catArgObjType[i] = 'Запрос котировок';
+                        break;
+                    case 'offer':
+                        catArgObjType[i] = 'Запрос предложений';
+                        break;
+                }
+                if (i == 0) {
+                    $('.add-ArgumentsType .current-option span').append(catArgObjType[i]);
+                } else {
+                    $('.add-ArgumentsType .current-option span').append(', ' + catArgObjType[i]);
+                }
+                $('.selectArgType_item').each(function() {
+                    if ($(this).text() == catArgObjType[i]) {
+                        $(this).addClass('choosenArgType');
+                    }
+                });
+            }
+            selectArgType.name = catArgObjType;
+        }
         $('.add-ArgumentsCategory').slideUp(400);
         $('.add-ArgumentsType').slideDown(400);
     } else if ($('.saveCat').hasClass('createArgument')) {
@@ -97,12 +129,15 @@ function categorySend(e) {
             catArgObj.name = $('.add-ArgumentsCategory .inputBox input').val();
             catArgObj.text = $('.add-ArgumentsCategory .argumentText textarea').val();
             catArgObj.type = $('.add-ArgumentsType .current-option').attr('data-value');
-            catArgObj.comment = $('.argumentsComment textarea').val();
+            catArgObj.comment = $('.argumentsComment textarea').val(),
+            argTypeValArray = catArgObj.type.split(',');
             data = 'edit[id]=' + argId +
                 '&edit[name]=' + catArgObj.name +
                 '&edit[arg]=true&edit[text]=' + catArgObj.text +
-                '&edit[type]=' + catArgObj.type +
                 '&edit[comment]=' + catArgObj.comment;
+            for (var i = 0; i < argTypeValArray.length; i++) {
+                data += ('&edit[type][]=' + argTypeValArray[i]);
+            }
             if (catArgObj.name == '' || catArgObj.text == '' || catArgObj.type == '') {
                 e.preventDefault();
                 alert('Не все обязательные поля заполненны!');
@@ -321,18 +356,12 @@ function ShellToFill(step, titleText, id, parent_id, dataRequired, text, comment
     this.title = '<h2 class="itemTitle">' + titleText + '</h2>';
     this.title2 = '<h3 class="itemTitle">' + titleText + '</h3>';
     this.catAdd = '<div class="category_add">Добавить категорию</div>';
-
-    if(addCat == true) {
-        this.catAdd2 = '<div class="category_add withoutText"></div>';
-    }
-    if(addArg == true){
-        this.argAdd = '<div class="category_argumentAdd"></div>';
-    }
-
+    if (addCat == true) this.catAdd2 = '<div class="category_add withoutText"></div>';
+    if (addArg == true) this.argAdd = '<div class="category_argumentAdd"></div>';
     this.argAddCross = '<div class="category_argumentAdd crossView">Довод</div>';
     this.argText = '<div class="argumText">' + text + '</div>';
     this.argComment = '<p class="argumentComment">' + comment + '</p>';
-    this.argType = '<p class="argumentType">' + argumentType.join(',') + '</p>';
+    this.argType = '<p class="argumentType">' + argumentType + '</p>';
     this.catEdit = '<div class="category_edit"></div>';
     this.catDel = '<div class="category_delete"></div>';
 }
@@ -453,9 +482,7 @@ var receivingData = {
                         break;
                     case 2:
                         cycleDataCat(num, writeGetData.subCategory_2);
-                        if (value.arguments.length != 0) {
-                            cycleDataArg(num, writeGetData.subCategory_3);
-                        }
+                        if (value.arguments.length != 0) cycleDataArg(num, writeGetData.subCategory_3);
                         break;
                     case 3:
                         cycleDataArg(num, writeGetData.subCategory_3);
@@ -463,15 +490,13 @@ var receivingData = {
                 }
                 function cycleDataCat(numb, func) {
                     for (var i = 0; i < value.cat_arguments.length; i++) {
-                        if(value.cat_arguments[i].count_arg > 0 ){
+                        if (value.cat_arguments[i].count_arg > 0 ) {
                             addCat = false;
                             addArg = true;
-                        }else if(value.cat_arguments[i].count_cat > 0){
+                        } else if (value.cat_arguments[i].count_cat > 0) {
                             addCat = true;
                             addArg = false;
                         }
-
-
                         shell = new ShellToFill(
                             numb,
                             value.cat_arguments[i].name,
@@ -480,7 +505,6 @@ var receivingData = {
                             value.cat_arguments[i].required
                         );
                         obj.parent().append(func());
-
                     }
                 }
                 function cycleDataArg(numb, func) {
