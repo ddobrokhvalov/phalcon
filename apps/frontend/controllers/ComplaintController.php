@@ -786,7 +786,7 @@ class ComplaintController extends ControllerBase
                     $arguments->andWhere("required = {$required}");
                 }
                 $arguments->andWhere("type LIKE '%{$type}%'");
-                $arguments->execute();
+                $arguments = $arguments->execute();
 
                 $this->getArguments($arguments, $type, $result);
                 echo json_encode($result);
