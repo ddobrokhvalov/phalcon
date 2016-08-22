@@ -363,7 +363,7 @@
     var temp_name = {};
     {% for argument in arguments  %}
         {% for template in argument['templates']  %}
-            templates[{{template.id}}] = '{{template.text}}';
+            templates[{{template.id}}] = "{{template.text}}";
             temp_name[{{template.id}}] = '{{template.name}}';
         {% endfor %}
     {% endfor %}
