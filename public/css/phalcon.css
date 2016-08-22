@@ -3305,8 +3305,12 @@ input#upload-files::-webkit-file-upload-button {
     color: #00aeef!important;
 }
 
-.itemTitle{
-    max-width: 80%;
+.catArguments ul {
+    max-width: 989px;
+}
+
+.itemTitle {
+    max-width: 60%;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
