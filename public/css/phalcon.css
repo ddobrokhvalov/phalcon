@@ -3304,3 +3304,10 @@ input#upload-files::-webkit-file-upload-button {
 .delete-active{
     color: #00aeef!important;
 }
+
+.itemTitle {
+    max-width: 80%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
