@@ -34,7 +34,7 @@ class Category extends Model
             $temp_arr = array();
             foreach($templates as $key => $val){
                 $temp =  preg_replace('/[\r\n\t]/', '', $val->text);
-                $val->text = 'fff';
+                $val->text = $temp;
                 $temp_arr[] = $val;
             }
            $category->cnt = $templates->count();
