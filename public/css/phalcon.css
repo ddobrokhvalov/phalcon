@@ -3309,7 +3309,7 @@ input#upload-files::-webkit-file-upload-button {
     max-width: 989px;
 }
 
-h3.itemTitle {
+.itemTitle {
     max-width: 60%;
     white-space: nowrap;
     text-overflow: ellipsis;
