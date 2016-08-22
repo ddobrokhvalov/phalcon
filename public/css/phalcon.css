@@ -3315,3 +3315,10 @@ input#upload-files::-webkit-file-upload-button {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+.argCompl-review li {
+    padding: 15px 10px 14px 23px;
+    line-height: 30px;
+    min-height: 20px;
+    white-space: normal;
+}
