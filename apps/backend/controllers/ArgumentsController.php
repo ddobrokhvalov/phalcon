@@ -421,7 +421,10 @@ class ArgumentsController  extends ControllerBase
                 exit;
             }
 
-
+            if (mb_strlen($data['name'], 'UTF-8') > 160) {
+                echo json_encode(array('status' => 'bad length name'));
+                exit;
+            }
 
             $text = strip_tags($data['text']);
 
@@ -516,6 +519,10 @@ class ArgumentsController  extends ControllerBase
                 }
                 if (!isset($edit['text']) && trim($edit['text']) == '') {
                     echo json_encode(array('err' => 'bad text'));
+                    exit;
+                }
+                if (mb_strlen($edit['name'], 'UTF-8') > 160) {
+                    echo json_encode(array('status' => 'bad length name'));
                     exit;
                 }
 
