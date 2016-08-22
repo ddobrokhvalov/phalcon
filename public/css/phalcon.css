@@ -3335,4 +3335,5 @@ input#upload-files::-webkit-file-upload-button {
 
 .current-option span {
     line-height: 35px;
+    min-height: 60px;
 }
