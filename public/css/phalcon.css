@@ -3328,3 +3328,11 @@ input#upload-files::-webkit-file-upload-button {
     min-height: 20px;
     white-space: normal;
 }
+
+.argumentsComplaints .current-option span {
+    padding-right: 80px;
+}
+
+.current-option span {
+    line-height: 35px;
+}
