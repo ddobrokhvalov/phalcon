@@ -2865,15 +2865,16 @@ a:focus {
 
 /* line 473, ../sass/_list_arguments.scss */
 #addArgComments,
-.deleteChoosenItem {
+.deleteChoosenItem,
+.admin-popup-wrap.warningMessageNew {
   display: none;
 }
 
-/* line 478, ../sass/_list_arguments.scss */
+/* line 479, ../sass/_list_arguments.scss */
 .delChoosenCatArg h6 {
   margin-bottom: 30px;
 }
-/* line 481, ../sass/_list_arguments.scss */
+/* line 482, ../sass/_list_arguments.scss */
 .delChoosenCatArg p {
   margin: 10px auto;
   max-width: 526px;
@@ -2882,28 +2883,28 @@ a:focus {
   line-height: 1.2;
   color: #2c2f32;
 }
-/* line 488, ../sass/_list_arguments.scss */
+/* line 489, ../sass/_list_arguments.scss */
 .delChoosenCatArg p:last-of-type {
   margin-bottom: 40px;
 }
-/* line 491, ../sass/_list_arguments.scss */
+/* line 492, ../sass/_list_arguments.scss */
 .delChoosenCatArg p span {
   font-weight: 600;
 }
-/* line 495, ../sass/_list_arguments.scss */
+/* line 496, ../sass/_list_arguments.scss */
 .delChoosenCatArg__catNames {
   display: none;
 }
-/* line 498, ../sass/_list_arguments.scss */
+/* line 499, ../sass/_list_arguments.scss */
 .delChoosenCatArg__argNumber {
   display: none;
 }
 
-/* line 502, ../sass/_list_arguments.scss */
+/* line 503, ../sass/_list_arguments.scss */
 .choosenArgType {
   position: relative;
 }
-/* line 504, ../sass/_list_arguments.scss */
+/* line 505, ../sass/_list_arguments.scss */
 .choosenArgType:after {
   position: absolute;
   content: '';
@@ -2913,6 +2914,21 @@ a:focus {
   width: 22px;
   height: 22px;
   background: url(../images/icon-jl-done.png) 0 0 no-repeat;
+}
+
+/* line 517, ../sass/_list_arguments.scss */
+.warningMessageNew p {
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: 100;
+  line-height: 60px;
+  color: #2c2f32;
+  text-align: center;
+}
+/* line 525, ../sass/_list_arguments.scss */
+.warningMessageNew .popupBtn {
+  float: none;
+  margin: 0 auto 44px;
 }
 
 /* line 5, ../sass/_user_list.scss */

@@ -471,7 +471,8 @@
   }
 }
 #addArgComments,
-.deleteChoosenItem {
+.deleteChoosenItem,
+.admin-popup-wrap.warningMessageNew {
   display: none;
 }
 .delChoosenCatArg {
@@ -510,5 +511,19 @@
     width: 22px;
     height: 22px;
     background: url(../images/icon-jl-done.png) 0 0 no-repeat;
+  }
+}
+.warningMessageNew {
+  p {
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: 100;
+    line-height: 60px;
+    color: #2c2f32;
+    text-align: center;
+  }
+  .popupBtn {
+    float: none;
+    margin: 0 auto 44px;
   }
 }
