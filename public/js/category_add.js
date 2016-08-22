@@ -26,7 +26,7 @@ $(document).ready(function() {
     $('.argCatTree').on('click', '.category_arrow, .category h2, #category h3', function() {
         toggleClick($(this));
     });
-    $('.argCatTree').on('click', '.subWrap_3 #argument .itemTitle', function() {
+    $('.argCatTree').on('click', '.subWrap_3 #argument .itemTitle, .subWrap_2 #argument .itemTitle', function() {
         $(this).parent().find('.category_edit').click();
     });
     $('.argCatTree').on('click', '.category_argumentAdd', function() {
