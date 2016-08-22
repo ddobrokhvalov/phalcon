@@ -31,16 +31,10 @@ class Category extends Model
                    )
                )
            );
-            $temp_arr = array();
-            foreach($templates as $key => $val){
-                $temp = strip_tags($val->text);
-                $val->text = $temp;
-                $temp_arr[] = $val;
-            }
            $category->cnt = $templates->count();
            $result[] = array(
                'category' => $category,
-               'templates' =>$temp_arr
+               'templates' =>$templates
            );
         }
       return  $result;
