@@ -176,7 +176,7 @@ jQuery(document).ready(function($) {
 	// close admin popup
 	$('.admin-popup-bg, .admin-popup-close').click(function() {
         deleteOldClasses();
-		$('.admin-popup-wrap').fadeOut();
+		$(this).parent().fadeOut();
 	});
 	// show complain details
 	$('.deploy-complaint').click(function() {
