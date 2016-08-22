@@ -3306,7 +3306,7 @@ input#upload-files::-webkit-file-upload-button {
 }
 
 .itemTitle {
-    max-width: 80%;
+    max-width: 50%;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
