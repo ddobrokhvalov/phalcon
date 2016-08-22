@@ -39,6 +39,10 @@ var selectArgType = {
 function pushTypeToVal(obj) {
     if (obj.parent().hasClass('selectArgType')) {
         obj.attr('data-value', '');
+        selectArgType.value = [];
+        $('.choosenArgType').each(function() {
+            selectArgType.value.push($(this).attr('data-value'))
+        });
         obj.attr('data-value', selectArgType.value);
     }
 }
@@ -69,7 +73,6 @@ function addRemoveType(obj) {
         obj.removeClass('choosenArgType');
         selectArgType.selected = false;
     } else {
-        selectArgType.value.push(obj.attr('data-value'));
         selectArgType.name.push(obj.text());
         if (obj.parent().parent().find('.current-option span').text() == '') {
             obj.parent().parent().find('.current-option span').append(obj.text());
