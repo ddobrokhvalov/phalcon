@@ -684,11 +684,13 @@ class ComplaintController extends ControllerBase
                 $arr_id = array();
 
 
-                $arguments = Arguments::query()
-                    ->where("category_id = {$id}")
-                    ->andWhere("required = {$required}")
-                    ->andWhere("type LIKE '%{$type}%'")
-                    ->execute();
+                $arguments = Arguments::query();
+                $arguments->where("category_id = {$id}");
+                if($required == 1) {
+                    $arguments->andWhere("required = {$required}");
+                }
+                $arguments->andWhere("type LIKE '%{$type}%'");
+                $arguments = $arguments->execute();
 
 
                 foreach($cat_arguments as $cat){
@@ -742,11 +744,13 @@ class ComplaintController extends ControllerBase
                 }
 
 
-                $arguments = Arguments::query()
-                    ->where("category_id = {$id}")
-                    ->andWhere("required = {$required}")
-                    ->andWhere("type LIKE '%{$type}%'")
-                    ->execute();
+                $arguments = Arguments::query();
+                $arguments->where("category_id = {$id}");
+                if($required == 1) {
+                    $arguments->andWhere("required = {$required}");
+                }
+                $arguments->andWhere("type LIKE '%{$type}%'");
+                $arguments = $arguments->execute();
 
                 $this->getArguments($arguments, $type, $result);
                 echo json_encode($result);
@@ -776,11 +780,13 @@ class ComplaintController extends ControllerBase
                     $required = 0;
                 }
 
-                $arguments = Arguments::query()
-                    ->where('name LIKE :name:', array('name' => '%' . $search . '%'))
-                    ->andWhere("required = {$required}")
-                    ->andWhere("type LIKE '%{$type}%'")
-                    ->execute();
+                $arguments = Arguments::query();
+                $arguments->where('name LIKE :name:', array('name' => '%' . $search . '%'));
+                if($required == 1) {
+                    $arguments->andWhere("required = {$required}");
+                }
+                $arguments->andWhere("type LIKE '%{$type}%'");
+                $arguments->execute();
 
                 $this->getArguments($arguments, $type, $result);
                 echo json_encode($result);
