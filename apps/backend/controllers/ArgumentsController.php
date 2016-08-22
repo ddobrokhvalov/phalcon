@@ -421,10 +421,18 @@ class ArgumentsController  extends ControllerBase
                 exit;
             }
 
+
+
             $text = strip_tags($data['text']);
+
+            if(trim($text) == ''){
+                echo json_encode(array('status' => 'bad text'));
+                exit;
+            }
 
             if (mb_strlen($text, 'UTF-8') > 6000) {
                 echo json_encode(array('status' => 'bad length text'));
+                exit;
             }
 
             $comment = isset($data['comment']) ? trim($data['comment']) : '';
