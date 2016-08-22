@@ -3322,3 +3322,9 @@ input#upload-files::-webkit-file-upload-button {
     min-height: 20px;
     white-space: normal;
 }
+.argumentsComplaints .custom-options li{
+    padding: 15px 10px 14px 23px;
+    line-height: 30px;
+    min-height: 20px;
+    white-space: normal;
+}
