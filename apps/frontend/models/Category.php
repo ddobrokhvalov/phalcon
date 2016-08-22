@@ -31,6 +31,9 @@ class Category extends Model
                    )
                )
            );
+            foreach($templates as $key => $val){
+                $templates[$key]->text = strip_tags($val->text);
+            }
            $category->cnt = $templates->count();
            $result[] = array(
                'category' => $category,
