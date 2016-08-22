@@ -34,13 +34,13 @@ class Category extends Model
             $temp_arr = array();
             foreach($templates as $key => $val){
                 $temp =  preg_replace('/[\r\n\t]/', '', $val->text);
-                $val->text = $temp;
+                $val->text = 'fff';
                 $temp_arr[] = $val;
             }
            $category->cnt = $templates->count();
            $result[] = array(
                'category' => $category,
-               'templates' =>$templates
+               'templates' =>$temp_arr
            );
         }
       return  $result;
