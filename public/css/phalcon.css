@@ -3331,9 +3331,9 @@ input#upload-files::-webkit-file-upload-button {
 
 .argumentsComplaints .current-option span {
     padding-right: 80px;
-}
-
-.current-option span {
-    line-height: 35px;
-    min-height: 60px;
+    padding-right: 80px;
+    width: 620px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
