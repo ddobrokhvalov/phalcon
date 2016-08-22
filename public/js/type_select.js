@@ -57,16 +57,10 @@ function addRemoveType(obj) {
         obj.parent().parent().find('.current-option span').text('');
         for (var i = 0; i < selectArgType.name.length; i++) {
             if (selectArgType.name[i] == selectArgType.availableObj.name) {
-                delete selectArgType.name[i];
-            }
-            if (i == 0) {
-                if (selectArgType.name[i] != undefined)
-                obj.parent().parent().find('.current-option span').append(selectArgType.name[i]);
-            } else {
-                if (selectArgType.name[i] != undefined)
-                obj.parent().parent().find('.current-option span').append(', ' + selectArgType.name[i]);
+                selectArgType.name.splice([i], 1);
             }
         }
+        obj.parent().parent().find('.current-option span').append(selectArgType.name.join(', '));
         for (var i = 0; i < selectArgType.value.length; i++) {
             if (selectArgType.value[i] == selectArgType.availableObj.value) {
                 selectArgType.value.splice([i], 1);
