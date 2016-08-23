@@ -5071,26 +5071,19 @@ body#backend-login {
     margin-right: 0;
   }
 }
-@media (max-width: 1282px) {
-  /* line 125, ../sass/style.scss */
-  .lm-logo {
-    width: 70% !important;
-    margin-left: 40px;
-  }
-}
 @media (max-width: 1325px) {
-  /* line 131, ../sass/style.scss */
+  /* line 125, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* line 135, ../sass/style.scss */
+  /* line 129, ../sass/style.scss */
   .admin-lm-wrap {
     left: -242px;
   }
 
-  /* line 138, ../sass/style.scss */
+  /* line 132, ../sass/style.scss */
   .lm-burger {
     display: block;
   }
