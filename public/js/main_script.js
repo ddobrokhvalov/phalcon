@@ -177,10 +177,12 @@ jQuery(document).ready(function($) {
 	$('.admin-popup-bg').click(function() {
         deleteOldClasses();
 		$(this).parent().fadeOut();
+        $('.inputBox input[type="text"], .cke_textarea_inline').css('border-color', '#d3d3d3');
 	});
     $('.admin-popup-close').click(function() {
         deleteOldClasses();
         $(this).parent().parent().fadeOut();
+        $('.inputBox input[type="text"], .cke_textarea_inline').css('border-color', '#d3d3d3');
     });
 	// show complain details
 	$('.deploy-complaint').click(function() {
