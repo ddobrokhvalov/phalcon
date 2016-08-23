@@ -3337,3 +3337,7 @@ input#upload-files::-webkit-file-upload-button {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+.complaints-main{
+    word-break: break-word;
+}
