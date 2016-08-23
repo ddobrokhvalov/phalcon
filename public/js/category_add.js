@@ -371,12 +371,12 @@ function requiredStartSearch() {
 }
 function maxStrLength(obj, num, tags) {
     if (tags) {
-        if (obj.text().length <= num) {
+        if (obj.text().length > num) {
             var temp = obj.text().substr(0, num);
             obj.text(temp);
             showMeWarningPopup('Комментарий не должен привышать ' + num + ' символов!');
         }
-    } else if (obj.val().length <= num) {
+    } else if (obj.val().length > num) {
         obj.val(obj.val().substr(0, num));
         showMeWarningPopup('Комментарий не должен привышать ' + num + ' символов!');
     }
