@@ -60,6 +60,11 @@ $(document).ready(function() {
             maxStrLength($(this), 160, 'argument');
         }
     });
+    $('body').on('keyup', '.inputBox input[type="text"], .cke_textarea_inline', function() {
+        if ($(this).val() != '' || $(this).text() != '') {
+            $(this).css('border-color', '#10b8f7');
+        }
+    });
     
     requiredStartSearch();
 });
@@ -80,63 +85,76 @@ function categorySend(e) {
     var catName = $('.inputBox input').val(),
         data;
     if ($('.saveCat').hasClass('subChild')) {
-        catNum++;
-        requiredCat = $('.requiredOrNot').attr('data-value');
-        data = 'parent_id=' + parentId +
-            '&name=' + catName +
-            '&required=' + requiredCat;
-        if (catName == '' || requiredCat == '') {
-            e.preventDefault();
-            showMeWarningPopup('Не все обязательные поля заполненны!');
+        if ($('.inputBox input[type="text"]').val() == '') {
+            $('.inputBox input[type="text"]').css('border-color', '#f26d7d');
         } else {
-            removeSecondActionButton();
-            createNewCategory.newCategorySend(data);
-            $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
+            catNum++;
+            requiredCat = $('.requiredOrNot').attr('data-value');
+            data = 'parent_id=' + parentId +
+                '&name=' + catName +
+                '&required=' + requiredCat;
+            if (catName == '' || requiredCat == '') {
+                e.preventDefault();
+                showMeWarningPopup('Не все обязательные поля заполненны!');
+            } else {
+                removeSecondActionButton();
+                createNewCategory.newCategorySend(data);
+                $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
+            }
         }
     } else if ($('.saveCat').hasClass('createArgumentStart')) {
-        $('.saveCat').text('Сохранить');
-        $('.popupBtn.cancel').addClass('backPopupLevel').text('Назад');
-        $('.saveCat').removeClass('createArgumentStart');
-        if ($('.saveCat').hasClass('editAlso')) {
-            $('.saveCat').addClass('editArgCat');
+        if ($('.inputBox input[type="text"]').val() == '' && $('.cke_textarea_inline').text() == '') {
+            $('.inputBox input[type="text"], .cke_textarea_inline').css('border-color', '#f26d7d');
+        } else if ($('.inputBox input[type="text"]').val() == '') {
+            $('.inputBox input[type="text"]').css('border-color', '#f26d7d');
+        } else if ($('.cke_textarea_inline').text() == '') {
+            $('.cke_textarea_inline').css('border-color', '#f26d7d');
         } else {
-            $('.saveCat').addClass('createArgument');
-        }
-        $('.argumentComments textarea').val('');
-        if (catArgObj != undefined && catArgObj.type != undefined) {
-            $('.add-ArgumentsType .current-option span').text('');
-            $('.add-ArgumentsType .current-option').attr('data-value', catArgObj.type)
-            var catArgObjType = catArgObj.type.split(',');
-            for (var i = 0; i < catArgObjType.length; i++) {
-                switch(catArgObjType[i]) {
-                    case 'electr_auction':
-                        catArgObjType[i] = 'Электронный аукцион';
-                        break;
-                    case 'concurs':
-                        catArgObjType[i] = 'Конкурс';
-                        break;
-                    case 'kotirovok':
-                        catArgObjType[i] = 'Запрос котировок';
-                        break;
-                    case 'offer':
-                        catArgObjType[i] = 'Запрос предложений';
-                        break;
-                }
-                if (i == 0) {
-                    $('.add-ArgumentsType .current-option span').append(catArgObjType[i]);
-                } else {
-                    $('.add-ArgumentsType .current-option span').append(', ' + catArgObjType[i]);
-                }
-                $('.selectArgType_item').each(function() {
-                    if ($(this).text() == catArgObjType[i]) {
-                        $(this).addClass('choosenArgType');
-                    }
-                });
+            $('.inputBox input[type="text"], .cke_textarea_inline').css('border-color', '#d3d3d3');
+            $('.saveCat').text('Сохранить');
+            $('.popupBtn.cancel').addClass('backPopupLevel').text('Назад');
+            $('.saveCat').removeClass('createArgumentStart');
+            if ($('.saveCat').hasClass('editAlso')) {
+                $('.saveCat').addClass('editArgCat');
+            } else {
+                $('.saveCat').addClass('createArgument');
             }
-            selectArgType.name = catArgObjType;
+            $('.argumentComments textarea').val('');
+            if (catArgObj != undefined && catArgObj.type != undefined) {
+                $('.add-ArgumentsType .current-option span').text('');
+                $('.add-ArgumentsType .current-option').attr('data-value', catArgObj.type)
+                var catArgObjType = catArgObj.type.split(',');
+                for (var i = 0; i < catArgObjType.length; i++) {
+                    switch (catArgObjType[i]) {
+                        case 'electr_auction':
+                            catArgObjType[i] = 'Электронный аукцион';
+                            break;
+                        case 'concurs':
+                            catArgObjType[i] = 'Конкурс';
+                            break;
+                        case 'kotirovok':
+                            catArgObjType[i] = 'Запрос котировок';
+                            break;
+                        case 'offer':
+                            catArgObjType[i] = 'Запрос предложений';
+                            break;
+                    }
+                    if (i == 0) {
+                        $('.add-ArgumentsType .current-option span').append(catArgObjType[i]);
+                    } else {
+                        $('.add-ArgumentsType .current-option span').append(', ' + catArgObjType[i]);
+                    }
+                    $('.selectArgType_item').each(function () {
+                        if ($(this).text() == catArgObjType[i]) {
+                            $(this).addClass('choosenArgType');
+                        }
+                    });
+                }
+                selectArgType.name = catArgObjType;
+            }
+            $('.add-ArgumentsCategory').slideUp(400);
+            $('.add-ArgumentsType').slideDown(400);
         }
-        $('.add-ArgumentsCategory').slideUp(400);
-        $('.add-ArgumentsType').slideDown(400);
     } else if ($('.saveCat').hasClass('createArgument')) {
         var argumentName = $('.inputBox input').val(),
             argumentText = $('.argumentText textarea').val(),
@@ -194,15 +212,19 @@ function categorySend(e) {
             }
         }
     } else {
-        requiredCat = $('.requiredOrNot').attr('data-value');
-        data = 'parent_id=' + 0 +
-            '&name=' + catName +
-            '&required=' + requiredCat;
-        if (catName == '' || requiredCat == '') {
-            e.preventDefault();
-            showMeWarningPopup('Не все обязательные поля заполненны!');
+        if ($('.inputBox input[type="text"]').val() == '') {
+            $('.inputBox input[type="text"]').css('border-color', '#f26d7d');
         } else {
-            createNewCategory.newCategorySend(data);
+            requiredCat = $('.requiredOrNot').attr('data-value');
+            data = 'parent_id=' + 0 +
+                '&name=' + catName +
+                '&required=' + requiredCat;
+            if (catName == '' || requiredCat == '') {
+                e.preventDefault();
+                showMeWarningPopup('Не все обязательные поля заполненны!');
+            } else {
+                createNewCategory.newCategorySend(data);
+            }
         }
     }
 }
@@ -256,6 +278,7 @@ function createSubCat_Arg(obj) {
 }
 function popupCancel(obj) {
     deleteOldClasses();
+    $('.inputBox input[type="text"], .cke_textarea_inline').css('border-color', '#d3d3d3');
     if ($(obj).hasClass('backPopupLevel')) {
         $('.add-ArgumentsCategory').slideDown(400);
         $('.add-ArgumentsType').slideUp(400);

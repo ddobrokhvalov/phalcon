@@ -233,6 +233,7 @@
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
+  outline: none;
 }
 .popupBtn {
   float: left;
@@ -267,6 +268,10 @@
       margin-top: 10px;
       max-height: 250px;
       overflow-y: scroll;
+      &:focus {
+        border: 1px solid #10b8f7 !important;
+        box-shadow: 0 0 7px 0 rgba(16, 184, 247, 0.13);
+      }
     }
   .admin-popup-content {
     width: 755px;
