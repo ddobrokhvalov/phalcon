@@ -392,6 +392,7 @@ function editCatArg(obj) {
         } else {
             $('#requiredOrNot_item2').prop('checked', true);
         }
+        $('.requiredOrNot').attr('data-value', obj.attr('data-required'))
         $('.argumentText').hide();
         catArgObj = {
             descr: obj.attr('id'),
