@@ -47,6 +47,9 @@ $(document).ready(function() {
     $('.argumentsComment textarea').keyup(function() {
         maxStrLength($(this));
     });
+    $('.warningMessageNew .popupBtn').click(function() {
+        $('.warningMessageNew').fadeOut();
+    });
     
     requiredStartSearch();
 });
@@ -74,7 +77,7 @@ function categorySend(e) {
             '&required=' + requiredCat;
         if (catName == '' || requiredCat == '') {
             e.preventDefault();
-            alert('Не все обязательные поля заполненны!');
+            showMeWarningPopup('Не все обязательные поля заполненны!');
         } else {
             removeSecondActionButton();
             createNewCategory.newCategorySend(data);
@@ -139,7 +142,7 @@ function categorySend(e) {
         }
         if (argumentTypeVal == '' || argumentText == '' || argumentName == '') {
             e.preventDefault();
-            alert('Не все обязательные поля заполненны!');
+            showMeWarningPopup('Не все обязательные поля заполненны!');
         } else {
             removeSecondActionButton();
             addArgument.addData(data);
@@ -161,7 +164,7 @@ function categorySend(e) {
             }
             if (catArgObj.name == '' || catArgObj.text == '' || catArgObj.type == '') {
                 e.preventDefault();
-                alert('Не все обязательные поля заполненны!');
+                showMeWarningPopup('Не все обязательные поля заполненны!');
             } else {
                 editCategoryArgument.editCatArg(data, catArgObj.descr);
                 $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
@@ -174,7 +177,7 @@ function categorySend(e) {
                 '&edit[required]=' + catArgObj.required;
             if (catArgObj.name == '' || catArgObj.required == '') {
                 e.preventDefault();
-                alert('Не все обязательные поля заполненны!');
+                showMeWarningPopup('Не все обязательные поля заполненны!');
             } else {
                 editCategoryArgument.editCatArg(data, catArgObj.descr);
                 $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
@@ -187,7 +190,7 @@ function categorySend(e) {
             '&required=' + requiredCat;
         if (catName == '' || requiredCat == '') {
             e.preventDefault();
-            alert('Не все обязательные поля заполненны!');
+            showMeWarningPopup('Не все обязательные поля заполненны!');
         } else {
             createNewCategory.newCategorySend(data);
         }
@@ -365,8 +368,12 @@ function requiredStartSearch() {
 function maxStrLength(obj) {
     if (obj.val().length > 1000) {
         obj.val(obj.val().substr(0, 1000));
-        alert('Комментарий не должен привышать 1000 символов!')
+        showMeWarningPopup('Комментарий не должен привышать 1000 символов!');
     }
+}
+function showMeWarningPopup(descr) {
+    $('.warningMessageNew').fadeIn().css('display', 'flex');
+    $('.warningMessageNew p').text(descr);
 }
 function ShellToFill(step, titleText, id, parent_id, dataRequired, text, comment, argumentType) {
     this.wrapp = '<li class="catArguments">';
@@ -495,7 +502,7 @@ var receivingData = {
             context: obj.parent(),
             success: function(value) {
                 if (value.cat_arguments.length == 0 && value.arguments.length == 0) {
-                    alert('нету данных!');
+                    showMeWarningPopup('Данные отсутствуют!');
                 }
                 num++;
                 switch (num) {
