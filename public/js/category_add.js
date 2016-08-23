@@ -45,10 +45,13 @@ $(document).ready(function() {
         $('.requiredOrNot').attr('data-value', $(this).attr('data-required'));
     });
     $('.argumentsComment textarea').keyup(function() {
-        maxStrLength($(this));
+        maxStrLength($(this), 1000);
     });
     $('.warningMessageNew .popupBtn').click(function() {
         $('.warningMessageNew').fadeOut();
+    });
+    $('body').on('keyup', '.cke_textarea_inline', function() {
+        maxStrLength($(this), 6000, true);
     });
     
     requiredStartSearch();
@@ -366,10 +369,16 @@ function requiredStartSearch() {
         }
     });
 }
-function maxStrLength(obj) {
-    if (obj.val().length > 1000) {
-        obj.val(obj.val().substr(0, 1000));
-        showMeWarningPopup('Комментарий не должен привышать 1000 символов!');
+function maxStrLength(obj, num, tags) {
+    if (tags) {
+        if (obj.text().length <= num) {
+            var temp = obj.text().substr(0, num);
+            obj.text(temp);
+            showMeWarningPopup('Комментарий не должен привышать ' + num + ' символов!');
+        }
+    } else if (obj.val().length <= num) {
+        obj.val(obj.val().substr(0, num));
+        showMeWarningPopup('Комментарий не должен привышать ' + num + ' символов!');
     }
 }
 function showMeWarningPopup(descr) {
