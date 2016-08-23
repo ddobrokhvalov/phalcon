@@ -388,6 +388,12 @@ function editCatArg(obj) {
         }
         initEditor("argument-text");
     } else {
+        if (obj.attr('data-required') == 0) {
+            $('#requiredOrNot_item1').prop('checked', true);
+        } else {
+            $('#requiredOrNot_item2').prop('checked', true);
+        }
+        $('.requiredOrNot').attr('data-value', obj.attr('data-required'))
         $('.argumentText').hide();
         catArgObj = {
             descr: obj.attr('id'),
