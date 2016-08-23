@@ -26,7 +26,8 @@ $(document).ready(function() {
             argument.addArgument("just_text", "just_text");
         }
         $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").show(); */
-        argument.addArgument(argObjSend.id, argObjSend.cat_id, argObjSend.complaint_text, argObjSend.required);
+
+        argument.addArgument(argObjSend.id, argObjSend.cat_id, argObjSend.complaint_text.replace(/Описание:/, ''), argObjSend.required);
         $('.admin-popup-wrap').fadeOut();
     });
     $('.steps-line span').hover(function() {

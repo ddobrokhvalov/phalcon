@@ -341,6 +341,7 @@ function editCatArg(obj) {
     $('.add-Arguments_category textarea').val('');
     parentId = obj.attr('data-parent_id');
     if (obj.attr('id') == 'argument') {
+        destroyEditor("argument-text");
         $('.requiredOrNot').hide();
         $('.saveCat').text('Добавить тип');
         $('.saveCat').addClass('createArgumentStart editAlso');
@@ -354,9 +355,12 @@ function editCatArg(obj) {
             type: obj.find('.argumentType').text(),
             comment: obj.find('.argumentComment').text()
         };
+        if (catArgObj.text.search("&lt;") >= 0) {
+            catArgObj.text = catArgObj.text.replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+        }
         argId = parseInt(obj.attr('data-id'))
         $('.inputBox input').val(catArgObj.name);
-        $('.argumentText textarea').text(catArgObj.text).val(catArgObj.text);
+        $('.argumentText #argument-text')/*.text(catArgObj.text)*/.val(catArgObj.text);
         $('.add-Arguments_category h6').text('Редактирование довода');
         $('.add-ArgumentsCategory .inputBox:first h4').text('Название довода');
         $('.selectArgType_item').each(function() {
@@ -373,6 +377,7 @@ function editCatArg(obj) {
             $('#addArgComments').prop('checked', true);
             $('.argumentsComment').show();
         }
+        initEditor("argument-text");
     } else {
         $('.argumentText').hide();
         catArgObj = {
@@ -391,7 +396,6 @@ function editCatArg(obj) {
             $('.requiredOrNot').show();
         }
     }
-    initEditor("argument-text");
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
 }
 function showArgComment(obj) {
@@ -416,12 +420,12 @@ function maxStrLength(obj, num, descr) {
         if (obj.text().length > num) {
             var temp = obj.text().substr(0, num);
             obj.text(temp);
-            showMeWarningPopup('Описание не должено превышать ' + num + ' символов!');
+            showMeWarningPopup('Описание не должно превышать ' + num + ' символов!');
         }
     } else if (descr == 'category') {
-        rezSymbol(obj, num, 'Название каталога не должено превышать ' + num + ' символов!');
+        rezSymbol(obj, num, 'Название каталога не должно превышать ' + num + ' символов!');
     } else if (descr == 'argument') {
-        rezSymbol(obj, num, 'Название довода не должено превышать ' + num + ' символов!');
+        rezSymbol(obj, num, 'Название довода не должно превышать ' + num + ' символов!');
     } else if (descr == 'comment') {
         rezSymbol(obj, num, 'Комментарий не должен превышать ' + num + ' символов!');
     }
@@ -800,6 +804,13 @@ var writeGetData = {
             '</ul></li>'
     }
 };
+
+function destroyEditor(id) {
+    if (CKEDITOR.instances[id]) {
+        CKEDITOR.instances[id].destroy();
+    }
+}
+
 function initEditor(id) {
     if ( CKEDITOR.instances[id] ) {
         CKEDITOR.instances[id].destroy();
