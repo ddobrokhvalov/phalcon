@@ -217,7 +217,8 @@ function addNewCat() {
         $('.saveCat').removeClass('subChild');
     }
     catNum = '';
-    $('.argumentText').hide();
+    $('.add-ArgumentsCategory').show();
+    $('.add-ArgumentsType, .argumentText').hide();
     $('.add-Arguments_category h6').text('Добавление категории');
     $('.add-ArgumentsCategory .inputBox:first h4').text('Название категории');
     $('.requiredOrNot').show();
