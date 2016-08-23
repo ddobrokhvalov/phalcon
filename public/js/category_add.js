@@ -65,6 +65,11 @@ $(document).ready(function() {
             $(this).css('border-color', '#10b8f7');
         }
     });
+    $('.add-ArgumentsType .current-option').click(function() {
+        if ($(this).attr('data-value') != '') {
+            $('.add-ArgumentsType .current-option span').css('border-color', '#d3d3d3');
+        }
+    });
     
     requiredStartSearch();
 });
@@ -156,25 +161,29 @@ function categorySend(e) {
             $('.add-ArgumentsType').slideDown(400);
         }
     } else if ($('.saveCat').hasClass('createArgument')) {
-        var argumentName = $('.inputBox input').val(),
-            argumentText = $('.argumentText textarea').val(),
-            argumentComm = $('.argumentsComment textarea').val(),
-            argumentTypeVal = $('.add-ArgumentsType .current-option').attr('data-value'),
-            argTypeValArray = argumentTypeVal.split(',');
-        data = 'arguments[category_id]=' + parentId +
-            '&arguments[name]=' + argumentName +
-            '&arguments[text]=' + argumentText +
-            '&arguments[comment]=' + argumentComm;
-        for (var i = 0; i < argTypeValArray.length; i++) {
-            data += ('&arguments[type][]=' + argTypeValArray[i]);
-        }
-        if (argumentTypeVal == '' || argumentText == '' || argumentName == '') {
-            e.preventDefault();
-            showMeWarningPopup('Не все обязательные поля заполненны!');
+        if ($('.selectArgType .current-option').attr('data-value') == '') {
+            $('.add-ArgumentsType .current-option span').css('border-color', '#f26d7d');
         } else {
-            removeSecondActionButton();
-            addArgument.addData(data);
-            $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
+            var argumentName = $('.inputBox input').val(),
+                argumentText = $('.argumentText textarea').val(),
+                argumentComm = $('.argumentsComment textarea').val(),
+                argumentTypeVal = $('.add-ArgumentsType .current-option').attr('data-value'),
+                argTypeValArray = argumentTypeVal.split(',');
+            data = 'arguments[category_id]=' + parentId +
+                '&arguments[name]=' + argumentName +
+                '&arguments[text]=' + argumentText +
+                '&arguments[comment]=' + argumentComm;
+            for (var i = 0; i < argTypeValArray.length; i++) {
+                data += ('&arguments[type][]=' + argTypeValArray[i]);
+            }
+            if (argumentTypeVal == '' || argumentText == '' || argumentName == '') {
+                e.preventDefault();
+                showMeWarningPopup('Не все обязательные поля заполненны!');
+            } else {
+                removeSecondActionButton();
+                addArgument.addData(data);
+                $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
+            }
         }
     } else if ($('.saveCat').hasClass('editArgCat')) {
         if (catArgObj.descr == 'argument') {
