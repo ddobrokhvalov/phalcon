@@ -174,7 +174,7 @@ jQuery(document).ready(function($) {
 		}
 	});*/
 	// close admin popup
-	$('.admin-popup-bg, .admin-popup-close').click(function() {
+	$('.admin-popup-bg').click(function() {
         deleteOldClasses();
 		$(this).parent().fadeOut();
 	});
