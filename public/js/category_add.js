@@ -327,6 +327,7 @@ function addArgumentFunc(obj) {
     $('.add-Arguments_category .admin-popup-content').removeClass('hiddenSaveBtn');
     $('.saveCat').attr('class', 'popupBtn saveCat');
     $('.add-Arguments_category input').text('').val('');
+    destroyEditor("argument-text");
     $('.add-Arguments_category textarea, .argumentText textarea').val('');
     $('.addArgComment').removeClass('toggleArgComment');
     $('#addArgComments').prop('checked', false);
