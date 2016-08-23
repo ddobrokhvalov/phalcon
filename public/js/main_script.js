@@ -178,6 +178,10 @@ jQuery(document).ready(function($) {
         deleteOldClasses();
 		$(this).parent().fadeOut();
 	});
+    $('.admin-popup-close').click(function() {
+        deleteOldClasses();
+        $(this).parent().parent().fadeOut();
+    });
 	// show complain details
 	$('.deploy-complaint').click(function() {
 		$('.deploy-complaint span').toggleClass('dep-up');
