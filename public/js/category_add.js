@@ -45,13 +45,20 @@ $(document).ready(function() {
         $('.requiredOrNot').attr('data-value', $(this).attr('data-required'));
     });
     $('.argumentsComment textarea').keyup(function() {
-        maxStrLength($(this), 1000);
+        maxStrLength($(this), 1000, 'comment');
     });
     $('.warningMessageNew .popupBtn').click(function() {
         $('.warningMessageNew').fadeOut();
     });
     $('body').on('keyup', '.cke_textarea_inline', function() {
-        maxStrLength($(this), 6000, true);
+        maxStrLength($(this), 6000, 'tags');
+    });
+    $('.add-ArgumentsCategory input[type="text"]').keyup(function() {
+        if ($(this).parent().parent().attr('data-obj') == 'category') {
+            maxStrLength($(this), 50, 'category');
+        } else {
+            maxStrLength($(this), 160, 'argument');
+        }
     });
     
     requiredStartSearch();
@@ -220,7 +227,7 @@ function addNewCat() {
         $('.saveCat').removeClass('subChild');
     }
     catNum = '';
-    $('.add-ArgumentsCategory').show();
+    $('.add-ArgumentsCategory').attr('data-obj', 'category').show();
     $('.add-ArgumentsType, .argumentText').hide();
     $('.add-Arguments_category h6').text('Добавление категории');
     $('.add-ArgumentsCategory .inputBox:first h4').text('Название категории');
@@ -237,7 +244,7 @@ function createSubCat_Arg(obj) {
     $('.saveCat').attr('class', 'popupBtn saveCat');
     $('.add-Arguments_category input').text('').val('');
     $('.add-Arguments_category textarea').val('');
-    $('.add-ArgumentsCategory').show();
+    $('.add-ArgumentsCategory').attr('data-obj', 'category').show();
     $('.add-ArgumentsType, .argumentText').hide();
     $('.saveCat').removeClass('editArgCat createArgumentStart').addClass('subChild').text('Сохранить');
     $('.popupBtn.cancel').removeClass('backPopupLevel').text('Отмена');
@@ -293,6 +300,7 @@ function addArgumentFunc(obj) {
     $('.add-ArgumentsCategory .inputBox:first h4').text('Название довода');
     $('.add-Arguments_category').fadeIn().css('display', 'flex');
     initEditor("argument-text");
+    $('.add-ArgumentsCategory').attr('data-obj', 'argument');
 }
 function editCatArg(obj) {
     $('.add-Arguments_category .admin-popup-content').removeClass('hiddenSaveBtn');
@@ -305,6 +313,7 @@ function editCatArg(obj) {
         $('.saveCat').text('Добавить тип');
         $('.saveCat').addClass('createArgumentStart editAlso');
         $('.add-ArgumentsCategory, .argumentText').show();
+        $('.add-ArgumentsCategory').attr('data-obj', 'argument');
         $('.add-ArgumentsType').hide();
         catArgObj = {
             descr: obj.attr('id'),
@@ -343,6 +352,7 @@ function editCatArg(obj) {
         $('.saveCat').addClass('editArgCat');
         $('.add-Arguments_category h6').text('Редактирование категории');
         $('.add-ArgumentsCategory .inputBox:first h4').text('Название категории');
+        $('.add-ArgumentsCategory').attr('data-obj', 'category');
         if (obj.parent().hasClass('subWrap_2')) {
             $('.requiredOrNot').hide();
         } else {
@@ -369,16 +379,25 @@ function requiredStartSearch() {
         }
     });
 }
-function maxStrLength(obj, num, tags) {
-    if (tags) {
+function maxStrLength(obj, num, descr) {
+    if (descr == 'tags') {
         if (obj.text().length > num) {
             var temp = obj.text().substr(0, num);
             obj.text(temp);
-            showMeWarningPopup('Комментарий не должен привышать ' + num + ' символов!');
+            showMeWarningPopup('Описание не должено превышать ' + num + ' символов!');
         }
-    } else if (obj.val().length > num) {
-        obj.val(obj.val().substr(0, num));
-        showMeWarningPopup('Комментарий не должен привышать ' + num + ' символов!');
+    } else if (descr == 'category') {
+        rezSymbol(obj, num, 'Название каталога не должено превышать ' + num + ' символов!');
+    } else if (descr == 'argument') {
+        rezSymbol(obj, num, 'Название довода не должено превышать ' + num + ' символов!');
+    } else if (descr == 'comment') {
+        rezSymbol(obj, num, 'Комментарий не должен превышать ' + num + ' символов!');
+    }
+    function rezSymbol(oBj, nUm, text) {
+        if (oBj.val().length > nUm) {
+            oBj.val(oBj.val().substr(0, nUm));
+            showMeWarningPopup(text);
+        }
     }
 }
 function showMeWarningPopup(descr) {
