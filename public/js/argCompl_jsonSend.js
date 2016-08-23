@@ -26,7 +26,8 @@ $(document).ready(function() {
             argument.addArgument("just_text", "just_text");
         }
         $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").show(); */
-        argument.addArgument(argObjSend.id, argObjSend.cat_id, argObjSend.complaint_text, argObjSend.required);
+
+        argument.addArgument(argObjSend.id, argObjSend.cat_id, argObjSend.complaint_text.replace(/Описание:/, ''), argObjSend.required);
         $('.admin-popup-wrap').fadeOut();
     });
     $('.steps-line span').hover(function() {
@@ -108,10 +109,8 @@ var argObjSend = {
         this.id = data.attr('data-value');
         this.cat_id = data.attr('data-parent');
         this.complaint_text = data.find('.argTextCome').html();
-        this.complaint_text = this.complaint_text.replace(/Описание:/, '');
         //this.complaint_text = data[0].innerText;
         this.complaint_descr = data.find('.argTextCome').html();
-        this.complaint_descr = this.complaint_descr.replace(/Описание:/, '');
         this.complaint_comment = data.find('.argCommentCome').text();
     }
 };
