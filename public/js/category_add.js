@@ -98,14 +98,14 @@ function categorySend(e) {
             data = 'parent_id=' + parentId +
                 '&name=' + catName +
                 '&required=' + requiredCat;
-            if (catName == '' || requiredCat == '') {
-                e.preventDefault();
-                showMeWarningPopup('Не все обязательные поля заполненны!');
-            } else {
+            // if (catName == '' || requiredCat == '') {
+            //    e.preventDefault();
+            //    showMeWarningPopup('Не все обязательные поля заполненны!');
+            // } else {
                 removeSecondActionButton();
                 createNewCategory.newCategorySend(data);
                 $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
-            }
+            // }
         }
     } else if ($('.saveCat').hasClass('createArgumentStart')) {
         if ($('.inputBox input[type="text"]').val() == '' && $('.cke_textarea_inline').text() == '') {
@@ -176,48 +176,56 @@ function categorySend(e) {
             for (var i = 0; i < argTypeValArray.length; i++) {
                 data += ('&arguments[type][]=' + argTypeValArray[i]);
             }
-            if (argumentTypeVal == '' || argumentText == '' || argumentName == '') {
-                e.preventDefault();
-                showMeWarningPopup('Не все обязательные поля заполненны!');
-            } else {
+            // if (argumentTypeVal == '' || argumentText == '' || argumentName == '') {
+            //    e.preventDefault();
+            //    showMeWarningPopup('Не все обязательные поля заполненны!');
+            // } else {
                 removeSecondActionButton();
                 addArgument.addData(data);
                 $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
-            }
+            // }
         }
     } else if ($('.saveCat').hasClass('editArgCat')) {
         if (catArgObj.descr == 'argument') {
-            catArgObj.name = $('.add-ArgumentsCategory .inputBox input').val();
-            catArgObj.text = $('.add-ArgumentsCategory .argumentText textarea').val();
-            catArgObj.type = $('.add-ArgumentsType .current-option').attr('data-value');
-            catArgObj.comment = $('.argumentsComment textarea').val(),
-            argTypeValArray = catArgObj.type.split(',');
-            data = 'edit[id]=' + argId +
-                '&edit[name]=' + catArgObj.name +
-                '&edit[arg]=true&edit[text]=' + catArgObj.text +
-                '&edit[comment]=' + catArgObj.comment;
-            for (var i = 0; i < argTypeValArray.length; i++) {
-                data += ('&edit[type][]=' + argTypeValArray[i]);
-            }
-            if (catArgObj.name == '' || catArgObj.text == '' || catArgObj.type == '') {
-                e.preventDefault();
-                showMeWarningPopup('Не все обязательные поля заполненны!');
+            if ($('.selectArgType .current-option').attr('data-value') == '') {
+                $('.add-ArgumentsType .current-option span').css('border-color', '#f26d7d');
             } else {
+                catArgObj.name = $('.add-ArgumentsCategory .inputBox input').val();
+                catArgObj.text = $('.add-ArgumentsCategory .argumentText textarea').val();
+                catArgObj.type = $('.add-ArgumentsType .current-option').attr('data-value');
+                catArgObj.comment = $('.argumentsComment textarea').val(),
+                    argTypeValArray = catArgObj.type.split(',');
+                data = 'edit[id]=' + argId +
+                    '&edit[name]=' + catArgObj.name +
+                    '&edit[arg]=true&edit[text]=' + catArgObj.text +
+                    '&edit[comment]=' + catArgObj.comment;
+                for (var i = 0; i < argTypeValArray.length; i++) {
+                    data += ('&edit[type][]=' + argTypeValArray[i]);
+                }
+                // if (catArgObj.name == '' || catArgObj.text == '' || catArgObj.type == '') {
+                //    e.preventDefault();
+                //    showMeWarningPopup('Не все обязательные поля заполненны!');
+                // } else {
                 editCategoryArgument.editCatArg(data, catArgObj.descr);
                 $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
+                // }
             }
         } else {
-            catArgObj.name = $('.inputBox input').val();
-            catArgObj.required = $('.requiredOrNot').attr('data-value');
-            data = 'edit[id]=' + catArgObj.id +
-                '&edit[name]=' + catArgObj.name +
-                '&edit[required]=' + catArgObj.required;
-            if (catArgObj.name == '' || catArgObj.required == '') {
-                e.preventDefault();
-                showMeWarningPopup('Не все обязательные поля заполненны!');
+            if ($('.inputBox input[type="text"]').val() == '') {
+                $('.inputBox input[type="text"]').css('border-color', '#f26d7d');
             } else {
+                catArgObj.name = $('.inputBox input').val();
+                catArgObj.required = $('.requiredOrNot').attr('data-value');
+                data = 'edit[id]=' + catArgObj.id +
+                    '&edit[name]=' + catArgObj.name +
+                    '&edit[required]=' + catArgObj.required;
+                // if (catArgObj.name == '' || catArgObj.required == '') {
+                //    e.preventDefault();
+                //    showMeWarningPopup('Не все обязательные поля заполненны!');
+                // } else {
                 editCategoryArgument.editCatArg(data, catArgObj.descr);
                 $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
+                // }
             }
         }
     } else {
@@ -228,12 +236,12 @@ function categorySend(e) {
             data = 'parent_id=' + 0 +
                 '&name=' + catName +
                 '&required=' + requiredCat;
-            if (catName == '' || requiredCat == '') {
-                e.preventDefault();
-                showMeWarningPopup('Не все обязательные поля заполненны!');
-            } else {
+            // if (catName == '' || requiredCat == '') {
+            //    e.preventDefault();
+            //    showMeWarningPopup('Не все обязательные поля заполненны!');
+            // } else {
                 createNewCategory.newCategorySend(data);
-            }
+            //}
         }
     }
 }
