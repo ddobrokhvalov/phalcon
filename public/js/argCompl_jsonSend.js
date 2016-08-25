@@ -332,12 +332,19 @@ var ajaxSendObj = {
         }
         function lookingToFillSelect(num) {
             for (var i = 0; i < ajaxSendObj.stepsCacheArr[num].cat_arguments.length; i++) {
-                $('#argComplSelect .custom-options div div:first').append(
-                    '<li class="argo"' +
-                    ' data-value="' + ajaxSendObj.stepsCacheArr[num].cat_arguments[i].id +
-                    '" data-parent="' + ajaxSendObj.stepsCacheArr[num].cat_arguments[i].parent_id +
-                    '">' + ajaxSendObj.stepsCacheArr[num].cat_arguments[i].name + '</li>'
-                );
+                $('#argComplSelect .custom-options div div:first').append(function() {
+                    if (ajaxSendObj.stepsCacheArr[num].cat_arguments[i].required == 1) {
+                        return '<li class="argo required"' +
+                            ' data-value="' + ajaxSendObj.stepsCacheArr[num].cat_arguments[i].id +
+                            '" data-parent="' + ajaxSendObj.stepsCacheArr[num].cat_arguments[i].parent_id +
+                            '">' + ajaxSendObj.stepsCacheArr[num].cat_arguments[i].name + '</li>'
+                    } else {
+                        return '<li class="argo"' +
+                        ' data-value="' + ajaxSendObj.stepsCacheArr[num].cat_arguments[i].id +
+                        '" data-parent="' + ajaxSendObj.stepsCacheArr[num].cat_arguments[i].parent_id +
+                        '">' + ajaxSendObj.stepsCacheArr[num].cat_arguments[i].name + '</li>'
+                    }
+                });
             }
         }
         function fillingItems(num) {
@@ -391,11 +398,23 @@ var ajaxSendObj = {
         if (data.arguments.length != 0) {
             $('.argCompl-review ul').removeClass('withoutArgOnBase');
             for (var i = 0; i < data.arguments.length; i++) {
-                $('.argCompl-review ul').append(
-                    '<li data-value="' + data.arguments[i].id +
-                    '" data-parent="' + data.arguments[i].category_id +
-                    '">' + data.arguments[i].name + '</li>'
-                );
+                if (data.arguments[i].required == 1) {
+                    $('.argCompl-review ul').append(
+                        '<li class="required" data-value="' + data.arguments[i].id +
+                        '" data-parent="' + data.arguments[i].category_id + '">' +
+                        data.arguments[i].name +
+                        '<div class="argTextCome">Описание: ' + data.arguments[i].text + '</div>' +
+                        '<p class="argCommentCome">Комментарий юриста: ' + data.arguments[i].comment + '</p></li>'
+                    );
+                } else {
+                    $('.argCompl-review ul').append(
+                        '<li data-value="' + data.arguments[i].id +
+                        '" data-parent="' + data.arguments[i].category_id + '">' +
+                        data.arguments[i].name +
+                        '<div class="argTextCome">Описание: ' + data.arguments[i].text + '</div>' +
+                        '<p class="argCommentCome">Комментарий юриста: ' + data.arguments[i].comment + '</p></li>'
+                    );
+                }
             }
         } else {
             $('.argCompl-review ul').addClass('withoutArgOnBase');
