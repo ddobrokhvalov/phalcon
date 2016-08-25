@@ -376,13 +376,20 @@
   &:before {
     position: absolute;
     content: '*';
-    top: 0;
+    top: 14px;
     left: 10px;
     font-size: 20px;
     line-height: inherit;
     text-transform: uppercase;
     font-weight: 600;
     color: #f26d7d;
+  }
+}
+.current-option {
+  .required {
+    &:before {
+      top: 0;
+    }
   }
 }
 .withoutArgOnBase {
