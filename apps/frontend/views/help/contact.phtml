@@ -1,13 +1,25 @@
 <div class="content">
     <div class="wrapper">
         <div class="c-content">
+            <style>
+                .wrap_success{
+                    width: 100%;
+                    text-align: center;
+                    top: 58px;
+                    position: absolute;
+                }
+            </style>
+            <div class="wrap_success">
+                {{ flashSession.output() }}
+            </div>
+
             <div class="c-cnt-pagename">
                 Контакты
             </div>
 
             <div class="c-mapb">
                 <script type="text/javascript" charset="utf-8" src="https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=S6PvMetJxzVzDK2kZx6n9rfkbBu45eCR&width=970&height=470&lang=ru_UA&sourceType=constructor"></script>
-                {{ flashSession.output() }}
+
             </div>            
             <div class="c-m-form">
                 <span>Напишите нам</span>
