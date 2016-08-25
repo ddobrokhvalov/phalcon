@@ -90,10 +90,11 @@ class ControllerBase extends Controller
                 }
             }
         }
+        $count_message = $messages->count();
         $this->view->messages = $messages->count() ? $messages : array();
         $this->view->move_statuses = isset($move_statuses) && is_array($move_statuses) ? $move_statuses : array();
-        $this->view->count_unread = isset($move_statuses) && is_array($move_statuses) ? count($move_statuses) : 0;
-        $messages->count() ? $this->view->count_unread += $messages->count() : '';
+       // $this->view->count_unread = isset($move_statuses) && is_array($move_statuses) ? count($move_statuses) : 0;
+        $this->view->count_unread = $count_message;
         $this->view->setTemplateAfter('menu');
         $this->view->applicants = $userApplicants;
         $complaint = new Complaint();
