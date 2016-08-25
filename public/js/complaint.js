@@ -71,11 +71,14 @@ $(document).ready(function () {
 
     $('body').on('click', '.add-popup-wrap--btn', function() {
         $(this).parent().parent().fadeOut();
-        $(this).remove();
-        $('.add-popup-wrap p').css({
-            'font-size': '25px',
-            'padding': '0'
-        });
+        var obj = $(this);
+        setTimeout(function() {
+            $('.add-popup-wrap p').css({
+                'font-size': '25px',
+                'padding': '0'
+            });
+            obj.remove();
+        }, 500);
     });
 
 });
@@ -353,8 +356,8 @@ var argument = {
                 reqItem++;
             }
         });
-        $('.add-popup-wrap .admin-popup-content').append(btnPush);
         if (obj === '1' && reqItem < 2) {
+            $('.add-popup-wrap .admin-popup-content').append(btnPush);
             $('.add-popup-wrap h6').text('Внимание!');
             $('.add-popup-wrap p').css({
                 'font-size': '20px',
