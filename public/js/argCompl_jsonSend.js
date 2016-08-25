@@ -26,8 +26,12 @@ $(document).ready(function() {
             argument.addArgument("just_text", "just_text");
         }
         $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").show(); */
-
-        argument.addArgument(argObjSend.id, argObjSend.cat_id, argObjSend.complaint_text.replace(/Описание:/, ''), argObjSend.required);
+        argument.addArgument(
+            argObjSend.id,
+            argObjSend.cat_id,
+            argObjSend.complaint_text.replace(/Описание:/, ''),
+            argObjSend.required
+        );
         $('.admin-popup-wrap').fadeOut();
     });
     $('.steps-line span').hover(function() {
@@ -38,8 +42,6 @@ $(document).ready(function() {
     $('.btn-div-showArgDescr').click(function() {
         showArgDescr($(this));
     });
-
-    // 0372100047315000207
 });
 
 var typeComplicant, datCome;
@@ -93,6 +95,8 @@ function showArgDescr(obj) {
 function argGetReq(obj) {
     if (obj.hasClass('required')) {
         argObjSend.required = 1;
+    } else {
+        argObjSend.required = 0;
     }
 }
 

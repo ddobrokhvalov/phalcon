@@ -4887,7 +4887,8 @@ body#backend-login {
 }
 
 /* line 1, ../sass/_complaint_add.scss */
-.opacity-cap-compl {
+.opacity-cap-compl,
+.add-popup-wrap--btn {
   float: left;
   width: 202px;
   font-size: 16px;
@@ -4901,41 +4902,54 @@ body#backend-login {
   background-color: #00aeef;
   cursor: pointer;
 }
-/* line 14, ../sass/_complaint_add.scss */
-.opacity-cap-compl:hover {
+/* line 15, ../sass/_complaint_add.scss */
+.opacity-cap-compl:hover,
+.add-popup-wrap--btn:hover {
   background-color: #10b8f7;
 }
 
-/* line 18, ../sass/_complaint_add.scss */
+/* line 19, ../sass/_complaint_add.scss */
+.add-popup-wrap--btn {
+  float: none;
+  margin: 30px auto;
+  width: 150px;
+}
+
+/* line 24, ../sass/_complaint_add.scss */
 .c-jd2-f-dov-b.addArgContainer {
   width: auto;
 }
 
-/* line 21, ../sass/_complaint_add.scss */
+/* line 27, ../sass/_complaint_add.scss */
 .c-jd2-f-save.addArgContainer {
   width: auto;
   float: right;
 }
 
-/* line 26, ../sass/_complaint_add.scss */
+/* line 32, ../sass/_complaint_add.scss */
 .add-complaint-page .c-jadd1 {
   padding: 30px 40px 22px 40px;
 }
-/* line 29, ../sass/_complaint_add.scss */
+/* line 35, ../sass/_complaint_add.scss */
 .add-complaint-page input[type="checkbox"] + label {
   line-height: unset;
 }
-/* line 32, ../sass/_complaint_add.scss */
+/* line 38, ../sass/_complaint_add.scss */
 .add-complaint-page .c-cs-cb {
   margin-top: 35px;
 }
-/* line 34, ../sass/_complaint_add.scss */
+/* line 40, ../sass/_complaint_add.scss */
 .add-complaint-page .c-cs-cb label {
   margin-bottom: 0;
   text-transform: none;
 }
-/* line 39, ../sass/_complaint_add.scss */
+/* line 45, ../sass/_complaint_add.scss */
 .add-complaint-page .c-jadd3 {
+  display: none;
+}
+
+/* line 49, ../sass/_complaint_add.scss */
+.add-popup-wrap {
   display: none;
 }
 
