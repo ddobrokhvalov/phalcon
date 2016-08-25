@@ -41,13 +41,14 @@ class Complaint extends Model
         $sql = "SELECT c.*, ap.name_short as apname FROM complaint as c
          LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
          LEFT JOIN user u ON(ap.user_id = u.id )
-         WHERE u.id =$user_id "; //todo: do we really need LEFT JOIN if the filter on the last RIGHT table? It will return something ONLY if u.id is not NULL!
+         WHERE u.id =$user_id  "; //todo: do we really need LEFT JOIN if the filter on the last RIGHT table? It will return something ONLY if u.id is not NULL!
         if ($status) {
             $sql .= " AND c.status = '$status'";
         }
         if($applicant_id && $applicant_id != 'All'){
             $sql .= " AND ap.id IN($applicant_id)";
         }
+        $sql .= 'ORDER BY c.date DESC';
         $result = $db->query($sql);
         return $result->fetchAll();
 

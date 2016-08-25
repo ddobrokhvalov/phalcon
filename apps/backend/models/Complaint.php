@@ -105,6 +105,8 @@ class Complaint extends Model
         if($applicant_id && $applicant_id != 'All'){
             $sql .= " AND ap.id = $applicant_id";
         }
+
+        $sql .= 'ORDER BY c.date DESC';
         $result = $db->query($sql);
         return $result->fetchAll();
 
