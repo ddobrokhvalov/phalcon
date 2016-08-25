@@ -126,10 +126,20 @@ var applicant = {
         this.type = 'fizlico';
     },
     selectApplicant: function (id, name, redirect, is_remove, is_select_first) {
+        debugger;
         if (!is_remove) {
             this.id.push(id);
             if ($('.applicant-name-container').html().length) {
-                $('.applicant-name-container').html($('.applicant-name-container').html().trim() + ", " + name.trim());
+                var temp = $('.applicant-name-container').html();
+                temp = temp.replace(name.trim(),'');
+                temp = temp.split(',');
+                for (var i = temp.length; i > 0; i--) {
+                    if (temp[i] == " " || temp[i] == "") {
+                        temp.splice(i,1);
+                    }
+                }
+                temp.push(name.trim());
+                $('.applicant-name-container').html(temp.join(','));
             } else {
                 if(name != undefined) {
                     $('.applicant-name-container').html(name.trim());
@@ -137,13 +147,14 @@ var applicant = {
             }
         }else {
             var temp = $('.applicant-name-container').html();
-            temp = temp.replace(name.trim(),'');
             temp = temp.split(',');
-            for (var i = temp.length; i > 0; i--) {
-                if (temp[i] == " ") {
-                    temp.splice(i,1);
+            for(var i = 0; i < temp.length; i++){
+                temp[i] = temp[i].trim();
+                if(temp[i] == name.trim()){
+                    temp.splice(i, 1);
                 }
             }
+
             $('.applicant-name-container').html(temp.join(','));
         }
         if (this.id.length == 0) {
