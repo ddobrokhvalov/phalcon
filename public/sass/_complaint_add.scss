@@ -1,4 +1,5 @@
-.opacity-cap-compl {
+.opacity-cap-compl,
+.add-popup-wrap--btn {
   float: left;
   width: 202px;
   font-size: 16px;
@@ -14,6 +15,11 @@
   &:hover {
     background-color: $h-blue;
   }
+}
+.add-popup-wrap--btn {
+  float: none;
+  margin: 30px auto;
+  width: 150px;
 }
 .c-jd2-f-dov-b.addArgContainer {
   width: auto;
@@ -39,4 +45,10 @@
     .c-jadd3 {
         display: none;
     }
+}
+.add-popup-wrap {
+  display: none;
+}
+.add-popup-wrap--btn {
+
 }

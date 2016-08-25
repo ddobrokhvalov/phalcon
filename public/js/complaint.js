@@ -24,6 +24,7 @@ $(document).ready(function () {
         argument.removeArgument($(this).attr("value"));
     });
     $("#edit_container").on("click", ".remove_template_from_edit", function () {
+        argument.removeArgumentReq($(this).parent().parent().parent().attr('data-required'));
         argument.removeArgument($(this).attr("value"));
     });
 
@@ -66,6 +67,18 @@ $(document).ready(function () {
 
     $('.argument_text_container').on('mouseup', '.atx', function () {
         alert('done');
+    });
+
+    $('body').on('click', '.add-popup-wrap--btn', function() {
+        $(this).parent().parent().fadeOut();
+        var obj = $(this);
+        setTimeout(function() {
+            $('.add-popup-wrap p').css({
+                'font-size': '25px',
+                'padding': '0'
+            });
+            obj.remove();
+        }, 500);
     });
 
 });
@@ -335,16 +348,22 @@ var argument = {
             $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").hide();
         } */
     },
-    removeArgumentReq: function(req) {
-        if (req == 1) {
-            $('.template_item').each(function() {
-                if ($(this).attr('data-required') == 1 &&
-                    $('.c-edit-j-t p').text() == 'Пользовательский текст') {
-                    setTimeout(function() {
-                        $('.c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
-                    }, 1000);
-                }
-            });
+    removeArgumentReq: function(obj) {
+        var reqItem = 0;
+        var btnPush = '<div class="add-popup-wrap--btn">Ок</div>';
+        $('.template_item').each(function() {
+            if ($(this).attr('data-required') === '1') {
+                reqItem++;
+            }
+        });
+        if (obj === '1' && reqItem < 2) {
+            $('.add-popup-wrap .admin-popup-content').append(btnPush);
+            $('.add-popup-wrap h6').text('Внимание!');
+            $('.add-popup-wrap p').css({
+                'font-size': '20px',
+                'padding': '0 20px'
+            }).text('Срок окончания подачи заявок прошел, как минимум один довод должен быть на действие (бездействие) комиссии');
+            $('.add-popup-wrap').fadeIn().css('display', 'flex');
         }
     }
 };
