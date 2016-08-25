@@ -63,6 +63,7 @@ class ControllerBase extends Controller
         /*Messages block*/
         $messages = Messages::find(array(
             'to_uid = :to_user: AND is_read = :is_read: AND is_deleted = 0',
+            "order" => "time DESC",
             'bind' => array(
                 'to_user' => $this->user->id,
                 'is_read' => 0,
