@@ -86,7 +86,7 @@ function removeSecondActionButton() {
 var addCat = true, addArg = true;
 var base_url = window.location.origin;
 var catNum = '', parentId, shell, catArgObj, requiredCat, argId, thisIdDel, thisObj;
-function categorySend(e) {
+function categorySend() {
     var catName = $('.inputBox input').val(),
         data;
     if ($('.saveCat').hasClass('subChild')) {
@@ -98,14 +98,9 @@ function categorySend(e) {
             data = 'parent_id=' + parentId +
                 '&name=' + catName +
                 '&required=' + requiredCat;
-            // if (catName == '' || requiredCat == '') {
-            //    e.preventDefault();
-            //    showMeWarningPopup('Не все обязательные поля заполненны!');
-            // } else {
-                removeSecondActionButton();
-                createNewCategory.newCategorySend(data);
-                $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
-            // }
+            removeSecondActionButton();
+            createNewCategory.newCategorySend(data);
+            $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
         }
     } else if ($('.saveCat').hasClass('createArgumentStart')) {
         if ($('.inputBox input[type="text"]').val() == '' && $('.cke_textarea_inline').text() == '') {
@@ -176,14 +171,9 @@ function categorySend(e) {
             for (var i = 0; i < argTypeValArray.length; i++) {
                 data += ('&arguments[type][]=' + argTypeValArray[i]);
             }
-            // if (argumentTypeVal == '' || argumentText == '' || argumentName == '') {
-            //    e.preventDefault();
-            //    showMeWarningPopup('Не все обязательные поля заполненны!');
-            // } else {
-                removeSecondActionButton();
-                addArgument.addData(data);
-                $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
-            // }
+            removeSecondActionButton();
+            addArgument.addData(data);
+            $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
         }
     } else if ($('.saveCat').hasClass('editArgCat')) {
         if (catArgObj.descr == 'argument') {
@@ -202,13 +192,8 @@ function categorySend(e) {
                 for (var i = 0; i < argTypeValArray.length; i++) {
                     data += ('&edit[type][]=' + argTypeValArray[i]);
                 }
-                // if (catArgObj.name == '' || catArgObj.text == '' || catArgObj.type == '') {
-                //    e.preventDefault();
-                //    showMeWarningPopup('Не все обязательные поля заполненны!');
-                // } else {
                 editCategoryArgument.editCatArg(data, catArgObj.descr);
                 $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
-                // }
             }
         } else {
             if ($('.inputBox input[type="text"]').val() == '') {
@@ -219,13 +204,8 @@ function categorySend(e) {
                 data = 'edit[id]=' + catArgObj.id +
                     '&edit[name]=' + catArgObj.name +
                     '&edit[required]=' + catArgObj.required;
-                // if (catArgObj.name == '' || catArgObj.required == '') {
-                //    e.preventDefault();
-                //    showMeWarningPopup('Не все обязательные поля заполненны!');
-                // } else {
                 editCategoryArgument.editCatArg(data, catArgObj.descr);
                 $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
-                // }
             }
         }
     } else {
@@ -236,12 +216,7 @@ function categorySend(e) {
             data = 'parent_id=' + 0 +
                 '&name=' + catName +
                 '&required=' + requiredCat;
-            // if (catName == '' || requiredCat == '') {
-            //    e.preventDefault();
-            //    showMeWarningPopup('Не все обязательные поля заполненны!');
-            // } else {
-                createNewCategory.newCategorySend(data);
-            //}
+            createNewCategory.newCategorySend(data);
         }
     }
 }
