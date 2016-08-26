@@ -204,7 +204,7 @@ function categorySend() {
                 data = 'edit[id]=' + catArgObj.id +
                     '&edit[name]=' + catArgObj.name +
                     '&edit[required]=' + catArgObj.required;
-                editCategoryArgument.editCatArg(data, catArgObj.descr);
+                editCategoryArgument.editCatArg(data, catArgObj.descr, catArgObj.required);
                 $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
             }
         }
@@ -402,6 +402,8 @@ function requiredStartSearch() {
     $('.argCatTree > .catArguments .category').each(function() {
         if ($(this).attr('data-required') == 1) {
             $(this).addClass('dataRequired');
+        } else {
+            $(this).removeClass('dataRequired');
         }
     });
 }
@@ -433,9 +435,20 @@ function showMeWarningPopup(descr) {
 function ShellToFill(step, titleText, id, parent_id, dataRequired, text, comment, argumentType) {
     this.wrapp = '<li class="catArguments">';
     this.holder = '<ul class="subWrap_' + step + '">';
-    this.box = '<div class="category" id="category" data-value="" data-id="' + id + '" data-parent_id="' + parent_id + '" data-required="' + dataRequired + '" data-toggle="true">';
-    this.box2 = '<li class="category" id="category" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '" data-required="' + dataRequired + '" data-toggle="true">';
-    this.box3 = '<li class="category" id="argument" data-value="' + step + '" data-id="' + id + '" data-parent_id="' + parent_id + '" data-required="' + dataRequired + '" data-toggle="true">';
+    this.box = '<div class="category" id="category" data-value="" data-id="' + id +
+        '" data-parent_id="' + parent_id +
+        '" data-required="' + dataRequired +
+        '" data-toggle="true">';
+    this.box2 = '<li class="category" id="category" data-value="' + step +
+        '" data-id="' + id +
+        '" data-parent_id="' + parent_id +
+        '" data-required="' + dataRequired +
+        '" data-toggle="true">';
+    this.box3 = '<li class="category" id="argument" data-value="' + step +
+        '" data-id="' + id +
+        '" data-parent_id="' + parent_id +
+        '" data-required="' + dataRequired +
+        '" data-toggle="true">';
     this.arrow = '<div class="category_arrow"></div>';
     this.title = '<h2 class="itemTitle">' + titleText + '</h2>';
     this.title2 = '<h3 class="itemTitle">' + titleText + '</h3>';
@@ -469,15 +482,19 @@ var createNewCategory = {
                 switch(catNum) {
                     case 1:
                         createNewCategory.createSubCategory_1();
+                        requiredStartSearch();
                         break;
                     case 2:
                         createNewCategory.createSubCategory_2();
+                        requiredStartSearch();
                         break;
                     case 3:
                         createNewCategory.createSubCategory_3();
+                        requiredStartSearch();
                         break;
                     default:
                         createNewCategory.createCategory();
+                        requiredStartSearch();
                 }
             },
             error: function(xhr) {
@@ -538,6 +555,7 @@ var addArgument = {
                         $(this).parent().append(writeGetData.subCategory_3());
                     }
                 });
+                requiredStartSearch();
             },
             error: function(xhr) {
                 alert(xhr + 'Request Status: ' + xhr.status + ' Status Text: '
@@ -563,13 +581,16 @@ var receivingData = {
                 switch (num) {
                     case 1:
                         cycleDataCat(num, writeGetData.subCategory_1);
+                        requiredStartSearch();
                         break;
                     case 2:
                         cycleDataCat(num, writeGetData.subCategory_2);
+                        requiredStartSearch();
                         if (value.arguments.length != 0) cycleDataArg(num, writeGetData.subCategory_3);
                         break;
                     case 3:
                         cycleDataArg(num, writeGetData.subCategory_3);
+                        requiredStartSearch();
                         break;
                 }
                 function cycleDataCat(numb, func) {
@@ -621,7 +642,7 @@ var receivingData = {
 };
 
 var editCategoryArgument = {
-    editCatArg: function(data, name) {
+    editCatArg: function(data, name, req) {
         $.ajax({
             type: "POST",
             url: base_url + "/admin/arguments/ajaxEdit",
@@ -631,8 +652,9 @@ var editCategoryArgument = {
                 if (name == 'argument') {
                     editCategoryArgument.renameArg(value);
                 } else {
-                    editCategoryArgument.renameCat(value);
+                    editCategoryArgument.renameCat(value, req);
                 }
+                requiredStartSearch();
                 popupCancel();
             },
             error: function(xhr) {
@@ -652,11 +674,14 @@ var editCategoryArgument = {
             }
         });
     },
-    renameCat: function(val) {
+    renameCat: function(val, requi) {
         $('.argCatTree #category').each(function() {
             var thisId = $(this).attr('data-id');
-            if (thisId == val.id) {
-                $(this).find('h2, h3').text(val.name);
+            if (thisId == val.id) $(this).find('h2, h3').text(val.name);
+            if (thisId == val.id && requi === '1') {
+                $(this).attr('data-required', requi);
+            } else if (thisId == val.id && requi === '0') {
+                $(this).attr('data-required', requi);
             }
         });
     }
