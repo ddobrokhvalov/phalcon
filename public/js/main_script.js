@@ -181,7 +181,11 @@ jQuery(document).ready(function($) {
 	});
     $('.admin-popup-close').click(function() {
         deleteOldClasses();
-        $(this).parent().parent().fadeOut();
+        if ($(this).hasClass('argCompHolder__close')) {
+            $(this).parent().parent().parent().fadeOut();
+        } else {
+            $(this).parent().parent().fadeOut();
+        }
         $('.inputBox input[type="text"], .cke_textarea_inline').css('border-color', '#d3d3d3');
     });
 	// show complain details
