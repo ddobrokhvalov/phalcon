@@ -1789,6 +1789,9 @@ input[type="radio"]:checked + label {
     line-height: 57px;
     width: 100%;
 }
+.c-jadd1-f.c-jadd1-f_new {
+    position: relative;
+}
 .c-jadd1-f label {
     float: left;
     font-weight: normal !important;
@@ -3111,6 +3114,11 @@ input[type="radio"]:checked + label {
     font-size: 12pt;
     height: 10%;
     width: 10%;
+}
+.c-jadd1-f_new .loading-gif {
+    position: absolute;
+    top: 16px;
+    left: 550px;
 }
 .q-container {
     display: none;
