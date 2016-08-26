@@ -69,6 +69,7 @@ class ControllerBase extends Controller
                 'is_read' => 0,
             ),
         ));
+
         /*Complaint moving history*/
         $compl = new Complaint();
         $statuses = $compl->getComplaintMovingStatus($this->user->id);
@@ -92,8 +93,11 @@ class ControllerBase extends Controller
         }
         $this->view->messages = $messages->count() ? $messages : array();
         $this->view->move_statuses = isset($move_statuses) && is_array($move_statuses) ? $move_statuses : array();
-        $this->view->count_unread = isset($move_statuses) && is_array($move_statuses) ? count($move_statuses) : 0;
-        $messages->count() ? $this->view->count_unread += $messages->count() : '';
+        //$this->view->count_unread = isset($move_statuses) && is_array($move_statuses) ? count($move_statuses) : 0;
+        $this->view->count_unread = $messages->count();
+        //$messages->count() ? $this->view->count_unread += $messages->count() : '';
+
+
         $this->view->setTemplateAfter('menu');
         $this->view->applicants = $userApplicants;
         $complaint = new Complaint();

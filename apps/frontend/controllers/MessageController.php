@@ -6,6 +6,8 @@ use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\Messages;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Library\PaginatorBuilder;
+use Multiple\Frontend\Models\Complaint;
+use Multiple\Frontend\Models\ComplaintMovingHistory;
 
 class MessageController extends ControllerBase
 {
@@ -23,6 +25,8 @@ class MessageController extends ControllerBase
                 'to_uid' => $this->user->id,
             ),
         ));
+
+
 
         $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
         $paginator = new Paginator(array(

@@ -2,6 +2,7 @@
 namespace Multiple\Frontend\Models;
 use Multiple\Library\Parser;
 use Phalcon\Mvc\Model;
+use Multiple\Frontend\Models\Messages;
 
 class Complaint extends Model
 {
@@ -174,6 +175,7 @@ class Complaint extends Model
 
     public function changeStatus($status, $data, $user_id = false)//todo: do we need user_id
     {
+
         foreach ($data as $id) { //todo: make through db query this. 'id IN ()' is faster then ORM
                                  //todo: $complaint->checkComplaintOwner($v, $this->user->id) add this
          //   if ($this->checkComplaintOwner($id, $user_id)) {
@@ -181,15 +183,21 @@ class Complaint extends Model
             if(!$complaint || $complaint->status==$status) {
                 continue;
             } elseif ($status == 'activate' ) {  //This return from arhive. We need to check history and set last status.
+                $stat = 'активирована';
                 $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
-                if($complainthistory)
+                if($complainthistory){
                     $this->changeStatus($complainthistory->old_status, [$id]);
-                else
+                }
+                else {
+                    $stat = 'помещена в черновик';
                     $this->changeStatus('draft', [$id]);
+                }
             } elseif ($status == 'delete') {
+                $stat = "удалена";
                 ComplaintMovingHistory::delete_history($id);
                 $complaint->delete();
             } elseif ($status == 'copy') {
+                $stat = "скопирована";
                 $newComplaint = new Complaint();
                 foreach($complaint as $k=>$v)
                     $newComplaint->$k = $v;
@@ -200,11 +208,13 @@ class Complaint extends Model
                 $newComplaint->save();
                 return $newComplaint->id;
             } elseif ($status == 'recolled' && $complaint->status == 'submitted'){
+                $stat = "отозвана";
                 $complaintmovinghistory = new ComplaintMovingHistory();
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
                 $complaint->status = 'recolled';
                 $complaint->save();
             } elseif ($status == 'archive') {
+                $stat = "помещена в архив";
                 $complaintmovinghistory = new ComplaintMovingHistory();
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
                 $complaint->status = 'archive';
@@ -216,6 +226,16 @@ class Complaint extends Model
                 $complaint->save();
             }
         }
+
+        $message = new Messages();
+        $message->to_uid = $user_id;
+        $message->subject = "Изменение статуса жалобы";
+        $message->body = "Ваша жалоба была {$stat}";
+        $message->time = date('Y-m-d H:i:s');
+        $message->is_read = 0;
+        $message->is_deleted = 0;
+        $message->comp_id = $id;
+        $message->save();
     }
 
     public function saveComplaint($data){

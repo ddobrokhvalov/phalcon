@@ -224,7 +224,7 @@
                             {% if cnt_mes < 4 %}
                             <li class="system">
                                 <div> Сообщение от администратора<br>Тема: {{ message.subject }} </div>
-                                <a href="#" onclick="jQuery('#message-text').val(jQuery(this).parent().find('#message_body').val());jQuery('.modal-message-detail').modal('show');setMessageRed(jQuery(this).parent().find('#message_id').val());jQuery(this).parent().remove();var cnt_m1 = +(jQuery('.ch-r-mail-dd-z span').text());cnt_m1-=1;jQuery('.ch-r-mail-dd-z span').text(' ' + cnt_m1 + ' ');jQuery('.ch-r-mail span').text(' ' + cnt_m1 + ' ');return false;">Посмотреть</a>
+                                <a href="#" onclick="jQuery('#comp_url').attr('href', jQuery(this).parent().find('#message-url').val());jQuery('#message-text').val(jQuery(this).parent().find('#message_body').val());jQuery('.modal-message-detail').modal('show');setMessageRed(jQuery(this).parent().find('#message_id').val());jQuery(this).parent().remove();var cnt_m1 = +(jQuery('.ch-r-mail-dd-z span').text());cnt_m1-=1;jQuery('.ch-r-mail-dd-z span').text(' ' + cnt_m1 + ' ');jQuery('.ch-r-mail span').text(' ' + cnt_m1 + ' ');return false;">Посмотреть</a>
                                 <span>{{ date('d F Y', message.time|strtotime) }}</span>
                                 {{hidden_field('message_body', 'value':message.body)}}
                                 {{hidden_field('message_id', 'value':message.id)}}
@@ -255,6 +255,7 @@
         </form>
       </div>
       <div class="modal-footer">
+          <a href="" id="comp_url">Жалоба</a>
         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
       </div>
     </div>

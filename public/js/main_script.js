@@ -136,6 +136,7 @@ jQuery(document).ready(function($) {
             return false;
         } else if (evt.currentTarget != undefined && typeof evt.currentTarget.classList == "object" && evt.currentTarget.classList.contains('show-message-popup')) {
             $('#message-text').val(evt.currentTarget.children[1].innerHTML);
+            $('#comp_url').attr('href', '/complaint/edit/' + evt.currentTarget.children[0].children[0].children[1].value);
             $('.modal-message-detail').modal('show');
             setMessageRed(evt.currentTarget.children[0].children[0].firstChild.value);
             evt.currentTarget.classList.remove('new-message');
