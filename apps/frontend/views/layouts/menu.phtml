@@ -242,34 +242,34 @@
     </div>
 </div>
 
-<div class="modal fade modal-message-detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-  <div class="modal-dialog modal-lg redesignBootstrapPopup">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Просмотр сообщения</h4>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <textarea disabled="disabled" style="min-height: 220px;" class="form-control" id="message-text" value=""></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-      </div>
-    </div>
-  </div>
-</div>
+<!--<div class="modal fade modal-message-detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">-->
+  <!--<div class="modal-dialog modal-lg redesignBootstrapPopup">-->
+    <!--<div class="modal-content">-->
+      <!--<div class="modal-header">-->
+        <!--<h4 class="modal-title">Просмотр сообщения</h4>-->
+      <!--</div>-->
+      <!--<div class="modal-body">-->
+        <!--<form>-->
+          <!--<div class="form-group">-->
+            <!--<textarea disabled="disabled" style="min-height: 220px;" class="form-control" id="message-text" value=""></textarea>-->
+          <!--</div>-->
+        <!--</form>-->
+      <!--</div>-->
+      <!--<div class="modal-footer">-->
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
 <div id="overlay"></div>
 
-<article class="admin-popup-wrap">
+<article class="admin-popup-wrap showDopMessPopup">
     <div class="admin-popup-bg"></div>
     <div class="admin-popup-content">
         <div class="admin-popup-close"></div>
         <h6>Просмотр сообщения</h6>
-        <p></p>
-        <div class="closeBtnMessage admin-popup-close">ok</div>
+        <p id="message-textNew"></p>
+        <div class="closeBtnMessage btn-div">Закрыть</div>
     </div>
 </article>
 
@@ -277,8 +277,10 @@
     $(document).ready(function(){
         $("#current_path").val(window.location.pathname);
         $('#adminMessagePopup').click(function() {
-            $('#message-text').val($(this).parent().find('#message_body').val());
-            $('.modal-message-detail').modal('show');
+//            $('#message-text').val($(this).parent().find('#message_body').val());
+            $('#message-textNew').text($(this).parent().find('#message_body').val());
+//            $('.modal-message-detail').modal('show');
+            $('.showDopMessPopup').fadeIn(400).css('display', 'flex');
             setMessageRed($(this).parent().find('#message_id').val());
             $(this).parent().remove();
             var cnt_m1 = +($('.ch-r-mail-dd-z span').text());

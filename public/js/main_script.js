@@ -7,6 +7,9 @@ jQuery(document).ready(function($) {
                 $(obj).parent().css('display', 'none');
             });
     });
+    $('.closeBtnMessage').click(function() {
+        $(this).parent().parent().fadeOut(400);
+    });
     $('.lawyer-wrap .lebel-checkbox').click(function(evt){
         evt.preventDefault();
         if($(this).hasClass('main-active-checkbox')){
@@ -135,8 +138,10 @@ jQuery(document).ready(function($) {
             $(this).find('.with-dropdown div[data-toggle=dropdown]').dropdown('toggle');
             return false;
         } else if (evt.currentTarget != undefined && typeof evt.currentTarget.classList == "object" && evt.currentTarget.classList.contains('show-message-popup')) {
-            $('#message-text').val(evt.currentTarget.children[1].innerHTML);
-            $('.modal-message-detail').modal('show');
+            // $('#message-text').val(evt.currentTarget.children[1].innerHTML);
+            $('#message-textNew').text(evt.currentTarget.children[1].innerHTML);
+            $('.showDopMessPopup').fadeIn(400).css('display', 'flex');
+            // $('.modal-message-detail').modal('show');
             setMessageRed(evt.currentTarget.children[0].children[0].firstChild.value);
             evt.currentTarget.classList.remove('new-message');
         } else {
