@@ -224,7 +224,7 @@
                             {% if cnt_mes < 4 %}
                             <li class="system">
                                 <div> Сообщение от администратора<br>Тема: {{ message.subject }} </div>
-                                <a href="#" onclick="jQuery('#message-text').val(jQuery(this).parent().find('#message_body').val());jQuery('.modal-message-detail').modal('show');setMessageRed(jQuery(this).parent().find('#message_id').val());jQuery(this).parent().remove();var cnt_m1 = +(jQuery('.ch-r-mail-dd-z span').text());cnt_m1-=1;jQuery('.ch-r-mail-dd-z span').text(' ' + cnt_m1 + ' ');jQuery('.ch-r-mail span').text(' ' + cnt_m1 + ' ');return false;">Посмотреть</a>
+                                <a href="#" id="adminMessagePopup">Посмотреть</a>
                                 <span>{{ date('d F Y', message.time|strtotime) }}</span>
                                 {{hidden_field('message_body', 'value':message.body)}}
                                 {{hidden_field('message_id', 'value':message.id)}}
@@ -241,8 +241,9 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade modal-message-detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg redesignBootstrapPopup">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Просмотр сообщения</h4>
@@ -261,9 +262,31 @@
   </div>
 </div>
 <div id="overlay"></div>
+
+<article class="admin-popup-wrap">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content">
+        <div class="admin-popup-close"></div>
+        <h6>Просмотр сообщения</h6>
+        <p></p>
+        <div class="closeBtnMessage admin-popup-close">ok</div>
+    </div>
+</article>
+
 <script type="text/javascript">
     $(document).ready(function(){
         $("#current_path").val(window.location.pathname);
+        $('#adminMessagePopup').click(function() {
+            $('#message-text').val($(this).parent().find('#message_body').val());
+            $('.modal-message-detail').modal('show');
+            setMessageRed($(this).parent().find('#message_id').val());
+            $(this).parent().remove();
+            var cnt_m1 = +($('.ch-r-mail-dd-z span').text());
+            cnt_m1 -= 1;
+            $('.ch-r-mail-dd-z span').text(' ' + cnt_m1 + ' ');
+            $('.ch-r-mail span').text(' ' + cnt_m1 + ' ');
+            return false;
+        });
     });
 </script>
 
