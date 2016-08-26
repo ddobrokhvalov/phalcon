@@ -51,7 +51,10 @@ function methodProcurement() {
     }
     typeComplicant = $('.type_complicant').val();
     datCome = $('.dateoff').val();
-    var data = 'step=' + startSend.step + '&type=' + typeComplicant + '&dateoff=' + datCome + '&checkrequired=' + argObjSend.required;
+    var data = 'step=' + startSend.step +
+        '&type=' + typeComplicant +
+        '&dateoff=' + datCome +
+        '&checkrequired=' + argObjSend.required;
     startSend.sendRequest(data);
     $('.argComp').removeClass('argComp-descr');
     $('.btn-div, #argComplBtn').hide();
@@ -61,7 +64,11 @@ function methodProcurement() {
 function searchStep(e) {
     ajaxSendObj.step = 6;
     var searchValue = $('.word-argCompl-input input').val();
-        data = 'search=' + searchValue + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant + '&dateoff=' + datCome + '&checkrequired=' + argObjSend.required;
+        data = 'search=' + searchValue +
+            '&step=' + ajaxSendObj.step +
+            '&type=' + typeComplicant +
+            '&dateoff=' + datCome +
+            '&checkrequired=' + argObjSend.required;
     ajaxSendObj.sendRequest(data);
     e.preventDefault();
 }
@@ -70,7 +77,11 @@ function nextStep(e) {
         ajaxSendObj.step = 2;
     }
     var id = $('#argComplSelect .current-option').attr('data-value'),
-        data = 'id=' + id + '&step=' + ajaxSendObj.step + '&type=' + typeComplicant + '&dateoff=' + datCome + '&checkrequired=' + argObjSend.required;
+        data = 'id=' + id +
+            '&step=' + ajaxSendObj.step +
+            '&type=' + typeComplicant +
+            '&dateoff=' + datCome +
+            '&checkrequired=' + argObjSend.required;
     ajaxSendObj.sendRequest(data);
     $('#argComplBtn').slideUp(400);
     e.preventDefault();

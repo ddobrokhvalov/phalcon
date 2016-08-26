@@ -364,6 +364,7 @@ var argument = {
                 'padding': '0 20px'
             }).text('Срок окончания подачи заявок прошел, как минимум один довод должен быть на действие (бездействие) комиссии');
             $('.add-popup-wrap').fadeIn().css('display', 'flex');
+            argObjSend.required = 0;
         }
     }
 };
