@@ -1764,20 +1764,33 @@ function submit_form_ajax(selector) {
         cache: false,
         data: formData,
         error: function(){
-            showSomePopupMessage('info', 'Error while saving data');
+            $(".admin-popup-wrap").hide();
+            $(".edit-status p").text("Ошибка при сохранении данных");
+            $(".edit-status.admin-popup-wrap").show();
+            setTimeout( function(){
+                location.reload();
+            }, 2000);
+            //showSomePopupMessage('info', 'Ошибка при сохранении данных');
+            //$('.alert-box').hide();
         },
         success: function(data) {
-            var myobjres = data;
-            if(myobjres['success']==true)
-                showSomePopupMessage('info', 'Success while saving data');
-            else {
-                var errors_list = '';
-                for(var index in myobjres['errors'] )
-                    errors_list = errors_list + data['errors'][index]+'\n\r';
-                showSomePopupMessage('error', errors_list);
-            }
+            $(".admin-popup-wrap").hide();
+            $(".edit-status p").text("Данные сохранены");
+            $(".edit-status.admin-popup-wrap").show();
+            setTimeout( function(){
+                location.reload();
+            }, 2000);
+            //var myobjres = data;
+            //if(myobjres['success']==true)
+            //    showSomePopupMessage('info', 'Данные успешно сохранены');
+            //else {
+            //    var errors_list = '';
+            //    for(var index in myobjres['errors'] )
+            //        errors_list = errors_list + data['errors'][index]+'\n\r';
+            //    showSomePopupMessage('error', errors_list);
+            //}
         },
-        timeout: 120000 // sets timeout to 2 minutes
+        //timeout: 120000 // sets timeout to 2 minutes
     });
     return false;
 }
