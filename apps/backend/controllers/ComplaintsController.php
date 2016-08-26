@@ -560,7 +560,7 @@ class ComplaintsController extends ControllerBase
             return $this->response->redirect('/admin/complaints/edit/' . $complaint_id);
         }
         $this->flashSession->error('Поле с вопросом не заполнено');
-        return $this->response->redirect('/admin/complaints/index');
+        return $this->response->redirect('/admin/complaints/edit/' . $complaint_id);
     }
 
     private function translit( $str ) {

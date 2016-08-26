@@ -475,7 +475,7 @@ class ComplaintController extends ControllerBase
             return $this->response->redirect('/complaint/edit/' . $complaint_id);
         }
         $this->flashSession->error('Поле с вопросом не заполнено');
-        return $this->response->redirect('/complaint/index');
+        return $this->response->redirect('/complaint/edit/' . $complaint_id);
     }
 
     public function statusAction()
