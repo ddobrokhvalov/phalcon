@@ -180,7 +180,6 @@
                                     <script type="text/javascript">
                                         jQuery(document).ready(function(){
                                             jQuery('body').on('change','.upload_f', function(){
-                                                debugger;
                                                 console.log(this);
                                                 var cnt = jQuery('.upload_f')[0].files.length;
                                                 if(cnt > 0){
@@ -190,7 +189,6 @@
                                                 }
                                                 var html = '';
                                                 var upload_file = jQuery('.upload_f');
-                                                debugger;
                                                 for(var i = 0; i < upload_file.length; i++){
                                                     for(var j = 0; j < jQuery(upload_file[i])[0].files.length; j++){
                                                         var file_data = jQuery(upload_file[i])[0].files[j]['name'].split('.');
