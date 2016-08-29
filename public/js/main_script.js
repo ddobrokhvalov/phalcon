@@ -8,7 +8,10 @@ jQuery(document).ready(function($) {
             });
     });
     $('.closeBtnMessage').click(function() {
-        $(this).parent().parent().fadeOut(400);
+        $(this).parent().parent().parent().fadeOut(400);
+    });
+    $('.closeBtnMessage').click(function() {
+        $(this).parent().parent().parent().fadeOut(400);
     });
     $('.lawyer-wrap .lebel-checkbox').click(function(evt){
         evt.preventDefault();
@@ -138,9 +141,18 @@ jQuery(document).ready(function($) {
             $(this).find('.with-dropdown div[data-toggle=dropdown]').dropdown('toggle');
             return false;
         } else if (evt.currentTarget != undefined && typeof evt.currentTarget.classList == "object" && evt.currentTarget.classList.contains('show-message-popup')) {
-            $('#message-text').val(evt.currentTarget.children[1].innerHTML);
-            $('.modal-message-detail').modal('show');
-            setMessageRed(evt.currentTarget.children[0].children[0].firstChild.value);
+            // $('#message-text').val(evt.currentTarget.children[1].innerHTML);
+            $('#message-textNew').text(evt.currentTarget.children[1].innerHTML);
+            $('.showDopMessPopup').fadeIn(400).css('display', 'flex');
+
+            if(evt.currentTarget.children[0].children[0].children[1].value == ''){
+                $('.show-complaint').css({'display': 'none'});
+            } else {
+                $('.show-complaint').css({'display': 'block'});
+                $('.show-complaint').attr('href','/complaint/edit/' + evt.currentTarget.children[0].children[0].children[1].value);
+            }
+            // $('.modal-message-detail').modal('show');
+            setMessageRed(evt.currentTarget.children[0].children[0].children[0].value);
             evt.currentTarget.classList.remove('new-message');
         } else {
             var to_url = $(this).attr('detail-url');

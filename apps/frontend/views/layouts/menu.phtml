@@ -106,20 +106,20 @@
                     <a href="/applicant/add">добавить заявителя</a>
                 </div>
                 <ul class="mCustomScrollbar">
-                   {% for applicant in applicants  %}
+                    {% for applicant in applicants  %}
                     {% if loop.first %}
                     <script>
                         {% if applicant_session is defined %}
-                         var applicantSelectedId = '{{applicant_session}}';
+                        var applicantSelectedId = '{{applicant_session}}';
                         {% endif %}
                     </script>
                     {% endif %}
                     <li>
                         <input id="cl{{ applicant.id}}" type="checkbox" name="cl{{ applicant.id}}" hidden>
                         <label class="select_applicant" id="name_applicant_{{applicant.id}}" value="{{ applicant.id}}" for="cl{{ applicant.id}}">
-                           {% if applicant.type == 'urlico' %}
+                            {% if applicant.type == 'urlico' %}
                             {{ applicant.name_short}}
-                           {% endif %}
+                            {% endif %}
                             {% if applicant.type == 'ip' %}
                             {{ applicant.name_full}}
                             {% endif %}
@@ -133,7 +133,7 @@
                             <a href="#pop-confirm-delete-applicant-front" applicant-id="{{ applicant.id}}" class="open_modal2">удалить</a>
                         </div>
                     </li>
-                   {% endfor %}
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -210,27 +210,27 @@
                     <ul class="ch-r-m-list">
                         {% set cnt_mes = 0 %}
                         {% for new_status in move_statuses %}
-                            {% if cnt_mes < 4 %}
-                            <a href="/complaint/edit/{{new_status['complaint_id']}}">
-                                <li class="{{ new_status['color'] }}">
-                                    Статус вашей жалобы на заявку №{{new_status['auction_id']}} изменен на «{{new_status['status']}}»
-                                    <span>{{ new_status['date'] }}</span>
-                                </li>
-                            </a>
-                            {% endif %}
-                            {% set cnt_mes+=1 %}
+                        {% if cnt_mes < 4 %}
+                        <a href="/complaint/edit/{{new_status['complaint_id']}}">
+                            <li class="{{ new_status['color'] }}">
+                                Статус вашей жалобы на заявку №{{new_status['auction_id']}} изменен на «{{new_status['status']}}»
+                                <span>{{ new_status['date'] }}</span>
+                            </li>
+                        </a>
+                        {% endif %}
+                        {% set cnt_mes+=1 %}
                         {% endfor %}
                         {% for message in messages %}
-                            {% if cnt_mes < 4 %}
-                            <li class="system">
-                                <div> Сообщение от администратора<br>Тема: {{ message.subject }} </div>
-                                <a href="#" onclick="jQuery('#message-text').val(jQuery(this).parent().find('#message_body').val());jQuery('.modal-message-detail').modal('show');setMessageRed(jQuery(this).parent().find('#message_id').val());jQuery(this).parent().remove();var cnt_m1 = +(jQuery('.ch-r-mail-dd-z span').text());cnt_m1-=1;jQuery('.ch-r-mail-dd-z span').text(' ' + cnt_m1 + ' ');jQuery('.ch-r-mail span').text(' ' + cnt_m1 + ' ');return false;">Посмотреть</a>
-                                <span>{{ date('d F Y', message.time|strtotime) }}</span>
-                                {{hidden_field('message_body', 'value':message.body)}}
-                                {{hidden_field('message_id', 'value':message.id)}}
-                            </li>
-                            {% endif %}
-                            {% set cnt_mes+=1 %}
+                        {% if cnt_mes < 4 %}
+<!--                        <li class="system">-->
+<!--                            <div> Сообщение от администратора<br>Тема: {{ message.subject }} </div>-->
+<!--                            <a href="#" id="adminMessagePopup">Посмотреть</a>-->
+<!--                            <span>{{ date('d F Y', message.time|strtotime) }}</span>-->
+<!--                            {{hidden_field('message_body', 'value':message.body)}}-->
+<!--                            {{hidden_field('message_id', 'value':message.id)}}-->
+<!--                        </li>-->
+                        {% endif %}
+                        {% set cnt_mes+=1 %}
                         {% endfor %}
                         <li class="all-message-link" onclick="window.location.href='/message/index';">
                             Все сообщения
@@ -241,31 +241,82 @@
         </div>
     </div>
 </div>
-<div class="modal fade modal-message-detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Просмотр сообщения</h4>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <textarea disabled="disabled" style="min-height: 220px;" class="form-control" id="message-text" value=""></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-      </div>
-    </div>
-  </div>
-</div>
+
+<!--<div class="modal fade modal-message-detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">-->
+<!--<div class="modal-dialog modal-lg redesignBootstrapPopup">-->
+<!--<div class="modal-content">-->
+<!--<div class="modal-header">-->
+<!--<h4 class="modal-title">Просмотр сообщения</h4>-->
+<!--</div>-->
+<!--<div class="modal-body">-->
+<!--<form>-->
+<!--<div class="form-group">-->
+<!--<textarea disabled="disabled" style="min-height: 220px;" class="form-control" id="message-text" value=""></textarea>-->
+<!--</div>-->
+<!--</form>-->
+<!--</div>-->
+<!--<div class="modal-footer">-->
+<!--<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 <div id="overlay"></div>
+
+<article class="admin-popup-wrap showDopMessPopup">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content">
+        <div class="admin-popup-close"></div>
+        <h6>Просмотр сообщения</h6>
+        <p id="message-textNew"></p>
+        <div class="wrap-button">
+            <a class="btn-div show-complaint" href="">Перейти к доводу</a>
+            <div class="closeBtnMessage btn-div">Закрыть</div>
+        </div>
+    </div>
+</article>
+<style>
+    .wrap-button{
+        display: inline-block;
+        float: right;
+        margin: 30px 40px 30px 0;
+    }
+    .wrap-button div {
+        margin-left: 20px;
+    }
+    .show-complaint{
+        display: inline-block;
+        color: #fff;
+        text-decoration: none;
+    }
+    .show-complaint:hover{
+        text-decoration: none;
+        color: #fff;
+        font-size: 16px;
+        line-height: 50px;
+        font-weight: 600;
+    }
+    .closeBtnMessage{
+        margin: 0px;
+    }
+</style>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#current_path").val(window.location.pathname);
+        $('#adminMessagePopup').click(function() {
+//            $('#message-text').val($(this).parent().find('#message_body').val())
+            $('#message-textNew').text($(this).parent().find('#message_body').val());
+//            $('.modal-message-detail').modal('show');
+            $('.showDopMessPopup').fadeIn(400).css('display', 'flex');
+            setMessageRed($(this).parent().find('#message_id').val());
+            $(this).parent().remove();
+            var cnt_m1 = +($('.ch-r-mail-dd-z span').text());
+            cnt_m1 -= 1;
+            $('.ch-r-mail-dd-z span').text(' ' + cnt_m1 + ' ');
+            $('.ch-r-mail span').text(' ' + cnt_m1 + ' ');
+            return false;
+        });
     });
 </script>
 
 <?php echo $this->getContent(); ?>
-

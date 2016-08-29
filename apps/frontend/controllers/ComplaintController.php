@@ -19,6 +19,7 @@ use Multiple\Frontend\Models\Arguments;
 use Multiple\Frontend\Models\ArgumentsCategory;
 //use Multiple\Library\TrustedLibrary;
 use  Phalcon\Mvc\Model\Query\Builder;
+use Multiple\Frontend\Models\Messages;
 
 
 class ComplaintController extends ControllerBase
@@ -152,11 +153,22 @@ class ComplaintController extends ControllerBase
         } else {
             $this->view->edit_now = FALSE;
         }
+
+        $m_user_id = $this->user->id;
+        $messages = Messages::find("comp_id = {$id} AND to_uid = {$m_user_id} ORDER BY time DESC");
+        if($messages){
+            foreach($messages as $mess) {
+                $mess->is_read = 1;
+                $mess->update();
+            }
+        }
         $this->view->user_arguments = $user_arguments;
-        $history = ComplaintMovingHistory::findFirst("complaint_id = $id");
+        $history = ComplaintMovingHistory::find("complaint_id = $id ORDER BY date DESC");
         if ($history) {
-            $history->is_read = 1;
-            $history->update();
+            foreach($history as $hist){
+                $hist->is_read = 1;
+                $hist->update();
+            }
         }
         $this->view->attached_files = $files_html;
         $complaint->purchases_name = str_replace("\r\n", " ", $complaint->purchases_name);
