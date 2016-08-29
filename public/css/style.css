@@ -5083,26 +5083,67 @@ body#backend-login {
   background-color: #10b8f7;
 }
 
+/* line 1, ../sass/_menu.scss */
+.showDopMessPopup {
+  z-index: 1100;
+  display: none;
+}
+/* line 4, ../sass/_menu.scss */
+.showDopMessPopup h6 {
+  font-size: 50px;
+}
+
+/* line 8, ../sass/_menu.scss */
+.closeBtnMessage {
+  display: block;
+  float: right;
+  margin: 30px 40px 30px 0;
+  width: 150px;
+  font-size: 16px;
+  line-height: 50px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 6px;
+  background-color: #00aeef;
+  cursor: pointer;
+}
+/* line 23, ../sass/_menu.scss */
+.closeBtnMessage:hover {
+  background-color: #10b8f7;
+}
+
+/* line 27, ../sass/_menu.scss */
+#message-textNew {
+  margin: 30px auto 0;
+  padding: 0 40px;
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 100;
+}
+
 @media (max-width: 1640px) {
-  /* line 119, ../sass/style.scss */
+  /* line 120, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: 330px;
     margin-right: 0;
   }
 }
 @media (max-width: 1325px) {
-  /* line 125, ../sass/style.scss */
+  /* line 126, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* line 129, ../sass/style.scss */
+  /* line 130, ../sass/style.scss */
   .admin-lm-wrap {
     left: -242px;
   }
 
-  /* line 132, ../sass/style.scss */
+  /* line 133, ../sass/style.scss */
   .lm-burger {
     display: block;
   }
