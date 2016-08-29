@@ -127,6 +127,11 @@ var complaint = {
             showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Заявитель не выбран");
             return false;
         }
+        for(var i = 0; i < applicant.id.length; i++){
+            if(applicant.id[i] == 'All' || applicant.id[i] == '' || applicant.id[i] == " "){
+                applicant.id.splice(i, 1);
+            }
+        }
         if (applicant.id.length > 1) {
             $(".ch-left").click();
             $("html, body").animate({ scrollTop: 0 }, 1);
@@ -813,7 +818,9 @@ function stopSaveCompl() {
     });
     if (flag) {
         if (complaint.prepareData()) {
-            saveComplaintToDocxFile();
+            if(typeof  statutsEdit == 'undefined') {
+                saveComplaintToDocxFile();
+            }
             complaint.saveAsDraft();
         }
     } else {

@@ -85,6 +85,8 @@ class ComplaintController extends ControllerBase
         $complaint = Complaint::findFirstById($id);
         if (!$complaint || !$complaint->checkComplaintOwner($id, $this->user->id))
             return $this->forward('complaint/index');
+        $applicant = Applicant::findFirstById($complaint->applicant_id);
+
 
         // Load arguments
         $category = new Category();
@@ -116,12 +118,12 @@ class ComplaintController extends ControllerBase
                 $user_arguments .= $argument->text . '</br>';
             }
             $arr_sub_cat[] = array(
-                'id'   => $argument->argument_id,
+                'id' => $argument->argument_id,
                 'text' => $argument->text,
             );
             ++$argument_order;
         }
-        if(!empty($arr_sub_cat)){
+        if (!empty($arr_sub_cat)) {
             $this->view->arr_sub_cat = $arr_sub_cat;
         }
         $this->view->arr_users_arg = $arr_users_arg;
@@ -156,8 +158,8 @@ class ComplaintController extends ControllerBase
 
         $m_user_id = $this->user->id;
         $messages = Messages::find("comp_id = {$id} AND to_uid = {$m_user_id} ORDER BY time DESC");
-        if($messages){
-            foreach($messages as $mess) {
+        if ($messages) {
+            foreach ($messages as $mess) {
                 $mess->is_read = 1;
                 $mess->update();
             }
@@ -165,7 +167,7 @@ class ComplaintController extends ControllerBase
         $this->view->user_arguments = $user_arguments;
         $history = ComplaintMovingHistory::find("complaint_id = $id ORDER BY date DESC");
         if ($history) {
-            foreach($history as $hist){
+            foreach ($history as $hist) {
                 $hist->is_read = 1;
                 $hist->update();
             }
@@ -175,6 +177,14 @@ class ComplaintController extends ControllerBase
         $question = new Question();
         $complaintQuestion = $question->getComplainQuestionAndAnswer($id);
         $this->setMenu();
+
+        if ($this->session->get('save_applicant') == null){
+            $check_aplicant = $this->session->get('applicant');
+            $this->session->set('save_applicant', array('applicant_id' => $check_aplicant['applicant_id']));
+        }
+        $this->session->set('applicant', array('applicant_id' => $applicant->id));
+        $this->view->applicant_session = $applicant->id;
+        $this->applicant_id = $applicant->id;
 //        $parser = new Parser();
 //        $data = $parser->parseAuction((string)$complaint->auction_id);
 //

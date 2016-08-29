@@ -47,7 +47,16 @@ class Complaint extends Model
             $sql .= " AND c.status = '$status'";
         }
         if($applicant_id && $applicant_id != 'All'){
-            $sql .= " AND ap.id IN($applicant_id)";
+            $temp = explode(',' , $applicant_id);
+            foreach($temp as $key => $val){
+                if($temp[$key] == 'All' || $temp[$key] == ''){
+                    unset($temp[$key]);
+                }
+            }
+            $temp = implode(',', $temp);
+            if($temp != '') {
+                $sql .= " AND ap.id IN($temp)";
+            }
         }
         $sql .= 'ORDER BY c.date DESC';
         $result = $db->query($sql);

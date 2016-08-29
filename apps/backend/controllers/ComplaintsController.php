@@ -57,9 +57,12 @@ class ComplaintsController extends ControllerBase
             $this->view->pick("access/denied");
             $this->setMenu();
         } else {
+
             $this->view->show_applicant = true;
             $complaint = Complaint::findFirstById( $id );
             if (!$complaint) return $this->forward('admin/complaint/index');
+
+
             $category = new Category();
             $arguments = $category->getArguments();
             $this->view->arguments = $arguments;

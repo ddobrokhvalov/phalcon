@@ -6,6 +6,7 @@ use Multiple\Frontend\Models\Applicant;
 use Multiple\Frontend\Models\Complaint;
 use Multiple\Frontend\Models\ComplaintMovingHistory;
 use Multiple\Frontend\Models\Messages;
+use Phalcon\Mvc\Router\Route;
 
 class ControllerBase extends Controller
 {
@@ -116,10 +117,22 @@ class ControllerBase extends Controller
             $this->session->set('applicant', array('applicant_id' => $_GET['applicant_id']));
 
         $applicant = $this->session->get('applicant');
-
+        $save_applicant = $this->session->get('save_applicant');
+        if($save_applicant != null){
+            $applicant = $save_applicant;
+            $this->session->set('applicant', $save_applicant);
+            $this->session->remove("save_applicant");
+        }
         if ($applicant) {
-            $this->view->applicant_session = $applicant['applicant_id'];
-            $this->applicant_id = $applicant['applicant_id'];
+            $temp = explode(',', $applicant['applicant_id'] );
+            foreach($temp as $key => $val){
+                if($temp[$key] == 'All'){
+                    unset($temp[$key]);
+                }
+            }
+            $temp = implode(',',$temp);
+            $this->view->applicant_session = $temp;
+            $this->applicant_id = $temp;
         }else {
             $this->view->applicant_session = 'All';
             $this->applicant_id = 'All';
