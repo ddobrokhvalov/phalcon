@@ -14,15 +14,28 @@ class UsersController extends Controller
 		echo '<br>', __METHOD__;
 	}
 
+
     public function changePasswordAction() {
+        $notification = $this->request->getPost('notifications');
+        $user = User::findFirstById($this->session->get('auth')['id']);
+        $user->notifications = ($notification == 1) ? 1 : 0;
+        $user->update();
+
+        $old_password = $this->request->getPost('old_password');
+        $new_password = $this->request->getPost('new_password');
+        $new_password_confirm = $this->request->getPost('new_password_confirm');
+
+
         $redirect_to = $this->request->getPost('current_path');
         if (!isset($redirect_to) || !$redirect_to || $redirect_to == '/login/start') {
             $redirect_to = '/complaint/index';
         }
-        $redirect_to = str_replace('public/', '', $redirect_to);
-        $old_password = $this->request->getPost('old_password');
-        $new_password = $this->request->getPost('new_password');
-        $new_password_confirm = $this->request->getPost('new_password_confirm');
+        $redirect_to = str_replace('public//', '', $redirect_to);
+
+        if($new_password == '' && $old_password == '' && $new_password_confirm == ''){
+            return $this->response->redirect($redirect_to);
+        }
+
         if (!isset($old_password) || (isset($old_password)) && !strlen($old_password)) {
             $this->flashSession->error('Старый пароль не введен');
             return $this->response->redirect($redirect_to);
