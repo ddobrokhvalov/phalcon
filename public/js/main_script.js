@@ -428,6 +428,15 @@ jQuery(document).ready(function($) {
         }
         return false;
     });
+    $("#delete-admin-details").click(function(evt){
+        evt.preventDefault();
+        if ($("#delete_admin").val().length > 0) {
+            $('.confirm-deletion-admin-lg').modal('show');
+            return false;
+        } else {
+            return false;
+        }
+    });
     $('.edit-aplicant .delete-file, .front-applicant .delete-file').click(function(){
         $('#delete-file-id').val($(this).find('#file-id').val());
         $('.confirm-deletion-file-lg').modal('show');
