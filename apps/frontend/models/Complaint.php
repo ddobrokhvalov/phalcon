@@ -193,11 +193,11 @@ class Complaint extends Model
                     $this->changeStatus('draft', [$id]);
                 }
             } elseif ($status == 'delete') {
-                $stat = "удалена";
+               // $stat = "удалена";
                 ComplaintMovingHistory::delete_history($id);
                 $complaint->delete();
             } elseif ($status == 'copy') {
-                $stat = "скопирована";
+               // $stat = "скопирована";
                 $newComplaint = new Complaint();
                 foreach($complaint as $k=>$v)
                     $newComplaint->$k = $v;
@@ -227,15 +227,17 @@ class Complaint extends Model
             }
         }
 
-        $message = new Messages();
-        $message->to_uid = $user_id;
-        $message->subject = "Изменение статуса жалобы";
-        $message->body = "Ваша жалоба была {$stat}";
-        $message->time = date('Y-m-d H:i:s');
-        $message->is_read = 0;
-        $message->is_deleted = 0;
-        $message->comp_id = $id;
-        $message->save();
+        if($status == 'archive' || $status == 'recolled' ||  $status == 'submitted' || $status == 'activate') {
+            $message = new Messages();
+            $message->to_uid = $user_id;
+            $message->subject = "Изменение статуса жалобы";
+            $message->body = "Ваша жалоба была {$stat}";
+            $message->time = date('Y-m-d H:i:s');
+            $message->is_read = 0;
+            $message->is_deleted = 0;
+            $message->comp_id = $id;
+            $message->save();
+        }
     }
 
     public function saveComplaint($data){
