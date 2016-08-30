@@ -250,13 +250,11 @@ class Complaint extends Model
             if(!$complaint || $complaint->status==$status) {
                 continue;
             } elseif ($status == 'activate' ) {  //This return from arhive. We need to check history and set last status.
-                $stat = 'активирована';
                 $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
                 if($complainthistory) {
                     $test = new Complaint();
                     $test->changeStatus($complainthistory->old_status, array($id));
                 } else {
-                    $stat = 'помещена в черновик';
                     $test = new Complaint();
                     $test->changeStatus('draft', array($id));
                 }
@@ -274,13 +272,11 @@ class Complaint extends Model
                 $newComplaint->save();
                 return $newComplaint->id;
             } elseif ($status == 'recolled' && $complaint->status == 'submitted'){
-                $stat = "отозвана";
                 $complaintmovinghistory = new ComplaintMovingHistory();
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
                 $complaint->status = 'recolled';
                 $complaint->save();
             } elseif ($status == 'archive') {
-                $stat = "помещена в архив";
                 $complaintmovinghistory = new ComplaintMovingHistory();
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
                 $complaint->status = 'archive';
@@ -291,15 +287,23 @@ class Complaint extends Model
                 $complaint->status = $status;
                 $complaint->save();
             }
-            if($status == 'archive' || $status == 'recolled' ||  $status == 'submitted' || $status == 'activate' || $status == 'draft') {
-                if($status == 'draft') $stat = 'помещена в черновик';
+            if($status != 'delete' && $status != 'copy') {
+                if($status == 'justified') $stat = 'Обоснована';
+                if($status == 'draft') $stat = 'Черновик';
+                if($status == 'unfounded') $stat = 'Необоснована';
+                if($status == 'under_consideration') $stat = 'На рассмотрении';
+                if($status == 'submitted') $stat = 'Подана';
+                if($status == 'recalled') $stat = 'Отозвана';
+                if($status == 'archive') $stat = 'Архив';
+                if($status == 'activate') $stat = 'Активирована';
+
                 $test = $complaint->id;
                 $comp = new Complaint();
                 $user_id = $comp->getComplaintOwner( $complaint->id );
                 $message = new Messages();
                 $message->to_uid = $user_id;
                 $message->subject = "Изменение статуса жалобы";
-                $message->body = "Вашe жалоба была {$stat} администратором";
+                $message->body = "Статут вашей жалобы был изменен на '{$stat}' администратором.";
                 $message->time = date('Y-m-d H:i:s');
                 $message->is_read = 0;
                 $message->is_deleted = 0;
