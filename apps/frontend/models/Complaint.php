@@ -234,20 +234,21 @@ class Complaint extends Model
                 $complaint->status = $status;
                 $complaint->save();
             }
+            if($status == 'archive' || $status == 'recolled' ||  $status == 'submitted' || $status == 'activate' || $status == 'draft') {
+                if($status == 'draft') $stat = 'помещена в черновик';
+                $message = new Messages();
+                $message->to_uid = $user_id;
+                $message->subject = "Изменение статуса жалобы";
+                $message->body = "Ваша жалоба была {$stat}";
+                $message->time = date('Y-m-d H:i:s');
+                $message->is_read = 0;
+                $message->is_deleted = 0;
+                $message->comp_id = $id;
+                $message->save();
+            }
         }
 
-        if($status == 'archive' || $status == 'recolled' ||  $status == 'submitted' || $status == 'activate' || $status == 'draft') {
-            if($status == 'draft') $stat = 'помещена в черновик';
-            $message = new Messages();
-            $message->to_uid = $user_id;
-            $message->subject = "Изменение статуса жалобы";
-            $message->body = "Ваша жалоба была {$stat}";
-            $message->time = date('Y-m-d H:i:s');
-            $message->is_read = 0;
-            $message->is_deleted = 0;
-            $message->comp_id = $id;
-            $message->save();
-        }
+
     }
 
     public function saveComplaint($data){
