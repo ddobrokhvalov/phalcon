@@ -18,4 +18,9 @@ class IndexController extends Controller
         $auth = $this->session->get('auth');
         $this->view->is_logged_in = $auth == FALSE ? /*TRUE : FALSE;*/ FALSE : TRUE;
 	}
+	public function page404Action(){
+		$this->response->setHeader('HTTP/1.0 404','Not Found');
+		echo 'dasdasd';
+		die();
+	}
 }

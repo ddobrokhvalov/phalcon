@@ -7,32 +7,39 @@ use Multiple\Backend\Models\Ufas;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Library\Log;
+use Multiple\Backend\Models\Permission;
 
 class UfasController extends ControllerBase {
 
     public function indexAction() {
-        $next_items = $this->request->getPost('next-portions-items');
-        if (!isset($next_items)) {
-            $next_items = 0;
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'index')) {
+            $this->view->pick("access/denied");
+            $this->setMenu();
+        } else {
+            $next_items = $this->request->getPost('next-portions-items');
+            if (!isset($next_items)) {
+                $next_items = 0;
+            }
+            $item_per_page = 20 + $next_items;
+            $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
+            $show_all_items = $this->request->get('all-portions-items');
+            if (isset($show_all_items) && $show_all_items == 'all_items') {
+                $item_per_page = 99999;
+            }
+            $ufas = Ufas::find();
+            $paginator = new Paginator(array(
+                "data" => $ufas,
+                "limit" => $item_per_page,
+                "page" => $numberPage
+            ));
+            $pages = $paginator->getPaginate();
+            $this->view->page = $pages;
+            $this->view->item_per_page = $item_per_page;
+            $this->view->scroll_to_down = $next_items > 0 ? TRUE : FALSE;
+            $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
+            $this->setMenu();
         }
-        $item_per_page = 20 + $next_items;
-        $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
-        $show_all_items = $this->request->get('all-portions-items');
-        if (isset($show_all_items) && $show_all_items == 'all_items') {
-            $item_per_page = 99999;
-        }
-        $ufas = Ufas::find();
-        $paginator = new Paginator(array(
-            "data"  => $ufas,
-            "limit" => $item_per_page,
-            "page"  => $numberPage
-        ));
-        $pages = $paginator->getPaginate();
-        $this->view->page = $pages;
-        $this->view->item_per_page = $item_per_page;
-        $this->view->scroll_to_down = $next_items > 0 ? TRUE : FALSE;
-        $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
-        $this->setMenu();
     }
 
     function checkInnAction() {
