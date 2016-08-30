@@ -78,6 +78,7 @@ class ControllerBase extends Controller
             $move_statuses = ComplaintMovingHistory::find(
                 array(
                     'complaint_id IN ({ids:array}) AND is_read = 0',
+                    "order" => "date DESC",
                     'bind' => array(
                         'ids' => array_keys($statuses)
                     )
