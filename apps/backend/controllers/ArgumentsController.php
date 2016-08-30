@@ -7,6 +7,7 @@ use Multiple\Backend\Models\ArgumentsCategory;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Models\Permission;
 use Multiple\Backend\Models\Arguments;
+use Multiple\Backend\Models\UsersArguments;
 
 class ArgumentsController  extends ControllerBase
 {
@@ -304,6 +305,9 @@ class ArgumentsController  extends ControllerBase
         if (count($categories)) {
             foreach ($categories as $key) {
                 $this->deleteTrees($key->id);
+                UsersArguments::find(array(
+                    "argument_category_id = {$key->id}"
+                ))->delete();
             }
         }
         ArgumentsCategory::find(
