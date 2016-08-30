@@ -48,6 +48,7 @@ class Module
 
 			// Плагин безопасности слушает события, инициированные диспетчером
 			$eventsManager->attach('dispatch:beforeDispatch', new SecurityPlugin);
+			$eventsManager->attach('dispatch:beforeException', new NotFoundPlugin);
 
 			// Отлавливаем исключения и not-found исключения, используя NotFoundPlugin
 		//	$eventsManager->attach('dispatch:beforeException', new NotFoundPlugin);

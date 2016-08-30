@@ -85,6 +85,11 @@ class Application extends BaseApplication
 				'action' => 'index',
 			));
 
+//			$router->notFound(array(
+//				"controller" => "index",
+//				"action" => "page404",
+//			));
+
 			return $router;
 
 		});
