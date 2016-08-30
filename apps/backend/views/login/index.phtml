@@ -28,8 +28,19 @@
             <div>
                 {{ submit_button('Войти') }}
             </div>
+            <div class="error">
+                {{flashSession.output()}}
+            </div>
         </form>
+
     </div>
 </div>
 </body>
 </html>
+<style>
+    .error{
+        color: red;
+        margin-top: 327px;
+        text-align: center;
+    }
+</style>

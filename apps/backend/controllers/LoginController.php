@@ -74,6 +74,9 @@ class LoginController extends ControllerBase
                         'action' => 'afterLogin'
                     )
                 );
+            } else {
+                $this->flashSession->error('Имя пользователя или пароль введен не верно');
+                return $this->response->redirect('/admin');
             }
 
 
