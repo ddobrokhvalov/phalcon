@@ -249,11 +249,13 @@ class Complaint extends Model
             if(!$complaint || $complaint->status==$status) {
                 continue;
             } elseif ($status == 'activate' ) {  //This return from arhive. We need to check history and set last status.
+                $stat = 'активирована';
                 $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
                 if($complainthistory) {
                     $test = new Complaint();
                     $test->changeStatus($complainthistory->old_status, array($id));
                 } else {
+                    $stat = 'помещена в черновик';
                     $test = new Complaint();
                     $test->changeStatus('draft', array($id));
                 }
@@ -271,11 +273,13 @@ class Complaint extends Model
                 $newComplaint->save();
                 return $newComplaint->id;
             } elseif ($status == 'recolled' && $complaint->status == 'submitted'){
+                $stat = "отозвана";
                 $complaintmovinghistory = new ComplaintMovingHistory();
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
                 $complaint->status = 'recolled';
                 $complaint->save();
             } elseif ($status == 'archive') {
+                $stat = "помещена в архив";
                 $complaintmovinghistory = new ComplaintMovingHistory();
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
                 $complaint->status = 'archive';
@@ -286,6 +290,18 @@ class Complaint extends Model
                 $complaint->status = $status;
                 $complaint->save();
             }
+        }
+
+        if($status == 'archive' || $status == 'recolled' ||  $status == 'submitted' || $status == 'activate') {
+            $message = new Messages();
+            $message->to_uid = $user_id;
+            $message->subject = "Изменение статуса жалобы";
+            $message->body = "Ваша жалоба была {$stat}";
+            $message->time = date('Y-m-d H:i:s');
+            $message->is_read = 0;
+            $message->is_deleted = 0;
+            $message->comp_id = $id;
+            $message->save();
         }
     }
 
