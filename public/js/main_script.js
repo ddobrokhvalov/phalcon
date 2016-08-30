@@ -191,10 +191,12 @@ jQuery(document).ready(function($) {
 	// close admin popup
 	$('.admin-popup-bg').click(function() {
         deleteOldClasses();
+        $(".edit-status").hide();
 		$(this).parent().fadeOut();
         $('.inputBox input[type="text"], .cke_textarea_inline').css('border-color', '#d3d3d3');
 	});
     $('.admin-popup-close').click(function() {
+        $('.edit-status').hide();
         deleteOldClasses();
         if ($(this).hasClass('argCompHolder__close')) {
             $(this).parent().parent().parent().fadeOut();
@@ -1792,7 +1794,7 @@ function submit_form_ajax(selector) {
             $(".edit-status p").text("Ошибка при сохранении данных");
             $(".edit-status.admin-popup-wrap").show();
             setTimeout( function(){
-                location.reload();
+                window.location = '/admin/admins/edit/'+ admin_id;
             }, 2000);
             //showSomePopupMessage('info', 'Ошибка при сохранении данных');
             //$('.alert-box').hide();
@@ -1802,7 +1804,7 @@ function submit_form_ajax(selector) {
             $(".edit-status p").text("Данные сохранены");
             $(".edit-status.admin-popup-wrap").show();
             setTimeout( function(){
-                location.reload();
+                window.location = '/admin/admins/edit/'+ admin_id;
             }, 2000);
             //var myobjres = data;
             //if(myobjres['success']==true)
