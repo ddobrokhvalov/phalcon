@@ -97,7 +97,9 @@ $(document).ready(function(){
 });
 
 $(document).ready(function() {
-    $(".ch-l-dd").hide();
+    $(".ch-l-dd").hide("slow", function(){
+        console.log(1);
+    });
     $(".ch-left").click(function(){
         if ($("#is_edit_now").val() == "is_edit_now") {
             showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Нельзя менять заявителя во время редактирования жалобы");
@@ -107,6 +109,10 @@ $(document).ready(function() {
         }
     });
     $(".ch-left-cl").click(function(){
+        if(window.location.pathname != '/complaint/add' &&
+            window.location.pathname.indexOf('/complaint/edit') == -1){
+            location.reload();
+        }
         $(".ch-l-dd").slideToggle(300);
         $('.opacity-layer').hide();
     });
@@ -132,7 +138,12 @@ $(document).ready(function() {
     });
 
     $('.opacity-layer').click(function() {
-        if ($(".ch-l-dd").css('display') == 'block') {$(".ch-l-dd").slideUp(300);}
+        if ($(".ch-l-dd").css('display') == 'block') {$(".ch-l-dd").slideUp(300, function(){
+            if(window.location.pathname != '/complaint/add' &&
+                window.location.pathname.indexOf('/complaint/edit') == -1){
+                location.reload();
+            }
+        });}
         if ($(".ch-r-mail-dd").css('display') == 'block') {$(".ch-r-mail-dd").slideUp(300);}
         if ($(".ch-r-sett-dd").css('display') == 'block') {$(".ch-r-sett-dd").slideUp(300);}
         $(this).hide();
