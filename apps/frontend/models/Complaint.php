@@ -236,7 +236,8 @@ class Complaint extends Model
             }
         }
 
-        if($status == 'archive' || $status == 'recolled' ||  $status == 'submitted' || $status == 'activate') {
+        if($status == 'archive' || $status == 'recolled' ||  $status == 'submitted' || $status == 'activate' || $status == 'draft') {
+            if($status == 'draft') $stat = 'помещена в черновик';
             $message = new Messages();
             $message->to_uid = $user_id;
             $message->subject = "Изменение статуса жалобы";

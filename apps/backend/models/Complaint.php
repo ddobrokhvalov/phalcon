@@ -5,6 +5,7 @@ use Phalcon\Exception;
 use Phalcon\Mvc\Model;
 use Multiple\Backend\Models\Question;
 use Multiple\Backend\Models\ComplaintMovingHistory;
+use Multiple\Backend\Models\Messages;
 
 class Complaint extends Model
 {
@@ -292,11 +293,15 @@ class Complaint extends Model
             }
         }
 
-        if($status == 'archive' || $status == 'recolled' ||  $status == 'submitted' || $status == 'activate') {
+        if($status == 'archive' || $status == 'recolled' ||  $status == 'submitted' || $status == 'activate' || $status == 'draft') {
+            if($status == 'draft') $stat = 'помещена в черновик';
+            $test = $complaint->id;
+            $comp = new Complaint();
+            $user_id = $comp->getComplaintOwner( $complaint->id );
             $message = new Messages();
             $message->to_uid = $user_id;
             $message->subject = "Изменение статуса жалобы";
-            $message->body = "Ваша жалоба была {$stat}";
+            $message->body = "Вашe жалоба была {$stat} администратором";
             $message->time = date('Y-m-d H:i:s');
             $message->is_read = 0;
             $message->is_deleted = 0;
