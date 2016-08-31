@@ -302,27 +302,27 @@ class ComplaintsController extends ControllerBase
                                 if ($complaint->status == 'submitted') {
                                     Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
                                     @Complaint::changeStatus($status, array($id));
-                                    $this->flashSession->success('Статус изменен');
+                                  //  $this->flashSession->success('Статус изменен');
                                 }
                                 break;
                             case 'draft':
                                 if ($complaint->status == 'archive') {
                                     Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
                                     @Complaint::changeStatus($status, array($id));
-                                    $this->flashSession->success('Статус изменен');
+                                   // $this->flashSession->success('Статус изменен');
                                 }
                                 break;
                             case 'archive':
                                 if ($complaint->status == 'draft' || $complaint->status == 'unfounded' || $complaint->status == 'recalled') {
                                     Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
                                     @Complaint::changeStatus($status, array($id));
-                                    $this->flashSession->success('Статус изменен');
+                                   // $this->flashSession->success('Статус изменен');
                                 }
                                 break;
                             default:
                                 Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
                                 @Complaint::changeStatus($status, array($id));
-                                $this->flashSession->success('Статус изменен');
+                                //$this->flashSession->success('Статус изменен');
                                 break;
                         }
                         /*if ($status == 'recalled' && $complaint->status == 'submitted') {
@@ -336,19 +336,41 @@ class ComplaintsController extends ControllerBase
                     $complaint = Complaint::findFirstById($complaint_id);
                     Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
                     @Complaint::changeStatus($status, array($complaint_id));
-                    $this->flashSession->success('Статус изменен');
+                    //$this->flashSession->success('Статус изменен');
                 }
                 if ($status == 'copy') {
-                    $this->flashSession->success('Жалоба скопирована');
+                    $this->flashSession->success('Успешно скопирована');
                 }
                 if ($status == 'archive') {
-                    $this->flashSession->success('Жалоба добавлена в архив');
+                    $this->flashSession->success('Статус изменен на архив');
+                }
+                if ($status == 'submitted') {
+                    $this->flashSession->success('Статус изменен на подано');
+                }
+                if ($status == 'recalled') {
+                    $this->flashSession->success('Статус изменен на отозвано');
+                }
+                if ($status == 'draft') {
+                    $this->flashSession->success('Успешно поместили в черновик');
+                }
+                if ($status == 'unfounded') {
+                    $this->flashSession->success('Статус изменен на необосновано');
+                }
+                if ($status == 'justified') {
+                    $this->flashSession->success('Статус изменен на обосновано');
+                }
+                if ($status == 'activate') {
+                    $this->flashSession->success('Успешно активировали');
+                }
+                if ($status == 'under_consideration') {
+                    $this->flashSession->success('Статус изменен на рассмотрение');
                 }
                 $data = "ok";
             }
         }
-        $this->view->disable();
         echo json_encode($data);
+        $this->view->disable();
+
     }
     
     public function addAnswerAction()
