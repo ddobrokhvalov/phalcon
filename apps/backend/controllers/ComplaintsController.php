@@ -151,7 +151,7 @@ class ComplaintsController extends ControllerBase
 
     public function previewAction($id){
         $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'index')) {
+        if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'edit') && !$perm->actionIsAllowed($this->user->id, 'complaints', 'edit')) {
            $this->view->pick("access/denied");
            $this->setMenu();
         } else {
@@ -267,8 +267,8 @@ class ComplaintsController extends ControllerBase
     }
 
     public function updateAnswerAction(){
-        $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'index') && $this->user->id != 1) {
+        $perm = new Permission();//&& $this->user->id != 1
+        if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'edit')) {
            $data = "access_denied";
         } else {
             $answer_id = $this->request->getPost("id");
@@ -354,7 +354,7 @@ class ComplaintsController extends ControllerBase
     public function addAnswerAction()
     {
         $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'edit')) {
+        if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'edit')) {
             $data = "access_denied";
         } else {
             $answer_text = $this->request->getPost("lawyer-answer");

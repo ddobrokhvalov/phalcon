@@ -30,7 +30,8 @@ class LawyerController extends ControllerBase
                 ->distinct(true)
                 ->from('Multiple\Backend\Models\Complaint')
                 ->join('Multiple\Backend\Models\Question', 'Multiple\Backend\Models\Complaint.id=Multiple\Backend\Models\Question.complaint_id')
-                ->orderby('Multiple\Backend\Models\Complaint.id');
+                ->orderby('Multiple\Backend\Models\Complaint.id')
+                ->orderby('Multiple\Backend\Models\Question.date DESC');
                 //->groupby('Multiple\Backend\Models\Complaint.id'); //error on live server
             $paginator = new Paginator(array(
                 "builder" => $questions,
