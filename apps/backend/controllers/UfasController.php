@@ -13,7 +13,7 @@ class UfasController extends ControllerBase {
 
     public function indexAction() {
         $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'template', 'edit')  && $this->user->id != 1) {
+        if (!$perm->actionIsAllowed($this->user->id, 'template', 'edit')) {
             $this->view->pick("access/denied");
             $this->setMenu();
         } else {
@@ -59,7 +59,7 @@ class UfasController extends ControllerBase {
 
     public function detailAction($id) {
         $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'template', 'edit')  && $this->user->id != 1) {
+        if (!$perm->actionIsAllowed($this->user->id, 'template', 'edit')) {
             $this->view->pick("access/denied");
             $this->setMenu();
         } else {
@@ -79,7 +79,7 @@ class UfasController extends ControllerBase {
 
     public function saveAction() {
         $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'template', 'edit')  && $this->user->id != 1) {
+        if (!$perm->actionIsAllowed($this->user->id, 'template', 'edit')) {
             $this->view->pick("access/denied");
             $this->setMenu();
         } else {
@@ -114,7 +114,7 @@ class UfasController extends ControllerBase {
 
     public function createAction() {
         $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'template', 'edit')  && $this->user->id != 1) {
+        if (!$perm->actionIsAllowed($this->user->id, 'template', 'edit')) {
             $this->view->pick("access/denied");
             $this->setMenu();
         } else {
@@ -148,8 +148,8 @@ class UfasController extends ControllerBase {
     }
 
     public function deleteAction() {
-        $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'template', 'edit')  && $this->user->id != 1) {
+        $perm = new Permission(); //&& $this->user->id != 1
+        if (!$perm->actionIsAllowed($this->user->id, 'template', 'edit') ) {
             $this->view->pick("access/denied");
             $this->setMenu();
         } else {

@@ -19,25 +19,31 @@ class ArgumentsController  extends ControllerBase
            $this->view->pick("access/denied");
            $this->setMenu();
         } else {*/
-        $Arguments = $this->modelsManager->createBuilder()
-            ->columns(
-                'Multiple\Backend\Models\Arguments.id,
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
+            $this->view->pick("access/denied");
+            $this->setMenu();
+        } else {
+            $Arguments = $this->modelsManager->createBuilder()
+                ->columns(
+                    'Multiple\Backend\Models\Arguments.id,
                     Multiple\Backend\Models\Arguments.argument_status,
                     Multiple\Backend\Models\Arguments.date,
                     Multiple\Backend\Models\Arguments.name,
                     Multiple\Backend\Models\ArgumentsCategory.name as catname'
-            )
-            ->from('Multiple\Backend\Models\Arguments')
-            ->join('Multiple\Backend\Models\ArgumentsCategory', 'Multiple\Backend\Models\ArgumentsCategory.id = Multiple\Backend\Models\Arguments.category_id')
-            ->getQuery()
-            ->execute();
-        $this->view->Arguments = $Arguments;
-        $this->view->ArgumentsCategory = ArgumentsCategory::find(
-            array(
-                "parent_id = 0",
-            )
-        );
-        $this->setMenu();
+                )
+                ->from('Multiple\Backend\Models\Arguments')
+                ->join('Multiple\Backend\Models\ArgumentsCategory', 'Multiple\Backend\Models\ArgumentsCategory.id = Multiple\Backend\Models\Arguments.category_id')
+                ->getQuery()
+                ->execute();
+            $this->view->Arguments = $Arguments;
+            $this->view->ArgumentsCategory = ArgumentsCategory::find(
+                array(
+                    "parent_id = 0",
+                )
+            );
+            $this->setMenu();
+        }
         //}
     }
 
