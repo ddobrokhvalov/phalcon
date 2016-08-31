@@ -408,6 +408,7 @@ class ComplaintsController extends ControllerBase
                     $message->subject = $subject;
                     $message->body = $body;
                     $message->time = date('Y-m-d H:i:s');
+                    $message->comp_id = $complaint_id;
                     $message->save();
 
                     $quest = Question::findFirstById($answer->question_id);
