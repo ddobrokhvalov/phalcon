@@ -339,7 +339,7 @@ class ComplaintsController extends ControllerBase
                     //$this->flashSession->success('Статус изменен');
                 }
                 if ($status == 'copy') {
-                    $this->flashSession->success('Успешно скопирована');
+                    $this->flashSession->success('Успешно скопировано');
                 }
                 if ($status == 'archive') {
                     $this->flashSession->success('Статус изменен на архив');
