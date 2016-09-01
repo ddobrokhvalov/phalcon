@@ -1049,7 +1049,7 @@ function change_complaint_status(complaint_id, st) {
                             $(".edit-status .admin-popup-content p").text("Жалоба успешно отозвана!");
                             break;
                         case 'draft':
-                            $(".edit-status .admin-popup-content p").text("Жалоба успешно помещена активирована!");
+                            $(".edit-status .admin-popup-content p").text("Жалоба успешно активирована!");
                             break;
                         case 'activate':
                             $(".edit-status .admin-popup-content p").text("Жалоба успешно активирована!");
