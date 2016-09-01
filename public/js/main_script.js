@@ -1029,8 +1029,37 @@ function change_complaint_status(complaint_id, st) {
             data: { id: complaint_id, status: st },
             dataType: 'json',
             success: function(data){
-                if (data == 'ok') {
-                   window.location.reload(true);
+                console.log(window.location.pathname);
+                if(window.location.pathname != 'admin/complaints/index') {
+                    $('.edit-status .admin-popup-close, .admin-popup-bg').on('click', function () {
+                        window.location.reload(true);
+                    });
+                    $(".edit-status.admin-popup-wrap").show();
+                    setTimeout(function () {
+                        window.location.reload(true);
+                    }, 2000);
+                    switch (data) {
+                        case 'copy':
+                            $(".edit-status .admin-popup-content p").text("Копия сделана успешно!");
+                            break;
+                        case 'archive':
+                            $(".edit-status .admin-popup-content p").text("Жалоба успешно помещена в архив!");
+                            break;
+                        case 'recalled':
+                            $(".edit-status .admin-popup-content p").text("Жалоба успешно отозвана!");
+                            break;
+                        case 'draft':
+                            $(".edit-status .admin-popup-content p").text("Жалоба успешно помещена активирована!");
+                            break;
+                        case 'activate':
+                            $(".edit-status .admin-popup-content p").text("Жалоба успешно активирована!");
+                            break;
+                        case 'delete':
+                            $(".edit-status .admin-popup-content p").text("Жалоба успешно удалена!");
+                            break;
+                    }
+                } else {
+                    window.location.reload(true);
                 }
             }
         });

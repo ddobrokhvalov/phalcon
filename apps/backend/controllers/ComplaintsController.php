@@ -368,7 +368,7 @@ class ComplaintsController extends ControllerBase
                 $data = "ok";
             }
         }
-        echo json_encode($data);
+        echo json_encode($status);
         $this->view->disable();
 
     }
