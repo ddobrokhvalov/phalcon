@@ -84,8 +84,21 @@
 
     </script>
 </div>
-
-
+    <style>
+        .list-logs .admin-lt-content li:nth-child(4) {
+            width: 110px;
+        }
+        .list-logs .admin-lt-content li:nth-child(2) {
+            width: 245px;
+        }
+        .lt-content-main:hover li:not(:last-child) {
+            font-weight: 600;
+            /*line-height: 30px;*/
+        }
+        .admin-lt-content li{
+            min-height: 75px;   
+        }
+    </style>
 <div class="admin-lt-content" id="sort-table">
     <ul class="lt-content-top">
         <li sort-field="sort-role"><span class="sortable">Роль</span></li>
