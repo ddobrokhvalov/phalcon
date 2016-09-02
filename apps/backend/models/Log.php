@@ -42,7 +42,9 @@ class Log extends Model
     {
 
         if (!$data) {
-            return Log::find();
+            return Log::find(array(
+                'order' => 'date DESC'
+            ));
         }
         $where = '';
         $bind = array();
@@ -83,6 +85,7 @@ class Log extends Model
 
         return Log::find(array(
             $where,
+            'order' => 'date DESC',
             'bind' => $bind
         ));
     }
