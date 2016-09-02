@@ -309,32 +309,36 @@ var argument = {
         if (complaint_text.length) {
             c_text = complaint_text;
         }
-        var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" data-required="' + objReq + '" class="template_edit template_item" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
-            (( id != 'just_text' ) ? '<span>' + templateName + '</span>' : '') +
-            '<div class="c-edit-j-h-ctr">' +
-            '<a  class="template-edit-control down c-edit-j-h-ctr1">Переместить ниже</a> <a class="template-edit-control up c-edit-j-h-ctr2">Переместить выше</a>' +
-            (( id != 'just_text' ) ? '<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' : '') +
-            '</div>' +
-            '</div>' +
-            '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" >' +
-            c_text +
-            '</div></div></div>';
-        $('#edit_container').append(html);
-        var currTextArea = 'edit_textarea_' + id;
-        setTimeout(function () {
-            if (drake !== false) {
-                drake.destroy(true);
+        debugger;
+
+        if(cat_id != undefined && templateName != undefined) {
+            var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" data-required="' + objReq + '" class="template_edit template_item" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
+                (( id != 'just_text' ) ? '<span>' + templateName + '</span>' : '') +
+                '<div class="c-edit-j-h-ctr">' +
+                '<a  class="template-edit-control down c-edit-j-h-ctr1">Переместить ниже</a> <a class="template-edit-control up c-edit-j-h-ctr2">Переместить выше</a>' +
+                (( id != 'just_text' ) ? '<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' : '') +
+                '</div>' +
+                '</div>' +
+                '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" >' +
+                c_text +
+                '</div></div></div>';
+            $('#edit_container').append(html);
+            var currTextArea = 'edit_textarea_' + id;
+            setTimeout(function () {
+                if (drake !== false) {
+                    drake.destroy(true);
+                }
+                //  drake = dragula([document.getElementById('edit_container')]);
+                drake = dragula([document.getElementById('argument_text_container')]);
+
+
+                initEditor(currTextArea);
+            }, 100);
+
+            if (objReq == 1 && $('#template_edit_just_text .c-edit-j-t p').text() == 'Пользовательский текст' ||
+                $('#template_edit_just_text .c-edit-j-t p').text() == 'Вам необходимо выбрать хотябы одну обязательную жалобу!') {
+                $('#template_edit_just_text .c-edit-j-t p').text('Пользовательский текст');
             }
-          //  drake = dragula([document.getElementById('edit_container')]);
-            drake = dragula([document.getElementById('argument_text_container')]);
-
-
-            initEditor(currTextArea);
-        }, 100);
-
-        if (objReq == 1 && $('#template_edit_just_text .c-edit-j-t p').text() == 'Пользовательский текст' ||
-            $('#template_edit_just_text .c-edit-j-t p').text() == 'Вам необходимо выбрать хотябы одну обязательную жалобу!') {
-            $('#template_edit_just_text .c-edit-j-t p').text('Пользовательский текст');
         }
     },
     removeArgument: function (id, cat_id) {

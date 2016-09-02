@@ -425,12 +425,18 @@
             var arr_sub = {};
             {% for argument in arguments  %}
                 {% for template in argument['templates']  %}
-                    {% if arr_users_arg[template.id] is defined %}
-                        templates[{{template.id}}] = "{{arr_users_arg[template.id]}}";
+                    {% if arr_users_arg[template.id] is defined%}
+                        {% if arr_users_arg[template.id] != '' %}
+                            templates[{{template.id}}] = "{{arr_users_arg[template.id]}}";
+                        {% endif %}
                     {% else %}
-                        templates[{{template.id}}] = '{{template.text}}';
+                        {% if template.text != '' %}
+                            templates[{{template.id}}] = '{{template.text}}';
+                        {% endif %}
                     {% endif %}
-                        temp_name[{{template.id}}] = '{{template.name}}';
+                        {% if template.name != '' %}
+                            temp_name[{{template.id}}] = '{{template.name}}';
+                        {% endif %}
                 {% endfor %}
             {% endfor %}
             {% if arr_sub_cat is defined  %}
