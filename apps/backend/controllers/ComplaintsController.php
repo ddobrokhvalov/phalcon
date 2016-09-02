@@ -36,7 +36,9 @@ class ComplaintsController extends ControllerBase
             if (isset($show_all_items) && $show_all_items == 'all_items') {
                 $item_per_page = 99999;
             }
-            $complaints = Complaint::find();
+            $complaints = Complaint::find(array(
+                "order" => "date DESC"
+            ));
             $paginator = new Paginator(array(
                 "data"  => $complaints,
                 "limit" => $item_per_page,
