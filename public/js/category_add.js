@@ -831,6 +831,7 @@ function initEditor(id) {
         CKEDITOR.instances[id].destroy();
         //CKEDITOR.remove(CKEDITOR.instances[id]);
     }
+
     var editor = CKEDITOR.inline(document.getElementById(id), {
         toolbarGroups: [
             {name: 'clipboard', groups: ['clipboard', 'undo']},
@@ -848,7 +849,7 @@ function initEditor(id) {
             {name: 'colors', groups: ['colors']},
             {name: 'about', groups: ['about']}
         ],
-        removeButtons: 'Blockquote,Indent,Outdent,About,RemoveFormat,Format,Styles,Strike,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source,NumberedList,BulletedList',
+        removeButtons: 'Blockquote,Indent,Outdent,About,RemoveFormat,Format,Strike,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source,NumberedList,BulletedList',
         removePlugins: 'Styles,Format',
 
         sharedSpaces: {
@@ -859,8 +860,16 @@ function initEditor(id) {
     // };
     editor.disableAutoInline = true;
     editor.config.extraPlugins = 'sharedspace';
+    editor.config.stylesSet = [
+        { name: 'Обычный текст',        element: 'span',    attributes: { 'class': 'marker_w' } },
+        { name: 'Выделенный текст',     element: 'span',    attributes: { 'class': 'marker_y' } }
+    ];
 
     CKEDITOR.instances[id].on('blur', function() {
         $("#argument-text").val($(".cke_textarea_inline.cke_editable").html());
     });
+    //CKEDITOR.stylesSet.add([
+    //    { name: 'Обычный текст',        element: 'span',    styles: { 'background-color': 'white' } },
+    //    { name: 'Выделенный текст',     element: 'span',    styles: { 'background-color': 'yellow' } }
+    //]);
 }

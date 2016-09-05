@@ -316,6 +316,12 @@
 </div>
 
 <style>
+    .marker_y{
+        background-color: yellow;
+    }
+    .marker_w{
+        background-color: white;
+    }
     .edit-status .admin-popup-content.index-main-popup{
         text-align: center;
     }
@@ -335,6 +341,7 @@
     .edit-status .admin-popup-content.index-popup{
         width: 500px;
     }
+
 </style>
 <script>
     $(document).ready(function(){
@@ -352,6 +359,12 @@
 
             });
         }
+
+        $('body').on('keyup', '.c-edit-j-t', function(){
+            $(this).find('span').replaceWith(function(){
+                return $(this).text();
+            });
+        })
     });
     </script>
 <script>
@@ -359,7 +372,7 @@
     var temp_name = {};
     {% for argument in arguments  %}
         {% for template in argument['templates']  %}
-            templates[{{template.id}}] = "{{template.text}}";
+            templates[{{template.id}}] = "{{template.text|e}}";
             temp_name[{{template.id}}] = '{{template.name}}';
         {% endfor %}
     {% endfor %}

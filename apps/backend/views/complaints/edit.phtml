@@ -428,7 +428,13 @@
     }
 </style>
 <script>
-    //$(document).ready(function(){
+    $(document).ready(function(){
+        $('body').on('keyup', '.c-edit-j-t', function(){
+            $(this).find('span').replaceWith(function(){
+                return $(this).text();
+            });
+        })
+    });
 
 
     auction.data['complaint_id'] = '{{complaint.id }}';
@@ -451,7 +457,7 @@
     {% for argument in arguments  %}
         {% for template in argument['templates']  %}
             {% if arr_users_arg[template.id] is defined %}
-            templates[{{template.id}}] = "{{arr_users_arg[template.id]}}";
+            templates[{{template.id}}] = '{{arr_users_arg[template.id]}}';
         {% else %}
         templates[{{template.id}}] = '{{template.text}}';
         {% endif %}
@@ -460,7 +466,7 @@
     {% endfor %}
     {% if arr_sub_cat is defined  %}
         {% for sub in arr_sub_cat %}
-            arr_sub[{{sub['id']}}] = "{{sub['text']}}";
+            arr_sub[{{sub['id']}}] = '{{sub['text']}}';
         {% endfor %}
     {% endif %}
         var categories_id = $("#arguments_id").val().split(",");

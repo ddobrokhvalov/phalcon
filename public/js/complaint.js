@@ -284,6 +284,7 @@ var currTextArea = 0;
 var argument = {
     argumentList: [],
     addArgument: function (id, cat_id, complaint_text, objReq) {
+        debugger;
         regFlags = objReq;
         complaint_text = complaint_text || "";
         //templates["just_text"] = "Вы можете ввести свой текст здесь";
@@ -720,7 +721,7 @@ function initEditor(id) {
     // };
     editor.disableAutoInline = true;
     editor.config.extraPlugins = 'sharedspace';
-
+    editor.config.allowedContent = true;
 }
 
 function getOffsetSum(elem) {

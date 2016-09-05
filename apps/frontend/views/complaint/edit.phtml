@@ -403,6 +403,16 @@
 
 
 <script>
+
+    $(document).ready(function(){
+        $('body').on('keyup', '.c-edit-j-t', function(){
+            $(this).find('span').replaceWith(function(){
+                return $(this).text();
+            });
+        })
+    });
+
+
         var edit = 'true';
     //$(document).ready(function(){
         auction.data['complaint_id'] = '{{complaint.id }}';
@@ -427,11 +437,11 @@
                 {% for template in argument['templates']  %}
                     {% if arr_users_arg[template.id] is defined%}
                         {% if arr_users_arg[template.id] != '' %}
-                            templates[{{template.id}}] = "{{arr_users_arg[template.id]}}";
+                            templates[{{template.id}}] = '{{arr_users_arg[template.id]}}';
                         {% endif %}
                     {% else %}
                         {% if template.text != '' %}
-                            templates[{{template.id}}] = '{{template.text}}';
+                            templates[{{template.id}}] = '{{template.text|e}}';
                         {% endif %}
                     {% endif %}
                         {% if template.name != '' %}
@@ -441,7 +451,7 @@
             {% endfor %}
             {% if arr_sub_cat is defined  %}
                 {% for sub in arr_sub_cat %}
-                    arr_sub[{{sub['id']}}] = "{{sub['text']}}";
+                    arr_sub[{{sub['id']}}] = "{{sub['text']|e}}";
                 {% endfor %}
             {% endif %}
             var categories_id = $("#arguments_id").val().split(",");
@@ -472,6 +482,13 @@
 </div>
 
 <style>
+    /*.marker_y{*/
+        /*background-color: yellow;*/
+    /*}*/
+    /*.marker_w{*/
+        /*background-color: white;*/
+    /*}*/
+
     .edit-status .admin-popup-content.index-main-popup{
         text-align: center;
     }
