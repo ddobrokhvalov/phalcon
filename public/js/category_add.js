@@ -861,8 +861,8 @@ function initEditor(id) {
     editor.disableAutoInline = true;
     editor.config.extraPlugins = 'sharedspace';
     editor.config.stylesSet = [
-        { name: 'Обычный текст',        element: 'span',    attributes: { 'class': 'marker_w' } },
-        { name: 'Выделенный текст',     element: 'span',    attributes: { 'class': 'marker_y' } }
+        { name: 'Обычный текст',        element: 'span',    attributes: { 'class': 'marker_white' } },
+        { name: 'Выделенный текст',     element: 'span',    attributes: { 'class': 'marker_yellow' } }
     ];
 
     CKEDITOR.instances[id].on('blur', function() {

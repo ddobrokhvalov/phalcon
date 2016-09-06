@@ -406,9 +406,9 @@
 
     $(document).ready(function(){
         $('body').on('keyup', '.c-edit-j-t', function(){
-            $(this).find('span').replaceWith(function(){
-                return $(this).text();
-            });
+            $(this).find('span').each(function(){
+                $(this).addClass('marker_white').removeClass('marker_yellow');
+            })
         })
     });
 
@@ -482,12 +482,14 @@
 </div>
 
 <style>
-    /*.marker_y{*/
-        /*background-color: yellow;*/
-    /*}*/
-    /*.marker_w{*/
-        /*background-color: white;*/
-    /*}*/
+    {% if edit_now %}
+        .marker_yellow{
+            background-color: yellow;
+        }
+        .marker_white{
+            background-color: white;
+        }
+    {% endif %}
 
     .edit-status .admin-popup-content.index-main-popup{
         text-align: center;
