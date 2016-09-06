@@ -196,6 +196,9 @@
       }
     }
   }
+  &.newDataRequired {
+    @extend .category.dataRequired;
+  }
 }
 .argument {
   h3 {

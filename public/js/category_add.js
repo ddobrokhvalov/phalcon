@@ -204,7 +204,7 @@ function categorySend() {
                 data = 'edit[id]=' + catArgObj.id +
                     '&edit[name]=' + catArgObj.name +
                     '&edit[required]=' + catArgObj.required;
-                editCategoryArgument.editCatArg(data, catArgObj.descr, catArgObj.required);
+                editCategoryArgument.editCatArg(data, catArgObj.descr, catArgObj.required, catArgObj.thisObj);
                 $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
             }
         }
@@ -374,8 +374,10 @@ function editCatArg(obj) {
             descr: obj.attr('id'),
             name: obj.find('h3, h2').text(),
             id: parseInt(obj.attr('data-id')),
+            thisObj: obj
         };
         $('.inputBox input').val(catArgObj.name);
+        $('.saveCat').text('Сохранить');
         $('.saveCat').addClass('editArgCat');
         $('.add-Arguments_category h6').text('Редактирование категории');
         $('.add-ArgumentsCategory .inputBox:first h4').text('Название категории');
@@ -642,19 +644,19 @@ var receivingData = {
 };
 
 var editCategoryArgument = {
-    editCatArg: function(data, name, req) {
+    editCatArg: function(data, name, req, obj) {
         $.ajax({
             type: "POST",
             url: base_url + "/admin/arguments/ajaxEdit",
             data: data,
+            context: obj,
             dataType: 'json',
             success: function(value) {
                 if (name == 'argument') {
                     editCategoryArgument.renameArg(value);
                 } else {
-                    editCategoryArgument.renameCat(value, req);
+                    editCategoryArgument.renameCat(value, req, obj);
                 }
-                requiredStartSearch();
                 popupCancel();
             },
             error: function(xhr) {
@@ -674,7 +676,7 @@ var editCategoryArgument = {
             }
         });
     },
-    renameCat: function(val, requi) {
+    renameCat: function(val, requi, obj) {
         $('.argCatTree #category').each(function() {
             var thisId = $(this).attr('data-id');
             if (thisId == val.id) $(this).find('h2, h3').text(val.name);
@@ -684,6 +686,17 @@ var editCategoryArgument = {
                 $(this).attr('data-required', requi);
             }
         });
+        if (val.required == 1) {
+            obj.addClass('dataRequired');
+            obj.nextAll().find('.category').each(function() {
+                $(this).addClass('dataRequired');
+            });
+        } else {
+            obj.removeClass('dataRequired');
+            obj.nextAll().find('.category').each(function() {
+                $(this).removeClass('dataRequired');
+            });
+        }
     }
 };
 
