@@ -27,6 +27,9 @@ class ComplaintsController extends ControllerBase
            $this->view->pick("access/denied");
            $this->setMenu();
         } else {
+            setlocale(LC_ALL, 'ru_RU.UTF-8');
+            $search = $this->request->get('search');
+            $search =  preg_replace ("/[^a-zA-ZА-Яа-я0-9\s]/u","",$search);
             $next_items = $this->request->getPost('next-portions-items');
             if (!isset($next_items)) {
                 $next_items = 0;
@@ -38,6 +41,7 @@ class ComplaintsController extends ControllerBase
                 $item_per_page = 99999;
             }
             $complaints = Complaint::find(array(
+                "conditions" => "complaint_name LIKE '%{$search}%' OR auction_id LIKE '%{$search}%'",
                 "order" => "date DESC"
             ));
             $paginator = new Paginator(array(

@@ -8,7 +8,18 @@
             <div class="lm-burger-close"></div>
         </div>
     </div>
-    <form action="#" method="POST">
+    <script>
+        $(document).ready(function() {
+            debugger;
+            $(".form_search").submit(function () {
+                debugger;
+                var text = $(".searc_val").val();
+                text = text.replace(/[^a-zA-ZА-Яа-я0-9-\s]/g, '');
+                $(".searc_val").val(text);
+            });
+        })
+    </script>
+    <form action="/admin/complaints/index" method="GET" class="form_search">
         <ul class="lm-menu">
             <li{% if cur_controller == 'user' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
                 <label for="lm-user"><input type="checkbox" id="lm-user"></label>
@@ -48,8 +59,8 @@
             <span>Выберите категории выше и ищите</span>
         </div>
         <div class="lm-search-box">
-            <input type="text" id="lm-search-field">
-            <input type="submit" id="lm-search-btn" value="">
+            <input type="text" id="lm-search-field" class="searc_val" name="search">
+            <input type="submit" id="lm-search-btn"  class="searc_comp" value="">
         </div>
     </form>
 </article>
