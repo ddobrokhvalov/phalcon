@@ -486,7 +486,7 @@ class ArgumentsController  extends ControllerBase
                         'id' => $argument->id,
                         'category_id' => $argument->category_id,
                         'name' => $argument->name,
-                        'text' => $argument->text,
+                        'text' => htmlspecialchars_decode($argument->text),
                         'required' => $argument->required,
                         'type' => $data['type'],
                         'comment' => $argument->comment
@@ -560,7 +560,7 @@ class ArgumentsController  extends ControllerBase
                     'id' => $argument->id,
                     'category_id' => $argument->category_id,
                     'name' => $argument->name,
-                    'text' => $argument->text,
+                    'text' => htmlspecialchars_decode($argument->text),
                     'type'      => $edit['type'],
                     'comment'   => $argument->comment
                 ));

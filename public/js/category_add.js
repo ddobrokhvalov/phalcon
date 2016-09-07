@@ -159,20 +159,19 @@ function categorySend() {
         if ($('.selectArgType .current-option').attr('data-value') == '') {
             $('.add-ArgumentsType .current-option span').css('border-color', '#f26d7d');
         } else {
-            var argumentName = $('.inputBox input').val(),
-                argumentText = $('.argumentText textarea').val(),
-                argumentComm = $('.argumentsComment textarea').val(),
-                argumentTypeVal = $('.add-ArgumentsType .current-option').attr('data-value'),
-                argTypeValArray = argumentTypeVal.split(',');
-            data = 'arguments[category_id]=' + parentId +
-                '&arguments[name]=' + argumentName +
-                '&arguments[text]=' + argumentText +
-                '&arguments[comment]=' + argumentComm;
+            var arrParam = {'arguments':{}};
+            arrParam.arguments.category_id = parentId;
+            arrParam.arguments.name = $('.inputBox input').val();
+            arrParam.arguments.text = $('.argumentText textarea').val();
+            arrParam.arguments.comment = $('.argumentsComment textarea').val();
+            arrParam.arguments.type = [];
+            argumentTypeVal = $('.add-ArgumentsType .current-option').attr('data-value'),
+            argTypeValArray = argumentTypeVal.split(',');
             for (var i = 0; i < argTypeValArray.length; i++) {
-                data += ('&arguments[type][]=' + argTypeValArray[i]);
+                arrParam.arguments.type.push(argTypeValArray[i]);
             }
             removeSecondActionButton();
-            addArgument.addData(data);
+            addArgument.addData(arrParam);
             $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
         }
     } else if ($('.saveCat').hasClass('editArgCat')) {
@@ -185,14 +184,28 @@ function categorySend() {
                 catArgObj.type = $('.add-ArgumentsType .current-option').attr('data-value');
                 catArgObj.comment = $('.argumentsComment textarea').val(),
                     argTypeValArray = catArgObj.type.split(',');
-                data = 'edit[id]=' + argId +
-                    '&edit[name]=' + catArgObj.name +
-                    '&edit[arg]=true&edit[text]=' + catArgObj.text +
-                    '&edit[comment]=' + catArgObj.comment;
+
+                var arrParam = {'edit':{}};
+                arrParam.edit.id = argId;
+                arrParam.edit.name = catArgObj.name;
+                arrParam.edit.arg = true;
+                arrParam.edit.text = catArgObj.text;
+                arrParam.edit.comment = catArgObj.comment;
+                arrParam.edit.type = [];
                 for (var i = 0; i < argTypeValArray.length; i++) {
-                    data += ('&edit[type][]=' + argTypeValArray[i]);
+                    arrParam.edit.type.push(argTypeValArray[i]);
                 }
-                editCategoryArgument.editCatArg(data, catArgObj.descr);
+
+
+                //data = 'edit[id]=' + argId +
+                //    '&edit[name]=' + catArgObj.name +
+                //    '&edit[arg]=true&edit[text]=' + catArgObj.text +
+                //    '&edit[comment]=' + catArgObj.comment;
+                //
+                //for (var i = 0; i < argTypeValArray.length; i++) {
+                //    data += ('&edit[type][]=' + argTypeValArray[i]);
+                //}
+                editCategoryArgument.editCatArg(arrParam, catArgObj.descr);
                 $('.add-Arguments_category .admin-popup-content').addClass('hiddenSaveBtn');
             }
         } else {
@@ -670,7 +683,7 @@ var editCategoryArgument = {
             var thisId = $(this).attr('data-id');
             if (thisId == val.id) {
                 $(this).find('h3').text(val.name);
-                $(this).find('.argumText').text(val.text);
+                $(this).find('.argumText').html(val.text);
                 $(this).find('.argumentComment').text(val.comment);
                 $(this).find('.argumentType').text(val.type);
             }
