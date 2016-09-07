@@ -3791,42 +3791,100 @@ span.revert-bg {
   z-index: 9;
 }
 
-/* line 349, ../sass/_applicant_page.scss */
-.message-page .lt-content-top li:first-child {
-  width: 325px;
+/* line 348, ../sass/_applicant_page.scss */
+.message-page .c-cnt-pagename {
+  margin-bottom: 0;
 }
-/* line 352, ../sass/_applicant_page.scss */
+/* line 351, ../sass/_applicant_page.scss */
+.message-page .admin-lt-head {
+  border-top: none;
+  border-bottom: 3px solid #00aeef;
+}
+/* line 354, ../sass/_applicant_page.scss */
+.message-page .admin-lt-head #delete-button {
+  margin: 15px 0 0;
+  width: 202px;
+  font-size: 18px;
+  line-height: 50px;
+  font-weight: 600;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-align: center;
+  border: none;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  background-color: #00aeef;
+}
+/* line 368, ../sass/_applicant_page.scss */
+.message-page .admin-lt-head #delete-button:hover {
+  background-color: #10b8f7;
+}
+/* line 374, ../sass/_applicant_page.scss */
+.message-page .lt-content-top li {
+  padding-left: 0;
+  text-align: center;
+  text-transform: none;
+}
+/* line 378, ../sass/_applicant_page.scss */
+.message-page .lt-content-top li span {
+  font-size: 20px;
+}
+/* line 382, ../sass/_applicant_page.scss */
+.message-page .lt-content-top li:first-child {
+  width: 245px;
+  border-left: 1px solid #e0e3ea;
+}
+/* line 386, ../sass/_applicant_page.scss */
 .message-page .lt-content-top li:nth-child(2) {
-  width: 515px;
+  width: 560px;
   line-height: 75px;
   overflow: hidden;
 }
-/* line 357, ../sass/_applicant_page.scss */
+/* line 391, ../sass/_applicant_page.scss */
 .message-page .lt-content-top li:nth-child(3) {
-  width: 160px;
+  width: 165px;
+  border-right: 1px solid #e0e3ea;
 }
-/* line 359, ../sass/_applicant_page.scss */
+/* line 394, ../sass/_applicant_page.scss */
 .message-page .lt-content-top li:nth-child(3) span {
   background-image: none;
 }
-/* line 365, ../sass/_applicant_page.scss */
-.message-page .lt-content-main li:first-child {
-  width: 325px;
-  padding-left: 30px !important;
-}
-/* line 369, ../sass/_applicant_page.scss */
-.message-page .lt-content-main li:nth-child(2) {
-  width: 515px;
-  line-height: 75px;
-  overflow: hidden;
-}
-/* line 374, ../sass/_applicant_page.scss */
-.message-page .lt-content-main li:nth-child(3) {
-  width: 160px;
-}
-/* line 378, ../sass/_applicant_page.scss */
+/* line 400, ../sass/_applicant_page.scss */
 .message-page .lt-content-main.new-message {
   font-weight: bold;
+}
+/* line 403, ../sass/_applicant_page.scss */
+.message-page .lt-content-main li {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* line 408, ../sass/_applicant_page.scss */
+.message-page .lt-content-main li:first-child {
+  padding-left: 33px !important;
+  width: 245px;
+}
+/* line 411, ../sass/_applicant_page.scss */
+.message-page .lt-content-main li:first-child:after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 76px;
+}
+/* line 420, ../sass/_applicant_page.scss */
+.message-page .lt-content-main li:nth-child(2) {
+  width: 560px;
+  line-height: 75px;
+}
+/* line 424, ../sass/_applicant_page.scss */
+.message-page .lt-content-main li:nth-child(3) {
+  padding-left: 0;
+  width: 165px;
+  text-align: center;
+  border-right: 1px solid #e0e3ea;
 }
 
 /* line 5, ../sass/_user_page.scss */
@@ -5097,8 +5155,14 @@ body#backend-login {
 .showDopMessPopup h6 {
   font-size: 50px;
 }
+/* line 7, ../sass/_menu.scss */
+.showDopMessPopup .wrap-button {
+  float: none;
+  padding: 0 40px;
+  width: 100%;
+}
 
-/* line 8, ../sass/_menu.scss */
+/* line 13, ../sass/_menu.scss */
 .closeBtnMessage {
   display: block;
   float: right;
@@ -5115,12 +5179,12 @@ body#backend-login {
   background-color: #00aeef;
   cursor: pointer;
 }
-/* line 23, ../sass/_menu.scss */
+/* line 28, ../sass/_menu.scss */
 .closeBtnMessage:hover {
   background-color: #10b8f7;
 }
 
-/* line 27, ../sass/_menu.scss */
+/* line 32, ../sass/_menu.scss */
 #message-textNew {
   margin: 30px auto 0;
   padding: 0 40px;
