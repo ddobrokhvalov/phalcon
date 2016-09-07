@@ -307,6 +307,7 @@ class Complaint extends Model
                 $message->time = date('Y-m-d H:i:s');
                 $message->is_read = 0;
                 $message->is_deleted = 0;
+                $message->stat_comp = $status;
                 $message->comp_id = $id;
                 $message->save();
             }
