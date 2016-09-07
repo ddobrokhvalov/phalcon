@@ -71,9 +71,10 @@
     }
   }
   .custom-options {
+    overflow: hidden;
     margin: 14px 0 0 0;
     padding: 10px 4px 10px 30px;
-    max-height: 265px;
+    height: auto;
     border: none;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
@@ -94,6 +95,9 @@
         background-color: transparent;
       }
     }
+  }
+  .newHolderScroll {
+    max-height: 200px;
   }
   .custom_select {
     margin-bottom: 30px;

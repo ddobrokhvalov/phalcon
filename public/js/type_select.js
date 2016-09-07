@@ -4,7 +4,7 @@ jQuery(document).ready(function($) {
 	    $(this).find('span').toggleClass('rotate-icon');
         pushTypeToVal($(this));
 	});
-	$('.custom-options').on('click', 'li', function() {
+	$('.custom-options').on('click', 'li', function(y) {
 		if ($(this).parent().parent().hasClass('selectArgType')) {
             addRemoveType($(this))
 		} else {
