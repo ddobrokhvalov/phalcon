@@ -16,6 +16,7 @@ use Multiple\Backend\Models\ComplaintMovingHistory;
 use Multiple\Backend\Models\Question;
 use Multiple\Backend\Models\Applicant;
 use Multiple\Library\Parser;
+use Multiple\Backend\Models\Ufas;
 
 class ComplaintsController extends ControllerBase
 {
@@ -124,6 +125,16 @@ class ComplaintsController extends ControllerBase
                 }
             }
 
+            $this->view->ufas_name = 'Уфас не определен';
+            if($complaint->ufas_id != null){
+                $ufas_name = Ufas::findFirst(array(
+                    "id={$complaint->ufas_id}"
+                ));
+                if($ufas_name){
+                    $this->view->ufas_name = $ufas_name->name;
+                }
+            }
+
             $action = $this->request->get('action');
             if (isset($action) && $action == 'edit') {
                 $this->view->edit_now = TRUE;
@@ -184,6 +195,17 @@ class ComplaintsController extends ControllerBase
                     ]
                 )
             );
+
+            $this->view->ufas_name = 'Уфас не определен';
+            if($complaint->ufas_id != null){
+                $ufas_name = Ufas::findFirst(array(
+                    "id={$complaint->ufas_id}"
+                ));
+                if($ufas_name){
+                    $this->view->ufas_name = $ufas_name->name;
+                }
+            }
+
             $user_arguments = '';
             foreach ($arguments as $argument) {
                 $user_arguments .= $argument->text . '</br>';

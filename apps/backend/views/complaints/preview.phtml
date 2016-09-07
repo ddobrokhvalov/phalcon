@@ -290,8 +290,7 @@
             $('#purchases_made').html(this.data.purchases_made);
             $('#purchases_name').html(this.data.purchases_name);
             $('#contact').html(this.data.contact);*/
-
-            var html = '<div class="c-jadd-lr-row"><span>Наименование закупки</span><div class="c-jadd-lr-sel"><select><option>УФАС по г. Санкт-Петербургу</option><option>УФАС по г. Санкт-Петербургу</option><option>УФАС по г. Санкт-Петербургу</option></select></div></div>';
+            var html = '<div class="c-jadd-lr-row"><span>Наименование закупки</span><div class="c-jadd-lr-sel">'+ this.data.ufas_name +'</div></div>';
             if (this.data.type == 'Открытый конкурс') {
                 html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
                 html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
@@ -383,6 +382,7 @@
         auction.data['data_provedeniya'] = '{{complaint.data_provedeniya }}';
         auction.data['okonchanie_rassmotreniya'] = '{{complaint.okonchanie_rassmotreniya }}';
         auction.data['vremya_provedeniya'] = '{{complaint.vremya_provedeniya }}';
+        auction.data['ufas_name']   = '{{ufas_name}}';
         auction.setData();
         $(document).ready(function() {
             //jQuery('.c-jadd-text').hide();

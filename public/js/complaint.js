@@ -532,7 +532,11 @@ var auction = {
             if (ufas_name.length == 0) {
                 ufas_name = "УФАС не определен";
             }
-            var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel">' + ufas_name + '</div></div>';
+            if (this.data.ufas_name){
+                ufas_name = this.data.ufas_name;
+            }
+
+            var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel">' + ufas_name + '</div></div><input type="hidden" name="ufas_id" value="' + complaint.inn +'">';
             if (this.data.type == 'Открытый конкурс') {
                 html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
                 html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
