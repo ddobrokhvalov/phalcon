@@ -11,6 +11,7 @@ class Messages extends Model
     public $subject;
     public $body;
     public $time;
+    public $stat_comp;
 
     public function initialize()
     {
