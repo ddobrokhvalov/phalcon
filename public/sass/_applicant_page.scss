@@ -397,6 +397,19 @@
     }
   }
   .lt-content-main {
+    border-left: 3px solid #000000;
+    &.justified {
+      border-top: none !important;
+      border-left-color: $f-green;
+    }
+    &.unfounded {
+      border-top: none !important;
+      border-left-color: $red;
+    }
+    &.under_consideration {
+      border-top: none !important;
+      border-left-color: $blue;
+    }
     &.new-message {
       font-weight: bold;
     }
@@ -406,16 +419,8 @@
       text-overflow: ellipsis;
     }
     li:first-child {
-      padding-left: 33px !important;
-      width: 245px;
-      &:after {
-        position: absolute;
-        content: '';
-        top: 0;
-        left: 0;
-        width: 3px;
-        height: 76px;
-      }
+      padding-left: 30px !important;
+      width: 242px;
     }
     li:nth-child(2) {
       width: 560px;

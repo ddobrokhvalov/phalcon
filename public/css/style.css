@@ -3850,36 +3850,46 @@ span.revert-bg {
 .message-page .lt-content-top li:nth-child(3) span {
   background-image: none;
 }
-/* line 400, ../sass/_applicant_page.scss */
+/* line 399, ../sass/_applicant_page.scss */
+.message-page .lt-content-main {
+  border-left: 3px solid #000000;
+}
+/* line 401, ../sass/_applicant_page.scss */
+.message-page .lt-content-main.justified {
+  border-top: none !important;
+  border-left-color: #53cab3;
+}
+/* line 405, ../sass/_applicant_page.scss */
+.message-page .lt-content-main.unfounded {
+  border-top: none !important;
+  border-left-color: #f26d7d;
+}
+/* line 409, ../sass/_applicant_page.scss */
+.message-page .lt-content-main.under_consideration {
+  border-top: none !important;
+  border-left-color: #00aeef;
+}
+/* line 413, ../sass/_applicant_page.scss */
 .message-page .lt-content-main.new-message {
   font-weight: bold;
 }
-/* line 403, ../sass/_applicant_page.scss */
+/* line 416, ../sass/_applicant_page.scss */
 .message-page .lt-content-main li {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-/* line 408, ../sass/_applicant_page.scss */
+/* line 421, ../sass/_applicant_page.scss */
 .message-page .lt-content-main li:first-child {
-  padding-left: 33px !important;
-  width: 245px;
+  padding-left: 30px !important;
+  width: 242px;
 }
-/* line 411, ../sass/_applicant_page.scss */
-.message-page .lt-content-main li:first-child:after {
-  position: absolute;
-  content: '';
-  top: 0;
-  left: 0;
-  width: 3px;
-  height: 76px;
-}
-/* line 420, ../sass/_applicant_page.scss */
+/* line 425, ../sass/_applicant_page.scss */
 .message-page .lt-content-main li:nth-child(2) {
   width: 560px;
   line-height: 75px;
 }
-/* line 424, ../sass/_applicant_page.scss */
+/* line 429, ../sass/_applicant_page.scss */
 .message-page .lt-content-main li:nth-child(3) {
   padding-left: 0;
   width: 165px;
