@@ -5035,61 +5035,61 @@ body#backend-login {
 .list-ufas .admin-add.ufasAdd {
   width: 250px;
 }
-/* line 12, ../sass/_ufas_page.scss */
-.list-ufas .admin-lt-content .lt-content-main li:first-child {
-  padding-left: 11px;
-}
-/* line 16, ../sass/_ufas_page.scss */
+/* line 13, ../sass/_ufas_page.scss */
 .list-ufas .admin-lt-content li:first-child {
   width: 235px;
 }
-/* line 19, ../sass/_ufas_page.scss */
+/* line 16, ../sass/_ufas_page.scss */
 .list-ufas .admin-lt-content li:nth-child(2) {
   width: 115px;
 }
-/* line 22, ../sass/_ufas_page.scss */
+/* line 19, ../sass/_ufas_page.scss */
 .list-ufas .admin-lt-content li:nth-child(3) {
   width: 280px;
 }
-/* line 25, ../sass/_ufas_page.scss */
+/* line 22, ../sass/_ufas_page.scss */
 .list-ufas .admin-lt-content li:nth-child(4) {
   width: 135px;
 }
-/* line 28, ../sass/_ufas_page.scss */
+/* line 25, ../sass/_ufas_page.scss */
 .list-ufas .admin-lt-content li:nth-child(5) {
   width: 200px;
 }
-/* line 32, ../sass/_ufas_page.scss */
+/* line 29, ../sass/_ufas_page.scss */
+.list-ufas .admin-lt-content .lt-content-main li:first-child {
+  padding-left: 11px;
+}
+/* line 34, ../sass/_ufas_page.scss */
 .list-ufas .lt-content-main:hover li {
   font-weight: normal;
 }
-/* line 36, ../sass/_ufas_page.scss */
-.list-ufas .lt-content-main li:nth-child(1), .list-ufas .lt-content-main li:nth-child(3) {
+/* line 38, ../sass/_ufas_page.scss */
+.list-ufas .lt-content-main li {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 80px;
   line-height: 20px;
-  padding-top: 20px;
-  overflow: hidden;
 }
-/* line 41, ../sass/_ufas_page.scss */
-.list-ufas .lt-content-main li:nth-child(2), .list-ufas .lt-content-main li:nth-child(4), .list-ufas .lt-content-main li:nth-child(5) {
-  line-height: 65px;
-  overflow: hidden;
-}
-/* line 46, ../sass/_ufas_page.scss */
+/* line 47, ../sass/_ufas_page.scss */
 .list-ufas .lt-content-main li a {
   color: #34383e;
 }
-/* line 53, ../sass/_ufas_page.scss */
+/* line 54, ../sass/_ufas_page.scss */
 .list-ufas .lt-content-top li span {
   background: #f9f9fa url("../images/arrow-to-down.png") no-repeat scroll 100% 50%;
   cursor: pointer;
   padding-right: 16px;
 }
 
-/* line 62, ../sass/_ufas_page.scss */
+/* line 63, ../sass/_ufas_page.scss */
 .ufas-details h1 {
   display: inline-block;
 }
-/* line 65, ../sass/_ufas_page.scss */
+/* line 66, ../sass/_ufas_page.scss */
 .ufas-details .delete-btn {
   background-color: transparent;
   border: none;
@@ -5103,11 +5103,11 @@ body#backend-login {
   padding: 0 34px;
   text-transform: uppercase;
 }
-/* line 77, ../sass/_ufas_page.scss */
+/* line 78, ../sass/_ufas_page.scss */
 .ufas-details .delete-btn:hover {
   background-color: #fef0f2;
 }
-/* line 81, ../sass/_ufas_page.scss */
+/* line 82, ../sass/_ufas_page.scss */
 .ufas-details .form-wrap {
   border-top: 3px solid #00aeef;
   background-color: #f7f8fa;
@@ -5116,17 +5116,17 @@ body#backend-login {
   padding-top: 36px;
   width: 100%;
 }
-/* line 88, ../sass/_ufas_page.scss */
+/* line 89, ../sass/_ufas_page.scss */
 .ufas-details .form-wrap label {
   display: block;
   margin-bottom: 36px;
 }
-/* line 91, ../sass/_ufas_page.scss */
+/* line 92, ../sass/_ufas_page.scss */
 .ufas-details .form-wrap label div {
   font-size: 16px;
   margin-bottom: 16px;
 }
-/* line 95, ../sass/_ufas_page.scss */
+/* line 96, ../sass/_ufas_page.scss */
 .ufas-details .form-wrap label input {
   -moz-appearance: textfield;
   border: 1px solid #e0e3ea;
@@ -5136,7 +5136,7 @@ body#backend-login {
   font: 100 18px/55px "Open Sans",sans-serif;
   padding: 0 17px;
 }
-/* line 105, ../sass/_ufas_page.scss */
+/* line 106, ../sass/_ufas_page.scss */
 .ufas-details .form-wrap .save-btn {
   background-color: #00aeef;
   border: medium none;
@@ -5151,7 +5151,7 @@ body#backend-login {
   text-transform: uppercase;
   width: 482px;
 }
-/* line 118, ../sass/_ufas_page.scss */
+/* line 119, ../sass/_ufas_page.scss */
 .ufas-details .form-wrap .save-btn:hover {
   background-color: #10b8f7;
 }

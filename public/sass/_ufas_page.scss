@@ -9,9 +9,6 @@
     .admin-add.ufasAdd {
         width: 250px;
     }
-    .admin-lt-content .lt-content-main li:first-child {
-        padding-left: 11px;
-    }
     .admin-lt-content {
         li:first-child {
             width: 235px;
@@ -28,21 +25,25 @@
         li:nth-child(5) {
             width: 200px;
         }
+        .lt-content-main {
+            li:first-child {
+                padding-left: 11px;
+            }
+        }
     }
     .lt-content-main:hover li {
         font-weight: normal;
     }
     .lt-content-main {
-        li:nth-child(1), li:nth-child(3) {
-            line-height: 20px;
-            padding-top: 20px;
-            overflow: hidden;
-        }
-        li:nth-child(2), li:nth-child(4), li:nth-child(5) {
-            line-height: 65px;
-            overflow: hidden;
-        }
         li {
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            height: 80px;
+            line-height: 20px;
             a {
                 color: #34383e;
             }
