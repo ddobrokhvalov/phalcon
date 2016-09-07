@@ -122,7 +122,6 @@ var complaint = {
 
     },
     prepareData: function () {
-        debugger;
         if (applicant.id == 'All' || applicant.id == '' || applicant.id == ' ' || applicant.id == undefined || applicant.id.length == 0 ) {
             //$("html, body").animate({ scrollTop: 0 }, 1);
             showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Заявитель не выбран");
@@ -284,7 +283,6 @@ var currTextArea = 0;
 var argument = {
     argumentList: [],
     addArgument: function (id, cat_id, complaint_text, objReq) {
-        debugger;
         regFlags = objReq;
         complaint_text = complaint_text || "";
         //templates["just_text"] = "Вы можете ввести свой текст здесь";
@@ -311,7 +309,6 @@ var argument = {
         if (complaint_text.length) {
             c_text = complaint_text;
         }
-        debugger;
 
         if(cat_id != undefined && templateName != undefined) {
             var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" data-required="' + objReq + '" class="template_edit template_item" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
