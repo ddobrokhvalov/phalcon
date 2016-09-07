@@ -220,14 +220,14 @@ var ajaxSendObj = {
             }
             for (var i = 0; i < data.cat_arguments.length; i++) {
                 if (data.date == 1 && data.cat_arguments[i].required == 1) {
-                    $('#argComplSelect .custom-options div div:first').append(
+                    $('#argComplSelect .custom-options div div div:first').append(
                         '<li class="argo required"' +
                         ' data-value="' + data.cat_arguments[i].id +
                         '" data-parent="' + data.cat_arguments[i].parent_id +
                         '">' + data.cat_arguments[i].name + '</li>'
                     );
                 } else {
-                    $('#argComplSelect .custom-options div div:first').append(
+                    $('#argComplSelect .custom-options div div div:first').append(
                         '<li class="argo"' +
                         ' data-value="' + data.cat_arguments[i].id +
                         '" data-parent="' + data.cat_arguments[i].parent_id +
