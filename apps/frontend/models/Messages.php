@@ -23,4 +23,5 @@ class Messages extends Model
         return 'messages';
     }
 
+
 }

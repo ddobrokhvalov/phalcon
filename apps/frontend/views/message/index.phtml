@@ -39,7 +39,7 @@
                     {{ message.subject }}
                 </li>
                 <li>{{ message.body }}</li>
-                <li>{{ message.time }}</li>
+                <li>{{ date('d.m.Y H:i', message.time|strtotime) }} </li>
             </ul>
             {% endfor %}
         </div>
