@@ -571,6 +571,14 @@ class ArgumentsController  extends ControllerBase
                 }
                 $id = $edit['id'];
                 $category = ArgumentsCategory::findFirst($id);
+
+                if($category->parent_id != 0){
+                    $parent = ArgumentsCategory::findFirst($category->parent_id);
+                    if($parent && $parent->required == 1){
+                        $edit['required'] = 1;
+                    }
+                }
+
                 if (!$category) {
                     echo json_encode(array('err' => 'bad id'));
                     exit;
