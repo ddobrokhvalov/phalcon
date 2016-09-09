@@ -365,14 +365,15 @@ var argument = {
             }
         });
         if (obj === '1' && reqItem < 2) {
-            $('.add-popup-wrap .admin-popup-content').append(btnPush);
-            $('.add-popup-wrap h6').text('Внимание!');
-            $('.add-popup-wrap p').css({
+            $('.add-popup-wrapNew .admin-popup-content').append(btnPush);
+            $('.add-popup-wrapNew h6').text('Внимание!');
+            $('.add-popup-wrapNew p').css({
                 'font-size': '20px',
                 'padding': '0 20px'
             }).text('Срок окончания подачи заявок прошел, как минимум один довод должен быть на действие (бездействие) комиссии');
-            $('.add-popup-wrap').fadeIn().css('display', 'flex');
+            $('.add-popup-wrapNew').fadeIn().css('display', 'flex');
             argObjSend.required = 0;
+            $('#template_edit_just_text .c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
         }
     }
 };
@@ -834,3 +835,20 @@ function stopSaveCompl() {
         showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Необходимо выбрать обязательный довод");
     }
 }
+
+
+var navbar = (function () {
+
+   return {
+       test: function () {
+           console.log(123);
+       },
+       test1: function () {
+
+       }
+   }
+}());
+// oop(инкапсуляция и наследование, полиморфизм), module,
+// test app
+// template (lodash, ...), module structure/ module data(setData(name, value), getData)
+// Bem
