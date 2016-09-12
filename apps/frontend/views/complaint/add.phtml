@@ -274,7 +274,9 @@
                             <span>Жалоба на положения документации</span>
                             <div></div>
                         </div>
-                        <ul class="custom-options mCustomScrollbar"></ul>
+                        <ul class="custom-options">
+                            <div class="newHolderScroll mCustomScrollbar"></div>
+                        </ul>
                     </div>
                 </div>
                 <section class="last-argComplList">
@@ -300,9 +302,9 @@
     </div>
 </article>
 
-<article class="admin-popup-wrap add-popup-wrap">
+<article class="admin-popup-wrap add-popup-wrapNew edit-status" style="display:none;">
     <div class="admin-popup-bg"></div>
-    <div class="admin-popup-content add-popup">
+    <div class="admin-popup-content index-main-popup">
         <div class="admin-popup-close"></div>
         <h6>Успех!</h6>
         <p></p>
@@ -316,16 +318,19 @@
 </div>
 
 <style>
-    /* .c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z{
-        display: none;
-    } */
-    .admin-popup-content.add-popup{
+    .marker_yellow{
+        background-color: yellow;
+    }
+    .marker_white{
+        background-color: white;
+    }
+    .edit-status .admin-popup-content.index-main-popup{
         text-align: center;
     }
-    .admin-popup-content.add-popup p{
+    .edit-status .admin-popup-content.index-main-popup p{
         font-size: 25px;
     }
-    .admin-popup-content.add-popup h6 {
+    .edit-status .admin-popup-content.index-main-popup h6 {
         position: relative;
         overflow: hidden;
         padding-bottom: 19px;
@@ -335,9 +340,10 @@
         color: #ffffff;
         text-align: center;
     }
-    .admin-popup-content.add-popup{
+    .edit-status .admin-popup-content.index-popup{
         width: 500px;
     }
+
 </style>
 <script>
     $(document).ready(function(){
@@ -355,6 +361,12 @@
 
             });
         }
+
+        $('body').on('keyup', '.c-edit-j-t', function(){
+            $(this).find('span').each(function(){
+                $(this).addClass('marker_white').removeClass('marker_yellow');
+            })
+        })
     });
     </script>
 <script>
@@ -362,7 +374,7 @@
     var temp_name = {};
     {% for argument in arguments  %}
         {% for template in argument['templates']  %}
-            templates[{{template.id}}] = "{{template.text}}";
+            templates[{{template.id}}] = "{{template.text|e}}";
             temp_name[{{template.id}}] = '{{template.name}}';
         {% endfor %}
     {% endfor %}

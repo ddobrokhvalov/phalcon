@@ -338,7 +338,7 @@
     <div class="admin-popup-bg"></div>
     <div class="admin-popup-content argComp">
         <section class="argCompHolder">
-            <div class="admin-popup-close"></div>
+            <div class="admin-popup-close argCompHolder__close"></div>
             <h6>Доводы жалоб</h6>
             <div class="argumentsComplaints">
                 <div class="word-argCompl-find">
@@ -373,7 +373,9 @@
                             <span>Жалоба на положения документации</span>
                             <div></div>
                         </div>
-                        <ul class="custom-options mCustomScrollbar"></ul>
+                        <ul class="custom-options">
+                            <div class="newHolderScroll mCustomScrollbar"></div>
+                        </ul>
                     </div>
                 </div>
                 <section class="last-argComplList">
@@ -403,6 +405,16 @@
 
 
 <script>
+
+    $(document).ready(function(){
+        $('body').on('keyup', '.c-edit-j-t', function(){
+            $(this).find('span').each(function(){
+                $(this).addClass('marker_white').removeClass('marker_yellow');
+            })
+        })
+    });
+
+
         var edit = 'true';
     //$(document).ready(function(){
         auction.data['complaint_id'] = '{{complaint.id }}';
@@ -418,6 +430,8 @@
         auction.data['data_provedeniya'] = '{{complaint.data_provedeniya }}';
         auction.data['okonchanie_rassmotreniya'] = '{{complaint.okonchanie_rassmotreniya }}';
         auction.data['vremya_provedeniya'] = '{{complaint.vremya_provedeniya }}';
+        auction.data['ufas_name'] = '{{ufas_name}}';
+
         auction.setData();
         {% if complaint.status == 'draft' and action_edit === true %}
             var templates = {};
@@ -425,17 +439,23 @@
             var arr_sub = {};
             {% for argument in arguments  %}
                 {% for template in argument['templates']  %}
-                    {% if arr_users_arg[template.id] is defined %}
-                        templates[{{template.id}}] = "{{arr_users_arg[template.id]}}";
+                    {% if arr_users_arg[template.id] is defined%}
+                        {% if arr_users_arg[template.id] != '' %}
+                            templates[{{template.id}}] = '{{arr_users_arg[template.id]}}';
+                        {% endif %}
                     {% else %}
-                        templates[{{template.id}}] = '{{template.text}}';
+                        {% if template.text != '' %}
+                            templates[{{template.id}}] = '{{template.text|e}}';
+                        {% endif %}
                     {% endif %}
-                        temp_name[{{template.id}}] = '{{template.name}}';
+                        {% if template.name != '' %}
+                            temp_name[{{template.id}}] = '{{template.name}}';
+                        {% endif %}
                 {% endfor %}
             {% endfor %}
             {% if arr_sub_cat is defined  %}
                 {% for sub in arr_sub_cat %}
-                    arr_sub[{{sub['id']}}] = "{{sub['text']}}";
+                    arr_sub[{{sub['id']}}] = "{{sub['text']|e}}";
                 {% endfor %}
             {% endif %}
             var categories_id = $("#arguments_id").val().split(",");
@@ -466,6 +486,15 @@
 </div>
 
 <style>
+    {% if edit_now %}
+        .marker_yellow{
+            background-color: yellow;
+        }
+        .marker_white{
+            background-color: white;
+        }
+    {% endif %}
+
     .edit-status .admin-popup-content.index-main-popup{
         text-align: center;
     }

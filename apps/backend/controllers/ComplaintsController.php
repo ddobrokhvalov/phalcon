@@ -16,6 +16,7 @@ use Multiple\Backend\Models\ComplaintMovingHistory;
 use Multiple\Backend\Models\Question;
 use Multiple\Backend\Models\Applicant;
 use Multiple\Library\Parser;
+use Multiple\Backend\Models\Ufas;
 
 class ComplaintsController extends ControllerBase
 {
@@ -26,6 +27,9 @@ class ComplaintsController extends ControllerBase
            $this->view->pick("access/denied");
            $this->setMenu();
         } else {
+            setlocale(LC_ALL, 'ru_RU.UTF-8');
+            $search = $this->request->get('search');
+            $search =  preg_replace ("/[^a-zA-ZА-Яа-я0-9\s]/u","",$search);
             $next_items = $this->request->getPost('next-portions-items');
             if (!isset($next_items)) {
                 $next_items = 0;
@@ -36,7 +40,10 @@ class ComplaintsController extends ControllerBase
             if (isset($show_all_items) && $show_all_items == 'all_items') {
                 $item_per_page = 99999;
             }
-            $complaints = Complaint::find();
+            $complaints = Complaint::find(array(
+                "conditions" => "complaint_name LIKE '%{$search}%' OR auction_id LIKE '%{$search}%'",
+                "order" => "date DESC"
+            ));
             $paginator = new Paginator(array(
                 "data"  => $complaints,
                 "limit" => $item_per_page,
@@ -83,7 +90,7 @@ class ComplaintsController extends ControllerBase
             foreach ($arguments as $argument) {
                 $categories_id[] = $argument->argument_category_id;
                 $arguments_id[] = $argument->argument_id;
-                $arr_users_arg[$argument->argument_id] = $argument->text;
+                $arr_users_arg[$argument->argument_id] = preg_replace('/[\r\n\t]/', '', $argument->text);
                 if ($argument_order == $complaint->complaint_text_order) {
                     $user_arguments .= $complaint->complaint_text . '</br>';
                     $user_arguments .= $argument->text . '</br>';
@@ -92,7 +99,7 @@ class ComplaintsController extends ControllerBase
                 }
                 $arr_sub_cat[] = array(
                     'id'   => $argument->argument_id,
-                    'text' => $argument->text,
+                    'text' => preg_replace('/[\r\n\t]/', '', $argument->text),
                 );
                 ++$argument_order;
             }
@@ -119,6 +126,16 @@ class ComplaintsController extends ControllerBase
                     foreach ($files as $file) {
                         $files_html[] = $file_model->getFilesHtml($file, $id, 'complaints');
                     }
+                }
+            }
+
+            $this->view->ufas_name = 'Уфас не определен';
+            if($complaint->ufas_id != null){
+                $ufas_name = Ufas::findFirst(array(
+                    "id={$complaint->ufas_id}"
+                ));
+                if($ufas_name){
+                    $this->view->ufas_name = $ufas_name->name;
                 }
             }
 
@@ -182,6 +199,17 @@ class ComplaintsController extends ControllerBase
                     ]
                 )
             );
+
+            $this->view->ufas_name = 'Уфас не определен';
+            if($complaint->ufas_id != null){
+                $ufas_name = Ufas::findFirst(array(
+                    "id={$complaint->ufas_id}"
+                ));
+                if($ufas_name){
+                    $this->view->ufas_name = $ufas_name->name;
+                }
+            }
+
             $user_arguments = '';
             foreach ($arguments as $argument) {
                 $user_arguments .= $argument->text . '</br>';

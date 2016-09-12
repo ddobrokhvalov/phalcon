@@ -122,7 +122,7 @@ var complaint = {
 
     },
     prepareData: function () {
-        if (applicant.id == 'All' || applicant.id == undefined || applicant.id.length == 0) {
+        if (applicant.id == 'All' || applicant.id == '' || applicant.id == ' ' || applicant.id == undefined || applicant.id.length == 0 ) {
             //$("html, body").animate({ scrollTop: 0 }, 1);
             showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Заявитель не выбран");
             return false;
@@ -194,11 +194,11 @@ var complaint = {
         $("#complaint_name").val(this.complainName);
         $("#applicant_id").val(applicant.id);
 
-        $(".add-popup-wrap p").text("Жалоба успешно сохранена!");
+        $(".edit-status p").text("Жалоба успешно сохранена!");
         $('.admin-popup-close, .admin-popup-bg').on('click', function() {
             $("#add-complaint-form").submit();
         });
-        $(".add-popup-wrap").show();
+        $(".edit-status").show();
         setTimeout( function(){
             $("#add-complaint-form").submit();
         }, 2000);
@@ -309,32 +309,35 @@ var argument = {
         if (complaint_text.length) {
             c_text = complaint_text;
         }
-        var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" data-required="' + objReq + '" class="template_edit template_item" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
-            (( id != 'just_text' ) ? '<span>' + templateName + '</span>' : '') +
-            '<div class="c-edit-j-h-ctr">' +
-            '<a  class="template-edit-control down c-edit-j-h-ctr1">Переместить ниже</a> <a class="template-edit-control up c-edit-j-h-ctr2">Переместить выше</a>' +
-            (( id != 'just_text' ) ? '<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' : '') +
-            '</div>' +
-            '</div>' +
-            '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" >' +
-            c_text +
-            '</div></div></div>';
-        $('#edit_container').append(html);
-        var currTextArea = 'edit_textarea_' + id;
-        setTimeout(function () {
-            if (drake !== false) {
-                drake.destroy(true);
+
+        if(cat_id != undefined && templateName != undefined) {
+            var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" data-required="' + objReq + '" class="template_edit template_item" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
+                (( id != 'just_text' ) ? '<span>' + templateName + '</span>' : '') +
+                '<div class="c-edit-j-h-ctr">' +
+                '<a  class="template-edit-control down c-edit-j-h-ctr1">Переместить ниже</a> <a class="template-edit-control up c-edit-j-h-ctr2">Переместить выше</a>' +
+                (( id != 'just_text' ) ? '<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' : '') +
+                '</div>' +
+                '</div>' +
+                '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" >' +
+                c_text +
+                '</div></div></div>';
+            $('#edit_container').append(html);
+            var currTextArea = 'edit_textarea_' + id;
+            setTimeout(function () {
+                if (drake !== false) {
+                    drake.destroy(true);
+                }
+                //  drake = dragula([document.getElementById('edit_container')]);
+                drake = dragula([document.getElementById('argument_text_container')]);
+
+
+                initEditor(currTextArea);
+            }, 100);
+
+            if (objReq == 1 && $('#template_edit_just_text .c-edit-j-t p').text() == 'Пользовательский текст' ||
+                $('#template_edit_just_text .c-edit-j-t p').text() == 'Вам необходимо выбрать хотябы одну обязательную жалобу!') {
+                $('#template_edit_just_text .c-edit-j-t p').text('Пользовательский текст');
             }
-          //  drake = dragula([document.getElementById('edit_container')]);
-            drake = dragula([document.getElementById('argument_text_container')]);
-
-
-            initEditor(currTextArea);
-        }, 100);
-
-        if (objReq == 1 && $('#template_edit_just_text .c-edit-j-t p').text() == 'Пользовательский текст' ||
-            $('#template_edit_just_text .c-edit-j-t p').text() == 'Вам необходимо выбрать хотябы одну обязательную жалобу!') {
-            $('#template_edit_just_text .c-edit-j-t p').text('Пользовательский текст');
         }
     },
     removeArgument: function (id, cat_id) {
@@ -362,14 +365,15 @@ var argument = {
             }
         });
         if (obj === '1' && reqItem < 2) {
-            $('.add-popup-wrap .admin-popup-content').append(btnPush);
-            $('.add-popup-wrap h6').text('Внимание!');
-            $('.add-popup-wrap p').css({
+            $('.add-popup-wrapNew .admin-popup-content').append(btnPush);
+            $('.add-popup-wrapNew h6').text('Внимание!');
+            $('.add-popup-wrapNew p').css({
                 'font-size': '20px',
                 'padding': '0 20px'
             }).text('Срок окончания подачи заявок прошел, как минимум один довод должен быть на действие (бездействие) комиссии');
-            $('.add-popup-wrap').fadeIn().css('display', 'flex');
+            $('.add-popup-wrapNew').fadeIn().css('display', 'flex');
             argObjSend.required = 0;
+            $('#template_edit_just_text .c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
         }
     }
 };
@@ -529,7 +533,11 @@ var auction = {
             if (ufas_name.length == 0) {
                 ufas_name = "УФАС не определен";
             }
-            var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel">' + ufas_name + '</div></div>';
+            if (this.data.ufas_name){
+                ufas_name = this.data.ufas_name;
+            }
+
+            var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel">' + ufas_name + '</div></div><input type="hidden" name="ufas_id" value="' + complaint.inn +'">';
             if (this.data.type == 'Открытый конкурс') {
                 html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
                 html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
@@ -715,6 +723,7 @@ function initEditor(id) {
     // };
     editor.disableAutoInline = true;
     editor.config.extraPlugins = 'sharedspace,font';
+    editor.config.allowedContent = true;
 
 }
 
@@ -820,10 +829,27 @@ function stopSaveCompl() {
         if (complaint.prepareData()) {
             if(typeof  statutsEdit == 'undefined') {
                 saveComplaintToDocxFile();
-            }return false;
+            }
             complaint.saveAsDraft();
         }
     } else {
         showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Необходимо выбрать обязательный довод");
     }
 }
+
+
+var navbar = (function () {
+
+   return {
+       test: function () {
+           console.log(123);
+       },
+       test1: function () {
+
+       }
+   }
+}());
+// oop(инкапсуляция и наследование, полиморфизм), module,
+// test app
+// template (lodash, ...), module structure/ module data(setData(name, value), getData)
+// Bem

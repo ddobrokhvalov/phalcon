@@ -22,6 +22,7 @@ use  Phalcon\Mvc\Model\Query\Builder;
 use Multiple\Frontend\Models\Messages;
 
 
+
 class ComplaintController extends ControllerBase
 {
     public function indexAction()
@@ -110,7 +111,7 @@ class ComplaintController extends ControllerBase
         foreach ($arguments as $argument) {
             $categories_id[] = $argument->argument_category_id;
             $arguments_id[] = $argument->argument_id;
-            $arr_users_arg[$argument->argument_id] = $argument->text;
+            $arr_users_arg[$argument->argument_id] = preg_replace('/[\r\n\t]/', '', $argument->text);
             if ($argument_order == $complaint->complaint_text_order) {
                 $user_arguments .= $complaint->complaint_text . '</br>';
                 $user_arguments .= $argument->text . '</br>';
@@ -119,7 +120,7 @@ class ComplaintController extends ControllerBase
             }
             $arr_sub_cat[] = array(
                 'id' => $argument->argument_id,
-                'text' => $argument->text,
+                'text' =>  preg_replace('/[\r\n\t]/', '', $argument->text)
             );
             ++$argument_order;
         }
@@ -195,6 +196,18 @@ class ComplaintController extends ControllerBase
 //        $complaint->vremya_provedeniya =        isset($data['procedura']['vremya_provedeniya'])         ? $data['procedura']['vremya_provedeniya']      : null;
 //        $complaint->vskrytie_konvertov =        isset($data['procedura']['vskrytie_konvertov'])         ? $data['procedura']['vskrytie_konvertov']      : null;
 //        $complaint->data_rassmotreniya =        isset($data['procedura']['data_rassmotreniya'])         ? $data['procedura']['data_rassmotreniya']      : null;
+
+        $this->view->ufas_name = 'Уфас не определен';
+        if($complaint->ufas_id != null){
+            $ufas_name = Ufas::findFirst(array(
+                "id={$complaint->ufas_id}"
+            ));
+            if($ufas_name){
+                $this->view->ufas_name = $ufas_name->name;
+            }
+        }
+
+
 
         if(is_null($complaint->date_start)) $complaint->date_start = $complaint->nachalo_podachi;
 
@@ -291,6 +304,17 @@ class ComplaintController extends ControllerBase
         $data = $this->request->getPost();
         $data['auctionData'] = explode('&', $data['auctionData']);
         $users_arguments = explode('_?_', $data['arguments_data']);
+
+        $ufas_id = null;
+        if(isset($data['ufas_id']) && is_numeric($data['ufas_id'])){
+            $ufas_id = Ufas::findFirst(array(
+                "number={$data['ufas_id']}"
+            ));
+            if($ufas_id) $ufas_id = $ufas_id->id;
+        }
+        $data['ufas_id'] = $ufas_id;
+
+
         unset($users_arguments[count($users_arguments) - 1]);
         foreach ($users_arguments as $key => $row) {
             $users_arguments[$key] = explode('?|||?', $row);

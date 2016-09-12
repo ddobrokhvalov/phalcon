@@ -89,8 +89,12 @@ a:visited {
     position: relative;
     width: 1000px;
 }
+.paddingIndent {
+    padding: 0 15px;
+}
 @media (max-width: 1617px) and (min-width: 1317px) {
-    .wrapper.wrap-with-menuPanel {
+    .wrapper.wrap-with-menuPanel,
+    .wrapper.marginLeftWrapper {
         margin: 0 0 0 300px;
     }
 }

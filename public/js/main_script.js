@@ -214,6 +214,7 @@ jQuery(document).ready(function($) {
 	// show and close answer to lawyer question on complaints
 	$('.opacity-btn').click(function() {
 		$(this).hide();
+        $(this).parent().find('.sendAnswer').show();
 		$(this).parent().find('.hidden-textarea').show();
 		$(this).parent().find('.hidden-textarea div').animate({opacity: 1}, 700);
 		$(this).parent().find('span').css('display', 'block').animate({
@@ -229,9 +230,11 @@ jQuery(document).ready(function($) {
 			width: '100%',
 			height: '140px'
 		}, 300);
+        return false;
 	});
 	$('.hidden-textarea div').click(function() {
 		var thisCross = $(this);
+        $(this).parent().parent().find('.sendAnswer').hide();
 		$(this).animate({opacity: 0}, 300);
 		$(this).parent().find('span').css('display', 'block').animate({
 			opacity: 0,

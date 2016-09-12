@@ -345,37 +345,92 @@
 	}
 }
 .message-page {
-    .lt-content-top {
-        li:first-child {
-            width: 325px;
-        }
-        li:nth-child(2) {
-            width: 515px;
-            line-height: 75px;
-            overflow: hidden;
-        }
-        li:nth-child(3) {
-            width: 160px;
-            span {
-                background-image: none;
-            }
+  .c-cnt-pagename {
+    margin-bottom: 0;
+  }
+  .admin-lt-head {
+    border-top: none;
+    border-bottom: 3px solid $blue;
+    #delete-button {
+      margin: 15px 0 0;
+      width: 202px;
+      font-size: 18px;
+      line-height: 50px;
+      font-weight: 600;
+      color: $white;
+      text-transform: uppercase;
+      text-align: center;
+      border: none;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      border-radius: 8px;
+      background-color: $blue;
+      &:hover {
+        background-color: $h-blue;
+      }
+    }
+  }
+  .lt-content-top {
+    li {
+      padding-left: 0;
+      text-align: center;
+      text-transform: none;
+      span {
+        font-size: 20px;
+      }
+    }
+    li:first-child {
+        width: 245px;
+        border-left: 1px solid #e0e3ea;
+    }
+    li:nth-child(2) {
+        width: 560px;
+        line-height: 75px;
+        overflow: hidden;
+    }
+    li:nth-child(3) {
+        width: 165px;
+        border-right: 1px solid #e0e3ea;
+        span {
+            background-image: none;
         }
     }
-    .lt-content-main {
-        li:first-child {
-            width: 325px;
-            padding-left: 30px !important;
-        }
-        li:nth-child(2) {
-            width: 515px;
-            line-height: 75px;
-            overflow: hidden;
-        }
-        li:nth-child(3) {
-            width: 160px;
-        }
+  }
+  .lt-content-main {
+    border-left: 3px solid #000000;
+    &.justified {
+      border-top: none !important;
+      border-left-color: $f-green;
     }
-    .lt-content-main.new-message {
-        font-weight: bold;
+    &.unfounded {
+      border-top: none !important;
+      border-left-color: $red;
     }
+    &.under_consideration {
+      border-top: none !important;
+      border-left-color: $blue;
+    }
+    &.new-message {
+      font-weight: bold;
+    }
+    li {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    li:first-child {
+      padding-left: 30px !important;
+      width: 242px;
+    }
+    li:nth-child(2) {
+      width: 560px;
+      line-height: 75px;
+    }
+    li:nth-child(3) {
+      padding-left: 0;
+      width: 165px;
+      text-align: center;
+      border-right: 1px solid #e0e3ea;
+    }
+  }
 }

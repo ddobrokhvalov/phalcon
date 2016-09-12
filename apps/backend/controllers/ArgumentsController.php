@@ -486,7 +486,7 @@ class ArgumentsController  extends ControllerBase
                         'id' => $argument->id,
                         'category_id' => $argument->category_id,
                         'name' => $argument->name,
-                        'text' => $argument->text,
+                        'text' => htmlspecialchars_decode($argument->text),
                         'required' => $argument->required,
                         'type' => $data['type'],
                         'comment' => $argument->comment
@@ -560,7 +560,7 @@ class ArgumentsController  extends ControllerBase
                     'id' => $argument->id,
                     'category_id' => $argument->category_id,
                     'name' => $argument->name,
-                    'text' => $argument->text,
+                    'text' => htmlspecialchars_decode($argument->text),
                     'type'      => $edit['type'],
                     'comment'   => $argument->comment
                 ));
@@ -571,6 +571,14 @@ class ArgumentsController  extends ControllerBase
                 }
                 $id = $edit['id'];
                 $category = ArgumentsCategory::findFirst($id);
+
+                if($category->parent_id != 0){
+                    $parent = ArgumentsCategory::findFirst($category->parent_id);
+                    if($parent && $parent->required == 1){
+                        $edit['required'] = 1;
+                    }
+                }
+
                 if (!$category) {
                     echo json_encode(array('err' => 'bad id'));
                     exit;

@@ -1,5 +1,5 @@
 <div class="content message-page">
-    <div class="wrapper wrap-with-menuPanel">
+    <div class="wrapper wrap-with-menuPanel paddingIndent">
         <div class="c-cnt-pagename" style="float: none;">Сообщения</div>
         <div class="admin-lt-head">
             <div class="select-all">
@@ -30,7 +30,7 @@
                 <li sort-field="sort-date"><span class="sortable">Дата</span></li>
             </ul>
             {% for message in page.items %}
-            <ul class="lt-content-main show-message-popup {% if message.is_read == 0 %} new-message {% endif %}">
+            <ul class="lt-content-main show-message-popup {{message.stat_comp}} {% if message.is_read == 0 %} new-message {% endif %}">
                 <li>
                     <div class="lt-psevdo-check">
                         {{hidden_field('message-id', 'value':message.id)}}
@@ -39,7 +39,7 @@
                     {{ message.subject }}
                 </li>
                 <li>{{ message.body }}</li>
-                <li>{{ message.time }}</li>
+                <li>{{ date('d.m.Y H:i', message.time|strtotime) }} </li>
             </ul>
             {% endfor %}
         </div>

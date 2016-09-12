@@ -7,7 +7,7 @@
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/tinysort.js"></script>
 <script type="text/javascript" src="/js/sort.extend.tinysort.js"></script>
-<script type="text/javascript" src="/js/init.js"></script>
+<!--<script type="text/javascript" src="/js/init.js"></script>-->
 <script type="text/javascript" src="/js/validator.js"></script>
 <script type="text/javascript" src="/js/complaint.js"></script>
 <script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
@@ -333,7 +333,7 @@
     <div class="admin-popup-bg"></div>
     <div class="admin-popup-content argComp">
         <section class="argCompHolder">
-            <div class="admin-popup-close"></div>
+            <div class="admin-popup-close argCompHolder__close"></div>
             <h6>Доводы жалоб</h6>
             <div class="argumentsComplaints">
                 <div class="word-argCompl-find">
@@ -368,7 +368,9 @@
                             <span>Жалоба на положения документации</span>
                             <div></div>
                         </div>
-                        <ul class="custom-options mCustomScrollbar"></ul>
+                        <ul class="custom-options">
+                            <div class="newHolderScroll mCustomScrollbar"></div>
+                        </ul>
                     </div>
                 </div>
                 <section class="last-argComplList">
@@ -381,8 +383,8 @@
                 <div class="btn-div-showArgDescr">Просмотреть</div>
                 <button id="argComplBtn">Дальше</button>
             </div>
-            <input type="hidden" class="type_complicant" value="{{complaint.type }}">
-            <input type="hidden" class="dateoff" value="{{complaint.nachalo_podachi }}">
+            <input type="hidden" class="type_complicant" value="">
+            <input type="hidden" class="dateoff" value="">
         </section>
         <div class="argDescrBox">
             <h5>Описание довода</h5>
@@ -394,6 +396,14 @@
     </div>
 </article>
 <style>
+    {% if edit_now %}
+        .marker_yellow{
+            background-color: yellow;
+        }
+        .marker_white{
+            background-color: white;
+        }
+    {% endif %}
     .edit-status .admin-popup-content.index-main-popup{
         text-align: center;
     }
@@ -428,7 +438,13 @@
     }
 </style>
 <script>
-    //$(document).ready(function(){
+    $(document).ready(function(){
+        $('body').on('keyup', '.c-edit-j-t', function(){
+            $(this).find('span').each(function(){
+                $(this).addClass('marker_white').removeClass('marker_yellow');
+            })
+        })
+    });
 
 
     auction.data['complaint_id'] = '{{complaint.id }}';
@@ -443,6 +459,7 @@
     auction.data['data_provedeniya'] = '{{complaint.data_provedeniya }}';
     auction.data['okonchanie_rassmotreniya'] = '{{complaint.okonchanie_rassmotreniya }}';
     auction.data['vremya_provedeniya'] = '{{complaint.vremya_provedeniya }}';
+    auction.data['ufas_name'] = '{{ufas_name}}';
     auction.setData();
     {% if complaint.status == 'draft' and action_edit === true %}
     var templates = {};
@@ -451,7 +468,7 @@
     {% for argument in arguments  %}
         {% for template in argument['templates']  %}
             {% if arr_users_arg[template.id] is defined %}
-            templates[{{template.id}}] = "{{arr_users_arg[template.id]}}";
+            templates[{{template.id}}] = '{{arr_users_arg[template.id]}}';
         {% else %}
         templates[{{template.id}}] = '{{template.text}}';
         {% endif %}
@@ -460,7 +477,7 @@
     {% endfor %}
     {% if arr_sub_cat is defined  %}
         {% for sub in arr_sub_cat %}
-            arr_sub[{{sub['id']}}] = "{{sub['text']}}";
+            arr_sub[{{sub['id']}}] = '{{sub['text']}}';
         {% endfor %}
     {% endif %}
         var categories_id = $("#arguments_id").val().split(",");
