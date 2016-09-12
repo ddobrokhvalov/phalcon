@@ -245,6 +245,9 @@ class ArgumentsController  extends ControllerBase
                         "id = {$id}",
                     )
                 )->delete();
+                UsersArguments::find(array(
+                    "argument_id = {$id}"
+                ))->delete();
                 echo json_encode(array('status' => 'ok'));
                 exit;
             } else {
