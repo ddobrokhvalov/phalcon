@@ -705,7 +705,7 @@ function initEditor(id) {
             {name: 'colors', groups: ['colors']},
             {name: 'about', groups: ['about']}
         ],
-        removeButtons: 'Blockquote,Indent,Outdent,About,RemoveFormat,Format,Styles,Strike,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source,NumberedList,BulletedList',
+        removeButtons: 'Blockquote,Indent,Outdent,About,RemoveFormat,Format,Font,Styles,Strike,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source,NumberedList',
         removePlugins: 'Styles,Format',
         sharedSpaces: {
             top: 'itselem',
@@ -714,7 +714,7 @@ function initEditor(id) {
     });
     // };
     editor.disableAutoInline = true;
-    editor.config.extraPlugins = 'sharedspace';
+    editor.config.extraPlugins = 'sharedspace,font';
 
 }
 
@@ -820,7 +820,7 @@ function stopSaveCompl() {
         if (complaint.prepareData()) {
             if(typeof  statutsEdit == 'undefined') {
                 saveComplaintToDocxFile();
-            }
+            }return false;
             complaint.saveAsDraft();
         }
     } else {

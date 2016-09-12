@@ -3349,3 +3349,6 @@ input#upload-files::-webkit-file-upload-button {
 .complaints-main{
     word-break: break-word;
 }
+.cke_combo__fontsize .cke_combo_text {
+    width: 50px !important;
+}

@@ -594,11 +594,11 @@ function replaceWordTags(text) {
         text = text.replace("</u>", '</w:t></w:r>');
     }
     while (text.search("<em>") >= 0) {
-        text = text.replace("<em>", '<w:r><w:rPr><w:i/></w:rPr><w:t>');
+        text = text.replace("<em>", '<w:pPr><w:pStyle w:val="a3"/><w:numPr><w:ilvl w:val="0"/><w:numId w:val="1"/></w:numPr><w:rPr></w:rPr></w:pPr><w:r><w:rPr><w:i/></w:rPr><w:t>');
         text = text.replace("</em>", '</w:t></w:r>');
     }
     while (text.search("<strong>") >= 0) {
-        text = text.replace("<strong>", '<w:r><w:rPr><w:b/></w:rPr><w:t>');
+        text = text.replace("<strong>", '<w:r><w:rPr><w:sz w:val="40"/><w:szCs w:val="40"/><w:b/></w:rPr><w:t>');
         text = text.replace("</strong>", '</w:t></w:r>');
     }
     text = add_simple_tags_text(text);
