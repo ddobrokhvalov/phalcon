@@ -653,9 +653,9 @@ function saveComplaintToDocxFile() {
             "ufas": "г. Санкт-Петербургу (тестовое)",
             /*"myXml": '<w:p><w:pPr><w:rPr><w:color w:val="FF0000"/></w:rPr></w:pPr><w:r><w:rPr><w:color w:val="FF0000"/></w:rPr><w:t>My custom</w:t></w:r><w:r><w:rPr><w:color w:val="00FF00"/></w:rPr><w:t>XML</w:t></w:r></w:p>',*/
             "dovod": custom_text,
-            "zakaz_phone": auction.responseData.zakazchik[0].tel,
-            "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0].kontaktnoe_lico,
-            "zakaz_address": auction.responseData.zakazchik[0].pochtovy_adres,
+            "zakaz_phone": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].tel,
+            "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].kontaktnoe_lico,
+            "zakaz_address": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].pochtovy_adres,
             "zakaz_mesto": "TEST mesto",
             "organiz_fio": auction.responseData.contact.dolg_lico,
             "organiz_phone": auction.responseData.contact.tel,
@@ -829,7 +829,7 @@ function stopSaveCompl() {
         if (complaint.prepareData()) {
             if(typeof  statutsEdit == 'undefined') {
                 saveComplaintToDocxFile();
-            }
+            }return false;
             complaint.saveAsDraft();
         }
     } else {
