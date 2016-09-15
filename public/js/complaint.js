@@ -300,6 +300,7 @@ var argument = {
             var templateName = temp_name[id];
         } else {
             var templateName = "Пользовательский текст";
+            c_text = "Пользовательский текст";
         }
         if (id != "just_text") {
             $('.argument_text_container').append('<span id="argument_text_container_' + id + '" class="atx argument_text_container_' + id + '">' + templateName + ' <a class="remove-argument" value="' + id + '"  ></a></span>');
@@ -308,6 +309,10 @@ var argument = {
         var c_text = templates[id];
         if (complaint_text.length) {
             c_text = complaint_text;
+        }
+
+        if(id == "just_text"){
+            c_text = "Пользовательский текст";
         }
 
         if(cat_id != undefined && templateName != undefined) {
@@ -461,7 +466,7 @@ var auction = {
                 //complaint.setHeader();
                 $('.loading-gif').hide();
                 auction.auctionReady = true;
-                argument.addArgument("just_text", "just_text");
+               // argument.addArgument("just_text", "just_text");
             } else {
                 $('#auction_id').addClass('c-inp-error');
                 $('#result_container').append('<b style="color:red!important;" class="msg_status_parser">Ошибка!</b>');

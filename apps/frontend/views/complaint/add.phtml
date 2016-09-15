@@ -105,9 +105,9 @@
                                 <!--</div>-->
                             <!--</div>-->
                         </div>
-                        <span class="c-jadd2-f-z">Текст жалобы</span>
+                        <span class="c-jadd2-f-z" style="display:none">Текст жалобы</span>
 
-                        <div class="c-jd2-f-edit">
+                        <div class="c-jd2-f-edit" style="display:none">
                             <div class="c-jd2-f-edit-h">
                                 <div style="float: left; padding-top: 8px;" id="itselem"></div>
                                 <div class="complaint-attachment">
@@ -173,7 +173,7 @@
                         </div>
 
                         <div class="c-jd2-f-save addArgContainer">
-                            <input id="complaint_save" class="complaint_save-blue" type="submit" value="Сохранить черновик">
+                            <input id="complaint_save" class="complaint_save-blue" type="submit" value="Сохранить черновик" style="display: none">
                         </div>
                     </form>
                     <div class="c-jd2-f-cat">
@@ -347,6 +347,9 @@
 </style>
 <script>
     $(document).ready(function(){
+        $('.c-jd2-f-edit')
+
+
         if (applicant.applicant_info.length == 0) {
             $.ajax({
                 type: 'POST',
