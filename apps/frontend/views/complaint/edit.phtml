@@ -123,7 +123,7 @@
                         <span class="c-jadd2-f-z">Сокращенное имя жалобы (для идинтификации внутри системы)</span>
                         <input id="complaint_name" type="text" name="complaint_name" value="{{ complaint.complaint_name }}">
                         <div class="c-jd2-f-dov-b">
-                            <div class="opacity-cap-compl">Добавить довод</div>
+                            <div class="opacity-cap-compl search-required">Добавить довод</div>
                             <!-- <div class="c-jd2-f-dov">
                                 Доводы жалобы
                             </div>
@@ -136,15 +136,15 @@
                                 </div>
                                 <div id="argument_text_container" class="argument_text_container c-jd2-f-dov-dd-t" >
 
-                                </div>
-                                <div class="c-jd2-f-dov-dd-pick mCustomScrollbar">
+                                </div>-->
+                                <div class="c-jd2-f-dov-dd-pick mCustomScrollbar" style="display: none">
                                     <div class="c-jd2-f-dov-dd-pick-b category-container">
                                         {% for argument in arguments  %}
                                             {% if argument['category'].cnt > 0 %}
                                                 <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}" style="display: block !important;">
                                                     <span>{{ argument['category'].name }}</span>
                                                     {% for template in argument['templates']  %}
-                                                      <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>
+                                                      <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  data-req="{{ argument['category'].required }}" hidden>
                                                       <label id="template_{{ template.id }}" for="jd2cbb{{ template.id }}">{{ template.name }}</label>
                                                     {% endfor %}
                                                 </div>
@@ -152,13 +152,13 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-                            </div> -->
+                           <!-- </div> -->
                             <div class="c-jd2-f-dov-dd-pick mCustomScrollbar" style="display:none">
                                 <div class="c-jd2-f-dov-dd-pick-b category-container" style="display:none">
                                     {% for argument in arguments  %}
                                     {% if argument['category'].cnt > 0 %}
                                         {% for template in argument['templates']  %}
-                                            <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}" style="display: none !important;"></div>
+                                            <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}" style="display: none !important;" data-req="{{argument['category'].required}}"></div>
                                             <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>
                                         {% endfor %}
                                     {% endif %}
@@ -466,8 +466,9 @@
                 /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
                 $(".category-container input#jd2cbb" + value).prop('checked', true);
                 var cat = $(".category-container input#jd2cbb" + value).attr("category");
+                debugger;
                 if(Object.keys(arr_sub).length){
-                    argument.addArgument(value, cat, arr_sub[cat]);
+                    argument.addArgument(value, cat, arr_sub[cat], $('.category-container #jd2cbb' + value ).attr("data-req"));
                 } else {
                     argument.addArgument(value, cat);
                 }
@@ -524,4 +525,12 @@
     </div>
 </article>
 
+<article class="admin-popup-wrap add-popup-wrapNew edit-status" style="display:none;">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content index-main-popup">
+        <div class="admin-popup-close"></div>
+        <h6>Успех!</h6>
+        <p></p>
+    </div>
+</article>
 

@@ -135,7 +135,7 @@
                     <div class="c-jadd2-f">
                         <span class="c-jadd2-f-z">Сокращенное имя жалобы (для идинтификации внутри системы)</span>
                         <input id="complaint_name" type="text" name="complaint_name" value="{{ complaint.complaint_name }}">
-                        <div class="opacity-cap-compl">Добавить довод</div>
+                        <div class="opacity-cap-compl search-required">Добавить довод</div>
 <!--                        <div class="c-jd2-f-dov-b">-->
 <!--                            <div class="opacity-cap-compl"></div>-->
 <!--                            <div class="c-jd2-f-dov">-->
@@ -158,7 +158,7 @@
                                         <div class="c-jd2-cb-b category-tamplate category-{{ argument['category'].id }}" style="display: none !important;">
                                             <span>{{ argument['category'].name }}</span>
                                             {% for template in argument['templates']  %}
-                                            <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  hidden>
+                                            <input class="template_checkbox" id="jd2cbb{{ template.id }}" value="{{ template.id }}" category="{{ argument['category'].id }}" type="checkbox"  data-req="{{ argument['category'].required }}" hidden>
                                             <label id="template_{{ template.id }}" for="jd2cbb{{ template.id }}">{{ template.name }}</label>
                                             {% endfor %}
                                         </div>
@@ -424,6 +424,15 @@
         width: 500px;
     }
 </style>
+<article class="admin-popup-wrap add-popup-wrapNew edit-status" style="display:none;">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content index-main-popup">
+        <div class="admin-popup-close"></div>
+        <h6>Успех!</h6>
+        <p></p>
+    </div>
+</article>
+
 <article class="admin-popup-wrap edit-status" style="display:none;">
     <div class="admin-popup-bg"></div>
     <div class="admin-popup-content index-main-popup">
@@ -489,7 +498,7 @@
             $(".category-container input#jd2cbb" + value).prop('checked', true);
             var cat = $(".category-container input#jd2cbb" + value).attr("category");
             if(Object.keys(arr_sub).length){
-                argument.addArgument(value, cat, arr_sub[cat]);
+                argument.addArgument(value, cat, arr_sub[cat], $('#jd2cbb' + value ).attr("data-req"));
             } else {
                 argument.addArgument(value, cat);
             }
