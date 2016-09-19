@@ -309,9 +309,7 @@ var argument = {
         var c_text = templates[id];
         if (complaint_text.length) {
             c_text = complaint_text;
-            c_text = c_text.replace('&lt;p&gt;', '');
-            c_text = c_text.replace('&lt;/p&gt;', '');
-            c_text = c_text.replace('&amp;lt;/p&amp;gt;', '');
+            c_text = complaint_text.replace('&lt;p&gt;', '').replace('&lt;/p&gt;', '').replace('&amp;lt;/p&amp;gt;', '');
         }
 
         if(id == "just_text"){
