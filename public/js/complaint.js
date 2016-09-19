@@ -314,7 +314,7 @@ var argument = {
         if(id == "just_text"){
             c_text = "Пользовательский текст";
         }
-
+        c_text = c_text.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
         if(cat_id != undefined && templateName != undefined) {
             var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" data-required="' + objReq + '" class="template_edit template_item" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
                 (( id != 'just_text' ) ? '<span>' + templateName + '</span>' : '') +
