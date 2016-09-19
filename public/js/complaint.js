@@ -309,13 +309,15 @@ var argument = {
         var c_text = templates[id];
         if (complaint_text.length) {
             c_text = complaint_text;
-            c_text = complaint_text.replace('&lt;p&gt;', '').replace('&lt;/p&gt;', '').replace('&amp;lt;/p&amp;gt;', '');
         }
 
         if(id == "just_text"){
             c_text = "Пользовательский текст";
         }
-
+        c_text = c_text.replace('&lt;p&gt;', '');
+        c_text = c_text.replace('&lt;/p&gt;', '');
+        c_text = c_text.replace('&lt;/p&gt;', '');
+        c_text = c_text.replace('&amp;lt;/p&amp;gt;', '');
         if(cat_id != undefined && templateName != undefined) {
             var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" data-required="' + objReq + '" class="template_edit template_item" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
                 (( id != 'just_text' ) ? '<span>' + templateName + '</span>' : '') +
