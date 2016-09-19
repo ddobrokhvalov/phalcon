@@ -314,10 +314,12 @@ var argument = {
         if(id == "just_text"){
             c_text = "Пользовательский текст";
         }
+
         c_text = c_text.replace('&lt;p&gt;', '');
         c_text = c_text.replace('&lt;/p&gt;', '');
-        c_text = c_text.replace('&lt;/p&gt;', '');
         c_text = c_text.replace('&amp;lt;/p&amp;gt;', '');
+        c_text = c_text.replace('</p>', '');
+        c_text = c_text.replace('<p>', '');
         if(cat_id != undefined && templateName != undefined) {
             var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" data-required="' + objReq + '" class="template_edit template_item" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
                 (( id != 'just_text' ) ? '<span>' + templateName + '</span>' : '') +
