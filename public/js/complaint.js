@@ -310,7 +310,7 @@ var argument = {
         if (complaint_text.length) {
             c_text = complaint_text;
             c_text = c_text.replace('&lt;p&gt;', '');
-            c_text = c_text.replace('&lt;p&gt;', '');
+            c_text = c_text.replace('&lt;/p&gt;', '');
         }
 
         if(id == "just_text"){
