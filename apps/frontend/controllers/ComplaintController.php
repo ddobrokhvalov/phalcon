@@ -606,21 +606,21 @@ class ComplaintController extends ControllerBase
                 "arguments" => array(),
                 "date" => 0
             );
-            $step =                 $this->request->get('step');
-            $data['type'] =         $this->request->getPost('type');
-            $data['dateOff'] =      $this->request->getPost('dateoff');
+            $CurrentStep =  $this->request->get('step');
+            $data['type'] = $this->request->getPost('type');
+            $data['dateOff'] = $this->request->getPost('dateoff');
             $data['checkRequired'] = $this->request->getPost('checkrequired');
 
-            if (!$step || !is_numeric($step))                       throw new Exception('bad step');
-            if (!$data['type'] || !$this->checkType($data['type'])) throw new Exception('bad type');
+            if (!$CurrentStep || !is_numeric($CurrentStep)) throw new Exception('bad step');
+            if (!$data['type'] || !$this->checkTypePurchase($data['type'])) throw new Exception('bad type');
             if (!$data['dateOff'] || trim($data['dateOff']) == '')  throw new Exception('bad date');
 
             $data['required'] = $this->checkDateEndSendApp($data['dateOff'], $result);
-            if (isset($data['checkRequired']) && $data['checkRequired'] == 1) {
+            if (!empty($data['checkRequired']) && $data['checkRequired'] == 1) {
                 $data['required'] = 0;
             }
 
-            switch ($step) {
+            switch ($CurrentStep) {
                 case self::STEP_ONE:
                     $cat = new ArgumentsCategory();
                     $cat_arguments = $cat->getCategoryNotEmpty($data['type'], $data['required']);
@@ -638,10 +638,10 @@ class ComplaintController extends ControllerBase
                         }
                     }
                     echo json_encode($result);
-                    break;
+                break;
                 case self::STEP_TWO:
                     $parent_id = $this->request->getPost('id');
-                    if (!is_numeric($parent_id)) throw new Exception('bad data');
+                    if (!$parent_id || !is_numeric($parent_id)) throw new Exception('bad data');
 
                     $cat = new ArgumentsCategory();
                     $cat_arguments = $cat->getCategoryNotEmpty($data['type'], $data['required']);
@@ -661,80 +661,63 @@ class ComplaintController extends ControllerBase
                         }
                     }
                     echo json_encode($result);
-                    break;
+                break;
                 case self::STEP_THREE:
                     $id = $this->request->getPost('id');
 
-                    if (!is_numeric($id)) throw new Exception('bad data');
+                    if (!$id || !is_numeric($id)) throw new Exception('bad data');
                     $parent_id = ArgumentsCategory::findFirst($id);
-                    if ($parent_id == false) throw new Exception('no cat');
+                    if (!$parent_id) throw new Exception('no cat');
 
+                    //Получить не пустые категории (в которых есть доводы)
                     $cat_arguments = new Builder();
                     $cat_arguments->getDistinct();
                     $cat_arguments->addFrom('Multiple\Frontend\Models\ArgumentsCategory', 'ArgumentsCategory');
                     $cat_arguments->rightJoin('Multiple\Frontend\Models\Arguments', "ArgumentsCategory.id = category_id AND type LIKE '%{$data['type']}%'");
                     $cat_arguments->where("parent_id = {$id}");
                     if ($data['required'] == 1) {
-                        $cat_arguments->andWhere("ArgumentsCategory.required = {$data['required']}");
-                        $cat_arguments->andWhere("Multiple\Frontend\Models\Arguments.required = {$data['required']}");
+                        $cat_arguments->andWhere("ArgumentsCategory.required = 1");
+                        $cat_arguments->andWhere("Multiple\Frontend\Models\Arguments.required = 1");
                     }
                     $cat_arguments->groupBy('ArgumentsCategory.id');
                     $cat_arguments = $cat_arguments->getQuery()->execute();
 
-                    $arr_id = array();
-
-                    $arguments = Arguments::query();
-                    $arguments->where("category_id = {$id}");
-                    if ($data['required'] == 1) {
-                        $arguments->andWhere("required = {$data['required']}");
+                    //Если категорий нет, то получаем доводы и добавляем их в результирующий массив $result
+                    if(count($cat_arguments) == 0) {
+                        $arguments = Arguments::query();
+                        $arguments->where("category_id = {$id}");
+                        if ($data['required'] == 1) $arguments->andWhere("required = 1");
+                        $arguments->andWhere("type LIKE '%{$data['type']}%'");
+                        $arguments = $arguments->execute();
+                        $this->setArgumentsInResult($arguments, $data['type'], $result);
+                    } else {
+                        foreach ($cat_arguments as $cat) {
+                            $result['cat_arguments'][] = array(
+                                'id' => $cat->id,
+                                'name' => $cat->name,
+                                'required' => $cat->required,
+                                'parent_id' => $cat->parent_id,
+                            );
+                        }
                     }
-                    $arguments->andWhere("type LIKE '%{$data['type']}%'");
-                    $arguments = $arguments->execute();
-
-
-                    foreach ($cat_arguments as $cat) {
-                        $result['cat_arguments'][] = array(
-                            'id' => $cat->id,
-                            'name' => $cat->name,
-                            'required' => $cat->required,
-                            'parent_id' => $cat->parent_id,
-                        );
-                        $arr_id[] = $cat->id;
-                    }
-
-
-                    if (!empty($arr_id) && count($arguments) > 0) {
-                        $arguments = Arguments::query()
-                            ->where("category_id IN ({arr_id:array})")
-                            ->orWhere("category_id = {$id}")
-                            ->andWhere("required = {$data['required']}")
-                            ->andWhere("type LIKE '%{$data['type']}%'")
-                            ->bind(array("arr_id" => $arr_id))
-                            ->execute();
-                    }
-
-
-                    $this->getArguments($arguments, $data['type'], $result);
                     echo json_encode($result);
-                    break;
+                break;
                 case self::STEP_FOUR:
                     $id = $this->request->getPost('id');
-                    if (!is_numeric($id)) throw new Exception('bad data');
+                    if (!$id || !is_numeric($id)) throw new Exception('bad data');
 
                     $arguments = Arguments::query();
                     $arguments->where("category_id = {$id}");
-                    if ($data['required'] == 1) {
-                        $arguments->andWhere("required = {$data['required']}");
-                    }
+                    if ($data['required'] == 1) $arguments->andWhere("required = 1");
                     $arguments->andWhere("type LIKE '%{$data['type']}%'");
                     $arguments = $arguments->execute();
 
-                    $this->getArguments($arguments, $data['type'], $result);
+                    $this->setArgumentsInResult($arguments, $data['type'], $result);
                     echo json_encode($result);
-                    break;
+                break;
                 case self::STEP_SEARCH:
                     $search = $this->request->getPost('search');
-                    $search = (isset($search)) ? trim($search) : '';
+                    $search = (!empty($search)) ? trim($search) : '';
 
                     if (empty($search)) {
                         echo json_encode($result);
@@ -743,32 +726,24 @@ class ComplaintController extends ControllerBase
 
                     $arguments = Arguments::query();
                     $arguments->where('name LIKE :name:', array('name' => '%' . $search . '%'));
-                    if ($data['required'] == 1) {
-                        $arguments->andWhere("required = {$data['required']}");
-                    }
+                    if ($data['required'] == 1) $arguments->andWhere("required = 1");
                     $arguments->andWhere("type LIKE '%{$data['type']}%'");
                     $arguments = $arguments->execute();
 
-                    $this->getArguments($arguments, $data['type'], $result);
+                    $this->setArgumentsInResult($arguments, $data['type'], $result);
                     echo json_encode($result);
-                    break;
+                break;
             }
-            exit;
         } catch (Exception $e){
             echo json_encode(array(
                 "error" => $e->getMessage()
             ));
         }
-    }
-
-    private function translit( $str ) {
-        $rus = array('А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', 'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я');
-        $lat = array('A', 'B', 'V', 'G', 'D', 'E', 'E', 'Gh', 'Z', 'I', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'F', 'H', 'C', 'Ch', 'Sh', 'Sch', 'Y', 'Y', 'Y', 'E', 'Yu', 'Ya', 'a', 'b', 'v', 'g', 'd', 'e', 'e', 'gh', 'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', 'h', 'c', 'ch', 'sh', 'sch', 'y', 'y', 'y', 'e', 'yu', 'ya');
-        return str_replace($rus, $lat, $str);
+        exit;
     }
 
 
-    private function checkType( $type ){
+    private function checkTypePurchase($type ){
         $checkType = false;
         switch ($type){
             case 'electr_auction':
@@ -787,7 +762,7 @@ class ComplaintController extends ControllerBase
         return $checkType;
     }
 
-    private function getArguments( $arguments, $type, &$result ){
+    private function setArgumentsInResult($arguments, $type, &$result ){
         foreach($arguments as $argument){
             $result['arguments'][] = array(
                 'id'            => $argument->id,
@@ -810,5 +785,11 @@ class ComplaintController extends ControllerBase
             return 1;
         }
         return 0;
+    }
+
+    private function translit( $str ) {
+        $rus = array('А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', 'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я');
+        $lat = array('A', 'B', 'V', 'G', 'D', 'E', 'E', 'Gh', 'Z', 'I', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'F', 'H', 'C', 'Ch', 'Sh', 'Sch', 'Y', 'Y', 'Y', 'E', 'Yu', 'Ya', 'a', 'b', 'v', 'g', 'd', 'e', 'e', 'gh', 'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', 'h', 'c', 'ch', 'sh', 'sch', 'y', 'y', 'y', 'e', 'yu', 'ya');
+        return str_replace($rus, $lat, $str);
     }
 }
