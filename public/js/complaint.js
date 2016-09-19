@@ -323,10 +323,9 @@ var argument = {
                 (( id != 'just_text' ) ? '<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' : '') +
                 '</div>' +
                 '</div>' +
-                '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" >' +
-                c_text +
-                '</div></div></div>';
+                '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" ></div></div></div>';
             $('#edit_container').append(html);
+            $('#edit_textarea_'+id).html(c_text);
             var currTextArea = 'edit_textarea_' + id;
             setTimeout(function () {
                 if (drake !== false) {
