@@ -311,6 +311,7 @@ var argument = {
             c_text = complaint_text;
             c_text = c_text.replace('&lt;p&gt;', '');
             c_text = c_text.replace('&lt;/p&gt;', '');
+            c_text = c_text.replace('&amp;lt;/p&amp;gt;', '');
         }
 
         if(id == "just_text"){
