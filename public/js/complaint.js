@@ -325,7 +325,7 @@ var argument = {
                 '</div>' +
                 '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" ></div></div></div>';
             $('#edit_container').append(html);
-            $('#edit_textarea_'+id).html(c_text);
+            $('#edit_textarea_'+id).append(c_text);
             var currTextArea = 'edit_textarea_' + id;
             setTimeout(function () {
                 if (drake !== false) {
