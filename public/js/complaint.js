@@ -314,7 +314,7 @@ var argument = {
         if(id == "just_text"){
             c_text = "Пользовательский текст";
         }
-
+        c_text = c_text.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
         if(cat_id != undefined && templateName != undefined) {
             var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" data-required="' + objReq + '" class="template_edit template_item" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
                 (( id != 'just_text' ) ? '<span>' + templateName + '</span>' : '') +
@@ -323,9 +323,10 @@ var argument = {
                 (( id != 'just_text' ) ? '<a class="remove_template_from_edit template-edit-control" value="' + id + '" >Удалить</a>' : '') +
                 '</div>' +
                 '</div>' +
-                '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" ></div></div></div>';
+                '<div class="c-edit-j-t"><div contenteditable class="edit-textarea" id="edit_textarea_' + id + '" >' +
+                c_text +
+                '</div></div></div>';
             $('#edit_container').append(html);
-            $('#edit_textarea_'+id).append(c_text.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">"));
             var currTextArea = 'edit_textarea_' + id;
             setTimeout(function () {
                 if (drake !== false) {
