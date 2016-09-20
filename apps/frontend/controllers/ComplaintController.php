@@ -12,6 +12,7 @@ use Multiple\Frontend\Models\UsersArguments;
 use Multiple\Frontend\Models\Files;
 use Multiple\Backend\Models\Ufas;
 use Multiple\Library\Parser;
+use Phalcon\Acl\Exception;
 use Phalcon\Mvc\Controller;
 use \Phalcon\Paginator\Adapter\NativeArray as Paginator;
 use Multiple\Library\PaginatorBuilder;
@@ -25,6 +26,13 @@ use Multiple\Frontend\Models\Messages;
 
 class ComplaintController extends ControllerBase
 {
+    const STEP_ONE = 1;
+    const STEP_TWO = 2;
+    const STEP_THREE = 3;
+    const STEP_FOUR = 4;
+    const STEP_SEARCH = 6;
+
+
     public function indexAction()
     {
         if (!$this->user) {
@@ -430,6 +438,12 @@ class ComplaintController extends ControllerBase
         }
         $complaint = Complaint::findFirstById($data['update-complaint-id']);
         if ($complaint) {
+            if($data['complaint_text'] == '<p>Пользовательский текст</p>'){
+                $data['complaint_text'] = '<p>'.str_replace($data['argument_text'],'Пользовательский текст', '').'</p>';
+            }
+            if($data['complaint_text'] == '<p>Вам необходимо выбрать хотябы одну обязательную жалобу!</p>'){
+                $data['complaint_text'] = '<p>'.str_replace($data['argument_text'],'Вам необходимо выбрать хотябы одну обязательную жалобу!', '').'</p>';
+            }
             $complaint->complaint_name = $data['complaint_name'];
             $complaint->complaint_text = $data['complaint_text'];
             $complaint->complaint_text_order = $data['complaint_text_order'];
@@ -584,289 +598,172 @@ class ComplaintController extends ControllerBase
 
     }
 
+    /* ADD COMPLICANT */
     public function ajaxStepsAddComplaintAction(){
-        $step = $this->request->get('step');
-        if(!is_numeric($step)){
-            echo json_encode(array('error' => 'bad data'));
-            exit;
-        }
-        $result = array(
-            "cat_arguments" => array(),
-            "arguments"     => array(),
-            "date"          => 0
-        );
-        switch($step){
-            case 1:
-                $type       = $this->request->getPost('type');
-                $dateOff    = $this->request->getPost('dateoff');
-                $checkRequired = $this->request->getPost('checkrequired');
+        try {
+            $data = array();
+            $result = array(
+                "cat_arguments" => array(),
+                "arguments" => array(),
+                "date" => 0
+            );
+            $CurrentStep =  $this->request->get('step');
+            $data['type'] = $this->request->getPost('type');
+            $data['dateOff'] = $this->request->getPost('dateoff');
+            $data['checkRequired'] = $this->request->getPost('checkrequired');
 
-                if(!isset($dateOff) || trim($dateOff) == ''){
-                    echo json_encode(array('error' => 'bad date'));
-                    exit;
-                }
+            if (!$CurrentStep || !is_numeric($CurrentStep)) throw new Exception('bad step');
+            if (!$data['type'] || !$this->checkTypePurchase($data['type'])) throw new Exception('bad type');
+            if (!$data['dateOff'] || trim($data['dateOff']) == '')  throw new Exception('bad date');
 
-                if(!isset($type) || !$this->checkType($type)){
-                    echo json_encode(array('error' => 'bad type'));
-                    exit;
-                }
+            $data['required'] = $this->checkDateEndSendApp($data['dateOff'], $result);
+            if (!empty($data['checkRequired']) && $data['checkRequired'] == 1) {
+                $data['required'] = 0;
+            }
 
-                $required = $this->checkDate($dateOff, $result);
-                if(isset($checkRequired) && $checkRequired == 1){
-                    $required = 0;
-                }
+            switch ($CurrentStep) {
+                case self::STEP_ONE:
+                    $cat = new ArgumentsCategory();
+                    $cat_arguments = $cat->getCategoryNotEmpty($data['type'], $data['required']);
+                    $temp_name = array();
 
-                $cat = new ArgumentsCategory();
-                $cat_arguments = $cat->getCategoryNotEmpty( $type, $required );
-                $temp_name = array();
-                foreach($cat_arguments as $cat){
-                    if(!in_array($cat->lvl1, $temp_name)){
-                        $temp_name[] = $cat->lvl1;
-                        $result['cat_arguments'][] = array(
-                            'id' => $cat->lvl1_id,
-                            'name' => $cat->lvl1,
-                            'required' => $cat->lvl1_required,
-                            'parent_id' => 0
-                        );
-                    }
-                }
-                echo json_encode($result);
-            break;
-            case 2:
-                $parent_id  = $this->request->getPost('id');
-                $type       = $this->request->getPost('type');
-                $dateOff    = $this->request->getPost('dateoff');
-                $checkRequired = $this->request->getPost('checkrequired');
-
-//                $parent_id  = ArgumentsCategory::findFirst($id);
-//                if($parent_id == false){
-//                    echo json_encode(array('error' => 'no cat'));
-//                    exit;
-//                }
-//                $parent_id  = $parent_id->parent_id;
-
-                if(!isset($dateOff) || trim($dateOff) == ''){
-                    echo json_encode(array('error' => 'bad date'));
-                    exit;
-                }
-
-                if(!is_numeric($parent_id)){
-                    echo json_encode(array('error' => 'bad data'));
-                    exit;
-                }
-                if(!isset($type) || !$this->checkType($type)){
-                    echo json_encode(array('error' => 'bad type'));
-                    exit;
-                }
-
-                $required = $this->checkDate($dateOff, $result);
-                if(isset($checkRequired) && $checkRequired == 1){
-                    $required = 0;
-                }
-
-                $cat = new ArgumentsCategory();
-                $cat_arguments = $cat->getCategoryNotEmpty( $type, $required );
-
-                $temp_name = array();
-                foreach($cat_arguments as $cat){
-                    if($cat->lvl1_id == $parent_id) {
-                        if(!in_array($cat->lvl2, $temp_name)) {
-                            $temp_name[] = $cat->lvl2;
-                            $result["cat_arguments"][] = array(
-                                "id" => $cat->lvl2_id,
-                                "name" => $cat->lvl2,
-                                'required' => $cat->lvl2_required,
-                                "parent_id" => $cat->lvl1_id,
+                    foreach ($cat_arguments as $cat) {
+                        if (!in_array($cat->lvl1, $temp_name)) {
+                            $temp_name[] = $cat->lvl1;
+                            $result['cat_arguments'][] = array(
+                                'id' => $cat->lvl1_id,
+                                'name' => $cat->lvl1,
+                                'required' => $cat->lvl1_required,
+                                'parent_id' => 0
                             );
                         }
                     }
-                }
-                echo json_encode($result);
-            break;
-            case 3:
-                $id         = $this->request->getPost('id');
-                $type       = $this->request->getPost('type');
-                $dateOff    = $this->request->getPost('dateoff');
-                $checkRequired = $this->request->getPost('checkrequired');
-
-                if(!isset($dateOff) || trim($dateOff) == ''){
-                    echo json_encode(array('error' => 'bad date'));
-                    exit;
-                }
-
-                $required = $this->checkDate($dateOff, $result);
-                if(isset($checkRequired) && $checkRequired == 1){
-                    $required = 0;
-                }
-
-                $parent_id  = ArgumentsCategory::findFirst($id);
-                if($parent_id == false){
-                    echo json_encode(array('error' => 'no cat'));
-                    exit;
-                }
-                $parent_id  = $parent_id->parent_id;
-
-                if(!is_numeric($id)){
-                    echo json_encode(array('error' => 'bad data'));
-                    exit;
-                }
-
-                if(!isset($type) || !$this->checkType($type)){
-                    echo json_encode(array('error' => 'bad type'));
-                    exit;
-                }
-
-                $cat_arguments = new Builder();
-                $cat_arguments->getDistinct();
-                $cat_arguments->addFrom('Multiple\Frontend\Models\ArgumentsCategory', 'ArgumentsCategory');
-                $cat_arguments->rightJoin('Multiple\Frontend\Models\Arguments', "ArgumentsCategory.id = category_id AND type LIKE '%{$type}%'");
-                $cat_arguments->where("parent_id = {$id}");
-                if($required == 1){
-                    $cat_arguments->andWhere("ArgumentsCategory.required = {$required}");
-                    $cat_arguments->andWhere("Multiple\Frontend\Models\Arguments.required = {$required}");
-                }
-                $cat_arguments->groupBy('ArgumentsCategory.id');
-                $cat_arguments = $cat_arguments->getQuery()->execute();
-
-                $arr_id = array();
-
-
-                $arguments = Arguments::query();
-                $arguments->where("category_id = {$id}");
-                if($required == 1) {
-                    $arguments->andWhere("required = {$required}");
-                }
-                $arguments->andWhere("type LIKE '%{$type}%'");
-                $arguments = $arguments->execute();
-
-
-                foreach($cat_arguments as $cat){
-                    $result['cat_arguments'][] = array(
-                        'id'        => $cat->id,
-                        'name'      => $cat->name,
-                        'required' => $cat->required,
-                        'parent_id' => $cat->parent_id,
-                    );
-                    $arr_id[] = $cat->id;
-                }
-
-
-
-                if(!empty($arr_id) && count($arguments) > 0){
-                    $arguments = Arguments::query()
-                        ->where("category_id IN ({arr_id:array})")
-                        ->orWhere("category_id = {$id}")
-                        ->andWhere("required = {$required}")
-                        ->andWhere("type LIKE '%{$type}%'")
-                        ->bind(array("arr_id" => $arr_id))
-                        ->execute();
-                }
-
-
-                $this->getArguments($arguments, $type, $result);
-                echo json_encode($result);
-            break;
-            case 4:
-                $id         = $this->request->getPost('id');
-                $type       = $this->request->getPost('type');
-                $dateOff    = $this->request->getPost('dateoff');
-                $checkRequired = $this->request->getPost('checkrequired');
-
-                if(!isset($dateOff) || trim($dateOff) == ''){
-                    echo json_encode(array('error' => 'bad date'));
-                    exit;
-                }
-                if(!is_numeric($id)){
-                    echo json_encode(array('error' => 'bad data'));
-                    exit;
-                }
-                if(!isset($type) || !$this->checkType($type)){
-                    echo json_encode(array('error' => 'bad type'));
-                    exit;
-                }
-
-                $required = $this->checkDate($dateOff, $result);
-                if(isset($checkRequired) && $checkRequired == 1){
-                    $required = 0;
-                }
-
-
-                $arguments = Arguments::query();
-                $arguments->where("category_id = {$id}");
-                if($required == 1) {
-                    $arguments->andWhere("required = {$required}");
-                }
-                $arguments->andWhere("type LIKE '%{$type}%'");
-                $arguments = $arguments->execute();
-
-                $this->getArguments($arguments, $type, $result);
-                echo json_encode($result);
-            break;
-            case 6:
-                $search     = $this->request->getPost('search');
-                $search     = (isset($search)) ? trim($search) : '';
-                $type       = $this->request->getPost('type');
-                $dateOff   = $this->request->getPost('dateoff');
-                $checkRequired = $this->request->getPost('checkrequired');
-
-                if(!isset($dateOff) || trim($dateOff) == ''){
-                    echo json_encode(array('error' => 'bad date'));
-                    exit;
-                }
-                if(empty($search)){
                     echo json_encode($result);
-                    exit;
-                }
-                if(!isset($type) || !$this->checkType($type)){
-                    echo json_encode(array('error' => 'bad type'));
-                    exit;
-                }
+                break;
+                case self::STEP_TWO:
+                    $parent_id = $this->request->getPost('id');
+                    if (!$parent_id || !is_numeric($parent_id)) throw new Exception('bad data');
 
-                $required = $this->checkDate($dateOff, $result);
-                if(isset($checkRequired) && $checkRequired == 1){
-                    $required = 0;
-                }
+                    $cat = new ArgumentsCategory();
+                    $cat_arguments = $cat->getCategoryNotEmpty($data['type'], $data['required']);
+                    $temp_name = array();
 
-                $arguments = Arguments::query();
-                $arguments->where('name LIKE :name:', array('name' => '%' . $search . '%'));
-                if($required == 1) {
-                    $arguments->andWhere("required = {$required}");
-                }
-                $arguments->andWhere("type LIKE '%{$type}%'");
-                $arguments = $arguments->execute();
+                    foreach ($cat_arguments as $cat) {
+                        if ($cat->lvl1_id == $parent_id) {
+                            if (!in_array($cat->lvl2, $temp_name)) {
+                                $temp_name[] = $cat->lvl2;
+                                $result["cat_arguments"][] = array(
+                                    "id" => $cat->lvl2_id,
+                                    "name" => $cat->lvl2,
+                                    'required' => $cat->lvl2_required,
+                                    "parent_id" => $cat->lvl1_id,
+                                );
+                            }
+                        }
+                    }
+                    echo json_encode($result);
+                break;
+                case self::STEP_THREE:
+                    $id = $this->request->getPost('id');
 
-                $this->getArguments($arguments, $type, $result);
-                echo json_encode($result);
-            break;
+                    if (!$id || !is_numeric($id)) throw new Exception('bad data');
+                    $parent_id = ArgumentsCategory::findFirst($id);
+                    if (!$parent_id) throw new Exception('no cat');
+
+                    //Получить не пустые категории (в которых есть доводы)
+                    $cat_arguments = new Builder();
+                    $cat_arguments->getDistinct();
+                    $cat_arguments->addFrom('Multiple\Frontend\Models\ArgumentsCategory', 'ArgumentsCategory');
+                    $cat_arguments->rightJoin('Multiple\Frontend\Models\Arguments', "ArgumentsCategory.id = category_id AND type LIKE '%{$data['type']}%'");
+                    $cat_arguments->where("parent_id = {$id}");
+                    if ($data['required'] == 1) {
+                        $cat_arguments->andWhere("ArgumentsCategory.required = 1");
+                        $cat_arguments->andWhere("Multiple\Frontend\Models\Arguments.required = 1");
+                    }
+                    $cat_arguments->groupBy('ArgumentsCategory.id');
+                    $cat_arguments = $cat_arguments->getQuery()->execute();
+
+                    //Если категорий нет, то получаем доводы и добавляем их в результирующий массив $result
+                    if(count($cat_arguments) == 0) {
+                        $arguments = Arguments::query();
+                        $arguments->where("category_id = {$id}");
+                        if ($data['required'] == 1) $arguments->andWhere("required = 1");
+                        $arguments->andWhere("type LIKE '%{$data['type']}%'");
+                        $arguments = $arguments->execute();
+                        $this->setArgumentsInResult($arguments, $data['type'], $result);
+                    } else {
+                        foreach ($cat_arguments as $cat) {
+                            $result['cat_arguments'][] = array(
+                                'id' => $cat->id,
+                                'name' => $cat->name,
+                                'required' => $cat->required,
+                                'parent_id' => $cat->parent_id,
+                            );
+                        }
+                    }
+                    echo json_encode($result);
+                break;
+                case self::STEP_FOUR:
+                    $id = $this->request->getPost('id');
+                    if (!$id || !is_numeric($id)) throw new Exception('bad data');
+
+                    $arguments = Arguments::query();
+                    $arguments->where("category_id = {$id}");
+                    if ($data['required'] == 1) $arguments->andWhere("required = 1");
+                    $arguments->andWhere("type LIKE '%{$data['type']}%'");
+                    $arguments = $arguments->execute();
+
+                    $this->setArgumentsInResult($arguments, $data['type'], $result);
+                    echo json_encode($result);
+                break;
+                case self::STEP_SEARCH:
+                    $search = $this->request->getPost('search');
+                    $search = (!empty($search)) ? trim($search) : '';
+
+                    if (empty($search)) {
+                        echo json_encode($result);
+                        exit;
+                    }
+
+                    $arguments = Arguments::query();
+                    $arguments->where('name LIKE :name:', array('name' => '%' . $search . '%'));
+                    if ($data['required'] == 1) $arguments->andWhere("required = 1");
+                    $arguments->andWhere("type LIKE '%{$data['type']}%'");
+                    $arguments = $arguments->execute();
+
+                    $this->setArgumentsInResult($arguments, $data['type'], $result);
+                    echo json_encode($result);
+                break;
+            }
+        } catch (Exception $e){
+            echo json_encode(array(
+                "error" => $e->getMessage()
+            ));
         }
         exit;
     }
 
-    private function translit( $str ) {
-        $rus = array('А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', 'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я');
-        $lat = array('A', 'B', 'V', 'G', 'D', 'E', 'E', 'Gh', 'Z', 'I', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'F', 'H', 'C', 'Ch', 'Sh', 'Sch', 'Y', 'Y', 'Y', 'E', 'Yu', 'Ya', 'a', 'b', 'v', 'g', 'd', 'e', 'e', 'gh', 'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', 'h', 'c', 'ch', 'sh', 'sch', 'y', 'y', 'y', 'e', 'yu', 'ya');
-        return str_replace($rus, $lat, $str);
-    }
 
-
-    private function checkType( $type ){
+    private function checkTypePurchase($type ){
         $checkType = false;
-        if($type == 'electr_auction'){
-            $checkType = true;
-        } else if( $type == 'concurs'){
-            $checkType = true;
-        } else if( $type == 'kotirovok'){
-            $checkType = true;
-        } else if( $type == 'offer'){
-            $checkType = true;
-        } else {
-            echo json_encode(array('status' => 'bad type'));
-            exit;
+        switch ($type){
+            case 'electr_auction':
+                $checkType = true;
+            break;
+            case 'concurs':
+                $checkType = true;
+            break;
+            case 'kotirovok':
+                $checkType = true;
+            break;
+            case 'offer':
+                $checkType = true;
+            break;
         }
         return $checkType;
     }
 
-    private function getArguments( $arguments, $type, &$result ){
+    private function setArgumentsInResult($arguments, $type, &$result ){
         foreach($arguments as $argument){
             $result['arguments'][] = array(
                 'id'            => $argument->id,
@@ -880,7 +777,7 @@ class ComplaintController extends ControllerBase
         }
     }
 
-    private function checkDate($dateOff, &$result){
+    private function checkDateEndSendApp($dateOff, &$result){
         $dateOff = strtotime($dateOff);
         $nowTime = strtotime("now");
 
@@ -889,5 +786,11 @@ class ComplaintController extends ControllerBase
             return 1;
         }
         return 0;
+    }
+
+    private function translit( $str ) {
+        $rus = array('А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', 'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я');
+        $lat = array('A', 'B', 'V', 'G', 'D', 'E', 'E', 'Gh', 'Z', 'I', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'F', 'H', 'C', 'Ch', 'Sh', 'Sch', 'Y', 'Y', 'Y', 'E', 'Yu', 'Ya', 'a', 'b', 'v', 'g', 'd', 'e', 'e', 'gh', 'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', 'h', 'c', 'ch', 'sh', 'sch', 'y', 'y', 'y', 'e', 'yu', 'ya');
+        return str_replace($rus, $lat, $str);
     }
 }

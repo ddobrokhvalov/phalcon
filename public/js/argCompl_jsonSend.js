@@ -1,6 +1,10 @@
 $(document).ready(function() {
     $('.opacity-cap-compl').click(function() {
-        methodProcurement();
+        if ($(this).hasClass('search-required')) {
+            methodProcurement('hasReq');
+        } else {
+            methodProcurement();
+        }
     });
     $('#argComplSelect .custom-options').on('click', 'li', function() {
         clickSelectLi($(this));
@@ -22,10 +26,11 @@ $(document).ready(function() {
         $('.btn-div-showArgDescr').removeClass('hideArgDescr').text('Просмотреть').hide();
     });
     $('.btn-div').click(function() {
-        /* if($('#template_edit_just_text').length == 0) {
+        if($('#template_edit_just_text').length == 0) {
             argument.addArgument("just_text", "just_text");
         }
-        $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").show(); */
+        $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").show();
+        $('.c-jd2-f-save input').show();
         argument.addArgument(
             argObjSend.id,
             argObjSend.cat_id,
@@ -45,16 +50,30 @@ $(document).ready(function() {
 });
 
 var typeComplicant, datCome;
-function methodProcurement() {
+function methodProcurement(req) {
     if (readyDataCatArg != undefined) {
         ajaxSendObj.firstStepRewriteData();
     }
     typeComplicant = $('.type_complicant').val();
     datCome = $('.dateoff').val();
-    var data = 'step=' + startSend.step +
-        '&type=' + typeComplicant +
-        '&dateoff=' + datCome +
-        '&checkrequired=' + argObjSend.required;
+    if (req === 'hasReq') {
+        argObjSend.required = 0;
+        $('.template_item').each(function() {
+            if ($(this).attr('data-required') === '1') {
+                argObjSend.required = 1
+                return;
+            }
+        });
+        var data = 'step=' + startSend.step +
+            '&type=' + typeComplicant +
+            '&dateoff=' + datCome +
+            '&checkrequired=' + argObjSend.required;
+    } else {
+        var data = 'step=' + startSend.step +
+            '&type=' + typeComplicant +
+            '&dateoff=' + datCome +
+            '&checkrequired=' + argObjSend.required;
+    }
     startSend.sendRequest(data);
     $('.argComp').removeClass('argComp-descr');
     $('.btn-div, #argComplBtn').hide();

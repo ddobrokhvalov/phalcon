@@ -74,6 +74,12 @@ class Complaint extends Model
         $this->status = $status;
         $this->date = date('Y-m-d H:i:s');
         foreach ($data as $k => $v) {
+            if($k == 'complaint_text' && $v == '<p>Пользовательский текст</p>'){
+                $v = '<p>'.str_replace($v,'Пользовательский текст', '').'</p>';
+            }
+            if($k == 'complaint_text' && $v == '<p>Вам необходимо выбрать хотябы одну обязательную жалобу!</p>'){
+                $v = '<p>'.str_replace($v,'Вам необходимо выбрать хотябы одну обязательную жалобу!', '').'</p>';
+            }
             $this->$k = $v;
         }
 

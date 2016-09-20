@@ -300,6 +300,7 @@ var argument = {
             var templateName = temp_name[id];
         } else {
             var templateName = "Пользовательский текст";
+            c_text = "Пользовательский текст";
         }
         if (id != "just_text") {
             $('.argument_text_container').append('<span id="argument_text_container_' + id + '" class="atx argument_text_container_' + id + '">' + templateName + ' <a class="remove-argument" value="' + id + '"  ></a></span>');
@@ -310,6 +311,10 @@ var argument = {
             c_text = complaint_text;
         }
 
+        if(id == "just_text"){
+            c_text = "Пользовательский текст";
+        }
+        c_text = c_text.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
         if(cat_id != undefined && templateName != undefined) {
             var html = '<div data-category-id="' + cat_id + '" data-argument-id="' + id + '" data-required="' + objReq + '" class="template_edit template_item" id="template_edit_' + id + '"><div class="c-edit-j-h">' +
                 (( id != 'just_text' ) ? '<span>' + templateName + '</span>' : '') +
@@ -461,7 +466,7 @@ var auction = {
                 //complaint.setHeader();
                 $('.loading-gif').hide();
                 auction.auctionReady = true;
-                argument.addArgument("just_text", "just_text");
+               // argument.addArgument("just_text", "just_text");
             } else {
                 $('#auction_id').addClass('c-inp-error');
                 $('#result_container').append('<b style="color:red!important;" class="msg_status_parser">Ошибка!</b>');
