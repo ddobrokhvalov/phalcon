@@ -328,6 +328,9 @@ var argument = {
                 '</div></div></div>';
             $('#edit_container').append(html);
             var currTextArea = 'edit_textarea_' + id;
+            if ($("#" + currTextArea).length) {
+                currTextArea = currTextArea + (parseInt(Math.random() * 100000));
+            }
             setTimeout(function () {
                 if (drake !== false) {
                     drake.destroy(true);
