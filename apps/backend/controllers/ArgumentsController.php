@@ -1,6 +1,7 @@
 <?php
 namespace Multiple\Backend\Controllers;
 
+use Phalcon\Acl\Exception;
 use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Model;
 use Multiple\Backend\Models\ArgumentsCategory;
@@ -215,49 +216,57 @@ class ArgumentsController  extends ControllerBase
     }
 
 
-
-    /*AJAX*/
-
-//    public function getAjaxCategoryAction(){
-//        $obj = new ArgumentsCategory();
-//        $data = $obj->getAllCategory();
-//        $data = $obj->buildTreeArray( $data );
-//        echo json_encode( $data );
-//    }
-
-
-    public function ajaxRemoveAction()
-    {
+    public function ajaxRemoveAction(){
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
             $this->view->pick("access/denied");
             $this->setMenu();
         } else {
-            $id = $this->request->get('id');
-            $argument = $this->request->get('argument');
-            if (!is_numeric($id)) {
-                echo "bad data";
-                exit;
-            }
-            if (isset($argument) && $argument == true) {
-                Arguments::find(
-                    array(
-                        "id = {$id}",
-                    )
-                )->delete();
-                UsersArguments::find(array(
-                    "argument_id = {$id}"
-                ))->delete();
-                echo json_encode(array('status' => 'ok'));
-                exit;
-            } else {
-                $this->deleteTrees($id);
-                echo json_encode(array('status' => 'ok'));
+            try {
+                $id = $this->request->get('id');
+                $argument = $this->request->get('argument');
+                if (!$id || !is_numeric($id)) throw new Exception("bad data");
+                if (!empty($argument) && $argument == true) {
+                    Arguments::find(array(
+                            "id = {$id}",
+                    ))->delete();
+                    UsersArguments::find(array(
+                        "argument_id = {$id}"
+                    ))->delete();
+                    echo json_encode(array('status' => 'ok'));
+                    exit;
+                } else {
+                    $this->deleteTrees($id);
+                    echo json_encode(array('status' => 'ok'));
+                    exit;
+                }
+                echo json_encode(array('status' => 'err'));
+            } catch(Exception $e){
+                echo json_encode(array('status' => $e->getMessage()));
                 exit;
             }
         }
-        echo json_encode(array('status' => 'err'));
         exit;
+    }
+
+    private function deleteTrees($id){
+        Arguments::find(array(
+            "category_id = {$id}",
+        ))->delete();
+        $categories = ArgumentsCategory::find(array(
+            "parent_id = {$id}"
+        ));
+        if (count($categories)) {
+            foreach ($categories as $key) {
+                $this->deleteTrees($key->id);
+                UsersArguments::find(array(
+                    "argument_category_id = {$key->id}"
+                ))->delete();
+            }
+        }
+        ArgumentsCategory::find(array(
+            "id = {$id}"
+        ))->delete();
     }
 
     public function ajaxGetCountCatArgAction(){
@@ -266,29 +275,27 @@ class ArgumentsController  extends ControllerBase
             $this->view->pick("access/denied");
             $this->setMenu();
         } else {
-            $id = $this->request->get('id');
-            if (!is_numeric($id)) {
-                echo "bad data";
+            try {
+                $id = $this->request->get('id');
+                if (!$id || !is_numeric($id)) throw new Exception("bad data");
+                $result = array('cat_arguments' => array(), 'arg_count' => 0, 'cat_count' => 0);
+                $this->CountElementTrees($id, $result);
+                echo json_encode($result);
+            } catch (Exception $e){
+                echo json_encode(array('status' => $e->getMessage()));
                 exit;
             }
-
-            $result = array('cat_arguments' => array(), 'arg_count' => 0, 'cat_count' => 0);
-            $this->CountElementTrees($id, $result);
-            echo json_encode($result);
         }
+        exit;
     }
 
     private function CountElementTrees($id, &$arr){
-        $arg =  Arguments::find(
-            array(
+        $arg =  Arguments::find(array(
                 "category_id = {$id}",
-            )
-        );
-        $cat = ArgumentsCategory::find(
-            array(
+        ));
+        $cat = ArgumentsCategory::find(array(
                 "parent_id = {$id}"
-            )
-        );
+        ));
         $arr['arg_count'] = $arr['arg_count'] + count($arg);
         $arr['cat_count'] = $arr['cat_count'] + count($cat);
         if (count($cat)) {
@@ -299,169 +306,121 @@ class ArgumentsController  extends ControllerBase
         }
     }
 
-    private function deleteTrees($id)
-    {
-        Arguments::find(
-            array(
-                "category_id = {$id}",
-            )
-        )->delete();
-        $categories = ArgumentsCategory::find(
-            array(
-                "parent_id = {$id}"
-            )
-        );
-        if (count($categories)) {
-            foreach ($categories as $key) {
-                $this->deleteTrees($key->id);
-                UsersArguments::find(array(
-                    "argument_category_id = {$key->id}"
-                ))->delete();
-            }
-        }
-        ArgumentsCategory::find(
-            array(
-                "id = {$id}"
-            )
-        )->delete();
-    }
 
-    public function ajaxGetCatArgumentsAction()
-    {
-        $id = $this->request->get('id');
-        if (!is_numeric($id)) {
-            echo json_encode(array('error' => 'bad data'));
+    public function ajaxGetCatArgumentsAction(){
+        try {
+            $id = $this->request->get('id');
+            if (!$id || !is_numeric($id)) throw new Exception("bad data");
+
+            $result = array(
+                "cat_arguments" => array(),
+                "arguments" => array(),
+            );
+
+            $cat_arguments = ArgumentsCategory::find("parent_id = {$id}");
+            $arguments = Arguments::query()
+                ->where("category_id = {$id}")
+                ->execute();
+
+            foreach ($cat_arguments as $cat) {
+                $temp_arg = Arguments::query()
+                    ->where("category_id = {$cat->id}")
+                    ->execute();
+                $temp_cat = ArgumentsCategory::find("parent_id = {$cat->id}");
+                $result["cat_arguments"][] = array(
+                    "id" => $cat->id,
+                    "name" => $cat->name,
+                    "required" => $cat->required,
+                    "parent_id" => $cat->parent_id,
+                    "count_arg" => count($temp_arg),
+                    "count_cat" => count($temp_cat)
+                );
+            }
+
+            foreach ($arguments as $argument) {
+                $result['arguments'][] = array(
+                    'id' => $argument->id,
+                    'name' => $argument->name,
+                    'text' => $argument->text,
+                    'required' => $argument->required,
+                    'type' => $argument->type,
+                    'comment' => $argument->comment,
+                    'category_id' => $argument->category_id,
+                );
+            }
+            echo json_encode($result);
+            exit;
+        } catch (Exception $e){
+            echo json_encode(array('error' => $e->getMessage()));
             exit;
         }
-
-        $result = array(
-            "cat_arguments" => array(),
-            "arguments" => array(),
-        );
-
-        $cat_arguments = ArgumentsCategory::find("parent_id = {$id}");
-        $arguments = Arguments::query()
-            ->where("category_id = {$id}")
-            ->execute();
-
-        foreach ($cat_arguments as $cat) {
-            $temp_arg = Arguments::query()
-                ->where("category_id = {$cat->id}")
-                ->execute();
-            $temp_cat = ArgumentsCategory::find("parent_id = {$cat->id}");
-            $result["cat_arguments"][] = array(
-                "id" => $cat->id,
-                "name" => $cat->name,
-                "required" => $cat->required,
-                "parent_id" => $cat->parent_id,
-                "count_arg" => count($temp_arg),
-                "count_cat" => count($temp_cat)
-            );
-        }
-
-        foreach ($arguments as $argument) {
-            $result['arguments'][] = array(
-                'id' => $argument->id,
-                'name' => $argument->name,
-                'text' => $argument->text,
-                'required' => $argument->required,
-                'type'      => $argument->type,
-                'comment'   => $argument->comment,
-                'category_id' => $argument->category_id,
-            );
-        }
-
-        echo json_encode($result);
     }
 
-    public function ajaxAddCategoryAction()
-    {
+    public function ajaxAddCategoryAction(){
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
             echo json_encode(array('status' => 'permission denied'));
         } else {
-            $parent_id = $this->request->getPost('parent_id');
-            $parent_id = (isset($parent_id)) ? $parent_id : 0;
-            $category_name = $this->request->getPost("name");
-            $required = $this->request->getPost("required");
+            try {
+                $parent_id = $this->request->getPost('parent_id');
+                $parent_id = (isset($parent_id)) ? $parent_id : 0;
+                $category_name = $this->request->getPost("name");
+                $required = $this->request->getPost("required");
 
-            if (mb_strlen($category_name, 'UTF-8') > 50 || trim($category_name) == "") {
-                echo json_encode(array('status' => 'bad length name'));
-                exit;
-            }
-            if ($category_name) {
-                $required_parent = 0;
-                if ($parent_id != 0) {
-                    $required_parent = ArgumentsCategory::findFirst($parent_id);
-                    if ($required_parent != false) {
-                        $required_parent = $required_parent->required;
+                if (mb_strlen($category_name, 'UTF-8') > 50 || trim($category_name) == "") throw new Exception('bad length name');
+                if ($category_name) {
+                    $required_parent = 0;
+                    if ($parent_id > 0) {
+                        $required_parent = ArgumentsCategory::findFirst($parent_id);
+                        if ($required_parent) $required_parent = $required_parent->required;
                     }
+
+                    $category = new ArgumentsCategory();
+                    $category->name = $category_name;
+                    $category->parent_id = $parent_id;
+                    $category->required = (isset($required) && $required == 1) ? 1 : $required_parent;
+                    $category->create();
+                    echo json_encode(array(
+                        'id' => $category->id,
+                        'name' => $category->name,
+                        'parent_id' => $category->parent_id,
+                        'required' => $category->required
+                    ));
                 }
-
-
-                $category = new ArgumentsCategory();
-                $category->name = $category_name;
-                $category->parent_id = $parent_id;
-                $category->required = (isset($required) && $required == 1) ? 1 : $required_parent;
-                $category->create();
-                echo json_encode(array(
-                    'id' => $category->id,
-                    'name' => $category->name,
-                    'parent_id' => $category->parent_id,
-                    'required' => $category->required
-                ));
+            } catch(Exception $e){
+                echo json_encode(array('status' => $e->getMessage()));
+                exit;
             }
         }
     }
 
 
-    public function ajaxAddArgumentsAction()
-    {
+    public function ajaxAddArgumentsAction(){
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
             $this->view->pick("access/denied");
             $this->setMenu();
         } else {
-            $data = $this->request->getPost("arguments");
-            if (!isset($data)) {
-                echo json_encode(array('status' => 'non data'));
-                exit;
-            } else if (!isset($data['category_id']) || !is_numeric($data['category_id'])) {
-                echo json_encode(array('status' => 'bad id'));
-                exit;
-            } else if (!isset($data['type']) || !is_array($data['type'])) {
-                echo json_encode(array('status' => 'bad type'));
-                exit;
-            }
+            try {
+                $data = $this->request->getPost("arguments");
+                if(empty($data)) throw new Exception('non data');
+                if(!isset($data['category_id'])  || !is_numeric($data['category_id'])) throw new Exception('bad id');
+                if(!isset($data['type']) || !is_array($data['type'])) throw new Exception('bad type');
+                if(!isset($data['name']) || mb_strlen($data['name'], 'UTF-8') > 160) throw new Exception('bad length name');
+                if(!isset($data['text'])) throw new Exception('bad length text');
 
-            if (mb_strlen($data['name'], 'UTF-8') > 160) {
-                echo json_encode(array('status' => 'bad length name'));
-                exit;
-            }
+                $text = strip_tags($data['text']);
+                if (trim($text) == '') throw new Exception('bad text');
+                if (mb_strlen($text, 'UTF-8') > 6000) throw new Exception('bad length text');
 
-            $text = strip_tags($data['text']);
+                $comment = isset($data['comment']) ? trim($data['comment']) : '';
+                if (mb_strlen($comment, 'utf-8') > 1000) throw new Exception('bad length comment');
 
-            if(trim($text) == ''){
-                echo json_encode(array('status' => 'bad text'));
-                exit;
-            }
+                $this->checkTypePurchase($data['type']);
 
-            if (mb_strlen($text, 'UTF-8') > 6000) {
-                echo json_encode(array('status' => 'bad length text'));
-                exit;
-            }
+                $errors = FALSE;
+                $err_arr = array();
 
-            $comment = isset($data['comment']) ? trim($data['comment']) : '';
-            if (mb_strlen($comment, 'utf-8') > 1000) {
-                echo json_encode(array('status' => 'bad length comment'));
-                exit;
-            }
-
-            $this->checkType($data['type']);
-
-            $errors = FALSE;
-            $err_arr = array();
-            if ($data) {
                 $argument = new Arguments();
                 foreach ($data as $field => $value) {
                     if ($field != 'comment' && $field != 'type' && $field != 'required') {
@@ -473,184 +432,147 @@ class ArgumentsController  extends ControllerBase
                         }
                     }
                 }
-                if (!$errors) {
-                    $required_parent = 0;
-                    $required_parent = ArgumentsCategory::findFirst($argument->category_id);
-                    if ($required_parent != false) {
-                        $required_parent = $required_parent->required;
-                    }
-                    $argument->argument_status = 1;
-                    $argument->date = date('Y-m-d H:i:s');
-                    $argument->comment = $comment;
-                    $argument->required = (isset($data['required']) && $data['required'] == true) ? 1 : $required_parent;
-                    $argument->type = (isset($data['type']) && is_array($data['type'])) ? implode(',' , $data['type']) : '';
-                    $argument->save();
-                    echo json_encode(array(
-                        'id' => $argument->id,
-                        'category_id' => $argument->category_id,
-                        'name' => $argument->name,
-                        'text' => htmlspecialchars_decode($argument->text),
-                        'required' => $argument->required,
-                        'type' => $data['type'],
-                        'comment' => $argument->comment
-                    ));
-                    exit;
-                } else {
-                    echo json_encode(array('status' => $err_arr));
-                    exit;
-                }
-            }
-        }
-    }
+                if ($errors) throw new Exception($err_arr);
+                $required_parent = 0;
+                $required_parent = ArgumentsCategory::findFirst($argument->category_id);
+                if ($required_parent) $required_parent = $required_parent->required;
 
-
-    public function ajaxEditAction()
-    {
-        $perm = new Permission();
-        if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
-            $this->view->pick("access/denied");
-            $this->setMenu();
-        } else {
-            $edit = $this->request->getPost("edit");
-            if (!isset($edit['id']) || !is_numeric($edit['id'])) {
-                echo json_encode(array('err' => 'bad id'));
-                exit;
-            }
-            if (!isset($edit['name'])  || trim($edit['name']) == '') {
-                echo json_encode(array('err' => 'bad name'));
-                exit;
-            }
-            if (isset($edit['arg']) && $edit['arg'] == true) {
-                $comment = isset($edit['comment']) ? trim($edit['comment']) : '';
-                if (mb_strlen($comment, 'utf-8') > 1000) {
-                    echo json_encode(array('status' => 'bad length comment'));
-                    exit;
-                }
-                if (!isset($edit['type']) || !is_array($edit['type'])) {
-                    echo json_encode(array('status' => 'bad type'));
-                    exit;
-                }
-                if (!isset($edit['text']) && trim($edit['text']) == '') {
-                    echo json_encode(array('err' => 'bad text'));
-                    exit;
-                }
-                if (mb_strlen($edit['name'], 'UTF-8') > 160) {
-                    echo json_encode(array('status' => 'bad length name'));
-                    exit;
-                }
-
-                $text = strip_tags($edit['text']);
-
-                if (mb_strlen($text, 'UTF-8') > 6000) {
-                    echo json_encode(array('status' => 'bad length text'));
-                    exit;
-                }
-
-                $this->checkType($edit['type']);
-
-                $id = $edit['id'];
-                $argument = Arguments::findFirst($id);
-                if (!$argument) {
-                    echo json_encode(array('err' => 'bad id'));
-                    exit;
-                }
-                $argument->name = trim($edit['name']);
-                $argument->text = trim($edit['text']);
-                $argument->type = implode(',' , $edit['type']);
+                $argument->argument_status = 1;
+                $argument->date = date('Y-m-d H:i:s');
                 $argument->comment = $comment;
+                $argument->required = (isset($data['required']) && $data['required'] == true) ? 1 : $required_parent;
+                $argument->type = (isset($data['type']) && is_array($data['type'])) ? implode(',', $data['type']) : '';
                 $argument->save();
                 echo json_encode(array(
                     'id' => $argument->id,
                     'category_id' => $argument->category_id,
                     'name' => $argument->name,
                     'text' => htmlspecialchars_decode($argument->text),
-                    'type'      => $edit['type'],
-                    'comment'   => $argument->comment
+                    'required' => $argument->required,
+                    'type' => $data['type'],
+                    'comment' => $argument->comment
                 ));
-            } else {
-                if (mb_strlen($edit['name'], 'UTF-8') > 50 || trim($edit['name']) == "") {
-                    echo json_encode(array('status' => 'bad length name'));
-                    exit;
-                }
-                $id = $edit['id'];
-                $category = ArgumentsCategory::findFirst($id);
-
-                if($category->parent_id != 0){
-                    $parent = ArgumentsCategory::findFirst($category->parent_id);
-                    if($parent && $parent->required == 1){
-                        $edit['required'] = 1;
-                    }
-                }
-
-                if (!$category) {
-                    echo json_encode(array('err' => 'bad id'));
-                    exit;
-                }
-                $this->checkRequired($id, $edit['required']);
-                $category->name = trim($edit['name']);
-                $category->required = (isset($edit['required']) && $edit['required'] == 1) ? 1 : 0;
-                $category->save();
-                echo json_encode(array(
-                    'id' => $category->id,
-                    'name' => $category->name,
-                    'required' => $category->required,
-                    'parent_id' => $category->parent_id,
-                ));
+            } catch(Exception $e){
+                echo json_encode(array('status' => $e->getMessage()));
+                exit;
             }
         }
     }
 
-    public function checkType( $arrType ){
+
+    public function ajaxEditAction(){
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'arguments', 'edit')) {
+            $this->view->pick("access/denied");
+            $this->setMenu();
+        } else {
+            try {
+                $edit = $this->request->getPost("edit");
+                if (!isset($edit['id']) || !is_numeric($edit['id'])) throw new Exception('bad id');
+                if (!isset($edit['name']) || trim($edit['name']) == '') throw new Exception('bad name');
+
+                if (isset($edit['arg']) && $edit['arg'] == true) {
+                    $comment = isset($edit['comment']) ? trim($edit['comment']) : '';
+                    if (mb_strlen($comment, 'utf-8') > 1000) throw new Exception('bad length comment');
+                    if (!isset($edit['type']) || !is_array($edit['type'])) throw new Exception('bad type');
+                    if (!isset($edit['text']) && trim($edit['text']) == '') throw new Exception('bad text');
+                    if (mb_strlen($edit['name'], 'UTF-8') > 160) throw new Exception('bad length name');
+
+                    $text = strip_tags($edit['text']);
+                    if (mb_strlen($text, 'UTF-8') > 6000) throw new Exception('bad length text');
+
+                    $this->checkTypePurchase($edit['type']);
+
+                    $id = $edit['id'];
+                    $argument = Arguments::findFirst($id);
+                    if (!$argument) throw new Exception('bad id');
+                    $argument->name = trim($edit['name']);
+                    $argument->text = trim($edit['text']);
+                    $argument->type = implode(',', $edit['type']);
+                    $argument->comment = $comment;
+                    $argument->save();
+                    echo json_encode(array(
+                        'id' => $argument->id,
+                        'category_id' => $argument->category_id,
+                        'name' => $argument->name,
+                        'text' => htmlspecialchars_decode($argument->text),
+                        'type' => $edit['type'],
+                        'comment' => $argument->comment
+                    ));
+                } else {
+                    if (mb_strlen($edit['name'], 'UTF-8') > 50 || trim($edit['name']) == "") throw new Exception('bad length name');
+
+                    $id = $edit['id'];
+                    $category = ArgumentsCategory::findFirst($id);
+
+                    if ($category->parent_id != 0) {
+                        $parent = ArgumentsCategory::findFirst($category->parent_id);
+                        if ($parent && $parent->required == 1) {
+                            $edit['required'] = 1;
+                        }
+                    }
+
+                    if (!$category) throw new Exception('bad id');
+                    $this->checkRequired($id, $edit['required']);
+                    $category->name = trim($edit['name']);
+                    $category->required = (isset($edit['required']) && $edit['required'] == 1) ? 1 : 0;
+                    $category->save();
+                    echo json_encode(array(
+                        'id' => $category->id,
+                        'name' => $category->name,
+                        'required' => $category->required,
+                        'parent_id' => $category->parent_id,
+                    ));
+                }
+            } catch(Exception $e){
+                echo json_encode(array('status' => $e->getMessage()));
+                exit;
+            }
+        }
+    }
+
+    public function checkTypePurchase($arrType ){
         $checkType = false;
         foreach($arrType as $key){
-            if($key == 'electr_auction'){
-                $checkType = true;
-                break;
-            } else if( $key == 'concurs'){
-                $checkType = true;
-                break;
-            } else if( $key == 'kotirovok'){
-                $checkType = true;
-                break;
-            } else if( $key == 'offer'){
-                $checkType = true;
-                break;
-            } else {
-                echo json_encode(array('status' => 'bad type'));
-                exit;
+            switch ($key){
+                case 'electr_auction':
+                    $checkType = true;
+                    break;
+                case 'concurs':
+                    $checkType = true;
+                    break;
+                case 'kotirovok':
+                    $checkType = true;
+                    break;
+                case 'offer':
+                    $checkType = true;
+                    break;
             }
         }
         return $checkType;
     }
 
-    private function checkRequired($id, $required)
-    {
-        $args = Arguments::find(
-            array(
+    private function checkRequired($id, $required){
+        $args = Arguments::find(array(
                 "category_id = {$id}",
-            )
-        );
+        ));
         foreach ($args as $key) {
             $key->required = $required;
             $key->save();
         }
 
-        $categories = ArgumentsCategory::find(
-            array(
+        $categories = ArgumentsCategory::find(array(
                 "parent_id = {$id}"
-            )
-        );
+        ));
 
         if (count($categories)) {
             foreach ($categories as $key) {
                 $this->checkRequired($key->id, $required);
             }
         }
-        $cats = ArgumentsCategory::find(
-            array(
+        $cats = ArgumentsCategory::find(array(
                 "id = {$id}"
-            )
-        );
+        ));
 
         foreach ($cats as $key) {
             $key->required = $required;
