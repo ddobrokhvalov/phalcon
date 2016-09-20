@@ -326,7 +326,6 @@
         if (sortReturnNumber===0) criteriumIndex++;
       }
       if (sortReturnNumber===0) sortReturnNumber = a.pos>b.pos?1:-1;
-      //console.log('sfn',a.pos,b.pos,valueA,valueB,sortReturnNumber); // todo: remove log;
       return sortReturnNumber;
     }
 

@@ -2472,15 +2472,20 @@ input[type="radio"]:checked + label {
     margin: 10px 0;
     width: 100%;
 }
-.c-edit-j-t ol {
+/*.c-edit-j-t ol {
     float: left;
-    padding: 0 0 0 50px;
     width: 100%;
 }
 .c-edit-j-t ol li {
     float: left;
     margin: 0 0 10px;
     width: 100%;
+}*/
+.c-edit-j-t ul {
+    list-style: disc inside !important;
+}
+.c-edit-j-t ol {
+    list-style: decimal inside !important;
 }
 .c-jd2-f-edit-t i {
     font-style: italic;
@@ -2492,7 +2497,7 @@ input[type="radio"]:checked + label {
     margin: 10px 0;
     width: 100%;
 }
-.c-jd2-f-edit-t ol {
+/*.c-jd2-f-edit-t ol {
     float: left;
     padding: 0 0 0 50px;
     width: 100%;
@@ -2501,7 +2506,7 @@ input[type="radio"]:checked + label {
     float: left;
     margin: 0 0 10px;
     width: 100%;
-}
+}*/
 .c-jadd1-1 {
     background: #f7f8fa none repeat scroll 0 0;
     border-top: 3px solid #222427;

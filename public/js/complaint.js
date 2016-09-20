@@ -626,11 +626,11 @@ function saveComplaintToDocxFile() {
         JSZipUtils.getBinaryContent(url, callback);
     };
     var custom_text = "";
+    var custom_text_unformatted = "";
     $("#edit_container .edit-textarea.cke_editable").each(function(index, elem){
-        custom_text += replaceWordTags($(elem).html() + "<br>");
+        custom_text += replaceWordTags($(elem).html() + "<br>", $(elem).attr("id"));
+        custom_text_unformatted += replaceWordTags($(elem).text() + "<br>", $(elem).attr("id"));
     });
-    //var custom_text = replaceWordTags(jQuery("#edit_textarea_just_text").html());
-    //return false;
     if ($("#operator_etp").is(":checked")) {
         $file_to_load = "operator_etp.docx";
     } else {
@@ -651,7 +651,6 @@ function saveComplaintToDocxFile() {
             "applicant_email": applicant.applicant_info.email,
             "tip_zakupki": zakupka.info.type,
             "ufas": "г. Санкт-Петербургу (тестовое)",
-            /*"myXml": '<w:p><w:pPr><w:rPr><w:color w:val="FF0000"/></w:rPr></w:pPr><w:r><w:rPr><w:color w:val="FF0000"/></w:rPr><w:t>My custom</w:t></w:r><w:r><w:rPr><w:color w:val="00FF00"/></w:rPr><w:t>XML</w:t></w:r></w:p>',*/
             "dovod": custom_text,
             "zakaz_phone": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].tel,
             "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].kontaktnoe_lico,
@@ -669,18 +668,60 @@ function saveComplaintToDocxFile() {
         out = doc.getZip().generate({type:"blob"});
           var data = new FormData();
           data.append('file', out);
-
           $.ajax({
             url :  "/complaint/saveBlobFile",
             type: 'POST',
             data: data,
+            async: false,
+            cache: false,
             contentType: false,
             processData: false,
             success: function(data) {
-              //alert("boa!");
             },
             error: function() {
-              //alert("not so boa!");
+            }
+          });
+    });
+    
+    loadFile("/js/docx_generator/docx_templates/" + $file_to_load, function(err, content) {
+        if (err) { console.log("eee"); throw e };
+        doc = new Docxgen(content);
+        doc.setData({
+            "applicant_fio": applicant.applicant_info.fio_applicant,
+            "applicant_address": applicant.applicant_info.address,
+            "applicant_phone": applicant.applicant_info.telefone,
+            "applicant_position": applicant.applicant_info.position,
+            "applicant_email": applicant.applicant_info.email,
+            "tip_zakupki": zakupka.info.type,
+            "ufas": "г. Санкт-Петербургу (тестовое)",
+            "dovod": custom_text_unformatted,
+            "zakaz_phone": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].tel,
+            "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].kontaktnoe_lico,
+            "zakaz_address": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].pochtovy_adres,
+            "zakaz_mesto": "TEST mesto",
+            "organiz_fio": auction.responseData.contact.dolg_lico,
+            "organiz_phone": auction.responseData.contact.tel,
+            "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
+            "organiz_address": auction.responseData.contact.pochtovy_adres,
+            "izveshchenie": $("#auction_id").val(),
+            "zakupka_name": auction.responseData.info.object_zakupki
+            }
+        );
+        doc.render();
+        out = doc.getZip().generate({type:"blob"});
+          var data = new FormData();
+          data.append('file', out);
+          $.ajax({
+            url :  "/complaint/saveBlobFile?unformatted=1",
+            type: 'POST',
+            data: data,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+            },
+            error: function() {
             }
           });
     });
@@ -713,13 +754,13 @@ function initEditor(id) {
             {name: 'colors', groups: ['colors']},
             {name: 'about', groups: ['about']}
         ],
-        removeButtons: 'Blockquote,Indent,Outdent,About,RemoveFormat,Format,Font,Styles,Strike,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source,NumberedList',
+        removeButtons: 'Blockquote,Indent,Outdent,About,RemoveFormat,Format,Font,Styles,Strike,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Scayt,Link,Unlink,Anchor,Image,Table,HorizontalRule,SpecialChar,Maximize,Source',
         removePlugins: 'Styles,Format',
         sharedSpaces: {
             top: 'itselem',
             left: 'itselem'
         }
-    });
+    });/*BulletedList*/
     // };
     editor.disableAutoInline = true;
     editor.config.extraPlugins = 'sharedspace,font';

@@ -409,7 +409,7 @@
     $(document).ready(function(){
         $('body').on('keyup', '.c-edit-j-t', function(){
             $(this).find('span').each(function(){
-                $(this).addClass('marker_white').removeClass('marker_yellow');
+                $(this).removeClass('marker_yellow');
             })
         })
     });
@@ -489,9 +489,6 @@
     {% if edit_now %}
         .marker_yellow{
             background-color: yellow;
-        }
-        .marker_white{
-            background-color: white;
         }
     {% endif %}
 
