@@ -446,10 +446,17 @@
 <script>
     $(document).ready(function(){
         $('body').on('keyup', '.c-edit-j-t', function(){
-            $(this).find('span').each(function(){
-                $(this).removeClass('marker_yellow');
-            })
-        })
+            $(this).find('font.marker').replaceWith()
+            if(!$(this).hasClass('delete_marker')) {
+                $('font.marker_yellow').each(function(i,el){
+                    $(el).before($(el).text()).remove();
+                });
+                $('font.marker_white').each(function(i,el){
+                    $(el).before($(el).text()).remove();
+                });
+                $(this).addClass('delete_marker');
+            }
+        });
     });
 
 

@@ -6,6 +6,7 @@ function replaceWordTags(text, ckeditor_id) {
         text = text.replace("</p>", '\r\n');
         text = text.replace("&nbsp;", ' ');
     }
+    text = remove_marker(text);
     text = replace_easy_tags(text);
     var dd = text.match(/<w:r>[\s\S]*?<\/w:r>/g);
     if (dd != null) {
@@ -290,4 +291,8 @@ function get_last_closing_sign_position(text) {
         }
     }
     return position;
+}
+
+function remove_marker(text){
+    return text.replace(/<font class="marker_yellow">/g, '').replace(/<font class="marker_white">/g, '').replace(/<\/font>/g, '');
 }

@@ -321,6 +321,9 @@
     .marker_yellow{
         background-color: yellow;
     }
+    .marker_white{
+        background-color: #f7f8fa;;
+    }
     .edit-status .admin-popup-content.index-main-popup{
         text-align: center;
     }
@@ -363,9 +366,16 @@
         }
 
         $('body').on('keyup', '.c-edit-j-t', function(){
-            $(this).find('span').each(function(){
-                $(this).removeClass('marker_yellow');
-            })
+            $(this).find('font.marker').replaceWith()
+            if(!$(this).hasClass('delete_marker')) {
+                $('font.marker_yellow').each(function(i,el){
+                    $(el).before($(el).text()).remove();
+                });
+                $('font.marker_white').each(function(i,el){
+                    $(el).before($(el).text()).remove();
+                });
+                $(this).addClass('delete_marker');
+            }
         });
     });
     </script>
