@@ -368,10 +368,10 @@
         $('body').on('keyup', '.c-edit-j-t', function(){
             if(!$(this).hasClass('delete_marker')) {
                 $(this).find('font.marker_yellow').each(function(i,el){
-                    $(el).before($(el).text()).remove();
+                    $(el).before($(el).html()).remove();
                 });
                 $(this).find('font.marker_white').each(function(i,el){
-                    $(el).before($(el).text()).remove();
+                    $(el).before($(el).html()).remove();
                 });
                 $(this).addClass('delete_marker');
             }
