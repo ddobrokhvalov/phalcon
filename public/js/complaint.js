@@ -879,7 +879,7 @@ function stopSaveCompl() {
         if (complaint.prepareData()) {
             if(typeof  statutsEdit == 'undefined') {
                 saveComplaintToDocxFile();
-            }return false;
+            }
             complaint.saveAsDraft();
         }
     } else {
