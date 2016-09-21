@@ -235,7 +235,8 @@ class ComplaintController extends ControllerBase
                     if (!file_exists($baseLocation)) {
                         mkdir($baseLocation, 0777, true);
                     }
-                    $name = 'complaint_' . time() . '.docx';
+                    $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
+                    $name = 'complaint_' . $unformatted . time() . '.docx';
                     $file->moveTo($baseLocation . $name);
                 }
             }

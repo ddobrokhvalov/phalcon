@@ -10,9 +10,7 @@
     </div>
     <script>
         $(document).ready(function() {
-            debugger;
             $(".form_search").submit(function () {
-                debugger;
                 var text = $(".searc_val").val();
                 text = text.replace(/[^a-zA-ZА-Яа-я0-9-\s]/g, '');
                 $(".searc_val").val(text);

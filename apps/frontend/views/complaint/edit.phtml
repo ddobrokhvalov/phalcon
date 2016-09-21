@@ -408,10 +408,16 @@
 
     $(document).ready(function(){
         $('body').on('keyup', '.c-edit-j-t', function(){
-            $(this).find('span').each(function(){
-                $(this).addClass('marker_white').removeClass('marker_yellow');
-            })
-        })
+            if(!$(this).hasClass('delete_marker')) {
+                $(this).find('font.marker_yellow').each(function(i,el){
+                    $(el).before($(el).html()).remove();
+                });
+                $(this).find('font.marker_white').each(function(i,el){
+                    $(el).before($(el).html()).remove();
+                });
+                $(this).addClass('delete_marker');
+            }
+        });
     });
 
 
@@ -466,7 +472,6 @@
                 /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
                 $(".category-container input#jd2cbb" + value).prop('checked', true);
                 var cat = $(".category-container input#jd2cbb" + value).attr("category");
-                debugger;
                 if(Object.keys(arr_sub).length){
                     argument.addArgument(value, cat, arr_sub[cat], $('.category-container #jd2cbb' + value ).attr("data-req"));
                 } else {
@@ -490,9 +495,6 @@
     {% if edit_now %}
         .marker_yellow{
             background-color: yellow;
-        }
-        .marker_white{
-            background-color: #f7f8fa;
         }
     {% endif %}
 

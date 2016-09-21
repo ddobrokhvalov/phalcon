@@ -322,7 +322,7 @@
         background-color: yellow;
     }
     .marker_white{
-        background-color: white;
+        background-color: #f7f8fa;;
     }
     .edit-status .admin-popup-content.index-main-popup{
         text-align: center;
@@ -366,10 +366,16 @@
         }
 
         $('body').on('keyup', '.c-edit-j-t', function(){
-            $(this).find('span').each(function(){
-                $(this).addClass('marker_white').removeClass('marker_yellow');
-            })
-        })
+            if(!$(this).hasClass('delete_marker')) {
+                $(this).find('font.marker_yellow').each(function(i,el){
+                    $(el).before($(el).html()).remove();
+                });
+                $(this).find('font.marker_white').each(function(i,el){
+                    $(el).before($(el).html()).remove();
+                });
+                $(this).addClass('delete_marker');
+            }
+        });
     });
     </script>
 <script>
