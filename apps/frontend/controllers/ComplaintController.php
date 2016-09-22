@@ -610,21 +610,21 @@ class ComplaintController extends ControllerBase
             $CurrentStep =  $this->request->get('step');
             $data['type'] = $this->request->getPost('type');
             $data['dateOff'] = $this->request->getPost('dateoff');
+
+            //1 - пользователь выбрал обязательный довод  // 0 - не выбрал
             $data['checkRequired'] = $this->request->getPost('checkrequired');
 
             if (!$CurrentStep || !is_numeric($CurrentStep)) throw new Exception('bad step');
             if (!$data['type'] || !$this->checkTypePurchase($data['type'])) throw new Exception('bad type');
             if (!$data['dateOff'] || trim($data['dateOff']) == '')  throw new Exception('bad date');
 
-            $data['required'] = $this->checkDateEndSendApp($data['dateOff'], $result);
-            if (!empty($data['checkRequired']) && $data['checkRequired'] == 1) {
-                $data['required'] = 0;
-            }
+            // 0 - не просрочено // 1 - просрочено
+            $data['checkDate'] = $this->checkDateEndSendApp($data['dateOff'], $result);
 
             switch ($CurrentStep) {
                 case self::STEP_ONE:
                     $cat = new ArgumentsCategory();
-                    $cat_arguments = $cat->getCategoryNotEmpty($data['type'], $data['required']);
+                    $cat_arguments = $cat->getCategoryNotEmpty($data['type'], $data['checkDate'], $data['checkRequired']);
                     $temp_name = array();
 
                     foreach ($cat_arguments as $cat) {
@@ -645,7 +645,7 @@ class ComplaintController extends ControllerBase
                     if (!$parent_id || !is_numeric($parent_id)) throw new Exception('bad data');
 
                     $cat = new ArgumentsCategory();
-                    $cat_arguments = $cat->getCategoryNotEmpty($data['type'], $data['required']);
+                    $cat_arguments = $cat->getCategoryNotEmpty($data['type'], $data['checkDate'], $data['checkRequired']);
                     $temp_name = array();
 
                     foreach ($cat_arguments as $cat) {
@@ -676,9 +676,12 @@ class ComplaintController extends ControllerBase
                     $cat_arguments->addFrom('Multiple\Frontend\Models\ArgumentsCategory', 'ArgumentsCategory');
                     $cat_arguments->rightJoin('Multiple\Frontend\Models\Arguments', "ArgumentsCategory.id = category_id AND type LIKE '%{$data['type']}%'");
                     $cat_arguments->where("parent_id = {$id}");
-                    if ($data['required'] == 1) {
+                    if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) {
                         $cat_arguments->andWhere("ArgumentsCategory.required = 1");
                         $cat_arguments->andWhere("Multiple\Frontend\Models\Arguments.required = 1");
+                    } else if($data['checkDate'] == 0){
+                        $cat_arguments->andWhere("ArgumentsCategory.required = 0");
+                        $cat_arguments->andWhere("Multiple\Frontend\Models\Arguments.required = 0");
                     }
                     $cat_arguments->groupBy('ArgumentsCategory.id');
                     $cat_arguments = $cat_arguments->getQuery()->execute();
@@ -687,7 +690,8 @@ class ComplaintController extends ControllerBase
                     if(count($cat_arguments) == 0) {
                         $arguments = Arguments::query();
                         $arguments->where("category_id = {$id}");
-                        if ($data['required'] == 1) $arguments->andWhere("required = 1");
+                        if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) $arguments->andWhere("required = 1");
+                        if ($data['checkDate'] == 0) $arguments->andWhere("required = 0");
                         $arguments->andWhere("type LIKE '%{$data['type']}%'");
                         $arguments = $arguments->execute();
                         $this->setArgumentsInResult($arguments, $data['type'], $result);
@@ -709,7 +713,8 @@ class ComplaintController extends ControllerBase
 
                     $arguments = Arguments::query();
                     $arguments->where("category_id = {$id}");
-                    if ($data['required'] == 1) $arguments->andWhere("required = 1");
+                    if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) $arguments->andWhere("required = 1");
+                    if ($data['checkDate'] == 0) $arguments->andWhere("required = 0");
                     $arguments->andWhere("type LIKE '%{$data['type']}%'");
                     $arguments = $arguments->execute();
 
@@ -727,7 +732,8 @@ class ComplaintController extends ControllerBase
 
                     $arguments = Arguments::query();
                     $arguments->where('name LIKE :name:', array('name' => '%' . $search . '%'));
-                    if ($data['required'] == 1) $arguments->andWhere("required = 1");
+                    if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) $arguments->andWhere("required = 1");
+                    if ($data['checkDate'] == 0) $arguments->andWhere("required = 0");
                     $arguments->andWhere("type LIKE '%{$data['type']}%'");
                     $arguments = $arguments->execute();
 
