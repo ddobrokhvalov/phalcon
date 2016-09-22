@@ -7,6 +7,7 @@ function replaceWordTags(text, ckeditor_id) {
         text = text.replace("&nbsp;", ' ');
     }
     text = remove_marker(text);
+    text = replace_hard_tags(text);
     text = replace_easy_tags(text);
     var dd = text.match(/<w:r>[\s\S]*?<\/w:r>/g);
     if (dd != null) {
@@ -295,4 +296,111 @@ function get_last_closing_sign_position(text) {
 
 function remove_marker(text){
     return text.replace(/<font class="marker_yellow">/g, '').replace(/<font class="marker_white">/g, '').replace(/<\/font>/g, '');
+}
+
+function replace_hard_tags(text) {debugger;
+    var text_parts = [];
+    var text_to_end = '';
+    var open_close_tag = {
+        '<strong>':'</strong>',
+        '<em>':'</em>',
+        '<u>':'</u>',
+        '<u><em>': '</em></u>',
+        '<em><u>': '</u></em>',
+        '<strong><u>': '</u></strong>',
+        '<u><strong>': '</strong></u>',
+        '<em><strong>': '</strong></em>',
+        '<strong><em>': '</em></strong>',
+        '<em><strong><u>': '</u></strong></em>',
+        '<em><u><strong>': '</strong></u></em>',
+        '<u><em><strong>': '</strong></em></u>',
+        '<u><strong><em>': '</em></strong></u>',
+        '<strong><u><em>': '</em></u></strong>',
+        '<strong><em><u>': '</u></em></strong>'
+    };
+    var tags_1_level = ["<strong>", "<em>", "<u>"];
+    var tags_2_level = ["<u><em>", "<em><u>", "<strong><u>", "<u><strong>", "<em><strong>", "<strong><em>"];
+    var tags_3_level = ["<strong><em><u>", "<strong><u><em>", "<u><strong><em>", "<u><em><strong>", "<em><u><strong>", "<em><strong><u>"];
+    var start_sign = text.search('<');debugger;
+    while (start_sign >= 0) {
+        if (text_parts.length > 0) {
+            var first_part = second_part.substr(0, start_sign);
+            var last_closing_position = get_last_closing_sign_position(second_part);
+            var second_part = second_part.substr(start_sign, ((last_closing_position + 1) - start_sign));
+            if (text_to_end.length == 0) {
+                text_to_end = second_part.substr(last_closing_position + 1, second_part.length);
+            }
+        } else {
+            var first_part = text.substr(0, start_sign);
+            var last_closing_position = get_last_closing_sign_position(text);
+            var second_part = text.substr(start_sign, ((last_closing_position + 1) - start_sign));
+            if (text_to_end.length == 0) {
+                text_to_end = text.substr(last_closing_position + 1, text.length);
+            }
+        }
+        text_parts.push(first_part);
+        
+        for (var s = 0; s < tags_1_level.length; s++) {
+            if (second_part.startsWith(tags_1_level[s])) {
+                if (second_part[tags_1_level[s].length] == '<') {
+                    break;
+                } else {
+                    var close_position = second_part.search(open_close_tag[tags_1_level[s]]);
+                    var simple_text = second_part.substring(tags_1_level[s].length, close_position).replace(/(<([^>]+)>)/ig, "");
+                    // TODO check if inside of this part exists other tags
+                    text_parts.push(tags_1_level[s] + simple_text + open_close_tag[tags_1_level[s]]);
+                    //second_part.substr(0, close_position + tags_1_level[s].length);
+                    second_part = second_part.substr(close_position + tags_1_level[s].length + 1, second_part.length);
+                }
+            }
+        }
+        for (var s = 0; s < tags_2_level.length; s++) {
+            if (second_part[tags_2_level[s].length] == '<') {
+                break;
+            }
+            
+        }
+        for (var s = 0; s < tags_3_level.length; s++) {
+            
+        }
+        start_sign = second_part.search('<');
+        /*if (text.startsWith(tags[s])) {
+                
+            }*/
+            /*switch (tags_0_level[s]) {
+                case '<strong>':
+                    
+                    break;
+            }*/
+        /*if (second_part.startsWith('<strong><em><u>') && second_part.endsWith('</u></em></strong>') ||
+            second_part.startsWith('<strong><u><em>') && second_part.endsWith('</em></u></strong>') ||
+            second_part.startsWith('<u><strong><em>') && second_part.endsWith('</em></strong></u>') ||
+            second_part.startsWith('<u><em><strong>') && second_part.endsWith('</strong></em></u>') ||
+            second_part.startsWith('<em><u><strong>') && second_part.endsWith('</strong></u></em>') ||
+            second_part.startsWith('<em><strong><u>') && second_part.endsWith('</u></strong></em>')) {
+                return text;
+            }
+            second_part.startsWith('<strong><em>') && second_part.endsWith('</em></strong>') ||
+            second_part.startsWith('<em><strong>') && second_part.endsWith('</strong></em>') ||
+            second_part.startsWith('<u><strong>') && second_part.endsWith('</strong></u>') ||
+            second_part.startsWith('<strong><u>') && second_part.endsWith('</u></strong>') ||
+            second_part.startsWith('<em><u>') && second_part.endsWith('</u></em>') ||
+            second_part.startsWith('<u><em>') && second_part.endsWith('</em></u>') ||
+            second_part.startsWith('<em>') && second_part.endsWith('</em>') ||
+            second_part.startsWith('<u>') && second_part.endsWith('</u>') ||
+            second_part.startsWith('<strong>') && second_part.endsWith('</strong>')) {
+            return text;
+        }*/
+        /*var simple_text = '';
+        if (second_part.startsWith('<strong>')) {
+            simple_text = '<strong>' + $(second_part).text() + '</strong>';
+        } else if (second_part.startsWith('<em>')) {
+            simple_text = '<em>' + $(second_part).text() + '</em>';
+        } else {
+            simple_text = '<u>' + $(second_part).text() + '</u>';
+        }
+        return first_part + simple_text + text_to_end;*/
+        return text_parts.join('');
+    }
+    return text;
 }
