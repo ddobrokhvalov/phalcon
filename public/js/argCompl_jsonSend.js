@@ -125,9 +125,10 @@ function showArgDescr(obj) {
 function argGetReq(obj) {
     if (obj.hasClass('required')) {
         argObjSend.required = 1;
-    } else {
-        argObjSend.required = 0;
     }
+    // else {
+    //     argObjSend.required = 0;
+    // }
 }
 
 var argObjSend = {
