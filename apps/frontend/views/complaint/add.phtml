@@ -113,37 +113,58 @@
                                 <div class="complaint-attachment">
                                     <div class="file-wrapper">
                                         <div class="text-above">Прикрепить файлы</div>
-                                        <input id="upload-files" class="upload_f" type="file" multiple name="upload-files[]">
+                                        <input id="upload-files" class="upload_f first" data-filedid="first" type="file" multiple name="upload-files[]">
                                     </div>
 
                                     <script type="text/javascript">
                                         jQuery(document).ready(function(){
                                             jQuery('body').on('change','.upload_f', function(){
-                                                console.log(this);
-                                                var cnt = jQuery('.upload_f')[0].files.length;
-                                                if(cnt > 0){
-                                                    var count = jQuery('.upload_f').length + 1;
-                                                    jQuery(".file-wrapper").append('<input id="upload-files" class="upload_f" type="file" multiple="multiple" name="upload-files[]">');
-                                                    jQuery(this).off('change');
+                                                debugger;
+                                                for (var i = 0; i < this.files.length; i++){
+                                                    var hrml = '';
+                                                    var file_data = this.files[i]['name'];
+                                                    var file_type = this.files[i]['type'];
+                                                    var file_size = this.files[i]['size'] / 1024;
+                                                    var classNameInputFile = 'file' + parseInt(Math.random() * 10000);
+                                                    jQuery('.attached-files').append('<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + this.files[i]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>');
+                                                    jQuery(".file-wrapper").append('<input id="upload-files" multiple class="upload_f '+ classNameInputFile +'" data-filedid="'+ classNameInputFile + '" type="file" name="upload-files[]">');
                                                 }
-                                                var html = '';
-                                                var upload_file = jQuery('.upload_f');
-                                                for(var i = 0; i < upload_file.length; i++){
-                                                    for(var j = 0; j < jQuery(upload_file[i])[0].files.length; j++){
-                                                        var file_data = jQuery(upload_file[i])[0].files[j]['name'].split('.');
-                                                        var file_type = file_data[file_data.length - 1];
-                                                        var file_size = jQuery(upload_file[i])[0].files[j]['size'] / 1024;
-                                                        var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery(upload_file[i])[0].files[j]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
-                                                    }
-                                                }
+
+                                                this.remove();
+
+//                                                console.log(this);
+//                                                var classNameInputFile = '';
+//                                                var cnt = jQuery('.upload_f')[0].files.length;
+//                                                if(cnt > 0){
+//                                                    var count = jQuery('.upload_f').length + 1;
+//                                                    classNameInputFile = 'file' + parseInt(Math.random() * 10000);
+//                                                    jQuery(".file-wrapper").append('<input id="upload-files" multiple class="upload_f '+ classNameInputFile +'" data-filedid="'+ classNameInputFile + '" type="file" name="upload-files[]">');
+//                                                    jQuery(this).off('change');
+//                                                }
+//                                                var html = '';
+//                                                var upload_file = jQuery('.upload_f');
+//                                                for(var i = 0; i < upload_file.length; i++){
+//                                                    for(var j = 0; j < jQuery(upload_file[i])[0].files.length; j++){
+//                                                        var file_data = jQuery(upload_file[i])[0].files[j]['name'].split('.');
+//                                                        var file_type = file_data[file_data.length - 1];
+//                                                        var file_size = jQuery(upload_file[i])[0].files[j]['size'] / 1024;
+//                                                        var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery(upload_file[i])[0].files[j]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div class="delete-file" data-remclass="' + jQuery(upload_file[i]).attr("data-filedid") + '" title="Удалить файл"></div><div style="clear:both;"></div></div>';
+//                                                    }
+//                                                }
     //                                                for (i = 0; i < cnt; i++) {
     //                                                    var file_data = jQuery('#upload-files')[0].files[i]['name'].split('.');
     //                                                    var file_type = file_data[file_data.length - 1];
     //                                                    var file_size = jQuery('#upload-files')[0].files[i]['size'] / 1024;
     //                                                    var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery('#upload-files')[0].files[i]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
     //                                                }
-                                                jQuery('.attached-files').html(html);
-                                            });
+                                          //      jQuery('.attached-files').html(html);
+//                                            });
+//                                            jQuery('body').on('click','.delete-file', function(){
+//                                                var className = $(this).attr('data-remclass');
+//
+//                                                $(this).parent().remove();
+//                                                $('.' + className).remove();
+//                                            });
                                         });
     //                                    jQuery(document).ready(function(){
     //                                        jQuery('#upload-files').change(function(){
@@ -158,7 +179,7 @@
     //                                            }
     //                                            jQuery('.attached-files').html(html);
     //                                        });
-    //                                    });
+                                       });
                                     </script>
                                 </div>
                                 <input type="file" id="cjd2file" hidden />
