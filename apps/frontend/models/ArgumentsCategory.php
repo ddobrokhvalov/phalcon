@@ -28,7 +28,7 @@ LEFT JOIN `arguments_categoty` as t3 on t3.parent_id = t2.id
 RIGHT JOIN `arguments` as `arg1` ON (t2.id = `arg1`.`category_id` AND `arg1`.`type` LIKE '%{$type}%') OR (t3.id = `arg1`.`category_id` AND `arg1`.`type` LIKE '%{$type}%')
 WHERE t1.parent_id = 0 ";
         if($req == 1 && $checkRequired == 0) $sql .= ' AND (t1.required = 1 OR t2.required = 1 OR t3.required = 1)';
-        if($req == 0 && $checkRequired == 0) $sql .= '  AND (t1.required = 0 OR t2.required = 0 OR t3.required = 0)';
+        if($req == 0) $sql .= '  AND (t1.required = 0 AND t2.required = 0 OR t3.required = 0)';
         $arg = new ArgumentsCategory();
         return new Resultset(null, $arg, $arg->getReadConnection()->query($sql));
     }

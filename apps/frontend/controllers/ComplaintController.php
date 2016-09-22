@@ -690,8 +690,7 @@ class ComplaintController extends ControllerBase
                     if(count($cat_arguments) == 0) {
                         $arguments = Arguments::query();
                         $arguments->where("category_id = {$id}");
-                        if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) $arguments->andWhere("required = 1");
-                        if ($data['checkDate'] == 0) $arguments->andWhere("required = 0");
+                        $this->showRequiredOrNot($arguments, $data);
                         $arguments->andWhere("type LIKE '%{$data['type']}%'");
                         $arguments = $arguments->execute();
                         $this->setArgumentsInResult($arguments, $data['type'], $result);
@@ -713,8 +712,7 @@ class ComplaintController extends ControllerBase
 
                     $arguments = Arguments::query();
                     $arguments->where("category_id = {$id}");
-                    if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) $arguments->andWhere("required = 1");
-                    if ($data['checkDate'] == 0) $arguments->andWhere("required = 0");
+                    $this->showRequiredOrNot($arguments, $data);
                     $arguments->andWhere("type LIKE '%{$data['type']}%'");
                     $arguments = $arguments->execute();
 
@@ -732,8 +730,7 @@ class ComplaintController extends ControllerBase
 
                     $arguments = Arguments::query();
                     $arguments->where('name LIKE :name:', array('name' => '%' . $search . '%'));
-                    if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) $arguments->andWhere("required = 1");
-                    if ($data['checkDate'] == 0) $arguments->andWhere("required = 0");
+                    $this->showRequiredOrNot($arguments, $data);
                     $arguments->andWhere("type LIKE '%{$data['type']}%'");
                     $arguments = $arguments->execute();
 
@@ -798,5 +795,10 @@ class ComplaintController extends ControllerBase
         $rus = array('А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', 'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я');
         $lat = array('A', 'B', 'V', 'G', 'D', 'E', 'E', 'Gh', 'Z', 'I', 'Y', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'F', 'H', 'C', 'Ch', 'Sh', 'Sch', 'Y', 'Y', 'Y', 'E', 'Yu', 'Ya', 'a', 'b', 'v', 'g', 'd', 'e', 'e', 'gh', 'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'f', 'h', 'c', 'ch', 'sh', 'sch', 'y', 'y', 'y', 'e', 'yu', 'ya');
         return str_replace($rus, $lat, $str);
+    }
+
+    private function showRequiredOrNot($arguments, $data){
+        if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) $arguments->andWhere("required = 1");
+        if ($data['checkDate'] == 0) $arguments->andWhere("required = 0");
     }
 }
