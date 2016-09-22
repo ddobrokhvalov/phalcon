@@ -619,7 +619,7 @@ class ComplaintController extends ControllerBase
             if (!$data['dateOff'] || trim($data['dateOff']) == '')  throw new Exception('bad date');
 
             // 0 - не просрочено // 1 - просрочено
-            $data['checkDate'] = $this->checkDateEndSendApp($data['dateOff'], $result);
+            $data['checkDate'] =  $this->checkDateEndSendApp($data['dateOff'], $result);
 
             switch ($CurrentStep) {
                 case self::STEP_ONE:
@@ -690,7 +690,7 @@ class ComplaintController extends ControllerBase
                     if(count($cat_arguments) == 0) {
                         $arguments = Arguments::query();
                         $arguments->where("category_id = {$id}");
-                        $this->showRequiredOrNot($arguments, $data);
+                        $this->showRequiredOrNotRequired($arguments, $data);
                         $arguments->andWhere("type LIKE '%{$data['type']}%'");
                         $arguments = $arguments->execute();
                         $this->setArgumentsInResult($arguments, $data['type'], $result);
@@ -712,7 +712,7 @@ class ComplaintController extends ControllerBase
 
                     $arguments = Arguments::query();
                     $arguments->where("category_id = {$id}");
-                    $this->showRequiredOrNot($arguments, $data);
+                    $this->showRequiredOrNotRequired($arguments, $data);
                     $arguments->andWhere("type LIKE '%{$data['type']}%'");
                     $arguments = $arguments->execute();
 
@@ -730,7 +730,7 @@ class ComplaintController extends ControllerBase
 
                     $arguments = Arguments::query();
                     $arguments->where('name LIKE :name:', array('name' => '%' . $search . '%'));
-                    $this->showRequiredOrNot($arguments, $data);
+                    $this->showRequiredOrNotRequired($arguments, $data);
                     $arguments->andWhere("type LIKE '%{$data['type']}%'");
                     $arguments = $arguments->execute();
 
@@ -797,7 +797,7 @@ class ComplaintController extends ControllerBase
         return str_replace($rus, $lat, $str);
     }
 
-    private function showRequiredOrNot($arguments, $data){
+    private function showRequiredOrNotRequired($arguments, $data){
         if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) $arguments->andWhere("required = 1");
         if ($data['checkDate'] == 0) $arguments->andWhere("required = 0");
     }
