@@ -355,14 +355,33 @@ function replace_hard_tags(text) {debugger;
             }
         }
         for (var s = 0; s < tags_2_level.length; s++) {
-            if (second_part[tags_2_level[s].length] == '<') {
-                break;
+            if (second_part.startsWith(tags_2_level[s])) {
+                if (second_part[tags_2_level[s].length] == '<') {
+                    break;
+                } else {
+                    var cut_first = tags_2_level[s].substr(0, (tags_2_level[s].search('>') + 1));
+                    var close_position = second_part.search(open_close_tag[cut_first]);
+                    var simple_text = second_part.substring(tags_2_level[s].length, close_position).replace(/(<([^>]+)>)/ig, "");
+                    // TODO check if inside of this part exists other tags
+                    text_parts.push(tags_2_level[s] + simple_text + open_close_tag[tags_2_level[s]]);
+                    //second_part.substr(0, close_position + tags_1_level[s].length);
+                    second_part = second_part.substr(close_position + cut_first.length + 1, second_part.length);
+                }
             }
-            
         }
-        for (var s = 0; s < tags_3_level.length; s++) {
-            
-        }
+        /*for (var s = 0; s < tags_3_level.length; s++) {
+            if (second_part.startsWith(tags_3_level[s])) {
+                if (second_part[tags_3_level[s].length] == '<') {
+                    break;
+                } else {
+                    var close_position = second_part.search(open_close_tag[tags_3_level[s]]);
+                    var simple_text = second_part.substring(tags_3_level[s].length, close_position).replace(/(<([^>]+)>)/ig, "");
+                    text_parts.push(tags_3_level[s] + simple_text + open_close_tag[tags_3_level[s]]);
+                    //second_part.substr(0, close_position + tags_1_level[s].length);
+                    second_part = second_part.substr(close_position + tags_3_level[s].length + 1, second_part.length);
+                }
+            }
+        }*/
         start_sign = second_part.search('<');
         /*if (text.startsWith(tags[s])) {
                 
@@ -400,6 +419,8 @@ function replace_hard_tags(text) {debugger;
             simple_text = '<u>' + $(second_part).text() + '</u>';
         }
         return first_part + simple_text + text_to_end;*/
+    }
+    if (text_parts.length > 0) {
         return text_parts.join('');
     }
     return text;
