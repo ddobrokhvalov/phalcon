@@ -9,6 +9,7 @@ function replaceWordTags(text, ckeditor_id) {
     text = remove_marker(text);
     text = replace_hard_tags(text);
     text = replace_easy_tags(text);
+    text = add_simple_tags_text(text);
     var dd = text.match(/<w:r>[\s\S]*?<\/w:r>/g);
     if (dd != null) {
         for (var _c = 0; _c < dd.length; _c++) {
@@ -48,21 +49,21 @@ function replaceWordTags(text, ckeditor_id) {
             var curr_text = '';
             if (start_text_o.length > 0) {
                 var text_to_end_o = del_text[d_t].substr(start_sign_o, del_text[d_t].length);
-                curr_text = '<w:r><w:t>' + start_text_o + '</w:t></w:r>' + text_to_end_o;
+                curr_text = '<w:r><w:t xml:space="preserve">' + start_text_o + '</w:t></w:r>' + text_to_end_o;
                 var position_o = (get_last_closing_sign_position(curr_text)) + 1;
                 start_text_o = curr_text.substr(0, position_o);
                 text_to_end_o = curr_text.substr(position_o, curr_text.length);
-                curr_text = start_text_o + '<w:r><w:t>' + text_to_end_o + '</w:t></w:r>';
+                curr_text = start_text_o + '<w:r><w:t xml:space="preserve">' + text_to_end_o + '</w:t></w:r>';
             }
             if (curr_text.length == 0) {
-                curr_text = '<w:r><w:t>' + del_text[d_t] + '</w:t></w:r>';
+                curr_text = '<w:r><w:t xml:space="preserve">' + del_text[d_t] + '</w:t></w:r>';
             }
             text_copy += '<w:p>' + curr_text + '</w:p>';
         } else if (del_text[d_t] != "" && del_text[d_t].substr(del_text[d_t].length - 6, del_text[d_t].length) != '</w:p>') {
             var position_o = (get_last_closing_sign_position(del_text[d_t])) + 1;
             start_text_o = del_text[d_t].substr(0, position_o);
             var text_to_end_o = del_text[d_t].substr(position_o, del_text[d_t].length);
-            text_copy += start_text_o + '<w:p><w:r><w:t>' + text_to_end_o + '</w:p></w:t></w:r>';
+            text_copy += start_text_o + '<w:p><w:r><w:t xml:space="preserve">' + text_to_end_o + '</w:p></w:t></w:r>';
         } else {
             text_copy += del_text[d_t];
         }
@@ -73,87 +74,88 @@ function replaceWordTags(text, ckeditor_id) {
         var start_text = text.substr(0, start_sign);
         if (start_text.length > 0) {
             var text_to_end = text.substr(start_sign, text.length);
-            text = '<w:p><w:r><w:t>' + start_text + '</w:t></w:r></w:p>' + text_to_end;
+            text = '<w:p><w:r><w:t xml:space="preserve">' + start_text + '</w:t></w:r></w:p>' + text_to_end;
             var position = (get_last_closing_sign_position(text)) + 1;
             start_text = text.substr(0, position);
             text_to_end = text.substr(position, text.length);
-            text = start_text + '<w:p><w:r><w:t>' + text_to_end + '</w:t></w:r></w:p>';
+            text = start_text + '<w:p><w:r><w:t xml:space="preserve">' + text_to_end + '</w:t></w:r></w:p>';
         }
         
     } else {
-        text = '<w:r><w:t>' + text + '</w:t></w:r>';
+        text = '<w:r><w:t xml:space="preserve">' + text + '</w:t></w:r>';
     }
     if (text.search("<w:p") != 0) {
         text = "<w:p>" + text + "</w:p>";
     }
+    text = quick_fix(text);
     return text;
 }
 
 function replace_easy_tags(text) {
     /* 3 style selected */
     while (text.search("<strong><em><u>") >= 0) {
-        text = text.replace("<strong><em><u>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("<strong><em><u>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</u></em></strong>", '</w:t></w:r>');
     }
     while (text.search("<strong><u><em>") >= 0) {
-        text = text.replace("<strong><u><em>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("<strong><u><em>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</em></u></strong>", '</w:t></w:r>');
     }
     while (text.search("<u><strong><em>") >= 0) {
-        text = text.replace("<u><strong><em>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("<u><strong><em>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</em></strong></u>", '</w:t></w:r>');
     }
     while (text.search("<u><em><strong>") >= 0) {
-        text = text.replace("<u><em><strong>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("<u><em><strong>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</strong></em></u>", '</w:t></w:r>');
     }
     while (text.search("<em><u><strong>") >= 0) {
-        text = text.replace("<em><u><strong>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("<em><u><strong>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</strong></u></em>", '</w:t></w:r>');
     }
     while (text.search("<em><strong><u>") >= 0) {
-        text = text.replace("<em><strong><u>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("<em><strong><u>", '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</u></strong></em>", '</w:t></w:r>');
     }
 
     /* 2 style selected */
     while (text.search("<strong><em>") >= 0) {
-        text = text.replace("<strong><em>", '<w:r><w:rPr><w:b/><w:i/></w:rPr><w:t>');
+        text = text.replace("<strong><em>", '<w:r><w:rPr><w:b/><w:i/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</em></strong>", '</w:t></w:r>');
     }
     while (text.search("<em><strong>") >= 0) {
-        text = text.replace("<em><strong>", '<w:r><w:rPr><w:b/><w:i/></w:rPr><w:t>');
+        text = text.replace("<em><strong>", '<w:r><w:rPr><w:b/><w:i/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</strong></em>", '</w:t></w:r>');
     }
     while (text.search("<u><strong>") >= 0) {
-        text = text.replace("<u><strong>", '<w:r><w:rPr><w:b/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("<u><strong>", '<w:r><w:rPr><w:b/><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</strong></u>", '</w:t></w:r>');
     }
     while (text.search("<strong><u>") >= 0) {
-        text = text.replace("<strong><u>", '<w:r><w:rPr><w:b/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("<strong><u>", '<w:r><w:rPr><w:b/><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</u></strong>", '</w:t></w:r>');
     }
     while (text.search("<em><u>") >= 0) {
-        text = text.replace("<em><u>", '<w:r><w:rPr><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("<em><u>", '<w:r><w:rPr><w:i/><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</u></em>", '</w:t></w:r>');
     }
     while (text.search("<u><em>") >= 0) {
-        text = text.replace("<u><em>", '<w:r><w:rPr><w:i/><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("<u><em>", '<w:r><w:rPr><w:i/><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</em></u>", '</w:t></w:r>');
     }
     
     /* One style selected */
     while (text.search("<u>") >= 0) {
-        text = text.replace("<u>", '<w:r><w:rPr><w:u w:val="single"/></w:rPr><w:t>');
+        text = text.replace("<u>", '<w:r><w:rPr><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</u>", '</w:t></w:r>');
     }
     while (text.search("<em>") >= 0) {
-        text = text.replace("<em>", '<w:r><w:rPr><w:i/></w:rPr><w:t>');
+        text = text.replace("<em>", '<w:r><w:rPr><w:i/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</em>", '</w:t></w:r>');
     }
     
     while (text.search("<strong>") >= 0) {
-        text = text.replace("<strong>", '<w:r><w:rPr><w:b/></w:rPr><w:t>');
+        text = text.replace("<strong>", '<w:r><w:rPr><w:b/></w:rPr><w:t xml:space="preserve">');
         text = text.replace("</strong>", '</w:t></w:r>');
     }
     return text;
@@ -194,14 +196,14 @@ function add_simple_tags_text(text) {
         if(no_styles_text[i] != "</w:r><w:r>" && no_styles_text[i] != ""){
             var clone_text = no_styles_text[i];
             clone_text = clone_text.substr(6, clone_text.length - 11);
-            text = text.replace(no_styles_text[i], "</w:r><w:r><w:t>" + clone_text + "</w:t></w:r><w:r>");
+            text = text.replace(no_styles_text[i], '</w:r><w:r><w:t xml:space="preserve">' + clone_text + "</w:t></w:r><w:r>");
         }
         
     }
     /*var no_styles_text = text.match(/\<\/w:r>(.*?)\<w:r>/);
     if (no_styles_text.length > 1) {
         if (no_styles_text[1].length > 0) {
-            text = text.replace(no_styles_text[1], '<w:r><w:t>' + no_styles_text[1] + '</w:t></w:r>');
+            text = text.replace(no_styles_text[1], '<w:r><w:t xml:space="preserve">' + no_styles_text[1] + '</w:t></w:r>');
         }
     }
     no_styles_text = text.match(/\<\/w:r>(.*?)\<w:r>/);
@@ -222,35 +224,35 @@ function add_font_support(text, f_style, tag_split) {
         short_open_tag = '</w:t></w:r>';
         switch (f_style) {
             case 'strong':
-                short_close_tag = '<w:r><w:rPr><w:b/></w:rPr><w:t>';
+                short_close_tag = '<w:r><w:rPr><w:b/></w:rPr><w:t xml:space="preserve">';
                 _tag = '<w:b/>';
                 break;
             case 'italian':
-                short_close_tag = '<w:r><w:rPr><w:i/></w:rPr><w:t>';
+                short_close_tag = '<w:r><w:rPr><w:i/></w:rPr><w:t xml:space="preserve">';
                 _tag = '<w:i/>';
                 break;
             case 'underline':
-                short_close_tag = '<w:r><w:rPr><w:u w:val="single"/></w:rPr><w:t>';
+                short_close_tag = '<w:r><w:rPr><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">';
                 _tag = '<w:u w:val="single"/>';
                 break;
             case 'underline_italian':
-                short_close_tag = '<w:r><w:rPr><w:i/><w:u w:val="single"/></w:rPr><w:t>';
+                short_close_tag = '<w:r><w:rPr><w:i/><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">';
                 _tag = '<w:i/><w:u w:val="single"/>';
                 break;
             case 'underline_bold':
-                short_close_tag = '<w:r><w:rPr><w:b/><w:u w:val="single"/></w:rPr><w:t>';
+                short_close_tag = '<w:r><w:rPr><w:b/><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">';
                 _tag = '<w:b/><w:u w:val="single"/>';
                 break;
             case 'italian_bold':
-                short_close_tag = '<w:r><w:rPr><w:b/><w:i/></w:rPr><w:t>';
+                short_close_tag = '<w:r><w:rPr><w:b/><w:i/></w:rPr><w:t xml:space="preserve">';
                 _tag = '<w:b/><w:i/>';
                 break;
             case 'italian_bold_underline':
-                short_close_tag = '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t>';
+                short_close_tag = '<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t xml:space="preserve">';
                 _tag = '<w:b/><w:i/><w:u w:val="single"/>';
                 break;
             default:
-                short_close_tag = '<w:r><w:t>';
+                short_close_tag = '<w:r><w:t xml:space="preserve">';
                 break;
         }
         
@@ -270,7 +272,7 @@ function add_font_support(text, f_style, tag_split) {
         text = text.replace(substring_to_replace, short_open_tag +
                                                 '<w:r><w:rPr>' +
                                                 _tag +
-                                                '<w:sz w:val="' + font_size + '"/><w:szCs w:val="' + font_size + '"/></w:rPr><w:t>' +
+                                                '<w:sz w:val="' + font_size + '"/><w:szCs w:val="' + font_size + '"/></w:rPr><w:t xml:space="preserve">' +
                                                 only_text +
                                                 '</w:t></w:r>' +
                                                 short_close_tag);
@@ -298,7 +300,7 @@ function remove_marker(text){
     return text.replace(/<font class="marker_yellow">/g, '').replace(/<font class="marker_white">/g, '').replace(/<\/font>/g, '');
 }
 
-function replace_hard_tags(text) {debugger;
+function replace_hard_tags(text) {
     var text_parts = [];
     var text_to_end = '';
     var open_close_tag = {
@@ -321,7 +323,7 @@ function replace_hard_tags(text) {debugger;
     var tags_1_level = ["<strong>", "<em>", "<u>"];
     var tags_2_level = ["<u><em>", "<em><u>", "<strong><u>", "<u><strong>", "<em><strong>", "<strong><em>"];
     var tags_3_level = ["<strong><em><u>", "<strong><u><em>", "<u><strong><em>", "<u><em><strong>", "<em><u><strong>", "<em><strong><u>"];
-    var start_sign = text.search('<');debugger;
+    var start_sign = text.search('<');
     while (start_sign >= 0) {
         if (text_parts.length > 0) {
             var first_part = second_part.substr(0, start_sign);
@@ -341,7 +343,7 @@ function replace_hard_tags(text) {debugger;
         text_parts.push(first_part);
         
         for (var s = 0; s < tags_1_level.length; s++) {
-            if (second_part.startsWith(tags_1_level[s])) {
+            if (second_part.length > 0 && second_part.startsWith(tags_1_level[s])) {
                 if (second_part[tags_1_level[s].length] == '<') {
                     break;
                 } else {
@@ -349,13 +351,12 @@ function replace_hard_tags(text) {debugger;
                     var simple_text = second_part.substring(tags_1_level[s].length, close_position).replace(/(<([^>]+)>)/ig, "");
                     // TODO check if inside of this part exists other tags
                     text_parts.push(tags_1_level[s] + simple_text + open_close_tag[tags_1_level[s]]);
-                    //second_part.substr(0, close_position + tags_1_level[s].length);
                     second_part = second_part.substr(close_position + tags_1_level[s].length + 1, second_part.length);
                 }
             }
         }
         for (var s = 0; s < tags_2_level.length; s++) {
-            if (second_part.startsWith(tags_2_level[s])) {
+            if (second_part.length > 0 && second_part.startsWith(tags_2_level[s])) {
                 if (second_part[tags_2_level[s].length] == '<') {
                     break;
                 } else {
@@ -364,64 +365,33 @@ function replace_hard_tags(text) {debugger;
                     var simple_text = second_part.substring(tags_2_level[s].length, close_position).replace(/(<([^>]+)>)/ig, "");
                     // TODO check if inside of this part exists other tags
                     text_parts.push(tags_2_level[s] + simple_text + open_close_tag[tags_2_level[s]]);
-                    //second_part.substr(0, close_position + tags_1_level[s].length);
                     second_part = second_part.substr(close_position + cut_first.length + 1, second_part.length);
                 }
             }
         }
-        /*for (var s = 0; s < tags_3_level.length; s++) {
-            if (second_part.startsWith(tags_3_level[s])) {
-                if (second_part[tags_3_level[s].length] == '<') {
-                    break;
-                } else {
-                    var close_position = second_part.search(open_close_tag[tags_3_level[s]]);
-                    var simple_text = second_part.substring(tags_3_level[s].length, close_position).replace(/(<([^>]+)>)/ig, "");
-                    text_parts.push(tags_3_level[s] + simple_text + open_close_tag[tags_3_level[s]]);
-                    //second_part.substr(0, close_position + tags_1_level[s].length);
-                    second_part = second_part.substr(close_position + tags_3_level[s].length + 1, second_part.length);
-                }
+        for (var s = 0; s < tags_3_level.length; s++) {
+            if (second_part.length > 0 && second_part.startsWith(tags_3_level[s])) {
+                var cut_first = tags_3_level[s].substr(0, (tags_3_level[s].search('>') + 1));
+                var close_position = second_part.search(open_close_tag[cut_first]);
+                var simple_text = second_part.substring(tags_3_level[s].length, close_position).replace(/(<([^>]+)>)/ig, "");
+                text_parts.push(tags_3_level[s] + simple_text + open_close_tag[tags_3_level[s]]);
+                second_part = second_part.substr(close_position + cut_first.length + 1, second_part.length);
             }
-        }*/
-        start_sign = second_part.search('<');
-        /*if (text.startsWith(tags[s])) {
-                
-            }*/
-            /*switch (tags_0_level[s]) {
-                case '<strong>':
-                    
-                    break;
-            }*/
-        /*if (second_part.startsWith('<strong><em><u>') && second_part.endsWith('</u></em></strong>') ||
-            second_part.startsWith('<strong><u><em>') && second_part.endsWith('</em></u></strong>') ||
-            second_part.startsWith('<u><strong><em>') && second_part.endsWith('</em></strong></u>') ||
-            second_part.startsWith('<u><em><strong>') && second_part.endsWith('</strong></em></u>') ||
-            second_part.startsWith('<em><u><strong>') && second_part.endsWith('</strong></u></em>') ||
-            second_part.startsWith('<em><strong><u>') && second_part.endsWith('</u></strong></em>')) {
-                return text;
-            }
-            second_part.startsWith('<strong><em>') && second_part.endsWith('</em></strong>') ||
-            second_part.startsWith('<em><strong>') && second_part.endsWith('</strong></em>') ||
-            second_part.startsWith('<u><strong>') && second_part.endsWith('</strong></u>') ||
-            second_part.startsWith('<strong><u>') && second_part.endsWith('</u></strong>') ||
-            second_part.startsWith('<em><u>') && second_part.endsWith('</u></em>') ||
-            second_part.startsWith('<u><em>') && second_part.endsWith('</em></u>') ||
-            second_part.startsWith('<em>') && second_part.endsWith('</em>') ||
-            second_part.startsWith('<u>') && second_part.endsWith('</u>') ||
-            second_part.startsWith('<strong>') && second_part.endsWith('</strong>')) {
-            return text;
-        }*/
-        /*var simple_text = '';
-        if (second_part.startsWith('<strong>')) {
-            simple_text = '<strong>' + $(second_part).text() + '</strong>';
-        } else if (second_part.startsWith('<em>')) {
-            simple_text = '<em>' + $(second_part).text() + '</em>';
-        } else {
-            simple_text = '<u>' + $(second_part).text() + '</u>';
         }
-        return first_part + simple_text + text_to_end;*/
+        start_sign = second_part.search('<');
     }
     if (text_parts.length > 0) {
-        return text_parts.join('');
+        return text_parts.join('') + text_to_end;
+    }
+    return text;
+}
+
+function quick_fix(text) {
+    if (text.search('<w:r><w:t xml:space="preserve"><w:r><w:t xml:space="preserve">') >= 0) {
+        text = text.replace(/<w:r><w:t xml:space="preserve"><w:r><w:t xml:space="preserve">/g, '<w:r><w:t xml:space="preserve">');
+    }
+    if (text.search('</w:t></w:r></w:t></w:r>') >= 0) {
+        text = text.replace(/<\/w:t><\/w:r><\/w:t><\/w:r>/g, '<\/w:t><\/w:r>');
     }
     return text;
 }
