@@ -271,10 +271,10 @@ class Complaint extends Model
                 $newComplaint->fid = serialize(array());
                 $newComplaint->save();
                 return $newComplaint->id;
-            } elseif ($status == 'recolled' && $complaint->status == 'submitted'){
+            } elseif ($status == 'recalled' && $complaint->status == 'submitted'){
                 $complaintmovinghistory = new ComplaintMovingHistory();
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
-                $complaint->status = 'recolled';
+                $complaint->status = 'recalled';
                 $complaint->save();
             } elseif ($status == 'archive') {
                 $complaintmovinghistory = new ComplaintMovingHistory();
