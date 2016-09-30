@@ -251,7 +251,7 @@ class Complaint extends Model
                 $message = new Messages();
                 $message->to_uid = $user_id;
                 $message->subject = "Изменение статуса жалобы";
-                $message->body = "Статут вашей жалобы был изменен на '{$stat}'";
+                $message->body = "Статус вашей жалобы был изменен на '{$stat}'";
                 $message->time = date('Y-m-d H:i:s');
                 $message->stat_comp = $status;
                 $message->is_read = 0;
