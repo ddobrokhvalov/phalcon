@@ -195,14 +195,14 @@ class Complaint extends Model
         foreach ($data as $id) { //todo: make through db query this. 'id IN ()' is faster then ORM
                                  //todo: $complaint->checkComplaintOwner($v, $this->user->id) add this
          //   if ($this->checkComplaintOwner($id, $user_id)) {
+            $history_id = null;
             $complaint = Complaint::findFirstById($id);
             if(!$complaint || $complaint->status==$status) {
                 continue;
             } elseif ($status == 'activate' ) {  //This return from arhive. We need to check history and set last status.
                 $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
                 if($complainthistory){
-                    $this->changeStatus($complainthistory->old_status, [$id]);
-                }
+                    $this->changeStatus($complainthistory->old_status, [$id]);                }
                 else {
                     $this->changeStatus('draft', [$id]);
                 }
@@ -226,16 +226,19 @@ class Complaint extends Model
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
                 $complaint->status = 'recalled';
                 $complaint->save();
+                $history_id = $complaintmovinghistory->id;
             } elseif ($status == 'archive') {
                 $complaintmovinghistory = new ComplaintMovingHistory();
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
                 $complaint->status = 'archive';
                 $complaint->save();
+                $history_id = $complaintmovinghistory->id;
             } else {
                 $complaintmovinghistory = new ComplaintMovingHistory();
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
                 $complaint->status = $status;
                 $complaint->save();
+                $history_id = $complaintmovinghistory->id;
             }
             if($status != 'delete' && $status != 'copy') {
                 if($status == 'justified') $stat = 'Обоснована';
@@ -257,6 +260,7 @@ class Complaint extends Model
                 $message->is_read = 0;
                 $message->is_deleted = 0;
                 $message->comp_id = $id;
+                $message->history_id = $history_id;
                 $message->save();
             }
         }

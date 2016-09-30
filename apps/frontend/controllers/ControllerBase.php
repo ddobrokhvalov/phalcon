@@ -60,55 +60,46 @@ class ControllerBase extends Controller
         }
         $applicant = new Applicant();
         $userApplicants = $applicant->findByUserId($this->user->id);
-
+        $messages = [];
         /*Messages block*/
-        $messages = Messages::find(array(
-            'to_uid = :to_user: AND is_read = :is_read: AND is_deleted = 0',
-            "order" => "time DESC",
-            'bind' => array(
-                'to_user' => $this->user->id,
-                'is_read' => 0,
-            ),
-        ));
-
-        /*Complaint moving history*/
+        $messagesObj = $this->modelsManager->createBuilder()
+            ->columns('m.id, m.subject, m.body, m.history_id, m.time, m.stat_comp, m.comp_id, h.complaint_id, h.new_status, c.auction_id')
+            ->addFrom('Multiple\Frontend\Models\Messages', 'm')
+            ->leftJoin('Multiple\Frontend\Models\ComplaintMovingHistory', 'm.history_id = h.id', 'h')
+            ->leftJoin('Multiple\Frontend\Models\Complaint', 'c.id = h.complaint_id', 'c')
+            ->andWhere('m.to_uid = :to_user: AND m.is_read = 0 AND m.is_deleted = 0', ['to_user' => $this->user->id])
+            ->orderBy('m.time desc')
+            ->Limit(4)
+            ->getQuery()
+            ->execute();
         $compl = new Complaint();
-        $statuses = $compl->getComplaintMovingStatus($this->user->id);
-        if (count($statuses)) {
-            $move_statuses = ComplaintMovingHistory::find(
-                array(
-                    'complaint_id IN ({ids:array}) AND is_read = 0',
-                    "order" => "date DESC",
-                    'bind' => array(
-                        'ids' => array_keys($statuses)
-                    )
-                )
-            )->toArray();
-            if (count($move_statuses)) {
-                foreach ($move_statuses as &$m_status) {
-                    $m_status['auction_id'] = $statuses["{$m_status['complaint_id']}"];
-                    $m_status['status'] = $compl->getCurrentStatusRussian($m_status['new_status']);
-                    $m_status['date'] = date('d F Y', strtotime($m_status['date']));
-                    $m_status['color'] = $compl->getComplaintColor($m_status['new_status']);
+        if($messagesObj){
+            foreach($messagesObj as $obj){
+                $temp = ['id' => $obj->id,'subject' => $obj->subject, 'body' => $obj->body, 'time' => strtotime($obj->time), 'status_change' => false];
+                if(isset($obj->history_id, $obj->complaint_id, $obj->auction_id)){
+                    $temp['status_change'] = true;
+                    $temp['auction_id'] = $obj->auction_id;
+                    $temp['complaint_id'] = $obj->complaint_id;
+                    $temp['status'] = $compl->getCurrentStatusRussian($obj->new_status);
+                    $temp['color'] = $compl->getComplaintColor($obj->new_status);
+                } elseif(isset($obj->stat_comp)){
+                    $temp['status_change'] = true;
+                    $temp['status'] = $compl->getCurrentStatusRussian($obj->stat_comp);
+                    $temp['color'] = $compl->getComplaintColor($obj->stat_comp);
+                    $temp['complaint_id'] = $obj->comp_id;
                 }
+                $messages[] = $temp;
             }
         }
-        $this->view->messages = $messages->count() ? $messages : array();
-        $this->view->move_statuses = isset($move_statuses) && is_array($move_statuses) ? $move_statuses : array();
-        //$this->view->count_unread = isset($move_statuses) && is_array($move_statuses) ? count($move_statuses) : 0;
-        $this->view->count_unread = $messages->count();
-        //$messages->count() ? $this->view->count_unread += $messages->count() : '';
-
-
+        $this->view->messages = $messages;
+        $this->view->count_unread = $this->view->count_unread = Messages::count(['to_uid = :to_user: AND is_read = 0 AND is_deleted = 0','bind' => ['to_user' => $this->user->id]]);
         $this->view->setTemplateAfter('menu');
         $this->view->applicants = $userApplicants;
         $complaint = new Complaint();
         $result = $complaint->findCountUserComplaints($this->user->id);
-
         $this->view->complaints_num = $result['complaints_num'];
         $this->view->total = $result['total'];
         $this->view->user = $this->user;
-
         if(isset($_GET['status']))
             $this->view->menu_status = $_GET['status'];
         else
