@@ -303,7 +303,7 @@ class Complaint extends Model
                 $message = new Messages();
                 $message->to_uid = $user_id;
                 $message->subject = "Изменение статуса жалобы";
-                $message->body = "Статут вашей жалобы был изменен на '{$stat}' администратором.";
+                $message->body = "Статус вашей жалобы был изменен на '{$stat}' администратором.";
                 $message->time = date('Y-m-d H:i:s');
                 $message->is_read = 0;
                 $message->is_deleted = 0;
