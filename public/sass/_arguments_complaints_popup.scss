@@ -72,6 +72,9 @@
   }
   .custom-options {
     overflow: hidden;
+    top: auto;
+    bottom: 74px;
+    z-index: 100;
     margin: 14px 0 0 0;
     padding: 10px 4px 10px 30px;
     height: auto;
@@ -97,7 +100,7 @@
     }
   }
   .newHolderScroll {
-    max-height: 200px;
+    max-height: 275px;
   }
   .custom_select {
     margin-bottom: 30px;
@@ -105,8 +108,13 @@
   .arguments-steps {
     margin: 0;
     padding: 42px 0 30px;
+    opacity: 1;
+    @include transition(opacity, 0.4s, ease-out);
     &:after {
       @include hasla;
+    }
+    &.opToggle {
+      opacity: 0;
     }
   }
   .current-option {
@@ -124,29 +132,36 @@
       }
     }
     > div {
-      position: relative;
-      z-index: -1;
-      bottom: 18px;
-      transition: bottom 0.6s ease;
+      position: absolute;
+      top: -16px;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      @include transition(opacity, 0.4s, ease-out);
       &.transDiv {
-        bottom: -3px;
+        opacity: 1;
       }
       &:after {
         position: absolute;
         content: '';
-        right: 38px;
-        bottom: -16px;
+        right: 45px;
+        top: 0;
         width: 0;
         height: 0;
         border-left: 9px solid transparent;
         border-right: 9px solid transparent;
-        border-bottom: 18px solid #f0f0f0;
+        border-top: 18px solid #f0f0f0;
       }
     }
   }
 }
 .word-argCompl-find {
   position: relative;
+  opacity: 1;
+  @include transition(opacity, 0.4s, ease-out);
+  &.opToggle {
+    opacity: 0;
+  }
   p {
     display: inline-block;
     margin: 0;
