@@ -246,6 +246,7 @@ class Complaint extends Model
     public function changeStatus($status, $data, $user_id = false)//todo: do we need user_id
     {
         foreach ($data as $id) {
+            $history_id = null;
             $complaint = Complaint::findFirstById($id);
             if(!$complaint || $complaint->status==$status) {
                 continue;
@@ -271,21 +272,24 @@ class Complaint extends Model
                 $newComplaint->fid = serialize(array());
                 $newComplaint->save();
                 return $newComplaint->id;
-            } elseif ($status == 'recolled' && $complaint->status == 'submitted'){
+            } elseif ($status == 'recalled' && $complaint->status == 'submitted'){
                 $complaintmovinghistory = new ComplaintMovingHistory();
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
-                $complaint->status = 'recolled';
+                $complaint->status = 'recalled';
                 $complaint->save();
+                $history_id = $complaintmovinghistory->id;
             } elseif ($status == 'archive') {
                 $complaintmovinghistory = new ComplaintMovingHistory();
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
                 $complaint->status = 'archive';
                 $complaint->save();
+                $history_id = $complaintmovinghistory->id;
             } else {
                 $complaintmovinghistory = new ComplaintMovingHistory();
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
                 $complaint->status = $status;
                 $complaint->save();
+                $history_id = $complaintmovinghistory->id;
             }
             if($status != 'delete' && $status != 'copy') {
                 if($status == 'justified') $stat = 'Обоснована';
@@ -303,12 +307,13 @@ class Complaint extends Model
                 $message = new Messages();
                 $message->to_uid = $user_id;
                 $message->subject = "Изменение статуса жалобы";
-                $message->body = "Статут вашей жалобы был изменен на '{$stat}' администратором.";
+                $message->body = "Статус вашей жалобы был изменен на '{$stat}' администратором.";
                 $message->time = date('Y-m-d H:i:s');
                 $message->is_read = 0;
                 $message->is_deleted = 0;
                 $message->stat_comp = $status;
                 $message->comp_id = $id;
+                $message->history_id = $history_id;
                 $message->save();
             }
         }
