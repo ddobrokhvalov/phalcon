@@ -65,11 +65,11 @@ var indexComplaint = {
             url: '/complaint/recall/0',
             data: 'status=' + status + '&complaints=' + data,
             success: function (msg) {
-                $(".admin-popup-content p").text("Жалоба успешно отозвана!");
+                $(".edit-status .admin-popup-content p").text("Жалоба успешно отозвана!");
                 $('.admin-popup-close, .admin-popup-bg').on('click', function() {
                     location.reload();
                 });
-                $(".admin-popup-wrap").show();
+                $(".admin-popup-wrap.edit-status").show();
                 setTimeout( function(){
                     location.reload();
                 }, 2000);
