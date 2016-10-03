@@ -361,9 +361,9 @@ var argument = {
         $('.argument_text_container_' + id).remove();
         $('#template_edit_' + id).remove();
         $('#jd2cbb' + id).prop('checked', false);
-        /* if($(".template_edit").length <= 1){
+        if($(".template_edit").length <= 1){
             $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").hide();
-        } */
+        }
     },
     removeArgumentReq: function(obj) {
         var reqItem = 0;

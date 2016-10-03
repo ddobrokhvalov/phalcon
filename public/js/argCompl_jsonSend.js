@@ -35,7 +35,7 @@ $(document).ready(function() {
             argObjSend.id,
             argObjSend.cat_id,
             argObjSend.complaint_text.replace(/Описание:/, ''),
-            argObjSend.required
+            argObjReqType
         );
         $('.admin-popup-wrap').fadeOut();
     });
@@ -123,13 +123,24 @@ function showArgDescr(obj) {
     }
 }
 function argGetReq(obj) {
+    var newReqFlag = false;
+    $('.template_item').each(function() {
+        if ($(this).attr('data-required') === '1') {
+            newReqFlag = true;
+        }
+    });
     if (obj.hasClass('required')) {
         argObjSend.required = 1;
+        argObjReqType = 1;
     }
-    // else {
-    //     argObjSend.required = 0;
-    // }
+    else if (newReqFlag) {
+        argObjReqType = 0;
+        argObjSend.required = 1;
+    } else {
+        argObjSend.required = 0;
+    }
 }
+var argObjReqType = '';
 
 var argObjSend = {
     id: 0,
