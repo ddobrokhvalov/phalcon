@@ -141,24 +141,10 @@
                                             });
                                             jQuery('body').on('click','.delete-file', function(){
                                                 var className = $(this).attr('data-remclass');
-
                                                 $(this).parent().remove();
                                                 $('.' + className).remove();
                                             });
                                         });
-    //                                    jQuery(document).ready(function(){
-    //                                        jQuery('#upload-files').change(function(){
-    //                                            var cnt = jQuery('#upload-files')[0].files.length;
-    //                                            var i = 0;
-    //                                            var html = '';
-    //                                            for (i = 0; i < cnt; i++) {
-    //                                                var file_data = jQuery('#upload-files')[0].files[i]['name'].split('.');
-    //                                                var file_type = file_data[file_data.length - 1];
-    //                                                var file_size = jQuery('#upload-files')[0].files[i]['size'] / 1024;
-    //                                                var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery('#upload-files')[0].files[i]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display:none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
-    //                                            }
-    //                                            jQuery('.attached-files').html(html);
-    //                                        });
                                     </script>
                                 </div>
                                 <input type="file" id="cjd2file" hidden />
