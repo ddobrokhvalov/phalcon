@@ -122,6 +122,10 @@ class Complaint extends Model
                 if ($short)
                     return 'Черновик';
                 return '<span data-status="draft" class="jl-status jl-chernov">Черновик</span>';
+            case 'activate':
+                if ($short)
+                    return 'Черновик';
+                return '<span data-status="draft" class="jl-status jl-chernov">Черновик</span>';
             case 'justified':
                 if ($short)
                     return 'Обоснована';

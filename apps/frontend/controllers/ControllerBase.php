@@ -80,7 +80,7 @@ class ControllerBase extends Controller
                     $temp['status_change'] = true;
                     $temp['auction_id'] = $obj->auction_id;
                     $temp['complaint_id'] = $obj->complaint_id;
-                    $temp['status'] = $compl->getCurrentStatusRussian($obj->new_status);
+                    $temp['status'] = $compl->getCurrentStatusRussian($obj->stat_comp);
                     $temp['color'] = $compl->getComplaintColor($obj->new_status);
                 } elseif(isset($obj->stat_comp)){
                     $temp['status_change'] = true;
