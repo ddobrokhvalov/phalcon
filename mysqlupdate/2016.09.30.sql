@@ -1,0 +1,1 @@
+ALTER TABLE `messages` ADD `history_id` INT NULL DEFAULT NULL AFTER `stat_comp`

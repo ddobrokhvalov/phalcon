@@ -208,30 +208,21 @@
                 </div>
                 <div class="ch-r-m-text">
                     <ul class="ch-r-m-list">
-                        {% set cnt_mes = 0 %}
-                        {% for new_status in move_statuses %}
-                        {% if cnt_mes < 4 %}
-                        <a href="/complaint/edit/{{new_status['complaint_id']}}">
-                            <li class="{{ new_status['color'] }}">
-                                Статус вашей жалобы на заявку №{{new_status['auction_id']}} изменен на «{{new_status['status']}}»
-                                <span>{{ new_status['date'] }}</span>
+                    {% for message in messages %}
+                        {% if(message['status_change'] == true) %}
+                        {% if message['complaint_id'] is defined %}<a href="/complaint/edit/{{message['complaint_id']}}">{% endif %}
+                            <li class="{{ message['color'] }}">
+                                Статус вашей жалобы {% if message['auction_id'] is defined %}на заявку №{{message['auction_id']}} {% endif %}изменен на «{{message['status']}}»
+                                <span>{{ date('d F Y', message['time']) }}</span>
                             </li>
-                        </a>
+                        {% if message['complaint_id'] is defined %}</a>{% endif %}
+                        {% else %}
+                            <li class=" box-status-black ">
+                                {{ message['body'] }}
+                                <span>{{ date('d F Y', message['time']) }}</span>
+                            </li>
                         {% endif %}
-                        {% set cnt_mes+=1 %}
-                        {% endfor %}
-                        {% for message in messages %}
-                        {% if cnt_mes < 4 %}
-<!--                        <li class="system">-->
-<!--                            <div> Сообщение от администратора<br>Тема: {{ message.subject }} </div>-->
-<!--                            <a href="#" id="adminMessagePopup">Посмотреть</a>-->
-<!--                            <span>{{ date('d F Y', message.time|strtotime) }}</span>-->
-<!--                            {{hidden_field('message_body', 'value':message.body)}}-->
-<!--                            {{hidden_field('message_id', 'value':message.id)}}-->
-<!--                        </li>-->
-                        {% endif %}
-                        {% set cnt_mes+=1 %}
-                        {% endfor %}
+                    {% endfor %}
                         <li class="all-message-link" onclick="window.location.href='/message/index';">
                             Все сообщения
                         </li>
