@@ -40,7 +40,9 @@ function replaceWordTags(text, ckeditor_id) {
     //text = add_simple_tags_text(text);
     text = add_list(text, ckeditor_id);
     text = add_font_support(text, '', false);
+    text = new_line_fix(text);
     var del_text = text.split('\r\n');
+    
     var text_copy = '';
     for (var d_t = 0; d_t < del_text.length; d_t++) {
         if (del_text[d_t] != "" && del_text[d_t].search("<w:p") != 0) {
@@ -297,7 +299,7 @@ function get_last_closing_sign_position(text) {
 }
 
 function remove_marker(text){
-    return text.replace(/<font class="marker_yellow">/g, '').replace(/<font class="marker_white">/g, '').replace(/<\/font>/g, '');
+    return text.replace(/<font class="marker_yellow">/g, '').replace(/<font class="marker_white">/g, '').replace(/<font class="marker_red">/g, '').replace(/<\/font>/g, '');
 }
 
 function replace_hard_tags(text) {
@@ -340,7 +342,9 @@ function replace_hard_tags(text) {
                 text_to_end = text.substr(last_closing_position + 1, text.length);
             }
         }
-        text_parts.push(first_part);
+        if (first_part != '\r\n') {
+            text_parts.push(first_part);
+        }
         
         for (var s = 0; s < tags_1_level.length; s++) {
             if (second_part.length > 0 && second_part.startsWith(tags_1_level[s])) {
@@ -378,6 +382,16 @@ function replace_hard_tags(text) {
                 second_part = second_part.substr(close_position + cut_first.length + 1, second_part.length);
             }
         }
+        if (second_part.startsWith('<ol>')) {
+            var list_html = second_part.substr(0, second_part.search('</ol>') + '</ol>'.length);
+            text_parts.push(list_html);
+            second_part = second_part.replace(list_html, '');
+        }
+        if (second_part.startsWith('<span')) {
+            var list_html = second_part.substr(0, second_part.search('</span>') + '</span>'.length);
+            text_parts.push(list_html);
+            second_part = second_part.replace(list_html, '');
+        }
         start_sign = second_part.search('<');
     }
     if (text_parts.length > 0) {
@@ -392,6 +406,13 @@ function quick_fix(text) {
     }
     if (text.search('</w:t></w:r></w:t></w:r>') >= 0) {
         text = text.replace(/<\/w:t><\/w:r><\/w:t><\/w:r>/g, '<\/w:t><\/w:r>');
+    }
+    return text;
+}
+
+function new_line_fix(text) {
+    if (text.search('\r\n</w:t></w:r>') >= 0) {
+        text = text.replace(/\r\n<\/w:t><\/w:r>/g, '</w:t></w:r>\r\n');
     }
     return text;
 }
