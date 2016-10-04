@@ -75,7 +75,7 @@ class ControllerBase extends Controller
         $compl = new Complaint();
         if($messagesObj){
             foreach($messagesObj as $obj){
-                $temp = ['id' => $obj->id,'subject' => $obj->subject, 'body' => $obj->body, 'time' => strtotime($obj->time), 'status_change' => false];
+                $temp = ['id' => $obj->id,'subject' => $obj->subject, 'body' => $obj->body, 'time' => strtotime($obj->time), 'status_change' => false, 'comp_id' => $obj->comp_id];
                 if(isset($obj->history_id, $obj->complaint_id, $obj->auction_id)){
                     $temp['status_change'] = true;
                     $temp['auction_id'] = $obj->auction_id;

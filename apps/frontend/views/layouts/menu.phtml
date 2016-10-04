@@ -217,10 +217,12 @@
                             </li>
                         {% if message['complaint_id'] is defined %}</a>{% endif %}
                         {% else %}
+                        <a href="/complaint/edit/{{message['comp_id']}}">
                             <li class=" box-status-black ">
                                 {{ message['body'] }}
                                 <span>{{ date('d F Y', message['time']) }}</span>
                             </li>
+                        </a>
                         {% endif %}
                     {% endfor %}
                         <li class="all-message-link" onclick="window.location.href='/message/index';">
