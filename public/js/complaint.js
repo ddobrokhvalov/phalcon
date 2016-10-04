@@ -636,104 +636,149 @@ function saveComplaintToDocxFile() {
     };
     var custom_text = "";
     var custom_text_unformatted = "";
-    $("#edit_container .edit-textarea.cke_editable").each(function(index, elem){
-        custom_text += replaceWordTags($(elem).html() + "<br>", $(elem).attr("id"));
-        custom_text_unformatted += replaceWordTags($(elem).text() + "<br>", $(elem).attr("id"));
+    var search_tags = ['span', 'strong', 'em', 'u'];
+    var wrong_ck_formatting = [];
+    var assoc_wrong_ck_formatting = {};
+    var docx_generator_allowed = true;
+
+    $(".edit-textarea.cke_editable").each(function(index, elem) {
+        $(search_tags).each(function(s_tag_index, s_tag_value) {
+            var entered_text = $(elem).html();
+            $(entered_text).find(s_tag_value).each(function(inner_ind, inner_elem){
+                var find_search_tags = $.grep(search_tags, function(value) {
+                    return value != s_tag_value;
+                });
+                $(find_search_tags).each(function(f_s_index, f_s_value) {
+                    if ($(inner_elem).html()[0] != '<' && !$(inner_elem).html().startsWith('<' + f_s_value) && $(inner_elem).html().search(f_s_value) > 0) {
+                        docx_generator_allowed = false;
+                        if ($.inArray($(inner_elem).html(), wrong_ck_formatting) == -1) {
+                            wrong_ck_formatting.push($(inner_elem).html());
+                            assoc_wrong_ck_formatting[s_tag_value] = $(inner_elem).html();
+                        }
+                    }
+                });
+            });
+        });
     });
-    if ($("#operator_etp").is(":checked")) {
-        $file_to_load = "operator_etp.docx";
-    } else {
-        if (compare_dates(procedura.info.okonchanie)) {
-            $file_to_load = "documentation.docx";
-        } else {
-            $file_to_load = "decline.docx";
-        }
-    }
-    loadFile("/js/docx_generator/docx_templates/" + $file_to_load, function(err, content) {
-        if (err) { console.log("eee"); throw e };
-        doc = new Docxgen(content);
-        doc.setData({
-            "applicant_fio": applicant.applicant_info.fio_applicant,
-            "applicant_address": applicant.applicant_info.address,
-            "applicant_phone": applicant.applicant_info.telefone,
-            "applicant_position": applicant.applicant_info.position,
-            "applicant_email": applicant.applicant_info.email,
-            "tip_zakupki": zakupka.info.type,
-            "ufas": "г. Санкт-Петербургу (тестовое)",
-            "dovod": custom_text,
-            "zakaz_phone": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].tel,
-            "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].kontaktnoe_lico,
-            "zakaz_address": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].pochtovy_adres,
-            "zakaz_mesto": "TEST mesto",
-            "organiz_fio": auction.responseData.contact.dolg_lico,
-            "organiz_phone": auction.responseData.contact.tel,
-            "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
-            "organiz_address": auction.responseData.contact.pochtovy_adres,
-            "izveshchenie": $("#auction_id").val(),
-            "zakupka_name": auction.responseData.info.object_zakupki
-            }
-        );
-        doc.render();
-        out = doc.getZip().generate({type:"blob"});
-          var data = new FormData();
-          data.append('file', out);
-          $.ajax({
-            url :  "/complaint/saveBlobFile",
-            type: 'POST',
-            data: data,
-            async: false,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function(data) {
-            },
-            error: function() {
-            }
-          });
-    });
+    if (docx_generator_allowed) {
+        $(".edit-textarea.cke_editable").each(function(index, elem){
+            custom_text += replaceWordTags($(elem).html() + "<br>", $(elem).attr("id"));
+            custom_text_unformatted += replaceWordTags($(elem).text() + "<br>", $(elem).attr("id"));
+        });
     
-    loadFile("/js/docx_generator/docx_templates/" + $file_to_load, function(err, content) {
-        if (err) { console.log("eee"); throw e };
-        doc = new Docxgen(content);
-        doc.setData({
-            "applicant_fio": applicant.applicant_info.fio_applicant,
-            "applicant_address": applicant.applicant_info.address,
-            "applicant_phone": applicant.applicant_info.telefone,
-            "applicant_position": applicant.applicant_info.position,
-            "applicant_email": applicant.applicant_info.email,
-            "tip_zakupki": zakupka.info.type,
-            "ufas": "г. Санкт-Петербургу (тестовое)",
-            "dovod": custom_text_unformatted,
-            "zakaz_phone": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].tel,
-            "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].kontaktnoe_lico,
-            "zakaz_address": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].pochtovy_adres,
-            "zakaz_mesto": "TEST mesto",
-            "organiz_fio": auction.responseData.contact.dolg_lico,
-            "organiz_phone": auction.responseData.contact.tel,
-            "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
-            "organiz_address": auction.responseData.contact.pochtovy_adres,
-            "izveshchenie": $("#auction_id").val(),
-            "zakupka_name": auction.responseData.info.object_zakupki
+        if ($("#operator_etp").is(":checked")) {
+            $file_to_load = "operator_etp.docx";
+        } else {
+            if (compare_dates(procedura.info.okonchanie)) {
+                $file_to_load = "documentation.docx";
+            } else {
+                $file_to_load = "decline.docx";
             }
-        );
-        doc.render();
-        out = doc.getZip().generate({type:"blob"});
-          var data = new FormData();
-          data.append('file', out);
-          $.ajax({
-            url :  "/complaint/saveBlobFile?unformatted=1",
-            type: 'POST',
-            data: data,
-            async: false,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function(data) {
-            },
-            error: function() {
-            }
-          });
-    });
+        }
+        loadFile("/js/docx_generator/docx_templates/" + $file_to_load, function(err, content) {
+            if (err) { console.log("eee"); throw e };
+            doc = new Docxgen(content);
+            doc.setData({
+                "applicant_fio": applicant.applicant_info.fio_applicant,
+                "applicant_address": applicant.applicant_info.address,
+                "applicant_phone": applicant.applicant_info.telefone,
+                "applicant_position": applicant.applicant_info.position,
+                "applicant_email": applicant.applicant_info.email,
+                "tip_zakupki": zakupka.info.type,
+                "ufas": "г. Санкт-Петербургу (тестовое)",
+                "dovod": custom_text,
+                "zakaz_phone": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].tel,
+                "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].kontaktnoe_lico,
+                "zakaz_address": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].pochtovy_adres,
+                "zakaz_mesto": "TEST mesto",
+                "organiz_fio": auction.responseData.contact.dolg_lico,
+                "organiz_phone": auction.responseData.contact.tel,
+                "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
+                "organiz_address": auction.responseData.contact.pochtovy_adres,
+                "izveshchenie": $("#auction_id").val(),
+                "zakupka_name": auction.responseData.info.object_zakupki
+                }
+            );
+            doc.render();
+            out = doc.getZip().generate({type:"blob"});
+              var data = new FormData();
+              data.append('file', out);
+              $.ajax({
+                url :  "/complaint/saveBlobFile",
+                type: 'POST',
+                data: data,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                },
+                error: function() {
+                }
+              });
+        });
+        
+        loadFile("/js/docx_generator/docx_templates/" + $file_to_load, function(err, content) {
+            if (err) { console.log("eee"); throw e };
+            doc = new Docxgen(content);
+            doc.setData({
+                "applicant_fio": applicant.applicant_info.fio_applicant,
+                "applicant_address": applicant.applicant_info.address,
+                "applicant_phone": applicant.applicant_info.telefone,
+                "applicant_position": applicant.applicant_info.position,
+                "applicant_email": applicant.applicant_info.email,
+                "tip_zakupki": zakupka.info.type,
+                "ufas": "г. Санкт-Петербургу (тестовое)",
+                "dovod": custom_text_unformatted,
+                "zakaz_phone": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].tel,
+                "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].kontaktnoe_lico,
+                "zakaz_address": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].pochtovy_adres,
+                "zakaz_mesto": "TEST mesto",
+                "organiz_fio": auction.responseData.contact.dolg_lico,
+                "organiz_phone": auction.responseData.contact.tel,
+                "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
+                "organiz_address": auction.responseData.contact.pochtovy_adres,
+                "izveshchenie": $("#auction_id").val(),
+                "zakupka_name": auction.responseData.info.object_zakupki
+                }
+            );
+            doc.render();
+            out = doc.getZip().generate({type:"blob"});
+              var data = new FormData();
+              data.append('file', out);
+              $.ajax({
+                url :  "/complaint/saveBlobFile?unformatted=1",
+                type: 'POST',
+                data: data,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                },
+                error: function() {
+                }
+              });
+        });
+    } else {
+        var wrong_format_text = '';
+        var open_close_tag = {
+            '<span>':'</span>',
+            '<strong>':'</strong>',
+            '<em>':'</em>',
+            '<u>':'</u>'
+        };
+        $.each(assoc_wrong_ck_formatting, function( key, value ) {
+            var _en_text = '<' + key + '>' + value + open_close_tag['<' + key + '>'];
+            wrong_format_text += '&bull;&nbsp;' + _en_text + '</br>';
+            $(".edit-textarea.cke_editable").each(function(index, elem) {
+                var entered_text = $(elem).html();
+                entered_text = entered_text.replace(_en_text, '<font class="marker_red">' + _en_text + '</font>');
+                $(elem).html(entered_text);
+            });
+        });
+        showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Такое форматирование недопустимо:</br>" + wrong_format_text);
+    }
 }
 function incrementMenuCount() {
     var countAll = $('.menu-status-all').html();
