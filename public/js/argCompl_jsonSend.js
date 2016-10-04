@@ -83,12 +83,14 @@ function methodProcurement(req) {
 function searchStep(e) {
     ajaxSendObj.step = 6;
     var searchValue = $('.word-argCompl-input input').val();
+    if (searchValue.length > 0) {
         data = 'search=' + searchValue +
             '&step=' + ajaxSendObj.step +
             '&type=' + typeComplicant +
             '&dateoff=' + datCome +
             '&checkrequired=' + argObjSend.required;
-    ajaxSendObj.sendRequest(data);
+        ajaxSendObj.sendRequest(data);
+    }
     e.preventDefault();
 }
 function nextStep(e) {
