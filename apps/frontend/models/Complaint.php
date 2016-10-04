@@ -202,9 +202,12 @@ class Complaint extends Model
             } elseif ($status == 'activate' ) {  //This return from arhive. We need to check history and set last status.
                 $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
                 if($complainthistory){
-                    $this->changeStatus($complainthistory->old_status, [$id]);                }
-                else {
+                    $this->changeStatus($complainthistory->old_status, [$id]);
+                    $history_id = $complainthistory->id;
+                } else {
                     $this->changeStatus('draft', [$id]);
+                    $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
+                    $history_id = $complainthistory->id;
                 }
             } elseif ($status == 'delete') {
                // $stat = "удалена";
@@ -242,13 +245,13 @@ class Complaint extends Model
             }
             if($status != 'delete' && $status != 'copy') {
                 if($status == 'justified') $stat = 'Обоснована';
-                if($status == 'draft') $stat = 'Черновик';
+                if($status == 'draft' || $status == 'activate') $stat = 'Черновик';
                 if($status == 'unfounded') $stat = 'Необоснована';
                 if($status == 'under_consideration') $stat = 'На рассмотрении';
                 if($status == 'submitted') $stat = 'Подана';
                 if($status == 'recalled') $stat = 'Отозвана';
                 if($status == 'archive') $stat = 'Архив';
-                if($status == 'activate') $stat = 'Активирована';
+                //if($status == 'activate') $stat = 'Активирована';
 
 
                 $message = new Messages();
