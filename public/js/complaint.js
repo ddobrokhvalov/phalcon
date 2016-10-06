@@ -649,22 +649,18 @@ var auction = {
              $('#' + key).html(this.data[key]);
              } */
 
-        }
-        ,
+        },
         processHTML: function (text, value) {
             return '<div class="c-jadd-lr-row"><span>' + text + '</span><span class="auction-data" >' + value + '</span></div>';
 
-        }
-        ,
+        },
         clearData: function () {
             for (var key in this.data) {
                 this.data[key] = '';
             }
         }
+    };
 
-
-    }
-    ;
 function saveComplaintToDocxFile() {
     var loadFile = function(url, callback) {
         JSZipUtils.getBinaryContent(url, callback);
@@ -799,6 +795,7 @@ function saveComplaintToDocxFile() {
                 }
               });
         });
+        return true;
     } else {
         var wrong_format_text = '';
         var open_close_tag = {
@@ -817,6 +814,7 @@ function saveComplaintToDocxFile() {
             });
         });
         showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Такое форматирование недопустимо:</br>" + wrong_format_text);
+        return false;
     }
 }
 function incrementMenuCount() {
@@ -962,10 +960,9 @@ function stopSaveCompl() {
     });
     if (flag) {
         if (complaint.prepareData()) {
-            //if(typeof  statutsEdit == 'undefined') {
-                saveComplaintToDocxFile();
-            //}
-            complaint.saveAsDraft();
+            if (saveComplaintToDocxFile()) {
+                complaint.saveAsDraft();
+            }
         }
     } else {
         showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Необходимо выбрать обязательный довод");
