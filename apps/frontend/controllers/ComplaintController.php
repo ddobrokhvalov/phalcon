@@ -121,12 +121,12 @@ class ComplaintController extends ControllerBase
             $categories_id[] = $argument->argument_category_id;
             $arguments_id[] = $argument->argument_id;
             $arr_users_arg[$argument->argument_id] = preg_replace('/[\r\n\t]/', '', $argument->text);
-            if ($argument_order == $complaint->complaint_text_order) {
+            /*if ($argument_order == $complaint->complaint_text_order) {
                 $user_arguments .= $complaint->complaint_text . '</br>';
                 $user_arguments .= $argument->text . '</br>';
-            } else {
+            } else {*/
                 $user_arguments .= $argument->text . '</br>';
-            }
+            //}
             $arr_sub_cat[] = array(
                 'id' => $argument->argument_id,
                 'text' =>  preg_replace('/[\r\n\t]/', '', $argument->text)
@@ -139,7 +139,7 @@ class ComplaintController extends ControllerBase
         $this->view->arr_users_arg = $arr_users_arg;
         $this->view->categories_id = implode(',', $categories_id);
         $this->view->arguments_id = implode(',', $arguments_id);
-        $this->view->complaint_text_order = $complaint->complaint_text_order;
+        //$this->view->complaint_text_order = $complaint->complaint_text_order;
 
         $files_html = [];
         if ($complaint->fid) {
@@ -347,10 +347,10 @@ class ComplaintController extends ControllerBase
             foreach ($row as $data_) {
                 $data_ = explode('===', $data_);
                 $users_arguments_[$key][$data_[0]] = $data_[1];
-                if (isset($users_arguments_[$key]['argument_id']) && $users_arguments_[$key]['argument_id'] == 'just_text') {
+                /*if (isset($users_arguments_[$key]['argument_id']) && $users_arguments_[$key]['argument_id'] == 'just_text') {
                     $data['complaint_text'] = $data_[1];
                     $data['complaint_text_order'] = $users_arguments_[$key]['order'];
-                }
+                }*/
             }
             /*for ($ind = 0; $ind < $cnt; $ind++) {
                 unset($row[$ind]);
@@ -449,17 +449,17 @@ class ComplaintController extends ControllerBase
             foreach ($row as $data_) {
                 $data_ = explode('===', $data_);
                 $users_arguments_[$key][$data_[0]] = $data_[1];
-                if (isset($users_arguments_[$key]['argument_id']) && $users_arguments_[$key]['argument_id'] == 'just_text') {
+                /*if (isset($users_arguments_[$key]['argument_id']) && $users_arguments_[$key]['argument_id'] == 'just_text') {
                     $data['complaint_text'] = $data_[1];
                     $data['complaint_text_order'] = $users_arguments_[$key]['order'];
-                }
+                }*/
             }
         }
         $complaint = Complaint::findFirstById($data['update-complaint-id']);
         if ($complaint) {
             $complaint->complaint_name = $data['complaint_name'];
-            $complaint->complaint_text = $data['complaint_text'];
-            $complaint->complaint_text_order = $data['complaint_text_order'];
+            //$complaint->complaint_text = $data['complaint_text'];
+            //$complaint->complaint_text_order = $data['complaint_text_order'];
         }
 
         if ($complaint->update() == false) {

@@ -376,10 +376,10 @@ var argument = {
                 initEditor(currTextArea);
             }, 100);
 
-            if (objReq == 1 && $('#template_edit_just_text .c-edit-j-t p').text() == 'Пользовательский текст' ||
+            /*if (objReq == 1 && $('#template_edit_just_text .c-edit-j-t p').text() == 'Пользовательский текст' ||
                 $('#template_edit_just_text .c-edit-j-t p').text() == 'Вам необходимо выбрать хотябы одну обязательную жалобу!') {
                 $('#template_edit_just_text .c-edit-j-t p').text('Пользовательский текст');
-            }
+            }*/
         }
     },
     removeArgument: function (id, cat_id) {
@@ -415,7 +415,7 @@ var argument = {
             }).text('Срок окончания подачи заявок прошел, как минимум один довод должен быть на действие (бездействие) комиссии');
             $('.add-popup-wrapNew').fadeIn().css('display', 'flex');
             argObjSend.required = 0;
-            $('#template_edit_just_text .c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
+            //$('#template_edit_just_text .c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
         }
     }
 };
@@ -482,7 +482,7 @@ var auction = {
             for (var i = 0; i < 5; i++) {
                 if (mainArr[i] < setTodayDate[i]) flag = true;
             }
-            if (flag) {
+            /*if (flag) {
                 setTimeout(function () {
                     $('.c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
                 }, 1000);
@@ -490,7 +490,7 @@ var auction = {
                 setTimeout(function() {
                     $('.c-edit-j-t p').text('Пользовательский текст');
                 }, 1000);
-            }
+            }*/
         },
         succesRequest: function (data,auction_id) {
             if (auction.processData(data, auction_id)) {
