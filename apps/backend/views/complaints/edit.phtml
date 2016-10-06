@@ -1,6 +1,18 @@
 {% extends "base-template.phtml" %}
 {% block title %}ФАС ОНЛАЙН - Жалобы{% endblock %}
 {% block body %}
+<script>
+    {% if edit_now %}
+        var ufasArr = new Array();
+        {% for uf in ufas  %}
+            ufasArr.push({
+                'name': '{{uf.name}}',
+                'number': '{{ uf.number }}'
+            });
+        {% endfor %}
+    {% endif %}
+    var comp_inn = '{{comp_inn}}';
+</script>
 <script type="text/javascript" src="/js/dragula.js"></script>
 <script type="text/javascript" src="/js/main_script.js"></script>
 <!--<script type="text/javascript" src="/js/type_select.js"></script>-->
@@ -126,6 +138,7 @@
 
             {% if complaint.status == 'draft' and action_edit === true %}
             <form action="/admin/complaints/update" id="add-complaint-form" enctype="multipart/form-data" method="POST">
+                <input type="hidden" name="ufas_id" value="{{comp_inn}}">
                 <input type="hidden" name="auctionData" id="auctionData" value="">
                 <input type="hidden" name="arguments_data" id="arguments_data" value="">
                 <input type="hidden" name="complaint_text" id="complaint_text" value="">

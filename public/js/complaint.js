@@ -1,4 +1,12 @@
 $(document).ready(function () {
+    $('body').on('change','#ufas-checked', function(){
+        $(this).find('option:selected').each(function() {
+            var option = this;
+            $('input[name="ufas_id"]').each(function(){
+               $(this).val($(option).val());
+            })
+        });
+    });
 
     $("#notice_button").click(function (event) {
         event.preventDefault();
@@ -545,8 +553,31 @@ var auction = {
             if (this.data.ufas_name){
                 ufas_name = this.data.ufas_name;
             }
+//ufas_name <input type="hidden" name="ufas_id" value="' + complaint.inn +'">
 
-            var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel">' + ufas_name + '</div></div><input type="hidden" name="ufas_id" value="' + complaint.inn +'">';
+            if(window.ufasArr) {
+                var non_ufas = true;
+                var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel"><select id="ufas-checked">';
+                for (var i = 0; i < ufasArr.length; i++) {
+                    if (ufasArr[i].number == complaint.inn || ufasArr[i].number == comp_inn) {
+                        non_ufas = false;
+                        html += '<option selected value="' + ufasArr[i].number + '">' + ufasArr[i].name + '</option>'
+                    } else {
+                        html += '<option value="' + ufasArr[i].number + '">' + ufasArr[i].name + '</option>'
+                    }
+                }
+                if(complaint.inn){
+                    html += '</select></div></div><input type="hidden" name="ufas_id" value="' + complaint.inn  + '">';
+                }else if(comp_inn){
+                    html += '</select></div></div><input type="hidden" name="ufas_id" value="' + comp_inn  + '">';
+                }else if(non_ufas){
+                    html += '</select></div></div><input type="hidden" name="ufas_id" value="0">';
+                }
+            } else {
+                var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel">' + ufas_name + '</div></div> <input type="hidden" name="ufas_id" value="' + complaint.inn + '">';
+            }
+
+
             if (this.data.type == 'Открытый конкурс') {
                 html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
                 html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);

@@ -136,12 +136,15 @@ class ComplaintsController extends ControllerBase
                 ));
                 if($ufas_name){
                     $this->view->ufas_name = $ufas_name->name;
+                    $this->view->comp_inn = $ufas_name->number;
                 }
             }
 
             $action = $this->request->get('action');
             if (isset($action) && $action == 'edit') {
                 $this->view->edit_now = TRUE;
+                $ufas = Ufas::find();
+                $this->view->ufas = $ufas;
             } else {
                 $this->view->edit_now = FALSE;
             }
