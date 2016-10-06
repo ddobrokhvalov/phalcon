@@ -240,10 +240,18 @@ class ComplaintController extends ControllerBase
                     $name = 'complaint_' . $unformatted . time() . '.docx';
                     $file->moveTo($baseLocation . $name);
                 }
-            }//DebugBreak();
+            }
             $docx = new DocxFiles();
             $docx->docx_file_name = $name;
+            $compl_id = $this->request->getPost('complaint_id');
             $docx->complaint_name = $this->request->getPost('complaint_name');
+            if (isset($compl_id) && $compl_id != 'undefined') {
+                $delete_docx = DocxFiles::find("complaint_id = $compl_id");
+                foreach ($delete_docx as $del_docx) {
+                    $del = unlink($baseLocation . $del_docx->docx_file_name);
+                    $del_docx->delete();
+                }
+            }
             $docx->user_id = $this->user->id;
             $docx->save();
         }
@@ -310,7 +318,7 @@ class ComplaintController extends ControllerBase
     }
 
     public function createAction()
-    {DebugBreak();
+    {
         if (!$this->request->isPost()) {
             echo 'error';
             exit;
@@ -425,7 +433,7 @@ class ComplaintController extends ControllerBase
     }
     
     public function updateAction()
-    {//DebugBreak();
+    {
         if (!$this->request->isPost()) {
             echo 'error';
             exit;
@@ -449,11 +457,6 @@ class ComplaintController extends ControllerBase
         }
         $complaint = Complaint::findFirstById($data['update-complaint-id']);
         if ($complaint) {
-            if($data['complaint_text'] == '<p>Пользовательский текст</p>'){
-                $data['complaint_text'] = '<p>'.str_replace($data['argument_text'],'Пользовательский текст', '').'</p>';
-            } else if($data['complaint_text'] == '<p>Вам необходимо выбрать хотябы одну обязательную жалобу!</p>'){
-                $data['complaint_text'] = '<p>'.str_replace($data['argument_text'],'Вам необходимо выбрать хотябы одну обязательную жалобу!', '').'</p>';
-            }
             $complaint->complaint_name = $data['complaint_name'];
             $complaint->complaint_text = $data['complaint_text'];
             $complaint->complaint_text_order = $data['complaint_text_order'];
@@ -525,6 +528,11 @@ class ComplaintController extends ControllerBase
                     $complaint->fid = serialize($saved_files);
                 }
                 $complaint->save();
+                $docx_s = DocxFiles::find("complaint_name = '{$complaint->complaint_name}'");
+                foreach ($docx_s as $docx) {
+                    $docx->complaint_id = $complaint->id;
+                    $docx->save();
+                }
             }
             $this->flashSession->success('Жалоба обновлена');
             return $this->response->redirect('complaint/edit/' . $complaint->id);

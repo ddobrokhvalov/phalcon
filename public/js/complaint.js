@@ -13,7 +13,7 @@ $(document).ready(function () {
 
             $('#notice_button').hide();
             $('.loading-gif').show();
-            auction.sendRequest(auction_id);
+            auction.sendRequest(auction_id, false);
         } else {
             $('#auction_id').addClass('c-inp-error');
         }
@@ -435,20 +435,23 @@ var auction = {
          }, */
 
         data: {},
-        sendRequest: function (auction_id) {
+        sendRequest: function (auction_id, only_info) {
             $.ajax({
                 type: 'POST',
                 url: '/purchase/get',
                 data: 'auction_id=' + auction_id,
                 success: function (msg) {
-                    $('#edit_container').empty();
                     var data = $.parseJSON(msg);
                     zakupka.info.type = data.info.type;
                     procedura.info.okonchanie = data.procedura.okonchanie_podachi;
+                    complaint.inn = data.info.zakupku_osushestvlyaet_inn.substr(0, 2);
                     auction.responseData = data;
                     console.log(data);
-                    auction.succesRequest(data,auction_id);
-                    auction.overdueData(data.procedura.okonchanie_podachi);
+                    if (!only_info) {
+                        $('#edit_container').empty();
+                        auction.succesRequest(data,auction_id);
+                        auction.overdueData(data.procedura.okonchanie_podachi);
+                    }
                 },
                 error: function (msg) {
                     console.log(msg);
@@ -491,7 +494,6 @@ var auction = {
         },
         succesRequest: function (data,auction_id) {
             if (auction.processData(data, auction_id)) {
-                complaint.inn = data.info.zakupku_osushestvlyaet_inn.substr(0, 2);
                 $('#auction_id').addClass('c-inp-done');
                 $('#notice_button').css('display', 'none');
                 $('#result_container').append('<b class="msg_status_parser">Данные Получены!</b>');

@@ -1,4 +1,7 @@
 <script type="application/javascript" src="/js/argCompl_jsonSend.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/docxtemplater.v2.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/FileSaver.min.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/jszip-utils.js"></script>
 <div class="content edit-complaint-page {% if complaint.status == 'draft' and action_edit === true %}edit-now {% endif %}">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
@@ -117,6 +120,7 @@
             <input type="hidden" name="arguments_data" id="arguments_data" value="">
             <input type="hidden" name="complaint_text" id="complaint_text" value="">
             <input type="hidden" name="applicant_id" id="applicant_id" value="">
+            <input type="hidden" name="complaint_id" id="complaint_id" value="{{complaint.id}}">
             <input type="hidden" name="update-complaint-id" id="update-complaint-id" value="{{ complaint.id }}">
                 <div class="c-jadd2 complaint-main-container" style="display: block !important;">
                     <div class="c-jadd2-f">
@@ -200,7 +204,6 @@
                                                 jQuery('.attached-files-wrap').html(html);
                                             });
                                             jQuery('body').on('click','.delete-file', function(){
-                                               debugger;
                                                 var className = $(this).attr('data-remclass');
                                                 $(this).parent().remove();
                                                 $('.' + className).remove();
@@ -443,9 +446,27 @@
         auction.data['okonchanie_rassmotreniya'] = '{{complaint.okonchanie_rassmotreniya }}';
         auction.data['vremya_provedeniya'] = '{{complaint.vremya_provedeniya }}';
         auction.data['ufas_name'] = '{{ufas_name}}';
+        
 
         auction.setData();
         {% if complaint.status == 'draft' and action_edit === true %}
+            $(document).ready(function(){
+                auction.sendRequest('{{complaint.auction_id}}', true);
+                if (applicant.applicant_info.length == 0) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/applicant/getApplicantInfo',
+                        data: 'applicant_id=' + applicant.id[0],
+                        success: function (msg) {
+                            applicant.applicant_info = msg.applicant_info;
+                        },
+                        error: function (msg) {
+                            console.log(msg);
+                        }
+
+                    });
+                }
+            });
             var templates = {};
             var temp_name = {};
             var arr_sub = {};
