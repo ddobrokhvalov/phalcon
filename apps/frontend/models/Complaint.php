@@ -85,13 +85,22 @@ class Complaint extends Model
 
     }
 
-    public function findCountUserComplaints($user_id)
+    public function findCountUserComplaints($user_id, $applicant_id = 'All')
     {
         $db = $this->getDi()->getShared('db');
-        $result = $db->query("SELECT COUNT(c.id) as num, c.status  FROM complaint as c
+        $sql = "SELECT COUNT(c.id) as num, c.status  FROM complaint as c
          LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
          LEFT JOIN user u ON(ap.user_id = u.id )
-         WHERE u.id =$user_id GROUP BY c.status ");  //todo: do we really need LEFT JOIN if the filter on the last RIGHT table? It will return something ONLY if u.id is not NULL!
+         WHERE u.id = $user_id ";
+          //todo: do we really need LEFT JOIN if the filter on the last RIGHT table? It will return something ONLY if u.id is not NULL!
+        if($applicant_id != 'All' && $applicant_id != ''){
+            if($applicant_id[0] == ','){
+                $applicant_id[0] = ' ';
+            }
+            $sql .= ' AND ap.id IN('.$applicant_id.') ';
+        }
+        $sql .= ' GROUP BY c.status ';
+        $result = $db->query($sql);
         $result = $result->fetchAll();
         $total = 0;
         $complaints_num = array();
