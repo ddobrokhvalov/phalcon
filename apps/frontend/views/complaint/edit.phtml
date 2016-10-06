@@ -408,7 +408,7 @@
 <script>
 
     $(document).ready(function(){
-        $('body').on('keyup', '.c-edit-j-t', function(){
+        $('body').on('click', '.c-edit-j-t', function(){
             if(!$(this).hasClass('delete_marker')) {
                 $(this).find('font.marker_yellow').each(function(i,el){
                     $(el).before($(el).html()).remove();
@@ -417,6 +417,11 @@
                     $(el).before($(el).html()).remove();
                 });
                 $(this).addClass('delete_marker');
+            }
+            if ($('.edit-textarea.cke_editable font.marker_red').length > 0) {
+                $(this).find('font.marker_red').each(function(i,el){
+                    $(el).before($(el).html()).remove();
+                });
             }
         });
     });
@@ -496,6 +501,9 @@
     {% if edit_now %}
         .marker_yellow{
             background-color: yellow;
+        }
+        .marker_red{
+            background-color: red;
         }
     {% endif %}
 

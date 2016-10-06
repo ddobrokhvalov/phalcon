@@ -9,6 +9,7 @@ use Multiple\Frontend\Models\Complaint;
 use Multiple\Frontend\Models\ComplaintMovingHistory;
 use Multiple\Frontend\Models\Question;
 use Multiple\Frontend\Models\UsersArguments;
+use Multiple\Frontend\Models\DocxFiles;
 use Multiple\Frontend\Models\Files;
 use Multiple\Backend\Models\Ufas;
 use Multiple\Library\Parser;
@@ -239,7 +240,12 @@ class ComplaintController extends ControllerBase
                     $name = 'complaint_' . $unformatted . time() . '.docx';
                     $file->moveTo($baseLocation . $name);
                 }
-            }
+            }//DebugBreak();
+            $docx = new DocxFiles();
+            $docx->docx_file_name = $name;
+            $docx->complaint_name = $this->request->getPost('complaint_name');
+            $docx->user_id = $this->user->id;
+            $docx->save();
         }
         $this->view->disable();
         die();
@@ -304,7 +310,7 @@ class ComplaintController extends ControllerBase
     }
 
     public function createAction()
-    {
+    {DebugBreak();
         if (!$this->request->isPost()) {
             echo 'error';
             exit;
@@ -403,6 +409,11 @@ class ComplaintController extends ControllerBase
                 $complaint->fid = serialize($saved_files);
                 //$this->flashSession->error($applicant->fid);
                 $complaint->save();
+                $docx_s = DocxFiles::find("complaint_name = '{$complaint->complaint_name}'");
+                foreach ($docx_s as $docx) {
+                    $docx->complaint_id = $complaint->id;
+                    $docx->save();
+                }
             }
             $this->flashSession->success('Жалоба сохранена');
             return $this->response->redirect('complaint/edit/' . $complaint->id);
@@ -414,7 +425,7 @@ class ComplaintController extends ControllerBase
     }
     
     public function updateAction()
-    {
+    {//DebugBreak();
         if (!$this->request->isPost()) {
             echo 'error';
             exit;
@@ -440,8 +451,7 @@ class ComplaintController extends ControllerBase
         if ($complaint) {
             if($data['complaint_text'] == '<p>Пользовательский текст</p>'){
                 $data['complaint_text'] = '<p>'.str_replace($data['argument_text'],'Пользовательский текст', '').'</p>';
-            }
-            if($data['complaint_text'] == '<p>Вам необходимо выбрать хотябы одну обязательную жалобу!</p>'){
+            } else if($data['complaint_text'] == '<p>Вам необходимо выбрать хотябы одну обязательную жалобу!</p>'){
                 $data['complaint_text'] = '<p>'.str_replace($data['argument_text'],'Вам необходимо выбрать хотябы одну обязательную жалобу!', '').'</p>';
             }
             $complaint->complaint_name = $data['complaint_name'];
@@ -553,6 +563,28 @@ class ComplaintController extends ControllerBase
         exit;
     }
 
+    function isComplaintNameUnicAction() {
+        $this->view->disable();
+        $complaint_name = $this->request->get('complaint_name');
+        $complaint_id = $this->request->get('complaint_id');
+        $and_complaint_where = '';
+        if (isset($complaint_id)) {
+            $and_complaint_where = " AND id != {$complaint_id}";
+        }
+        $response['name_unic'] = TRUE;
+        if ($complaint_name) {
+            $db = $this->getDi()->getShared('db');
+            $result = $db->query("SELECT id FROM complaint WHERE complaint_name = '{$complaint_name}'{$and_complaint_where}");
+            $id = $result->fetch();
+            if ($id) {
+                $response['name_unic'] = FALSE;
+            }
+        }
+        header('Content-type: application/json');
+        echo json_encode($response);
+        die();
+    }
+    
     public function recallAction($id)
     {
 

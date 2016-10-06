@@ -81,7 +81,37 @@ $(document).ready(function () {
         }, 500);
     });
 
+    $('#complaint_name').focusout(function() {
+        var cmpl_name = $(this).val();
+        checkComplaintName(cmpl_name);
+    });
+
 });
+
+function checkComplaintName(name) {
+    var name_allowed = true;
+    if (name.length > 0) {
+        $.ajax({
+            type: "POST",
+            url: '/complaint/isComplaintNameUnic',
+            dataType: 'json',
+            async: false,
+            cache: false,
+            data: {complaint_name: name, complaint_id: $("#complaint_id").val()},
+            success: function(data) {
+                if (!data.name_unic) {
+                    complaint.showError('#complaint_name', 'Жалоба с таким именем уже существует в системе', 'before');
+                    name_allowed = false;
+                } else {
+                    $('#complaint_name').parent().children('.c-inp-err-t').remove();
+                    $('#complaint_name').addClass('c-inp-done');
+                    name_allowed = true;
+                }
+            },
+        });
+    }
+    return name_allowed;
+}
 
 var complaint = {
     complainName: '',
@@ -151,6 +181,9 @@ var complaint = {
         this.complainName = $('#complaint_name').val();
         if (!validator.text(this.complainName, 3, 255)) {
             this.showError('#complaint_name', 'Ошибка! Полное наименование должно быть от 3 до 255 символов', 'before');
+            return false;
+        }
+        if (!checkComplaintName(this.complainName)) {
             return false;
         }
         $('#complaint_name').addClass('c-inp-done');
@@ -703,6 +736,8 @@ function saveComplaintToDocxFile() {
             out = doc.getZip().generate({type:"blob"});
               var data = new FormData();
               data.append('file', out);
+              data.append('complaint_name', $('#complaint_name').val());
+              data.append('complaint_id', $("#complaint_id").val());
               $.ajax({
                 url :  "/complaint/saveBlobFile",
                 type: 'POST',
@@ -746,6 +781,8 @@ function saveComplaintToDocxFile() {
             out = doc.getZip().generate({type:"blob"});
               var data = new FormData();
               data.append('file', out);
+              data.append('complaint_name', $('#complaint_name').val());
+              data.append('complaint_id', $("#complaint_id").val());
               $.ajax({
                 url :  "/complaint/saveBlobFile?unformatted=1",
                 type: 'POST',
@@ -879,6 +916,7 @@ function showSomePopupMessage(type, message) {
 }
 
 
+
 function ajaxFileUpload(url, fileelementid) {
     var formData = new FormData();
     formData.append('file', $("#" + fileelementid)[0].files[0]);
@@ -922,9 +960,9 @@ function stopSaveCompl() {
     });
     if (flag) {
         if (complaint.prepareData()) {
-            if(typeof  statutsEdit == 'undefined') {
+            //if(typeof  statutsEdit == 'undefined') {
                 saveComplaintToDocxFile();
-            }
+            //}
             complaint.saveAsDraft();
         }
     } else {
