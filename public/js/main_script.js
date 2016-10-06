@@ -462,7 +462,7 @@ jQuery(document).ready(function($) {
             }
         }
     });
-    $('.ch-r-m-text').css('height', ul_mes_height + 'px');
+    $('.ch-r-m-text').css('height', 'auto');
 
     $('.argComp .current-option').click(function() {
         $(this).find('div').toggleClass('transDiv');

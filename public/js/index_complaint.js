@@ -593,6 +593,7 @@ var indexComplaint = {
         var self = this;
         var count = 0;
         self.activeButton('.to-archive');
+        self.activeButton('.set-active');
         self.activeButton('.to-delete');
         self.deActiveButton('.button-recall');
         this.arrComplaint = [];

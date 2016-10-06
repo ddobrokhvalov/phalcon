@@ -156,7 +156,7 @@
                 {{ user.email }}
             </div>
             <div class="ch-r-mail">
-                <span>{% if count_unread %} {{count_unread}} {% else %} {% endif %}</span>
+                <span>{% if count_unread %} {{count_unread}} {% else %} 0 {% endif %}</span>
             </div>
             <div class="ch-r-sett"></div>
             <a href="/login/logout" class="ch-r-logout"></a>
@@ -204,7 +204,7 @@
             <div class="ch-r-mail-dd">
                 <div class="ch-r-mail-dd-z">
                     Сообщения
-                    <span>{% if count_unread %} {{count_unread}} {% else %} {% endif %}</span>
+                    <span>{% if count_unread %} {{count_unread}} {% else %} 0 {% endif %}</span>
                 </div>
                 <div class="ch-r-m-text">
                     <ul class="ch-r-m-list">
@@ -217,10 +217,12 @@
                             </li>
                         {% if message['complaint_id'] is defined %}</a>{% endif %}
                         {% else %}
+                        <a href="/complaint/edit/{{message['comp_id']}}">
                             <li class=" box-status-black ">
                                 {{ message['body'] }}
                                 <span>{{ date('d F Y', message['time']) }}</span>
                             </li>
+                        </a>
                         {% endif %}
                     {% endfor %}
                         <li class="all-message-link" onclick="window.location.href='/message/index';">
