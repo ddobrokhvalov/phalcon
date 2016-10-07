@@ -589,25 +589,22 @@ var auction = {
                 ufas_name = this.data.ufas_name;
             }
 //ufas_name <input type="hidden" name="ufas_id" value="' + complaint.inn +'">
-
             if(window.ufasArr) {
-                var non_ufas = true;
+                debugger;
+                var ufasNonDetected = true;
+                var temp_ufas = {
+                   'name': ufasArr[0].name,
+                    'number': ufasArr[0].number
+                };
                 var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel"><select id="ufas-checked">';
                 for (var i = 0; i < ufasArr.length; i++) {
-                    if (ufasArr[i].number == complaint.inn || ufasArr[i].number == comp_inn) {
-                        non_ufas = false;
-                        html += '<option selected value="' + ufasArr[i].number + '">' + ufasArr[i].name + '</option>'
-                    } else {
-                        html += '<option value="' + ufasArr[i].number + '">' + ufasArr[i].name + '</option>'
+                    if((ufas_name == 'Уфас не определен' || ufas_name == 'УФАС не определен') && ufasNonDetected){
+                        html += '<option selected>Уфас не определен</option>';
+                        ufasNonDetected = false;
                     }
+                    html += '<option '+ ((ufasArr[i].number == complaint.inn || ufasArr[i].number == comp_inn)? 'selected' : '') +' value="' + ufasArr[i].number + '">' + ufasArr[i].name + '</option>'
                 }
-                if(complaint.inn){
-                    html += '</select></div></div><input type="hidden" name="ufas_id" value="' + complaint.inn  + '">';
-                }else if(comp_inn){
-                    html += '</select></div></div><input type="hidden" name="ufas_id" value="' + comp_inn  + '">';
-                }else if(non_ufas){
-                    html += '</select></div></div><input type="hidden" name="ufas_id" value="0">';
-                }
+                html += '</select></div></div><input type="hidden" name="ufas_id" value="' + ((complaint.inn) ? complaint.inn : (comp_inn) ? comp_inn : null)  + '">';
             } else {
                 var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel">' + ufas_name + '</div></div> <input type="hidden" name="ufas_id" value="' + complaint.inn + '">';
             }

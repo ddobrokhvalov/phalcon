@@ -523,6 +523,12 @@ class ComplaintsController extends ControllerBase
             $complaint->complaint_name = $data['complaint_name'];
             $complaint->complaint_text = $data['complaint_text'];
             $complaint->complaint_text_order = $data['complaint_text_order'];
+            $ufas = Ufas::findFirst(array(
+                "number = {$data['ufas_id']}"
+            ));
+            if($ufas){
+                $complaint->ufas_id = $ufas->id;
+            }
         }
 
         if ($complaint->update() == false) {
