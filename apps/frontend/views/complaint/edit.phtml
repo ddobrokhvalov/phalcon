@@ -1,4 +1,7 @@
 <script type="application/javascript" src="/js/argCompl_jsonSend.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/docxtemplater.v2.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/FileSaver.min.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/jszip-utils.js"></script>
 <script>
     {% if edit_now %}
         var ufasArr = new Array();
@@ -130,6 +133,7 @@
             <input type="hidden" name="arguments_data" id="arguments_data" value="">
             <input type="hidden" name="complaint_text" id="complaint_text" value="">
             <input type="hidden" name="applicant_id" id="applicant_id" value="">
+            <input type="hidden" name="complaint_id" id="complaint_id" value="{{complaint.id}}">
             <input type="hidden" name="update-complaint-id" id="update-complaint-id" value="{{ complaint.id }}">
                 <div class="c-jadd2 complaint-main-container" style="display: block !important;">
                     <div class="c-jadd2-f">
@@ -213,7 +217,6 @@
                                                 jQuery('.attached-files-wrap').html(html);
                                             });
                                             jQuery('body').on('click','.delete-file', function(){
-                                               debugger;
                                                 var className = $(this).attr('data-remclass');
                                                 $(this).parent().remove();
                                                 $('.' + className).remove();
@@ -421,7 +424,7 @@
 <script>
 
     $(document).ready(function(){
-        $('body').on('keyup', '.c-edit-j-t', function(){
+        $('body').on('click', '.c-edit-j-t', function(){
             if(!$(this).hasClass('delete_marker')) {
                 $(this).find('font.marker_yellow').each(function(i,el){
                     $(el).before($(el).html()).remove();
@@ -430,6 +433,11 @@
                     $(el).before($(el).html()).remove();
                 });
                 $(this).addClass('delete_marker');
+            }
+            if ($('.edit-textarea.cke_editable font.marker_red').length > 0) {
+                $(this).find('font.marker_red').each(function(i,el){
+                    $(el).before($(el).html()).remove();
+                });
             }
         });
     });
@@ -451,9 +459,27 @@
         auction.data['okonchanie_rassmotreniya'] = '{{complaint.okonchanie_rassmotreniya }}';
         auction.data['vremya_provedeniya'] = '{{complaint.vremya_provedeniya }}';
         auction.data['ufas_name'] = '{{ufas_name}}';
+        
 
         auction.setData();
         {% if complaint.status == 'draft' and action_edit === true %}
+            $(document).ready(function(){
+                auction.sendRequest('{{complaint.auction_id}}', true);
+                if (applicant.applicant_info.length == 0) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/applicant/getApplicantInfo',
+                        data: 'applicant_id=' + applicant.id[0],
+                        success: function (msg) {
+                            applicant.applicant_info = msg.applicant_info;
+                        },
+                        error: function (msg) {
+                            console.log(msg);
+                        }
+
+                    });
+                }
+            });
             var templates = {};
             var temp_name = {};
             var arr_sub = {};
@@ -480,9 +506,9 @@
             {% endif %}
             var categories_id = $("#arguments_id").val().split(",");
             $.each(categories_id, function( index, value ) {
-                if (index == {{ complaint_text_order }}) {
+                /*if (index == {{ complaint_text_order }}) {
                     argument.addArgument("just_text", "just_text", '{{complaint.complaint_text}}');
-                }
+                }*/
                 /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
                 $(".category-container input#jd2cbb" + value).prop('checked', true);
                 var cat = $(".category-container input#jd2cbb" + value).attr("category");
@@ -511,6 +537,9 @@
     {% if edit_now %}
         .marker_yellow{
             background-color: yellow;
+        }
+        .marker_red{
+            background-color: red;
         }
     {% endif %}
 

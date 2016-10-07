@@ -141,7 +141,7 @@
                 <input type="hidden" name="ufas_id" value="{{comp_inn}}">
                 <input type="hidden" name="auctionData" id="auctionData" value="">
                 <input type="hidden" name="arguments_data" id="arguments_data" value="">
-                <input type="hidden" name="complaint_text" id="complaint_text" value="">
+                <!--<input type="hidden" name="complaint_text" id="complaint_text" value="">-->
                 <input type="hidden" name="applicant_id" id="applicant_id" value="">
                 <input type="hidden" name="update-complaint-id" id="update-complaint-id" value="{{ complaint.id }}">
                 <div class="c-jadd2 complaint-main-container" style="display: block !important;">
@@ -514,9 +514,9 @@
     {% endif %}
         var categories_id = $("#arguments_id").val().split(",");
         $.each(categories_id, function( index, value ) {
-            if (index == '{{ complaint_text_order }}') {
+            /*if (index == '{{ complaint_text_order }}') {
                 argument.addArgument("just_text", "just_text", "{{complaint.complaint_text}}");
-            }
+            }*/
             /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
             $(".category-container input#jd2cbb" + value).prop('checked', true);
             var cat = $(".category-container input#jd2cbb" + value).attr("category");

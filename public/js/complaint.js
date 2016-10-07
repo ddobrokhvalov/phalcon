@@ -21,7 +21,7 @@ $(document).ready(function () {
 
             $('#notice_button').hide();
             $('.loading-gif').show();
-            auction.sendRequest(auction_id);
+            auction.sendRequest(auction_id, false);
         } else {
             $('#auction_id').addClass('c-inp-error');
         }
@@ -89,7 +89,37 @@ $(document).ready(function () {
         }, 500);
     });
 
+    $('#complaint_name').focusout(function() {
+        var cmpl_name = $(this).val();
+        checkComplaintName(cmpl_name);
+    });
+
 });
+
+function checkComplaintName(name) {
+    var name_allowed = true;
+    if (name.length > 0) {
+        $.ajax({
+            type: "POST",
+            url: '/complaint/isComplaintNameUnic',
+            dataType: 'json',
+            async: false,
+            cache: false,
+            data: {complaint_name: name, complaint_id: $("#complaint_id").val()},
+            success: function(data) {
+                if (!data.name_unic) {
+                    complaint.showError('#complaint_name', 'Жалоба с таким именем уже существует в системе', 'before');
+                    name_allowed = false;
+                } else {
+                    $('#complaint_name').parent().children('.c-inp-err-t').remove();
+                    $('#complaint_name').addClass('c-inp-done');
+                    name_allowed = true;
+                }
+            },
+        });
+    }
+    return name_allowed;
+}
 
 var complaint = {
     complainName: '',
@@ -159,6 +189,9 @@ var complaint = {
         this.complainName = $('#complaint_name').val();
         if (!validator.text(this.complainName, 3, 255)) {
             this.showError('#complaint_name', 'Ошибка! Полное наименование должно быть от 3 до 255 символов', 'before');
+            return false;
+        }
+        if (!checkComplaintName(this.complainName)) {
             return false;
         }
         $('#complaint_name').addClass('c-inp-done');
@@ -351,10 +384,10 @@ var argument = {
                 initEditor(currTextArea);
             }, 100);
 
-            if (objReq == 1 && $('#template_edit_just_text .c-edit-j-t p').text() == 'Пользовательский текст' ||
+            /*if (objReq == 1 && $('#template_edit_just_text .c-edit-j-t p').text() == 'Пользовательский текст' ||
                 $('#template_edit_just_text .c-edit-j-t p').text() == 'Вам необходимо выбрать хотябы одну обязательную жалобу!') {
                 $('#template_edit_just_text .c-edit-j-t p').text('Пользовательский текст');
-            }
+            }*/
         }
     },
     removeArgument: function (id, cat_id) {
@@ -390,7 +423,7 @@ var argument = {
             }).text('Срок окончания подачи заявок прошел, как минимум один довод должен быть на действие (бездействие) комиссии');
             $('.add-popup-wrapNew').fadeIn().css('display', 'flex');
             argObjSend.required = 0;
-            $('#template_edit_just_text .c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
+            //$('#template_edit_just_text .c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
         }
     }
 };
@@ -410,20 +443,23 @@ var auction = {
          }, */
 
         data: {},
-        sendRequest: function (auction_id) {
+        sendRequest: function (auction_id, only_info) {
             $.ajax({
                 type: 'POST',
                 url: '/purchase/get',
                 data: 'auction_id=' + auction_id,
                 success: function (msg) {
-                    $('#edit_container').empty();
                     var data = $.parseJSON(msg);
                     zakupka.info.type = data.info.type;
                     procedura.info.okonchanie = data.procedura.okonchanie_podachi;
+                    complaint.inn = data.info.zakupku_osushestvlyaet_inn.substr(0, 2);
                     auction.responseData = data;
                     console.log(data);
-                    auction.succesRequest(data,auction_id);
-                    auction.overdueData(data.procedura.okonchanie_podachi);
+                    if (!only_info) {
+                        $('#edit_container').empty();
+                        auction.succesRequest(data,auction_id);
+                        auction.overdueData(data.procedura.okonchanie_podachi);
+                    }
                 },
                 error: function (msg) {
                     console.log(msg);
@@ -454,7 +490,7 @@ var auction = {
             for (var i = 0; i < 5; i++) {
                 if (mainArr[i] < setTodayDate[i]) flag = true;
             }
-            if (flag) {
+            /*if (flag) {
                 setTimeout(function () {
                     $('.c-edit-j-t p').text('Вам необходимо выбрать хотябы одну обязательную жалобу!');
                 }, 1000);
@@ -462,11 +498,10 @@ var auction = {
                 setTimeout(function() {
                     $('.c-edit-j-t p').text('Пользовательский текст');
                 }, 1000);
-            }
+            }*/
         },
         succesRequest: function (data,auction_id) {
             if (auction.processData(data, auction_id)) {
-                complaint.inn = data.info.zakupku_osushestvlyaet_inn.substr(0, 2);
                 $('#auction_id').addClass('c-inp-done');
                 $('#notice_button').css('display', 'none');
                 $('#result_container').append('<b class="msg_status_parser">Данные Получены!</b>');
@@ -645,22 +680,18 @@ var auction = {
              $('#' + key).html(this.data[key]);
              } */
 
-        }
-        ,
+        },
         processHTML: function (text, value) {
             return '<div class="c-jadd-lr-row"><span>' + text + '</span><span class="auction-data" >' + value + '</span></div>';
 
-        }
-        ,
+        },
         clearData: function () {
             for (var key in this.data) {
                 this.data[key] = '';
             }
         }
+    };
 
-
-    }
-    ;
 function saveComplaintToDocxFile() {
     var loadFile = function(url, callback) {
         JSZipUtils.getBinaryContent(url, callback);
@@ -720,6 +751,7 @@ function saveComplaintToDocxFile() {
                 "dovod": custom_text,
                 "zakaz_phone": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].tel,
                 "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].kontaktnoe_lico,
+                "zakaz_kontaktnoe_name": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].name,
                 "zakaz_address": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].pochtovy_adres,
                 "zakaz_mesto": "TEST mesto",
                 "organiz_fio": auction.responseData.contact.dolg_lico,
@@ -734,6 +766,8 @@ function saveComplaintToDocxFile() {
             out = doc.getZip().generate({type:"blob"});
               var data = new FormData();
               data.append('file', out);
+              data.append('complaint_name', $('#complaint_name').val());
+              data.append('complaint_id', $("#complaint_id").val());
               $.ajax({
                 url :  "/complaint/saveBlobFile",
                 type: 'POST',
@@ -759,13 +793,14 @@ function saveComplaintToDocxFile() {
                 "applicant_position": applicant.applicant_info.position,
                 "applicant_email": applicant.applicant_info.email,
                 "tip_zakupki": zakupka.info.type,
-                "ufas": "г. Санкт-Петербургу (тестовое)",
+                "ufas": $('.c-jadd-lr-sel').text(),
                 "dovod": custom_text_unformatted,
-                "zakaz_phone": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].tel,
-                "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].kontaktnoe_lico,
-                "zakaz_address": auction.responseData.zakazchik[0] == null ? '' : auction.responseData.zakazchik[0].pochtovy_adres,
-                "zakaz_mesto": "TEST mesto",
-                "organiz_fio": auction.responseData.contact.dolg_lico,
+                "zakaz_phone": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.tel : auction.responseData.zakazchik[0].tel,
+                "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].kontaktnoe_lico,
+                "zakaz_kontaktnoe_name": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.name + ', ' + auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].name,
+                "zakaz_address": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.pochtovy_adres : auction.responseData.zakazchik[0].pochtovy_adres,
+                "zakaz_mesto": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.mesto_nahogdeniya : "TEST mesto",
+                "organiz_fio": auction.responseData.contact.name + ', ' + auction.responseData.contact.dolg_lico,
                 "organiz_phone": auction.responseData.contact.tel,
                 "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
                 "organiz_address": auction.responseData.contact.pochtovy_adres,
@@ -777,6 +812,8 @@ function saveComplaintToDocxFile() {
             out = doc.getZip().generate({type:"blob"});
               var data = new FormData();
               data.append('file', out);
+              data.append('complaint_name', $('#complaint_name').val());
+              data.append('complaint_id', $("#complaint_id").val());
               $.ajax({
                 url :  "/complaint/saveBlobFile?unformatted=1",
                 type: 'POST',
@@ -791,6 +828,7 @@ function saveComplaintToDocxFile() {
                 }
               });
         });
+        return true;
     } else {
         var wrong_format_text = '';
         var open_close_tag = {
@@ -809,6 +847,7 @@ function saveComplaintToDocxFile() {
             });
         });
         showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Такое форматирование недопустимо:</br>" + wrong_format_text);
+        return false;
     }
 }
 function incrementMenuCount() {
@@ -910,6 +949,7 @@ function showSomePopupMessage(type, message) {
 }
 
 
+
 function ajaxFileUpload(url, fileelementid) {
     var formData = new FormData();
     formData.append('file', $("#" + fileelementid)[0].files[0]);
@@ -953,10 +993,9 @@ function stopSaveCompl() {
     });
     if (flag) {
         if (complaint.prepareData()) {
-            if(typeof  statutsEdit == 'undefined') {
-                saveComplaintToDocxFile();
+            if (saveComplaintToDocxFile()) {
+                complaint.saveAsDraft();
             }
-            complaint.saveAsDraft();
         }
     } else {
         showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Необходимо выбрать обязательный довод");
