@@ -582,21 +582,23 @@ var auction = {
             $('#contact').html(this.data.contact);
 
             var ufas_name = $("#ufas-list li[ufas-number='" + complaint.inn + "']").text();
+            var ufasNonDetected = false;
             if (ufas_name.length == 0) {
                 ufas_name = "УФАС не определен";
+                ufasNonDetected = true;
             }
             if (this.data.ufas_name){
                 ufas_name = this.data.ufas_name;
             }
 
+            /**
+             * SELECT UFAS
+             */
             if(window.ufasArr) {
                 var ufasNonDetected = true;
                 var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel"><select id="ufas-checked">';
+                if(ufasNonDetected)  html += '<option selected>Уфас не определен</option>';
                 for (var i = 0; i < ufasArr.length; i++) {
-                    if((ufas_name == 'Уфас не определен' || ufas_name == 'УФАС не определен') && ufasNonDetected){
-                        html += '<option selected>Уфас не определен</option>';
-                        ufasNonDetected = false;
-                    }
                     html += '<option '+ ((ufasArr[i].number == complaint.inn || ufasArr[i].number == comp_inn)? 'selected' : '') +' value="' + ufasArr[i].number + '">' + ufasArr[i].name + '</option>'
                 }
                 html += '</select></div></div><input type="hidden" name="ufas_id" value="' + ((complaint.inn) ? complaint.inn : (comp_inn) ? comp_inn : null)  + '">';
