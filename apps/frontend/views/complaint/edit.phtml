@@ -1,7 +1,3 @@
-<script type="application/javascript" src="/js/argCompl_jsonSend.js"></script>
-<script type="application/javascript" src="/js/docx_generator/js/docxtemplater.v2.js"></script>
-<script type="application/javascript" src="/js/docx_generator/js/FileSaver.min.js"></script>
-<script type="application/javascript" src="/js/docx_generator/js/jszip-utils.js"></script>
 <script>
     {% if edit_now %}
         var ufasArr = new Array();
@@ -14,6 +10,10 @@
     {% endif %}
     var comp_inn = '{{comp_inn}}';
 </script>
+<script type="application/javascript" src="/js/argCompl_jsonSend.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/docxtemplater.v2.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/FileSaver.min.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/jszip-utils.js"></script>
 <div class="content edit-complaint-page {% if complaint.status == 'draft' and action_edit === true %}edit-now {% endif %}">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">

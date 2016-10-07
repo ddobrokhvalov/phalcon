@@ -588,14 +588,9 @@ var auction = {
             if (this.data.ufas_name){
                 ufas_name = this.data.ufas_name;
             }
-//ufas_name <input type="hidden" name="ufas_id" value="' + complaint.inn +'">
+
             if(window.ufasArr) {
-                debugger;
                 var ufasNonDetected = true;
-                var temp_ufas = {
-                   'name': ufasArr[0].name,
-                    'number': ufasArr[0].number
-                };
                 var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel"><select id="ufas-checked">';
                 for (var i = 0; i < ufasArr.length; i++) {
                     if((ufas_name == 'Уфас не определен' || ufas_name == 'УФАС не определен') && ufasNonDetected){
