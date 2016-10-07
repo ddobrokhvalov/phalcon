@@ -582,10 +582,8 @@ var auction = {
             $('#contact').html(this.data.contact);
 
             var ufas_name = $("#ufas-list li[ufas-number='" + complaint.inn + "']").text();
-            var ufasNonDetected = false;
             if (ufas_name.length == 0) {
                 ufas_name = "УФАС не определен";
-                ufasNonDetected = true;
             }
             if (this.data.ufas_name){
                 ufas_name = this.data.ufas_name;
@@ -597,12 +595,12 @@ var auction = {
             if(window.ufasArr) {
                 var ufasNonDetected = true;
                 var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel"><select id="ufas-checked">';
-                if(ufasNonDetected)  html += '<option selected>Уфас не определен</option>';
+                if(ufasNonDetected == 'УФАС не определен' || ufasNonDetected == 'Уфас не определен')  html += '<option selected>Уфас не определен</option>';
                 for (var i = 0; i < ufasArr.length; i++) {
                     html += '<option '+ ((ufasArr[i].number == complaint.inn || ufasArr[i].number == comp_inn)? 'selected' : '') +' value="' + ufasArr[i].number + '">' + ufasArr[i].name + '</option>'
                 }
                 html += '</select></div></div>';
-                html += '<input type="hidden" name="ufas_id" value="' + ((complaint.inn) ? complaint.inn : (comp_inn) ? comp_inn : null)  + '">';
+                html += '<input type="hidden" name="ufas_id" value="' + ((complaint.inn) ? complaint.inn : (comp_inn) ? comp_inn : null)  + '">'
             } else {
                 var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel">' + ufas_name + '</div></div> <input type="hidden" name="ufas_id" value="' + complaint.inn + '">';
             }
