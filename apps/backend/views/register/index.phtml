@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>{% block title %}ФАС ОНЛАЙН{% endblock %}</title>
+{% block styles %}
+<link rel="stylesheet" href="/css/style.css" />
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+{% endblock %}
+</head>
+<body id="backend-login">
+<div class="backend-login-wrap">
+    <div class="backend-login" style="height: 756px;">
+        <h2>Регистрация</h2>
+        <form action="/admin/register/index" method="post">
+            <div>
+                <label for="email">Логин/Email</label>
+                <div>
+                    {{ text_field('email') }}
+                </div>
+            </div>
+            <div>
+                <label for="email">Телефон</label>
+                <div>
+                    {{ text_field('number') }}
+                </div>
+            </div>
+            <div>
+                <label for="password">Пароль</label>
+                <div>
+                    {{ password_field('password') }}
+                </div>
+            </div>
+            <div>
+                <label for="password">Пароль еще раз</label>
+                <div>
+                    {{ password_field('confpassword') }}
+                </div>
+            </div>
+            <div>
+                {{ submit_button('Регистрация') }}
+            </div>
+            <div class="error">
+                {{flashSession.output()}}
+            </div>
+        </form>
+
+    </div>
+</div>
+</body>
+</html>
+<style>
+    .error{
+        color: red;
+        margin-top: 327px;
+        text-align: center;
+    }
+</style>

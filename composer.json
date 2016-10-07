@@ -1,0 +1,5 @@
+{
+  "require": {
+    "vanchelo/phalcon-mailer": "~2.0"
+  }
+}

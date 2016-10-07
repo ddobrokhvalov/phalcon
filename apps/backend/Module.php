@@ -106,5 +106,42 @@ class Module
 			return new FlashDirect();
 		});
 
+        $di->set('mailer', function() {
+            $service = new MailerService();
+//            $service = new MailerService([
+//                'driver' => 'smtp', // mail, sendmail, smtp
+//                'host'   => 'smtp.email.com',
+//                'port'   => 587,
+//                'from'   => [
+//                    'address' => 'no-reply@my-domain.com',
+//                    'name'    => 'My Cool Company',
+//                ],
+//                'encryption' => 'tls',
+//                'username'   => 'no-reply@my-domain.com',
+//                'password'   => 'some-strong-password',
+//                'sendmail'   => '/usr/sbin/sendmail -bs',
+//                // Путь используемый для поиска шаблонов писем
+//                'viewsDir'   => __DIR__ . '/../app/views/', // optional
+//            ]);
+
+
+//            $service = new MailerService([
+//                'driver' => 'mail', // mail, sendmail, smtp
+//                'host'   => 'smtp.email.com',
+//                'port'   => 587,
+//                'from'   => [
+//                    'address' => 'no-reply@my-domain.com',
+//                    'name'    => 'My Cool Company',
+//                ],
+//                'encryption' => 'tls',
+//                'username'   => 'no-reply@my-domain.com',
+//                'password'   => 'some-strong-password',
+//                'sendmail'   => '/usr/sbin/sendmail -bs',
+//                // Путь используемый для поиска шаблонов писем
+//                'viewsDir'   => __DIR__ . '/../app/views/', // optional
+//            ]);
+            return $service->mailer();
+        });
+
 	}
 }

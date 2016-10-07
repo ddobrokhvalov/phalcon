@@ -67,6 +67,12 @@ class Application extends BaseApplication
 				'params'=>3
 			));
 
+            $router->add("/admin/register", array(
+                'module' => 'backend',
+                'controller' => 'register',
+                'action' => 'index',
+            ));
+
 			$router->add("/admin", array(
 				'module' => 'backend',
 				'controller' => 'login',
@@ -84,6 +90,8 @@ class Application extends BaseApplication
 				'controller' => 'login',
 				'action' => 'index',
 			));
+
+
 
 //			$router->notFound(array(
 //				"controller" => "index",
