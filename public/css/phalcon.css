@@ -1927,10 +1927,8 @@ input[type="radio"]:checked + label {
     float: left;
     height: 55px;
     margin: 5px 0 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
     width: 100%;
-    padding-left: 10px;
-    padding-top: 5px;
 }
 .c-jadd-lr-sel select {
     background: transparent none repeat scroll 0 0;
@@ -3360,4 +3358,14 @@ input#upload-files::-webkit-file-upload-button {
 }
 .cke_combo__fontsize .cke_combo_text {
     width: 50px !important;
+}
+
+/*-------------------Custom Select---------------------------*/
+
+.wrapper-select {
+    position: relative;
+}
+
+.ui-selectmenu-button {
+    width: auto !important;
 }
