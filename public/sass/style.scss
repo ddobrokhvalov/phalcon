@@ -4,98 +4,114 @@
 @import "variables_etc/mixins";
 
 html, body {
-	height: 100%
+  height: 100%
 }
+
 body {
-	position: relative !important;
-	font-family: 'Open Sans', sans-serif !important;
+  position: relative !important;
+  font-family: 'Open Sans', sans-serif !important;
 }
+
 input, textarea {
-	outline: none; 
+  outline: none;
 }
+
 a {
-	text-decoration: none;
+  text-decoration: none;
 }
+
 b {
-	font-weight: 900;
+  font-weight: 900;
 }
+
 i {
-	font-style: italic;
+  font-style: italic;
 }
+
 img {
-	display: block;
+  display: block;
 }
+
 .page-wrap {
-    height: 100%;
-    display: table;
-    width: 965px; 
-	color: #34383e;
-    margin: 0 auto;
-    button {
-    	color: #34383e;
-    }
-    h1 {
-        font-size: 46px;
-        line-height: 1.1;
-        font-weight: 100;
-        margin-bottom: 32px;
-        max-width: 960px;
-        overflow: hidden;
-    }
+  height: 100%;
+  display: table;
+  width: 965px;
+  color: #34383e;
+  margin: 0 auto;
+  button {
+    color: #34383e;
+  }
+  h1 {
+    font-size: 46px;
+    line-height: 1.1;
+    font-weight: 100;
+    margin-bottom: 32px;
+    max-width: 960px;
+    overflow: hidden;
+  }
 }
+
 #main {
-    display: table-row;
-    height: 100%;
+  display: table-row;
+  height: 100%;
 }
+
 h1 {
-	font-size: 46px;
-	line-height: 1.1;
-	font-weight: 100;
-	margin: 0 0 16px 1px;
+  font-size: 46px;
+  line-height: 1.1;
+  font-weight: 100;
+  margin: 0 0 16px 1px;
 }
+
 h2, h3 {
-	font-size: 32px;
-	line-height: 1.1;
-	font-weight: 100;
+  font-size: 32px;
+  line-height: 1.1;
+  font-weight: 100;
 }
+
 h4 {
-	font-size: 18px;
-	line-height: 1.1;
-	font-weight: 900;
+  font-size: 18px;
+  line-height: 1.1;
+  font-weight: 900;
 }
- ul.status-green, .notification-number-box.status-green {
-    border-top: 3px solid $status-green;
+
+ul.status-green, .notification-number-box.status-green {
+  border-top: 3px solid $status-green;
 }
+
 ul.status-red, .notification-number-box.status-red {
-    border-top: 3px solid $status-red;
+  border-top: 3px solid $status-red;
 }
+
 ul.status-blue, .notification-number-box.status-blue {
-    border-top: 3px solid $status-blue;
+  border-top: 3px solid $status-blue;
 }
+
 ul.status-black, .notification-number-box.status-black {
-    border-top: 3px solid $status-black;
+  border-top: 3px solid $status-black;
 }
+
 .lebel-checkbox {
-	position: relative;
-	width: 16px;
-	height: 16px;
-	background: url(../images/checkbx1.png) 0 0 no-repeat !important;
-    p {
-        background-color: transparent !important;
-    }
-	input {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 16px;
-		height: 16px;
-		margin: 0;
-		opacity: 0;
-		cursor: pointer;
-	}
-	&.main-active-checkbox {
-		background-position: 0 bottom !important;
-	}
+  position: relative;
+  width: 16px;
+  height: 16px;
+  background: url(../images/checkbx1.png) 0 0 no-repeat !important;
+  p {
+    background-color: transparent !important;
+  }
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  &.main-active-checkbox {
+    background-position: 0 bottom !important;
+  }
 }
 
 @import "layers/left_menu";
@@ -115,22 +131,24 @@ ul.status-black, .notification-number-box.status-black {
 @import "complaint_add";
 @import "ufas_page";
 @import "menu";
+@import "customScroll";
 
 @media (max-width: 1640px) {
-	.page-wrap, .header-wrap #admin-header {
-		margin-left: 330px;
-		margin-right: 0;
-	}
+  .page-wrap, .header-wrap #admin-header {
+    margin-left: 330px;
+    margin-right: 0;
+  }
 }
+
 @media (max-width: 1325px) {
-	.page-wrap, .header-wrap #admin-header {
-		margin-left: auto;
-		margin-right: auto;
-	}
-	.admin-lm-wrap {
-		left: -242px;
-	}
-	.lm-burger {
-		display: block;
-	}
+  .page-wrap, .header-wrap #admin-header {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .admin-lm-wrap {
+    left: -242px;
+  }
+  .lm-burger {
+    display: block;
+  }
 }
