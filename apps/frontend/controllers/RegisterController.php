@@ -24,21 +24,21 @@ class RegisterController extends Controller
                 }
                 if($data['password'] != $data['confpassword']) throw new Exception('Пароли не совпадают');
 
-                $admin = Admin::find("email = '{$data['email']}'");
-                if (count($admin)) {
-                    echo json_encode(array('status' => 'admin exists'))
+                $user = User::find("email = '{$data['email']}'");
+                if (count($user)) {
+                    echo json_encode(array('status' => 'user exists'));
                     exit;
                 }
 
                 $hashpassword = sha1($data['password']);
-                $admin = new Admin();
-                $admin->email = trim($data['email']);
-                $admin->phone = trim($data['phone']);
-                $admin->password = $hashpassword;
-                $admin->hashreg = sha1($data['email'] . $data['password'] . date('now'));
-                $admin->status = 2;
-                $admin->date_reg = date('now');
-                $admin->save();
+                $user = new User();
+                $user->email = trim($data['email']);
+                $user->phone = trim($data['phone']);
+                $user->password = $hashpassword;
+                $user->hashreg = sha1($data['email'] . $data['password'] . date('now'));
+                $user->status = 2;
+                $user->date_reg = date('now');
+                $user->save();
 
                 $message = $this->mailer->createMessageFromView('../views/emails/register', array(
                                 'hashreg'   => $hashpassword,
@@ -49,6 +49,7 @@ class RegisterController extends Controller
                 $message->cc('example_cc@gmail.com');
                 $message->bcc('example_bcc@gmail.com');
                 $message->send();
+                echo json_encode(array('status' => 'ok'));
             }
         } catch(Exception $e){
             if(count($messages)) {
@@ -68,7 +69,7 @@ class RegisterController extends Controller
         try{
             $data = $this->request->get();
             if(!isset($data['hashreg']) || trim($data['hashreg']) == '') throw new Exception('error hash registration');
-            $admin = Admin::findFirst("hashreg='{$data['hashreg']}'");
+            $admin = User::findFirst("hashreg='{$data['hashreg']}'");
             if(!$admin) throw new Exception('Error does not exists admin');
 
             $admin->hashreg = null;
