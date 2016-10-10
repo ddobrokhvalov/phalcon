@@ -665,7 +665,6 @@ var auction = {
                 html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
                 html += this.processHTML('Дата и время проведения предварительного отбора', this.data.data_provedeniya);
             }
-
             $('.date-container').html(html);
 
             console.log('select');

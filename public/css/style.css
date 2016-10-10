@@ -5271,8 +5271,8 @@ body#backend-login {
   float: none;
   width: 16px;
   position: absolute;
-  right: 10px;
-  top: 22px;
+  right: 3px;
+  top: 32px;
 }
 
 .custom-select-complain .ui-selectmenu-button {
@@ -5280,9 +5280,25 @@ body#backend-login {
   cursor: pointer;
 }
 .ui-selectmenu-menu {
-  width: 420px !important;
+  width: 370px !important;
 }
 
 .ui-widget-content {
   height: 500px;
+}
+
+.c-jadd-lr-sel {
+  height: 75px;
+  line-height: 18px;
+  padding: 10px;
+  box-sizing: border-box;
+  color: black;
+  text-transform: uppercase;
+  border: 1px solid #c5c5c5;
+  background: #f6f6f6;
+  font-size: 14px;
+}
+
+.ui-widget {
+  font-family: inherit;
 }
