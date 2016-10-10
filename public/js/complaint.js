@@ -666,8 +666,6 @@ var auction = {
                 html += this.processHTML('Дата и время проведения предварительного отбора', this.data.data_provedeniya);
             }
             $('.date-container').html(html);
-
-            console.log('select');
             $( "#ufas-checked" ).selectmenu().selectmenu( "menuWidget" ).addClass( "overflow" );
 
             /* for (var key in this.data) {
