@@ -110,15 +110,6 @@ class Module
         $di->set('mailer', function(){
             $config = new ConfigIni("config/config.ini");
             $config = $config->mailer->toArray();
-            $config['viewsDir'] = __DIR__.$config['viewsDir'];
-
-            $config = [
-                'driver'     => 'mail',
-                'from'       => [
-                    'email' => 'example@gmail.com',
-                    'name'  => 'YOUR FROM NAME'
-                ]
-            ];
             return new \Phalcon\Ext\Mailer\Manager($config);
         });
 	}

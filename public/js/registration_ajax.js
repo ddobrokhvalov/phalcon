@@ -15,7 +15,7 @@ $(document).ready(function () {
                             $(this).append('<button>Закрыть</button>');
                             break;
                         case 'user exists':
-                            $(this).html('<strong style="font-size: 20px;">«Уже зарегистрированы – авторизуйтесь»</strong><br/>');
+                            $(this).html('<strong style="font-size: 10px;">«Уже зарегистрированы – авторизуйтесь»</strong><br/>');
                             $(this).append('<a >Закрыть</a>');
                             break;
 
@@ -23,7 +23,7 @@ $(document).ready(function () {
 
                 }
                 if(res.status == 'ok'){
-                    $(this).html('<strong style="font-size: 20px;">На указанный вами почтовый ящик отправлена ссылка для завершения регистрации</strong><br/>');
+                    $(this).html('<strong style="font-size: 10px;">На указанный вами почтовый ящик отправлена ссылка для завершения регистрации</strong><br/>');
                     $(this).append('<button>Закрыть</button>');
                 }
             },
