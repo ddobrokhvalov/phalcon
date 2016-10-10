@@ -951,14 +951,9 @@ function ajaxFileUpload(url, fileelementid) {
 }
 
 function stopSaveCompl() {
-    var flag;
-    if (regFlags == 1) {
-        flag = false;
-    } else {
-        flag = true;
-    }
+    var flag = false;
     $('.template_item').each(function() {
-        if ($(this).attr('data-required') == 1) flag = true;
+        if ($(this).attr('data-required') == "1") flag = true;
     });
     if (flag) {
         if (complaint.prepareData()) {
