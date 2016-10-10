@@ -10,9 +10,10 @@ use Phalcon\Config\Adapter\Ini as ConfigIni;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Flash\Direct as FlashDirect;
-
 use Multiple\Backend\Plugins\SecurityPlugin;
 use Multiple\Backend\Plugins\NotFoundPlugin;
+require_once('../vendor/autoload.php');
+
 class Module
 {
 
@@ -106,42 +107,19 @@ class Module
 			return new FlashDirect();
 		});
 
-        $di->set('mailer', function() {
-            $service = new MailerService();
-//            $service = new MailerService([
-//                'driver' => 'smtp', // mail, sendmail, smtp
-//                'host'   => 'smtp.email.com',
-//                'port'   => 587,
-//                'from'   => [
-//                    'address' => 'no-reply@my-domain.com',
-//                    'name'    => 'My Cool Company',
-//                ],
-//                'encryption' => 'tls',
-//                'username'   => 'no-reply@my-domain.com',
-//                'password'   => 'some-strong-password',
-//                'sendmail'   => '/usr/sbin/sendmail -bs',
-//                // Путь используемый для поиска шаблонов писем
-//                'viewsDir'   => __DIR__ . '/../app/views/', // optional
-//            ]);
+        $di->set('mailer', function(){
+            $config = new ConfigIni("config/config.ini");
+            $config = $config->mailer->toArray();
+            $config['viewsDir'] = __DIR__.$config['viewsDir'];
 
-
-//            $service = new MailerService([
-//                'driver' => 'mail', // mail, sendmail, smtp
-//                'host'   => 'smtp.email.com',
-//                'port'   => 587,
-//                'from'   => [
-//                    'address' => 'no-reply@my-domain.com',
-//                    'name'    => 'My Cool Company',
-//                ],
-//                'encryption' => 'tls',
-//                'username'   => 'no-reply@my-domain.com',
-//                'password'   => 'some-strong-password',
-//                'sendmail'   => '/usr/sbin/sendmail -bs',
-//                // Путь используемый для поиска шаблонов писем
-//                'viewsDir'   => __DIR__ . '/../app/views/', // optional
-//            ]);
-            return $service->mailer();
+            $config = [
+                'driver'     => 'mail',
+                'from'       => [
+                    'email' => 'example@gmail.com',
+                    'name'  => 'YOUR FROM NAME'
+                ]
+            ];
+            return new \Phalcon\Ext\Mailer\Manager($config);
         });
-
 	}
 }

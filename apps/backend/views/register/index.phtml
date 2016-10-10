@@ -10,7 +10,7 @@
 </head>
 <body id="backend-login">
 <div class="backend-login-wrap">
-    <div class="backend-login" style="height: 756px;">
+    <div class="backend-login" style="height: 800px;">
         <h2>Регистрация</h2>
         <form action="/admin/register/index" method="post">
             <div>
@@ -22,7 +22,7 @@
             <div>
                 <label for="email">Телефон</label>
                 <div>
-                    {{ text_field('number') }}
+                    {{ text_field('phone') }}
                 </div>
             </div>
             <div>
@@ -40,9 +40,16 @@
             <div>
                 {{ submit_button('Регистрация') }}
             </div>
+            {% if flashSession.output() %}
             <div class="error">
                 {{flashSession.output()}}
             </div>
+            {% endif %}
+            {% if admin_exists is defined %}
+            <div class="admin_exists">
+                <p>«Уже зарегистрированы – авторизуйтесь» <a href="http://{{host}}/admin/login">Авторизоваться</a></p>
+            </div>
+            {% endif%}
         </form>
 
     </div>
