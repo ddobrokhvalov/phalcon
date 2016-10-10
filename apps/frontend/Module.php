@@ -29,6 +29,7 @@ class Module
             'Multiple\Backend\Models'      => '../apps/backend/models/',
 			'Multiple\Frontend\Plugins'     => '../apps/frontend/plugins/',
 			'Multiple\Frontend\Form'        => '../apps/frontend/form/',
+            'Multiple\Frontend\Validator'        => '../apps/frontend/validator/',
 			'Multiple\Library'     => '../apps/library/',
 
 		));

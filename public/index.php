@@ -46,6 +46,12 @@ class Application extends BaseApplication
 				'controller' => 'ajax',
 				'action' => 'trusted',
 			));
+
+            $router->add("/register/index", array(
+                'module' => 'frontend',
+                'controller' => 'register',
+                'action' => 'index',
+            ));
 			
 			$router->add("/ajax/getlast", array(
 				'module' => 'frontend',

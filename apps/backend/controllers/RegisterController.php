@@ -43,7 +43,7 @@ class RegisterController extends Controller
                 $admin->save();
 
                 $message = $this->mailer->createMessageFromView('../views/emails/register', array(
-                                'hashreg'   => $hashpassword,
+                                'hashreg'   => $admin->hashreg,
                                 'host'      => $host
                             ))
                     ->to('example_to@gmail.com', 'OPTIONAL NAME')

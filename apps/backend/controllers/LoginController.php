@@ -65,6 +65,10 @@ class LoginController extends ControllerBase
             );
 
             if ($admin != false) {
+                if($admin->activeted == 0){
+                    $this->flashSession->error('Вы неактивировали аккаунт');
+                    return $this->response->redirect('/admin');
+                }
                 $this->_registerSession($admin);
 
                 Log::addAdminLog(Log::$typeAdminAuth, Log::$textAdminLogin, $admin);

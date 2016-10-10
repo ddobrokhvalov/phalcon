@@ -1,10 +1,10 @@
 <?php
 
-namespace Multiple\Backend\Controllers;
+namespace Multiple\Frontend\Controllers;
 use Phalcon\Acl\Exception;
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Validator\RegisterValidator;
-use Multiple\Backend\Models\User;
+use Multiple\Frontend\Models\User;
 
 
 class RegisterController extends Controller
@@ -37,11 +37,11 @@ class RegisterController extends Controller
                 $user->password = $hashpassword;
                 $user->hashreg = sha1($data['email'] . $data['password'] . date('now'));
                 $user->status = 2;
-                $user->date_reg = date('now');
+                $user->date_registration = date('now');
                 $user->save();
 
                 $message = $this->mailer->createMessageFromView('../views/emails/register', array(
-                                'hashreg'   => $hashpassword,
+                                'hashreg'   => $user->hashreg,
                                 'host'      => $host
                             ))
                     ->to('example_to@gmail.com', 'OPTIONAL NAME')
@@ -61,8 +61,8 @@ class RegisterController extends Controller
             } else {
                 echo json_encode(array('error' => $e->getMessage()));
             }
-            exit;
         }
+        exit;
     }
 
     public function confirmAction(){
@@ -73,7 +73,7 @@ class RegisterController extends Controller
             if(!$admin) throw new Exception('Error does not exists admin');
 
             $admin->hashreg = null;
-            $admin->activeted = 1;
+            $admin->status = 1;
             $admin->save();
         } catch (Exception $e){
             echo $e->getMessage();
