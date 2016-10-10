@@ -9,7 +9,21 @@ $(document).ready(function () {
             context: form,
             success: function(res){
                 if(res.status){
-                    $(this).html('<strong style="font-size: 20px;">На указанный вами почтовый ящик отправлена ссылка для завершения регистрации</strong>');
+                    switch(res.status){
+                        case 'ok':
+                            $(this).html('<strong style="font-size: 20px;">На указанный вами почтовый ящик отправлена ссылка для завершения регистрации</strong><br/>');
+                            $(this).append('<button>Закрыть</button>');
+                            break;
+                        case 'user exists':
+                            $(this).html('<strong style="font-size: 20px;">«Уже зарегистрированы – авторизуйтесь»</strong><br/>');
+                            $(this).append('<a >Закрыть</a>');
+                            break;
+
+                    }
+
+                }
+                if(res.status == 'ok'){
+                    $(this).html('<strong style="font-size: 20px;">На указанный вами почтовый ящик отправлена ссылка для завершения регистрации</strong><br/>');
                     $(this).append('<button>Закрыть</button>');
                 }
             },

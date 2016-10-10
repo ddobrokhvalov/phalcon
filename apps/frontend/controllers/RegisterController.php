@@ -44,10 +44,10 @@ class RegisterController extends Controller
                                 'hashreg'   => $user->hashreg,
                                 'host'      => $host
                             ))
-                    ->to('example_to@gmail.com', 'OPTIONAL NAME')
-                    ->subject('Hello world!');
-                $message->cc('example_cc@gmail.com');
-                $message->bcc('example_bcc@gmail.com');
+                    ->to($user->email)
+                    ->subject('Регистрация в интеллектуальной системе ФАС');
+                //$message->cc('example_cc@gmail.com');
+                //$message->bcc('example_bcc@gmail.com');
                 $message->send();
                 echo json_encode(array('status' => 'ok'));
             }
