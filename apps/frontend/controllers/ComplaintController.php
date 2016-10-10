@@ -162,6 +162,8 @@ class ComplaintController extends ControllerBase
         $action = $this->request->get('action');
         if (isset($action) && $action == 'edit') {
             $this->view->edit_now = TRUE;
+            $ufas = Ufas::find();
+            $this->view->ufas = $ufas;
         } else {
             $this->view->edit_now = FALSE;
         }
@@ -207,12 +209,14 @@ class ComplaintController extends ControllerBase
 //        $complaint->data_rassmotreniya =        isset($data['procedura']['data_rassmotreniya'])         ? $data['procedura']['data_rassmotreniya']      : null;
 
         $this->view->ufas_name = 'Уфас не определен';
+        $this->view->comp_inn = 'null';
         if($complaint->ufas_id != null){
             $ufas_name = Ufas::findFirst(array(
                 "id={$complaint->ufas_id}"
             ));
             if($ufas_name){
                 $this->view->ufas_name = $ufas_name->name;
+                $this->view->comp_inn = $ufas_name->number;
             }
         }
 
@@ -460,6 +464,14 @@ class ComplaintController extends ControllerBase
             $complaint->complaint_name = $data['complaint_name'];
             //$complaint->complaint_text = $data['complaint_text'];
             //$complaint->complaint_text_order = $data['complaint_text_order'];
+            $complaint->complaint_text = $data['complaint_text'];
+            $complaint->complaint_text_order = $data['complaint_text_order'];
+            $ufas = Ufas::findFirst(array(
+                "number = {$data['ufas_id']}"
+            ));
+            if($ufas){
+                $complaint->ufas_id = $ufas->id;
+            }
         }
 
         if ($complaint->update() == false) {

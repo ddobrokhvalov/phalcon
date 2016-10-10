@@ -1,7 +1,22 @@
+<script>
+    {% if edit_now %}
+        var ufasArr = new Array();
+        {% for uf in ufas  %}
+            ufasArr.push({
+                'name': '{{uf.name}}',
+                'number': '{{ uf.number }}'
+            });
+        {% endfor %}
+    {% endif %}
+    var comp_inn = '{{comp_inn}}';
+</script>
 <script type="application/javascript" src="/js/argCompl_jsonSend.js"></script>
 <script type="application/javascript" src="/js/docx_generator/js/docxtemplater.v2.js"></script>
 <script type="application/javascript" src="/js/docx_generator/js/FileSaver.min.js"></script>
 <script type="application/javascript" src="/js/docx_generator/js/jszip-utils.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/js/complaint.js"></script>
+<link rel="stylesheet" href="/css/jquery-ui.css">
 <div class="content edit-complaint-page {% if complaint.status == 'draft' and action_edit === true %}edit-now {% endif %}">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
@@ -116,6 +131,7 @@
             
             {% if complaint.status == 'draft' and action_edit === true %}
             <form action="/complaint/update" id="add-complaint-form" enctype="multipart/form-data" method="POST">
+            <input type="hidden" name="ufas_id" value="{{comp_inn}}">
             <input type="hidden" name="auctionData" id="auctionData" value="">
             <input type="hidden" name="arguments_data" id="arguments_data" value="">
             <input type="hidden" name="complaint_text" id="complaint_text" value="">
@@ -509,7 +525,9 @@
                 applicant.id = ["{{complaint.applicant_id}}"];
             }, 500);
         {% endif %}
-        
+
+
+
     //});
 </script>
 <div id="pop-before-ask-question" class="modal_div">

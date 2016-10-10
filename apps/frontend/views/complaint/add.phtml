@@ -375,10 +375,18 @@
 <script>
     var templates = {};
     var temp_name = {};
+    var ufasArr = new Array();
+    var comp_inn = '';
     {% for argument in arguments  %}
         {% for template in argument['templates']  %}
             templates[{{template.id}}] = "{{template.text|e}}";
             temp_name[{{template.id}}] = '{{template.name}}';
         {% endfor %}
+    {% endfor %}
+    {% for uf in ufas  %}
+        ufasArr.push({
+            'name': '{{uf.name}}',
+            'number': '{{ uf.number }}'
+        });
     {% endfor %}
 </script>
