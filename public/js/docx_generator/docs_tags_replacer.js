@@ -42,10 +42,9 @@ function replaceWordTags(text, ckeditor_id) {
     text = add_font_support(text, '', false);
     text = new_line_fix(text);
     var del_text = text.split('\r\n');
-    
     var text_copy = '';
     for (var d_t = 0; d_t < del_text.length; d_t++) {
-        if (del_text[d_t] != "" && del_text[d_t].search("<w:p") != 0) {
+        if (del_text[d_t] != "" && del_text[d_t].search("<w:p") != 0 && !del_text[d_t].startsWith('<')) {
             var start_sign_o = del_text[d_t].search("<");
             var start_text_o = del_text[d_t].substr(0, start_sign_o);
             var curr_text = '';
@@ -62,10 +61,16 @@ function replaceWordTags(text, ckeditor_id) {
             }
             text_copy += '<w:p>' + curr_text + '</w:p>';
         } else if (del_text[d_t] != "" && del_text[d_t].substr(del_text[d_t].length - 6, del_text[d_t].length) != '</w:p>') {
-            var position_o = (get_last_closing_sign_position(del_text[d_t])) + 1;
-            start_text_o = del_text[d_t].substr(0, position_o);
-            var text_to_end_o = del_text[d_t].substr(position_o, del_text[d_t].length);
-            text_copy += start_text_o + '<w:p><w:r><w:t xml:space="preserve">' + text_to_end_o + '</w:p></w:t></w:r>';
+            if (del_text[d_t] != '</w:t></w:r>') {
+                var position_o = (get_last_closing_sign_position(del_text[d_t])) + 1;
+                start_text_o = del_text[d_t].substr(0, position_o);
+                var text_to_end_o = del_text[d_t].substr(position_o, del_text[d_t].length);
+                if (start_text_o.search('<w:p') == -1) {
+                    text_copy += '<w:p>' + start_text_o + '<w:r><w:t xml:space="preserve">' + text_to_end_o + '</w:t></w:r></w:p>';
+                } else {
+                    text_copy += start_text_o + '<w:p><w:r><w:t xml:space="preserve">' + text_to_end_o + '</w:t></w:r></w:p>';
+                }
+            }
         } else {
             text_copy += del_text[d_t];
         }
