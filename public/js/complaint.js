@@ -1,4 +1,12 @@
 $(document).ready(function () {
+    $('body').on('change','#ufas-checked', function(){
+        $(this).find('option:selected').each(function() {
+            var option = this;
+            $('input[name="ufas_id"]').each(function(){
+               $(this).val($(option).val());
+            })
+        });
+    });
 
     $("#notice_button").click(function (event) {
         event.preventDefault();
@@ -581,7 +589,24 @@ var auction = {
                 ufas_name = this.data.ufas_name;
             }
 
-            var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel">' + ufas_name + '</div></div><input type="hidden" name="ufas_id" value="' + complaint.inn +'">';
+            /**
+             * SELECT UFAS
+             */
+            // class="c-jadd-lr-sel"
+            if(window.ufasArr) {
+                var ufasNonDetected = true;
+                var html = '<div class="c-jadd-lr-row"><label for="ufas-checked">Подведомственность УФАС</label><div class="custom-select-complain"><select  id="ufas-checked">';
+                if(ufasNonDetected == 'УФАС не определен' || ufasNonDetected == 'Уфас не определен')  html += '<option selected>Уфас не определен</option>';
+                for (var i = 0; i < ufasArr.length; i++) {
+                    html += '<option '+ ((ufasArr[i].number == complaint.inn || ufasArr[i].number == comp_inn)? 'selected' : '') +' value="' + ufasArr[i].number + '">' + ufasArr[i].name + '</option>'
+                }
+                html += '</select></div></div>';
+                html += '<input type="hidden" name="ufas_id" value="' + ((complaint.inn) ? complaint.inn : (comp_inn) ? comp_inn : null)  + '">'
+            } else {
+                var html = '<div class="c-jadd-lr-row"><span>Подведомственность УФАС</span><div class="c-jadd-lr-sel">' + ufas_name + '</div></div> <input type="hidden" name="ufas_id" value="' + complaint.inn + '">';
+            }
+
+
             if (this.data.type == 'Открытый конкурс') {
                 html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
                 html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
@@ -640,10 +665,8 @@ var auction = {
                 html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
                 html += this.processHTML('Дата и время проведения предварительного отбора', this.data.data_provedeniya);
             }
-
-
             $('.date-container').html(html);
-
+            $( "#ufas-checked" ).selectmenu().selectmenu( "menuWidget" ).addClass( "overflow" );
 
             /* for (var key in this.data) {
              $('#' + key).html(this.data[key]);
