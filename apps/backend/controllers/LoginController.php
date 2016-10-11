@@ -49,7 +49,6 @@ class LoginController extends ControllerBase
     {
         if ($this->request->isPost()) {
 
-
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
 
@@ -65,10 +64,6 @@ class LoginController extends ControllerBase
             );
 
             if ($admin != false) {
-                if($admin->activeted == 0){
-                    $this->flashSession->error('Вы неактивировали аккаунт');
-                    return $this->response->redirect('/admin');
-                }
                 $this->_registerSession($admin);
 
                 Log::addAdminLog(Log::$typeAdminAuth, Log::$textAdminLogin, $admin);

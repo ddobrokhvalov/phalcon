@@ -13,13 +13,10 @@ class Admin extends Model
     public $name;
     public $patronymic;
     public $avatar;
-    public $hashreg;
-    public $activeted;
-    public $date_reg;
 
     public function initialize(){
         $this->setSource("admin");
-        $this->allowEmptyStringValues(['surname', 'name', 'patronymic', 'avatar', 'phone', 'hashreg', 'activeted']);
+        $this->allowEmptyStringValues(['surname', 'name', 'patronymic', 'avatar', 'phone']);
     }
     public function getSource()
     {
