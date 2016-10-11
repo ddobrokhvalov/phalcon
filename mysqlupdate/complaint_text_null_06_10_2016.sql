@@ -1,0 +1,2 @@
+ALTER TABLE `complaint`	CHANGE COLUMN `complaint_text` `complaint_text` TEXT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `complaint_name`;
+ALTER TABLE `complaint`	CHANGE COLUMN `complaint_text_order` `complaint_text_order` INT(11) NULL AFTER `fid`;

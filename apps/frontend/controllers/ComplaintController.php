@@ -9,6 +9,7 @@ use Multiple\Frontend\Models\Complaint;
 use Multiple\Frontend\Models\ComplaintMovingHistory;
 use Multiple\Frontend\Models\Question;
 use Multiple\Frontend\Models\UsersArguments;
+use Multiple\Frontend\Models\DocxFiles;
 use Multiple\Frontend\Models\Files;
 use Multiple\Backend\Models\Ufas;
 use Multiple\Library\Parser;
@@ -120,12 +121,12 @@ class ComplaintController extends ControllerBase
             $categories_id[] = $argument->argument_category_id;
             $arguments_id[] = $argument->argument_id;
             $arr_users_arg[$argument->argument_id] = preg_replace('/[\r\n\t]/', '', $argument->text);
-            if ($argument_order == $complaint->complaint_text_order) {
+            /*if ($argument_order == $complaint->complaint_text_order) {
                 $user_arguments .= $complaint->complaint_text . '</br>';
                 $user_arguments .= $argument->text . '</br>';
-            } else {
+            } else {*/
                 $user_arguments .= $argument->text . '</br>';
-            }
+            //}
             $arr_sub_cat[] = array(
                 'id' => $argument->argument_id,
                 'text' =>  preg_replace('/[\r\n\t]/', '', $argument->text)
@@ -138,7 +139,7 @@ class ComplaintController extends ControllerBase
         $this->view->arr_users_arg = $arr_users_arg;
         $this->view->categories_id = implode(',', $categories_id);
         $this->view->arguments_id = implode(',', $arguments_id);
-        $this->view->complaint_text_order = $complaint->complaint_text_order;
+        //$this->view->complaint_text_order = $complaint->complaint_text_order;
 
         $files_html = [];
         if ($complaint->fid) {
@@ -161,6 +162,8 @@ class ComplaintController extends ControllerBase
         $action = $this->request->get('action');
         if (isset($action) && $action == 'edit') {
             $this->view->edit_now = TRUE;
+            $ufas = Ufas::find();
+            $this->view->ufas = $ufas;
         } else {
             $this->view->edit_now = FALSE;
         }
@@ -206,12 +209,14 @@ class ComplaintController extends ControllerBase
 //        $complaint->data_rassmotreniya =        isset($data['procedura']['data_rassmotreniya'])         ? $data['procedura']['data_rassmotreniya']      : null;
 
         $this->view->ufas_name = 'Уфас не определен';
+        $this->view->comp_inn = 'null';
         if($complaint->ufas_id != null){
             $ufas_name = Ufas::findFirst(array(
                 "id={$complaint->ufas_id}"
             ));
             if($ufas_name){
                 $this->view->ufas_name = $ufas_name->name;
+                $this->view->comp_inn = $ufas_name->number;
             }
         }
 
@@ -240,6 +245,19 @@ class ComplaintController extends ControllerBase
                     $file->moveTo($baseLocation . $name);
                 }
             }
+            $docx = new DocxFiles();
+            $docx->docx_file_name = $name;
+            $compl_id = $this->request->getPost('complaint_id');
+            $docx->complaint_name = $this->request->getPost('complaint_name');
+            if (isset($compl_id) && $compl_id != 'undefined') {
+                $delete_docx = DocxFiles::find("complaint_id = $compl_id");
+                foreach ($delete_docx as $del_docx) {
+                    $del = unlink($baseLocation . $del_docx->docx_file_name);
+                    $del_docx->delete();
+                }
+            }
+            $docx->user_id = $this->user->id;
+            $docx->save();
         }
         $this->view->disable();
         die();
@@ -333,10 +351,10 @@ class ComplaintController extends ControllerBase
             foreach ($row as $data_) {
                 $data_ = explode('===', $data_);
                 $users_arguments_[$key][$data_[0]] = $data_[1];
-                if (isset($users_arguments_[$key]['argument_id']) && $users_arguments_[$key]['argument_id'] == 'just_text') {
+                /*if (isset($users_arguments_[$key]['argument_id']) && $users_arguments_[$key]['argument_id'] == 'just_text') {
                     $data['complaint_text'] = $data_[1];
                     $data['complaint_text_order'] = $users_arguments_[$key]['order'];
-                }
+                }*/
             }
             /*for ($ind = 0; $ind < $cnt; $ind++) {
                 unset($row[$ind]);
@@ -403,6 +421,11 @@ class ComplaintController extends ControllerBase
                 $complaint->fid = serialize($saved_files);
                 //$this->flashSession->error($applicant->fid);
                 $complaint->save();
+                $docx_s = DocxFiles::find("complaint_name = '{$complaint->complaint_name}'");
+                foreach ($docx_s as $docx) {
+                    $docx->complaint_id = $complaint->id;
+                    $docx->save();
+                }
             }
             $this->flashSession->success('Жалоба сохранена');
             return $this->response->redirect('complaint/edit/' . $complaint->id);
@@ -430,23 +453,25 @@ class ComplaintController extends ControllerBase
             foreach ($row as $data_) {
                 $data_ = explode('===', $data_);
                 $users_arguments_[$key][$data_[0]] = $data_[1];
-                if (isset($users_arguments_[$key]['argument_id']) && $users_arguments_[$key]['argument_id'] == 'just_text') {
+                /*if (isset($users_arguments_[$key]['argument_id']) && $users_arguments_[$key]['argument_id'] == 'just_text') {
                     $data['complaint_text'] = $data_[1];
                     $data['complaint_text_order'] = $users_arguments_[$key]['order'];
-                }
+                }*/
             }
         }
         $complaint = Complaint::findFirstById($data['update-complaint-id']);
         if ($complaint) {
-            if($data['complaint_text'] == '<p>Пользовательский текст</p>'){
-                $data['complaint_text'] = '<p>'.str_replace($data['argument_text'],'Пользовательский текст', '').'</p>';
-            }
-            if($data['complaint_text'] == '<p>Вам необходимо выбрать хотябы одну обязательную жалобу!</p>'){
-                $data['complaint_text'] = '<p>'.str_replace($data['argument_text'],'Вам необходимо выбрать хотябы одну обязательную жалобу!', '').'</p>';
-            }
             $complaint->complaint_name = $data['complaint_name'];
+            //$complaint->complaint_text = $data['complaint_text'];
+            //$complaint->complaint_text_order = $data['complaint_text_order'];
             $complaint->complaint_text = $data['complaint_text'];
             $complaint->complaint_text_order = $data['complaint_text_order'];
+            $ufas = Ufas::findFirst(array(
+                "number = {$data['ufas_id']}"
+            ));
+            if($ufas){
+                $complaint->ufas_id = $ufas->id;
+            }
         }
 
         if ($complaint->update() == false) {
@@ -515,6 +540,11 @@ class ComplaintController extends ControllerBase
                     $complaint->fid = serialize($saved_files);
                 }
                 $complaint->save();
+                $docx_s = DocxFiles::find("complaint_name = '{$complaint->complaint_name}'");
+                foreach ($docx_s as $docx) {
+                    $docx->complaint_id = $complaint->id;
+                    $docx->save();
+                }
             }
             $this->flashSession->success('Жалоба обновлена');
             return $this->response->redirect('complaint/edit/' . $complaint->id);
@@ -553,6 +583,28 @@ class ComplaintController extends ControllerBase
         exit;
     }
 
+    function isComplaintNameUnicAction() {
+        $this->view->disable();
+        $complaint_name = $this->request->get('complaint_name');
+        $complaint_id = $this->request->get('complaint_id');
+        $and_complaint_where = '';
+        if (isset($complaint_id)) {
+            $and_complaint_where = " AND id != {$complaint_id}";
+        }
+        $response['name_unic'] = TRUE;
+        if ($complaint_name) {
+            $db = $this->getDi()->getShared('db');
+            $result = $db->query("SELECT id FROM complaint WHERE complaint_name = '{$complaint_name}'{$and_complaint_where}");
+            $id = $result->fetch();
+            if ($id) {
+                $response['name_unic'] = FALSE;
+            }
+        }
+        header('Content-type: application/json');
+        echo json_encode($response);
+        die();
+    }
+    
     public function recallAction($id)
     {
 

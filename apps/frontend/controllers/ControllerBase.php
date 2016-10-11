@@ -75,12 +75,12 @@ class ControllerBase extends Controller
         $compl = new Complaint();
         if($messagesObj){
             foreach($messagesObj as $obj){
-                $temp = ['id' => $obj->id,'subject' => $obj->subject, 'body' => $obj->body, 'time' => strtotime($obj->time), 'status_change' => false];
+                $temp = ['id' => $obj->id,'subject' => $obj->subject, 'body' => $obj->body, 'time' => strtotime($obj->time), 'status_change' => false, 'comp_id' => $obj->comp_id];
                 if(isset($obj->history_id, $obj->complaint_id, $obj->auction_id)){
                     $temp['status_change'] = true;
                     $temp['auction_id'] = $obj->auction_id;
                     $temp['complaint_id'] = $obj->complaint_id;
-                    $temp['status'] = $compl->getCurrentStatusRussian($obj->new_status);
+                    $temp['status'] = $compl->getCurrentStatusRussian($obj->stat_comp);
                     $temp['color'] = $compl->getComplaintColor($obj->new_status);
                 } elseif(isset($obj->stat_comp)){
                     $temp['status_change'] = true;
@@ -96,7 +96,8 @@ class ControllerBase extends Controller
         $this->view->setTemplateAfter('menu');
         $this->view->applicants = $userApplicants;
         $complaint = new Complaint();
-        $result = $complaint->findCountUserComplaints($this->user->id);
+        $applicant_id = $this->session->get('applicant');
+        $result = $complaint->findCountUserComplaints($this->user->id, $applicant_id['applicant_id']);
         $this->view->complaints_num = $result['complaints_num'];
         $this->view->total = $result['total'];
         $this->view->user = $this->user;

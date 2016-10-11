@@ -1,10 +1,10 @@
 jQuery(document).ready(function($) {
 	$('.current-option').click(function() {
         $(this).next('.custom-options').slideToggle();
-	    $(this).find('span').toggleClass('rotate-icon');
+        $(this).find('span').toggleClass('rotate-icon');
         pushTypeToVal($(this));
 	});
-	$('.custom-options').on('click', 'li', function(y) {
+	$('.custom-options').on('click', 'li', function() {
 		if ($(this).parent().parent().hasClass('selectArgType')) {
             addRemoveType($(this))
 		} else {

@@ -2,7 +2,8 @@
 <script type="application/javascript" src="/js/docx_generator/js/docxtemplater.v2.js"></script>
 <script type="application/javascript" src="/js/docx_generator/js/FileSaver.min.js"></script>
 <script type="application/javascript" src="/js/docx_generator/js/jszip-utils.js"></script>
-
+<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/css/jquery-ui.css">
 <!--[if IE]>
     <script type="text/javascript" src="/js/docx_generator/js/jszip-utils-ie.js"></script>
 <![endif]-->
@@ -113,17 +114,18 @@
                                 <div class="complaint-attachment">
                                     <div class="file-wrapper">
                                         <div class="text-above">Прикрепить файлы</div>
-                                        <input id="upload-files" class="upload_f" type="file" multiple name="upload-files[]">
+                                        <input id="upload-files" class="upload_f first" data-filedid="first" type="file" name="upload-files[]">
                                     </div>
 
                                     <script type="text/javascript">
                                         jQuery(document).ready(function(){
                                             jQuery('body').on('change','.upload_f', function(){
-                                                console.log(this);
+                                                var classNameInputFile = '';
                                                 var cnt = jQuery('.upload_f')[0].files.length;
                                                 if(cnt > 0){
                                                     var count = jQuery('.upload_f').length + 1;
-                                                    jQuery(".file-wrapper").append('<input id="upload-files" class="upload_f" type="file" multiple="multiple" name="upload-files[]">');
+                                                    classNameInputFile = 'file' + parseInt(Math.random() * 10000);
+                                                    jQuery(".file-wrapper").append('<input id="upload-files" class="upload_f '+ classNameInputFile +'" data-filedid="'+ classNameInputFile + '" type="file" name="upload-files[]">');
                                                     jQuery(this).off('change');
                                                 }
                                                 var html = '';
@@ -133,32 +135,17 @@
                                                         var file_data = jQuery(upload_file[i])[0].files[j]['name'].split('.');
                                                         var file_type = file_data[file_data.length - 1];
                                                         var file_size = jQuery(upload_file[i])[0].files[j]['size'] / 1024;
-                                                        var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery(upload_file[i])[0].files[j]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
+                                                        var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery(upload_file[i])[0].files[j]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div class="delete-file" data-remclass="' + jQuery(upload_file[i]).attr("data-filedid") + '" title="Удалить файл"></div><div style="clear:both;"></div></div>';
                                                     }
                                                 }
-    //                                                for (i = 0; i < cnt; i++) {
-    //                                                    var file_data = jQuery('#upload-files')[0].files[i]['name'].split('.');
-    //                                                    var file_type = file_data[file_data.length - 1];
-    //                                                    var file_size = jQuery('#upload-files')[0].files[i]['size'] / 1024;
-    //                                                    var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery('#upload-files')[0].files[i]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
-    //                                                }
                                                 jQuery('.attached-files').html(html);
                                             });
+                                            jQuery('body').on('click','.delete-file', function(){
+                                                var className = $(this).attr('data-remclass');
+                                                $(this).parent().remove();
+                                                $('.' + className).remove();
+                                            });
                                         });
-    //                                    jQuery(document).ready(function(){
-    //                                        jQuery('#upload-files').change(function(){
-    //                                            var cnt = jQuery('#upload-files')[0].files.length;
-    //                                            var i = 0;
-    //                                            var html = '';
-    //                                            for (i = 0; i < cnt; i++) {
-    //                                                var file_data = jQuery('#upload-files')[0].files[i]['name'].split('.');
-    //                                                var file_type = file_data[file_data.length - 1];
-    //                                                var file_size = jQuery('#upload-files')[0].files[i]['size'] / 1024;
-    //                                                var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery('#upload-files')[0].files[i]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display:none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
-    //                                            }
-    //                                            jQuery('.attached-files').html(html);
-    //                                        });
-    //                                    });
                                     </script>
                                 </div>
                                 <input type="file" id="cjd2file" hidden />
@@ -269,10 +256,10 @@
                 </ul>
                 <div id="argComplSelect" class="select-holder">
                     <div class="title-info-box">Выберите категорию</div>
-                    <div class="custom_select">
+                    <div class="custom_select animate-toTop">
                         <div class="current-option" data-value="">
-                            <span>Жалоба на положения документации</span>
                             <div></div>
+                            <span>Жалоба на положения документации</span>
                         </div>
                         <ul class="custom-options">
                             <div class="newHolderScroll mCustomScrollbar"></div>
@@ -322,7 +309,10 @@
         background-color: yellow;
     }
     .marker_white{
-        background-color: #f7f8fa;;
+        background-color: #f7f8fa;
+    }
+    .marker_red{
+        background-color: red;
     }
     .edit-status .admin-popup-content.index-main-popup{
         text-align: center;
@@ -365,7 +355,7 @@
             });
         }
 
-        $('body').on('keyup', '.c-edit-j-t', function(){
+        $('body').on('click', '.c-edit-j-t', function(){
             if(!$(this).hasClass('delete_marker')) {
                 $(this).find('font.marker_yellow').each(function(i,el){
                     $(el).before($(el).html()).remove();
@@ -375,16 +365,29 @@
                 });
                 $(this).addClass('delete_marker');
             }
+            if ($('.edit-textarea.cke_editable font.marker_red').length > 0) {
+                $(this).find('font.marker_red').each(function(i,el){
+                    $(el).before($(el).html()).remove();
+                });
+            }
         });
     });
     </script>
 <script>
     var templates = {};
     var temp_name = {};
+    var ufasArr = new Array();
+    var comp_inn = '';
     {% for argument in arguments  %}
         {% for template in argument['templates']  %}
             templates[{{template.id}}] = "{{template.text|e}}";
             temp_name[{{template.id}}] = '{{template.name}}';
         {% endfor %}
+    {% endfor %}
+    {% for uf in ufas  %}
+        ufasArr.push({
+            'name': '{{uf.name}}',
+            'number': '{{ uf.number }}'
+        });
     {% endfor %}
 </script>

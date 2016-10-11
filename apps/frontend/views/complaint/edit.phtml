@@ -1,4 +1,22 @@
+<script>
+    {% if edit_now %}
+        var ufasArr = new Array();
+        {% for uf in ufas  %}
+            ufasArr.push({
+                'name': '{{uf.name}}',
+                'number': '{{ uf.number }}'
+            });
+        {% endfor %}
+    {% endif %}
+    var comp_inn = '{{comp_inn}}';
+</script>
 <script type="application/javascript" src="/js/argCompl_jsonSend.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/docxtemplater.v2.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/FileSaver.min.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/jszip-utils.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/js/complaint.js"></script>
+<link rel="stylesheet" href="/css/jquery-ui.css">
 <div class="content edit-complaint-page {% if complaint.status == 'draft' and action_edit === true %}edit-now {% endif %}">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
@@ -113,10 +131,12 @@
             
             {% if complaint.status == 'draft' and action_edit === true %}
             <form action="/complaint/update" id="add-complaint-form" enctype="multipart/form-data" method="POST">
+            <input type="hidden" name="ufas_id" value="{{comp_inn}}">
             <input type="hidden" name="auctionData" id="auctionData" value="">
             <input type="hidden" name="arguments_data" id="arguments_data" value="">
             <input type="hidden" name="complaint_text" id="complaint_text" value="">
             <input type="hidden" name="applicant_id" id="applicant_id" value="">
+            <input type="hidden" name="complaint_id" id="complaint_id" value="{{complaint.id}}">
             <input type="hidden" name="update-complaint-id" id="update-complaint-id" value="{{ complaint.id }}">
                 <div class="c-jadd2 complaint-main-container" style="display: block !important;">
                     <div class="c-jadd2-f">
@@ -173,17 +193,18 @@
                                 <div class="complaint-attachment">
                                     <div class="file-wrapper">
                                         <div class="text-above">Прикрепить файлы</div>
-                                        <input id="upload-files" class="upload_f" type="file" multiple="multiple" name="upload-files[]">
+                                        <input id="upload-files" class="upload_f first" data-filedid="first" type="file" name="upload-files[]">
                                     </div>
-                                    
+
                                     <script type="text/javascript">
                                         jQuery(document).ready(function(){
                                             jQuery('body').on('change','.upload_f', function(){
-                                                console.log(this);
+                                                var classNameInputFile = '';
                                                 var cnt = jQuery('.upload_f')[0].files.length;
                                                 if(cnt > 0){
                                                     var count = jQuery('.upload_f').length + 1;
-                                                    jQuery(".file-wrapper").append('<input id="upload-files" class="upload_f" type="file" multiple="multiple" name="upload-files[]">');
+                                                    classNameInputFile = 'file' + parseInt(Math.random() * 10000);
+                                                    jQuery(".file-wrapper").append('<input id="upload-files" class="upload_f '+ classNameInputFile +'" data-filedid="'+ classNameInputFile + '" type="file" name="upload-files[]">');
                                                     jQuery(this).off('change');
                                                 }
                                                 var html = '';
@@ -193,16 +214,15 @@
                                                         var file_data = jQuery(upload_file[i])[0].files[j]['name'].split('.');
                                                         var file_type = file_data[file_data.length - 1];
                                                         var file_size = jQuery(upload_file[i])[0].files[j]['size'] / 1024;
-                                                        var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery(upload_file[i])[0].files[j]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
+                                                        var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery(upload_file[i])[0].files[j]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div class="delete-file" data-remclass="' + jQuery(upload_file[i]).attr("data-filedid") + '" title="Удалить файл"></div><div style="clear:both;"></div></div>';
                                                     }
                                                 }
-//                                                for (i = 0; i < cnt; i++) {
-//                                                    var file_data = jQuery('#upload-files')[0].files[i]['name'].split('.');
-//                                                    var file_type = file_data[file_data.length - 1];
-//                                                    var file_size = jQuery('#upload-files')[0].files[i]['size'] / 1024;
-//                                                    var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery('#upload-files')[0].files[i]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div style="display: none;" class="delete-file" title="Удалить файл"></div><div style="clear:both;"></div></div>';
-//                                                }
-                                                jQuery('.attached-files .attached-files-wrap').html(html);
+                                                jQuery('.attached-files-wrap').html(html);
+                                            });
+                                            jQuery('body').on('click','.delete-file', function(){
+                                                var className = $(this).attr('data-remclass');
+                                                $(this).parent().remove();
+                                                $('.' + className).remove();
                                             });
                                         });
                                     </script>
@@ -368,10 +388,10 @@
                 </ul>
                 <div id="argComplSelect" class="select-holder">
                     <div class="title-info-box">Выберите категорию</div>
-                    <div class="custom_select">
+                    <div class="custom_select animate-toTop">
                         <div class="current-option" data-value="">
-                            <span>Жалоба на положения документации</span>
                             <div></div>
+                            <span>Жалоба на положения документации</span>
                         </div>
                         <ul class="custom-options">
                             <div class="newHolderScroll mCustomScrollbar"></div>
@@ -407,7 +427,7 @@
 <script>
 
     $(document).ready(function(){
-        $('body').on('keyup', '.c-edit-j-t', function(){
+        $('body').on('click', '.c-edit-j-t', function(){
             if(!$(this).hasClass('delete_marker')) {
                 $(this).find('font.marker_yellow').each(function(i,el){
                     $(el).before($(el).html()).remove();
@@ -416,6 +436,11 @@
                     $(el).before($(el).html()).remove();
                 });
                 $(this).addClass('delete_marker');
+            }
+            if ($('.edit-textarea.cke_editable font.marker_red').length > 0) {
+                $(this).find('font.marker_red').each(function(i,el){
+                    $(el).before($(el).html()).remove();
+                });
             }
         });
     });
@@ -437,9 +462,27 @@
         auction.data['okonchanie_rassmotreniya'] = '{{complaint.okonchanie_rassmotreniya }}';
         auction.data['vremya_provedeniya'] = '{{complaint.vremya_provedeniya }}';
         auction.data['ufas_name'] = '{{ufas_name}}';
+        
 
         auction.setData();
         {% if complaint.status == 'draft' and action_edit === true %}
+            $(document).ready(function(){
+                auction.sendRequest('{{complaint.auction_id}}', true);
+                if (applicant.applicant_info.length == 0) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/applicant/getApplicantInfo',
+                        data: 'applicant_id=' + applicant.id[0],
+                        success: function (msg) {
+                            applicant.applicant_info = msg.applicant_info;
+                        },
+                        error: function (msg) {
+                            console.log(msg);
+                        }
+
+                    });
+                }
+            });
             var templates = {};
             var temp_name = {};
             var arr_sub = {};
@@ -466,9 +509,9 @@
             {% endif %}
             var categories_id = $("#arguments_id").val().split(",");
             $.each(categories_id, function( index, value ) {
-                if (index == {{ complaint_text_order }}) {
+                /*if (index == {{ complaint_text_order }}) {
                     argument.addArgument("just_text", "just_text", '{{complaint.complaint_text}}');
-                }
+                }*/
                 /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
                 $(".category-container input#jd2cbb" + value).prop('checked', true);
                 var cat = $(".category-container input#jd2cbb" + value).attr("category");
@@ -482,7 +525,9 @@
                 applicant.id = ["{{complaint.applicant_id}}"];
             }, 500);
         {% endif %}
-        
+
+
+
     //});
 </script>
 <div id="pop-before-ask-question" class="modal_div">
@@ -495,6 +540,9 @@
     {% if edit_now %}
         .marker_yellow{
             background-color: yellow;
+        }
+        .marker_red{
+            background-color: red;
         }
     {% endif %}
 

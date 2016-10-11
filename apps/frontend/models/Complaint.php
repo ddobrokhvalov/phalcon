@@ -85,13 +85,22 @@ class Complaint extends Model
 
     }
 
-    public function findCountUserComplaints($user_id)
+    public function findCountUserComplaints($user_id, $applicant_id = 'All')
     {
         $db = $this->getDi()->getShared('db');
-        $result = $db->query("SELECT COUNT(c.id) as num, c.status  FROM complaint as c
+        $sql = "SELECT COUNT(c.id) as num, c.status  FROM complaint as c
          LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
          LEFT JOIN user u ON(ap.user_id = u.id )
-         WHERE u.id =$user_id GROUP BY c.status ");  //todo: do we really need LEFT JOIN if the filter on the last RIGHT table? It will return something ONLY if u.id is not NULL!
+         WHERE u.id = $user_id ";
+          //todo: do we really need LEFT JOIN if the filter on the last RIGHT table? It will return something ONLY if u.id is not NULL!
+        if($applicant_id != 'All' && $applicant_id != ''){
+            if($applicant_id[0] == ','){
+                $applicant_id[0] = ' ';
+            }
+            $sql .= ' AND ap.id IN('.$applicant_id.') ';
+        }
+        $sql .= ' GROUP BY c.status ';
+        $result = $db->query($sql);
         $result = $result->fetchAll();
         $total = 0;
         $complaints_num = array();
@@ -119,6 +128,10 @@ class Complaint extends Model
     public function getCurrentStatusRussian($status, $short = TRUE) {
         switch ($status) {
             case 'draft':
+                if ($short)
+                    return 'Черновик';
+                return '<span data-status="draft" class="jl-status jl-chernov">Черновик</span>';
+            case 'activate':
                 if ($short)
                     return 'Черновик';
                 return '<span data-status="draft" class="jl-status jl-chernov">Черновик</span>';
@@ -202,9 +215,12 @@ class Complaint extends Model
             } elseif ($status == 'activate' ) {  //This return from arhive. We need to check history and set last status.
                 $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
                 if($complainthistory){
-                    $this->changeStatus($complainthistory->old_status, [$id]);                }
-                else {
+                    $this->changeStatus($complainthistory->old_status, [$id]);
+                    $history_id = $complainthistory->id;
+                } else {
                     $this->changeStatus('draft', [$id]);
+                    $complainthistory = ComplaintMovingHistory::findFirst(array("complaint_id = :complaint_id:", "bind" => array("complaint_id" => $id), "order" => "date desc"));
+                    $history_id = $complainthistory->id;
                 }
             } elseif ($status == 'delete') {
                // $stat = "удалена";
@@ -242,13 +258,13 @@ class Complaint extends Model
             }
             if($status != 'delete' && $status != 'copy') {
                 if($status == 'justified') $stat = 'Обоснована';
-                if($status == 'draft') $stat = 'Черновик';
+                if($status == 'draft' || $status == 'activate') $stat = 'Черновик';
                 if($status == 'unfounded') $stat = 'Необоснована';
                 if($status == 'under_consideration') $stat = 'На рассмотрении';
                 if($status == 'submitted') $stat = 'Подана';
                 if($status == 'recalled') $stat = 'Отозвана';
                 if($status == 'archive') $stat = 'Архив';
-                if($status == 'activate') $stat = 'Активирована';
+                //if($status == 'activate') $stat = 'Активирована';
 
 
                 $message = new Messages();

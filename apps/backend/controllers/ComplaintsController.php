@@ -136,12 +136,15 @@ class ComplaintsController extends ControllerBase
                 ));
                 if($ufas_name){
                     $this->view->ufas_name = $ufas_name->name;
+                    $this->view->comp_inn = $ufas_name->number;
                 }
             }
 
             $action = $this->request->get('action');
             if (isset($action) && $action == 'edit') {
                 $this->view->edit_now = TRUE;
+                $ufas = Ufas::find();
+                $this->view->ufas = $ufas;
             } else {
                 $this->view->edit_now = FALSE;
             }
@@ -520,6 +523,12 @@ class ComplaintsController extends ControllerBase
             $complaint->complaint_name = $data['complaint_name'];
             $complaint->complaint_text = $data['complaint_text'];
             $complaint->complaint_text_order = $data['complaint_text_order'];
+            $ufas = Ufas::findFirst(array(
+                "number = {$data['ufas_id']}"
+            ));
+            if($ufas){
+                $complaint->ufas_id = $ufas->id;
+            }
         }
 
         if ($complaint->update() == false) {
