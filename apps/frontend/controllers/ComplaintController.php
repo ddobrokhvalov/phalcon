@@ -34,6 +34,10 @@ class ComplaintController extends ControllerBase
     const STEP_SEARCH = 6;
 
 
+    public function testAction(){
+        
+    }
+
     public function indexAction()
     {
         if (!$this->user) {
