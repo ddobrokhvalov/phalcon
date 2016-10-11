@@ -73,11 +73,11 @@ class Application extends BaseApplication
 				'params'=>3
 			));
 
-            $router->add("/admin/register", array(
-                'module' => 'backend',
-                'controller' => 'register',
-                'action' => 'index',
-            ));
+//            $router->add("/admin/register", array(
+//                'module' => 'backend',
+//                'controller' => 'register',
+//                'action' => 'index',
+//            ));
 
 			$router->add("/admin", array(
 				'module' => 'backend',

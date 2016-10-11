@@ -47,8 +47,6 @@ class RegisterController extends Controller
                             ))
                     ->to($user->email)
                     ->subject('Регистрация в интеллектуальной системе ФАС');
-                //$message->cc('example_cc@gmail.com');
-                //$message->bcc('example_bcc@gmail.com');
                 $message->send();
                 echo json_encode(array('status' => 'ok'));
             }
