@@ -9,19 +9,16 @@ use Multiple\Frontend\Models\User;
 
 class RegisterController extends Controller
 {
-    private $errorMessage;
-
     public function indexAction(){
         try{
             if($this->request->isPost()) {
                 $data = $this->request->get();
+                if($data['password'] != $data['confpassword']) throw new Exception('Пароли не совпадают');
+
                 $host =  $this->request->getHttpHost();
                 $validation = new RegisterValidator();
                 $messages = $validation->validate($data);
-                if(count($messages)){
-                    $this->errorMessage = $messages;
-                    throw new Exception();
-                }
+                if(count($messages))  throw new Exception();
                 if($data['password'] != $data['confpassword']) throw new Exception('Пароли не совпадают');
 
                 $user = User::find("email = '{$data['email']}'");
@@ -51,15 +48,16 @@ class RegisterController extends Controller
                 echo json_encode(array('status' => 'ok'));
             }
         } catch(Exception $e){
+            $temp_err = array();
             if(count($messages)) {
-                $temp_err = array();
                 foreach ($messages as $message) {
                     $temp_err[] = $message->getMessage();
                 }
                 echo json_encode(array('error' => $temp_err ));
             } else {
-                echo json_encode(array('error' => $e->getMessage()));
+                $temp_err[] = $e->getMessage();
             }
+            echo json_encode(array('error' => $temp_err));
         }
         exit;
     }
