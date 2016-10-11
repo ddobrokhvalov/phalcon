@@ -49,11 +49,10 @@ class RegisterController extends Controller
             }
         } catch(Exception $e){
             $temp_err = array();
-            if(count($messages)) {
+            if(isset($messages) && count($messages)) {
                 foreach ($messages as $message) {
                     $temp_err[] = $message->getMessage();
                 }
-                echo json_encode(array('error' => $temp_err ));
             } else {
                 $temp_err[] = $e->getMessage();
             }
