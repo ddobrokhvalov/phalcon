@@ -7,26 +7,21 @@ $(document).ready(function () {
             data: $(this).serialize(),
             dataType: "json",
             context: form,
-            success: function(res){
-                $(this).hide();
-                // if(res.status){
-                //     switch(res.status){
-                //         case 'ok':
-                //             $(this).html('<strong style="font-size: 20px;">На указанный вами почтовый ящик отправлена ссылка для завершения регистрации</strong><br/>');
-                //             $(this).append('<button>Закрыть</button>');
-                //             break;
-                //         case 'user exists':
-                //             $(this).html('<strong style="font-size: 10px;">«Уже зарегистрированы – авторизуйтесь»</strong><br/>');
-                //             $(this).append('<a >Закрыть</a>');
-                //             break;
-                //
-                //     }
-                //
-                // }
-                // if(res.status == 'ok'){
-                //     $(this).html('<strong style="font-size: 10px;">На указанный вами почтовый ящик отправлена ссылка для завершения регистрации</strong><br/>');
-                //     $(this).append('<button>Закрыть</button>');
-                // }
+            success: function(res) {
+
+                if (res.status){
+                    switch (res.status) {
+                        case 'ok':
+                            $(this).find('input').each(function () {
+                                $(this).val('');
+                            })
+                            $(this).parent().hide();
+                            $('#overlay').hide();
+                        break;
+                    }
+                } else if(res.error){
+                    $(this).append(res.error);
+                }
             },
         });
         return false;

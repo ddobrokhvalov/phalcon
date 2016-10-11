@@ -12,34 +12,44 @@ class RegisterValidator extends Validation
 
     public function initialize()
     {
-        $this->add('email', new PresenceOf(array('message' => 'The e-mail is required',"cancelOnFail" => true,)));
-        $this->add('email', new Email(array('message' => 'The e-mail is not valid')));
-        $this->add('password', new PresenceOf(array('message' => 'The password is required', "cancelOnFail" => true,)));
-        $this->add('password', new StringLength(array('min' => 8, 'message' => 'Password is short', "cancelOnFail" => true,)));
+        $this->add('name', new PresenceOf(array('message' => 'Имя обязательное поле',"cancelOnFail" => true,)));
+        $this->add('name', new Regex(
+            [
+                "message"    => "Некорректный имя",
+                "pattern"    => "/^[\w]+$/",
+                "cancelOnFail" => true,
+            ]
+        ));
+        $this->add('email', new PresenceOf(array('message' => 'E-mail обязательное поле',"cancelOnFail" => true,)));
+        $this->add('email', new Email(array('message' => 'Некорректный E-mail')));
+        $this->add('password', new PresenceOf(array('message' => 'Пароль обязательное поле', "cancelOnFail" => true,)));
+        $this->add('password', new StringLength(array('min' => 8, 'message' => 'Пароль менее 8 символов', "cancelOnFail" => true,)));
         $this->add('password', new Regex(
             [
-                "message"    => "The wrong password",
+                "message"    => "Некорректный пароль",
                 "pattern"    => "/^[\S]+$/",
                 "cancelOnFail" => true,
             ]
         ));
-        $this->add('confpassword', new PresenceOf(array('message' => 'The confpassword is required',"cancelOnFail" => true,)));
-        $this->add('confpassword', new StringLength(array('min' => 8, 'message' => 'Confpassword is short',"cancelOnFail" => true,)));
+        $this->add('confpassword', new PresenceOf(array('message' => 'Проверка пароля обязательное поле',"cancelOnFail" => true,)));
+        $this->add('confpassword', new StringLength(array('min' => 8, 'message' => 'Проверка пароля менее 8 символов',"cancelOnFail" => true,)));
         $this->add('confpassword', new Regex(
             [
-                "message"    => "The wrong confpassword",
+                "message"    => "Некорректный пароль",
                 "pattern"    => "/^[\S]+$/",
                 "cancelOnFail" => true,
             ]
         ));
-        $this->add('phone', new PresenceOf(array('message' => 'The confpassword is required',"cancelOnFail" => true,)));
+        $this->add('phone', new PresenceOf(array('message' => 'Телефон обязательное поле',"cancelOnFail" => true,)));
         $this->add('phone', new Regex(
             [
-                "message"    => "The wrong phone",
+                "message"    => "Некорректный телефон",
                 "pattern"    => "/[+0-9]+/",
                 "cancelOnFail" => true,
             ]
         ));
     }
 }
+
+
 
