@@ -8,6 +8,7 @@ $(document).ready(function () {
             dataType: "json",
             context: form,
             success: function(res){
+                $(this).hide();
                 // if(res.status){
                 //     switch(res.status){
                 //         case 'ok':

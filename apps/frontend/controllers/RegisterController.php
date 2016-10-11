@@ -33,7 +33,7 @@ class RegisterController extends Controller
                 $hashpassword = sha1($data['password']);
                 $user = new User();
                 $user->email = trim($data['email']);
-                $user->name = trim($data['name']);
+                $user->firstname = trim($data['name']);
                 $user->phone = trim($data['phone']);
                 $user->password = $hashpassword;
                 $user->hashreg = sha1($data['email'] . $data['password'] . date('now'));
