@@ -222,6 +222,7 @@ class AdminsController extends ControllerBase
             if (!count($messages) ) {
                 $data['password'] = sha1($data['password']);
                 $admin->activated = 1;
+                $admin->date_reg = date('now');
                 if($admin->save($data, array_keys($data)) == false) {
                     $this->flashSession->error('Возникла ошибка при сохранении администратора');
                         return $this->dispatcher->forward(array(
