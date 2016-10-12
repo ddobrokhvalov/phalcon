@@ -185,6 +185,7 @@ var complaint = {
     if (!checkComplaintName(this.complainName)) {
       return false;
     }
+    complaint.arguments_data = '';
     $('#complaint_name').addClass('c-inp-done');
     var ind = 0;
     $("#edit_container .template_edit").each(function () {
