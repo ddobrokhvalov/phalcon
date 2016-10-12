@@ -90,7 +90,7 @@ class LoginController extends Controller
 
     public function authorizeAction()
     {
-        TrustedLibrary::trusted_library_authorize();
+       // TrustedLibrary::trusted_library_authorize();
     }
 
     public function indexAction()

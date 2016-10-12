@@ -10,6 +10,7 @@ $(document).ready(function() {
         clickSelectLi($(this));
     });
     $('#argComplBtn').click(function(e) {
+        $('.btn-div, #argComplBtn').hide();
         nextStep(e);
     });
     $('.word-argCompl-input button').click(function(e) {
@@ -76,7 +77,6 @@ function methodProcurement(req) {
     }
     startSend.sendRequest(data);
     $('.argComp').removeClass('argComp-descr');
-    $('.btn-div, #argComplBtn').hide();
     $('.btn-div-showArgDescr').removeClass('hideArgDescr').text('Просмотреть').hide();
     $('.addArguments').fadeIn().css('display', 'flex');
 }
