@@ -45,6 +45,7 @@ class RegisterController extends Controller
                     ->subject('Регистрация в интеллектуальной системе ФАС');
                 $message->send();
                 echo json_encode(array('status' => 'ok'));
+                exit;
             }
         } catch(Exception $e){
             $temp_err = array();
