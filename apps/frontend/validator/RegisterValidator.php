@@ -16,7 +16,7 @@ class RegisterValidator extends Validation
         $this->add('name', new Regex(
             [
                 "message"    => "Некорректное имя",
-                "pattern"    => "/^[a-zA-Zа-яА-Я]+$/",
+                "pattern"    => "/^[a-zA-Zа-яА-ЯьЬъЪ]+$/",
                 "cancelOnFail" => true,
             ]
         ));
