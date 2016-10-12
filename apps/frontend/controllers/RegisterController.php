@@ -19,7 +19,6 @@ class RegisterController extends Controller
                 $validation = new RegisterValidator();
                 $messages = $validation->validate($data);
                 if(count($messages))  throw new Exception();
-                if($data['password'] != $data['confpassword']) throw new Exception('Пароли не совпадают');
 
                 $user = User::find("email = '{$data['email']}'");
                 if (count($user)) {
@@ -51,10 +50,10 @@ class RegisterController extends Controller
             $temp_err = array();
             if(isset($messages) && count($messages)) {
                 foreach ($messages as $message) {
-                    $temp_err[] = $message->getMessage();
+                    $temp_err[$message->getField()][] = $message->getMessage();
                 }
             } else {
-                $temp_err[] = $e->getMessage();
+                $temp_err['other'] = $e->getMessage();
             }
             echo json_encode(array('error' => $temp_err));
         }

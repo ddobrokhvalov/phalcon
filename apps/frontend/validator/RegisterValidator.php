@@ -15,8 +15,8 @@ class RegisterValidator extends Validation
         $this->add('name', new PresenceOf(array('message' => 'Имя обязательное поле','cancelOnFail' => true)));
         $this->add('name', new Regex(
             [
-                "message"    => "Некорректный имя",
-                "pattern"    => "/^[\w]+$/",
+                "message"    => "Некорректное имя",
+                "pattern"    => "/^[a-zA-Zа-яА-Я]+$/",
                 "cancelOnFail" => true,
             ]
         ));

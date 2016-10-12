@@ -19,7 +19,9 @@ $(document).ready(function () {
                         break;
                     }
                 } else if(res.error){
-                    $(this).append(res.error);
+                    for(mess in res.error){
+                        $(this).append(res.error[mess]);
+                    }
                 }
             },
         });
