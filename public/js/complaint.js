@@ -39,6 +39,7 @@ $(document).ready(function () {
   });
 
   $('#complaint_save').click(function (evt) {
+  //$('#complaint_save').unbind('click').bind('click', function (evt) {
     evt.preventDefault();
     stopSaveCompl();
   });
@@ -198,7 +199,6 @@ var complaint = {
     });
     this.complainText = '';
     for (var key in argument.argumentList) {
-      console.log(key);
       this.complainText += $('#edit_textarea_' + argument.argumentList[key]).html();
     }
 
@@ -733,9 +733,8 @@ function saveComplaintToDocxFile() {
     loadFile("/js/docx_generator/docx_templates/" + $file_to_load, function (err, content) {
       if (err) {
         console.log("eee");
-        throw e
+        throw e;
       }
-      ;
       doc = new Docxgen(content);
       doc.setData({
           "applicant_fio": applicant.applicant_info.fio_applicant,
@@ -783,9 +782,8 @@ function saveComplaintToDocxFile() {
     loadFile("/js/docx_generator/docx_templates/" + $file_to_load, function (err, content) {
       if (err) {
         console.log("eee");
-        throw e
+        throw e;
       }
-      ;
       doc = new Docxgen(content);
       doc.setData({
           "applicant_fio": applicant.applicant_info.fio_applicant,

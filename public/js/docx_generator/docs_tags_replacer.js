@@ -5,7 +5,7 @@ function replaceWordTags(text, ckeditor_id) {
         text = text.replace("<p>", '');
         text = text.replace("</p>", '\r\n');
         text = text.replace("&nbsp;", ' ');
-    }
+    }debugger;
     text = remove_marker(text);
     text = replace_hard_tags(text);
     text = replace_easy_tags(text);
@@ -208,7 +208,7 @@ function add_list(text, ckeditor_id) {
     return text;
 }
 
-function add_simple_tags_text(text) {
+function add_simple_tags_text(text) {//debugger;
     var no_styles_text = text.match(/<\/w:r>[\s\S]*?<w:r>/g);
     if (no_styles_text == null) {
         return text;
@@ -217,7 +217,9 @@ function add_simple_tags_text(text) {
         if(no_styles_text[i] != "</w:r><w:r>" && no_styles_text[i] != ""){
             var clone_text = no_styles_text[i];
             clone_text = clone_text.substr(6, clone_text.length - 11);
-            text = text.replace(no_styles_text[i], '</w:r><w:r><w:t xml:space="preserve">' + clone_text + "</w:t></w:r><w:r>");
+            if (!clone_text.startsWith('<span style="font-size:')) {
+                text = text.replace(no_styles_text[i], '</w:r><w:r><w:t xml:space="preserve">' + clone_text + "</w:t></w:r><w:r>");
+            }
         }
         
     }
