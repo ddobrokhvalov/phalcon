@@ -58,7 +58,7 @@
             считанные минуты
         </h2>
         <div class="ms2-str">
-            <a href="#pop-login" class="ms2-s-btn open_modal">Начать работу</a><br>
+            <a href="#pop-start" class="ms2-s-btn open_modal">Начать работу</a><br>
             Для работы с системой используйте вашу ЭП для ЭТП.<br>
             Нет ЭП? Выпустим всего за 7300 руб. <a href="#">Купить</a>
         </div>
@@ -297,20 +297,30 @@
 <script src="{{TRUSTED_LOGIN_PLUGIN_PATH}}js/tlogin-2.0.1.js"></script>
 </div>-->
 <!-- popup start -->
-<!-- <div id="pop-start" class="modal_div">
+ <div id="pop-start" class="modal_div">
     <h2>Начать работу</h2>
-    <form>
+    <form class="reg-new-user" method="POST">
+        <label for="popstrt-inp1">Ваше имя</label>
+        <input type="text" id="popstrt-inp1" required="required" name="name">
         <label for="popstrt-inp1">E-mail</label>
-        <input type="text" id="popstrt-inp1" required="required">
-        <div class="pop-str1">
+        <input type="text" id="popstrt-inp1" required="required" name="email">
+        <label for="popstrt-inp1">Телефон</label>
+        <input type="text" id="popstrt-inp1" required="required" name="phone">
+        <label for="popstrt-inp1">Пароль</label>
+        <input type="text" id="popstrt-inp1" required="required" name="password">
+        <label for="popstrt-inp1">Еще пароль</label>
+        <input type="text" id="popstrt-inp1" required="required" name="confpassword">
+        <div class="error-reg" style="color:red">
+        </div>
+        <!--<div class="pop-str1">
             <input type="checkbox" id="popstrt-inp2">
             <label for="popstrt-inp2">Согласен с правилами</label>
-            <a href="#">Правила использования сервиса</a>
-        </div>
+           <a href="#">Правила использования сервиса</a>
+        </div>-->
         <input type="submit" value="Войти">
     </form>
     <div class="modal-close"></div>
-</div> -->
+</div>
 
 <!-- popup start -->
 <div id="pop-done" class="modal_div">
@@ -324,3 +334,4 @@
 </div>
 
 <div id="overlay"></div>
+<script src="/js/registration_ajax.js"></script>

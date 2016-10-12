@@ -61,6 +61,10 @@ class LoginController extends Controller
                     $this->flashSession->error('Вы были заблокированы. Обратитесь к администратору сайта по номеру тел. или емаил');
                     return $this->response->redirect('/?block=true');
                 }
+                if($user->status == 2){
+                    $this->flashSession->error('Вы неактивировали аккаунт.');
+                    return $this->response->redirect('/?block=true');
+                }
                 $this->_registerSession($user);
                 return $this->dispatcher->forward(
                     array(

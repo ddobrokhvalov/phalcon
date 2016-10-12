@@ -49,7 +49,6 @@ class LoginController extends ControllerBase
     {
         if ($this->request->isPost()) {
 
-
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
 

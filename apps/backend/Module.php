@@ -10,9 +10,10 @@ use Phalcon\Config\Adapter\Ini as ConfigIni;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Flash\Direct as FlashDirect;
-
 use Multiple\Backend\Plugins\SecurityPlugin;
 use Multiple\Backend\Plugins\NotFoundPlugin;
+require_once('../vendor/autoload.php');
+
 class Module
 {
 
@@ -106,5 +107,10 @@ class Module
 			return new FlashDirect();
 		});
 
+        $di->set('mailer', function(){
+            $config = new ConfigIni("config/config.ini");
+            $config = $config->mailer->toArray();
+            return new \Phalcon\Ext\Mailer\Manager($config);
+        });
 	}
 }

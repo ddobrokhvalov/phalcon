@@ -13,6 +13,7 @@ use Phalcon\Events\Manager as EventsManager;
 
 use Multiple\Frontend\Plugins\SecurityPlugin;
 use Multiple\Frontend\Plugins\NotFoundPlugin;
+require_once('../vendor/autoload.php');
 
 class Module
 {
@@ -28,6 +29,7 @@ class Module
             'Multiple\Backend\Models'      => '../apps/backend/models/',
 			'Multiple\Frontend\Plugins'     => '../apps/frontend/plugins/',
 			'Multiple\Frontend\Form'        => '../apps/frontend/form/',
+            'Multiple\Frontend\Validator'        => '../apps/frontend/validator/',
 			'Multiple\Library'     => '../apps/library/',
 
 		));
@@ -99,5 +101,11 @@ class Module
 			$session->start();
 			return $session;
 		});
+
+        $di->set('mailer', function(){
+            $config = new ConfigIni("config/config.ini");
+            $config = $config->mailer->toArray();
+            return new \Phalcon\Ext\Mailer\Manager($config);
+        });
 	}
 }
