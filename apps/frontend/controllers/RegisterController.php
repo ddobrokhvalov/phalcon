@@ -72,6 +72,14 @@ class RegisterController extends Controller
             $user->status = 1;
             $user->save();
 
+            $message = $this->mailer->createMessageFromView('../views/emails/confirm', array(
+                'host'  => $this->request->getHttpHost(),
+                'login' => $user->email,
+                'name'  => $user->firstname
+            ))
+                ->to($user->email)
+                ->subject('Подтверждение в интеллектуальной системе ФАС');
+            $message->send();
             $this->response->redirect('/');
         } catch (Exception $e){
             echo $e->getMessage();

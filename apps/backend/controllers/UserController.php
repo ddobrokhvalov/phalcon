@@ -319,7 +319,7 @@ class UserController extends ControllerBase
         } else {
             $users_ids = $this->request->getPost("ids");
             $block = $this->request->getPost("block");
-            
+            $arr_emails = array();
             if(count($users_ids)){
                 $users = User::find(
                     array(
@@ -335,9 +335,28 @@ class UserController extends ControllerBase
                     } else {
                         $user->status = 1;
                     }
+                    $arr_emails[] = $user->email;
                     $user->update();
                 }
+
+                if($block) {
+                    $message = $this->mailer->createMessageFromView('../views/emails/block', array(
+                        'host' => $this->request->getHttpHost()
+                    ))
+                        ->bcc(implode(',', $arr_emails))
+                        ->subject('Вы заблокированы в системе ФАС');
+                    $message->send();
+                } else {
+                    $message = $this->mailer->createMessageFromView('../views/emails/unblock', array(
+                        'host' => $this->request->getHttpHost()
+                    ))
+                        ->bcc(implode(',', $arr_emails))
+                        ->subject('Вы разблокированы в системе ФАС');
+                    $message->send();
+                }
             }
+
+
             $this->flashSession->success('Изменения сохранены');
             $data = "ok";
         }
