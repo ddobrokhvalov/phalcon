@@ -39,8 +39,8 @@ $(document).ready(function () {
   });
 
   $('#complaint_save').click(function (evt) {
-    stopSaveCompl();
     evt.preventDefault();
+    stopSaveCompl();
   });
   $('#back_complaint_save').click(function (evt) {
     evt.preventDefault();
