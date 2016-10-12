@@ -66,7 +66,7 @@ class RegisterController extends Controller
             $data = $this->request->get();
             if(!isset($data['hashreg']) || trim($data['hashreg']) == '') throw new Exception('error hash registration');
             $user = User::findFirst("hashreg='{$data['hashreg']}'");
-            if(!$user) throw new Exception('Error does not exists admin');
+            if(!$user) throw new Exception('Error does not exists user or user already activate');
 
             $user->hashreg = null;
             $user->status = 1;
