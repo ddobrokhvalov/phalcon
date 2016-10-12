@@ -18,7 +18,7 @@ class RegisterController extends Controller
                 $host =  $this->request->getHttpHost();
                 $validation = new RegisterValidator();
                 $messages = $validation->validate($data);
-                if(count($messages))  throw new Exception();
+                if(count($messages))  throw new Exception('error');
 
                 $user = User::find("email = '{$data['email']}'");
                 if (count($user)) {
