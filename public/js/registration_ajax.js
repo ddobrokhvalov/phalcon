@@ -20,7 +20,7 @@ $(document).ready(function () {
                     }
                 } else if(res.error){
                     for(mess in res.error){
-                        $(this).append(res.error[mess]);
+                        $(this).find('.error-reg').html('<p>'+ res.error[mess] + '</p>');
                     }
                 }
             },
