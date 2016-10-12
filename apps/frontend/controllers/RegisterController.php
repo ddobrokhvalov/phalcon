@@ -34,7 +34,7 @@ class RegisterController extends Controller
                 $user->password = $hashpassword;
                 $user->hashreg = sha1($data['email'] . $data['password'] . date('now'));
                 $user->status = 2;
-                $user->date_registration = date('now');
+                $user->date_registration = date('Y-m-d H:i:s');;
                 $user->save();
 
                 $message = $this->mailer->createMessageFromView('../views/emails/register', array(
