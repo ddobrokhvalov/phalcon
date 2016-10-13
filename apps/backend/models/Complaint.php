@@ -328,7 +328,7 @@ class Complaint extends Model
                     'comp_name'  => $complaint->name
                 ))
                     ->to($user->email)
-                    ->subject('Регистрация в интеллектуальной системе ФАС');
+                    ->subject('Изменение статуса жалобы в системе ФАС');
                 $message->send();
                 echo json_encode(array('status' => 'ok'));
             }
