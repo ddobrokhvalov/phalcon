@@ -97,13 +97,4 @@ class LoginController extends Controller
     {
        return $this->response->redirect('/');
     }
-
-    public function recoveryPassword(){
-
-    }
-
-    private function random_password($chars = 9) {
-        $letters = 'abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-        return substr(str_shuffle($letters), 0, $chars);
-    }
 }

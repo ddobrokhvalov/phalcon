@@ -34,7 +34,7 @@ class RegisterController extends Controller
                 $user->password = $hashpassword;
                 $user->hashreg = sha1($data['email'] . $data['password'] . date('now'));
                 $user->status = 2;
-                $user->date_registration = date('Y-m-d H:i:s');;
+                $user->date_registration = date('Y-m-d H:i:s');
                 $user->save();
 
                 $message = $this->mailer->createMessageFromView('../views/emails/register', array(
@@ -86,5 +86,57 @@ class RegisterController extends Controller
             $this->response->redirect('/');
             exit;
         }
+    }
+
+    public function recoverypassAction(){
+        try{
+            if ($this->request->isPost()) {
+                $email = $this->request->getPost('email');
+                if(!isset($email) || trim($email) == '') throw new Exception('error email');
+                $user = User::findFirst(array("email = {$email}"));
+                if(!$user) throw new Exception('error user');
+                $user->hashrecovery = sha1($user->email + date('Y-m-d H:i:s'));
+                $user->save();
+
+                $message = $this->mailer->createMessageFromView('../views/emails/recovery', array(
+                    'hashrecovery'   => $user->hashrecovery,
+                    'host'      => $this->request->getHttpHost()
+                ))
+                    ->to($user->email)
+                    ->subject('Восстановление пароля в системе ФАС');
+                $message->send();
+                echo json_encode(array('status' => 'ok'));
+                exit;
+            } else if($this->request->isGet()){
+                $hashrecoverypass = $this->request->get('recovery');
+                if(!isset($hashrecoverypass) || trim($hashrecoverypass) == '') throw new Exception('error hash');
+                $user = User::findFirst(array("hashrecovery='{$hashrecoverypass}'"));
+                if(!$user) throw new Exception('error user');
+                $password = $this->random_password();
+                $user->hashrecovery = null;
+                $user->password = sha1($password);
+                $user->save();
+
+                $message = $this->mailer->createMessageFromView('../views/emails/new_password', array(
+                    'host'      => $this->request->getHttpHost(),
+                    'password'  => $password
+                ))
+                    ->to($user->email)
+                    ->subject('Восстановление пароля в системе ФАС');
+                $message->send();
+                //echo json_encode(array('status' => 'ok'));
+                //exit;
+
+            }
+        } catch (Exception $e){
+            echo json_encode(array('status' => $e->getMessage()));
+            exit;
+        }
+        $this->response->redirect('/');
+    }
+
+    private function random_password($chars = 9) {
+        $letters = 'abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        return substr(str_shuffle($letters), 0, $chars);
     }
 }
