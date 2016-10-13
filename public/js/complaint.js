@@ -691,10 +691,11 @@ function saveComplaintToDocxFile() {
   };
   var custom_text = "";
   var custom_text_unformatted = "";
-  var search_tags = ['span', 'strong', 'em', 'u'];
+  var search_tags = ['li', 'span', 'strong', 'em', 'u'];
   var wrong_ck_formatting = [];
   var assoc_wrong_ck_formatting = {};
   var docx_generator_allowed = true;
+  var list_formatting_detected = false;
 
   $(".edit-textarea.cke_editable").each(function (index, elem) {
     $(search_tags).each(function (s_tag_index, s_tag_value) {
@@ -704,12 +705,25 @@ function saveComplaintToDocxFile() {
           return value != s_tag_value;
         });
         $(find_search_tags).each(function (f_s_index, f_s_value) {
-          if ($(inner_elem).html()[0] != '<' && !$(inner_elem).html().startsWith('<' + f_s_value) && $(inner_elem).html().search(f_s_value) > 0) {
-            docx_generator_allowed = false;
-            if ($.inArray($(inner_elem).html(), wrong_ck_formatting) == -1) {
-              wrong_ck_formatting.push($(inner_elem).html());
-              assoc_wrong_ck_formatting[s_tag_value] = $(inner_elem).html();
-            }
+          if (s_tag_value == 'li') {
+              if ($(inner_elem).html().search('<' + f_s_value + '>') >= 0) {
+                  docx_generator_allowed = false;
+                    if ($.inArray($(inner_elem).html(), wrong_ck_formatting) == -1) {
+                      wrong_ck_formatting.push($(inner_elem).html());
+                      assoc_wrong_ck_formatting[s_tag_value] = $(inner_elem).html();
+                    }
+                    list_formatting_detected = true;
+                    showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Форматирование внутри списка недопустимо");
+                    return false;
+              }
+          } else {
+              if ($(inner_elem).html()[0] != '<' && !$(inner_elem).html().startsWith('<' + f_s_value) && $(inner_elem).html().search('<' + f_s_value + '>') > 0) {
+                docx_generator_allowed = false;
+                if ($.inArray($(inner_elem).html(), wrong_ck_formatting) == -1) {
+                  wrong_ck_formatting.push($(inner_elem).html());
+                  assoc_wrong_ck_formatting[s_tag_value] = $(inner_elem).html();
+                }
+              }
           }
         });
       });
@@ -834,18 +848,26 @@ function saveComplaintToDocxFile() {
       '<span>': '</span>',
       '<strong>': '</strong>',
       '<em>': '</em>',
-      '<u>': '</u>'
+      '<u>': '</u>',
+      '<li>': '</li>'
     };
-    $.each(assoc_wrong_ck_formatting, function (key, value) {
-      var _en_text = '<' + key + '>' + value + open_close_tag['<' + key + '>'];
-      wrong_format_text += '&bull;&nbsp;' + _en_text + '</br>';
-      $(".edit-textarea.cke_editable").each(function (index, elem) {
-        var entered_text = $(elem).html();
-        entered_text = entered_text.replace(_en_text, '<font class="marker_red">' + _en_text + '</font>');
-        $(elem).html(entered_text);
-      });
-    });
-    showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Такое форматирование недопустимо:</br>" + wrong_format_text);
+        $.each(assoc_wrong_ck_formatting, function (key, value) {
+          var _en_text = '<' + key + '>' + value + open_close_tag['<' + key + '>'];
+          wrong_format_text += '&bull;&nbsp;' + _en_text + '</br>';
+          $(".edit-textarea.cke_editable").each(function (index, elem) {
+            var entered_text = $(elem).html();
+            if (key == 'li') {
+                var _en_text2 = '<li><font class="marker_red">' + _en_text.substr(4, _en_text.length - 9) + '</font></li>';
+                entered_text = entered_text.replace(_en_text, _en_text2);
+            } else {
+                entered_text = entered_text.replace(_en_text, '<font class="marker_red">' + _en_text + '</font>');
+            }
+            $(elem).html(entered_text);
+          });
+        });
+    if (!list_formatting_detected) {
+        showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Такое форматирование недопустимо:</br>" + wrong_format_text);
+    }
     return false;
   }
 }

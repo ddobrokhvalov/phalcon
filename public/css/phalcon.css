@@ -2481,7 +2481,7 @@ input[type="radio"]:checked + label {
 .c-edit-j-t ul {
     list-style: disc inside !important;
 }
-.c-edit-j-t ol {
+.c-edit-j-t ol, .c-jd2-f-edit-t ol {
     list-style: decimal inside !important;
 }
 .c-jd2-f-edit-t i {
