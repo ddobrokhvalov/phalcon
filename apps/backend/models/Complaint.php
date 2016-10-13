@@ -315,7 +315,6 @@ class Complaint extends Model
                 $message->comp_id = $id;
                 $message->history_id = $history_id;
                 $message->save();
-
                 /*$user = User::findFirst(array("id={$user_id}"));
                 $message = $this->mailer->createMessageFromView('../views/emails/status', array(
                     'status'    => $status,
@@ -329,7 +328,6 @@ class Complaint extends Model
                     ->to($user->email)
                     ->subject('Изменение статуса жалобы в системе ФАС');
                 $message->send();*/
-                echo json_encode(array('status' => 'ok'));
             }
         }
     }
