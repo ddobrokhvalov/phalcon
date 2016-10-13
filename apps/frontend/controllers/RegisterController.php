@@ -22,7 +22,7 @@ class RegisterController extends Controller
 
                 $user = User::find("email = '{$data['email']}'");
                 if (count($user)) {
-                    echo json_encode(array('status' => 'user exists'));
+                    echo json_encode(array('error' => array('user' => 'Пользователь с таким email уже есть')));
                     exit;
                 }
 
@@ -54,7 +54,7 @@ class RegisterController extends Controller
                     $temp_err[$message->getField()][] = $message->getMessage();
                 }
             } else {
-                $temp_err['other'] = $e->getMessage();
+                $temp_err['password'] = $e->getMessage();
             }
             echo json_encode(array('error' => $temp_err));
         }
