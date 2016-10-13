@@ -315,6 +315,22 @@ class Complaint extends Model
                 $message->comp_id = $id;
                 $message->history_id = $history_id;
                 $message->save();
+
+                $user = User::findFirst(array("id = {$user_id}"));
+
+                $message = $this->mailer->createMessageFromView('../views/emails/status', array(
+                    'status'    => $status,
+                    'host'      => $this->request->getHttpHost(),
+                    'firstname' => $user->firstname,
+                    'patronymic' => $user->patronymic,
+                    'auction_id' => $complaint->auction_id,
+                    'comp_id'    => $complaint->id,
+                    'comp_name'  => $complaint->name
+                ))
+                    ->to($user->email)
+                    ->subject('Регистрация в интеллектуальной системе ФАС');
+                $message->send();
+                echo json_encode(array('status' => 'ok'));
             }
         }
     }
