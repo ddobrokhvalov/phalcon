@@ -51,7 +51,7 @@ class LoginController extends Controller
 
             $validation = new LoginValidator();
             $messages = $validation->validate($this->request->getPost());
-            if(count($messages)){
+            if(count($messages) > 0){
                 foreach ($messages as $key){
                     echo json_encode(array('error' => array($key->getField() => $key->getMessage())));
                     exit;
