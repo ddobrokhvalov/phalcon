@@ -247,6 +247,7 @@ class Complaint extends Model
     {
         foreach ($data as $id) {
             $history_id = null;
+            $message_text = '';
             $complaint = Complaint::findFirstById($id);
             if(!$complaint || $complaint->status==$status) {
                 continue;
@@ -292,16 +293,35 @@ class Complaint extends Model
                 $history_id = $complaintmovinghistory->id;
             }
             if($status != 'delete' && $status != 'copy') {
-                if($status == 'justified') $stat = 'Обоснована';
-                if($status == 'draft') $stat = 'Черновик';
-                if($status == 'unfounded') $stat = 'Необоснована';
-                if($status == 'under_consideration') $stat = 'На рассмотрении';
-                if($status == 'submitted') $stat = 'Подана';
-                if($status == 'recalled') $stat = 'Отозвана';
-                if($status == 'archive') $stat = 'Архив';
-                if($status == 'activate') $stat = 'Активирована';
+                if($status == 'justified'){
+                    $stat = 'Обоснована';
+                    $message_text .= 'обоснована';
+                }
+                if($status == 'draft' || $status == 'activate'){
+                    $stat = 'Черновик';
+                    $message_text .= 'помещена в черновик';
+                }
+                if($status == 'unfounded'){
+                    $stat = 'Необоснована';
+                    $message_text .= 'необоснована';
+                }
+                if($status == 'under_consideration'){
+                    $stat = 'На рассмотрении';
+                    $message_text .= 'помещена на рассмотрение';
+                }
+                if($status == 'submitted'){
+                    $stat = 'Подана';
+                    $message_text .= 'подана';
+                }
+                if($status == 'recalled'){
+                    $stat = 'Отозвана';
+                    $message_text .= 'отозвана';
+                }
+                if($status == 'archive'){
+                    $stat = 'Архив';
+                    $message_text .= 'помещена в архив';
+                }
 
-                $test = $complaint->id;
                 $comp = new Complaint();
                 $user_id = $comp->getComplaintOwner( $complaint->id );
                 $message = new Messages();
@@ -315,19 +335,20 @@ class Complaint extends Model
                 $message->comp_id = $id;
                 $message->history_id = $history_id;
                 $message->save();
-                /*$user = User::findFirst(array("id={$user_id}"));
+
+                $user = User::findFirst(array("id={$user_id}"));
                 $message = $this->mailer->createMessageFromView('../views/emails/status', array(
-                    'status'    => $status,
+                    'status'    => $message_text,
                     'host'      => $this->request->getHttpHost(),
                     'firstname' => $user->firstname,
                     'patronymic' => $user->patronymic,
                     'auction_id' => $complaint->auction_id,
                     'comp_id'    => $complaint->id,
-                    'comp_name'  => $complaint->name
+                    'comp_name'  => $complaint->complaint_name
                 ))
                     ->to($user->email)
                     ->subject('Изменение статуса жалобы в системе ФАС');
-                $message->send();*/
+                $message->send();
             }
         }
     }
