@@ -18,6 +18,22 @@ $(document).ready(function () {
     }
   });
 
+  $('.search-complaint').on('submit', function(){
+      var action = $(this).find('form').attr('action');
+      var search = $(this).find('input[name="search"]').val();
+      var url = action;
+      if(action.indexOf('index?status') + 1){
+        action += '&search=' + search;
+      } else {
+        action += '?search=' + search;
+      }
+
+      window.location = action;
+      //console.log(action);
+      //$(this).find('form').attr('action',action);
+    return false;
+  })
+
 
   $(".argument_text_container").on("click", "a", function () {
     argument.removeArgument($(this).attr("value"));
