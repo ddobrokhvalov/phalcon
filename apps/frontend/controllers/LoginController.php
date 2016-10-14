@@ -69,22 +69,18 @@ class LoginController extends Controller
             );
             if ($user != false) {
                 if($user->status == 0){
-                    echo json_encode(array('error' => 'Вы были заблокированы. Обратитесь к администратору сайта по номеру тел. или емаил'));
+                    echo json_encode(array('error' => array('status' => 'Вы были заблокированы. Обратитесь к администратору сайта по номеру тел. или емаил')));
                     exit;
                 }
                 if($user->status == 2){
-                    echo json_encode(array('error' => 'Вы неактивировали аккаунт.'));
+                    echo json_encode(array('error' => array('status' => 'Вы неактивировали аккаунт.')));
                     exit;
                 }
                 $this->_registerSession($user);
-                return $this->dispatcher->forward(
-                    array(
-                        'controller' => 'complaint',
-                        'action' => 'index'
-                    )
-                );
+                echo json_encode(array('status' => 'ok'));
+                exit;
             }  else {
-                echo json_encode(array('error' => 'Имя пользователя или пароль введен не верно'));
+                echo json_encode(array('error' => array('status' => 'Имя пользователя или пароль введен не верно')));
                 exit;
             }
         }

@@ -8,7 +8,9 @@ $(document).ready(function () {
             dataType: "json",
             context: form,
             success: function(res) {
-                if(res.error){
+                if(res.status && res.status == 'ok'){
+                    window.location = 'complaint/index';
+                }else if(res.error){
                     for(mess in res.error){
                         $(this).find('.errors').html('<p>'+ res.error[mess] + '</p>');
                     }
