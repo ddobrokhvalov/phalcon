@@ -9,7 +9,9 @@ $(document).ready(function () {
             context: form,
             success: function(res) {
                 if(res.error){
-                    $(this).find('.errors').html('<p>'+res.error+'</p>');
+                    for(mess in res.error){
+                        $(this).find('.errors').html('<p>'+ res.error[mess] + '</p>');
+                    }
                 }
             },
         });

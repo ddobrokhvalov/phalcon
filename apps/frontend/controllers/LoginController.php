@@ -6,6 +6,7 @@ use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\User;
 use Multiple\Library\Log;
 use Multiple\Library\TrustedLibrary;
+use Multiple\Frontend\Validator\LoginValidator;
 
 class LoginController extends Controller
 {
@@ -47,6 +48,16 @@ class LoginController extends Controller
         if ($this->request->isPost()) {
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
+
+            $validation = new LoginValidator();
+            $messages = $validation->validate($this->request->getPost());
+            if(count($messages)){
+                foreach ($messages as $key){
+                    echo json_encode(array('error' => array($key->getField() => $key->getMessage())));
+                    exit;
+                }
+            }
+
             $user = User::findFirst(
                 array(
                     "email = :email:  AND password = :password:",
