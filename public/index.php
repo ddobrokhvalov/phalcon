@@ -47,11 +47,18 @@ class Application extends BaseApplication
 				'action' => 'trusted',
 			));
 
+            $router->add("/register/recoveryPassword", array(
+                'module' => 'frontend',
+                'controller' => 'register',
+                'action' => 'recoveryPassword',
+            ));
             $router->add("/register/index", array(
                 'module' => 'frontend',
                 'controller' => 'register',
                 'action' => 'index',
             ));
+
+
 			
 			$router->add("/ajax/getlast", array(
 				'module' => 'frontend',
