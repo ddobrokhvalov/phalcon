@@ -58,12 +58,12 @@ class LoginController extends Controller
             );
             if ($user != false) {
                 if($user->status == 0){
-                    $this->flashSession->error('Вы были заблокированы. Обратитесь к администратору сайта по номеру тел. или емаил');
-                    return $this->response->redirect('/?block=true');
+                    echo json_encode(array('error' => 'Вы были заблокированы. Обратитесь к администратору сайта по номеру тел. или емаил'));
+                    exit;
                 }
                 if($user->status == 2){
-                    $this->flashSession->error('Вы неактивировали аккаунт.');
-                    return $this->response->redirect('/?block=true');
+                    echo json_encode(array('error' => 'Вы неактивировали аккаунт.'));
+                    exit;
                 }
                 $this->_registerSession($user);
                 return $this->dispatcher->forward(
@@ -73,8 +73,8 @@ class LoginController extends Controller
                     )
                 );
             }  else {
-                $this->flashSession->error('Имя пользователя или пароль введен не верно');
-                return $this->response->redirect('/');
+                echo json_encode(array('error' => 'Имя пользователя или пароль введен не верно'));
+                exit;
             }
         }
 //        return $this->dispatcher->forward(
