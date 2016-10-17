@@ -41,7 +41,7 @@ class OrderController extends ControllerBase
                 $order->date = date('Y-m-d H:i:s');
                 if ($order->save() === false) throw new \Exception('Ошибка создание заказа');
 
-                $message = $this->mailer->createMessageFromView('../views/emails/order_', array(
+                $message = $this->mailer->createMessageFromView('../views/emails/order', array(
                     'hashreg'   => $user->hashreg,
                     'host'      => $this->request->getHttpHost(),
                     'order' => $order
