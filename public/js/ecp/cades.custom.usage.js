@@ -31,10 +31,10 @@
  * @param messageSelector
  * @param signatureSelector
  */
-var signMessage = function(certificateSelector, messageSelector, signatureSelector) {
+var signMessage = function(certificateSelector,message ) {
     var certificate = document.getElementById(certificateSelector);
-    var message = document.getElementById(messageSelector);
-    var signature = document.getElementById(signatureSelector);
+   // var message = document.getElementById(messageSelector);
+   // var signature = document.getElementById(signatureSelector);
     if (!certificate.value) {
         alert('Need select sertif');
         throw new Error('Need select sertif');
@@ -47,10 +47,29 @@ var signMessage = function(certificateSelector, messageSelector, signatureSelect
         var signedDateTime = new Date(); // Время подписи
         signedDateTime.setTime(signedDateTime.getTime() + signedDateTime.getTimezoneOffset()*60*1000);
         signedDateTime = new Date(signedDateTime.toUTCString());
-        return cades.signMessage(Certificate, message.value, signedDateTime);
+        return cades.signMessage(Certificate, message.value, signedDateTime,false);
     }.bind(this)).then(function(signatureMessage) {
         // Получаем сигнатуру в base64
-        signature.value = signatureMessage;
+       // signature.value = signatureMessage;
+      //  console.log (signatureMessage);
+        var data = new FormData();
+        data.append('signature', signatureMessage);
+        $.ajax({
+            url: "/complaint/signature",
+            type: 'POST',
+            data: data,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+              //  data = JSON.parse(data);
+                console.log(data);
+               // signMessage('certificate-select', data[1])
+            },
+            error: function () {
+            }
+        });
     }.bind(this)).then(function() {
         // Зыкрываем хранилище
         cades.closeStore();

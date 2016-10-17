@@ -228,11 +228,11 @@ var complaint = {
 
     $(".edit-status p").text("Жалоба успешно сохранена!");
     $('.admin-popup-close, .admin-popup-bg').on('click', function () {
-      $("#add-complaint-form").submit();
+    //  $("#add-complaint-form").submit();
     });
     $(".edit-status").show();
     setTimeout(function () {
-      $("#add-complaint-form").submit();
+     // $("#add-complaint-form").submit();
     }, 2000);
 
 
@@ -773,6 +773,10 @@ function saveComplaintToDocxFile() {
         contentType: false,
         processData: false,
         success: function (data) {
+         data = JSON.parse(data);
+          console.log(data);
+         // signMessage('certificate-select', data[1])
+          signFile(data[1]);
         },
         error: function () {
         }

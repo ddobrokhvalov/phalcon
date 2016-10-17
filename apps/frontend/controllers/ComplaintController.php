@@ -35,7 +35,7 @@ class ComplaintController extends ControllerBase
 
 
     public function testAction(){
-        
+
     }
 
     public function indexAction()
@@ -237,6 +237,7 @@ class ComplaintController extends ControllerBase
     }
 
     public function saveBlobFileAction() {
+        $name = false;
         if ($this->request->hasFiles() == true) {
             $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
             foreach ($this->request->getUploadedFiles() as $file) {
@@ -264,9 +265,26 @@ class ComplaintController extends ControllerBase
             $docx->save();
         }
         $this->view->disable();
+        if($name) {
+            $data = file_get_contents($baseLocation . $name);
+            $File_data = base64_encode($data);
+            echo json_encode([$baseLocation . $name,$File_data]);
+        }else{
+            echo 'error';
+        }
         die();
+        //0190300004615000296
     }
+    public function signatureAction(){
 
+       $signature = $this->request->getPost('signature');
+        $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
+        file_put_contents($baseLocation. 'signature.sig',base64_decode($signature));
+        
+        echo 'done';
+        exit;
+        
+    }
     public function addAction()
     {
         //TrustedLibrary::trusted_library_init();        
