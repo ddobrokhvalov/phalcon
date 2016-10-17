@@ -108,8 +108,18 @@ class Module
 		});
 
         $di->set('mailer', function(){
-            $config = new ConfigIni("config/config.ini");
-            $config = $config->mailer->toArray();
+            $temp_conf = new ConfigIni("config/config.ini");
+            $temp_conf = $temp_conf->mailer->toArray();
+            $config = array();
+            $config['driver'] = $temp_conf['driver'];
+            $config['host'] = $temp_conf['host'];
+            $config['port'] = $temp_conf['port'];
+            $config['encryption'] = $temp_conf['encryption'];
+            $config['username'] = $temp_conf['username'];
+            $config['password'] = $temp_conf['password'];
+            $config['from']['email'] = $temp_conf['femail'];
+            $config['from']['name'] = $temp_conf['fname'];
+
             return new \Phalcon\Ext\Mailer\Manager($config);
         });
 	}
