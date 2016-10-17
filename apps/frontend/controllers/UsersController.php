@@ -17,8 +17,18 @@ class UsersController extends Controller
 
     public function changePasswordAction() {
         $notification = $this->request->getPost('notifications');
+        $firstname = $this->request->getPost('firstname');
+        $lastname = $this->request->getPost('lastname');
+        $patronymic = $this->request->getPost('patronymic');
+        $phone = $this->request->getPost('phone');
         $user = User::findFirstById($this->session->get('auth')['id']);
+
+
         $user->notifications = ($notification == 1) ? 1 : 0;
+        $user->firstname = (isset($firstname) && trim($firstname) != '') ? trim($firstname) : $user->firstname;
+        $user->lastname = (isset($lastname) && trim($lastname) != '') ? trim($lastname) : $user->lastname;
+        $user->patronymic = (isset($patronymic) && trim($patronymic) != '') ? trim($patronymic) : $user->patronymic;
+        $user->phone = (isset($phone) && trim($phone) != '' && preg_match('/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/', $phone)) ? trim($phone) : $user->phone;
         $user->update();
 
         $old_password = $this->request->getPost('old_password');
