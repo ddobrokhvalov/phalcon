@@ -44,7 +44,7 @@ class OrderController extends ControllerBase
                 $message = $this->mailer->createMessageFromView('../views/emails/order', array(
                     'hashreg'   => $user->hashreg,
                     'host'      => $this->request->getHttpHost(),
-                    'order_data' => $order
+                    'order' => $order
                 ))
                     ->to($this->adminsEmails['order'])
                     ->subject('Новый заказ в системе ФАС');
