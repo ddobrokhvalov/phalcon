@@ -22,6 +22,7 @@ use Multiple\Frontend\Models\ArgumentsCategory;
 //use Multiple\Library\TrustedLibrary;
 use  Phalcon\Mvc\Model\Query\Builder;
 use Multiple\Frontend\Models\Messages;
+use Phalcon\Mvc\Url;
 
 
 
@@ -40,6 +41,8 @@ class ComplaintController extends ControllerBase
              $this->flashSession->error('Вы не залогинены в системе');
              return $this->response->redirect('/');
         }
+        $search = $this->request->get('search');
+        $search =  preg_replace ("/[^a-zA-ZА-Яа-я0-9\s]/u","", $search);
         $this->setMenu();
         $complaint = new Complaint();
         $status = 0;
@@ -48,7 +51,7 @@ class ComplaintController extends ControllerBase
         if (isset($_GET['status']))
             $status = $_GET['status'];
       
-        $complaints = $complaint->findUserComplaints($this->user->id, $status, $this->applicant_id);
+        $complaints = $complaint->findUserComplaints($this->user->id, $status, $this->applicant_id, $search);
         #$this->view->complaints = $complaints;
         $this->view->status = $status;
         $paginator = new Paginator(array(
@@ -57,6 +60,10 @@ class ComplaintController extends ControllerBase
             "page"  => $numberPage
         ));
         $pages = $paginator->getPaginate();
+        if($status){
+            $url = '/complaint/index?status='.$status;
+        }
+        $this->view->searchurl = $url;
         $this->view->page = $pages;
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->view->index_action = true;
