@@ -1,4 +1,22 @@
 $(document).ready(function () {
+
+
+  $('.applicantCertificate__add').click(function() {
+    $('.addAppCertificate-main').fadeIn().css('display', 'flex');
+  });
+  $('.apCerList').on('click', '.apCerItem', function() {
+    $('.apCerItem').removeClass('apCerItem-active');
+    $(this).addClass('apCerItem-active');
+  });
+  $('.existingCerListBox').on('click', '.existingCerListBox__item', function() {
+    var thisText = $(this).text();
+    $('.existingCerListBox__item').removeClass('apCerItem-active');
+    $(this).addClass('apCerItem-active');
+    $('.existingCerListBox__title').text(thisText);
+    $('.existingCerListBox .custom-options').slideUp();
+  });
+
+
   $("#notice_button").click(function (event) {
     event.preventDefault();
     var auction_id = $('#auction_id').val();
