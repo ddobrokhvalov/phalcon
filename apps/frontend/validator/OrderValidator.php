@@ -8,8 +8,6 @@ use Phalcon\Validation\Validator\Regex;
 
 class OrderValidator extends Validation
 {
-
-
     public function initialize()
     {
         $this->add('auction_id', new PresenceOf(array('message' => 'Номер извещение обязательное поле','cancelOnFail' => true)));

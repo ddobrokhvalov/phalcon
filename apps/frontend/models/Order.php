@@ -6,10 +6,10 @@
  * Time: 10:54
  */
 
-namespace Multiple\Backend\Models;
+namespace Multiple\Frontend\Models;
+use Phalcon\Mvc\Model;
 
-
-class Order
+class Order extends Model
 {
     public $id;
     public $user_id;

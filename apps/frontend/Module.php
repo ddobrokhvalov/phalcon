@@ -114,6 +114,14 @@ class Module
             $config['password'] = $temp_conf['password'];
             $config['from']['email'] = $temp_conf['femail'];
             $config['from']['name'] = $temp_conf['fname'];
+
+            return new \Phalcon\Ext\Mailer\Manager($config);
+        });
+
+        $di->set('adminsEmails', function(){
+            $emails = new ConfigIni("config/config.ini");
+            $emails = $emails->adminsEmails->toArray();
+            return $emails;
         });
 	}
 }

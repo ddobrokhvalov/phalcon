@@ -37,7 +37,7 @@ class RegisterController extends Controller
                 $user->date_registration = date('Y-m-d H:i:s');
                 $user->save();
 
-                $message = $this->mailer->createMessageFromView('../views/emails/register', array(
+                $message = $this->mailer->createMessageFromView('../views/emails/order', array(
                                 'hashreg'   => $user->hashreg,
                                 'host'      => $host
                             ))
