@@ -47,6 +47,20 @@
                 <div data-tabsLabel="physical-face" onclick="applicant.setFizlico();">Физическое лицо</div>
             </div>
             <div data-tabs="legal-entity" class="tabs-content active-tabs-content">
+                <div class="legal-entity__applicantCertificate applicantCertificate">
+                    <ul class="applicantCertificate__apCerList apCerList mCustomScrollbar">
+                        <li class="apCerList__apCeritem apCerItem">Lorem ipsum [<span>date</span>] | number</li>
+                        <li class="apCerList__apCeritem apCerItem">Lorem ipsum [<span>date</span>] | number</li>
+                        <li class="apCerList__apCeritem apCerItem">Lorem ipsum [<span>date</span>] | number</li>
+                        <li class="apCerList__apCeritem apCerItem">Lorem ipsum [<span>date</span>] | number</li>
+                        <li class="apCerList__apCeritem apCerItem">Lorem ipsum [<span>date</span>] | number</li>
+                        <li class="apCerList__apCeritem apCerItem">Lorem ipsum [<span>date</span>] | number</li>
+                    </ul>
+                    <div class="applicantCertificate__btnHolder">
+                        <div class="applicantCertificate__add">Добавить</div>
+                        <div class="applicantCertificate__remove">Удалить</div>
+                    </div>
+                </div>
                 <form action="/applicant/create" enctype="multipart/form-data" method="POST">
                     {{hidden_field('type', 'value':'urlico')}}
                     {{hidden_field('for_user_id', 'value':for_user_id)}}
@@ -262,3 +276,47 @@
         </div>
     </div>
 </div>
+
+<article class="admin-popup-wrap addAppCertificate addAppCertificate-main" style="display:none;">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content index-main-popup">
+        <div class="admin-popup-close"></div>
+        <h6>Импорт заявителя из данных сертификата</h6>
+        <div class="addAppCertificate__existingCerList existingCerListBox">
+            <div class="select-holder">
+                <div class="title-info-box">Выберите сертификат для импорта данных заявителя</div>
+                <div class="custom_select">
+                    <div class="current-option">
+                        <div></div>
+                        <span class="existingCerListBox__title">Действителен до [дата] | Имя организации/ФОИ физ.лица</span>
+                    </div>
+                    <ul class="custom-options mCustomScrollbar">
+                        <li class="existingCerListBox__item">Действия заказчика 1</li>
+                        <li class="existingCerListBox__item">Действия заказчика 2</li>
+                        <li class="existingCerListBox__item">Действия заказчика 3</li>
+                        <li class="existingCerListBox__item">Действия заказчика 4</li>
+                        <li class="existingCerListBox__item">Действия заказчика 5</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="existingCerListBox__dscr">Показаны все сертификаты доступные в КриптоПро на Вашем компьютере</p>
+        </div>
+        <div class="addAppCertificate__btnHolder">
+            <div class="addAppCertificate__addBtn">Добавить</div>
+            <div class="addAppCertificate__cancelBtn">Отменить</div>
+        </div>
+    </div>
+</article>
+
+<article class="admin-popup-wrap addAppCertificate addAppCertificate-alert" style="display:none;">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content index-main-popup">
+        <div class="admin-popup-close"></div>
+        <h6>Импорт заявителя из данных сертификата</h6>
+        <p class="addAppCertificate__dscrAlert">Для работы функции импорта из сертификата необходим плагин КриптоПРО. Установить плагин для Вашего Браузера сейчас?</p>
+        <div class="addAppCertificate__btnHolder">
+            <div class="addAppCertificate__addBtn">Установить</div>
+            <div class="addAppCertificate__cancelBtn">Отменить</div>
+        </div>
+    </div>
+</article>
