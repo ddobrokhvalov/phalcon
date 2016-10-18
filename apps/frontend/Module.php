@@ -97,6 +97,8 @@ class Module
 			return new Database($config->database->toArray());
 		});
 		$di->set('session', function () {
+            ini_set('session.gc_maxlifetime', 200000);
+            session_set_cookie_params(2000000);
 			$session = new SessionAdapter();
 			$session->start();
 			return $session;
