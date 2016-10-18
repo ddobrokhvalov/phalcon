@@ -86,6 +86,21 @@
   }
   &__cancelBtn {
     float: right !important;
+    a {
+      display: block;
+      font-size: 14px;
+      line-height: 50px;
+      font-weight: 600;
+      text-align: center;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-decoration: none;
+      &:hover {
+        color: #ffffff;
+        font-weight: 600;
+        text-decoration: none;
+      }
+    }
   }
   .admin-popup-content {
     h6 {
@@ -153,4 +168,28 @@
     font-size: 18px;
     line-height: 1.1;
   }
+}
+.preloaderHolder {
+  padding: 50px 0 70px;
+}
+.preloader {
+  margin: 0 auto;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 5px solid;
+  border-top-color: #00aeef;
+  border-bottom-color: rgba(0,0,0, 0.1);
+  border-left-color: #00aeef;
+  border-right-color: rgba(0,0,0, 0.1);
+  -webkit-animation: preloader 1.2s ease-in-out infinite;
+  animation: preloader 1.2s ease-in-out infinite;
+}
+@keyframes preloader {
+  from {@include rotate(0deg)}
+  to {@include rotate(360deg);}
+}
+.hiddenClass {
+  visibility: hidden;
 }
