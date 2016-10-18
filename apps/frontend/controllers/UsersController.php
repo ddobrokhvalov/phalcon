@@ -67,13 +67,13 @@ class UsersController extends Controller
                     $user->update();
                     $this->flashSession->success('Пароль изменен');
 
-                    $message = $this->mailer->createMessageFromView('../views/emails/edit_password', array(
-                        'hashreg'   => $user->hashreg,
-                        'host'      => $host
-                    ))
-                        ->to($user->email)
-                        ->subject('Регистрация в интеллектуальной системе ФАС');
-                    $message->send();
+//                    $message = $this->mailer->createMessageFromView('../views/emails/edit_password', array(
+//                        'hashreg'   => $user->hashreg,
+//                        'host'      => $host
+//                    ))
+//                        ->to($user->email)
+//                        ->subject('Регистрация в интеллектуальной системе ФАС');
+//                    $message->send();
                     return $this->response->redirect($redirect_to);
                 } else {
                     $this->flashSession->error('Старый пароль введен не верно');
