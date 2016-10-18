@@ -1,0 +1,195 @@
+.applicantCertificate {
+  margin-bottom: 40px;
+  height: 222px;
+  overflow: hidden;
+  &__btnHolder {
+    position: relative;
+    margin-right: 5%;
+    width: 35%;
+    height: 100%;
+    float: right;
+    > div {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 170px;
+      height: 50px;
+      font-size: 14px;
+      line-height: 50px;
+      font-weight: 600;
+      text-align: center;
+      text-transform: uppercase;
+      color: #ffffff;
+      border-radius: 6px;
+      background-color: #00aeef;
+      cursor: pointer;
+      &:hover {
+        background-color: #10b8f7;
+      }
+    }
+  }
+  &__add {
+    top: 0;
+    bottom: auto;
+    margin-bottom: 20px;
+  }
+}
+.apCerList {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  float: left;
+  margin: 0;
+  width: 60%;
+  height: 100%;
+  border: 1px solid #e0e3ea;
+  background-color: #ffffff;
+}
+.apCerItem {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  padding: 0 15px;
+  font: 100 18px/55px 'Open Sans', sans-serif;
+  color: #34383e;
+  cursor: pointer;
+  &-active {
+    background-color: #f7f8fa;
+  }
+  &:hover {
+    background-color: #f7f8fa;
+  }
+}
+.addAppCertificate {
+  &__btnHolder {
+    overflow: hidden;
+    margin-bottom: 30px;
+    padding: 0 30px;
+    > div {
+      float: left;
+      width: 170px;
+      height: 50px;
+      font-size: 14px;
+      line-height: 50px;
+      font-weight: 600;
+      text-align: center;
+      text-transform: uppercase;
+      color: #ffffff;
+      border-radius: 6px;
+      background-color: #00aeef;
+      cursor: pointer;
+      &:hover {
+        background-color: #10b8f7;
+      }
+    }
+  }
+  &__cancelBtn {
+    float: right !important;
+    a {
+      display: block;
+      font-size: 14px;
+      line-height: 50px;
+      font-weight: 600;
+      text-align: center;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-decoration: none;
+      &:hover {
+        color: #ffffff;
+        font-weight: 600;
+        text-decoration: none;
+      }
+    }
+  }
+  .admin-popup-content {
+    h6 {
+      padding: 50px 30px 60px;
+      font-size: 46px;
+      line-height: 50px;
+    }
+  }
+  &__dscr {
+    padding: 30px;
+    font: 18px/1.1px 'Open Sans', sans-serif;
+    color: #34383e;
+  }
+  &__dscrAlert {
+    margin: 30px 0 50px;
+    padding: 0 30px;
+    font-size: 22px;
+    font-weight: 100;
+    line-height: 1.5;
+    text-align: center;
+  }
+}
+.existingCerListBox {
+  padding: 0 30px;
+  .title-info-box {
+    padding-left: 7px;
+    font-size: 22px;
+    font-weight: 100;
+    line-height: 2.5;
+  }
+  .current-option {
+    margin-bottom: 20px;
+    span {
+      padding-right: 80px;
+      font-size: 20px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+  .custom-options {
+    overflow: hidden;
+    margin-top: 5px;
+    max-height: 240px;
+    background-color: #ffffff;
+    li {
+      position: relative;
+      padding: 15px 10px 14px 23px;
+      font-size: 20px;
+      line-height: 30px;
+      font-weight: 100;
+      border-bottom: 1px solid #fff;
+      cursor: pointer;
+      &:hover {
+        background-color: #f7f8fa;
+      }
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+  &__dscr {
+    margin-bottom: 50px;
+    padding-left: 7px;
+    font-size: 18px;
+    line-height: 1.1;
+  }
+}
+.preloaderHolder {
+  padding: 50px 0 70px;
+}
+.preloader {
+  margin: 0 auto;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 5px solid;
+  border-top-color: #00aeef;
+  border-bottom-color: rgba(0,0,0, 0.1);
+  border-left-color: #00aeef;
+  border-right-color: rgba(0,0,0, 0.1);
+  -webkit-animation: preloader 1.2s ease-in-out infinite;
+  animation: preloader 1.2s ease-in-out infinite;
+}
+@keyframes preloader {
+  from {@include rotate(0deg)}
+  to {@include rotate(360deg);}
+}
+.hiddenClass {
+  visibility: hidden;
+}
