@@ -1,9 +1,7 @@
 $(document).ready(function () {
 
 
-  $('.applicantCertificate__add').click(function() {
-    $('.addAppCertificate-main').fadeIn().css('display', 'flex');
-  });
+  
   $('.apCerList').on('click', '.apCerItem', function() {
     $('.apCerItem').removeClass('apCerItem-active');
     $(this).addClass('apCerItem-active');

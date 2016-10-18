@@ -1,4 +1,16 @@
 $(document).ready(function () {
+
+  //  $('.addAppCertificate-main').fadeIn().css('display', 'flex');
+ //   $('#import-aplicant').removeClass('admin-popup-close');
+    //$('.admin-popup-bg').un
+
+    $('.addAppCertificate__cancelBtn').click(function(){
+
+    });
+    $('.applicantCertificate__add').click(function() {
+        $('.addAppCertificate-main').fadeIn().css('display', 'flex');
+        $('#import-aplicant').addClass('admin-popup-close');
+    });
     
     /*$(".active-tabs-content form").submit(function( event ) {
       alert("Handler for .submit() called.");
