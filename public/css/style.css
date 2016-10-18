@@ -1840,7 +1840,7 @@ a:focus {
 }
 
 /* line 21, ../sass/_status_change.scss */
-.admin-popup-bg {
+.admin-popup-bg, .admin-popup-bg-hiddenClick {
   position: absolute;
   top: 0;
   left: 0;
@@ -1852,6 +1852,11 @@ a:focus {
 }
 
 /* line 31, ../sass/_status_change.scss */
+.admin-popup-bg-hiddenClick {
+  cursor: auto;
+}
+
+/* line 34, ../sass/_status_change.scss */
 .admin-popup-close {
   position: absolute;
   top: 19px;
@@ -1863,7 +1868,7 @@ a:focus {
   background: url(../images/icon-mod-close.png) no-repeat center;
 }
 
-/* line 41, ../sass/_status_change.scss */
+/* line 44, ../sass/_status_change.scss */
 .admin-popup-content {
   position: relative;
   z-index: 9999;
@@ -1876,7 +1881,7 @@ a:focus {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 50, ../sass/_status_change.scss */
+/* line 53, ../sass/_status_change.scss */
 .admin-popup-content h6 {
   position: relative;
   overflow: hidden;
@@ -1887,7 +1892,7 @@ a:focus {
   color: #ffffff;
   text-align: center;
 }
-/* line 59, ../sass/_status_change.scss */
+/* line 62, ../sass/_status_change.scss */
 .admin-popup-content h6:before {
   position: absolute;
   content: '';
@@ -1899,11 +1904,11 @@ a:focus {
   background-color: #00aeef;
   transform: rotate(-3deg);
 }
-/* line 71, ../sass/_status_change.scss */
+/* line 74, ../sass/_status_change.scss */
 .admin-popup-content ul {
   margin-top: 30px;
 }
-/* line 74, ../sass/_status_change.scss */
+/* line 77, ../sass/_status_change.scss */
 .admin-popup-content label {
   position: relative;
   margin-left: 102px;
@@ -1913,7 +1918,7 @@ a:focus {
   font-weight: 100;
   cursor: pointer;
 }
-/* line 82, ../sass/_status_change.scss */
+/* line 85, ../sass/_status_change.scss */
 .admin-popup-content label div {
   position: absolute;
   content: '';
@@ -1923,7 +1928,7 @@ a:focus {
   height: 16px;
   background: url(../images/checkbx1.png) 0 0 no-repeat;
 }
-/* line 91, ../sass/_status_change.scss */
+/* line 94, ../sass/_status_change.scss */
 .admin-popup-content label input {
   position: absolute;
   top: calc(50% - 8px);
@@ -1935,7 +1940,7 @@ a:focus {
   opacity: 0;
   cursor: pointer;
 }
-/* line 103, ../sass/_status_change.scss */
+/* line 106, ../sass/_status_change.scss */
 .admin-popup-content button {
   display: block;
   margin: 0 auto 40px;
@@ -5336,19 +5341,36 @@ body#backend-login {
 .addAppCertificate__cancelBtn {
   float: right !important;
 }
-/* line 91, ../sass/_applicantCertificate.scss */
+/* line 89, ../sass/_applicantCertificate.scss */
+.addAppCertificate__cancelBtn a {
+  display: block;
+  font-size: 14px;
+  line-height: 50px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+}
+/* line 98, ../sass/_applicantCertificate.scss */
+.addAppCertificate__cancelBtn a:hover {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+}
+/* line 106, ../sass/_applicantCertificate.scss */
 .addAppCertificate .admin-popup-content h6 {
   padding: 50px 30px 60px;
   font-size: 46px;
   line-height: 50px;
 }
-/* line 97, ../sass/_applicantCertificate.scss */
+/* line 112, ../sass/_applicantCertificate.scss */
 .addAppCertificate__dscr {
   padding: 30px;
   font: 18px/1.1px 'Open Sans', sans-serif;
   color: #34383e;
 }
-/* line 102, ../sass/_applicantCertificate.scss */
+/* line 117, ../sass/_applicantCertificate.scss */
 .addAppCertificate__dscrAlert {
   margin: 30px 0 50px;
   padding: 0 30px;
@@ -5358,22 +5380,22 @@ body#backend-login {
   text-align: center;
 }
 
-/* line 111, ../sass/_applicantCertificate.scss */
+/* line 126, ../sass/_applicantCertificate.scss */
 .existingCerListBox {
   padding: 0 30px;
 }
-/* line 113, ../sass/_applicantCertificate.scss */
+/* line 128, ../sass/_applicantCertificate.scss */
 .existingCerListBox .title-info-box {
   padding-left: 7px;
   font-size: 22px;
   font-weight: 100;
   line-height: 2.5;
 }
-/* line 119, ../sass/_applicantCertificate.scss */
+/* line 134, ../sass/_applicantCertificate.scss */
 .existingCerListBox .current-option {
   margin-bottom: 20px;
 }
-/* line 121, ../sass/_applicantCertificate.scss */
+/* line 136, ../sass/_applicantCertificate.scss */
 .existingCerListBox .current-option span {
   padding-right: 80px;
   font-size: 20px;
@@ -5381,14 +5403,14 @@ body#backend-login {
   text-overflow: ellipsis;
   overflow: hidden;
 }
-/* line 129, ../sass/_applicantCertificate.scss */
+/* line 144, ../sass/_applicantCertificate.scss */
 .existingCerListBox .custom-options {
   overflow: hidden;
   margin-top: 5px;
   max-height: 240px;
   background-color: #ffffff;
 }
-/* line 134, ../sass/_applicantCertificate.scss */
+/* line 149, ../sass/_applicantCertificate.scss */
 .existingCerListBox .custom-options li {
   position: relative;
   padding: 15px 10px 14px 23px;
@@ -5398,20 +5420,62 @@ body#backend-login {
   border-bottom: 1px solid #fff;
   cursor: pointer;
 }
-/* line 142, ../sass/_applicantCertificate.scss */
+/* line 157, ../sass/_applicantCertificate.scss */
 .existingCerListBox .custom-options li:hover {
   background-color: #f7f8fa;
 }
-/* line 145, ../sass/_applicantCertificate.scss */
+/* line 160, ../sass/_applicantCertificate.scss */
 .existingCerListBox .custom-options li:last-child {
   border-bottom: none;
 }
-/* line 150, ../sass/_applicantCertificate.scss */
+/* line 165, ../sass/_applicantCertificate.scss */
 .existingCerListBox__dscr {
   margin-bottom: 50px;
   padding-left: 7px;
   font-size: 18px;
   line-height: 1.1;
+}
+
+/* line 172, ../sass/_applicantCertificate.scss */
+.preloaderHolder {
+  padding: 50px 0 70px;
+}
+
+/* line 175, ../sass/_applicantCertificate.scss */
+.preloader {
+  margin: 0 auto;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 5px solid;
+  border-top-color: #00aeef;
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+  border-left-color: #00aeef;
+  border-right-color: rgba(0, 0, 0, 0.1);
+  -webkit-animation: preloader 1.2s ease-in-out infinite;
+  animation: preloader 1.2s ease-in-out infinite;
+}
+
+@keyframes preloader {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+/* line 193, ../sass/_applicantCertificate.scss */
+.hiddenClass {
+  visibility: hidden;
 }
 
 @media (max-width: 1640px) {
