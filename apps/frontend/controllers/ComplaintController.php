@@ -23,6 +23,7 @@ use Multiple\Frontend\Models\ArgumentsCategory;
 use  Phalcon\Mvc\Model\Query\Builder;
 use Multiple\Frontend\Models\Messages;
 use Phalcon\Mvc\Url;
+use Multiple\Library\Translit;
 
 
 
@@ -415,7 +416,7 @@ class ComplaintController extends ControllerBase
                             $applicant_file = new Files();
                             $name = explode('.', $file->getName())[0] . '_' . time() . '.' . explode('.', $file->getName())[1];
                             //$name = iconv("UTF-8", "cp1251", $name);
-                            $applicant_file->file_path = $this->translit($name);
+                            $applicant_file->file_path = Translit::rusToEng($name);
                             $applicant_file->file_size = round($file->getSize() / 1024, 2);
                             $applicant_file->file_type = $file->getType();
                             $applicant_file->save();
