@@ -46,6 +46,19 @@ class Application extends BaseApplication
 				'controller' => 'ajax',
 				'action' => 'trusted',
 			));
+
+            $router->add("/register/recoveryPassword", array(
+                'module' => 'frontend',
+                'controller' => 'register',
+                'action' => 'recoveryPassword',
+            ));
+            $router->add("/register/index", array(
+                'module' => 'frontend',
+                'controller' => 'register',
+                'action' => 'index',
+            ));
+
+
 			
 			$router->add("/ajax/getlast", array(
 				'module' => 'frontend',
@@ -67,6 +80,12 @@ class Application extends BaseApplication
 				'params'=>3
 			));
 
+//            $router->add("/admin/register", array(
+//                'module' => 'backend',
+//                'controller' => 'register',
+//                'action' => 'index',
+//            ));
+
 			$router->add("/admin", array(
 				'module' => 'backend',
 				'controller' => 'login',
@@ -84,6 +103,8 @@ class Application extends BaseApplication
 				'controller' => 'login',
 				'action' => 'index',
 			));
+
+
 
 //			$router->notFound(array(
 //				"controller" => "index",

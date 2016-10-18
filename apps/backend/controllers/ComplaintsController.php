@@ -17,6 +17,7 @@ use Multiple\Backend\Models\Question;
 use Multiple\Backend\Models\Applicant;
 use Multiple\Library\Parser;
 use Multiple\Backend\Models\Ufas;
+use Multiple\Backend\Models\User;
 
 class ComplaintsController extends ControllerBase
 {
@@ -440,13 +441,25 @@ class ComplaintsController extends ControllerBase
                     $message->body = $body;
                     $message->time = date('Y-m-d H:i:s');
                     $message->comp_id = $complaint_id;
-                    $message->save();
+                    //$message->save();
 
                     $quest = Question::findFirstById($answer->question_id);
                     if($quest){
                         $quest->is_read = 'y';
                         $quest->save();
                     }
+
+                    $user = User::findFirst($toid);
+                    $message = $this->mailer->createMessageFromView('../views/emails/lawyer', array(
+                        'host' => $this->request->getHttpHost(),
+                        'firstname' => $user->firstname,
+                        'patronymic' => $user->patronymic,
+                        'quies_text' => $quest->text,
+                        'answer_text' => $answer_text
+                    ))
+                        ->to($user->email)
+                        ->subject('Ответ юриста в системе ФАС');
+                    $message->send();
                 }
             }
             $response = new \Phalcon\Http\Response();

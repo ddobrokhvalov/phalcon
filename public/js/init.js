@@ -12,7 +12,7 @@ $(document).ready(function() {
              function(){
                  $(div)
                      .css('display', 'block')
-                     .animate({opacity: 1, top: '50%'}, 200);
+                     .animate({opacity: 1, top: '35%'}, 200);
          });
      });
      open_modal2.click( function(event){

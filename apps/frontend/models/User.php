@@ -14,6 +14,12 @@ class User extends Model
     public function initialize()
     {
         $this->setSource('user');
+
+        $this->hasMany(
+            "id",
+            "Orders",
+            "user_id"
+        );
     }
 
     public function getSource()

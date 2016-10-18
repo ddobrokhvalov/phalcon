@@ -6,6 +6,7 @@ use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\User;
 use Multiple\Library\Log;
 use Multiple\Library\TrustedLibrary;
+use Multiple\Frontend\Validator\LoginValidator;
 
 class LoginController extends Controller
 {
@@ -47,6 +48,16 @@ class LoginController extends Controller
         if ($this->request->isPost()) {
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
+
+            $validation = new LoginValidator();
+            $messages = $validation->validate($this->request->getPost());
+            if(count($messages) > 0){
+                foreach ($messages as $key){
+                    echo json_encode(array('error' => array($key->getField() => $key->getMessage())));
+                    exit;
+                }
+            }
+
             $user = User::findFirst(
                 array(
                     "email = :email:  AND password = :password:",
@@ -58,19 +69,19 @@ class LoginController extends Controller
             );
             if ($user != false) {
                 if($user->status == 0){
-                    $this->flashSession->error('Вы были заблокированы. Обратитесь к администратору сайта по номеру тел. или емаил');
-                    return $this->response->redirect('/?block=true');
+                    echo json_encode(array('error' => array('status' => 'Вы были заблокированы. Обратитесь к администратору сайта по номеру тел. или емаил')));
+                    exit;
+                }
+                if($user->status == 2){
+                    echo json_encode(array('error' => array('status' => 'Вы неактивировали аккаунт.')));
+                    exit;
                 }
                 $this->_registerSession($user);
-                return $this->dispatcher->forward(
-                    array(
-                        'controller' => 'complaint',
-                        'action' => 'index'
-                    )
-                );
+                echo json_encode(array('status' => 'ok'));
+                exit;
             }  else {
-                $this->flashSession->error('Имя пользователя или пароль введен не верно');
-                return $this->response->redirect('/');
+                echo json_encode(array('error' => array('status' => 'Имя пользователя или пароль введен не верно')));
+                exit;
             }
         }
 //        return $this->dispatcher->forward(
@@ -86,7 +97,7 @@ class LoginController extends Controller
 
     public function authorizeAction()
     {
-        TrustedLibrary::trusted_library_authorize();
+       // TrustedLibrary::trusted_library_authorize();
     }
 
     public function indexAction()

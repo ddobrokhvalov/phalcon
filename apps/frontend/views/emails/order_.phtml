@@ -1,0 +1,7 @@
+ФИО: {{ order.firstname }} {{ order.lastname }} {{ order.patronymic }}</br>
+Ссылка на пользователя: http://{{host}}/admin/user/edit/{{order.user_id}}</br>
+Email:{{ order.email }}</br>
+Телефон:{{ order.phone }}</br>
+Номер извещения:{{ order.auction_id }}</br>
+Ссылка на извещение:http://zakupki.gov.ru/epz/order/notice/ea44/view/common-info.html?regNumber={{ order.auction_id }}</br>
+Дата создания:{{ order.date }}</br>

@@ -10,9 +10,10 @@ use Phalcon\Config\Adapter\Ini as ConfigIni;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Flash\Direct as FlashDirect;
-
 use Multiple\Backend\Plugins\SecurityPlugin;
 use Multiple\Backend\Plugins\NotFoundPlugin;
+require_once('../vendor/autoload.php');
+
 class Module
 {
 
@@ -97,6 +98,8 @@ class Module
 			return new Database($config->database->toArray());
 		});
 		$di->set('session', function () {
+            ini_set('session.gc_maxlifetime', 200000);
+            session_set_cookie_params(2000000);
 			$session = new SessionAdapter();
 			$session->start();
 			return $session;
@@ -106,5 +109,20 @@ class Module
 			return new FlashDirect();
 		});
 
+        $di->set('mailer', function(){
+            $temp_conf = new ConfigIni("config/config.ini");
+            $temp_conf = $temp_conf->mailer->toArray();
+            $config = array();
+            $config['driver'] = $temp_conf['driver'];
+            $config['host'] = $temp_conf['host'];
+            $config['port'] = $temp_conf['port'];
+            $config['encryption'] = $temp_conf['encryption'];
+            $config['username'] = $temp_conf['username'];
+            $config['password'] = $temp_conf['password'];
+            $config['from']['email'] = $temp_conf['femail'];
+            $config['from']['name'] = $temp_conf['fname'];
+
+            return new \Phalcon\Ext\Mailer\Manager($config);
+        });
 	}
 }

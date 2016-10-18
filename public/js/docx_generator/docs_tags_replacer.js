@@ -5,11 +5,13 @@ function replaceWordTags(text, ckeditor_id) {
         text = text.replace("<p>", '');
         text = text.replace("</p>", '\r\n');
         text = text.replace("&nbsp;", ' ');
-    }
+    }debugger;
     text = remove_marker(text);
     text = replace_hard_tags(text);
     text = replace_easy_tags(text);
     text = add_simple_tags_text(text);
+    add_font_to_next_item = false;
+    font_size_to_next_item = 0;
     var dd = text.match(/<w:r>[\s\S]*?<\/w:r>/g);
     if (dd != null) {
         for (var _c = 0; _c < dd.length; _c++) {
@@ -34,6 +36,18 @@ function replaceWordTags(text, ckeditor_id) {
             } else if (dd[_c].search('<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr>') >= 0) {
                 var replaced_font = add_font_support(dd[_c], 'italian_bold_underline', true);
                 text = text.replace(dd[_c], replaced_font);
+            } else if ((dd[_c].search('<span style="font-size:') >= 0 && dd[_c].search('</span>') < 0) ||
+                (dd[_c].search('<span style="font-size:') > dd[_c].search('</span>'))) {
+                add_font_to_next_item = true;
+                var font_size_style = dd[_c].match(/font-size:[^;]+px/);
+                font_size_to_next_item = (get_font_size(font_size_style[0])) / 2;
+                var dd_current = dd[_c];
+                dd_current = dd_current.replace('</span>', '');
+                dd_current = dd_current.replace('<span style="font-size:' + font_size_to_next_item + 'px;">', '');
+                if (dd_current == '<w:r><w:t xml:space="preserve"></w:t></w:r>') {
+                    dd_current = '';
+                }
+                text = text.replace(dd[_c], dd_current);
             }
         }
     }
@@ -194,7 +208,7 @@ function add_list(text, ckeditor_id) {
     return text;
 }
 
-function add_simple_tags_text(text) {
+function add_simple_tags_text(text) {//debugger;
     var no_styles_text = text.match(/<\/w:r>[\s\S]*?<w:r>/g);
     if (no_styles_text == null) {
         return text;
@@ -203,7 +217,9 @@ function add_simple_tags_text(text) {
         if(no_styles_text[i] != "</w:r><w:r>" && no_styles_text[i] != ""){
             var clone_text = no_styles_text[i];
             clone_text = clone_text.substr(6, clone_text.length - 11);
-            text = text.replace(no_styles_text[i], '</w:r><w:r><w:t xml:space="preserve">' + clone_text + "</w:t></w:r><w:r>");
+            if (!clone_text.startsWith('<span style="font-size:')) {
+                text = text.replace(no_styles_text[i], '</w:r><w:r><w:t xml:space="preserve">' + clone_text + "</w:t></w:r><w:r>");
+            }
         }
         
     }
@@ -264,9 +280,17 @@ function add_font_support(text, f_style, tag_split) {
         }
         
     }
+    if (add_font_to_next_item) {
+        var text_no_style = $(text).text();
+        text = text.replace(text_no_style, '<span style="font-size:' + font_size_to_next_item + 'px;">' + text_no_style + '</span>');
+    }
+    add_font_to_next_item = false;
     while (true) {
-    var font_size_style = text.match(/font-size:[^;]+px/);
+        var font_size_style = text.match(/font-size:[^;]+px/);
         if (font_size_style == null) {
+            if (text.search('</span>' >= 0) && text.search('<span style="font-size:' < 0)) {
+                text = text.replace('</span>', '');
+            }
             return text;
         }
         var font_size = get_font_size(font_size_style[0]);
@@ -283,6 +307,9 @@ function add_font_support(text, f_style, tag_split) {
                                                 only_text +
                                                 '</w:t></w:r>' +
                                                 short_close_tag);
+        if (text.search('<w:r><w:rPr><w:b/><w:i/><w:u w:val="single"/></w:rPr><w:t xml:space="preserve"></w:t></w:r>') >= 0) {
+            text = text.replace(/<w:r><w:rPr><w:b\/><w:i\/><w:u w:val="single"\/><\/w:rPr><w:t xml:space="preserve"><\/w:t><\/w:r>/g, '');
+        }
     }
     return text;
 }
@@ -411,6 +438,9 @@ function quick_fix(text) {
     }
     if (text.search('</w:t></w:r></w:t></w:r>') >= 0) {
         text = text.replace(/<\/w:t><\/w:r><\/w:t><\/w:r>/g, '<\/w:t><\/w:r>');
+    }
+    if (text.search('<w:r><w:t xml:space="preserve"></w:t></w:r>') >= 0) {
+        text = text.replace(/<w:r><w:t xml:space="preserve"><\/w:t><\/w:r>/g, '');
     }
     return text;
 }

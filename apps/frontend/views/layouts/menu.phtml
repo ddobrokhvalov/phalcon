@@ -72,6 +72,15 @@
                 </a>
             </li>
         </ul>
+        <div class="lm-search-title">
+            <p>Поиск по выбранному</p>
+        </div>
+        <div class="lm-search-box search-complaint">
+            <form action="{{searchurl}}" method="GET">
+                <input type="text" id="lm-search-field" class="searc_val" name="search">
+                <input type="submit" id="lm-search-btn"  class="searc_comp" value="">
+            </form>
+        </div>
         <div class="lm-cont">
             <div class="lm-c-b1"><a href="tel:8 (800) 100-93-86" style="color:white">8 (800) 100-93-86</a></div>
             <div class="lm-c-b2"><a href="mailto:info@fas-online.ru" style="color:white">info@fas-online.ru</a></div>
@@ -185,6 +194,25 @@
                         <form action="/users/changePassword" method="POST">
                             <input id="cr1" type="checkbox" name="notifications" hidden  {% if user.notifications == 1%} checked  {% endif %}  value="1"  >
                         <label for="cr1">Получать уведомления на e-mail</label>
+                    </div>
+                    <div class="ch-r-s-inf-f">
+                        <p>Личные данные</p>
+                        <label for="adm-set-name" class="set-same-lable">
+                            <p>Имя</p>
+                            <input type="text" id="usri1" name="firstname" value="{{user.firstname}}">
+                        </label>
+                        <label for="adm-set-name" class="set-same-lable" >
+                            <p>Фамилия</p>
+                            <input type="text" id="usri1" name="lastname" value="{{user.lastname}}">
+                        </label>
+                        <label for="adm-set-name" class="set-same-lable">
+                            <p>Отчество</p>
+                            <input type="text" id="usri1" name="patronymic" value="{{user.patronymic}}">
+                        </label>
+                        <label for="adm-set-name" class="set-same-lable">
+                            <p>Телефон</p>
+                            <input type="text" id="usri1" name="phone" value="{{user.phone}}">
+                        </label>
                     </div>
                     <div class="ch-r-s-inf-f">
                             <span>Сменить пароль</span>
