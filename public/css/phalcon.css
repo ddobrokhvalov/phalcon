@@ -2856,7 +2856,9 @@ input[type="radio"]:checked + label {
     color: #34383e;
     opacity: 1;
 }
-.modal_div form input[type="text"], .modal_div form input[type="password"] {
+.modal_div form input[type="text"],
+.modal_div form input[type="password"],
+.modal_div form input[type="email"] {
     border: 1px solid #34383e;
     float: left;
     font-size: 18px;
@@ -2864,6 +2866,10 @@ input[type="radio"]:checked + label {
     margin: 5px 0 25px;
     padding: 0 10px;
     width: 100%;
+}
+.modal_div form input[type="email"]:focus {
+    border: 1px solid #10b8f7 !important;
+    box-shadow: 0 0 7px 0 rgba(16, 184, 247, 0.13);
 }
 .modal_div form label {
     float: left;
