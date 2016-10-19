@@ -76,10 +76,12 @@
             <p>Поиск по выбранному</p>
         </div>
         <div class="lm-search-box search-complaint">
+            {% if searchurl is defined %}
             <form action="{{searchurl}}" method="GET">
                 <input type="text" id="lm-search-field" class="searc_val" name="search">
                 <input type="submit" id="lm-search-btn"  class="searc_comp" value="">
             </form>
+            {% endif %}
         </div>
         <div class="lm-cont">
             <div class="lm-c-b1"><a href="tel:8 (800) 100-93-86" style="color:white">8 (800) 100-93-86</a></div>
