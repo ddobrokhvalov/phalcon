@@ -14,6 +14,7 @@ class RegisterController extends Controller
             if($this->request->isPost()) {
                 $data = $this->request->getPost();
                 $captcha = $this->chechCaptcha();
+                var_dump($captcha);
                 if ($captcha != null && $captcha->success) throw new Exception('Капча не прошла');
 
                 if($data['password'] != $data['confpassword']) throw new Exception('Пароли не совпадают');
@@ -143,10 +144,12 @@ class RegisterController extends Controller
 
 
     private function chechCaptcha(){
-        $data['secret']   =   '6LdzsQkUAAAAAPTeUGETjJC0Fuojx7-6qa0JkbPo';
-        $data['response'] = 'g-recaptcha-response';
-        $data['remoteip'] = $_SERVER["REMOTE_ADDR"];
-        $reCaptcha = new ReCaptcha($data['secret']);
-        return $reCaptcha->verifyResponse($data['remoteip'],$data['response']);
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, "secret=6LdzsQkUAAAAAPTeUGETjJC0Fuojx7-6qa0JkbPo&response=g-recaptcha-response");
+        $out = curl_exec($curl);
+        return $out;
     }
 }
