@@ -63,6 +63,8 @@ class ComplaintController extends ControllerBase
         $pages = $paginator->getPaginate();
         if($status){
             $url = '/complaint/index?status='.$status;
+        } else {
+            $url = '/complaint/index';
         }
         $this->view->searchurl = $url;
         $this->view->page = $pages;
