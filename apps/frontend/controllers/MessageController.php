@@ -17,6 +17,7 @@ class MessageController extends ControllerBase
         if (!isset($next_items)) {
             $next_items = 0;
         }
+
         $item_per_page = 20 + $next_items;
         $messages = Messages::find(array(
             'to_uid = :to_uid: AND is_deleted = 0',
@@ -26,7 +27,10 @@ class MessageController extends ControllerBase
             ),
         ));
 
-
+        $show_all_items = $this->request->get('all-portions-items');
+        if (isset($show_all_items) && $show_all_items == 'all_items') {
+            $item_per_page = 99999;
+        }
 
         $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
         $paginator = new Paginator(array(
