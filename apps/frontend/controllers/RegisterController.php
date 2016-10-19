@@ -144,8 +144,7 @@ class RegisterController extends Controller
 
 
     private function chechCaptcha($data){
-        $secret = "6LcePAATAAAAABjXaTsy7gwcbnbaF5XgJKwjSNwT";
-        $reCaptcha = new ReCaptcha($secret);
+        $reCaptcha = new ReCaptcha('6LdzsQkUAAAAAPTeUGETjJC0Fuojx7-6qa0JkbPo');
         return $reCaptcha->verifyResponse(
             $_SERVER["REMOTE_ADDR"],
             $data["g-recaptcha-response"]
