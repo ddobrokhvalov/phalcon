@@ -18,6 +18,7 @@ use Multiple\Backend\Models\Applicant;
 use Multiple\Library\Parser;
 use Multiple\Backend\Models\Ufas;
 use Multiple\Backend\Models\User;
+use Multiple\Library\Translit;
 
 class ComplaintsController extends ControllerBase
 {
@@ -527,15 +528,15 @@ class ComplaintsController extends ControllerBase
         }
         $complaint = Complaint::findFirstById($data['update-complaint-id']);
         if ($complaint) {
-            if($data['complaint_text'] == '<p>Пользовательский текст</p>'){
+            if(!empty($data['complaint_text']) && $data['complaint_text'] == '<p>Пользовательский текст</p>'){
                 $data['complaint_text'] = '<p>'.str_replace($data['argument_text'],'Пользовательский текст', '').'</p>';
             }
-            if($data['complaint_text'] == '<p>Вам необходимо выбрать хотябы одну обязательную жалобу!</p>'){
+            if(!empty($data['complaint_text']) && $data['complaint_text'] == '<p>Вам необходимо выбрать хотябы одну обязательную жалобу!</p>'){
                 $data['complaint_text'] = '<p>'.str_replace($data['argument_text'],'Вам необходимо выбрать хотябы одну обязательную жалобу!', '').'</p>';
             }
             $complaint->complaint_name = $data['complaint_name'];
-            $complaint->complaint_text = $data['complaint_text'];
-            $complaint->complaint_text_order = $data['complaint_text_order'];
+            $complaint->complaint_text = (!empty($data['complaint_text'])) ? $data['complaint_text'] : '';
+            $complaint->complaint_text_order = (!empty($data['complaint_text_order'])) ? $data['complaint_text_order'] : '';
             $ufas = Ufas::findFirst(array(
                 "number = {$data['ufas_id']}"
             ));
