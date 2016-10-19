@@ -5,7 +5,7 @@ use Phalcon\Acl\Exception;
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Validator\RegisterValidator;
 use Multiple\Frontend\Models\User;
-
+use Multiple\Library\ReCaptcha;
 
 class RegisterController extends Controller
 {
@@ -13,8 +13,8 @@ class RegisterController extends Controller
         try{
             if($this->request->isPost()) {
                 $data = $this->request->getPost();
-                $responceCatcha = $this->chechCaptcha();
-                if(!$responceCatcha->success) throw new Exception('Капча не прошла');
+                $captcha = $this->chechCaptcha();
+                if ($captcha != null && $captcha->success) throw new Exception('Капча не прошла');
 
                 if($data['password'] != $data['confpassword']) throw new Exception('Пароли не совпадают');
 
@@ -143,15 +143,10 @@ class RegisterController extends Controller
 
 
     private function chechCaptcha(){
-        $curl = curl_init();
-        $data = array();
         $data['secret']   =   '6LdzsQkUAAAAAPTeUGETjJC0Fuojx7-6qa0JkbPo';
         $data['response'] = 'g-recaptcha-response';
         $data['remoteip'] = $_SERVER["REMOTE_ADDR"];
-        curl_setopt($curl, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, 'secret='.$data['secret'].'&response='.$data['response'].'&remoteip='.$data['remoteip']);
-        return curl_exec($curl);
+        $reCaptcha = new ReCaptcha($data['secret']);
+        return $reCaptcha->verifyResponse($data['remoteip'],$data['response']);
     }
 }
