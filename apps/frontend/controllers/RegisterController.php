@@ -13,7 +13,7 @@ class RegisterController extends Controller
         try{
             if($this->request->isPost()) {
                 $data = $this->request->getPost();
-                $captcha = $this->chechCaptcha();
+                $captcha = $this->chechCaptcha($data);
                 var_dump($captcha);
                 if ($captcha != null && $captcha->success) throw new Exception('Капча не прошла');
 
@@ -143,13 +143,12 @@ class RegisterController extends Controller
     }
 
 
-    private function chechCaptcha(){
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, "secret=6LdzsQkUAAAAAPTeUGETjJC0Fuojx7-6qa0JkbPo&response=g-recaptcha-response");
-        $out = curl_exec($curl);
-        return $out;
+    private function chechCaptcha($data){
+        $secret = "6LcePAATAAAAABjXaTsy7gwcbnbaF5XgJKwjSNwT";
+        $reCaptcha = new ReCaptcha($secret);
+        return $reCaptcha->verifyResponse(
+            $_SERVER["REMOTE_ADDR"],
+            $data["g-recaptcha-response"]
+        );
     }
 }
