@@ -14,7 +14,7 @@ class RegisterController extends Controller
             if($this->request->isPost()) {
                 $data = $this->request->getPost();
                 $captcha = $this->chechCaptcha($data);
-                if ($captcha != null && $captcha->success) throw new Exception('Ошибка каптчи');
+                if (!empty($captcha) && $captcha->success) throw new Exception('Ошибка каптчи');
 
                 if($data['password']) throw new Exception('Введите пароль');
 
