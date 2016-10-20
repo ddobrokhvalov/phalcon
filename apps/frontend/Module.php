@@ -125,5 +125,11 @@ class Module
             $emails = $emails->adminsEmails->toArray();
             return $emails;
         });
+
+        $di->set('reCaptcha', function(){
+            $emails = new ConfigIni("config/config.ini");
+            $emails = $emails->reCaptcha->toArray();
+            return $emails;
+        });
 	}
 }
