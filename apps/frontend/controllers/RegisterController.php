@@ -13,11 +13,12 @@ class RegisterController extends Controller
         try{
             if($this->request->isPost()) {
                 $data = $this->request->getPost();
-                if (empty($data['g-recaptcha-response'])) throw new Exception('Ошибка каптчи');
-                $captcha = ReCaptcha::chechCaptcha($data);
-                if (empty($captcha) && !$captcha->success) throw new Exception('Ошибка каптчи');
-
+                if(empty($data['offerta'])) throw new Exception('Не подтвердили условия оферты');
                 if(empty($data['password'])) throw new Exception('Введите пароль');
+                if (empty($data['g-recaptcha-response'])) throw new Exception('Не ввели каптчу');
+                $captcha = ReCaptcha::chechCaptcha($data);
+                if (empty($captcha) && !$captcha->success) throw new Exception('Ошибка проверки каптчи');
+
 
                 $host =  $this->request->getHttpHost();
                 $validation = new RegisterValidator();
