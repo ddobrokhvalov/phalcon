@@ -25,6 +25,7 @@ class UsersController extends Controller
             $validation = new EditUserValidator();
             $user = User::findFirstById($this->session->get('auth')['id']);
             $messages = $validation->validate($data);
+            $data['current_path'] = str_replace('public//', '', $data['current_path']);
             if (!$user) throw new \Exception('not user');
             if (count($messages)) throw new MessageException($messages);
 
