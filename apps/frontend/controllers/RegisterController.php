@@ -14,10 +14,9 @@ class RegisterController extends Controller
             if($this->request->isPost()) {
                 $data = $this->request->getPost();
                 $captcha = $this->chechCaptcha($data);
-                var_dump($captcha);
                 if ($captcha != null && $captcha->success) throw new Exception('Капча не прошла');
 
-                if($data['password'] != $data['confpassword']) throw new Exception('Пароли не совпадают');
+                if($data['password']) throw new Exception('Введите пароль');
 
                 $host =  $this->request->getHttpHost();
                 $validation = new RegisterValidator();
