@@ -32,15 +32,14 @@ class RegisterValidator extends Validation
                 "cancelOnFail" => true,
             ]
         ));
-//        $this->add('confpassword', new PresenceOf(array('message' => 'Проверка пароля обязательное поле','cancelOnFail' => true)));
-//        $this->add('confpassword', new StringLength(array('min' => 8, 'messageMinimum' => 'Проверка пароля менее 8 символов','cancelOnFail' => true)));
-//        $this->add('confpassword', new Regex(
-//            [
-//                "message"    => "Некорректный пароль",
-//                "pattern"    => "/^[\S]+$/",
-//                "cancelOnFail" => true,
-//            ]
-//        ));
+        $this->add('confpassword', new PresenceOf(array('message' => 'Проверка пароля обязательное поле','cancelOnFail' => true)));
+        $this->add('confpassword', new Regex(
+            [
+                "message"    => "Некорректный пароль",
+                "pattern"    => "/^[\S]+$/",
+                "cancelOnFail" => true,
+            ]
+        ));
 //        $this->add('phone', new PresenceOf(array('message' => 'Телефон обязательное поле','cancelOnFail' => true)));
 //        $this->add('phone', new Regex(
 //            [

@@ -7,6 +7,7 @@ use Multiple\Frontend\Validator\RegisterValidator;
 use Multiple\Frontend\Models\User;
 use Multiple\Library\ReCaptcha;
 use Multiple\Library\MessageException;
+use Phalcon\Security\Random;
 
 class RegisterController extends Controller
 {
@@ -14,20 +15,7 @@ class RegisterController extends Controller
         try{
             if($this->request->isPost()) {
                 $data = $this->request->getPost();
-                if(empty($data['offerta'])) throw new Exception('Не подтвердили условия оферты');
-                if (empty($data['g-recaptcha-response'])) throw new Exception('Не ввели каптчу');
-                $captcha = ReCaptcha::chechCaptcha($data);
-                if (empty($captcha) && !$captcha->success) throw new Exception('Ошибка проверки каптчи');
-                $host =  $this->request->getHttpHost();
-                $validation = new RegisterValidator();
-                $messages = $validation->validate($data);
-                if(count($messages))  throw new MessageException($messages);
-
-                $user = User::find("email = '{$data['email']}'");
-                if (count($user)) {
-                    echo json_encode(array('error' => array('user' => 'Пользователь с таким email уже есть')));
-                    exit;
-                }
+                $this->checkUser( $data );
 
                 $hashpassword = sha1($data['password']);
                 $user = new User();
@@ -40,7 +28,7 @@ class RegisterController extends Controller
 
                 $message = $this->mailer->createMessageFromView('../views/emails/register', array(
                                 'hashreg'   => $user->hashreg,
-                                'host'      => $host
+                                'host'      => $this->request->getHttpHost()
                             ))
                     ->to($user->email)
                     ->subject('Регистрация в интеллектуальной системе ФАС');
@@ -91,9 +79,11 @@ class RegisterController extends Controller
         try{
             if ($this->request->isPost()) {
                 $email = $this->request->getPost('email');
-                if(!isset($email) || trim($email) == '') throw new Exception('error email');
+                if(empty($email) || trim($email) == '') throw new Exception('error email');
+
                 $user = User::findFirst(array("email = {$email}"));
                 if(!$user) throw new Exception('error user');
+
                 $user->hashrecovery = sha1($user->email + date('Y-m-d H:i:s'));
                 $user->save();
 
@@ -108,10 +98,12 @@ class RegisterController extends Controller
                 exit;
             } else if($this->request->isGet()){
                 $hashrecoverypass = $this->request->get('recovery');
+                $random = new Random();
                 if(!isset($hashrecoverypass) || trim($hashrecoverypass) == '') throw new Exception('error hash');
                 $user = User::findFirst(array("hashrecovery='{$hashrecoverypass}'"));
                 if(!$user) throw new Exception('error user');
-                $password = $this->random_password();
+
+                $password = $random->hex(8);
                 $user->hashrecovery = null;
                 $user->password = sha1($password);
                 $user->save();
@@ -134,8 +126,22 @@ class RegisterController extends Controller
         $this->response->redirect('/');
     }
 
-    private function random_password($chars = 9) {
-        $letters = 'abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-        return substr(str_shuffle($letters), 0, $chars);
+    private function checkUser( $data ){
+        $validation = new RegisterValidator();
+        if(empty($data['offerta'])) throw new Exception('Не подтвердили условия оферты');
+        //if (empty($data['g-recaptcha-response'])) throw new Exception('Не ввели каптчу');
+
+        $captcha = ReCaptcha::chechCaptcha($data);
+        //if (empty($captcha) && !$captcha->success) throw new Exception('Ошибка проверки каптчи');
+
+        $messages = $validation->validate($data);
+        if(count($messages))  throw new MessageException($messages);
+        if($data['password'] != $data['confpassword']) throw new Exception('Пароли не совпадают');
+
+        $user = User::find("email = '{$data['email']}'");
+        if (count($user)) {
+            echo json_encode(array('error' => array('user' => 'Пользователь с таким email уже есть')));
+            exit;
+        }
     }
 }
