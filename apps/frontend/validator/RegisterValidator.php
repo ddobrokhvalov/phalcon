@@ -20,6 +20,7 @@ class RegisterValidator extends Validation
 //                "cancelOnFail" => true,
 //            ]
 //        ));*/
+        $this->add('offerta',new PresenceOf(array('message' => 'Подтверждение оферты обязательное поле','cancelOnFail' => true)));
         $this->add('email', new PresenceOf(array('message' => 'E-mail обязательное поле','cancelOnFail' => true)));
         $this->add('email', new Email(array('message' => 'Некорректный E-mail','cancelOnFail' => true)));
         $this->add('password', new PresenceOf(array('message' => 'Пароль обязательное поле', 'cancelOnFail' => true)));
