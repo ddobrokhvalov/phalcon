@@ -55,7 +55,7 @@ class RegisterController extends Controller
             }
             echo json_encode(array('error' => $temp_err));
         } catch(Exception $e){
-            echo json_encode(array('error' => $e->getMessage()));
+            echo json_encode(array('error' => array('error' => $e->getMessage())));
         }
         exit;
     }
