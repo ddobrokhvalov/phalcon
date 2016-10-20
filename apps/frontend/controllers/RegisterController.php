@@ -13,11 +13,10 @@ class RegisterController extends Controller
         try{
             if($this->request->isPost()) {
                 $data = $this->request->getPost();
-                if (!empty($data['g-recaptcha-response'])) throw new Exception('Ошибка передачи каптчи');
-                $data['remoute_addr'] = $_SERVER['REMOTE_ADDR'];
-                $captcha = ReCaptcha::chechCaptcha($data, $this->reCaptcha['secret']);
+                if (!empty($data['g-recaptcha-response'])) throw new Exception('Ошибка каптчи');
+                $captcha = $this->chechCaptcha($data);
 
-                if (!empty($captcha) && $captcha->success) throw new Exception('Ошибка подтверждения каптчи');
+                if (!empty($captcha) && $captcha->success) throw new Exception('Ошибка каптчи');
 
                 if($data['password']) throw new Exception('Введите пароль');
 
@@ -146,7 +145,7 @@ class RegisterController extends Controller
 
 
     private function chechCaptcha($data){
-        $secretKey = $this->reCaptcha['secret'];
+        $secretKey = '6LdzsQkUAAAAAPTeUGETjJC0Fuojx7-6qa0JkbPo';
         $ip = $_SERVER['REMOTE_ADDR'];
         $captcha = $data['g-recaptcha-response'];
         $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
