@@ -14,8 +14,7 @@ class RegisterController extends Controller
             if($this->request->isPost()) {
                 $data = $this->request->getPost();
                 if (empty($data['g-recaptcha-response'])) throw new Exception('Ошибка каптчи');
-                $captcha = ReCaptcha::chechCaptcha($data, $this->reCaptcha['secret']);
-                var_dump($captcha);
+                $captcha = ReCaptcha::chechCaptcha($data);
                 if (empty($captcha) && !$captcha->success) throw new Exception('Ошибка каптчи');
 
                 if($data['password']) throw new Exception('Введите пароль');
@@ -57,7 +56,7 @@ class RegisterController extends Controller
                     $temp_err[$message->getField()][] = $message->getMessage();
                 }
             } else {
-                $temp_err['password'] = $e->getMessage();
+                $temp_err['errors'] = $e->getMessage();
             }
             echo json_encode(array('error' => $temp_err));
         }
@@ -141,15 +140,5 @@ class RegisterController extends Controller
     private function random_password($chars = 9) {
         $letters = 'abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
         return substr(str_shuffle($letters), 0, $chars);
-    }
-
-
-    private function chechCaptcha($data){
-        $secretKey = '6LdzsQkUAAAAAPTeUGETjJC0Fuojx7-6qa0JkbPo';
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $captcha = $data['g-recaptcha-response'];
-        $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
-        $responseKeys = json_decode($response,true);
-        return $responseKeys;
     }
 }
