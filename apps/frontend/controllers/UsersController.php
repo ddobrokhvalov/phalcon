@@ -7,6 +7,7 @@ use Phalcon\Acl\Exception;
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\User;
 use Multiple\Frontend\Models\Messages;
+use Multiple\Library\MessageException;
 
 
 class UsersController extends Controller
@@ -17,14 +18,15 @@ class UsersController extends Controller
 		echo '<br>', __METHOD__;
 	}
 
-    public function changePasswordAction(){
+    public function changePasswordAction()
+    {
         try {
             $data = $this->request->getPost();
             $validation = new EditUserValidator();
             $user = User::findFirstById($this->session->get('auth')['id']);
             $messages = $validation->validate($data);
-            if(!$user) throw new \Exception('not user');
-            if(count($messages)) throw new \Exception('not user');
+            if (!$user) throw new \Exception('not user');
+            if (count($messages)) throw new MessageException($messages);
 
             $data['phone'] = $this->filter->sanitize($data['phone'], trim);
             $data['lastname'] = $this->filter->sanitize($data['lastname'], trim);
@@ -38,15 +40,15 @@ class UsersController extends Controller
             $user->phone = empty($data['phone']) ? $user->phone : $data['phone'];
             $user->lastname = empty($data['lastname']) ? $user->lastname : $data['lastname'];
             $user->firstname = empty($data['firstname']) ? $user->firstname : $data['firstname'];
-            $user->patronymic = empty($data['patronymic']) ? $user->patronymic  : $data['patronymic'];
+            $user->patronymic = empty($data['patronymic']) ? $user->patronymic : $data['patronymic'];
             $user->notifications = empty($data['notifications']) ? 0 : 1;
 
-            if(!empty($data['current_path']) || $data['current_path'] == '/login/start' ){
+            if (!empty($data['current_path']) || $data['current_path'] == '/login/start') {
                 $data['current_path'] = '/complaint/index';
             }
 
-            if(!empty($data['new_password']) && !empty($data['old_password'] && !empty($data['new_password_confirm']))) {
-                if(strlen($data['new_password']) < 8)  throw new \Exception('Пароль менее 8 символов');
+            if (!empty($data['new_password']) && !empty($data['old_password'] && !empty($data['new_password_confirm']))) {
+                if (strlen($data['new_password']) < 8) throw new \Exception('Пароль менее 8 символов');
                 if ($user->password == sha1($data['old_password'])) {
                     if ($data['new_password'] == $data['new_password_confirm']) {
                         $user->password = sha1($data['new_password']);
@@ -58,14 +60,13 @@ class UsersController extends Controller
                 }
             }
             $this->flashSession->success('Данные сохранены');
-        } catch (\Exception $e){
-            if(isset($messages) && count($messages)) {
-                foreach ($messages as $message) {
-                    $this->flashSession->error($message->getMessage());
-                }
-            } else {
-                $this->flashSession->error($e->getMessage());
+
+        } catch (MessageException $messages){
+            foreach ($messages->getArrErrors() as $message) {
+                $this->flashSession->error($message->getMessage());
             }
+        }catch (\Exception $e){
+            $this->flashSession->error($e->getMessage());
         }
         $user->update();
         return $this->response->redirect($data['current_path']);

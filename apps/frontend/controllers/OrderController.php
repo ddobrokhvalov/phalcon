@@ -13,6 +13,7 @@ use Multiple\Frontend\Models\User;
 use Multiple\Frontend\Models\Order;
 use Multiple\Frontend\Validator\OrderValidator;
 use Phalcon\Config\Adapter\Ini as ConfigIni;
+use Multiple\Library\MessageException;
 
 class OrderController extends ControllerBase
 {
@@ -22,7 +23,7 @@ class OrderController extends ControllerBase
                 $data = $this->request->getPost();
                 $validation = new OrderValidator();
                 $messages = $validation->validate($data);
-                if(count($messages))  throw new \Exception('error');
+                if(count($messages)) throw new MessageException($messages);
 
                 $user_id = $this->user->id;
                 $user = User::findFirst(array(
@@ -53,16 +54,14 @@ class OrderController extends ControllerBase
                 echo json_encode(array('status' => 'ok'));
                 exit;
            }
-        } catch (\Exception $e){
+        } catch (MessageException $messages){
             $temp_err = array();
-            if(isset($messages) && count($messages)) {
-                foreach ($messages as $message) {
-                    $temp_err[$message->getField()][] = $message->getMessage();
-                }
-            } else {
-                $temp_err[] = $e->getMessage();
+            foreach ($messages->getArrErrors() as $message) {
+                $temp_err[$message->getField()][] = $message->getMessage();
             }
-            echo json_encode(array("error" => $temp_err));
+            echo json_encode(array('error' => $temp_err));
+        } catch (\Exception $e){
+            echo json_encode(array("error" => $e->getMessage()));
             exit;
         }
     }
