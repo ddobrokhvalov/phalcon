@@ -4,7 +4,7 @@ namespace Multiple\Library;
 
 class ReCaptcha
 {
-    public static function chechCaptcha($data, $secret){
+    public static function chechCaptcha($data){
         $ip = $_SERVER['REMOTE_ADDR'];
         $secret = '6LdzsQkUAAAAAPTeUGETjJC0Fuojx7-6qa0JkbPo';
         $captcha = $data['g-recaptcha-response'];
