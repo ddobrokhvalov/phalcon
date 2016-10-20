@@ -14,7 +14,7 @@ class RegisterController extends Controller
             if($this->request->isPost()) {
                 $data = $this->request->getPost();
                 if (!empty($data['g-recaptcha-response'])) throw new Exception('Ошибка каптчи');
-                $captcha = $this->chechCaptcha($data);
+                $captcha = ReCaptcha::chechCaptcha($data, $this->reCaptcha['secret']);
 
                 if (!empty($captcha) && $captcha->success) throw new Exception('Ошибка каптчи');
 
