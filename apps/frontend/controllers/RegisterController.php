@@ -144,10 +144,11 @@ class RegisterController extends Controller
 
 
     private function chechCaptcha($data){
-        $reCaptcha = new ReCaptcha('6LdzsQkUAAAAAPTeUGETjJC0Fuojx7-6qa0JkbPo');
-        return $reCaptcha->verifyResponse(
-            $_SERVER["REMOTE_ADDR"],
-            $data["g-recaptcha-response"]
-        );
+        $secretKey = "6LdzsQkUAAAAAPTeUGETjJC0Fuojx7-6qa0JkbPo";
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $captcha = $data['g-recaptcha-response'];
+        $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
+        $responseKeys = json_decode($response,true);
+        return $responseKeys;
     }
 }
