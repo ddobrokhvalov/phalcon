@@ -13,6 +13,8 @@ class RegisterController extends Controller
         try{
             if($this->request->isPost()) {
                 $data = $this->request->getPost();
+                if (!empty($data['g-recaptcha-response'])) throw new Exception('Ошибка каптчи');
+                $data['remoute_addr'] = $_SERVER['REMOTE_ADDR'];
                 $captcha = ReCaptcha::chechCaptcha($data, $this->reCaptcha['secret']);
 
                 if (!empty($captcha) && $captcha->success) throw new Exception('Ошибка каптчи');
