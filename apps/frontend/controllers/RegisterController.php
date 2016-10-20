@@ -17,7 +17,7 @@ class RegisterController extends Controller
                 $captcha = ReCaptcha::chechCaptcha($data);
                 if (empty($captcha) && !$captcha->success) throw new Exception('Ошибка каптчи');
 
-                if($data['password']) throw new Exception('Введите пароль');
+                if(empty($data['password'])) throw new Exception('Введите пароль');
 
                 $host =  $this->request->getHttpHost();
                 $validation = new RegisterValidator();
