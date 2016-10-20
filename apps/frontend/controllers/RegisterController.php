@@ -6,6 +6,7 @@ use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Validator\RegisterValidator;
 use Multiple\Frontend\Models\User;
 use Multiple\Library\ReCaptcha;
+use Multiple\Library\MessageException;
 
 class RegisterController extends Controller
 {
@@ -17,12 +18,10 @@ class RegisterController extends Controller
                 if (empty($data['g-recaptcha-response'])) throw new Exception('Не ввели каптчу');
                 $captcha = ReCaptcha::chechCaptcha($data);
                 if (empty($captcha) && !$captcha->success) throw new Exception('Ошибка проверки каптчи');
-
-
                 $host =  $this->request->getHttpHost();
                 $validation = new RegisterValidator();
                 $messages = $validation->validate($data);
-                if(count($messages))  throw new Exception('error');
+                if(count($messages))  throw new MessageException($messages);
 
                 $user = User::find("email = '{$data['email']}'");
                 if (count($user)) {
@@ -49,16 +48,14 @@ class RegisterController extends Controller
                 echo json_encode(array('status' => 'ok'));
                 exit;
             }
-        } catch(Exception $e){
+        } catch (MessageException $messages){
             $temp_err = array();
-            if(isset($messages) && count($messages)) {
-                foreach ($messages as $message) {
-                    $temp_err[$message->getField()][] = $message->getMessage();
-                }
-            } else {
-                $temp_err['errors'] = $e->getMessage();
+            foreach ($messages->getArrErrors() as $message) {
+                $temp_err[$message->getField()][] = $message->getMessage();
             }
             echo json_encode(array('error' => $temp_err));
+        } catch(Exception $e){
+            echo json_encode(array('error' => $e->getMessage()));
         }
         exit;
     }
