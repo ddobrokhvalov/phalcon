@@ -9,7 +9,7 @@
 namespace Multiple\Library\Exceptions;
 
 
-class RegisterException extends \Exception
+class FieldException extends \Exception
 {
     private $field_name;
 
