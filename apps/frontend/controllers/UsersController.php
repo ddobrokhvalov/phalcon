@@ -7,7 +7,8 @@ use Phalcon\Acl\Exception;
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\User;
 use Multiple\Frontend\Models\Messages;
-use Multiple\Library\MessageException;
+use Multiple\Library\Exceptions\MessageException;
+use Multiple\Library\Exceptions\FieldException;
 
 
 class UsersController extends Controller
@@ -26,7 +27,7 @@ class UsersController extends Controller
             $user = User::findFirstById($this->session->get('auth')['id']);
             $messages = $validation->validate($data);
             $data['current_path'] = str_replace('public//', '', $data['current_path']);
-            if (!$user) throw new \Exception('not user');
+            if (!$user) throw new FieldException('not user', 'user');
             if (count($messages)) throw new MessageException($messages);
 
             $data['phone'] = $this->filter->sanitize($data['phone'], trim);
@@ -49,15 +50,15 @@ class UsersController extends Controller
             }
 
             if (!empty($data['new_password']) && !empty($data['old_password'] && !empty($data['new_password_confirm']))) {
-                if (strlen($data['new_password']) < 8) throw new \Exception('Пароль менее 8 символов');
+                if (strlen($data['new_password']) < 8) throw new FieldException('Пароль менее 8 символов', 'password');
                 if ($user->password == sha1($data['old_password'])) {
                     if ($data['new_password'] == $data['new_password_confirm']) {
                         $user->password = sha1($data['new_password']);
                     } else {
-                        throw new \Exception('Непраильное подтверждние пароля');
+                        throw new FieldException('Непраильное подтверждние пароля', 'confpassword');
                     }
                 } else {
-                    throw new \Exception('Неправильный старый пароль');
+                    throw new FieldException('Неправильный старый пароль', 'oldpassword');
                 }
             }
             $this->flashSession->success('Данные сохранены');
@@ -66,9 +67,10 @@ class UsersController extends Controller
             foreach ($messages->getArrErrors() as $message) {
                 $this->flashSession->error($message->getMessage());
             }
-        }catch (\Exception $e){
+        } catch (FieldException $e){
             $this->flashSession->error($e->getMessage());
         }
+
         $user->update();
         return $this->response->redirect($data['current_path']);
     }

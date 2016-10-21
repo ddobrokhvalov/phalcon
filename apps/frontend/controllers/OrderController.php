@@ -12,8 +12,8 @@ namespace Multiple\Frontend\Controllers;
 use Multiple\Frontend\Models\User;
 use Multiple\Frontend\Models\Order;
 use Multiple\Frontend\Validator\OrderValidator;
-use Phalcon\Config\Adapter\Ini as ConfigIni;
-use Multiple\Library\MessageException;
+use Multiple\Library\Exceptions\MessageException;
+use Multiple\Library\Exceptions\FieldException;
 
 class OrderController extends ControllerBase
 {
@@ -29,7 +29,7 @@ class OrderController extends ControllerBase
                 $user = User::findFirst(array(
                     "id = {$user_id}"
                 ));
-                if(!$user) throw new \Exception('Такого пользователя нет');
+                if(!$user) throw new FieldException('Такого пользователя нет', 'user');
 
                 $order = new Order();
                 $order->phone = $user->phone;
@@ -40,7 +40,7 @@ class OrderController extends ControllerBase
                 $order->email = $user->email;
                 $order->auction_id = trim($data['auction_id']);
                 $order->date = date('Y-m-d H:i:s');
-                if ($order->save() === false) throw new \Exception('Ошибка создание заказа');
+                if ($order->save() === false) throw new FieldException('Ошибка создание заказа', 'save');
 
                 $message = $this->mailer->createMessageFromView('../views/emails/order', array(
                     'hashreg'   => $user->hashreg,
@@ -60,8 +60,8 @@ class OrderController extends ControllerBase
                 $temp_err[$message->getField()][] = $message->getMessage();
             }
             echo json_encode(array('error' => $temp_err));
-        } catch (\Exception $e){
-            echo json_encode(array("error" => $e->getMessage()));
+        } catch (FieldException $message){
+            echo json_encode(array("error" => $message->getMessage()));
             exit;
         }
     }
