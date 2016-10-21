@@ -13,7 +13,7 @@ class FieldException extends \Exception
 {
     private $field_name;
 
-    public function __construct($message, $field_name = 'filed') {
+    public function __construct($message, $field_name = 'field') {
         $this->field_name = $field_name;
         parent::__construct($message, 0, null);
     }
