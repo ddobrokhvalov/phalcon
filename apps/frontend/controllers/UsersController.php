@@ -50,7 +50,7 @@ class UsersController extends Controller
             }
 
             if (!empty($data['new_password']) && !empty($data['old_password'] && !empty($data['new_password_confirm']))) {
-                if (strlen($data['new_password']) < 8) throw new \Exception('Пароль менее 8 символов');
+                if (strlen($data['new_password']) < 8) throw new FieldException('Пароль менее 8 символов', 'password');
                 if ($user->password == sha1($data['old_password'])) {
                     if ($data['new_password'] == $data['new_password_confirm']) {
                         $user->password = sha1($data['new_password']);
@@ -67,9 +67,10 @@ class UsersController extends Controller
             foreach ($messages->getArrErrors() as $message) {
                 $this->flashSession->error($message->getMessage());
             }
-        }catch (FieldException $e){
+        } catch (FieldException $e){
             $this->flashSession->error($e->getMessage());
         }
+
         $user->update();
         return $this->response->redirect($data['current_path']);
     }
