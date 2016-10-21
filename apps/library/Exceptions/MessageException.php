@@ -6,7 +6,7 @@
  * Time: 13:57
  */
 
-namespace Multiple\Library;
+namespace Multiple\Library\Exceptions;
 
 
 class MessageException extends \Exception

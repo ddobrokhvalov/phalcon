@@ -1,12 +1,12 @@
 <?php
 
 namespace Multiple\Frontend\Controllers;
-use Phalcon\Acl\Exception;
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Validator\RegisterValidator;
 use Multiple\Frontend\Models\User;
 use Multiple\Library\ReCaptcha;
 use Multiple\Library\MessageException;
+use Multiple\Library\Exceptions\RegisterException;
 use Phalcon\Security\Random;
 
 class RegisterController extends Controller
@@ -42,8 +42,8 @@ class RegisterController extends Controller
                 $temp_err[$message->getField()][] = $message->getMessage();
             }
             echo json_encode(array('error' => $temp_err));
-        } catch(Exception $e){
-            echo json_encode(array('error' => array('error' => $e->getMessage())));
+        } catch(RegisterException $message){
+            echo json_encode(array('error' => array($message->getField() => $message->getMessage())));
         }
         exit;
     }
@@ -51,9 +51,9 @@ class RegisterController extends Controller
     public function confirmAction(){
         try{
             $data = $this->request->get();
-            if(empty($data['hashreg']) || trim($data['hashreg']) == '') throw new Exception('error hash registration');
+            if(empty($data['hashreg']) || trim($data['hashreg']) == '') throw new RegisterException('error hash registration', 'hash');
             $user = User::findFirst("hashreg='{$data['hashreg']}'");
-            if(!$user) throw new Exception('Error does not exists user or user already activate');
+            if(!$user) throw new RegisterException('Error does not exists user or user already activate', 'user');
 
             $user->hashreg = null;
             $user->status = 1;
@@ -68,7 +68,7 @@ class RegisterController extends Controller
                 ->subject('Подтверждение в интеллектуальной системе ФАС');
             $message->send();
             $this->response->redirect('/');
-        } catch (Exception $e){
+        } catch (RegisterException $e){
             echo $e->getMessage();
             $this->response->redirect('/');
             exit;
@@ -80,9 +80,9 @@ class RegisterController extends Controller
             $random = new Random();
             if ($this->request->isPost()) {
                 $email = $this->request->getPost('email');
-                if(empty($email) || trim($email) == '') throw new Exception('error email');
+                if(empty($email) || trim($email) == '') throw new RegisterException('error email', 'email');
                 $user = User::findFirst(array("email='{$email}'"));
-                if(!$user) throw new Exception('error user');
+                if(!$user) throw new UserException('error user');
 
                 $user->hashrecovery = $random->uuid();
                 $user->save();
@@ -98,9 +98,9 @@ class RegisterController extends Controller
                 exit;
             } else if($this->request->isGet()){
                 $hashrecoverypass = $this->request->get('recovery');
-                if(!isset($hashrecoverypass) || trim($hashrecoverypass) == '') throw new Exception('error hash');
+                if(!isset($hashrecoverypass) || trim($hashrecoverypass) == '') throw new RegisterException('hash error', 'hash');
                 $user = User::findFirst(array("hashrecovery='{$hashrecoverypass}'"));
-                if(!$user) throw new Exception('error user');
+                if(!$user) throw new RegisterException('error user', 'user');
 
                 $password = $random->hex(8);
                 $user->hashrecovery = null;
@@ -114,11 +114,8 @@ class RegisterController extends Controller
                     ->to($user->email)
                     ->subject('Восстановление пароля в системе ФАС');
                 $message->send();
-                //echo json_encode(array('status' => 'ok'));
-                //exit;
-
             }
-        } catch (Exception $e){
+        } catch (RegisterException $e){
             echo json_encode(array('status' => $e->getMessage()));
             exit;
         }
@@ -127,20 +124,18 @@ class RegisterController extends Controller
 
     private function checkUser( $data ){
         $validation = new RegisterValidator();
-        if(empty($data['offerta'])) throw new Exception('Не подтвердили условия оферты');
-        if (empty($data['g-recaptcha-response'])) throw new Exception('Не ввели каптчу');
+        if(empty($data['offerta'])) throw new RegisterException('Не подтвердили условия оферты', 'offerta');
+        if (empty($data['g-recaptcha-response'])) throw new RegisterException('Не ввели каптчу', 'captcha');
 
         $captcha = ReCaptcha::chechCaptcha($data);
-        if (empty($captcha) && !$captcha->success) throw new Exception('Ошибка проверки каптчи');
+        if (empty($captcha) && !$captcha->success) throw new RegisterException('Ошибка проверки каптчи', 'captcha');
 
         $messages = $validation->validate($data);
         if(count($messages))  throw new MessageException($messages);
-        if($data['password'] != $data['confpassword']) throw new Exception('Пароли не совпадают');
+        if($data['password'] != $data['confpassword']) throw new RegisterException('Пароли не совпадают', 'confpassword');
 
         $user = User::find("email = '{$data['email']}'");
-        if (count($user)) {
-            echo json_encode(array('error' => array('user' => 'Пользователь с таким email уже есть')));
-            exit;
-        }
+        if (count($user)) throw new RegisterException('Пользователь с таким email уже есть', 'user');
+
     }
 }
