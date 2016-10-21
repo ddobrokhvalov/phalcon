@@ -128,10 +128,10 @@ class RegisterController extends Controller
     private function checkUser( $data ){
         $validation = new RegisterValidator();
         if(empty($data['offerta'])) throw new Exception('Не подтвердили условия оферты');
-        //if (empty($data['g-recaptcha-response'])) throw new Exception('Не ввели каптчу');
+        if (empty($data['g-recaptcha-response'])) throw new Exception('Не ввели каптчу');
 
         $captcha = ReCaptcha::chechCaptcha($data);
-        //if (empty($captcha) && !$captcha->success) throw new Exception('Ошибка проверки каптчи');
+        if (empty($captcha) && !$captcha->success) throw new Exception('Ошибка проверки каптчи');
 
         $messages = $validation->validate($data);
         if(count($messages))  throw new MessageException($messages);
