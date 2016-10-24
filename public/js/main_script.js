@@ -255,7 +255,7 @@ jQuery(document).ready(function($) {
 		$(this).parent().parent().find('.opacity-btn').show();
 	});
 	// tabs show and hide
-	$('.aplicant-tabs-label div').click(function() {
+	/*$('.aplicant-tabs-label div').click(function() {
         if($(this).hasClass('disabled-tab')){
             return false;
         }
@@ -268,7 +268,7 @@ jQuery(document).ready(function($) {
 				$(this).addClass('active-tabs-content');
 			}
 		}); 
-	});
+	}); */
 	// call and close administrator settings panel 
 	$('.admin-settings').click(function() {
 		$('.admin-settings-modal').slideDown('fast');

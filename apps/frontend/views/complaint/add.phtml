@@ -7,6 +7,16 @@
 <!--[if IE]>
     <script type="text/javascript" src="/js/docx_generator/js/jszip-utils-ie.js"></script>
 <![endif]-->
+
+<!--  ECP -->
+<script src="/js/ecp/es6-promise.min.js" type="text/javascript"></script>
+<script src="/js/ecp/cades.min.js" type="text/javascript"></script>
+
+<script src="/js/ecp/Custom_low.level.signFile.js" type="text/javascript"></script>
+<!-- ECP -->
+
+
+
 <div class="content add-complaint-page">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
@@ -165,7 +175,11 @@
                     </form>
                     <div class="c-jd2-f-cat">
                         <input type="radio" name="jd2cat" id="jd2cat1" checked hidden>
-                        <label class = "" for="jd2cat1">Подписать ЭП</label>
+
+                      <!--  <label id="sign-ecp" class = "trusted-ep" for="jd2cat1">Подписать ЭП</label> -->
+
+                        <label id="sign-ecp" class = "" for="jd2cat1">Подписать ЭП</label>
+
                         <input type="radio" name="jd2cat" id="jd2cat2" hidden>
                         <label for="jd2cat2">Отправить в УФАС</label>
                     </div>

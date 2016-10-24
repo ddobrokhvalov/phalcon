@@ -1,4 +1,11 @@
 
+<!--  ECP -->
+<script src="/js/ecp/es6-promise.min.js" type="text/javascript"></script>
+<script src="/js/ecp/cades.min.js" type="text/javascript"></script>
+<!-- <script src="/js/ecp/cades.custom.usage.js" type="text/javascript"></script> -->
+<script src="/js/ecp/Custom_low.level.find.cetrificates.js" type="text/javascript"></script>
+
+<!--  ECP -->
 <!--<div class="content">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
@@ -42,32 +49,22 @@
         <div class="c-cnt-pagename" style="float: none;">Добавить заявителя</div>
         <div class="tabs-block">
             <div class="aplicant-tabs-label">
-                <div data-tabsLabel="legal-entity" class="active-tabs-label" onclick="applicant.setUrlico();">Юридическое лицо</div>
-                <div data-tabsLabel="individual-entrepreneur" onclick="applicant.setIp();">Индивидуальный предприниматель</div>
-                <div data-tabsLabel="physical-face" onclick="applicant.setFizlico();">Физическое лицо</div>
+                <div data-tabsLabel="legal-entity" class="active-tabs-label tabs-ur" onclick="">Юридическое лицо</div>
+                <div data-tabsLabel="individual-entrepreneur" class="tabs-ip" onclick="">Индивидуальный предприниматель</div>
+                <div data-tabsLabel="physical-face" class="tabs-fl" onclick="">Физическое лицо</div>
             </div>
+
             <div data-tabs="legal-entity" class="tabs-content active-tabs-content">
-                <div class="legal-entity__applicantCertificate applicantCertificate">
-                    <ul class="applicantCertificate__apCerList apCerList mCustomScrollbar">
-                        <li class="apCerList__apCeritem apCerItem">Lorem ipsum [<span>date</span>] | number</li>
-                        <li class="apCerList__apCeritem apCerItem">Lorem ipsum [<span>date</span>] | number</li>
-                        <li class="apCerList__apCeritem apCerItem">Lorem ipsum [<span>date</span>] | number</li>
-                        <li class="apCerList__apCeritem apCerItem">Lorem ipsum [<span>date</span>] | number</li>
-                        <li class="apCerList__apCeritem apCerItem">Lorem ipsum [<span>date</span>] | number</li>
-                        <li class="apCerList__apCeritem apCerItem">Lorem ipsum [<span>date</span>] | number</li>
-                    </ul>
-                    <div class="applicantCertificate__btnHolder">
-                        <div class="applicantCertificate__add">Добавить</div>
-                        <div class="applicantCertificate__remove">Удалить</div>
-                    </div>
-                </div>
+               
                 <form action="/applicant/create" enctype="multipart/form-data" method="POST">
                     {{hidden_field('type', 'value':'urlico')}}
                     {{hidden_field('for_user_id', 'value':for_user_id)}}
-                    <label for="entity-textarea">
+                  <!--  <label for="entity-textarea">
                         <div>Полное наименование</div>
                         <textarea name="full-name" id="entity-textarea" style="width: 815px;"></textarea>
-                    </label>
+                    </label> -->
+                    <input type="hidden" value="0" name="ecp" id="ecp_ur">
+                    <input type="hidden" value="0" name="ecp_text" id="ecp_text">
                     <label for="entity-short">
                         <div>Краткое наименование</div>
                         <input type="text" name="kratkoe-name" id="entity-short" style="width: 480px;">
@@ -141,6 +138,7 @@
                     <button class="save-tab-form add_applicant">Сохранить изменения</button>
                 </form>
             </div>
+
             <div data-tabs="individual-entrepreneur" class="tabs-content">
                 <form action="/applicant/create" enctype="multipart/form-data" method="POST">
                     {{hidden_field('type', 'value':'indlico')}}
@@ -280,7 +278,7 @@
 <article class="admin-popup-wrap addAppCertificate addAppCertificate-main" style="display:none;">
     <div class="admin-popup-bg"></div>
     <div class="admin-popup-content index-main-popup">
-        <div class="admin-popup-close"></div>
+        <div id="import-aplicant" class="admin-popup-close"></div>
         <h6>Импорт заявителя из данных сертификата</h6>
         <div class="addAppCertificate__existingCerList existingCerListBox">
             <div class="select-holder">
@@ -321,7 +319,8 @@
     </div>
 </article>
 
-<article class="admin-popup-wrap addAppCertificate addAppCertificate-preloader" style="display:none;">
+
+<article class="admin-popup-wrap addAppCertificate addAppCertificate-preloader" style="display:flex;">
     <div class="admin-popup-bg-hiddenClick"></div>
     <div class="admin-popup-content index-main-popup">
         <h6>Ожидание</h6>
@@ -343,12 +342,8 @@
                         <div></div>
                         <span class="existingCerListBox__title">Действителен до [дата] | Имя организации/ФОИ физ.лица</span>
                     </div>
-                    <ul class="custom-options mCustomScrollbar">
-                        <li class="existingCerListBox__item">Действия заказчика 1</li>
-                        <li class="existingCerListBox__item">Действия заказчика 2</li>
-                        <li class="existingCerListBox__item">Действия заказчика 3</li>
-                        <li class="existingCerListBox__item">Действия заказчика 4</li>
-                        <li class="existingCerListBox__item">Действия заказчика 5</li>
+                    <ul class=" certificate-box-2 custom-options mCustomScrollbar">
+                       
                     </ul>
                 </div>
             </div>
@@ -356,7 +351,8 @@
         </div>
         <div class="addAppCertificate__btnHolder">
             <div class="addAppCertificate__addBtn">Добавить</div>
-            <div class="addAppCertificate__cancelBtn"><a href="#">Отменить</a></div>
+            <div class="addAppCertificate__cancelBtn"><a href="/complaint/index">Отменить</a></div>
         </div>
     </div>
 </article>
+

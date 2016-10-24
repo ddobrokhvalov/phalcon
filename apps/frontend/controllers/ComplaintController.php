@@ -2,7 +2,7 @@
 
 namespace Multiple\Frontend\Controllers;
 
-
+use Multiple\Frontend\Models\ApplicantECP;
 use Multiple\Frontend\Models\Applicant;
 use Multiple\Frontend\Models\Category;
 use Multiple\Frontend\Models\Complaint;
@@ -34,6 +34,10 @@ class ComplaintController extends ControllerBase
     const STEP_FOUR = 4;
     const STEP_SEARCH = 6;
 
+
+    public function testAction(){
+
+    }
 
     public function indexAction()
     {
@@ -241,6 +245,7 @@ class ComplaintController extends ControllerBase
     }
 
     public function saveBlobFileAction() {
+        $name = false;
         if ($this->request->hasFiles() == true) {
             $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
             foreach ($this->request->getUploadedFiles() as $file) {
@@ -268,15 +273,41 @@ class ComplaintController extends ControllerBase
             $docx->save();
         }
         $this->view->disable();
+        if($name) {
+            $thumbprint = 0;
+            if(isset($_POST['applicant_id'])) {
+                $applicant_id = $_POST['applicant_id'];
+                $thumbprint = ApplicantECP::findFirst("activ = 1 AND applicant_id = $applicant_id ");
+                $thumbprint = $thumbprint->thumbprint;
+            }
+            $data = file_get_contents($baseLocation . $name);
+            $File_data = base64_encode($data);
+            echo json_encode([$File_data,$thumbprint,$name]);
+        }else{
+            echo 'error';
+        }
         die();
+        //0190300004615000296
     }
+    public function signatureAction(){
 
+        $signature = $this->request->getPost('signature');
+        $signFileOriginName  = $this->request->getPost('signFileOriginName');
+        $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
+        file_put_contents($baseLocation. $signFileOriginName.'.sig',base64_decode($signature));
+        
+        echo 'done';
+        exit;
+        
+    }
     public function addAction()
     {
+
         $this->setMenu();
         $category = new Category();
         $arguments = $category->getArguments();
         $ufas = Ufas::find();
+
         $this->view->ufas = $ufas;
         $this->view->arguments = $arguments;
     }

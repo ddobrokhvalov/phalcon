@@ -3,6 +3,7 @@ namespace Multiple\Frontend\Controllers;
 
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\Applicant;
+use Multiple\Frontend\Models\ApplicantECP;
 use Multiple\Frontend\Models\Files;
 use Multiple\Frontend\Form\ApplicantForm;
 use Multiple\Library\Log;
@@ -13,13 +14,14 @@ class ApplicantController extends ControllerBase
     {
         $this->view->setTemplateAfter('menu');
     }
+
     public function editAction($id)
     {
         $this->setMenu();
         $applicant = Applicant::findFirstById($id);
-        if(!$applicant || $applicant->user_id != $this->user->id)
+        if (!$applicant || $applicant->user_id != $this->user->id)
             return $this->forward('complaint/index');
-        $applicantFiles =  $applicant->getApplicantFiles($applicant->id);
+        $applicantFiles = $applicant->getApplicantFiles($applicant->id);
         $files_html = [];
         if ($applicant->fid) {
             $file_ids = unserialize($applicant->fid);
@@ -38,15 +40,20 @@ class ApplicantController extends ControllerBase
                 }
             }
         }
+        $this->view->aplicant_ecp = ApplicantECP::findByApplicantId($applicant->id);
         $this->view->applicant = $applicant;
         $this->view->attached_files = $files_html;
     }
+
     public function addAction()
     {
         $this->view->for_user_id = 0;
+        
         $this->setMenu();
     }
-    public function createAction() {
+
+    public function createAction()
+    {
         if (!$this->request->isPost()) {
             return $this->forward('applicant/add');
         }
@@ -68,17 +75,17 @@ class ApplicantController extends ControllerBase
             $applicant = new Applicant();
             switch ($_POST['type']) {
                 case 'urlico';
-                    if (!isset($_POST['full-name']) || !$_POST['full-name']) {
-                        $this->flashSession->error('Полное наименование не может быть пустым');
-                        return $this->dispatcher->forward(array(
-                            'module' => 'frontend',
-                            'controller' => 'applicant',
-                            'action' => 'add'
-                        ));
-                    }
+                    /*  if (!isset($_POST['full-name']) || !$_POST['full-name']) {
+                          $this->flashSession->error('Полное наименование не может быть пустым');
+                          return $this->dispatcher->forward(array(
+                              'module' => 'frontend',
+                              'controller' => 'applicant',
+                              'action' => 'add'
+                          ));
+                      } */
                     $applicant->user_id = $user_id;
                     $applicant->type = 'urlico';
-                    $applicant->name_full = $_POST['full-name'];
+                    $applicant->name_full = false;
                     $applicant->name_short = $_POST['kratkoe-name'];
                     $applicant->inn = $_POST['inn'];
                     $applicant->kpp = $_POST['kpp'];
@@ -148,6 +155,14 @@ class ApplicantController extends ControllerBase
                     ));
             }
             $applicant->save();
+
+            $applicantECP = new  ApplicantECP();
+            $applicantECP->applicant_id = $applicant->id;
+            $applicantECP->thumbprint = $_POST['ecp'];
+            $applicantECP->activ = 1;
+            $applicantECP->name_ecp = $_POST['ecp_text'];
+            $applicantECP->save();
+            $applicantECP->deactiveOtherECP($applicantECP->id, $applicant->id);
             // Save attached files.
             $saved_files = array();
             if ($this->request->hasFiles() == true) {
@@ -175,7 +190,8 @@ class ApplicantController extends ControllerBase
         return $this->response->redirect('/complaint/index?applicant_id=' . $applicant->id);
     }
 
-    public function saveAction() {
+    public function saveAction()
+    {
         if (!$this->request->isPost()) {
             return $this->dispatcher->forward(array(
                 'module' => 'backend',
@@ -184,7 +200,7 @@ class ApplicantController extends ControllerBase
             ));
         }
         $id = $this->request->getPost("id", "int");
-         $applicant = Applicant::findFirstById($id);
+        $applicant = Applicant::findFirstById($id);
         if (!$applicant) {
             //$this->flash->error("Product does not exist");
             return $this->dispatcher->forward(array(
@@ -277,35 +293,41 @@ class ApplicantController extends ControllerBase
 //            'action' => 'edit',
 //            'params' => ['id' => $id],
 //        ));
-            $this->response->redirect("applicant/edit/{$id}");
+        $this->response->redirect("applicant/edit/{$id}");
     }
 
-    public function delfileAction($id){
+    public function delfileAction($id)
+    {
         $applicant = new Applicant();
         $applicantFile = $applicant->checkFileOwner($this->user->id, $id);
-        if($applicantFile){
+        if ($applicantFile) {
             $applicant->deleteFile($applicantFile);
-            return $this->forward('applicant/edit/'.$applicantFile['app_id']);
-        }else{
+            return $this->forward('applicant/edit/' . $applicantFile['app_id']);
+        } else {
             return $this->forward('complaint/index');
         }
     }
-    public function deleteAction($id){
+
+    public function deleteAction($id)
+    {
         $applicant = Applicant::findFirstById($id);
-        if(!$applicant || $applicant->user_id != $this->user->id)
+        if (!$applicant || $applicant->user_id != $this->user->id)
             return $this->forward('complaint/index');
 
 
         $appFiles = $applicant->getApplicantFiles($id);
-        foreach($appFiles as $file){
+        foreach ($appFiles as $file) {
             $applicant->deleteFile($file);
         }
-
+        $appECP = ApplicantECP::findByApplicantId($id);
+        foreach ($appECP as $ecp)
+            $ecp->delete();
         $applicant->delete();
         return $this->forward('complaint/index');
     }
 
-    public function deleteFileAction() {
+    public function deleteFileAction()
+    {
         $file_id = $this->request->getPost('file_id');
         $applicant_id = $this->request->getPost('applicant_id');
         if ($file_id && $applicant_id) {
@@ -331,18 +353,21 @@ class ApplicantController extends ControllerBase
         echo json_encode($data);
     }
 
-    public function checkinnAction(){
+    public function checkinnAction()
+    {
         if (!$this->request->isPost()) {
-            echo 'false'; exit;
+            echo 'false';
+            exit;
         }
         $data = $this->request->getPost();
-        if(!isset($data['inn'])){
-            echo 'false'; exit;
+        if (!isset($data['inn'])) {
+            echo 'false';
+            exit;
         }
 
         $app = new Applicant();
 
-        if($app->checkInn($data['inn']))
+        if ($app->checkInn($data['inn']))
             echo 'true';
         else
             echo 'false';
@@ -350,10 +375,11 @@ class ApplicantController extends ControllerBase
         exit;
     }
 
-    public function ajaxSetApplicantIdAction(){
+    public function ajaxSetApplicantIdAction()
+    {
         $response = array();
         $response['applicant_info'] = array();
-        if(isset($_POST['applicant_id'])) {
+        if (isset($_POST['applicant_id'])) {
             $this->session->set('applicant', array('applicant_id' => $_POST['applicant_id']));
             if ($_POST['applicant_id'] != 'All') {
                 $response['applicant_info'] = Applicant::findFirstById($_POST['applicant_id'])->toArray();
@@ -365,10 +391,11 @@ class ApplicantController extends ControllerBase
         die();
     }
 
-    public function getApplicantInfoAction(){
+    public function getApplicantInfoAction()
+    {
         $response = array();
         $response['applicant_info'] = array();
-        if(isset($_POST['applicant_id'])) {
+        if (isset($_POST['applicant_id'])) {
             if ($_POST['applicant_id'] != 'All') {
                 $response['applicant_info'] = Applicant::findFirstById($_POST['applicant_id'])->toArray();
             }

@@ -9,7 +9,21 @@
                 <div onclick="applicant.setFizlico();" data-tabsLabel="physical-face"  {%if applicant.type=="fizlico" %}class="active-tabs-label"{%endif%}>Физическое лицо</div>
             </div>
             <div data-tabs="legal-entity" class="tabs-content {%if applicant.type=="urlico" %}active-tabs-content{%endif%}">
-                <form action="/applicant/save" method="POST" enctype="multipart/form-data" id="urlico">
+
+
+            <div class="legal-entity__applicantCertificate applicantCertificate">
+                <ul class="applicantCertificate__apCerList apCerList mCustomScrollbar">
+                    {% for ecp in aplicant_ecp %}
+                      <li class="apCerList__apCeritem apCerItem">{{ ecp.name_ecp }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="applicantCertificate__btnHolder">
+                    <div class="applicantCertificate__add">Добавить</div>
+                    <div class="applicantCertificate__remove">Удалить</div>
+                </div>
+            </div>
+
+            <form action="/applicant/save" method="POST" enctype="multipart/form-data" id="urlico">
                     {{hidden_field('id', 'value':applicant.id)}}
                     {{hidden_field('type', 'value':'urlico')}}
                     <label for="entity-textarea">
