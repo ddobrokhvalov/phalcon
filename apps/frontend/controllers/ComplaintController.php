@@ -275,46 +275,10 @@ class ComplaintController extends ControllerBase
 
     public function addAction()
     {
-        //TrustedLibrary::trusted_library_init();        
         $this->setMenu();
         $category = new Category();
         $arguments = $category->getArguments();
         $ufas = Ufas::find();
-
-        //if (isset($_SESSION['TRUSTEDNET']['OAUTH'])) $OAuth2 = unserialize($_SESSION['TRUSTEDNET']['OAUTH']);
-//        if (isset($OAuth2)){
-//            /*$token = $OAuth2->getAccessToken();
-//            if(!$OAuth2->checkToken())
-//                if($OAuth2->refresh())*/
-//            $token = $OAuth2->getRefreshToken();
-//            $this->view->token  = $token;
-//
-//        } else {
-//            $this->session->destroy();
-//            return $this->forward('/');
-//        }
-
-
-//        $data = ArgumentsCategory::query()
-//                ->where('parent_id=0')
-//                ->execute();
-
-//        $arg = new ArgumentsCategory();
-//        $data = $arg->getCategoryNotEmpty();
-//        $temp = array();
-//        foreach($data as $val){
-//            if($val->parent_id == 0) {
-//                $temp[] = array(
-//                    'id' => $val->lvl1_id,
-//                    'name' => $val->lvl1,
-//                    'parent_id' => 0
-//                );
-//            }
-//        }
-//        $temp = array_map("unserialize", array_unique( array_map("serialize", $temp) ));
-
-        //$arg = new ArgumentsCategory();
-        //$this->view->categories = $temp;
         $this->view->ufas = $ufas;
         $this->view->arguments = $arguments;
     }
