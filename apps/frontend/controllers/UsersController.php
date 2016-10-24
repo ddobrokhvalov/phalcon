@@ -2,9 +2,14 @@
 
 namespace Multiple\Frontend\Controllers;
 
+use Multiple\Frontend\Validator\EditUserValidator;
+use Phalcon\Acl\Exception;
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\User;
 use Multiple\Frontend\Models\Messages;
+use Multiple\Library\Exceptions\MessageException;
+use Multiple\Library\Exceptions\FieldException;
+
 
 class UsersController extends Controller
 {
@@ -14,73 +19,60 @@ class UsersController extends Controller
 		echo '<br>', __METHOD__;
 	}
 
-
-    public function changePasswordAction() {
-        $notification = $this->request->getPost('notifications');
-        $firstname = $this->request->getPost('firstname');
-        $lastname = $this->request->getPost('lastname');
-        $patronymic = $this->request->getPost('patronymic');
-        $phone = $this->request->getPost('phone');
-        $user = User::findFirstById($this->session->get('auth')['id']);
-
-
-        $user->notifications = ($notification == 1) ? 1 : 0;
-        $user->firstname = (isset($firstname) && trim($firstname) != '') ? trim($firstname) : $user->firstname;
-        $user->lastname = (isset($lastname) && trim($lastname) != '') ? trim($lastname) : $user->lastname;
-        $user->patronymic = (isset($patronymic) && trim($patronymic) != '') ? trim($patronymic) : $user->patronymic;
-        $user->phone = (isset($phone) && trim($phone) != '' && preg_match('/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/', $phone)) ? trim($phone) : $user->phone;
-        $user->update();
-
-        $old_password = $this->request->getPost('old_password');
-        $new_password = $this->request->getPost('new_password');
-        $new_password_confirm = $this->request->getPost('new_password_confirm');
-
-
-        $redirect_to = $this->request->getPost('current_path');
-        if (!isset($redirect_to) || !$redirect_to || $redirect_to == '/login/start') {
-            $redirect_to = '/complaint/index';
-        }
-        $redirect_to = str_replace('public//', '', $redirect_to);
-
-        if($new_password == '' && $old_password == '' && $new_password_confirm == ''){
-            return $this->response->redirect($redirect_to);
-        }
-
-        if (!isset($old_password) || (isset($old_password)) && !strlen($old_password)) {
-            $this->flashSession->error('Старый пароль не введен');
-            return $this->response->redirect($redirect_to);
-        }
-        if (isset($new_password) && $new_password) {
-            if ($new_password != $new_password_confirm) {
-                $this->flashSession->error('Подтвердите ввод нового пароля');
-                return $this->response->redirect($redirect_to);
-            }
-        } else {
-            $this->flashSession->error('Новый пароль не может быть пустым');
-            return $this->response->redirect($redirect_to);
-        }
-        if (isset($this->session->get('auth')['id'])) {
+    public function changePasswordAction()
+    {
+        try {
+            $data = $this->request->getPost();
+            $validation = new EditUserValidator();
             $user = User::findFirstById($this->session->get('auth')['id']);
-            if ($user) {
-                if ($user->password == sha1($old_password)) {
-                    $user->password = sha1($new_password);
-                    $user->update();
-                    $this->flashSession->success('Пароль изменен');
+            $messages = $validation->validate($data);
+            $data['current_path'] = str_replace('public//', '', $data['current_path']);
+            if (!$user) throw new FieldException('not user', 'user');
+            if (count($messages)) throw new MessageException($messages);
 
-//                    $message = $this->mailer->createMessageFromView('../views/emails/edit_password', array(
-//                        'hashreg'   => $user->hashreg,
-//                        'host'      => $host
-//                    ))
-//                        ->to($user->email)
-//                        ->subject('Регистрация в интеллектуальной системе ФАС');
-//                    $message->send();
-                    return $this->response->redirect($redirect_to);
+            $data['phone'] = $this->filter->sanitize($data['phone'], trim);
+            $data['lastname'] = $this->filter->sanitize($data['lastname'], trim);
+            $data['firstname'] = $this->filter->sanitize($data['firstname'], trim);
+            $data['patronymic'] = $this->filter->sanitize($data['patronymic'], trim);
+            $data['new_password'] = $this->filter->sanitize($data['new_password'], trim);
+            $data['old_password'] = $this->filter->sanitize($data['old_password'], trim);
+            $data['new_password_confirm'] = $this->filter->sanitize($data['new_password_confirm'], trim);
+            $data['current_path'] = str_replace('public//', '', $data['current_path']);
+
+            $user->phone = empty($data['phone']) ? $user->phone : $data['phone'];
+            $user->lastname = empty($data['lastname']) ? $user->lastname : $data['lastname'];
+            $user->firstname = empty($data['firstname']) ? $user->firstname : $data['firstname'];
+            $user->patronymic = empty($data['patronymic']) ? $user->patronymic : $data['patronymic'];
+            $user->notifications = empty($data['notifications']) ? 0 : 1;
+
+            if (!empty($data['current_path']) || $data['current_path'] == '/login/start') {
+                $data['current_path'] = '/complaint/index';
+            }
+
+            if (!empty($data['new_password']) && !empty($data['old_password'] && !empty($data['new_password_confirm']))) {
+                if (strlen($data['new_password']) < 8) throw new FieldException('Пароль менее 8 символов', 'password');
+                if ($user->password == sha1($data['old_password'])) {
+                    if ($data['new_password'] == $data['new_password_confirm']) {
+                        $user->password = sha1($data['new_password']);
+                    } else {
+                        throw new FieldException('Непраильное подтверждние пароля', 'confpassword');
+                    }
                 } else {
-                    $this->flashSession->error('Старый пароль введен не верно');
-                    return $this->response->redirect($redirect_to);
+                    throw new FieldException('Неправильный старый пароль', 'oldpassword');
                 }
             }
+            $this->flashSession->success('Данные сохранены');
+
+        } catch (MessageException $messages){
+            foreach ($messages->getArrErrors() as $message) {
+                $this->flashSession->error($message->getMessage());
+            }
+        } catch (FieldException $e){
+            $this->flashSession->error($e->getMessage());
         }
+
+        $user->update();
+        return $this->response->redirect($data['current_path']);
     }
 
     public function setMessageReadAction() {
@@ -96,4 +88,5 @@ class UsersController extends Controller
             echo json_encode($data);
         }
     }
+
 }

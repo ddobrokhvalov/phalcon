@@ -3,7 +3,6 @@ namespace Multiple\Frontend\Controllers;
 
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\Applicant;
-use Multiple\Library\TrustedLibrary;
 use Multiple\Frontend\Models\Documents;
 use Phalcon\Di;
 
@@ -22,11 +21,6 @@ class AjaxController extends Controller{
         echo $Documents->id;
     }
 
-//    public function trustedAction(){
-//        ini_set('display_errors', false);
-//        TrustedLibrary::trusted_esign();
-//    }
-    
     public function getlastAction(){
         $Documents = Documents::findFirst(
             array(

@@ -48,14 +48,14 @@
             <div class="admin-table-footer">
                 {% if page.current * item_per_page < page.total_items %}
                     {% set cnt = page.total_items - (page.current * item_per_page) %}
-                    <a href="#" onclick="$('#next_items').submit()">Еще <span>{{ cnt > item_per_page ? 20 : cnt}} сообщений</span></a><!--todo: -->
+                    <a href="#" onclick="$('#next_items').submit()">Еще <span>20 сообщений</span></a><!--todo: -->
                     {% else %}
                         <div></div>
                 {% endif %}
-                <a href="#">Показать все сообщения (<span>{{page.total_items}}</span>)</a><!--todo: -->
+                <a href="/message/index?all-portions-items=all_items">Показать все сообщения (<span>{{page.total_items}}</span>)</a><!--todo: -->
             </div>
             <form id="next_items" method="post">
-                {{hidden_field('next-portions-items', 'value':20)}}
+                <input type="hidden" id="next_items" name="next-portions-items" value="{{item_per_page}}">
             </form>
         {% endif %}
         <div class="admin-pagination-box">

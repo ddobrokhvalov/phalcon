@@ -1,45 +1,34 @@
 <?php
 
 namespace Multiple\Frontend\Controllers;
-use Phalcon\Acl\Exception;
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Validator\RegisterValidator;
 use Multiple\Frontend\Models\User;
-
+use Multiple\Library\ReCaptcha;
+use Multiple\Library\MessageException;
+use Multiple\Library\Exceptions\FieldException;
+use Phalcon\Security\Random;
 
 class RegisterController extends Controller
 {
     public function indexAction(){
         try{
             if($this->request->isPost()) {
-                $data = $this->request->get();
-                if($data['password'] != $data['confpassword']) throw new Exception('Пароли не совпадают');
+                $random = new Random();
+                $data = $this->request->getPost();
+                $this->checkUser( $data );
 
-                $host =  $this->request->getHttpHost();
-                $validation = new RegisterValidator();
-                $messages = $validation->validate($data);
-                if(count($messages))  throw new Exception('error');
-
-                $user = User::find("email = '{$data['email']}'");
-                if (count($user)) {
-                    echo json_encode(array('error' => array('user' => 'Пользователь с таким email уже есть')));
-                    exit;
-                }
-
-                $hashpassword = sha1($data['password']);
                 $user = new User();
                 $user->email = trim($data['email']);
-                $user->firstname = trim($data['name']);
-                $user->phone = trim($data['phone']);
-                $user->password = $hashpassword;
-                $user->hashreg = sha1($data['email'] . $data['password'] . date('now'));
+                $user->password = sha1($data['password']);
+                $user->hashreg = $random->uuid();
                 $user->status = 2;
                 $user->date_registration = date('Y-m-d H:i:s');
                 $user->save();
 
-                $message = $this->mailer->createMessageFromView('../views/emails/order', array(
+                $message = $this->mailer->createMessageFromView('../views/emails/register', array(
                                 'hashreg'   => $user->hashreg,
-                                'host'      => $host
+                                'host'      => $this->request->getHttpHost()
                             ))
                     ->to($user->email)
                     ->subject('Регистрация в интеллектуальной системе ФАС');
@@ -47,16 +36,14 @@ class RegisterController extends Controller
                 echo json_encode(array('status' => 'ok'));
                 exit;
             }
-        } catch(Exception $e){
+        } catch (MessageException $messages){
             $temp_err = array();
-            if(isset($messages) && count($messages)) {
-                foreach ($messages as $message) {
-                    $temp_err[$message->getField()][] = $message->getMessage();
-                }
-            } else {
-                $temp_err['password'] = $e->getMessage();
+            foreach ($messages->getArrErrors() as $message) {
+                $temp_err[$message->getField()][] = $message->getMessage();
             }
             echo json_encode(array('error' => $temp_err));
+        } catch(FieldException $message){
+            echo json_encode(array('error' => array($message->getField() => $message->getMessage())));
         }
         exit;
     }
@@ -64,9 +51,9 @@ class RegisterController extends Controller
     public function confirmAction(){
         try{
             $data = $this->request->get();
-            if(!isset($data['hashreg']) || trim($data['hashreg']) == '') throw new Exception('error hash registration');
+            if(empty($data['hashreg']) || trim($data['hashreg']) == '') throw new FieldException('error hash registration', 'hash');
             $user = User::findFirst("hashreg='{$data['hashreg']}'");
-            if(!$user) throw new Exception('Error does not exists user or user already activate');
+            if(!$user) throw new FieldException('Error does not exists user or user already activate', 'user');
 
             $user->hashreg = null;
             $user->status = 1;
@@ -81,7 +68,7 @@ class RegisterController extends Controller
                 ->subject('Подтверждение в интеллектуальной системе ФАС');
             $message->send();
             $this->response->redirect('/');
-        } catch (Exception $e){
+        } catch (FieldException $e){
             echo $e->getMessage();
             $this->response->redirect('/');
             exit;
@@ -90,12 +77,14 @@ class RegisterController extends Controller
 
     public function recoverypassAction(){
         try{
+            $random = new Random();
             if ($this->request->isPost()) {
                 $email = $this->request->getPost('email');
-                if(!isset($email) || trim($email) == '') throw new Exception('error email');
-                $user = User::findFirst(array("email = {$email}"));
-                if(!$user) throw new Exception('error user');
-                $user->hashrecovery = sha1($user->email + date('Y-m-d H:i:s'));
+                if(empty($email) || trim($email) == '') throw new FieldException('error email', 'email');
+                $user = User::findFirst(array("email='{$email}'"));
+                if(!$user) throw new UserException('error user');
+
+                $user->hashrecovery = $random->uuid();
                 $user->save();
 
                 $message = $this->mailer->createMessageFromView('../views/emails/recovery', array(
@@ -109,10 +98,11 @@ class RegisterController extends Controller
                 exit;
             } else if($this->request->isGet()){
                 $hashrecoverypass = $this->request->get('recovery');
-                if(!isset($hashrecoverypass) || trim($hashrecoverypass) == '') throw new Exception('error hash');
+                if(!isset($hashrecoverypass) || trim($hashrecoverypass) == '') throw new FieldException('hash error', 'hash');
                 $user = User::findFirst(array("hashrecovery='{$hashrecoverypass}'"));
-                if(!$user) throw new Exception('error user');
-                $password = $this->random_password();
+                if(!$user) throw new FieldException('error user', 'user');
+
+                $password = $random->hex(8);
                 $user->hashrecovery = null;
                 $user->password = sha1($password);
                 $user->save();
@@ -124,19 +114,28 @@ class RegisterController extends Controller
                     ->to($user->email)
                     ->subject('Восстановление пароля в системе ФАС');
                 $message->send();
-                //echo json_encode(array('status' => 'ok'));
-                //exit;
-
             }
-        } catch (Exception $e){
+        } catch (FieldException $e){
             echo json_encode(array('status' => $e->getMessage()));
             exit;
         }
         $this->response->redirect('/');
     }
 
-    private function random_password($chars = 9) {
-        $letters = 'abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-        return substr(str_shuffle($letters), 0, $chars);
+    private function checkUser( $data ){
+        $validation = new RegisterValidator();
+        if(empty($data['offerta'])) throw new FieldException('Не подтвердили условия оферты', 'offerta');
+        if (empty($data['g-recaptcha-response'])) throw new FieldException('Не ввели каптчу', 'captcha');
+
+        $captcha = ReCaptcha::chechCaptcha($data);
+        if (empty($captcha) && !$captcha->success) throw new FieldException('Ошибка проверки каптчи', 'captcha');
+
+        $messages = $validation->validate($data);
+        if(count($messages))  throw new MessageException($messages);
+        if($data['password'] != $data['confpassword']) throw new FieldException('Пароли не совпадают', 'confpassword');
+
+        $user = User::find("email = '{$data['email']}'");
+        if (count($user)) throw new FieldException('Пользователь с таким email уже есть', 'user');
+
     }
 }
