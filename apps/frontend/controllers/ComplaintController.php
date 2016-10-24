@@ -101,7 +101,6 @@ class ComplaintController extends ControllerBase
 
     public function editAction($id)
     {
-        //TrustedLibrary::trusted_library_init();
         $complaint = Complaint::findFirstById($id);
         if (!$complaint || !$complaint->checkComplaintOwner($id, $this->user->id))
             return $this->forward('complaint/index');

@@ -22,11 +22,6 @@ class AjaxController extends Controller{
         echo $Documents->id;
     }
 
-//    public function trustedAction(){
-//        ini_set('display_errors', false);
-//        TrustedLibrary::trusted_esign();
-//    }
-    
     public function getlastAction(){
         $Documents = Documents::findFirst(
             array(
