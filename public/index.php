@@ -41,11 +41,6 @@ class Application extends BaseApplication
 			$router->setDefaultModule("frontend");
 			$router->setDefaultController("index");
 			$router->setDefaultAction("index");
-//			$router->add("/esign/ajax.php", array(
-//				'module' => 'frontend',
-//				'controller' => 'ajax',
-//				'action' => 'trusted',
-//			));
 
             $router->add("/register/recoveryPassword", array(
                 'module' => 'frontend',

@@ -3,7 +3,6 @@ namespace Multiple\Frontend\Controllers;
 
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Models\Applicant;
-use Multiple\Library\TrustedLibrary;
 use Multiple\Frontend\Models\Documents;
 use Phalcon\Di;
 
