@@ -1038,9 +1038,10 @@ function ajaxFileUpload(url, fileelementid) {
 }
 
 function stopSaveCompl() {
+    if(!$('.template_item').length) return false;
     var flag = false;
     $('.template_item').each(function () {
-        if ($(this).attr('data-required') == "1") flag = true;
+        if ($(this).attr('data-required') == "1" || !$(this).attr('data-required')) flag = true;
     });
     if (flag) {
         if (complaint.prepareData()) {
