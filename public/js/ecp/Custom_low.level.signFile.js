@@ -17,11 +17,11 @@ var onLoad = function(event)
         signFile(sBase64Data); //подписываем данные
     };
 };
-var signFile = function(contentBase64)
+var signFile = function(contentBase64,thumbprint)
 {
     var cades = window.cades;
   //  var thumbprint = 'F170F6CF858141A44B5141D45C60DD64FC74071A'; // отпечаток сертификата для поиска
-    var thumbprint =  '0D236BAE9545B8651439986078A2A92E35F09C45';
+  //  var thumbprint =  '0D236BAE9545B8651439986078A2A92E35F09C45';
     // Создание объекта хранилища сертификатов CAPICOM.Store
     var oStore = cades.then(function() {
         return cades.store();
@@ -90,6 +90,7 @@ var signFile = function(contentBase64)
        // console.log(signatureMessage);
         var data = new FormData();
         data.append('signature', signatureMessage);
+        data.append('signFileOriginName',signFileOriginName);
         $.ajax({
             url: "/complaint/signature",
             type: 'POST',

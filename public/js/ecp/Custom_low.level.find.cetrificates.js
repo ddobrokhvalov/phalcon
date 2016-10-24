@@ -1,7 +1,10 @@
 var pluginNotFound = true;
+var timer_id = false;
+var userCertificates = false;
 (function() {
-    
-    showWaitPopup();
+
+
+    timer_id = setTimeout(hideWaitPopup, 1000*20);
 
     // Доступ всегда осуществляется в ассинхронном режиме
     // Получаем объект Promise для доступа к cades plugin api
@@ -15,6 +18,7 @@ var pluginNotFound = true;
     // Получаем доступ к хранилищу сертификатов пользователя
     oStore.then(function(Store) {
         pluginNotFound = false;
+        hideWaitPopup();
         return Store.open.apply(Store, [
             Store.CAPICOM_CURRENT_USER_STORE, // Хранилище текущего пользователя
             Store.CAPICOM_MY_STORE, // Имя хранилища "My"
@@ -68,6 +72,18 @@ var pluginNotFound = true;
         // Получаем массыв сертификатов с необходимыми данным
         // ...
         console.log(aCertificate);
+        userCertificates = aCertificate;
+        var html = '';
+        for(var i in aCertificate){
+            var str = aCertificate[i].ValidFromDate;
+            str = str.substr(0, 10);
+            var field = str + ' | ' + aCertificate[i].SubjectDNSName;         
+            html +='<li class="existingCerListBox__item" onclick="setCertItem('+i+')" >'+field+'</li>';
+        }
+         $('.certificate-box-2').html(html);
+       // certificate-box-2
+
+
     });
 
     // Закрываем хранилище
@@ -75,6 +91,18 @@ var pluginNotFound = true;
         return Store.close();
     });
 })();
-function  showWaitPopup(){
-    $('.addAppCertificate-wait').fadeIn().css('display', 'flex');
+var selectedCertif = false;
+function setCertItem(num){
+    selectedCertif = userCertificates[num];
+}
+function  hideWaitPopup(){
+    clearTimeout(timer_id);
+    $('.addAppCertificate-preloader').hide();
+
+    if(pluginNotFound == true){
+
+        $('.addAppCertificate-alert').fadeIn().css('display', 'flex');
+    }else{
+        $('.addAppCertificate-main2').fadeIn().css('display', 'flex');
+    }
 }

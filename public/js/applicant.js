@@ -1,31 +1,49 @@
 $(document).ready(function () {
 
-  //  $('.addAppCertificate-main').fadeIn().css('display', 'flex');
- //   $('#import-aplicant').removeClass('admin-popup-close');
-    //$('.admin-popup-bg').un
+    $('.addAppCertificate__addBtn').click(function () {
+        if (selectedCertif == false)
+            return;
 
-    $('.addAppCertificate__cancelBtn').click(function(){
+        $('.addAppCertificate-main2').fadeOut().css('display', 'none');
 
+        var userData = selectedCertif.SubjectName;
+
+        if (userData.indexOf('OGRN=') != -1) {
+            applicant.parseUrLico(selectedCertif);
+        }
+        if (userData.indexOf('OGRNIP=') != -1) {
+            applicant.parseIp(selectedCertif);
+        }
+        var str = selectedCertif.ValidFromDate;
+        str = str.substr(0, 10);
+        var field = str + ' | ' + selectedCertif.SubjectDNSName;
+
+        $('#ecp_ur').val(selectedCertif.Thumbprint);
+        $('#ecp_text').val(field);
+
+        $('.content').removeClass('hiddenClass');
     });
-    $('.applicantCertificate__add').click(function() {
+
+
+    $('.applicantCertificate__add').click(function () {
         $('.addAppCertificate-main').fadeIn().css('display', 'flex');
         $('#import-aplicant').addClass('admin-popup-close');
     });
-    
+
     /*$(".active-tabs-content form").submit(function( event ) {
-      alert("Handler for .submit() called.");
-      if (!applicantValidator.result) {
-        event.preventDefault();
-      }
-    });*/
-    
+     alert("Handler for .submit() called.");
+     if (!applicantValidator.result) {
+     event.preventDefault();
+     }
+     });*/
+
     var url = window.location.href;
     if (typeof applicantFirstId !== 'undefined' && url.indexOf('applicant_id=') == -1)
-        applicant.selectFirst(applicantFirstId,false);
+        applicant.selectFirst(applicantFirstId, false);
 
 
-   if(typeof applicantSelectedId !== 'undefined' && applicantSelectedId != 'All')
-       applicant.selectFirst(applicantSelectedId,false);
+    if (typeof applicantSelectedId !== 'undefined' && applicantSelectedId != 'All')
+        applicant.selectFirst(applicantSelectedId, false);
 
     $("#add_applicant, .add_applicant").click(function (event) {
         event.preventDefault();
@@ -34,7 +52,7 @@ $(document).ready(function () {
         }
         applicantValidator.start();
         if (applicantValidator.result) {
-            $('#applicant_form').submit();
+            //$('#applicant_form').submit();
             $(".active-tabs-content form").submit();
         } else {
             event.preventDefault();
@@ -44,24 +62,24 @@ $(document).ready(function () {
 
     $('.select_applicant').click(function () {
         /*if (applicant.id) {
-            $('#cl' + applicant.id).prop('checked', false);
-        }*/
+         $('#cl' + applicant.id).prop('checked', false);
+         }*/
         var is_remove = false;
         var index_element = jQuery.inArray($(this).attr("value"), applicant.id);
-        if (index_element >=0) {
+        if (index_element >= 0) {
             is_remove = true;
-            applicant.id = jQuery.grep(applicant.id, function(elem, index){
+            applicant.id = jQuery.grep(applicant.id, function (elem, index) {
                 return index != index_element;
             });
         }
         applicant.selectApplicant($(this).attr("value"), $(this).html(), true, is_remove, false);
     });
 
-    $('#urlico').click(function(){ applicant.setUrlico(); });
-    $('#ip').click(function(){ applicant.setIp(); });
-    $('#fizlico').click(function(){ applicant.setFizlico(); });
-    applicant.setUrlico();
-
+    /* $('#urlico').click(function(){ applicant.setUrlico(); });
+     $('#ip').click(function(){ applicant.setIp(); });
+     $('#fizlico').click(function(){ applicant.setFizlico(); });
+     applicant.setUrlico();
+     */
 
 
     $(".apllicant-field-container").on("focusout", "#czvr3", function () {
@@ -69,11 +87,11 @@ $(document).ready(function () {
         applicant.checkInn($('#czvr3').val());
     });
 
-    $('.c-content input[type="checkbox"]').click(function() {
+    $('.c-content input[type="checkbox"]').click(function () {
         if ($(this).prop('checked')) {
             $('.c-cs-btns').addClass('c-cs-btns-after');
         } else {
-            if($( "input[class='complaint-checkbox']:checked" ).length == 0) {
+            if ($("input[class='complaint-checkbox']:checked").length == 0) {
                 $('.c-cs-btns').removeClass('c-cs-btns-after');
             }
         }
@@ -99,10 +117,78 @@ var procedura = {
 
 var applicant = {
     id: [],
-    type:false,
-    save:false,
+    type: false,
+    save: false,
     applicant_info: [],
-    checkInn: function(inn){
+    parseUrLico: function (selectedCertif) {
+        $('.tabs-ip').css('visibility', 'hidden');
+        $('.tabs-fl').css('visibility', 'hidden');
+
+        this.setUrlico();
+        var data = selectedCertif.SubjectName;
+        data = data.split(',');
+        console.log(data);
+        var kratkoe_name = data[6];
+
+        kratkoe_name = kratkoe_name.substr(4, kratkoe_name.length - 5);
+        $('#entity-short').val(kratkoe_name);
+        var inn = data[11];
+        inn = inn.substr(7, inn.length - 4);
+        $('#entity-inn').val(inn);
+
+        var kpp = data[3];
+        kpp = kpp.split('/');
+        kpp = kpp[1];
+        kpp = kpp.substr(4, kpp.length);
+        $('#entity-kpp').val(kpp);
+        var address = data[7];
+        address = address.substr(3, address.length);
+        $('#entity-address').val(address);
+        var position = data[2];
+        position = position.substr(3, position.lenght);
+        $('#entity-position').val(position);
+        var fio_aplicant = data[4];
+        fio_aplicant = fio_aplicant.substr(4, fio_aplicant.length);
+        $('#entity-fio-z').val(fio_aplicant);
+        var email = data[10];
+        email = email.substr(3, email.length);
+        $('#entity-email').val(email);
+
+        
+
+
+    },
+    parseIp: function (selectedCertif) {
+        $('.tabs-ur').css('visibility', 'hidden');
+        $('.tabs-fl').css('visibility', 'hidden');
+        this.setIp();
+        var data = selectedCertif.SubjectName;
+        data = data.split(',');
+        console.log(data);
+        var shortName1 = data[0];
+        shortName1 = shortName1.substr(3,shortName1.lenght);
+        var shortName = data[1];
+        shortName = shortName.substr(3, shortName.lenght);
+        shortName = shortName1 + ' ' +shortName;
+        $('#entity-short').val(shortName);
+        var inn = data[9];
+        inn = inn.substr(5,inn.length);
+        $('#entity-inn').val(inn);
+
+        var city = data[6];
+        city = city.substr(6,city.lenght);
+        var address  = data[3];
+        address = address.substr(8, address.lenght);
+        $('#entity-address').val(city + ' ' +address);
+        $('#entity-fio-z').val(shortName);
+
+         var email = data[8];
+         email = email.substr(3,email.lenght);
+         $('#entity-email').val(email);
+
+      
+    },
+    checkInn: function (inn) {
         if (!validator.numeric($('#czvr3').val(), 10, 10)) {
             applicantValidator.showError('#czvr3', 'Ошибка! ИНН состоит из 10 цифр');
             return false;
@@ -113,14 +199,14 @@ var applicant = {
             data: 'inn=' + inn,
             success: function (msg) {
 
-              if(msg == 'true'){
-                  applicant.save = false;
-                  showMessagePopup('error','Заявитель с таким ИНН уже зарегистрирован в системе. ');
-                  applicantValidator.showError('#czvr3', 'Ошибка! Заявитель с таким ИНН уже зарегистрирован в системе.');
-              }else{
-                  applicantValidator.done('#czvr3');
-                  applicant.save = true;
-              }
+                if (msg == 'true') {
+                    applicant.save = false;
+                    showMessagePopup('error', 'Заявитель с таким ИНН уже зарегистрирован в системе. ');
+                    applicantValidator.showError('#czvr3', 'Ошибка! Заявитель с таким ИНН уже зарегистрирован в системе.');
+                } else {
+                    applicantValidator.done('#czvr3');
+                    applicant.save = true;
+                }
             },
             error: function (msg) {
                 console.log(msg);
@@ -128,13 +214,13 @@ var applicant = {
 
         });
     },
-    setUrlico: function(){
-       this.type = 'urlico';
+    setUrlico: function () {
+        this.type = 'urlico';
     },
-    setIp:function(){
+    setIp: function () {
         this.type = 'ip';
     },
-    setFizlico:function(){
+    setFizlico: function () {
         this.type = 'fizlico';
     },
     selectApplicant: function (id, name, redirect, is_remove, is_select_first) {
@@ -142,26 +228,26 @@ var applicant = {
             this.id.push(id);
             if ($('.applicant-name-container').html().length) {
                 var temp = $('.applicant-name-container').html();
-                temp = temp.replace(name.trim(),'');
+                temp = temp.replace(name.trim(), '');
                 temp = temp.split(',');
                 for (var i = temp.length; i > 0; i--) {
                     if (temp[i] == " " || temp[i] == "") {
-                        temp.splice(i,1);
+                        temp.splice(i, 1);
                     }
                 }
                 temp.push(name.trim());
                 $('.applicant-name-container').html(temp.join(','));
             } else {
-                if(name != undefined) {
+                if (name != undefined) {
                     $('.applicant-name-container').html(name.trim());
                 }
             }
-        }else {
+        } else {
             var temp = $('.applicant-name-container').html();
             temp = temp.split(',');
-            for(var i = 0; i < temp.length; i++){
+            for (var i = 0; i < temp.length; i++) {
                 temp[i] = temp[i].trim();
-                if(temp[i] == name.trim()){
+                if (temp[i] == name.trim()) {
                     temp.splice(i, 1);
                 }
             }
@@ -176,12 +262,12 @@ var applicant = {
         if (!is_select_first) {
             complaint.filterComplaintByApplicant(this.id);
         }
-       // }
+        // }
     },
     selectFirst: function (id, redirect) {
         id = id.split(',');
         var globalThis = this;
-        $.each(id, function(index, value){
+        $.each(id, function (index, value) {
             globalThis.selectApplicant(value, $('#name_applicant_' + value).html(), redirect, false, true);
             $('#cl' + value).prop('checked', true);
         });
@@ -193,178 +279,178 @@ var applicantValidator = {
     start: function () {
 
         this.result = true;
-       switch (applicant.type) {
-           case 'urlico':
-               var field_selector = '.active-tabs-content #entity-textarea';
-               if (!validator.text($(field_selector).val(), 3, 255)) {
-                   this.showError(field_selector, 'Ошибка! Полное наименование должно быть от 3 до 255 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-short';
-               if (!validator.text($(field_selector).val(), 3, 100)) {
-                   this.showError(field_selector, 'Ошибка! Краткое наименование должно быть от 3 до 100 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-inn';
-               if (!validator.numeric($(field_selector).val(), 10, 10)) {
-                   this.showError(field_selector, 'Ошибка! ИНН состоит из 10 цифр');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-kpp';
-               if (!validator.numeric($(field_selector).val(), 9, 9)) {
-                   this.showError(field_selector, 'Ошибка! КПП состоит из 9 цифр');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-address';
-               if (!validator.text($(field_selector).val(), 3, 255)) {
-                   this.showError(field_selector, 'Ошибка! Адрес местонахождения должен быть от 3 до 255 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-position';
-               if (!validator.text($(field_selector).val(), 3, 100)) {
-                   this.showError(field_selector, 'Ошибка! Должность заявителя должна быть от 3 до 100 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-fio-z';
-               if (!validator.text($(field_selector).val(), 3, 100)) {
-                   this.showError(field_selector, 'Ошибка! ФИО заявителя должно быть от 3 до 100 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-fio-k';
-               if (!validator.text($(field_selector).val(), 3, 100)) {
-                   this.showError(field_selector, 'Ошибка! ФИО контактного лица должно быть от 3 до 100 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-phone';
-               if (!validator.text($(field_selector).val(), 5, 100)) {
-                   this.showError(field_selector, 'Ошибка! Контактный факс, телефон должен быть от 5 до 100 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-email';
-               if (!validator.email($(field_selector).val())) {
-                   this.showError(field_selector, 'Ошибка! Неверный E-mail');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               break;
-           case 'ip':
-               var field_selector = '.active-tabs-content #entity-textarea';
-               if (!validator.text($(field_selector).val(), 3, 255)) {
-                   this.showError(field_selector, 'Ошибка! Полное наименование должно быть от 3 до 255 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-inn';
-               if (!validator.numeric($(field_selector).val(), 10, 10)) {
-                   this.showError(field_selector, 'Ошибка! ИНН состоит из 10 цифр');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-address';
-               if (!validator.text($(field_selector).val(), 3, 255)) {
-                   this.showError(field_selector, 'Ошибка! Адрес местонахождения должен быть от 3 до 255 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-position';
-               if (!validator.text($(field_selector).val(), 3, 100)) {
-                   this.showError(field_selector, 'Ошибка! Должность заявителя должна быть от 3 до 100 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-fio-z';
-               if (!validator.text($(field_selector).val(), 3, 100)) {
-                   this.showError(field_selector, 'Ошибка! ФИО заявителя должно быть от 3 до 100 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-phone';
-               if (!validator.text($(field_selector).val(), 5, 100)) {
-                   this.showError(field_selector, 'Ошибка! Контактный факс, телефон должен быть от 5 до 100 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-email';
-               if (!validator.email($(field_selector).val())) {
-                   this.showError(field_selector, 'Ошибка! Неверный E-mail');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-fio-k';
-               if (!validator.text($(field_selector).val(), 3, 100)) {
-                   this.showError(field_selector, 'Ошибка! ФИО контактного лица должно быть от 3 до 100 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               break;
-           case 'fizlico':
-               var field_selector = '.active-tabs-content #entity-fio-z';
-               if (!validator.text($(field_selector).val(), 3, 255)) {
-                   this.showError(field_selector, 'Ошибка! ФИО заявителя должно быть от 3 до 255 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-address';
-               if (!validator.text($(field_selector).val(), 3, 255)) {
-                   this.showError(field_selector, 'Ошибка! Адрес местонахождения должен быть от 3 до 255 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-phone';
-               if (!validator.text($(field_selector).val(), 5, 100)) {
-                   this.showError(field_selector, 'Ошибка! Контактный факс, телефон должен быть от 5 до 100 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-email';
-               if (!validator.email($(field_selector).val())) {
-                   this.showError(field_selector, 'Ошибка! Неверный E-mail');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               var field_selector = '.active-tabs-content #entity-fio-k';
-               if (!validator.text($(field_selector).val(), 3, 100)) {
-                   this.showError(field_selector, 'Ошибка! ФИО контактного лица должно быть от 3 до 100 символов');
-                   this.result = false;
-               } else {
-                   this.done(field_selector);
-               }
-               break;
-           default:
-               this.result = false;
-               break;
-       }
+        switch (applicant.type) {
+            case 'urlico':
+                /*  var field_selector = '.active-tabs-content #entity-textarea';
+                 if (!validator.text($(field_selector).val(), 3, 255)) {
+                 this.showError(field_selector, 'Ошибка! Полное наименование должно быть от 3 до 255 символов');
+                 this.result = false;
+                 } else {
+                 this.done(field_selector);
+                 } */
+                var field_selector = '.active-tabs-content #entity-short';
+                if (!validator.text($(field_selector).val(), 3, 100)) {
+                    this.showError(field_selector, 'Ошибка! Краткое наименование должно быть от 3 до 100 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-inn';
+                if (!validator.numeric($(field_selector).val(), 10, 10)) {
+                    this.showError(field_selector, 'Ошибка! ИНН состоит из 10 цифр');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-kpp';
+                if (!validator.numeric($(field_selector).val(), 9, 9)) {
+                    this.showError(field_selector, 'Ошибка! КПП состоит из 9 цифр');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-address';
+                if (!validator.text($(field_selector).val(), 3, 255)) {
+                    this.showError(field_selector, 'Ошибка! Адрес местонахождения должен быть от 3 до 255 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-position';
+                if (!validator.text($(field_selector).val(), 3, 100)) {
+                    this.showError(field_selector, 'Ошибка! Должность заявителя должна быть от 3 до 100 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-fio-z';
+                if (!validator.text($(field_selector).val(), 3, 100)) {
+                    this.showError(field_selector, 'Ошибка! ФИО заявителя должно быть от 3 до 100 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-fio-k';
+                if (!validator.text($(field_selector).val(), 3, 100)) {
+                    this.showError(field_selector, 'Ошибка! ФИО контактного лица должно быть от 3 до 100 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-phone';
+                if (!validator.text($(field_selector).val(), 5, 100)) {
+                    this.showError(field_selector, 'Ошибка! Контактный факс, телефон должен быть от 5 до 100 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-email';
+                if (!validator.email($(field_selector).val())) {
+                    this.showError(field_selector, 'Ошибка! Неверный E-mail');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                break;
+            case 'ip':
+              /*  var field_selector = '.active-tabs-content #entity-textarea';
+                if (!validator.text($(field_selector).val(), 3, 255)) {
+                    this.showError(field_selector, 'Ошибка! Полное наименование должно быть от 3 до 255 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                } */
+                var field_selector = '.active-tabs-content #entity-inn';
+                if (!validator.numeric($(field_selector).val(), 12, 12)) {
+                    this.showError(field_selector, 'Ошибка! ИНН состоит из 12 цифр');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-address';
+                if (!validator.text($(field_selector).val(), 3, 255)) {
+                    this.showError(field_selector, 'Ошибка! Адрес местонахождения должен быть от 3 до 255 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-position';
+                if (!validator.text($(field_selector).val(), 3, 100)) {
+                    this.showError(field_selector, 'Ошибка! Должность заявителя должна быть от 3 до 100 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-fio-z';
+                if (!validator.text($(field_selector).val(), 3, 100)) {
+                    this.showError(field_selector, 'Ошибка! ФИО заявителя должно быть от 3 до 100 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-phone';
+                if (!validator.text($(field_selector).val(), 5, 100)) {
+                    this.showError(field_selector, 'Ошибка! Контактный факс, телефон должен быть от 5 до 100 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-email';
+                if (!validator.email($(field_selector).val())) {
+                    this.showError(field_selector, 'Ошибка! Неверный E-mail');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-fio-k';
+                if (!validator.text($(field_selector).val(), 3, 100)) {
+                    this.showError(field_selector, 'Ошибка! ФИО контактного лица должно быть от 3 до 100 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                break;
+            case 'fizlico':
+                var field_selector = '.active-tabs-content #entity-fio-z';
+                if (!validator.text($(field_selector).val(), 3, 255)) {
+                    this.showError(field_selector, 'Ошибка! ФИО заявителя должно быть от 3 до 255 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-address';
+                if (!validator.text($(field_selector).val(), 3, 255)) {
+                    this.showError(field_selector, 'Ошибка! Адрес местонахождения должен быть от 3 до 255 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-phone';
+                if (!validator.text($(field_selector).val(), 5, 100)) {
+                    this.showError(field_selector, 'Ошибка! Контактный факс, телефон должен быть от 5 до 100 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-email';
+                if (!validator.email($(field_selector).val())) {
+                    this.showError(field_selector, 'Ошибка! Неверный E-mail');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                var field_selector = '.active-tabs-content #entity-fio-k';
+                if (!validator.text($(field_selector).val(), 3, 100)) {
+                    this.showError(field_selector, 'Ошибка! ФИО контактного лица должно быть от 3 до 100 символов');
+                    this.result = false;
+                } else {
+                    this.done(field_selector);
+                }
+                break;
+            default:
+                this.result = false;
+                break;
+        }
     },
     done: function (element) {
         $(element).addClass('c-inp-done');

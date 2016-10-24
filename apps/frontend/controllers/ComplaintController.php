@@ -2,7 +2,7 @@
 
 namespace Multiple\Frontend\Controllers;
 
-
+use Multiple\Frontend\Models\ApplicantECP;
 use Multiple\Frontend\Models\Applicant;
 use Multiple\Frontend\Models\Category;
 use Multiple\Frontend\Models\Complaint;
@@ -273,9 +273,15 @@ class ComplaintController extends ControllerBase
         }
         $this->view->disable();
         if($name) {
+            $thumbprint = 0;
+            if(isset($_POST['applicant_id'])) {
+                $applicant_id = $_POST['applicant_id'];
+                $thumbprint = ApplicantECP::findFirst("activ = 1 AND applicant_id = $applicant_id ");
+                $thumbprint = $thumbprint->thumbprint;
+            }
             $data = file_get_contents($baseLocation . $name);
             $File_data = base64_encode($data);
-            echo json_encode([$baseLocation . $name,$File_data]);
+            echo json_encode([$File_data,$thumbprint,$name]);
         }else{
             echo 'error';
         }
@@ -284,9 +290,10 @@ class ComplaintController extends ControllerBase
     }
     public function signatureAction(){
 
-       $signature = $this->request->getPost('signature');
+        $signature = $this->request->getPost('signature');
+        $signFileOriginName  = $this->request->getPost('signFileOriginName');
         $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
-        file_put_contents($baseLocation. 'signature.sig',base64_decode($signature));
+        file_put_contents($baseLocation. $signFileOriginName.'.sig',base64_decode($signature));
         
         echo 'done';
         exit;
@@ -294,46 +301,13 @@ class ComplaintController extends ControllerBase
     }
     public function addAction()
     {
-        //TrustedLibrary::trusted_library_init();        
+
         $this->setMenu();
         $category = new Category();
         $arguments = $category->getArguments();
         $ufas = Ufas::find();
 
-        //if (isset($_SESSION['TRUSTEDNET']['OAUTH'])) $OAuth2 = unserialize($_SESSION['TRUSTEDNET']['OAUTH']);
-//        if (isset($OAuth2)){
-//            /*$token = $OAuth2->getAccessToken();
-//            if(!$OAuth2->checkToken())
-//                if($OAuth2->refresh())*/
-//            $token = $OAuth2->getRefreshToken();
-//            $this->view->token  = $token;
-//
-//        } else {
-//            $this->session->destroy();
-//            return $this->forward('/');
-//        }
 
-
-//        $data = ArgumentsCategory::query()
-//                ->where('parent_id=0')
-//                ->execute();
-
-//        $arg = new ArgumentsCategory();
-//        $data = $arg->getCategoryNotEmpty();
-//        $temp = array();
-//        foreach($data as $val){
-//            if($val->parent_id == 0) {
-//                $temp[] = array(
-//                    'id' => $val->lvl1_id,
-//                    'name' => $val->lvl1,
-//                    'parent_id' => 0
-//                );
-//            }
-//        }
-//        $temp = array_map("unserialize", array_unique( array_map("serialize", $temp) ));
-
-        //$arg = new ArgumentsCategory();
-        //$this->view->categories = $temp;
         $this->view->ufas = $ufas;
         $this->view->arguments = $arguments;
     }
