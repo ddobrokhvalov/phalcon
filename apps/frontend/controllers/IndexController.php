@@ -3,7 +3,6 @@
 namespace Multiple\Frontend\Controllers;
 
 use Phalcon\Mvc\Controller;
-use Multiple\Library\TrustedLibrary;
 
 class IndexController extends Controller
 {
