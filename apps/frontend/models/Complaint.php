@@ -41,7 +41,7 @@ class Complaint extends Model
     {
         $db = $this->getDi()->getShared('db');
         $sql = "SELECT c.*, ap.name_short as apname FROM complaint as c
-         LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
+         LEFT JOIN applicant ap ON(c.applicant_id = ap.id AND ap.is_blocked = 1)
          LEFT JOIN user u ON(ap.user_id = u.id )
          WHERE u.id =$user_id  "; //todo: do we really need LEFT JOIN if the filter on the last RIGHT table? It will return something ONLY if u.id is not NULL!
 
@@ -93,9 +93,9 @@ class Complaint extends Model
     {
         $db = $this->getDi()->getShared('db');
         $sql = "SELECT COUNT(c.id) as num, c.status  FROM complaint as c
-         LEFT JOIN applicant ap ON(c.applicant_id = ap.id )
+         LEFT JOIN applicant ap ON(c.applicant_id = ap.id  AND ap.is_blocked = 1)
          LEFT JOIN user u ON(ap.user_id = u.id )
-         WHERE u.id = $user_id ";
+         WHERE u.id = $user_id  ";
           //todo: do we really need LEFT JOIN if the filter on the last RIGHT table? It will return something ONLY if u.id is not NULL!
         if($applicant_id != 'All' && $applicant_id != ''){
             if($applicant_id[0] == ','){

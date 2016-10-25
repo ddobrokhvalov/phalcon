@@ -225,6 +225,12 @@ var applicant = {
     },
     selectApplicant: function (id, name, redirect, is_remove, is_select_first) {
         if (!is_remove) {
+            if(this.id == 'All') this.id = [];
+            for(var i = 0; i < this.id.length; i++){
+                if(this.id[i] == 'All' || this.id[i] == ''){
+                    this.id.splice(i, 1);
+                }
+            }
             this.id.push(id);
             if ($('.applicant-name-container').html().length) {
                 var temp = $('.applicant-name-container').html();
@@ -252,6 +258,9 @@ var applicant = {
                 }
             }
 
+            if(temp.length == 0){
+                this.id.push('All');
+            }
             $('.applicant-name-container').html(temp.join(','));
         }
         if (this.id.length == 0) {
