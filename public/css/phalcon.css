@@ -3426,3 +3426,6 @@ input#upload-files::-webkit-file-upload-button {
 .userData input{
      font-weight: normal;
  }
+.userData label{
+    font-weight: normal;
+}
