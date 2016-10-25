@@ -274,7 +274,7 @@ var complaint = {
         //     $("#add-complaint-form").submit();
         // }, 2000);
 
-        $("#add-complaint-form").submit();
+        //$("#add-complaint-form").submit();
 
         /*$.ajax({
          type: 'POST',
