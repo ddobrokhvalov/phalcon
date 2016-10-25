@@ -264,15 +264,17 @@ var complaint = {
         $("#complaint_name").val(this.complainName);
         $("#applicant_id").val(applicant.id);
 
-        $(".edit-status p").text("Жалоба успешно сохранена!");
-        $('.admin-popup-close, .admin-popup-bg').on('click', function () {
-              $("#add-complaint-form").submit();
-        });
-        $(".edit-status").show();
-        setTimeout(function () {
-            $("#add-complaint-form").submit();
-        }, 2000);
+        // $(".edit-status p").text("Жалоба успешно сохранена!");
+        // $(".edit-status p").text("Жалоба успешно сохранена!");
+        // $('.admin-popup-close, .admin-popup-bg').on('click', function () {
+        //       $("#add-complaint-form").submit();
+        // });
+        //$(".edit-status").show();
+        // setTimeout(function () {
+        //     $("#add-complaint-form").submit();
+        // }, 2000);
 
+        $("#add-complaint-form").submit();
 
         /*$.ajax({
          type: 'POST',
