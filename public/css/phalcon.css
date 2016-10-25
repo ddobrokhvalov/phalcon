@@ -3419,3 +3419,10 @@ input#upload-files::-webkit-file-upload-button {
 .ui-widget {
     font-family: inherit;
 }
+
+.userData p{
+    font-weight: normal;
+}
+.userData input{
+     font-weight: normal;
+ }
