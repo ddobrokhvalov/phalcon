@@ -266,11 +266,11 @@ var complaint = {
 
         $(".edit-status p").text("Жалоба успешно сохранена!");
         $('.admin-popup-close, .admin-popup-bg').on('click', function () {
-            //  $("#add-complaint-form").submit();
+              $("#add-complaint-form").submit();
         });
         $(".edit-status").show();
         setTimeout(function () {
-            // $("#add-complaint-form").submit();
+            $("#add-complaint-form").submit();
         }, 2000);
 
 

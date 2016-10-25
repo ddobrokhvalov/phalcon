@@ -47,6 +47,9 @@ class ComplaintController extends ControllerBase
         }
         $search = $this->request->get('search');
         $search =  preg_replace ("/[^a-zA-ZА-Яа-я0-9\s]/u","", $search);
+
+
+
         $this->setMenu();
         $complaint = new Complaint();
         $status = 0;
@@ -108,8 +111,8 @@ class ComplaintController extends ControllerBase
         if (!$complaint || !$complaint->checkComplaintOwner($id, $this->user->id))
             return $this->forward('complaint/index');
         $applicant = Applicant::findFirstById($complaint->applicant_id);
-
-
+        $this->session->set('save_applicant', $this->session->get('applicant'));
+        $this->session->set('applicant', array('applicant_id' => $complaint->applicant_id));
         // Load arguments
         $category = new Category();
         $arguments = $category->getArguments();
@@ -202,11 +205,6 @@ class ComplaintController extends ControllerBase
         $complaintQuestion = $question->getComplainQuestionAndAnswer($id);
         $this->setMenu();
 
-        if ($this->session->get('save_applicant') == null){
-            $check_aplicant = $this->session->get('applicant');
-            $this->session->set('save_applicant', array('applicant_id' => $check_aplicant['applicant_id']));
-        }
-        $this->session->set('applicant', array('applicant_id' => $applicant->id));
         $this->view->applicant_session = $applicant->id;
         $this->applicant_id = $applicant->id;
 //        $parser = new Parser();
