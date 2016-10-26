@@ -5,7 +5,7 @@ function replaceWordTags(text, ckeditor_id) {
         text = text.replace("<p>", '');
         text = text.replace("</p>", '\r\n');
         text = text.replace("&nbsp;", ' ');
-    }debugger;
+    }
     text = remove_marker(text);
     text = replace_hard_tags(text);
     text = replace_easy_tags(text);
