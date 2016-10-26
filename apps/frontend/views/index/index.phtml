@@ -265,10 +265,11 @@
     <h2>Вход в систему</h2>
     <form action="/login/start" method="post">
         <label for="poplog-inp1">E-mail</label>
+        <div class="c-inp-err-t"></div>
         <input type="text" id="poplog-inp1" required="required" name="email">
         <label for="poplog-inp2">Пароль</label>
+        <div class="c-inp-err-t"></div>
         <input type="password" id="poplog-inp2" required="required" name="password">
-        <div class="errors"></div>
         <input type="submit" value="Войти">
         <div class="link-login">
             <span> <a href="#pop-start" class="open_modal" onclick="$('#pop-login').hide()">Регистрация нового пользователя</a><a href="#pop-recovery" class="open_modal" onclick="$('#pop-login').hide()">Забыли пароль?</a></span>
@@ -284,12 +285,15 @@
 <!--        <label for="popstrt-inp1">Ваше имя</label>-->
 <!--        <input type="text" id="popstrt-inp1" required="required" name="name">-->
         <label for="popstrt-inp1">E-mail</label>
+        <div class="c-inp-err-t"></div>
         <input type="text" id="popstrt-inp1" required="required" name="email">
 <!--        <label for="popstrt-inp1">Телефон</label>-->
 <!--        <input type="text" id="popstrt-inp1" required="required" name="phone">-->
         <label for="popstrt-inp1">Пароль</label>
+        <div class="c-inp-err-t"></div>
         <input type="text" id="popstrt-inp1" required="required" name="password">
         <label for="popstrt-inp1">Повторите пароль</label>
+        <div class="c-inp-err-t"></div>
         <input type="text" id="popstrt-inp1" required="required" name="confpassword">
         <div>
             <input type="checkbox" id="popstrt-inp1" required="required" name="offerta" style="display:inline" value="1" checked> Подтверждение условия оферты

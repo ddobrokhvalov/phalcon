@@ -5,7 +5,7 @@ use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Validator\RegisterValidator;
 use Multiple\Frontend\Models\User;
 use Multiple\Library\ReCaptcha;
-use Multiple\Library\MessageException;
+use Multiple\Library\Exceptions\MessageException;
 use Multiple\Library\Exceptions\FieldException;
 use Phalcon\Security\Random;
 
@@ -142,7 +142,7 @@ class RegisterController extends Controller
         if($data['password'] != $data['confpassword']) throw new FieldException('Пароли не совпадают', 'confpassword');
 
         $user = User::find("email = '{$data['email']}'");
-        if (count($user)) throw new FieldException('Пользователь с таким email уже есть', 'user');
+        if (count($user)) throw new FieldException('Пользователь с таким email уже есть', 'email');
 
     }
 }
