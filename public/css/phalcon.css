@@ -3445,3 +3445,8 @@ input#upload-files::-webkit-file-upload-button {
     text-decoration: underline;
     font-size: 15px;
 }
+
+.already-reg{
+    margin-top: 118px;
+    text-align: center;
+}

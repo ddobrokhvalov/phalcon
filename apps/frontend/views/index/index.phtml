@@ -271,7 +271,7 @@
         <div class="errors"></div>
         <input type="submit" value="Войти">
         <div class="link-login">
-            <span> <a href="#pop-start" class="open_modal">Регистрация нового пользователя</a><a href="#">Забыли пароль?</a></span>
+            <span> <a href="#pop-start" class="open_modal" onclick="$('#pop-login').hide()">Регистрация нового пользователя</a><a href="#pop-recovery" class="open_modal" onclick="$('#pop-login').hide()">Забыли пароль?</a></span>
         </div>
     </form>
 
@@ -291,7 +291,7 @@
         <input type="text" id="popstrt-inp1" required="required" name="password">
         <label for="popstrt-inp1">Повторите пароль</label>
         <input type="text" id="popstrt-inp1" required="required" name="confpassword">
-        <input type="checkbox" id="popstrt-inp1" required="required" name="offerta" style="display:inline" value="1"> Подтверждение условия оферты
+        <input type="checkbox" id="popstrt-inp1" required="required" name="offerta" style="display:inline" value="1" checked> Подтверждение условия оферты
         <div class="error-reg" style="color:red"></div>
         <div class="g-recaptcha" data-sitekey="6LdzsQkUAAAAABZTg2NJB9EVfnY0VUOPGgm9bhlN"></div>
         <!--<div class="pop-str1">
@@ -300,7 +300,11 @@
            <a href="#">Правила использования сервиса</a>
         </div>-->
         <input type="submit" value="Войти" style="margin-top: 30px">
+        <div class="already-reg">
+            <p>Уже зарегистрированы – <a href="#pop-login" class="open_modal" onclick="$('#pop-start').hide()">авторизуйтесь</a></p>
+        </div>
     </form>
+
     <div class="modal-close"></div>
 </div>
 
@@ -315,6 +319,24 @@
     <div class="modal-close"></div>
 </div>
 
+<style>
+    #pop-done {
+        padding-right: 0px !important;
+    }
+</style>
+
+<!-- popup recovery -->
+<div id="pop-recovery" class="modal_div">
+    <h2>Восстановление пароля</h2>
+    <form class="rec-pass" method="POST">
+        <label for="popstrt-inp1">Введите ваш email</label>
+        <input type="text" id="popstrt-inp1" required="required" name="email">
+        <input type="submit" value="Отправить" style="margin-top: 30px">
+    </form>
+    <div class="modal-close"></div>
+</div>
+
 <div id="overlay"></div>
 <script src="/js/registration_ajax.js"></script>
 <script src="/js/login_ajax.js"></script>
+<script src="/js/rec_pass.js"></script>
