@@ -1,3 +1,4 @@
+<script src="/js/order_ajax.js"></script>
 <div id="chsort">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
@@ -26,7 +27,7 @@
         <div class="c-content">
             <div class="drawing-complaints">
                 <span>Составим жалобу для вас всего за 3500 руб.</span>
-                <a href="#">Заказать</a>
+                <a href="#pop-order" class="open_modal">Заказать</a>
             </div>
             <div class="c-c-sort">
                 <div class="c-cs-cb">
@@ -175,4 +176,23 @@ var currentStatus ='{{ status }}';
         <p></p>
     </div>
 </article>
+
+<div id="pop-order" class="modal_div">
+    <h2>Заказ жалобы</h2>
+    <form method="post">
+        <label for="poplog-inp1">Введите номер извещения (заказа)</label>
+        <div class="c-inp-err-t"></div>
+        <input type="text" id="poplog-inp1" required="required" name="auction_id" pattern="^[0]{1}[\d]{18}$" placeholder="Введите номер извещения 19 цифр" maxlength="19">
+        <input type="submit" value="Заказать">
+    </form>
+    <div class="modal-close"></div>
+</div>
+
+<div id="pop-done" class="modal_div">
+    <h2>Начать работу</h2>
+    <div class="pop-done-txt">
+        Ваш запрос отправлен. Юрист свяжется с<br/> Вами в ближайшее время
+    </div>
+    <div class="modal-close"></div>
+</div>
 
