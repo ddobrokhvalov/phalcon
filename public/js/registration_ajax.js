@@ -33,8 +33,13 @@ $(document).ready(function () {
     if(location.search == '?success=confirm'){
         //$('#pop-done').modal('show');
         $('#pop-done h2').text('Подтверждение');
-        $('.pop-done-txt').html('Наши поздравления, Вы зарегистрировались в<br> интеллектуальной системе ФАС-Онлайн.<br/> <a href="#pop-login" class="open_modal">Авторизуйтесь</a>, чтобы начать работу');
+        $('.pop-done-txt').html('Наши поздравления, Вы зарегистрировались в<br> интеллектуальной системе ФАС-Онлайн.<br/> <a href="#pop-login" class="open_modal logreg">Авторизуйтесь</a>, чтобы начать работу');
         $('#pop-done').show();
         $('#overlay').show();
+
+        $('body').on('click', '.logreg', function(){
+            $('#pop-done').hide();
+            $('#pop-login').show();
+        });
     }
 });
