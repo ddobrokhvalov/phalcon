@@ -107,7 +107,7 @@ class SecurityPlugin extends Plugin
     public function beforeDispatch(Event $event, Dispatcher $dispatcher)
     {
         if ($dispatcher->getControllerName() != 'login') {
-            $auth = $this->session->get('auth');
+            $auth = $this->session->get('auth_admin');
             if (!$auth) {
                 $dispatcher->forward(array(
                     'controller' => 'login',
