@@ -15,7 +15,7 @@ class ControllerBase extends Controller
 
     protected function initialize()
     {
-        $auth = $this->session->get('auth');
+        $auth = $this->session->get('auth_admin');
         if (!$auth)
             $user_id = false;
         else
