@@ -3377,7 +3377,6 @@ input#upload-files::-webkit-file-upload-button {
 }
 
 .custom-select-complain .ui-selectmenu-text{
-    a comment to this line
     height: 75px;
     line-height: 18px;
     padding: 10px;
@@ -3429,4 +3428,24 @@ input#upload-files::-webkit-file-upload-button {
  }
 .userData label{
     font-weight: normal;
+}
+
+.link-login{
+     margin-top: 340px;
+
+ }
+
+.link-login a:first-child{
+    margin-right: 23px;
+}
+
+.link-login a{
+    color: #00b0fa;
+    text-decoration: underline;
+    font-size: 15px;
+}
+
+.already-reg{
+    margin-top: 118px;
+    text-align: center;
 }
