@@ -35,8 +35,10 @@ $(document).ready(function () {
     });
 
     $('.reg-new-user input').on('keyup', function(){
-        $(this).prev(".c-inp-err-t").text('');
-        $(this).addClass('c-inp-done');
+        if($(this).attr("type") != 'submit'){
+            $(this).prev(".c-inp-err-t").text('');
+            $(this).addClass('c-inp-done');
+        }
     });
 
 
