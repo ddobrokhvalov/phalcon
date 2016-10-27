@@ -2221,6 +2221,40 @@ input[type="radio"]:checked + label {
 /*.c-jd2-f-cat input[type="radio"]:checked + label {*/
     /*background: #00aeef none repeat scroll 0 0;*/
 /*}*/
+.inlineBlock {
+    display: inline-block;
+    margin-left: 52px;
+}
+.reqReg {
+    position: relative;
+    margin-bottom: 15px;
+    padding-left: 30px;
+    font-size: 15px !important;
+    line-height: 27px;
+    font-weight: 400;
+    cursor: pointer;
+}
+.reqReg__input {
+    display: inline-block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+}
+.entryBtn {
+    float: none !important;
+    display: block !important;
+    margin: 10px auto !important;
+    width: auto !important;
+}
+.fontNormal {
+    font-weight: 400 !important;
+    margin: 0 !important;
+}
+.reg-new-user {
+    margin-top: 0 !important;
+}
 .c-jadd3 {
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
@@ -3464,6 +3498,14 @@ input#upload-files::-webkit-file-upload-button {
 }
 
 .already-reg{
-    margin-top: 118px;
     text-align: center;
+}
+.already-reg-float {
+    float: left;
+    margin: -25px 0 40px;
+    padding: 0 40px;
+}
+.already-reg-float a {
+    color: #00b0fa;
+    text-decoration: underline;
 }
