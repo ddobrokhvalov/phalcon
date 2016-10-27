@@ -57,6 +57,18 @@ class LoginController extends Controller
                 }
             }
 
+            $checkEmail = User::findFirst(array(
+                    "email = :email: ",
+                    'bind' => array(
+                        'email' => $email,
+                    )
+                )
+            );
+            if(!$checkEmail){
+                echo json_encode(array('error' => array('email' => 'Пользователь с таким email не зарегистрирован')));
+                exit;
+            }
+
             $user = User::findFirst(
                 array(
                     "email = :email:  AND password = :password:",
@@ -72,7 +84,7 @@ class LoginController extends Controller
                     exit;
                 }
                 if($user->status == 2){
-                    echo json_encode(array('error' => array('email' => 'Вы неактивировали аккаунт.')));
+                    echo json_encode(array('error' => array('email' => 'Вы не активировали аккаунт.')));
                     exit;
                 }
                 $this->_registerSession($user);
