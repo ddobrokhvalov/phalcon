@@ -137,7 +137,7 @@ class RegisterController extends Controller
             if(preg_match('/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/', $phone)){
                 $message = $this->mailer->createMessageFromView('../views/emails/callback', array(
                     'host'      => $this->request->getHttpHost(),
-                    'password'  => $phone
+                    'phone'  => $phone
                 ))
                     ->to($this->adminsEmails['order'])
                     ->subject('Обратный звонок');
