@@ -102,7 +102,7 @@ var signFile = function(contentBase64,thumbprint)
             success: function (data) {
                 //  data = JSON.parse(data);
                 console.log(data);
-                alert('Подписано успешно');
+                alert('Подписано успешно!!!');
 
                 $('#sign-ecp').removeClass('skyColor');
                 $('#send_yfas').addClass('skyColor');
