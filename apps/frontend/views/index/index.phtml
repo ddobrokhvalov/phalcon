@@ -236,7 +236,7 @@
             <span>
                 Пока мы делаем самую лучшую в РФ систему ведения жалоб, наслаждаесь бета версией
             </span><br>
-            <a href="#">Заказать звонок</a>
+            <a href="#pop-callback" class="open_modal">Заказать звонок</a>
         </h2>
     </div>
 </div>
@@ -278,6 +278,19 @@
 
     <div class="modal-close"></div>
 </div>
+
+<!-- popup callback -->
+<div id="pop-callback" class="modal_div">
+    <h2>Заказать звонок</h2>
+    <form action="/login/start" method="post">
+        <label for="poplog-inp1">Телефон</label>
+        <div class="c-inp-err-t"></div>
+        <input type="text" id="poplog-inp1" required="required" name="phone">
+        <input type="submit" value="Отправить">
+    </form>
+    <div class="modal-close"></div>
+</div>
+
 <!-- popup start -->
  <div id="pop-start" class="modal_div">
     <h2>Начать работу</h2>
