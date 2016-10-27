@@ -28,7 +28,10 @@ class UsersController extends Controller
             $messages = $validation->validate($data);
             $data['current_path'] = str_replace('public//', '', $data['current_path']);
             if (!$user) throw new FieldException('not user', 'user');
-            if (count($messages)) throw new MessageException($messages);
+
+            if (empty($data['new_password']) && empty($data['old_password'] && empty($data['new_password_confirm']))) {
+                if (count($messages)) throw new MessageException($messages);
+            }
 
             $data['phone'] = $this->filter->sanitize($data['phone'], trim);
             $data['lastname'] = $this->filter->sanitize($data['lastname'], trim);
@@ -38,12 +41,6 @@ class UsersController extends Controller
             $data['old_password'] = $this->filter->sanitize($data['old_password'], trim);
             $data['new_password_confirm'] = $this->filter->sanitize($data['new_password_confirm'], trim);
             $data['current_path'] = str_replace('public//', '', $data['current_path']);
-
-            $user->phone = empty($data['phone']) ? $user->phone : $data['phone'];
-            $user->lastname = empty($data['lastname']) ? $user->lastname : $data['lastname'];
-            $user->firstname = empty($data['firstname']) ? $user->firstname : $data['firstname'];
-            $user->patronymic = empty($data['patronymic']) ? $user->patronymic : $data['patronymic'];
-            $user->notifications = empty($data['notifications']) ? 0 : 1;
 
             if (!empty($data['current_path']) || $data['current_path'] == '/login/start') {
                 $data['current_path'] = '/complaint/index';
@@ -69,10 +66,15 @@ class UsersController extends Controller
             }
         } catch (FieldException $e){
             $this->flashSession->error($e->getMessage());
+        } finally{
+            $user->phone = empty($data['phone']) ? $user->phone : $data['phone'];
+            $user->lastname = empty($data['lastname']) ? $user->lastname : $data['lastname'];
+            $user->firstname = empty($data['firstname']) ? $user->firstname : $data['firstname'];
+            $user->patronymic = empty($data['patronymic']) ? $user->patronymic : $data['patronymic'];
+            $user->notifications = empty($data['notifications']) ? 0 : 1;
+            $user->update();
+            return $this->response->redirect($data['current_path']);
         }
-
-        $user->update();
-        return $this->response->redirect($data['current_path']);
     }
 
     public function setMessageReadAction() {
