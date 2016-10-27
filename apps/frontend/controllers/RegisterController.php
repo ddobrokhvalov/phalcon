@@ -131,6 +131,25 @@ class RegisterController extends Controller
         //$this->response->redirect('/');
     }
 
+    public function callbackAction(){
+        if ($this->request->isPost()) {
+            $phone = $this->request->getPost('phone');
+            if(preg_match('/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/', $phone)){
+                $message = $this->mailer->createMessageFromView('../views/emails/callback', array(
+                    'host'      => $this->request->getHttpHost(),
+                    'phone'  => $phone
+                ))
+                    ->to($this->adminsEmails['order'])
+                    ->subject('Обратный звонок');
+                $message->send();
+                echo json_encode(array('status' => 'ok'));
+            } else {
+                echo json_encode(array('error' => 'Некорректный телефон'));
+            }
+        }
+        exit;
+    }
+
     private function checkUser( $data ){
         $validation = new RegisterValidator();
         if(empty($data['offerta'])) throw new FieldException('Не подтвердили условия оферты', 'offerta');
