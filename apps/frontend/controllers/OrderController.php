@@ -40,7 +40,7 @@ class OrderController extends ControllerBase
                 $order->email = $user->email;
                 $order->auction_id = trim($data['auction_id']);
                 $order->date = date('Y-m-d H:i:s');
-                if ($order->save() === false) throw new FieldException('Ошибка создание заказа', 'save');
+                if ($order->save() === false) throw new FieldException('Ошибка создания заказа ', 'save');
 
                 $message = $this->mailer->createMessageFromView('../views/emails/order', array(
                     'hashreg'   => $user->hashreg,
