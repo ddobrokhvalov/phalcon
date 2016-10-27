@@ -80,7 +80,7 @@ class LoginController extends Controller
             );
             if ($user != false) {
                 if($user->status == 0){
-                    echo json_encode(array('error' => array('email' => 'Вы были заблокированы. Обратитесь к администратору сайта по номеру тел. или емаил')));
+                    echo json_encode(array('error' => array('email' => 'Ваш аккаунт заблокирован. Для разблокировки обратитесь к администратору по номеру телефона или E-mail')));
                     exit;
                 }
                 if($user->status == 2){
