@@ -121,12 +121,14 @@ class RegisterController extends Controller
                     ->to($user->email)
                     ->subject('Восстановление пароля в системе ФАС');
                 $message->send();
+                $this->response->redirect('/?success=recovery');
             }
         } catch (FieldException $e){
-            echo json_encode(array('error' => $e->getMessage()));
-            exit;
+            $this->flashSession->error($e->getMessage());
+            //echo $e->getMessage();
+            $this->response->redirect('/');
         }
-        $this->response->redirect('/');
+        //$this->response->redirect('/');
     }
 
     private function checkUser( $data ){
