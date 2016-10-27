@@ -174,7 +174,7 @@
                         </div>
                     </form>
                     <div class="c-jd2-f-cat">
-                        <span class="skyColor">Подписать ЭП</span>
+                        <span class="">Подписать ЭП</span>
                         <span>Отправить в УФАС</span>
                         <!--<input type="radio" name="jd2cat" id="jd2cat1" checked hidden>-->
                       <!--  <label id="sign-ecp" class = "trusted-ep" for="jd2cat1">Подписать ЭП</label> -->
@@ -355,6 +355,8 @@
     });
     </script>
 <script>
+    var edit_mode = {{ edit_mode }};
+    console.log(edit_mode);
     var templates = {};
     var temp_name = {};
     var ufasArr = new Array();

@@ -2210,7 +2210,10 @@ input[type="radio"]:checked + label {
     line-height: 88px;
     text-align: center;
     text-transform: uppercase;
-    width: 50%;
+    width: 49%;
+}
+.c-jd2-f-cat span:last-child{
+    float: right;
 }
 .c-jd2-f-cat .skyColor {
     background: #00aeef;

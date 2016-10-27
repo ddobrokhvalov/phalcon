@@ -3,6 +3,8 @@ $(document).ready(function () {
     $('.addAppCertificate__addBtn').click(function () {
         if (selectedCertif == false)
             return;
+        if(edit_mode == 0)
+            return;
 
         $('.addAppCertificate-main2').fadeOut().css('display', 'none');
 

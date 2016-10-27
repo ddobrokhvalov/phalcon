@@ -260,7 +260,7 @@ var complaint = {
     saveAsDraft: function () {
         $("#auctionData").val(this.auctionData);
         $("#arguments_data").val(complaint.arguments_data + "");
-        //$("#complaint_text").val(this.complainText);
+        $("#complaint_text").val(this.complainText);
         $("#complaint_name").val(this.complainName);
         $("#applicant_id").val(applicant.id);
 
@@ -274,22 +274,9 @@ var complaint = {
         //     $("#add-complaint-form").submit();
         // }, 2000);
 
-        //$("#add-complaint-form").submit();
+        $("#add-complaint-form").submit();
 
-        /*$.ajax({
-         type: 'POST',
-         url: '/complaint/create',
-         data: this.auctionData + '&complaint_text=' + this.complainText + '&complaint_name=' + this.complainName + '&applicant_id=' + applicant.id,
-         success: function (data) {
-         console.log(data);
-         if (data.result == "success") {
-         window.location.href = "/complaint/edit/" + data.id;
-         }
-         },
-         error: function (msg) {
-         console.log(msg);
-         }
-         });*/
+
 
     },
     showError: function (element, msg, insert_here) {
