@@ -488,8 +488,8 @@ function delete_complaint_file_edit_form(complaint_id, file_id) {
             data: { file_id: file_id, complaint_id: complaint_id },
             dataType: 'json',
             success: function(data){
-                showStyledPopupMessage("#pop-before-ask-question", "Уведомление", "Файл успешно удален");
-                $("#delete-file-row-" + file_id).remove();
+                //showStyledPopupMessage("#pop-before-ask-question", "Уведомление", "Файл успешно удален");
+                //$("#delete-file-row-" + file_id).remove();
             },
         });
     }

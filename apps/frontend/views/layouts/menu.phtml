@@ -197,7 +197,7 @@
                             <input id="cr1" type="checkbox" name="notifications" hidden  {% if user.notifications == 1%} checked  {% endif %}  value="1"  >
                         <label for="cr1">Получать уведомления на e-mail</label>
                     </div>
-                    <div class="ch-r-s-inf-f">
+                    <div class="ch-r-s-inf-f userData" style="font-weight: normal">
                         <p>Личные данные</p>
                         <label for="adm-set-name" class="set-same-lable">
                             <p>Имя</p>
@@ -216,7 +216,7 @@
                             <input type="text" id="usri1" name="phone" value="{{user.phone}}">
                         </label>
                     </div>
-                    <div class="ch-r-s-inf-f">
+                    <div class="ch-r-s-inf-f userData" >
                             <span>Сменить пароль</span>
                             <label for="usri1">Старый пароль</label>
                             <input type="password" id="usri1" name="old_password">
@@ -321,6 +321,13 @@
     }
     .closeBtnMessage{
         margin: 0px;
+    }
+    .lm-search-title {
+        font-size: 1px;
+        padding: 1px 0 16px 22px;
+    }
+    .lm-search-title p{
+        color: #222427;
     }
 </style>
 <script type="text/javascript">

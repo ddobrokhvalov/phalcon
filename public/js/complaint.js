@@ -264,15 +264,17 @@ var complaint = {
         $("#complaint_name").val(this.complainName);
         $("#applicant_id").val(applicant.id);
 
-        $(".edit-status p").text("Жалоба успешно сохранена!");
-        $('.admin-popup-close, .admin-popup-bg').on('click', function () {
-            //  $("#add-complaint-form").submit();
-        });
-        $(".edit-status").show();
-        setTimeout(function () {
-            // $("#add-complaint-form").submit();
-        }, 2000);
+        // $(".edit-status p").text("Жалоба успешно сохранена!");
+        // $(".edit-status p").text("Жалоба успешно сохранена!");
+        // $('.admin-popup-close, .admin-popup-bg').on('click', function () {
+        //       $("#add-complaint-form").submit();
+        // });
+        //$(".edit-status").show();
+        // setTimeout(function () {
+        //     $("#add-complaint-form").submit();
+        // }, 2000);
 
+        //$("#add-complaint-form").submit();
 
         /*$.ajax({
          type: 'POST',
@@ -788,25 +790,27 @@ function saveComplaintToDocxFile() {
             }
             doc = new Docxgen(content);
             doc.setData({
-                    "applicant_fio": applicant.applicant_info.fio_applicant,
+                    "applicant_fio": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_full + ', ' + applicant.applicant_info.fio_applicant : applicant.applicant_info.fio_applicant,
+                    "applicant_fio2": applicant.applicant_info.fio_applicant,
                     "applicant_address": applicant.applicant_info.address,
                     "applicant_phone": applicant.applicant_info.telefone,
                     "applicant_position": applicant.applicant_info.position,
                     "applicant_email": applicant.applicant_info.email,
                     "tip_zakupki": zakupka.info.type,
-                    "ufas": $('.c-jadd-lr-sel').text(),
+                    "ufas": $('.ui-selectmenu-text').text(),
                     "dovod": custom_text,
                     "zakaz_phone": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.tel : auction.responseData.zakazchik[0].tel,
                     "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].kontaktnoe_lico,
                     "zakaz_kontaktnoe_name": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.name + ', ' + auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].name,
                     "zakaz_address": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.pochtovy_adres : auction.responseData.zakazchik[0].pochtovy_adres,
                     "zakaz_mesto": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.mesto_nahogdeniya : "",
-                    "organiz_fio": auction.responseData.contact.dolg_lico,
+                    "organiz_fio": auction.responseData.contact.name + ', ' + auction.responseData.contact.dolg_lico,
                     "organiz_phone": auction.responseData.contact.tel,
                     "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
                     "organiz_address": auction.responseData.contact.pochtovy_adres,
                     "izveshchenie": $("#auction_id").val(),
-                    "zakupka_name": auction.responseData.info.object_zakupki
+                    "zakupka_name": auction.responseData.info.object_zakupki,
+                    "zayavitel": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_full : "Заявитель"
                 }
             );
             doc.render();
@@ -847,7 +851,8 @@ function saveComplaintToDocxFile() {
             }
             doc = new Docxgen(content);
             doc.setData({
-                    "applicant_fio": applicant.applicant_info.fio_applicant,
+                    "applicant_fio": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_full + ', ' + applicant.applicant_info.fio_applicant : applicant.applicant_info.fio_applicant,
+                    "applicant_fio2": applicant.applicant_info.fio_applicant,
                     "applicant_address": applicant.applicant_info.address,
                     "applicant_phone": applicant.applicant_info.telefone,
                     "applicant_position": applicant.applicant_info.position,
@@ -865,7 +870,8 @@ function saveComplaintToDocxFile() {
                     "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
                     "organiz_address": auction.responseData.contact.pochtovy_adres,
                     "izveshchenie": $("#auction_id").val(),
-                    "zakupka_name": auction.responseData.info.object_zakupki
+                    "zakupka_name": auction.responseData.info.object_zakupki,
+                    "zayavitel": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_full : "Заявитель"
                 }
             );
             doc.render();
@@ -1038,9 +1044,10 @@ function ajaxFileUpload(url, fileelementid) {
 }
 
 function stopSaveCompl() {
+    if(!$('.template_item').length) return false;
     var flag = false;
     $('.template_item').each(function () {
-        if ($(this).attr('data-required') == "1") flag = true;
+        if ($(this).attr('data-required') == "1" || !$(this).attr('data-required')) flag = true;
     });
     if (flag) {
         if (complaint.prepareData()) {

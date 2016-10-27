@@ -337,7 +337,7 @@ var ajaxSendObj = {
         ajaxSendObj.step = 2;
         $('.last-argComplList').slideUp(400);
         $('#argComplSelect').slideDown(400);
-        $('#argComplSelect .current-option span').removeClass('required').text('Жалоба на положения документации');
+        $('#argComplSelect .current-option span').removeClass('required').text('Выберите категорию');
         $('#argComplSelect .custom-options li').remove();
         for (var i = 0; i < readyDataCatArg.cat_arguments.length; i++) {
             if (readyDataCatArg.date == 1 && readyDataCatArg.cat_arguments[i].required == 1) {

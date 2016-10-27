@@ -11,7 +11,7 @@ class LoginController extends ControllerBase
     private function _registerSession($admin)
     {
         $this->session->set(
-            'auth',
+            'auth_admin',
             array(
                 'id' => $admin->id,
                 'email' => $admin->email,
@@ -21,7 +21,7 @@ class LoginController extends ControllerBase
 
     public function logoutAction()
     {
-        $auth = $this->session->get('auth');
+        $auth = $this->session->get('auth_admin');
 
         if (!$auth) {
             $admin_id = false;

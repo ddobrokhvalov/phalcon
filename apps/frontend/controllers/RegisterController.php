@@ -5,7 +5,7 @@ use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Validator\RegisterValidator;
 use Multiple\Frontend\Models\User;
 use Multiple\Library\ReCaptcha;
-use Multiple\Library\MessageException;
+use Multiple\Library\Exceptions\MessageException;
 use Multiple\Library\Exceptions\FieldException;
 use Phalcon\Security\Random;
 
@@ -33,7 +33,10 @@ class RegisterController extends Controller
                     ->to($user->email)
                     ->subject('Регистрация в интеллектуальной системе ФАС');
                 $message->send();
-                echo json_encode(array('status' => 'ok'));
+                echo json_encode(array(
+                    'status' => 'ok',
+                    'email' => $user->email
+                ));
                 exit;
             }
         } catch (MessageException $messages){
@@ -51,9 +54,9 @@ class RegisterController extends Controller
     public function confirmAction(){
         try{
             $data = $this->request->get();
-            if(empty($data['hashreg']) || trim($data['hashreg']) == '') throw new FieldException('error hash registration', 'hash');
+            if(empty($data['hashreg']) || trim($data['hashreg']) == '') throw new FieldException('Нет хэша подтверждения регистрации', 'hash');
             $user = User::findFirst("hashreg='{$data['hashreg']}'");
-            if(!$user) throw new FieldException('Error does not exists user or user already activate', 'user');
+            if(!$user) throw new FieldException('Такого пользователя нет или он уже активирован!', 'user');
 
             $user->hashreg = null;
             $user->status = 1;
@@ -67,11 +70,12 @@ class RegisterController extends Controller
                 ->to($user->email)
                 ->subject('Подтверждение в интеллектуальной системе ФАС');
             $message->send();
-            $this->response->redirect('/');
+            $this->response->redirect('/?success=confirm');
         } catch (FieldException $e){
-            echo $e->getMessage();
+            $this->flashSession->error($e->getMessage());
+            //echo $e->getMessage();
             $this->response->redirect('/');
-            exit;
+            //exit;
         }
     }
 
@@ -82,7 +86,7 @@ class RegisterController extends Controller
                 $email = $this->request->getPost('email');
                 if(empty($email) || trim($email) == '') throw new FieldException('error email', 'email');
                 $user = User::findFirst(array("email='{$email}'"));
-                if(!$user) throw new UserException('error user');
+                if(!$user) throw new FieldException('Пользователя с таким email нет');
 
                 $user->hashrecovery = $random->uuid();
                 $user->save();
@@ -94,7 +98,10 @@ class RegisterController extends Controller
                     ->to($user->email)
                     ->subject('Восстановление пароля в системе ФАС');
                 $message->send();
-                echo json_encode(array('status' => 'ok'));
+                echo json_encode(array(
+                    'status' => 'ok',
+                    'email' => $email
+                ));
                 exit;
             } else if($this->request->isGet()){
                 $hashrecoverypass = $this->request->get('recovery');
@@ -114,12 +121,14 @@ class RegisterController extends Controller
                     ->to($user->email)
                     ->subject('Восстановление пароля в системе ФАС');
                 $message->send();
+                $this->response->redirect('/?success=recovery');
             }
         } catch (FieldException $e){
-            echo json_encode(array('status' => $e->getMessage()));
-            exit;
+            $this->flashSession->error($e->getMessage());
+            //echo $e->getMessage();
+            $this->response->redirect('/');
         }
-        $this->response->redirect('/');
+        //$this->response->redirect('/');
     }
 
     private function checkUser( $data ){
@@ -135,7 +144,7 @@ class RegisterController extends Controller
         if($data['password'] != $data['confpassword']) throw new FieldException('Пароли не совпадают', 'confpassword');
 
         $user = User::find("email = '{$data['email']}'");
-        if (count($user)) throw new FieldException('Пользователь с таким email уже есть', 'user');
+        if (count($user)) throw new FieldException('Пользователь с таким email уже есть', 'email');
 
     }
 }
