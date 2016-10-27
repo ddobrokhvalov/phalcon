@@ -260,7 +260,7 @@ var complaint = {
     saveAsDraft: function () {
         $("#auctionData").val(this.auctionData);
         $("#arguments_data").val(complaint.arguments_data + "");
-        $("#complaint_text").val(this.complainText);
+       // $("#complaint_text").val(this.complainText);
         $("#complaint_name").val(this.complainName);
         $("#applicant_id").val(applicant.id);
 
@@ -273,8 +273,8 @@ var complaint = {
         // setTimeout(function () {
         //     $("#add-complaint-form").submit();
         // }, 2000);
-
-        $("#add-complaint-form").submit();
+        if(signSavedComplaint == false)
+         $("#add-complaint-form").submit();
 
 
 

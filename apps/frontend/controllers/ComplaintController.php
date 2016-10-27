@@ -371,9 +371,8 @@ class ComplaintController extends ControllerBase
             $data["{$value[0]}"] = $value[1];
         }
         $complaint = new Complaint();
-      
         $complaint->addComplaint($data);
-        
+
 
         if ($complaint->save() == false) {
             //$this->flashSession->error('Не выбран заявитель');
@@ -434,7 +433,7 @@ class ComplaintController extends ControllerBase
                 }
             }
             $this->flashSession->success('Жалоба сохранена');
-            return $this->response->redirect('complaint/edit/' . $complaint->id);
+            return $this->response->redirect('complaint/edit/' . $complaint->id . '?action=edit');
             //$response = array('result' => 'success', 'id' => $complaint->id);
         }
         /*header('Content-type: application/json');
