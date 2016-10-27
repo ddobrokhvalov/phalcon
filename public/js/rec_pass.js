@@ -29,12 +29,12 @@ $(document).ready(function () {
         //$('#pop-done').modal('show');
         $('#pop-done h2').text('Восстановление');
         $('.pop-done-txt').html('На ваш email выслан новый пароль');
-        $('#pop-done').show();
+        $('#pop-done').css('display', 'block').animate({opacity: 1, top: '35%'}, 200);
         $('#overlay').show();
 
         $('body').on('click', '.logreg', function(){
-            $('#pop-done').hide();
-            $('#pop-login').show();
+            $('#pop-done').css('display', 'none');
+            $('#pop-login').css('display', 'block').animate({opacity: 1, top: '35%'}, 200);
         });
     }
 });
