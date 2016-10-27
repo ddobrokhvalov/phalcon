@@ -131,7 +131,7 @@ class RegisterController extends Controller
         //$this->response->redirect('/');
     }
 
-    public function callback(){
+    public function callbackAction(){
         if ($this->request->isPost()) {
             $phone = $this->request->getPost('phone');
             if(preg_match('/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/', $phone)){
