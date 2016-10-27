@@ -73,6 +73,7 @@ class ComplaintController extends ControllerBase
             $url = '/complaint/index';
         }
         $this->view->searchurl = $url;
+        $this->view->searhparam = $search;
         $this->view->page = $pages;
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->view->index_action = true;
