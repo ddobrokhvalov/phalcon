@@ -2188,8 +2188,20 @@ input[type="radio"]:checked + label {
     overflow: hidden;
     width: 100%;
 }
-.c-jd2-f-cat label {
-    background: #cacdd5 none repeat scroll 0 0;
+/*.c-jd2-f-cat label {*/
+    /*background: #cacdd5;*/
+    /*color: #fff;*/
+    /*cursor: pointer;*/
+    /*float: left;*/
+    /*font-size: 22px;*/
+    /*font-weight: bold;*/
+    /*line-height: 88px;*/
+    /*text-align: center;*/
+    /*text-transform: uppercase;*/
+    /*width: 50%;*/
+/*}*/
+.c-jd2-f-cat span {
+    background: #cacdd5;
     color: #fff;
     cursor: pointer;
     float: left;
@@ -2200,9 +2212,12 @@ input[type="radio"]:checked + label {
     text-transform: uppercase;
     width: 50%;
 }
-.c-jd2-f-cat input[type="radio"]:checked + label {
-    background: #00aeef none repeat scroll 0 0;
+.c-jd2-f-cat .skyColor {
+    background: #00aeef;
 }
+/*.c-jd2-f-cat input[type="radio"]:checked + label {*/
+    /*background: #00aeef none repeat scroll 0 0;*/
+/*}*/
 .c-jadd3 {
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
