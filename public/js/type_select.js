@@ -17,8 +17,8 @@ jQuery(document).ready(function($) {
 		}
 		if ($(this).hasClass('argo')) {
 			$(this).parent().parent().parent().parent().parent().parent().find('.hidden-select').val(choosenValue).prop('selected', true);
-			//$(this).parent().parent().parent().parent().parent().find('.current-option span').text($(this).text());
-            $(this).parent().parent().parent().parent().parent().find('.current-option span').text('Выберите категорию');
+			$(this).parent().parent().parent().parent().parent().find('.current-option span').text($(this).text());
+            //$(this).parent().parent().parent().parent().parent().find('.current-option span').text('Выберите категорию');
 			$(this).parent().parent().parent().parent().parent().find('.current-option span').removeClass('rotate-icon');
 			$(this).parent().parent().parent().parent().parent().find('.current-option div').removeClass('transDiv');
 			$(this).parent().parent().parent().parent().parent().find('.current-option').attr('data-value', choosenValue);
