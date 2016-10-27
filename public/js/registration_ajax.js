@@ -11,9 +11,19 @@ $(document).ready(function () {
                 if (res.status){
                     switch (res.status) {
                         case 'ok':
-                            $(this).find('input[name="email"]').val('')
-                            $(this).find('input[name="password"]').val('')
-                            $(this).find('input[name="confpassword"]').val('')
+                            $(this).find('input[name="email"]')
+                                .removeClass('c-inp-error')
+                                .removeClass('c-inp-done')
+                                .val('');
+                            $(this).find('input[name="password"]')
+                                .removeClass('c-inp-error')
+                                .removeClass('c-inp-done')
+                                .val('');
+                            $(this).find('input[name="confpassword"]')
+                                .removeClass('c-inp-error')
+                                .removeClass('c-inp-done')
+                                .val('');
+                            $(this).find('.c-inp-err-t').text('');
                             $(this).parent().hide();
                             $('#pop-done h2').text('Подтверждение');
                             $('.pop-done-txt').html('На указанную вами электронную почту<br>'+ res.email +' отправлено письмо для завершения<br>регистрации');
@@ -21,7 +31,7 @@ $(document).ready(function () {
                         break;
                     }
                 } else if(res.error){
-                    $(this).find('input').each(function(){
+                    $(this).find('input').each(function() {
                         $(this).removeClass('c-inp-done');
                     });
                     for(mess in res.error){
