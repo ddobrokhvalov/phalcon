@@ -180,9 +180,9 @@ var currentStatus ='{{ status }}';
 <div id="pop-order" class="modal_div">
     <h2>Заказ жалобы</h2>
     <form method="post">
-        <label for="poplog-inp1">Введите номер извещения (заказа)</label>
+        <label class="fontNormal" for="poplog-inp1">Введите номер извещения (заказа)</label>
         <div class="c-inp-err-t"></div>
-        <input type="text" id="poplog-inp1" required="required" name="auction_id" pattern="^[0]{1}[\d]{18}$" placeholder="Введите номер извещения 19 цифр" maxlength="19">
+        <input type="text" id="poplog-inp1" required="required" name="auction_id" placeholder="Введите номер извещения 19 цифр" maxlength="19"> <!-- pattern="^[0]{1}[\d]{18}$" -->
         <input type="submit" value="Заказать">
     </form>
     <div class="modal-close"></div>

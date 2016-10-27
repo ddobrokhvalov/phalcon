@@ -8,13 +8,14 @@ $(document).ready(function () {
             dataType: "json",
             context: form,
             success: function(res) {
-                if(res.status && res.status == 'ok'){
-                    $(form).parent().css('display', 'none')
-                    $('#pop-done').css('display', 'block').animate({opacity: 1, top: '35%'}, 200);
-                } else if(res.error){
-                    $(this).find('.c-inp-err-t').text(res.error);
+                if (res.status && res.status == 'ok'){
+                    $(form).parent().hide();
+                    $('#pop-done').show().animate({opacity: 1, top: '35%'}, 200);
+                } else if (res.error) {
+                    $(this).find('.c-inp-err-t').text('Неверный формат данных');
+                    $(this).find('input[type="text"]').addClass('c-inp-error');
                 }
-            },
+            }
         });
         return false;
     });
