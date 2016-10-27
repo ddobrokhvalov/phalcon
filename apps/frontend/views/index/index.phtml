@@ -264,10 +264,10 @@
 <div id="pop-login" class="modal_div">
     <h2>Вход в систему</h2>
     <form action="/login/start" method="post">
-        <label for="poplog-inp1">E-mail</label>
+        <label class="fontNormal" for="poplog-inp1">E-mail</label>
         <div class="c-inp-err-t"></div>
         <input type="text" id="poplog-inp1" required="required" name="email">
-        <label for="poplog-inp2">Пароль</label>
+        <label class="fontNormal" for="poplog-inp2">Пароль</label>
         <div class="c-inp-err-t"></div>
         <input type="password" id="poplog-inp2" required="required" name="password">
         <input type="submit" value="Войти">
@@ -275,15 +275,17 @@
             <span> <a href="#pop-start" class="open_modal" onclick="$('#pop-login').hide()">Регистрация нового пользователя</a><a href="#pop-recovery" class="open_modal" onclick="$('#pop-login').hide()">Забыли пароль?</a></span>
         </div>
     </form>
-
+    <div class="already-reg already-reg-float">
+        <p>Регистрация в системе подтверждает Ваше согласие с условиями пользовательского соглашения сервиса «ФАС-Онлайн». <a href="#">Просмотреть</a></p>
+    </div>
     <div class="modal-close"></div>
 </div>
 
 <!-- popup callback -->
 <div id="pop-callback" class="modal_div">
     <h2>Заказать звонок</h2>
-    <form action="/register/callback" method="post">
-        <label for="poplog-inp1">Телефон</label>
+    <form method="post">
+        <label class="fontNormal" for="poplog-inp1">Телефон</label>
         <div class="c-inp-err-t"></div>
         <input type="text" id="poplog-inp1" required="required" name="phone">
         <input type="submit" value="Отправить">
@@ -368,3 +370,4 @@
 <script src="/js/registration_ajax.js"></script>
 <script src="/js/login_ajax.js"></script>
 <script src="/js/rec_pass.js"></script>
+<script src="/js/callback_ajax.js"></script>
