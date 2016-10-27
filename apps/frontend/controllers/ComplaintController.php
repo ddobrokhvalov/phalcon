@@ -235,6 +235,7 @@ class ComplaintController extends ControllerBase
 
         if(is_null($complaint->date_start)) $complaint->date_start = $complaint->nachalo_podachi;
 
+        $this->view->edit_mode = 1;
         $this->view->complaint = $complaint;
         $this->view->complaint_question = $complaintQuestion;
         $this->view->action_edit = false;
@@ -287,6 +288,7 @@ class ComplaintController extends ControllerBase
         }
         die();
         //0190300004615000296
+        //  skyColor
     }
     public function signatureAction(){
 
@@ -307,6 +309,7 @@ class ComplaintController extends ControllerBase
         $arguments = $category->getArguments();
         $ufas = Ufas::find();
 
+        $this->view->edit_mode = 0;
         $this->view->ufas = $ufas;
         $this->view->arguments = $arguments;
     }
@@ -368,8 +371,8 @@ class ComplaintController extends ControllerBase
             $data["{$value[0]}"] = $value[1];
         }
         $complaint = new Complaint();
-
         $complaint->addComplaint($data);
+
 
         if ($complaint->save() == false) {
             //$this->flashSession->error('Не выбран заявитель');
@@ -430,7 +433,7 @@ class ComplaintController extends ControllerBase
                 }
             }
             $this->flashSession->success('Жалоба сохранена');
-            return $this->response->redirect('complaint/edit/' . $complaint->id);
+            return $this->response->redirect('complaint/edit/' . $complaint->id . '?action=edit');
             //$response = array('result' => 'success', 'id' => $complaint->id);
         }
         /*header('Content-type: application/json');
