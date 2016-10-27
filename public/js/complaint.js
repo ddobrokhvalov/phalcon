@@ -777,7 +777,7 @@ function saveComplaintToDocxFile() {
             }
             doc = new Docxgen(content);
             doc.setData({
-                    "applicant_fio": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_full + ', ' + applicant.applicant_info.fio_applicant : applicant.applicant_info.fio_applicant,
+                    "applicant_fio": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : applicant.applicant_info.fio_applicant,
                     "applicant_fio2": applicant.applicant_info.fio_applicant,
                     "applicant_address": applicant.applicant_info.address,
                     "applicant_phone": applicant.applicant_info.telefone,
@@ -788,16 +788,19 @@ function saveComplaintToDocxFile() {
                     "dovod": custom_text,
                     "zakaz_phone": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.tel : auction.responseData.zakazchik[0].tel,
                     "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].kontaktnoe_lico,
-                    "zakaz_kontaktnoe_name": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.name + ', ' + auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].name,
+                    "zakaz_kontaktnoe_name1": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.name : '',
+                    "zakaz_kontaktnoe_name2": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].name,
+                    "kontakt": auction.responseData.zakazchik[0] == null ? 'Контактное лицо:' : 'Название организации:',
                     "zakaz_address": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.pochtovy_adres : auction.responseData.zakazchik[0].pochtovy_adres,
                     "zakaz_mesto": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.mesto_nahogdeniya : "",
-                    "organiz_fio": auction.responseData.contact.name + ', ' + auction.responseData.contact.dolg_lico,
+                    "organiz_fio1": auction.responseData.contact.name,
+                    "organiz_fio2": auction.responseData.contact.dolg_lico,
                     "organiz_phone": auction.responseData.contact.tel,
                     "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
                     "organiz_address": auction.responseData.contact.pochtovy_adres,
                     "izveshchenie": $("#auction_id").val(),
                     "zakupka_name": auction.responseData.info.object_zakupki,
-                    "zayavitel": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_full : "Заявитель"
+                    "zayavitel": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : "Заявитель"
                 }
             );
             doc.render();
@@ -838,7 +841,7 @@ function saveComplaintToDocxFile() {
             }
             doc = new Docxgen(content);
             doc.setData({
-                    "applicant_fio": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_full + ', ' + applicant.applicant_info.fio_applicant : applicant.applicant_info.fio_applicant,
+                    "applicant_fio": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : applicant.applicant_info.fio_applicant,
                     "applicant_fio2": applicant.applicant_info.fio_applicant,
                     "applicant_address": applicant.applicant_info.address,
                     "applicant_phone": applicant.applicant_info.telefone,
@@ -849,16 +852,19 @@ function saveComplaintToDocxFile() {
                     "dovod": custom_text_unformatted,
                     "zakaz_phone": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.tel : auction.responseData.zakazchik[0].tel,
                     "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].kontaktnoe_lico,
-                    "zakaz_kontaktnoe_name": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.name + ', ' + auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].name,
+                    "zakaz_kontaktnoe_name1": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.name : '',
+                    "zakaz_kontaktnoe_name2": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].name,
+                    "kontakt": auction.responseData.zakazchik[0] == null ? 'Контактное лицо:' : 'Название организации:',
                     "zakaz_address": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.pochtovy_adres : auction.responseData.zakazchik[0].pochtovy_adres,
                     "zakaz_mesto": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.mesto_nahogdeniya : "",
-                    "organiz_fio": auction.responseData.contact.name + ', ' + auction.responseData.contact.dolg_lico,
+                    "organiz_fio1": auction.responseData.contact.name,
+                    "organiz_fio2": auction.responseData.contact.dolg_lico,
                     "organiz_phone": auction.responseData.contact.tel,
                     "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
                     "organiz_address": auction.responseData.contact.pochtovy_adres,
                     "izveshchenie": $("#auction_id").val(),
                     "zakupka_name": auction.responseData.info.object_zakupki,
-                    "zayavitel": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_full : "Заявитель"
+                    "zayavitel": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : "Заявитель"
                 }
             );
             doc.render();
@@ -1047,18 +1053,6 @@ function stopSaveCompl() {
     }
 }
 
-
-var navbar = (function () {
-
-    return {
-        test: function () {
-            console.log(123);
-        },
-        test1: function () {
-
-        }
-    }
-}());
 // oop(инкапсуляция и наследование, полиморфизм), module,
 // test app
 // template (lodash, ...), module structure/ module data(setData(name, value), getData)
