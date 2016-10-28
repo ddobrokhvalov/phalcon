@@ -89,4 +89,15 @@ class UsersController extends Controller
         }
     }
 
+    public function checkUserAction(){
+        $user = User::findFirstById($this->session->get('auth')['id']);
+        if(!$user->firstname && !$user->lastname && !$user->patronymic &&
+                !$user->conversion && !$user->phone && !$user->mobile_phone){
+            echo json_encode(array('status' => 'no'));
+            exit;
+        }
+        echo json_encode(array('status' => 'ok'));
+        exit;
+    }
+
 }
