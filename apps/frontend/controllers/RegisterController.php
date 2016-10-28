@@ -13,32 +13,31 @@ class RegisterController extends Controller
 {
     public function indexAction(){
         try{
-            if($this->request->isPost()) {
-                $random = new Random();
-                $data = $this->request->getPost();
-                $this->checkUser( $data );
+            if(! $this->request->isPost()) throw new FieldException('Некорректный метод отправки');
+            $random = new Random();
+            $data = $this->request->getPost();
+            $this->checkUser( $data );
 
-                $user = new User();
-                $user->email = trim($data['email']);
-                $user->password = sha1($data['password']);
-                $user->hashreg = $random->uuid();
-                $user->status = 2;
-                $user->date_registration = date('Y-m-d H:i:s');
-                $user->save();
+            $user = new User();
+            $user->email = trim($data['email']);
+            $user->password = sha1($data['password']);
+            $user->hashreg = $random->uuid();
+            $user->status = 2;
+            $user->date_registration = date('Y-m-d H:i:s');
+            $user->save();
 
-                $message = $this->mailer->createMessageFromView('../views/emails/register', array(
-                                'hashreg'   => $user->hashreg,
-                                'host'      => $this->request->getHttpHost()
-                            ))
-                    ->to($user->email)
-                    ->subject('Регистрация в интеллектуальной системе ФАС');
-                $message->send();
-                echo json_encode(array(
-                    'status' => 'ok',
-                    'email' => $user->email
-                ));
-                exit;
-            }
+            $message = $this->mailer->createMessageFromView('../views/emails/register', array(
+                            'hashreg'   => $user->hashreg,
+                            'host'      => $this->request->getHttpHost()
+                        ))
+                ->to($user->email)
+                ->subject('Регистрация в интеллектуальной системе ФАС');
+            $message->send();
+            echo json_encode(array(
+                'status' => 'ok',
+                'email' => $user->email
+            ));
+            exit;
         } catch (MessageException $messages){
             $temp_err = array();
             foreach ($messages->getArrErrors() as $message) {
@@ -73,9 +72,7 @@ class RegisterController extends Controller
             $this->response->redirect('/?success=confirm');
         } catch (FieldException $e){
             $this->flashSession->error($e->getMessage());
-            //echo $e->getMessage();
             $this->response->redirect('/');
-            //exit;
         }
     }
 
@@ -125,27 +122,26 @@ class RegisterController extends Controller
             }
         } catch (FieldException $e){
             $this->flashSession->error($e->getMessage());
-            //echo $e->getMessage();
             $this->response->redirect('/');
         }
-        //$this->response->redirect('/');
     }
 
     public function callbackAction(){
-        if ($this->request->isPost()) {
+        try {
+            if (!$this->request->isPost()) throw new FieldException('Некорректный метод отправки');
             $phone = $this->request->getPost('phone');
-            if(preg_match('/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/', $phone)){
-                $message = $this->mailer->createMessageFromView('../views/emails/callback', array(
-                    'host'      => $this->request->getHttpHost(),
-                    'phone'  => $phone
-                ))
-                    ->to($this->adminsEmails['order'])
-                    ->subject('Обратный звонок');
-                $message->send();
-                echo json_encode(array('status' => 'ok'));
-            } else {
-                echo json_encode(array('error' => 'Некорректный телефон'));
-            }
+            if(empty('phone')) throw new FieldException('Нет телефона');
+            if(!preg_match('/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/', $phone)) throw  new FieldException('Некорректный телефон');
+            $message = $this->mailer->createMessageFromView('../views/emails/callback', array(
+                'host' => $this->request->getHttpHost(),
+                'phone' => $phone
+            ))
+                ->to($this->adminsEmails['order'])
+                ->subject('Обратный звонок');
+            $message->send();
+            echo json_encode(array('status' => 'ok'));
+        } catch (FieldException $message){
+            echo json_encode(array('error' => $message->getMessage()));
         }
         exit;
     }
