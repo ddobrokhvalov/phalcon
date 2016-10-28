@@ -62,7 +62,7 @@ class OrderController extends ControllerBase
             echo json_encode(array('error' => $temp_err));
         } catch (FieldException $message){
             echo json_encode(array("error" => $message->getMessage()));
-            exit;
         }
+        exit;
     }
 }
