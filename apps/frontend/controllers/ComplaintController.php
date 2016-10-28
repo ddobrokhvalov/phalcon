@@ -234,10 +234,6 @@ class ComplaintController extends ControllerBase
 
 
         if(is_null($complaint->date_start)) $complaint->date_start = $complaint->nachalo_podachi;
-
-
-        ;
-
         $this->view->date_end = $this->checkDateEndSendApp($complaint->okonchanie_podachi);
         $this->view->edit_mode = 1;
         $this->view->complaint = $complaint;
