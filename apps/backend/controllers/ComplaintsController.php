@@ -451,16 +451,18 @@ class ComplaintsController extends ControllerBase
                     }
 
                     $user = User::findFirst($toid);
-                    $message = $this->mailer->createMessageFromView('../views/emails/lawyer', array(
-                        'host' => $this->request->getHttpHost(),
-                        'firstname' => $user->firstname,
-                        'patronymic' => $user->patronymic,
-                        'quies_text' => $quest->text,
-                        'answer_text' => $answer_text
-                    ))
-                        ->to($user->email)
-                        ->subject('Ответ юриста в системе ФАС');
-                    $message->send();
+                    if($user && $user->notifications == 1) {
+                        $message = $this->mailer->createMessageFromView('../views/emails/lawyer', array(
+                            'host' => $this->request->getHttpHost(),
+                            'firstname' => $user->firstname,
+                            'patronymic' => $user->patronymic,
+                            'quies_text' => $quest->text,
+                            'answer_text' => $answer_text
+                        ))
+                            ->to($user->email)
+                            ->subject('Ответ юриста в системе ФАС');
+                        $message->send();
+                    }
                 }
             }
             $response = new \Phalcon\Http\Response();

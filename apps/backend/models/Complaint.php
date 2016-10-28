@@ -337,18 +337,20 @@ class Complaint extends Model
                 $message->save();
 
                 $user = User::findFirst(array("id={$user_id}"));
-                $message = $this->mailer->createMessageFromView('../views/emails/status', array(
-                    'status'    => $message_text,
-                    'host'      => $this->request->getHttpHost(),
-                    'firstname' => $user->firstname,
-                    'patronymic' => $user->patronymic,
-                    'auction_id' => $complaint->auction_id,
-                    'comp_id'    => $complaint->id,
-                    'comp_name'  => $complaint->complaint_name
-                ))
-                    ->to($user->email)
-                    ->subject('Изменение статуса жалобы в системе ФАС');
-                $message->send();
+                if($user && $user->notifications == 1) {
+                    $message = $this->mailer->createMessageFromView('../views/emails/status', array(
+                        'status' => $message_text,
+                        'host' => $this->request->getHttpHost(),
+                        'firstname' => $user->firstname,
+                        'patronymic' => $user->patronymic,
+                        'auction_id' => $complaint->auction_id,
+                        'comp_id' => $complaint->id,
+                        'comp_name' => $complaint->complaint_name
+                    ))
+                        ->to($user->email)
+                        ->subject('Изменение статуса жалобы в системе ФАС');
+                    $message->send();
+                }
             }
         }
     }
