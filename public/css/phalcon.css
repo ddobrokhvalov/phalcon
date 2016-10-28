@@ -282,14 +282,14 @@ a:visited {
     position: relative;
     width: 100%;
 }
-.mstripe-3 h2 {
-    float: left;
-    font-size: 40px;
-    font-weight: 100;
-    margin: 0 0 55px;
-    text-align: center;
-    width: 100%;
-}
+/*.mstripe-3 h2 {*/
+    /*float: left;*/
+    /*font-size: 40px;*/
+    /*font-weight: 100;*/
+    /*margin: 0 0 55px;*/
+    /*text-align: center;*/
+    /*width: 100%;*/
+/*}*/
 .ms3-macbook {
     background: rgba(0, 0, 0, 0) url("../images/macbook.png") no-repeat scroll center center;
     float: left;
@@ -303,6 +303,22 @@ a:visited {
     height: 447px;
     margin: 33px 0 0 113px;
     width: 715px;
+}
+.mstripe-3 h2 {
+    float: left;
+    font-size: 40px;
+    font-weight: 100;
+    margin: 0 0 45px;
+    text-align: center;
+    width: 100%;
+}
+.mstripe-3 h2 span {
+    float: left;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 22px;
+    margin: 10px 0 0;
+    width: 100%;
 }
 .ms3-list {
     float: left;
@@ -360,7 +376,7 @@ a:visited {
     background: #fefcf6 url("../images/ms4-bg.jpg") no-repeat scroll center bottom / 100% auto;
     float: left;
     overflow: hidden;
-    padding: 130px 0 355px;
+    padding: 100px 0 355px;
     position: relative;
     width: 100%;
 }
@@ -449,6 +465,9 @@ a:visited {
     line-height: 22px;
     text-align: center;
     width: 20%;
+}
+.ms4-s-b-smallHeight {
+    height: 220px;
 }
 .ms4-s-b-i {
     float: left;
