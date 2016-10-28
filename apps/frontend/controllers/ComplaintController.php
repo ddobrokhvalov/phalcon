@@ -234,7 +234,7 @@ class ComplaintController extends ControllerBase
 
 
         if(is_null($complaint->date_start)) $complaint->date_start = $complaint->nachalo_podachi;
-
+        $this->view->date_end = $this->checkDateEndSendApp($complaint->okonchanie_podachi);
         $this->view->edit_mode = 1;
         $this->view->complaint = $complaint;
         $this->view->complaint_question = $complaintQuestion;
@@ -837,12 +837,14 @@ class ComplaintController extends ControllerBase
         }
     }
 
-    private function checkDateEndSendApp($dateOff, &$result){
+    private function checkDateEndSendApp($dateOff, &$result = false){
         $dateOff = strtotime($dateOff);
         $nowTime = strtotime("now");
 
         if($nowTime > $dateOff){
-            $result['date'] = 1;
+            if($result) {
+                $result['date'] = 1;
+            }
             return 1;
         }
         return 0;
