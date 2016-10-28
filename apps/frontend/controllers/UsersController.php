@@ -23,24 +23,18 @@ class UsersController extends Controller
     {
         try {
             $data = $this->request->getPost();
-            $validation = new EditUserValidator();
             $user = User::findFirstById($this->session->get('auth')['id']);
-            $messages = $validation->validate($data);
             $data['current_path'] = str_replace('public//', '', $data['current_path']);
             if (!$user) throw new FieldException('not user', 'user');
-
             if (empty($data['new_password']) && empty($data['old_password'] && empty($data['new_password_confirm']))) {
+                $validation = new EditUserValidator();
+                $messages = $validation->validate($data);
                 if (count($messages)) throw new MessageException($messages);
             }
 
-            $data['phone'] = $this->filter->sanitize($data['phone'], trim);
-            $data['lastname'] = $this->filter->sanitize($data['lastname'], trim);
-            $data['firstname'] = $this->filter->sanitize($data['firstname'], trim);
-            $data['patronymic'] = $this->filter->sanitize($data['patronymic'], trim);
-            $data['new_password'] = $this->filter->sanitize($data['new_password'], trim);
-            $data['old_password'] = $this->filter->sanitize($data['old_password'], trim);
-            $data['new_password_confirm'] = $this->filter->sanitize($data['new_password_confirm'], trim);
-            $data['current_path'] = str_replace('public//', '', $data['current_path']);
+            foreach ($data as $key){
+                $data[$key] =  $this->filter->sanitize($data[$key], trim);
+            }
 
             if (!empty($data['current_path']) || $data['current_path'] == '/login/start') {
                 $data['current_path'] = '/complaint/index';
