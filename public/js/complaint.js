@@ -1042,7 +1042,7 @@ function stopSaveCompl() {
     $('.template_item').each(function () {
         if ($(this).attr('data-required') == "1" || !$(this).attr('data-required')) flag = true;
     });
-    if ($('#overdueOrNot').val()) flag = true;
+    if ($('#overdueOrNot').val() === '0') flag = true;
     if (flag) {
         if (complaint.prepareData()) {
             if (saveComplaintToDocxFile()) {
