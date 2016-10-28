@@ -908,13 +908,34 @@ input[type="checkbox"]:checked:disabled + label {
     top: 27px;
 }
 .ch-r-sett {
-    background: rgba(0, 0, 0, 0) url("../images/icon-ch-sett.png") no-repeat scroll center center;
+    position: relative;
     cursor: pointer;
     float: left;
     height: 90px;
     margin: 0 26px 0 0;
     position: relative;
     width: 22px;
+}
+.ch-r-sett:before {
+    position: absolute;
+    content: '';
+    top: 50%;
+    left: 0;
+    margin-top: -11px;
+    width: 22px;
+    height: 22px;
+    background:url("../images/icon-ch-sett.png") 0 0 no-repeat;
+}
+.ch-r-sett:hover:before {
+    animation: rotate-set-copy 4s infinite;
+}
+@keyframes rotate-set-copy {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@-webkit-keyframes rotate-set-copy {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
 }
 .ch-r-logout {
     background: rgba(0, 0, 0, 0) url("../images/icon-ch-logout.png") no-repeat scroll center center;
