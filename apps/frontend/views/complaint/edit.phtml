@@ -137,6 +137,7 @@
             
             {% if complaint.status == 'draft' and action_edit === true %}
             <form action="/complaint/update" id="add-complaint-form" enctype="multipart/form-data" method="POST">
+                <input type="hidden" class="date_end" value="{{ date_end }}">
             <input type="hidden" name="ufas_id" value="{{comp_inn}}">
             <input type="hidden" name="auctionData" id="auctionData" value="">
             <input type="hidden" name="arguments_data" id="arguments_data" value="">
