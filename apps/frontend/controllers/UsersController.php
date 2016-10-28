@@ -65,6 +65,8 @@ class UsersController extends Controller
             $user->lastname = empty($data['lastname']) ? $user->lastname : $data['lastname'];
             $user->firstname = empty($data['firstname']) ? $user->firstname : $data['firstname'];
             $user->patronymic = empty($data['patronymic']) ? $user->patronymic : $data['patronymic'];
+            $user->conversion = empty($data['conversion']) ? $user->conversion : $data['conversion'];
+            $user->mobile_phone = (empty($data['mobile_phone']) || !preg_match('/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/',$data['mobile_phone'])) ? $user->mobile_phone : $data['mobile_phone'];
             $user->notifications = empty($data['notifications']) ? 0 : 1;
             $user->update();
             return $this->response->redirect($data['current_path']);
