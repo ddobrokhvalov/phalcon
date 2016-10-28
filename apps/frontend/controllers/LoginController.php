@@ -40,7 +40,6 @@ class LoginController extends Controller
         if ($auth)
             $this->session->destroy();
         return $this->response->redirect('/');
-        //header( 'Location: http://'.$_SERVER['HTTP_HOST'] );
     }
 
     public function startAction() {
@@ -57,27 +56,24 @@ class LoginController extends Controller
                 }
             }
 
-            $checkEmail = User::findFirst(array(
+            $user = User::findFirst(array(
                     "email = :email: ",
                     'bind' => array(
                         'email' => $email,
                     )
                 )
             );
-            if(!$checkEmail){
+
+            if(!$user){
                 echo json_encode(array('error' => array('email' => 'Пользователь с таким email не зарегистрирован')));
                 exit;
             }
 
-            $user = User::findFirst(
-                array(
-                    "email = :email:  AND password = :password:",
-                    'bind' => array(
-                        'email' => $email,
-                        'password' => sha1($password)
-                    )
-                )
-            );
+            if($user->password != sha1($password)) {
+                echo json_encode(array('error' => array('email' => 'Имя пользователя или пароль введен не верно')));
+                exit;
+            }
+
             if ($user != false) {
                 if($user->status == 0){
                     echo json_encode(array('error' => array('email' => 'Ваш аккаунт заблокирован. Для разблокировки обратитесь к администратору по номеру телефона или E-mail')));
@@ -95,20 +91,7 @@ class LoginController extends Controller
                 exit;
             }
         }
-//        return $this->dispatcher->forward(
-//            array(
-//                'controller' => 'login',
-//                'action' => 'index'
-//            )
-//        );
-
-
         return $this->response->redirect('complaint/index');
-    }
-
-    public function authorizeAction()
-    {
-
     }
 
     public function indexAction()
