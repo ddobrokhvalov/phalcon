@@ -162,6 +162,7 @@ class ComplaintsController extends ControllerBase
             $complaintQuestion = $question->getComplainQuestionAndAnswer($id);
             $this->setMenu();
             $this->view->complaint = $complaint;
+            $this->view->date_end = $this->checkDateEndSendApp($complaint->okonchanie_podachi);
             $this->view->complaint_question = $complaintQuestion;
             $this->view->action_edit = false;
             if (isset($_GET['action']) && $_GET['action'] == 'edit' && $complaint->status =='draft')
@@ -646,5 +647,15 @@ class ComplaintsController extends ControllerBase
         }
         $this->flashSession->error('Поле с вопросом не заполнено');
         return $this->response->redirect('/admin/complaints/edit/' . $complaint_id);
+    }
+
+    private function checkDateEndSendApp($dateOff, &$result = false){
+        $dateOff = strtotime($dateOff);
+        $nowTime = strtotime("now");
+
+        if($nowTime > $dateOff){
+            return 1;
+        }
+        return 0;
     }
 }
