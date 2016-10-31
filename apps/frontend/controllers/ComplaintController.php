@@ -23,6 +23,7 @@ use  Phalcon\Mvc\Model\Query\Builder;
 use Multiple\Frontend\Models\Messages;
 use Phalcon\Mvc\Url;
 use Multiple\Library\Translit;
+use Multiple\Frontend\Models\User;
 
 
 
@@ -207,6 +208,7 @@ class ComplaintController extends ControllerBase
         $this->setMenu();
 
         $this->view->applicant_session = $applicant->id;
+        $this->view->checkUser = $this->checkUser();
         $this->applicant_id = $applicant->id;
 //        $parser = new Parser();
 //        $data = $parser->parseAuction((string)$complaint->auction_id);
@@ -311,6 +313,7 @@ class ComplaintController extends ControllerBase
 
         $this->view->edit_mode = 0;
         $this->view->ufas = $ufas;
+        $this->view->checkUser = $this->checkUser();
         $this->view->arguments = $arguments;
     }
 
@@ -851,5 +854,18 @@ class ComplaintController extends ControllerBase
     private function showRequiredOrNotRequired($arguments, $data){
         if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) $arguments->andWhere("required = 1");
         if ($data['checkDate'] == 0) $arguments->andWhere("required = 0");
+    }
+
+    private function checkUser(){
+        $user = User::findFirstById($this->session->get('auth')['id']);
+
+        if(!$user->firstname)    return 1;
+        if(!$user->lastname)     return 1;
+        if(!$user->patronymic)   return 1;
+        if(!$user->conversion)   return 1;
+        if(!$user->phone)        return 1;
+        if(!$user->mobile_phone) return 1;
+
+        return 0;
     }
 }
