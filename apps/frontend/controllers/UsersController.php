@@ -91,12 +91,27 @@ class UsersController extends Controller
 
     public function checkUserAction(){
         $user = User::findFirstById($this->session->get('auth')['id']);
-        if(!$user->firstname && !$user->lastname && !$user->patronymic &&
-                !$user->conversion && !$user->phone && !$user->mobile_phone){
-            echo json_encode(array('status' => 'no'));
-            exit;
+        $res_arr = array();
+        $res_arr['error'] = array();
+        if(!$user->firstname){
+            $res_arr['error']['firstname'] = 'Имя обязательное поле';
         }
-        echo json_encode(array('status' => 'ok'));
+        if(!$user->lastname){
+            $res_arr['error']['lastname'] = 'Фамилия обязательное поле';
+        }
+        if(!$user->patronymic){
+            $res_arr['error']['patronymic'] = 'Отчество обязательное поле';
+        }
+        if(!$user->conversion){
+            $res_arr['error']['conversion'] = 'Как к вам обращаться обязательное поле';
+        }
+        if(!$user->phone){
+            $res_arr['error']['phone'] = 'Телефон обязательное поле';
+        }
+        if(!$user->mobile_phone){
+            $res_arr['error']['mobile_phone'] = 'Мобильный телефон обязательное поле';
+        }
+        echo json_encode(array($res_arr));
         exit;
     }
 
