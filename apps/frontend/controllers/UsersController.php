@@ -93,22 +93,22 @@ class UsersController extends Controller
         $user = User::findFirstById($this->session->get('auth')['id']);
         $res_arr = array();
         if(!$user->firstname){
-            $res_arr['firstname'] = 'Имя обязательное поле';
+            $res_arr['firstname'] = 'Имя, необходимо заполнить';
         }
         if(!$user->lastname){
-            $res_arr['lastname'] = 'Фамилия обязательное поле';
+            $res_arr['lastname'] = 'Фамилия, необходимо заполнить';
         }
         if(!$user->patronymic){
-            $res_arr['patronymic'] = 'Отчество обязательное поле';
+            $res_arr['patronymic'] = 'Отчество, необходимо заполнить';
         }
         if(!$user->conversion){
-            $res_arr['conversion'] = 'Как к вам обращаться обязательное поле';
+            $res_arr['conversion'] = 'Как к вам обращаться, необходимо заполнить';
         }
         if(!$user->phone){
-            $res_arr['phone'] = 'Телефон обязательное поле';
+            $res_arr['phone'] = 'Телефон, необходимо заполнить ';
         }
         if(!$user->mobile_phone){
-            $res_arr['mobile_phone'] = 'Мобильный телефон обязательное поле';
+            $res_arr['mobile_phone'] = 'Мобильный телефон, необходимо заполнить ';
         }
         echo json_encode(['error' => $res_arr ]);
         exit;
