@@ -9,6 +9,7 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function(res) {
                     if (res.error) {
+                        $('.ch-r-s-inf-f.userData .c-inp-err-t').text('');
                         for (error in res.error) {
                             var keyName = error,
                                 keyData = res.error[error];
