@@ -1,9 +1,14 @@
 $(document).ready(function() {
     $('.opacity-cap-compl').click(function() {
-        if ($(this).hasClass('search-required')) {
-            methodProcurement('hasReq');
+        var fieldsUserCheck = $(this).attr('data-userfields');
+        if (fieldsUserCheck === '1') {
+            return false;
         } else {
-            methodProcurement();
+            if ($(this).hasClass('search-required')) {
+                methodProcurement('hasReq');
+            } else {
+                methodProcurement();
+            }
         }
     });
     $('#argComplSelect .custom-options').on('click', 'li', function() {
