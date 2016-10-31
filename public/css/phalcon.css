@@ -1771,6 +1771,9 @@ input[type="radio"]:checked + label {
     margin: 5px 0 0;
     width: 100%;
 }
+.c-inp-err-t-minMrgTop {
+    margin: -10px 0 0;
+}
 .c-zv-f-doc {
     background: rgba(0, 0, 0, 0) url("../images/icon-f-doc.png") no-repeat scroll left 8px center;
     float: left;

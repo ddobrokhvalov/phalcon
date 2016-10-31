@@ -188,43 +188,49 @@
                     Настройки пользователя
                 </div>
                 <div class="ch-r-s-inf">
-                    <div class="ch-r-s-i-usr">
-                        Добро пожаловать<br>
-                        {{ user.email }}
-                    </div>
-                    <div class="ch-r-s-i-mail">
-                        <form action="/users/changePassword" method="POST">
+                    <form method="POST" id="edit-user">
+                        <div class="ch-r-s-i-usr">
+                            Добро пожаловать<br>
+                            {{ user.email }}
+                        </div>
+                        <div class="ch-r-s-i-mail">
                             <input id="cr1" type="checkbox" name="notifications" hidden  {% if user.notifications == 1%} checked  {% endif %}  value="1"  >
-                        <label for="cr1">Получать уведомления на e-mail</label>
-                    </div>
-                    <div class="ch-r-s-inf-f userData" style="font-weight: normal">
-                        <p>Личные данные</p>
-                        <label for="adm-set-name" class="set-same-lable">
-                            <p>Имя</p>
-                            <input type="text" id="usri1" name="firstname" value="{{user.firstname}}">
-                        </label>
-                        <label for="adm-set-name" class="set-same-lable" >
-                            <p>Фамилия</p>
-                            <input type="text" id="usri1" name="lastname" value="{{user.lastname}}">
-                        </label>
-                        <label for="adm-set-name" class="set-same-lable">
-                            <p>Отчество</p>
-                            <input type="text" id="usri1" name="patronymic" value="{{user.patronymic}}">
-                        </label>
-                        <label for="adm-set-name" class="set-same-lable">
-                            <p>Как к вам обращаться?</p>
-                            <input type="text" id="usri1" name="conversion" value="{{user.conversion}}">
-                        </label>
-                        <label for="adm-set-name" class="set-same-lable">
-                            <p>Телефон</p>
-                            <input type="text" id="usri1" name="phone" value="{{user.phone}}">
-                        </label>
-                        <label for="adm-set-name" class="set-same-lable">
-                            <p>Мобильный телефон</p>
-                            <input type="text" id="usri1" name="mobile_phone" value="{{user.mobile_phone}}">
-                        </label>
-                    </div>
-                    <div class="ch-r-s-inf-f userData" >
+                            <label for="cr1">Получать уведомления на e-mail</label>
+                        </div>
+                        <div class="ch-r-s-inf-f userData" style="font-weight: normal">
+                            <p>Личные данные</p>
+                            <label for="adm-set-name" class="set-same-lable">
+                                <p>Имя</p>
+                                <div class="c-inp-err-t c-inp-err-t-minMrgTop"></div>
+                                <input type="text" id="usri1" name="firstname" required value="{{user.firstname}}">
+                            </label>
+                            <label for="adm-set-name" class="set-same-lable" >
+                                <p>Фамилия</p>
+                                <div class="c-inp-err-t c-inp-err-t-minMrgTop"></div>
+                                <input type="text" id="usri1" name="lastname" required value="{{user.lastname}}">
+                            </label>
+                            <label for="adm-set-name" class="set-same-lable">
+                                <p>Отчество</p>
+                                <div class="c-inp-err-t c-inp-err-t-minMrgTop"></div>
+                                <input type="text" id="usri1" name="patronymic" required value="{{user.patronymic}}">
+                            </label>
+                            <label for="adm-set-name" class="set-same-lable">
+                                <p>Как к вам обращаться?</p>
+                                <div class="c-inp-err-t c-inp-err-t-minMrgTop"></div>
+                                <input type="text" id="usri1" name="conversion" required value="{{user.conversion}}">
+                            </label>
+                            <label for="adm-set-name" class="set-same-lable">
+                                <p>Телефон</p>
+                                <div class="c-inp-err-t c-inp-err-t-minMrgTop"></div>
+                                <input type="text" id="usri1" name="phone" required value="{{user.phone}}">
+                            </label>
+                            <label for="adm-set-name" class="set-same-lable">
+                                <p>Мобильный телефон</p>
+                                <div class="c-inp-err-t c-inp-err-t-minMrgTop"></div>
+                                <input type="text" id="usri1" name="mobile_phone" required value="{{user.mobile_phone}}">
+                            </label>
+                        </div>
+                        <div class="ch-r-s-inf-f userData" >
                             <span>Сменить пароль</span>
                             <label for="usri1">Старый пароль</label>
                             <input type="password" id="usri1" name="old_password">
@@ -234,8 +240,8 @@
                             <input type="password" id="usri3" name="new_password_confirm">
                             <input type="submit" value="Сохранить">
                             <input type="hidden" id="current_path" name="current_path" value="">
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
 

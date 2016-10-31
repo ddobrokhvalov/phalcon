@@ -32,8 +32,8 @@ class UsersController extends Controller
                 if (count($messages)) throw new MessageException($messages);
             }
 
-            foreach ($data as $key){
-                $data[$key] =  $this->filter->sanitize($data[$key], trim);
+            foreach ($data as $key => $value){
+                $data[$key] =  $this->filter->sanitize($value, 'trim');
             }
 
             if (!empty($data['current_path']) || $data['current_path'] == '/login/start') {
@@ -52,24 +52,26 @@ class UsersController extends Controller
                     throw new FieldException('Неправильный старый пароль', 'oldpassword');
                 }
             }
-            $this->flashSession->success('Данные сохранены');
 
+            echo json_encode(array('status' => 'ok'));
         } catch (MessageException $messages){
+            $temp_arr = array();
             foreach ($messages->getArrErrors() as $message) {
-                $this->flashSession->error($message->getMessage());
+                $temp_arr[$message->getField()][] = $message->getMessage();
             }
+            echo json_encode(array('error' => $temp_arr));
         } catch (FieldException $e){
-            $this->flashSession->error($e->getMessage());
+            echo json_encode(array('error' => array( $e->getField() => $e->getMessage())));
         } finally{
             $user->phone = empty($data['phone']) ? $user->phone : $data['phone'];
             $user->lastname = empty($data['lastname']) ? $user->lastname : $data['lastname'];
             $user->firstname = empty($data['firstname']) ? $user->firstname : $data['firstname'];
             $user->patronymic = empty($data['patronymic']) ? $user->patronymic : $data['patronymic'];
             $user->conversion = empty($data['conversion']) ? $user->conversion : $data['conversion'];
-            $user->mobile_phone = (empty($data['mobile_phone']) || !preg_match('/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/',$data['mobile_phone'])) ? $user->mobile_phone : $data['mobile_phone'];
+            $user->mobile_phone = empty($data['mobile_phone']) ? $user->mobile_phone : $data['mobile_phone'];
             $user->notifications = empty($data['notifications']) ? 0 : 1;
             $user->update();
-            return $this->response->redirect($data['current_path']);
+            exit;
         }
     }
 
@@ -85,6 +87,31 @@ class UsersController extends Controller
             $this->view->disable();
             echo json_encode($data);
         }
+    }
+
+    public function checkUserAction(){
+        $user = User::findFirstById($this->session->get('auth')['id']);
+        $res_arr = array();
+        if(!$user->firstname){
+            $res_arr['firstname'] = 'Имя, необходимо заполнить';
+        }
+        if(!$user->lastname){
+            $res_arr['lastname'] = 'Фамилия, необходимо заполнить';
+        }
+        if(!$user->patronymic){
+            $res_arr['patronymic'] = 'Отчество, необходимо заполнить';
+        }
+        if(!$user->conversion){
+            $res_arr['conversion'] = 'Как к вам обращаться, необходимо заполнить';
+        }
+        if(!$user->phone){
+            $res_arr['phone'] = 'Телефон, необходимо заполнить ';
+        }
+        if(!$user->mobile_phone){
+            $res_arr['mobile_phone'] = 'Мобильный телефон, необходимо заполнить ';
+        }
+        echo json_encode(['error' => $res_arr ]);
+        exit;
     }
 
 }
