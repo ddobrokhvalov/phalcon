@@ -48,7 +48,7 @@ class OrderController extends ControllerBase
                     'order' => $order
                 ))
                     ->to($this->adminsEmails['order'])
-                    ->subject('Новый заказ в системе ФАС');
+                    ->subject('Новый заказ в системе ФАС-Онлайн');
                 $message->send();
 
                 echo json_encode(array('status' => 'ok'));

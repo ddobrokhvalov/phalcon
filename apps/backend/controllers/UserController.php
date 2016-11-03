@@ -344,14 +344,14 @@ class UserController extends ControllerBase
                         'host' => $this->request->getHttpHost()
                     ))
                         ->bcc(implode(',', $arr_emails))
-                        ->subject('Вы заблокированы в системе ФАС');
+                        ->subject('Вы заблокированы в системе ФАС-Онлайн');
                     $message->send();
                 } else {
                     $message = $this->mailer->createMessageFromView('../views/emails/unblock', array(
                         'host' => $this->request->getHttpHost()
                     ))
                         ->bcc(implode(',', $arr_emails))
-                        ->subject('Вы разблокированы в системе ФАС');
+                        ->subject('Вы разблокированы в системе ФАС-Онлайн');
                     $message->send();
                 }
             }
@@ -400,7 +400,7 @@ class UserController extends ControllerBase
                 'body' => $body,
             ))
                 ->bcc(implode(',',$arr_emails ))
-                ->subject('Сообщение в системе ФАС');
+                ->subject('Сообщение в системе ФАС-Онлайн');
             $message->send();
         }
 

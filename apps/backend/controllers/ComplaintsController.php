@@ -461,7 +461,7 @@ class ComplaintsController extends ControllerBase
                             'answer_text' => $answer_text
                         ))
                             ->to($user->email)
-                            ->subject('Ответ юриста в системе ФАС');
+                            ->subject('Ответ юриста в системе ФАС-Онлайн');
                         $message->send();
                     }
                 }

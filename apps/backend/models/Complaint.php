@@ -348,7 +348,7 @@ class Complaint extends Model
                         'comp_name' => $complaint->complaint_name
                     ))
                         ->to($user->email)
-                        ->subject('Изменение статуса жалобы в системе ФАС');
+                        ->subject('Изменение статуса жалобы в системе ФАС-Онлайн');
                     $message->send();
                 }
             }
