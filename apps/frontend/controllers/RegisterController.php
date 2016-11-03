@@ -31,7 +31,7 @@ class RegisterController extends Controller
                             'host'      => $this->request->getHttpHost()
                         ))
                 ->to($user->email)
-                ->subject('Регистрация в интеллектуальной системе ФАС');
+                ->subject('Регистрация в интеллектуальной системе ФАС-Онлайн');
             $message->send();
             echo json_encode(array(
                 'status' => 'ok',
@@ -67,7 +67,7 @@ class RegisterController extends Controller
                 'name'  => $user->firstname
             ))
                 ->to($user->email)
-                ->subject('Подтверждение в интеллектуальной системе ФАС');
+                ->subject('Подтверждение в интеллектуальной системе ФАС-Онлайн');
             $message->send();
             $this->response->redirect('/?success=confirm');
         } catch (FieldException $e){
@@ -93,7 +93,7 @@ class RegisterController extends Controller
                     'host'      => $this->request->getHttpHost()
                 ))
                     ->to($user->email)
-                    ->subject('Восстановление пароля в системе ФАС');
+                    ->subject('Восстановление пароля в системе ФАС-Онлайн');
                 $message->send();
                 echo json_encode(array(
                     'status' => 'ok',
@@ -104,9 +104,9 @@ class RegisterController extends Controller
                 $hashrecoverypass = $this->request->get('recovery');
                 if(!isset($hashrecoverypass) || trim($hashrecoverypass) == '') throw new FieldException('hash error', 'hash');
                 $user = User::findFirst(array("hashrecovery='{$hashrecoverypass}'"));
-                if(!$user) throw new FieldException('error user', 'user');
+                if(!$user) throw new FieldException('Восстановление пароля невозможно, получите новую ссылку', 'user');
 
-                $password = $random->hex(8);
+                $password = $this->random_password();
                 $user->hashrecovery = null;
                 $user->password = sha1($password);
                 $user->save();
@@ -116,7 +116,7 @@ class RegisterController extends Controller
                     'password'  => $password
                 ))
                     ->to($user->email)
-                    ->subject('Восстановление пароля в системе ФАС');
+                    ->subject('Восстановление пароля в системе ФАС-Онлайн');
                 $message->send();
                 $this->response->redirect('/?success=recovery');
             }
@@ -160,6 +160,10 @@ class RegisterController extends Controller
 
         $user = User::find("email = '{$data['email']}'");
         if (count($user)) throw new FieldException('Пользователь с таким email уже есть', 'email');
+    }
 
+    private function random_password($chars = 8) {
+        $letters = 'abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        return substr(str_shuffle($letters), 0, $chars);
     }
 }
