@@ -12,7 +12,7 @@ $(document).ready(function () {
                     $(form).parent().hide();
                     $('#pop-done').show().animate({opacity: 1, top: '35%'}, 200);
                 } else if (res.error) {
-                    $(this).find('.c-inp-err-t').text('Неверный формат данных');
+                    $(this).find('.c-inp-err-t').text(res.error);
                     $(this).find('input[type="text"]').addClass('c-inp-error');
                 }
             }

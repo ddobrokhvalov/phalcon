@@ -58,7 +58,7 @@
         </div>
         <div class="admin-lt-content" id="sort-table">
             <ul class="lt-content-top">
-                <li sort-field="sort-fio"><span class="sortable">ФИО</span></li>
+                <li sort-field="sort-fio"><span class="sortable">Как обращаться</span></li>
                 <li sort-field="sort-phone"><span class="sortable">Телефон</span></li>
                 <li sort-field="sort-applicants"><span class="sortable">Заявители</span></li>
                 <li sort-field="sort-complaints"><span class="sortable">Жалобы</span></li>
@@ -67,7 +67,7 @@
             </ul>
             {% for user in page.items %}
             <ul sort-fio="{{user.lastname}} {{user.firstname}} {{user.patronymic}}" sort-phone="{{user.phone}}" sort-applicants="35" sort-complaints="29" sort-time-to="22.01.2016" class="lt-content-main {% if user.status == 0 %} hidden-arg {% endif %}" detail-url="{{url('admin/user/edit/' ~ user.id)}}">
-                <li><div class="lt-psevdo-check">{{hidden_field('user-id', 'value':user.id)}}</div>{{user.lastname}} {{user.firstname}} {{user.patronymic}}</li>
+                <li><div class="lt-psevdo-check">{{hidden_field('user-id', 'value':user.id)}}</div>{% if user.conversion != '' %} {{user.conversion}} {% else %} Не заполнено поле {% endif %}</li>
                 <li>{{user.phone}}</li>
                 <li>{{ user.users_applicants }}</li>
                 <li>{{ user.users_complaints }}</li>

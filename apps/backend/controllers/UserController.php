@@ -124,7 +124,7 @@ class UserController extends ControllerBase
 
         $post = $this->request->getPost();
         $data['email'] = $post['email'];
-        foreach(['lastname', 'firstname', 'patronymic', 'phone', 'admin_comment'] as $key)
+        foreach(['conversion', 'mobile_phone', 'phone', 'admin_comment'] as $key)
                $data[$key] = $post[$key];
 
         if (strlen($post['password']) > 0)
