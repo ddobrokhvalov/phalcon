@@ -397,6 +397,7 @@ class UserController extends ControllerBase
             $message = $this->mailer->createMessageFromView('../views/emails/message', array(
                 'host' => $this->request->getHttpHost(),
                 'body' => $body,
+                'subject' => $subject,
             ))
                 ->bcc(implode(',',$arr_emails ))
                 ->subject('Сообщение в системе ФАС-Онлайн');
