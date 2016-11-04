@@ -341,8 +341,7 @@ class Complaint extends Model
                     $message = $this->mailer->createMessageFromView('../views/emails/status', array(
                         'status' => $message_text,
                         'host' => $this->request->getHttpHost(),
-                        'firstname' => $user->firstname,
-                        'patronymic' => $user->patronymic,
+                        'conversion' => $user->conversion,
                         'auction_id' => $complaint->auction_id,
                         'comp_id' => $complaint->id,
                         'comp_name' => $complaint->complaint_name
