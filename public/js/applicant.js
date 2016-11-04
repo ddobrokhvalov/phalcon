@@ -17,7 +17,7 @@ $(document).ready(function () {
             applicant.parseIp(selectedCertif);
         }
         var str = selectedCertif.ValidFromDate;
-        str = str.substr(0, 10);
+        str = str.toString().substr(0, 10);
         var field = str + ' | ' + selectedCertif.SubjectDNSName;
 
         $('#ecp_ur').val(selectedCertif.Thumbprint);
@@ -138,16 +138,8 @@ var applicant = {
         this.setUrlico();
         var data = selectedCertif.SubjectName;
         data = data.split(',');
-        //"SN=Болквадзе, G=Мамука Фридонович, T=Генеральный директор, OID.1.2.840.113549.1.9.2="INN=7804525956/KPP=780401001/OGRN=1147847049998", CN=Болквадзе Мамука Фридонович, OU=0, O="ООО ПСК ""СТРОЙПРОЕКТ""", L=Санкт-Петербург, S=78 Санкт-Петербург, C=RU, E=f-ree-z@inbox.ru, INN=007804525956, OGRN=1147847049998, SNILS=08571995623"
-        // "SN=Барба, G=Денис Валерьевич, T=Генеральный директор, OID.1.2.840.113549.1.9.2="INN=7811164468/KPP=781101001/OGRN=1157847035235", STREET=пр-т Солидарности 12/2Е - 10-Н, CN=Барба Денис Валерьевич, OU=0, O=ООО 'ГЕФЕСТ', L=Санкт-Петербург, S=78 г. Санкт-Петербург, C=RU, E=info@gefest-doors.ru, INN=007811164468, OGRN=1157847035235, SNILS=17739245308"
-
-
-        console.log(data);
-
-
         $('#entity-short').val(this.parseSnUr(data, 'O=', 3, 4));
         $('#entity-inn').val(this.parseSnUr(data, ' INN=', 7, 4));
-
         var kpp = data[3];
         kpp = kpp.split('/');
         kpp = kpp[1];
@@ -155,10 +147,7 @@ var applicant = {
         $('#entity-kpp').val(kpp);
         $('#entity-address').val(this.parseSnUr(data, ' L=', 3, 0) + ' ' + this.parseSnUr(data, 'STREET=', 8, 1));
         $('#entity-position').val(this.parseSnUr(data, 'T=', 3, 0));
-        $('#entity-fio-z').val(this.parseSnUr(data, 'CN=', 4, 0));
-
-       // var email = data[10];
-      //  email = email.substr(3, email.length);
+        $('#entity-fio-z').val(this.parseSnUr(data, 'CN=', 4, 0));      
         $('#entity-email').val(this.parseSnUr(data, ' E=', 3, 0));
 
 
