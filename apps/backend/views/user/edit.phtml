@@ -18,20 +18,16 @@
             <div class="left-block-editing">
                 <span>Данные пользователя</span>
                 <label for="fUser">
-                    <p>Фамилия</p>
-                    {{text_field('lastname', 'value':edituser.lastname, 'id':'fUser')}}
-                </label>
-                <label for="iUser">
-                    <p>Имя</p>
-                    {{text_field('firstname', 'value':edituser.firstname, 'id':'iUser')}}
-                </label>
-                <label for="oUser">
-                    <p>Отчество</p>
-                    {{text_field('patronymic', 'value':edituser.patronymic, 'id':'oUser')}}
+                    <p>Как к вам обращаться</p>
+                    {{text_field('conversion', 'value':edituser.conversion, 'id':'fUser')}}
                 </label>
                 <label for="telFaxUser">
                     <p>Контактный факс, телефон</p>
                     {{ numeric_field('phone', 'value':edituser.phone, 'id':'telFaxUser')}}
+                </label>
+                <label for="telFaxUser">
+                    <p>Мобильный телефон</p>
+                    {{ numeric_field('mobile_phone', 'value':edituser.mobile_phone, 'id':'mobile_phone')}}
                 </label>
                 <label for="userEmail">
                     <p>E-mail</p>

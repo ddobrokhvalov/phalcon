@@ -13,20 +13,16 @@
             <div class="left-block-editing">
                 <span>Данные пользователя</span>
                 <label for="fUser">
-                    <p>Фамилия</p>
-                    {{text_field('lastname', 'value':params['lastname'], 'id':'fUser')}}
-                </label>
-                <label for="iUser">
-                    <p>Имя</p>
-                    {{text_field('firstname', 'value':params['firstname'], 'id':'iUser')}}
-                </label>
-                <label for="oUser">
-                    <p>Отчество</p>
-                    {{text_field('patronymic', 'value':params['patronymic'], 'id':'oUser')}}
+                    <p>Как к вам обращаться</p>
+                    {{text_field('conversion', 'value':params['conversion'], 'id':'fUser')}}
                 </label>
                 <label for="telFaxUser">
                     <p>Контактный факс, телефон</p>
                     {{ numeric_field('phone', 'value':params['phone'], 'id':'telFaxUser')}}
+                </label>
+                <label for="telFaxUser">
+                    <p>Мобильный телефон</p>
+                    {{ numeric_field('mobile_phone', 'value':params['mobile_phone'], 'id':'mobile_phone')}}
                 </label>
                 <label for="userEmail">
                     <p>E-mail</p>
@@ -78,20 +74,6 @@
             var field_selector = '#fUser';
             if (!validator.text($(field_selector).val(), 3, 100)) {
                this.showError(field_selector, 'Ошибка! фамилия должна быть от 3 до 100 символов');
-               this.result = false;
-            } else {
-               this.done(field_selector);
-            }
-            var field_selector = '#iUser';
-            if (!validator.text($(field_selector).val(), 2, 100)) {
-               this.showError(field_selector, 'Ошибка! Имя должно быть от 2 до 100 символов');
-               this.result = false;
-            } else {
-               this.done(field_selector);
-            }
-            var field_selector = '#oUser';
-            if (!validator.text($(field_selector).val(), 3, 100)) {
-               this.showError(field_selector, 'Ошибка! Отчество должно быть от 3 до 100 символов');
                this.result = false;
             } else {
                this.done(field_selector);

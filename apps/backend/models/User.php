@@ -12,10 +12,9 @@ class User extends Model
     public $status;
     public $date_registration;
     public $admin_comment;
-    public $firstname;
-    public $lastname;
-    public $patronymic;
+    public $conversion;
     public $phone;
+    public $mobile_phone;
     public $activity;
     public $users_applicants;
     public $users_complaints;

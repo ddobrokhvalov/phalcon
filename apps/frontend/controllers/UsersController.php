@@ -64,9 +64,6 @@ class UsersController extends Controller
             echo json_encode(array('error' => array( $e->getField() => $e->getMessage())));
         } finally{
             $user->phone = empty($data['phone']) ? $user->phone : $data['phone'];
-            $user->lastname = empty($data['lastname']) ? $user->lastname : $data['lastname'];
-            $user->firstname = empty($data['firstname']) ? $user->firstname : $data['firstname'];
-            $user->patronymic = empty($data['patronymic']) ? $user->patronymic : $data['patronymic'];
             $user->conversion = empty($data['conversion']) ? $user->conversion : $data['conversion'];
             $user->mobile_phone = empty($data['mobile_phone']) ? $user->mobile_phone : $data['mobile_phone'];
             $user->notifications = empty($data['notifications']) ? 0 : 1;
@@ -92,15 +89,6 @@ class UsersController extends Controller
     public function checkUserAction(){
         $user = User::findFirstById($this->session->get('auth')['id']);
         $res_arr = array();
-        if(!$user->firstname){
-            $res_arr['firstname'] = 'Имя, необходимо заполнить';
-        }
-        if(!$user->lastname){
-            $res_arr['lastname'] = 'Фамилия, необходимо заполнить';
-        }
-        if(!$user->patronymic){
-            $res_arr['patronymic'] = 'Отчество, необходимо заполнить';
-        }
         if(!$user->conversion){
             $res_arr['conversion'] = 'Как к вам обращаться, необходимо заполнить';
         }

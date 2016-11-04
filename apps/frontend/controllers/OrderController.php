@@ -34,9 +34,10 @@ class OrderController extends ControllerBase
                 $order = new Order();
                 $order->phone = $user->phone;
                 $order->user_id = $user->id;
-                $order->firstname = $user->firstname;
-                $order->lastname = $user->lastname;
-                $order->patronymic = $user->patronymic;
+                $order->firstname = $user->conversion;
+//                $order->firstname = $user->firstname;
+//                $order->lastname = $user->lastname;
+//                $order->patronymic = $user->patronymic;
                 $order->email = $user->email;
                 $order->auction_id = trim($data['auction_id']);
                 $order->date = date('Y-m-d H:i:s');
@@ -48,7 +49,7 @@ class OrderController extends ControllerBase
                     'order' => $order
                 ))
                     ->to($this->adminsEmails['order'])
-                    ->subject('Новый заказ в системе ФАС');
+                    ->subject('Новый заказ в системе ФАС-Онлайн');
                 $message->send();
 
                 echo json_encode(array('status' => 'ok'));

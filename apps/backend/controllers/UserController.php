@@ -124,7 +124,7 @@ class UserController extends ControllerBase
 
         $post = $this->request->getPost();
         $data['email'] = $post['email'];
-        foreach(['lastname', 'firstname', 'patronymic', 'phone', 'admin_comment'] as $key)
+        foreach(['conversion', 'mobile_phone', 'phone', 'admin_comment'] as $key)
                $data[$key] = $post[$key];
 
         if (strlen($post['password']) > 0)
@@ -162,10 +162,9 @@ class UserController extends ControllerBase
             $this->view->params = array(
                 'email'         => '',
                 'password'      => '',
-                'firstname'     => '',
-                'lastname'      => '',
+                'conversion'     => '',
                 'phone'         => '',
-                'patronymic'    => '',
+                'mobile_phone'         => '',
                 'admin_comment' => '',
                 'sendEmail'     => ''
             );
@@ -191,9 +190,9 @@ class UserController extends ControllerBase
                 'controller' => 'user',
                 'action' => 'add',
                 'params' => array(
-                    'firstname'          => $post['firstname'],
-                    'lastname'       => $post['lastname'],
+                    'conversion'          => $post['conversion'],
                     'phone'         => $post['phone'],
+                    'mobile_phone'         => $post['mobile_phone'],
                     'patronymic'    => $post['patronymic'],
                     'email'         => $post['email'],
                     'admin_comment' => $post['admin_comment'],
@@ -207,7 +206,7 @@ class UserController extends ControllerBase
         } else {
             $data['notifications'] = 0;
         }
-        foreach(['lastname', 'firstname', 'patronymic', 'phone', 'admin_comment', 'password'] as $key)
+        foreach(['conversion', 'mobile_phone', 'phone', 'admin_comment', 'password'] as $key)
            $data[$key] = $post[$key];
         $validation = new UserValidator();
         $validation->add('password', new PresenceOf((array('message' => 'The password is required'))));
@@ -344,14 +343,14 @@ class UserController extends ControllerBase
                         'host' => $this->request->getHttpHost()
                     ))
                         ->bcc(implode(',', $arr_emails))
-                        ->subject('Вы заблокированы в системе ФАС');
+                        ->subject('Вы заблокированы в системе ФАС-Онлайн');
                     $message->send();
                 } else {
                     $message = $this->mailer->createMessageFromView('../views/emails/unblock', array(
                         'host' => $this->request->getHttpHost()
                     ))
                         ->bcc(implode(',', $arr_emails))
-                        ->subject('Вы разблокированы в системе ФАС');
+                        ->subject('Вы разблокированы в системе ФАС-Онлайн');
                     $message->send();
                 }
             }
@@ -398,9 +397,10 @@ class UserController extends ControllerBase
             $message = $this->mailer->createMessageFromView('../views/emails/message', array(
                 'host' => $this->request->getHttpHost(),
                 'body' => $body,
+                'subject' => $subject,
             ))
                 ->bcc(implode(',',$arr_emails ))
-                ->subject('Сообщение в системе ФАС');
+                ->subject('Сообщение в системе ФАС-Онлайн');
             $message->send();
         }
 

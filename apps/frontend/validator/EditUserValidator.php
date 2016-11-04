@@ -11,10 +11,7 @@ class EditUserValidator extends Validation
 {
     public function initialize()
     {
-        $this->add('firstname', new PresenceOf(array('message' => 'Имя обязательное поле','cancelOnFail' => true)));
         $this->add('conversion', new PresenceOf(array('message' => 'Как к вам обращаться обязательное поле','cancelOnFail' => true)));
-        $this->add('lastname', new PresenceOf(array('message' => 'Фамилия обязательное поле','cancelOnFail' => true)));
-        $this->add('patronymic', new PresenceOf(array('message' => 'Отчество обязательное поле','cancelOnFail' => true)));
         $this->add('phone', new PresenceOf(array('message' => 'Телефон обязательное поле','cancelOnFail' => true)));
         $this->add('phone', new Regex(
             [
