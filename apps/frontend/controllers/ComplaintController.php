@@ -24,7 +24,7 @@ use Multiple\Frontend\Models\Messages;
 use Phalcon\Mvc\Url;
 use Multiple\Library\Translit;
 use Multiple\Frontend\Models\User;
-
+use Multiple\Library\Calendar\Calendar;
 
 
 class ComplaintController extends ControllerBase
@@ -73,6 +73,11 @@ class ComplaintController extends ControllerBase
         } else {
             $url = '/complaint/index';
         }
+
+
+        $data = new Calendar('06.09.2016 19:58');
+        $data = $data->checkDate();
+
         $this->view->searchurl = $url;
         $this->view->searhparam = $search;
         $this->view->page = $pages;
