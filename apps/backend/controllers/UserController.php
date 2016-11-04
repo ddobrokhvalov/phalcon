@@ -162,10 +162,9 @@ class UserController extends ControllerBase
             $this->view->params = array(
                 'email'         => '',
                 'password'      => '',
-                'firstname'     => '',
-                'lastname'      => '',
+                'conversion'     => '',
                 'phone'         => '',
-                'patronymic'    => '',
+                'mobile_phone'         => '',
                 'admin_comment' => '',
                 'sendEmail'     => ''
             );
