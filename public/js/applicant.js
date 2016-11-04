@@ -3,8 +3,8 @@ $(document).ready(function () {
     $('.addAppCertificate__addBtn').click(function () {
         if (selectedCertif == false)
             return;
-        if(edit_mode == 0)
-            return;
+        //  if(edit_mode == 0)
+        //     return;
 
         $('.addAppCertificate-main2').fadeOut().css('display', 'none');
 
@@ -122,6 +122,15 @@ var applicant = {
     type: false,
     save: false,
     applicant_info: [],
+    parseSnUr: function (data, searchValue, start, lenght) {
+        for (var i = 0; i < data.length; i++) {
+            var str = data[i];
+            if (str.indexOf(searchValue) != -1) {
+                return str.substr(start, str.length - lenght);
+            }
+        }
+        return '';
+    },
     parseUrLico: function (selectedCertif) {
         $('.tabs-ip').css('visibility', 'hidden');
         $('.tabs-fl').css('visibility', 'hidden');
@@ -134,33 +143,23 @@ var applicant = {
 
 
         console.log(data);
-        var kratkoe_name = data[6];
 
-        kratkoe_name = kratkoe_name.substr(4, kratkoe_name.length - 5);
-        $('#entity-short').val(kratkoe_name);
-        var inn = data[11];
-        inn = inn.substr(7, inn.length - 4);
-        $('#entity-inn').val(inn);
+
+        $('#entity-short').val(this.parseSnUr(data, 'O=', 3, 4));
+        $('#entity-inn').val(this.parseSnUr(data, ' INN=', 7, 4));
 
         var kpp = data[3];
         kpp = kpp.split('/');
         kpp = kpp[1];
         kpp = kpp.substr(4, kpp.length);
         $('#entity-kpp').val(kpp);
-        var address = data[7];
-        address = address.substr(3, address.length);
-        $('#entity-address').val(address);
-        var position = data[2];
-        position = position.substr(3, position.lenght);
-        $('#entity-position').val(position);
-        var fio_aplicant = data[4];
-        fio_aplicant = fio_aplicant.substr(4, fio_aplicant.length);
-        $('#entity-fio-z').val(fio_aplicant);
-        var email = data[10];
-        email = email.substr(3, email.length);
-        $('#entity-email').val(email);
+        $('#entity-address').val(this.parseSnUr(data, ' L=', 3, 0) + ' ' + this.parseSnUr(data, 'STREET=', 8, 1));
+        $('#entity-position').val(this.parseSnUr(data, 'T=', 3, 0));
+        $('#entity-fio-z').val(this.parseSnUr(data, 'CN=', 4, 0));
 
-        
+       // var email = data[10];
+      //  email = email.substr(3, email.length);
+        $('#entity-email').val(this.parseSnUr(data, ' E=', 3, 0));
 
 
     },
@@ -172,27 +171,27 @@ var applicant = {
         data = data.split(',');
         console.log(data);
         var shortName1 = data[0];
-        shortName1 = shortName1.substr(3,shortName1.lenght);
+        shortName1 = shortName1.substr(3, shortName1.lenght);
         var shortName = data[1];
         shortName = shortName.substr(3, shortName.lenght);
-        shortName = shortName1 + ' ' +shortName;
+        shortName = shortName1 + ' ' + shortName;
         $('#entity-short').val(shortName);
         var inn = data[9];
-        inn = inn.substr(5,inn.length);
+        inn = inn.substr(5, inn.length);
         $('#entity-inn').val(inn);
 
         var city = data[6];
-        city = city.substr(6,city.lenght);
-        var address  = data[3];
+        city = city.substr(6, city.lenght);
+        var address = data[3];
         address = address.substr(8, address.lenght);
-        $('#entity-address').val(city + ' ' +address);
+        $('#entity-address').val(city + ' ' + address);
         $('#entity-fio-z').val(shortName);
 
-         var email = data[8];
-         email = email.substr(3,email.lenght);
-         $('#entity-email').val(email);
+        var email = data[8];
+        email = email.substr(3, email.lenght);
+        $('#entity-email').val(email);
 
-      
+
     },
     checkInn: function (inn) {
         if (!validator.numeric($('#czvr3').val(), 10, 10)) {
@@ -231,9 +230,9 @@ var applicant = {
     },
     selectApplicant: function (id, name, redirect, is_remove, is_select_first) {
         if (!is_remove) {
-            if(this.id == 'All') this.id = [];
-            for(var i = 0; i < this.id.length; i++){
-                if(this.id[i] == 'All' || this.id[i] == ''){
+            if (this.id == 'All') this.id = [];
+            for (var i = 0; i < this.id.length; i++) {
+                if (this.id[i] == 'All' || this.id[i] == '') {
                     this.id.splice(i, 1);
                 }
             }
@@ -264,7 +263,7 @@ var applicant = {
                 }
             }
 
-            if(temp.length == 0){
+            if (temp.length == 0) {
                 this.id.push('All');
             }
             $('.applicant-name-container').html(temp.join(','));
@@ -368,13 +367,13 @@ var applicantValidator = {
                 }
                 break;
             case 'ip':
-              /*  var field_selector = '.active-tabs-content #entity-textarea';
-                if (!validator.text($(field_selector).val(), 3, 255)) {
-                    this.showError(field_selector, 'Ошибка! Полное наименование должно быть от 3 до 255 символов');
-                    this.result = false;
-                } else {
-                    this.done(field_selector);
-                } */
+                /*  var field_selector = '.active-tabs-content #entity-textarea';
+                 if (!validator.text($(field_selector).val(), 3, 255)) {
+                 this.showError(field_selector, 'Ошибка! Полное наименование должно быть от 3 до 255 символов');
+                 this.result = false;
+                 } else {
+                 this.done(field_selector);
+                 } */
                 var field_selector = '.active-tabs-content #entity-inn';
                 if (!validator.numeric($(field_selector).val(), 12, 12)) {
                     this.showError(field_selector, 'Ошибка! ИНН состоит из 12 цифр');
