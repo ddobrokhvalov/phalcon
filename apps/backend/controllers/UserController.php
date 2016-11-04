@@ -190,9 +190,9 @@ class UserController extends ControllerBase
                 'controller' => 'user',
                 'action' => 'add',
                 'params' => array(
-                    'firstname'          => $post['firstname'],
-                    'lastname'       => $post['lastname'],
+                    'conversion'          => $post['conversion'],
                     'phone'         => $post['phone'],
+                    'mobile_phone'         => $post['mobile_phone'],
                     'patronymic'    => $post['patronymic'],
                     'email'         => $post['email'],
                     'admin_comment' => $post['admin_comment'],
@@ -206,7 +206,7 @@ class UserController extends ControllerBase
         } else {
             $data['notifications'] = 0;
         }
-        foreach(['lastname', 'firstname', 'patronymic', 'phone', 'admin_comment', 'password'] as $key)
+        foreach(['conversion', 'mobile_phone', 'phone', 'admin_comment', 'password'] as $key)
            $data[$key] = $post[$key];
         $validation = new UserValidator();
         $validation->add('password', new PresenceOf((array('message' => 'The password is required'))));
