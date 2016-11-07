@@ -3,38 +3,50 @@ namespace Multiple\Library\Calendar;
 
 class Calendar
 {
-    private $url = 'http://basicdata.ru/api/json/calend/';
-    private $startDate;
+    private $api;
+    private $endDate;
     private $nowDate;
-    private $holidays;
+    private $interval;
+    private $countDiffDays;
+    private static $instance = null;
 
-    private function getHolidays()
+    private  function __construct(ApiCalendar $api, $endDate)
     {
-        $site = curl_init();
-        curl_setopt($site, CURLOPT_URL, $this->url );
-        curl_setopt($site, CURLOPT_RETURNTRANSFER,true);
-        $temp = curl_exec($site);
-        if(!empty($temp)){
-            return (array)json_decode($temp);
-        }
+        $this->api = $api;
+        $this->countDiffDays = 0;
+        $this->endDate = new \DateTime($endDate);
+        $this->nowDate = new \DateTime('now');
+        $this->interval = new \DateInterval('P1D');
     }
 
-    public  function __construct($startDate)
-    {
-        $this->startDate = strtotime($startDate);
-        $this->startDate = date("Y-m-d H:i:s", $this->startDate);
-        $this->nowDate =  date("Y-m-d H:i:s");
-        $this->holidays = $this->getHolidays();
-    }
     public function checkDate()
     {
         $countHolidays = 0;
-        $currrent = date('Y-m-d H:i:s', strtotime($this->startDate) + 86400);
-        while($currrent <= $this->nowDate){
-            $nDay = date("N", strtotime($currrent));
-            if($nDay > 5) $countHolidays++;
-            $currrent = date('Y-m-d H:i:s', strtotime($currrent) + 86400);
+        $countDays = 0;
+        $currrent = $this->endDate;
+        $currrent->add($this->interval);
+        if($this->nowDate > $this->endDate) {
+            while ($currrent < $this->nowDate && $countDays < 20) {
+                $isHoliday = $this->api->checkHoliday($currrent);
+                if ($isHoliday == 'holiday') $countHolidays++;
+                elseif ($isHoliday != 'work' && $currrent->format('N') > 5) $countHolidays++;
+                $currrent->add($this->interval);
+                $countDays++;
+            }
+            if(($countDays - $countHolidays) >= 10 ) return 1;
         }
+        return 0;
+    }
 
+    public static function getInstance(ApiCalendar $api, $date ){
+        if(is_null(self::$instance)){
+            return new Calendar($api, $date);
+        }
+        return self::$instance;
     }
 }
+
+
+
+
+

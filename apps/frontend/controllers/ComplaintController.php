@@ -12,6 +12,7 @@ use Multiple\Frontend\Models\UsersArguments;
 use Multiple\Frontend\Models\DocxFiles;
 use Multiple\Frontend\Models\Files;
 use Multiple\Backend\Models\Ufas;
+use Multiple\Library\Calendar\BasicDataRu;
 use Multiple\Library\Parser;
 use Phalcon\Acl\Exception;
 use Phalcon\Mvc\Controller;
@@ -73,10 +74,6 @@ class ComplaintController extends ControllerBase
         } else {
             $url = '/complaint/index';
         }
-
-
-        $data = new Calendar('06.09.2016 19:58');
-        $data = $data->checkDate();
 
         $this->view->searchurl = $url;
         $this->view->searhparam = $search;
