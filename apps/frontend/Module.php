@@ -2,6 +2,7 @@
 
 namespace Multiple\Frontend;
 
+
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\Dispatcher;
@@ -13,7 +14,10 @@ use Phalcon\Events\Manager as EventsManager;
 
 use Multiple\Frontend\Plugins\SecurityPlugin;
 use Multiple\Frontend\Plugins\NotFoundPlugin;
+
+
 require_once('../vendor/autoload.php');
+
 
 class Module
 {
@@ -125,5 +129,6 @@ class Module
             $emails = $emails->adminsEmails->toArray();
             return $emails;
         });
+
 	}
 }
