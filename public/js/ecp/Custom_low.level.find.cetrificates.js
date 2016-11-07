@@ -76,7 +76,8 @@ var userCertificates = false;
         var html = '';
         for(var i in aCertificate){
             var str = aCertificate[i].ValidFromDate;
-            str = str.substr(0, 10);
+            console.log(str.toString());
+            str = str.toString().substr(0, 10);
             var field = str + ' | ' + aCertificate[i].SubjectDNSName;         
             html +='<li class="existingCerListBox__item" onclick="setCertItem('+i+')" >'+field+'</li>';
         }
