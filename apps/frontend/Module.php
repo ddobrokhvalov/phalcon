@@ -14,8 +14,7 @@ use Phalcon\Events\Manager as EventsManager;
 
 use Multiple\Frontend\Plugins\SecurityPlugin;
 use Multiple\Frontend\Plugins\NotFoundPlugin;
-use Multiple\Library\Calendar\Calendar;
-use Multiple\Library\Calendar\ApiBasicDataRu;
+
 
 require_once('../vendor/autoload.php');
 
