@@ -3552,3 +3552,19 @@ input#upload-files::-webkit-file-upload-button {
     color: #00b0fa;
     text-decoration: underline;
 }
+
+
+/* TEST */
+.help_link{
+    line-height: 44px !important;
+    margin: 0 0 0 !important;
+    padding: 0 0 0 0 !important;
+    font-size: 12px;
+}
+.help_link:hover{
+    font-weight: normal!important;
+}
+
+.help_link:before{
+    top: 16px !important;
+}
