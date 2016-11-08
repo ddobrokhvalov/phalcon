@@ -52,9 +52,9 @@
                     <label for="cmf1">Как вас зовут</label>
                     <input type="text" id="cmf1" name="conversion" value="{% if conversion is defined %} {{ conversion }} {% endif %}">
                     <label for="cmf2">Контактный телефон</label>
-                    <input type="text" id="cmf2" name="phone" class="phone" value="{% if name is defined %} {{ phone }} {% endif %}">
+                    <input type="text" id="cmf2" name="phone" class="phone" value="{% if phone is defined %} {{ phone }} {% endif %}">
                     <label for="cmf3" >E-mail</label>
-                    <input type="email" id="cmf3" name="email" value="{% if name is defined %} {{ email }} {% endif %}">
+                    <input type="email" id="cmf3" name="email" value="{% if email is defined %} {{ email }} {% endif %}">
                     <label for="cmf4">Ваше собщение</label>
                     <textarea id="cmf4" name="message"></textarea>
                     <input type="submit" value="Отправить сообщение">
