@@ -5405,7 +5405,7 @@ body#backend-login {
 }
 /* line 144, ../sass/_applicantCertificate.scss */
 .existingCerListBox .custom-options {
-  overflow: hidden;
+  overflow-y: scroll;
   margin-top: 5px;
   max-height: 240px;
   background-color: #ffffff;

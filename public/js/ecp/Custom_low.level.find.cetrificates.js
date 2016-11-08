@@ -32,6 +32,7 @@ var userCertificates = false;
     }).then(function(Certificates) { // Получаем объект достпупа к API Certificates
         // Получаем список сертификатов у которых не истек срок дейтсвия
         return Certificates.find(Certificates.CAPICOM_CERTIFICATE_FIND_TIME_VALID);
+       // return Certificates.find();
     }).then(function(Certificates) {
         return new Promise(function(resolve, reject) {
             // Получаем необходимые сведения по сертификатам
@@ -81,7 +82,8 @@ var userCertificates = false;
             var field = str + ' | ' + aCertificate[i].SubjectDNSName;         
             html +='<li class="existingCerListBox__item" onclick="setCertItem('+i+')" >'+field+'</li>';
         }
-         $('.certificate-box-2').html(html);
+
+        $('.certificate-box-2').html(html);
        // certificate-box-2
 
 
