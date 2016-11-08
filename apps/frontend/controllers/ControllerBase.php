@@ -18,12 +18,19 @@ class ControllerBase extends Controller
        // $this->tag->prependTitle('INVO | ');
        // $this->view->setTemplateAfter('main');
         $auth = $this->session->get('auth');
-
         if (!$auth) {
             $user_id = false;
         } else {
             $user_id = $auth['id'];
         }
+
+        if($_SERVER['REQUEST_URI'] == '/help/about' ||
+            $_SERVER['REQUEST_URI'] == '/help/faq' ||
+            $_SERVER['REQUEST_URI'] == '/help/contact' ||
+            $_SERVER['REQUEST_URI'] == '/help/sendMailFromContact') {
+            if(!$user_id) $user_id = true;
+        }
+
         if ($user_id) {
             $this->user = User::findFirst(
                 array(

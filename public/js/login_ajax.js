@@ -9,7 +9,7 @@ $(document).ready(function () {
             context: form,
             success: function(res) {
                 if(res.status && res.status == 'ok'){
-                    window.location = 'complaint/index';
+                    window.location = '/complaint/index';
                 }else if(res.error){
                     $(this).find('input').each(function(){
                         $(this).removeClass('c-inp-done');

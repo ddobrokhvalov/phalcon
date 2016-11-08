@@ -1,3 +1,16 @@
+{% if showHeader == true %}
+<div class="mheader">
+    <div class="wrapper">
+        <div class="mhlogo">
+            <a href="#"></a>
+        </div>
+        <a href="tel:+88001009386" class="mh-phone">8 (800) 100-93-86</a>
+        <a href="mailto:info@fas-online.ru" class="mh-mail">info@fas-online.ru</a>
+        <a href="#pop-login" class="mh-login open_modal">Вход в систему</a>
+    </div>
+</div>
+{% endif %}
+
 <div class="content">
     <script type="text/javascript" src="/js/input_mask.js"></script>
     <div class="wrapper">
@@ -37,13 +50,13 @@
                 <span>Напишите нам</span>
                 <form action="/help/sendMailFromContact" method="POST" id="contact-form">
                     <label for="cmf1">Как вас зовут</label>
-                    <input type="text" id="cmf1" name="sender-name">
+                    <input type="text" id="cmf1" name="conversion" value="{% if conversion is defined %} {{ conversion }} {% endif %}">
                     <label for="cmf2">Контактный телефон</label>
-                    <input type="text" id="cmf2" name="sender-phone" class="phone">
+                    <input type="text" id="cmf2" name="phone" class="phone" value="{% if name is defined %} {{ phone }} {% endif %}">
                     <label for="cmf3" >E-mail</label>
-                    <input type="email" id="cmf3" name="sender-email">
+                    <input type="email" id="cmf3" name="email" value="{% if name is defined %} {{ email }} {% endif %}">
                     <label for="cmf4">Ваше собщение</label>
-                    <textarea id="cmf4" name="sender-message"></textarea>
+                    <textarea id="cmf4" name="message"></textarea>
                     <input type="submit" value="Отправить сообщение">
                 </form>
             </div>
@@ -65,3 +78,25 @@
         $(".phone").mask("+7 (999) 999-9999");
     });
 </script>
+
+<div id="pop-login" class="modal_div">
+    <h2>Вход в систему</h2>
+    <form method="post">
+        <label class="fontNormal" for="poplog-inp1">E-mail</label>
+        <div class="c-inp-err-t"></div>
+        <input type="text" id="poplog-inp1" required="required" name="email">
+        <label class="fontNormal" for="poplog-inp2">Пароль</label>
+        <div class="c-inp-err-t"></div>
+        <input type="password" id="poplog-inp2" required="required" name="password">
+        <input type="submit" value="Войти">
+        <div class="link-login">
+            <span> <a href="#pop-start" class="open_modal" onclick="$('#pop-login').hide()">Регистрация нового пользователя</a><a href="#pop-recovery" class="open_modal" onclick="$('#pop-login').hide()">Забыли пароль?</a></span>
+        </div>
+    </form>
+    <div class="already-reg already-reg-float">
+        <p>Регистрация в системе подтверждает Ваше согласие с условиями пользовательского соглашения сервиса «ФАС-Онлайн». <a href="#">Просмотреть</a></p>
+    </div>
+    <div class="modal-close"></div>
+</div>
+<div id="overlay"></div>
+<script src="/js/login_ajax.js"></script>
