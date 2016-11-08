@@ -635,8 +635,8 @@ var auction = {
         if (this.data.type == 'Электронный аукцион') {
             html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
             html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
-            html += this.processHTML('Дата проведения электронного аукциона', this.data.data_provedeniya);
             html += this.processHTML('Дата окончания срока рассмотрения первых частей заявок', this.data.okonchanie_rassmotreniya);
+            html += this.processHTML('Дата проведения электронного аукциона', this.data.data_provedeniya);
             html += this.processHTML('Время проведения электронного аукциона', this.data.vremya_provedeniya);
         }
         if (this.data.type == 'Конкурс с ограниченным участием') {

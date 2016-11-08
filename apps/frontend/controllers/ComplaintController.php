@@ -73,6 +73,7 @@ class ComplaintController extends ControllerBase
         } else {
             $url = '/complaint/index';
         }
+
         $this->view->searchurl = $url;
         $this->view->searhparam = $search;
         $this->view->page = $pages;
