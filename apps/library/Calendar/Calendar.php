@@ -10,17 +10,17 @@ class Calendar
     private $countDiffDays;
     private static $instance = null;
 
-    private  function __construct(ApiCalendar $api, $endDate)
+    private  function __construct(ApiCalendar $api)
     {
         $this->api = $api;
         $this->countDiffDays = 0;
-        $this->endDate = new \DateTime($endDate);
         $this->nowDate = new \DateTime('now');
         $this->interval = new \DateInterval('P1D');
     }
 
-    public function checkDate()
+    public function checkDate($endDate, $days = 10)
     {
+        $this->endDate = new \DateTime($endDate);
         $countHolidays = 0;
         $countDays = 0;
         $currrent = $this->endDate;
@@ -33,14 +33,14 @@ class Calendar
                 $countDays++;
             }
             $countDays--;
-            if(($countDays - $countHolidays) >= 10 ) return 1;
+            if(($countDays - $countHolidays) >= $days ) return 1;
         }
         return 0;
     }
 
-    public static function getInstance(ApiCalendar $api, $date ){
+    public static function getInstance(ApiCalendar $api){
         if(is_null(self::$instance)){
-            return new Calendar($api, $date);
+            return new Calendar($api);
         }
         return self::$instance;
     }
