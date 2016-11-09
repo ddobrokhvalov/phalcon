@@ -812,8 +812,8 @@ class ComplaintController extends ControllerBase
     public function checkDateOnTenDaysAction(){
         $date = $this->request->getPost('date');
         if(!empty($date)) {
-            $date = Calendar::getInstance(new BasicDataRu(), $date);
-            $date = $date->checkDate();
+            $date = Calendar::getInstance(new BasicDataRu());
+            $date = $date->checkDate($date);
         }
         echo json_encode(array('date' => $date));
         exit;
