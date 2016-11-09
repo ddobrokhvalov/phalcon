@@ -4,11 +4,10 @@ namespace Multiple\Library\Calendar;
 class Calendar
 {
     private $api;
-    private $endDate;
+    private $date;
     private $nowDate;
     private $interval;
     private $countDiffDays;
-    private static $instance = null;
 
     private  function __construct(ApiCalendar $api)
     {
@@ -18,13 +17,13 @@ class Calendar
         $this->interval = new \DateInterval('P1D');
     }
 
-    public function checkDate($endDate, $days = 10)
+    public function checkDateAddComplaint($date, $days = 10)
     {
-        $this->endDate = new \DateTime($endDate);
+        $this->date = new \DateTime($date);
         $countHolidays = 0;
         $countDays = 0;
-        $currrent = $this->endDate;
-        if($this->nowDate > $this->endDate) {
+        $currrent = $this->date;
+        if($this->nowDate > $this->date) {
             while ($currrent < $this->nowDate && $countDays < 20) {
                 $isHoliday = $this->api->checkHoliday($currrent);
                 if ($isHoliday == 'holiday') $countHolidays++;
@@ -38,11 +37,30 @@ class Calendar
         return 0;
     }
 
-    public static function getInstance(ApiCalendar $api){
-        if(is_null(self::$instance)){
-            return new Calendar($api);
+    public function checkDateAbortComplaint($regDate, $days = 5){
+        $this->date = new \DateTime($regDate);
+        $countHolidays = 0;
+        $countDays = 0;
+        $currrent = $this->date;
+        if($this->nowDate > $this->date) {
+            while ($currrent < $this->nowDate && $countDays < 20) {
+                $isHoliday = $this->api->checkHoliday($currrent);
+                if ($isHoliday == 'holiday'){
+                    $countHolidays++;
+                } elseif($countDays == 0 && $isHoliday != 'work'){
+                    if($currrent->format('N') == 6){
+                        $currrent->add(new \DateInterval('P3D'));
+                    } else if( $currrent->format('N') == 7 ){
+                        $currrent->add(new \DateInterval('P2D'));
+                    }
+                } elseif($currrent->format('N') > 5){
+                    $countHolidays++;
+                }
+                $countDays++;
+            }
+            if(($countDays - $countHolidays) >= $days ) return 1;
         }
-        return self::$instance;
+        return 0;
     }
 }
 
