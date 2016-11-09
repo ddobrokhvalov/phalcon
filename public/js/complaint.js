@@ -585,7 +585,7 @@ var auction = {
             $('.addArguments .type_complicant').val('electr_auction');
         } else if (str_type.indexOf('конкурс') != -1) {
             $('.addArguments .type_complicant').val('concurs');
-        } else if (tr_type.indexOf('котировок') != -1) {
+        } else if (str_type.indexOf('котировок') != -1) {
             $('.addArguments .type_complicant').val('kotirovok');
         } else if (str_type.indexOf('предложений') != -1) {
             $('.addArguments .type_complicant').val('offer');
@@ -683,6 +683,11 @@ var auction = {
             html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
             html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
             html += this.processHTML('Дата и время проведения предварительного отбора', this.data.data_provedeniya);
+        }
+        if (this.data.type == 'Двухэтапный конкурс') {
+            html += this.processHTML('Дата и время проведения предварительного отбора', this.data.data_rassmotreniya);
+            html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+            html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
         }
         $('.date-container').html(html);
         $("#ufas-checked").selectmenu().selectmenu("menuWidget").addClass("overflow");
