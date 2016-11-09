@@ -24,7 +24,6 @@ class Calendar
         $countHolidays = 0;
         $countDays = 0;
         $currrent = $this->endDate;
-        $currrent->add($this->interval);
         if($this->nowDate > $this->endDate) {
             while ($currrent < $this->nowDate && $countDays < 20) {
                 $isHoliday = $this->api->checkHoliday($currrent);
@@ -33,6 +32,7 @@ class Calendar
                 $currrent->add($this->interval);
                 $countDays++;
             }
+            $countDays--;
             if(($countDays - $countHolidays) >= 10 ) return 1;
         }
         return 0;
