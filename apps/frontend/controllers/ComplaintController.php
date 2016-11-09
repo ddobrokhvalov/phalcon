@@ -809,10 +809,13 @@ class ComplaintController extends ControllerBase
         exit;
     }
 
-    public function checkDateOnTenDays(){
+    public function checkDateOnTenDaysAction(){
         $date = $this->request->getPost('date');
-        $date = Calendar::getInstance(new BasicDataRu(), $date);
-        echo $date;
+        if(!empty($date)) {
+            $date = Calendar::getInstance(new BasicDataRu(), $date);
+            $date = $date->checkDate();
+        }
+        echo json_encode(array('date' => $date));
         exit;
     }
 

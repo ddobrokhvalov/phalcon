@@ -1,14 +1,5 @@
 $(document).ready(function () {
-    $('#pop-order form').on('submit', function(){
-        $.ajax({
-            type: 'POST',
-            url: '/complaint/checkDateOnTenDays',
-            data: $(this),
-            dataType: "json",
-            success: function(res) {
+    $('#complaint_save').on('submit', function(){
 
-            }
-        });
-        return false;
     });
 });
