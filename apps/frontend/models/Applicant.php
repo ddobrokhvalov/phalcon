@@ -13,6 +13,7 @@ class Applicant extends Model
     public $inn;
     public $kpp;
     public $address;
+    public $post_address;
     public $position;
     public $fio_applicant;
     public $fio_contact_person;
