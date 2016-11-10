@@ -36,7 +36,7 @@ class Calendar
             $diffDays = $countDays - $countHolidays;
             if($diffDays > $this->days ) return 1;
             elseif($diffDays == $this->days){
-                if($this->date->format('H:i') > $this->nowDate->format('H:i')){
+                if($this->nowDate->format('H:i') > $this->date->format('H:i')){
                     return 1;
                 }
             }
