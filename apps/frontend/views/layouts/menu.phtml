@@ -4,73 +4,83 @@
             <div class="lm-opcl-btn1"></div>
             <div class="lm-opcl-btn2"></div>
         </div>
-        <div class="lm-logo"></div>
+        <a href="/complaint/index" style="display: block"><div class="lm-logo"></div></a>
         <div class="lm-btn">
             <a href="/complaint/add">добавить жалобу</a>
         </div>
         <ul class="lm-nav">
-            <li>
-                <a class="{% if menu_status == 'all' %} lm-link-active {% endif %} "  href="/complaint/index">
-                    ВСЕ
-                    <span class="menu-status-all">{{ total }}</span>
-                </a>
-            </li>
-            <li>
-                <a class="{% if menu_status == 'draft' %} lm-link-active {% endif %} " href="/complaint/index?status=draft">
-                    Черновики
-                    {% if complaints_num['draft'] is defined %}
-                    <span class="menu-status-draft">{{ complaints_num['draft'] }}</span>
-                    {% endif %}
-                </a>
-            </li>
-            <li>
-                <a class="{% if menu_status == 'submitted' %} lm-link-active {% endif %}" href="/complaint/index?status=submitted">
-                    Поданные
-                    {% if complaints_num['submitted'] is defined %}
-                    <span>{{ complaints_num['submitted'] }}</span>
-                    {% endif %}
-                </a>
-            </li>
-            <li>
-                <a class="{% if menu_status == 'under_consideration' %} lm-link-active {% endif %}" href="/complaint/index?status=under_consideration">
-                    На рассмотрении
-                    {% if complaints_num['under_consideration'] is defined %}
-                    <span>{{ complaints_num['under_consideration'] }}</span>
-                    {% endif %}
-                </a>
-            </li>
-            <li>
-                <a class="{% if menu_status == 'justified' %} lm-link-active {% endif %}" href="/complaint/index?status=justified">
-                    Обоснованные
-                    {% if complaints_num['justified'] is defined %}
-                    <span>{{ complaints_num['justified'] }}</span>
-                    {% endif %}
-                </a>
-            </li>
-            <li>
-                <a class="{% if menu_status == 'unfounded' %} lm-link-active {% endif %}" href="/complaint/index?status=unfounded">
-                    Необоснованные
-                    {% if complaints_num['unfounded'] is defined %}
-                    <span>{{ complaints_num['unfounded'] }}</span>
-                    {% endif %}
-                </a>
-            </li>
-            <li>
-                <a class="{% if menu_status == 'recalled' %} lm-link-active {% endif %}" href="/complaint/index?status=recalled">
-                    Отозванные
-                    {% if complaints_num['recalled'] is defined %}
-                    <span>{{ complaints_num['recalled'] }}</span>
-                    {% endif %}
-                </a>
-            </li>
-            <li>
-                <a class="{% if menu_status == 'archive' %} lm-link-active {% endif %}" href="/complaint/index?status=archive">
-                    Архив
-                    {% if complaints_num['archive'] is defined %}
-                    <span>{{ complaints_num['archive'] }}</span>
-                    {% endif %}
-                </a>
-            </li>
+            {% if help is defined %}
+                {% for name, link in sidebarMenu %}
+                    <li>
+                        <a class="help_link"  href="{{ link }}">
+                            {{ name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li>
+                    <a class="{% if menu_status == 'all' %} lm-link-active {% endif %} "  href="/complaint/index">
+                        ВСЕ
+                        <span class="menu-status-all">{{ total }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if menu_status == 'draft' %} lm-link-active {% endif %} " href="/complaint/index?status=draft">
+                        Черновики
+                        {% if complaints_num['draft'] is defined %}
+                        <span class="menu-status-draft">{{ complaints_num['draft'] }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if menu_status == 'submitted' %} lm-link-active {% endif %}" href="/complaint/index?status=submitted">
+                        Поданные
+                        {% if complaints_num['submitted'] is defined %}
+                        <span>{{ complaints_num['submitted'] }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if menu_status == 'under_consideration' %} lm-link-active {% endif %}" href="/complaint/index?status=under_consideration">
+                        На рассмотрении
+                        {% if complaints_num['under_consideration'] is defined %}
+                        <span>{{ complaints_num['under_consideration'] }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if menu_status == 'justified' %} lm-link-active {% endif %}" href="/complaint/index?status=justified">
+                        Обоснованные
+                        {% if complaints_num['justified'] is defined %}
+                        <span>{{ complaints_num['justified'] }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if menu_status == 'unfounded' %} lm-link-active {% endif %}" href="/complaint/index?status=unfounded">
+                        Необоснованные
+                        {% if complaints_num['unfounded'] is defined %}
+                        <span>{{ complaints_num['unfounded'] }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if menu_status == 'recalled' %} lm-link-active {% endif %}" href="/complaint/index?status=recalled">
+                        Отозванные
+                        {% if complaints_num['recalled'] is defined %}
+                        <span>{{ complaints_num['recalled'] }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if menu_status == 'archive' %} lm-link-active {% endif %}" href="/complaint/index?status=archive">
+                        Архив
+                        {% if complaints_num['archive'] is defined %}
+                        <span>{{ complaints_num['archive'] }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+            {% endif %}
         </ul>
         <div class="lm-search-title">
             <p>Поиск по выбранному</p>
@@ -87,7 +97,7 @@
             <div class="lm-c-b1"><a href="tel:8 (800) 100-93-86" style="color:white">8 (800) 100-93-86</a></div>
             <div class="lm-c-b2"><a href="mailto:info@fas-online.ru" style="color:white">info@fas-online.ru</a></div>
         </div>
-        <div class="lm-gospart"></div>
+        <a href="http://gos-partner.ru/" style="display: block"><div class="lm-gospart"></div></a>
     </div>
 </div>
 <script>

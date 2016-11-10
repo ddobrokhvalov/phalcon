@@ -53,6 +53,11 @@ class Application extends BaseApplication
                 'action' => 'index',
             ));
 
+            $router->add("/help/about", array(
+                'module' => 'frontend',
+                'controller' => 'help',
+                'action' => 'about',
+            ));
 
 			
 			$router->add("/ajax/getlast", array(

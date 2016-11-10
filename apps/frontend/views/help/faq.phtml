@@ -1,7 +1,8 @@
+{% if showHeader == true %}
 <div class="mheader">
     <div class="wrapper">
         <div class="mhlogo">
-            <a href="#"></a>
+            <a href="http://fas-online.ru"></a>
         </div>
         <a href="tel:+88001009386" class="mh-phone">8 (800) 100-93-86</a>
         <a href="mailto:info@fas-online.ru" class="mh-mail">info@fas-online.ru</a>
@@ -22,6 +23,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 
 <div class="content">
     <div class="wrapper">
@@ -79,25 +81,25 @@
         </div>
     </div>
 </div>
-<!-- popup login -->
+
 <div id="pop-login" class="modal_div">
     <h2>Вход в систему</h2>
-    <form action="/login/start" method="post">
-        <label for="poplog-inp1">E-mail</label>
+    <form method="post">
+        <label class="fontNormal" for="poplog-inp1">E-mail</label>
+        <div class="c-inp-err-t"></div>
         <input type="text" id="poplog-inp1" required="required" name="email">
-        <label for="poplog-inp2">Пароль</label>
+        <label class="fontNormal" for="poplog-inp2">Пароль</label>
+        <div class="c-inp-err-t"></div>
         <input type="password" id="poplog-inp2" required="required" name="password">
         <input type="submit" value="Войти">
+        <div class="link-login">
+            <span> <a href="#pop-start" class="open_modal" onclick="$('#pop-login').hide()">Регистрация нового пользователя</a><a href="#pop-recovery" class="open_modal" onclick="$('#pop-login').hide()">Забыли пароль?</a></span>
+        </div>
     </form>
-    <div class="modal-close"></div>
-</div>
-<div id="pop-done" class="modal_div">
-    <h2>Начать работу</h2>
-    <div class="pop-done-txt">
-        На указанную вами электронную почту<br>
-        test@test.ru отправлено письмо для завершения<br>
-        регистрации
+    <div class="already-reg already-reg-float">
+        <p>Регистрация в системе подтверждает Ваше согласие с условиями пользовательского соглашения сервиса «ФАС-Онлайн». <a href="#">Просмотреть</a></p>
     </div>
     <div class="modal-close"></div>
 </div>
 <div id="overlay"></div>
+<script src="/js/login_ajax.js"></script>

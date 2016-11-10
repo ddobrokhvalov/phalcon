@@ -45,6 +45,7 @@ class SecurityPlugin extends Plugin
 
             //Public area resources
             $publicResources = array(
+                'help'      => array('about', 'contact', 'faq', 'sendMailFromContact'),
                 'register' => array('index', 'confirm', 'recoverypass', 'callback'),
                 'login' => array('index', 'start'),
                 'index' => array('index'),

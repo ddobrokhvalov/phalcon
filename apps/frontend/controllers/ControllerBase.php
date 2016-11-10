@@ -18,12 +18,19 @@ class ControllerBase extends Controller
        // $this->tag->prependTitle('INVO | ');
        // $this->view->setTemplateAfter('main');
         $auth = $this->session->get('auth');
-
         if (!$auth) {
             $user_id = false;
         } else {
             $user_id = $auth['id'];
         }
+
+        if($_SERVER['REQUEST_URI'] == '/help/about' ||
+            $_SERVER['REQUEST_URI'] == '/help/faq' ||
+            $_SERVER['REQUEST_URI'] == '/help/contact' ||
+            $_SERVER['REQUEST_URI'] == '/help/sendMailFromContact') {
+            if(!$user_id) $user_id = true;
+        }
+
         if ($user_id) {
             $this->user = User::findFirst(
                 array(
@@ -101,6 +108,7 @@ class ControllerBase extends Controller
         $this->view->complaints_num = $result['complaints_num'];
         $this->view->total = $result['total'];
         $this->view->user = $this->user;
+        $this->view->host = $this->request->getHttpHost();
         if(isset($_GET['status']))
             $this->view->menu_status = $_GET['status'];
         else
