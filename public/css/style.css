@@ -5337,11 +5337,28 @@ body#backend-login {
 .addAppCertificate__btnHolder > div:hover {
   background-color: #10b8f7;
 }
-/* line 87, ../sass/_applicantCertificate.scss */
+/* line 88, ../sass/_applicantCertificate.scss */
+.addAppCertificate__addBtn > a {
+  display: block;
+  font-size: 14px;
+  line-height: 50px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+}
+/* line 97, ../sass/_applicantCertificate.scss */
+.addAppCertificate__addBtn > a:hover {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+}
+/* line 104, ../sass/_applicantCertificate.scss */
 .addAppCertificate__cancelBtn {
   float: right !important;
 }
-/* line 89, ../sass/_applicantCertificate.scss */
+/* line 106, ../sass/_applicantCertificate.scss */
 .addAppCertificate__cancelBtn a {
   display: block;
   font-size: 14px;
@@ -5352,25 +5369,25 @@ body#backend-login {
   color: #ffffff;
   text-decoration: none;
 }
-/* line 98, ../sass/_applicantCertificate.scss */
+/* line 115, ../sass/_applicantCertificate.scss */
 .addAppCertificate__cancelBtn a:hover {
   color: #ffffff;
   font-weight: 600;
   text-decoration: none;
 }
-/* line 106, ../sass/_applicantCertificate.scss */
+/* line 123, ../sass/_applicantCertificate.scss */
 .addAppCertificate .admin-popup-content h6 {
   padding: 50px 30px 60px;
   font-size: 46px;
   line-height: 50px;
 }
-/* line 112, ../sass/_applicantCertificate.scss */
+/* line 129, ../sass/_applicantCertificate.scss */
 .addAppCertificate__dscr {
   padding: 30px;
   font: 18px/1.1px 'Open Sans', sans-serif;
   color: #34383e;
 }
-/* line 117, ../sass/_applicantCertificate.scss */
+/* line 134, ../sass/_applicantCertificate.scss */
 .addAppCertificate__dscrAlert {
   margin: 30px 0 50px;
   padding: 0 30px;
@@ -5380,22 +5397,22 @@ body#backend-login {
   text-align: center;
 }
 
-/* line 126, ../sass/_applicantCertificate.scss */
+/* line 143, ../sass/_applicantCertificate.scss */
 .existingCerListBox {
   padding: 0 30px;
 }
-/* line 128, ../sass/_applicantCertificate.scss */
+/* line 145, ../sass/_applicantCertificate.scss */
 .existingCerListBox .title-info-box {
   padding-left: 7px;
   font-size: 22px;
   font-weight: 100;
   line-height: 2.5;
 }
-/* line 134, ../sass/_applicantCertificate.scss */
+/* line 151, ../sass/_applicantCertificate.scss */
 .existingCerListBox .current-option {
   margin-bottom: 20px;
 }
-/* line 136, ../sass/_applicantCertificate.scss */
+/* line 153, ../sass/_applicantCertificate.scss */
 .existingCerListBox .current-option span {
   padding-right: 80px;
   font-size: 20px;
@@ -5403,14 +5420,14 @@ body#backend-login {
   text-overflow: ellipsis;
   overflow: hidden;
 }
-/* line 144, ../sass/_applicantCertificate.scss */
+/* line 161, ../sass/_applicantCertificate.scss */
 .existingCerListBox .custom-options {
-  overflow-y: scroll;
+  overflow: hidden;
   margin-top: 5px;
   max-height: 240px;
   background-color: #ffffff;
 }
-/* line 149, ../sass/_applicantCertificate.scss */
+/* line 166, ../sass/_applicantCertificate.scss */
 .existingCerListBox .custom-options li {
   position: relative;
   padding: 15px 10px 14px 23px;
@@ -5420,15 +5437,15 @@ body#backend-login {
   border-bottom: 1px solid #fff;
   cursor: pointer;
 }
-/* line 157, ../sass/_applicantCertificate.scss */
+/* line 174, ../sass/_applicantCertificate.scss */
 .existingCerListBox .custom-options li:hover {
   background-color: #f7f8fa;
 }
-/* line 160, ../sass/_applicantCertificate.scss */
+/* line 177, ../sass/_applicantCertificate.scss */
 .existingCerListBox .custom-options li:last-child {
   border-bottom: none;
 }
-/* line 165, ../sass/_applicantCertificate.scss */
+/* line 182, ../sass/_applicantCertificate.scss */
 .existingCerListBox__dscr {
   margin-bottom: 50px;
   padding-left: 7px;
@@ -5436,12 +5453,12 @@ body#backend-login {
   line-height: 1.1;
 }
 
-/* line 172, ../sass/_applicantCertificate.scss */
+/* line 189, ../sass/_applicantCertificate.scss */
 .preloaderHolder {
   padding: 50px 0 70px;
 }
 
-/* line 175, ../sass/_applicantCertificate.scss */
+/* line 192, ../sass/_applicantCertificate.scss */
 .preloader {
   margin: 0 auto;
   padding: 0;
@@ -5473,7 +5490,7 @@ body#backend-login {
     transform: rotate(360deg);
   }
 }
-/* line 193, ../sass/_applicantCertificate.scss */
+/* line 210, ../sass/_applicantCertificate.scss */
 .hiddenClass {
   visibility: hidden;
 }
