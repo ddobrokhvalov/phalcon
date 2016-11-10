@@ -155,6 +155,20 @@ var applicant = {
 
 
     },
+    /*
+     "SN=Соколов"
+     " G=Александр Ильич"
+     " OID.1.2.840.113549.1.9.2="INN=780620162964""
+     " STREET=ул. Михаила Дудина д. 25 кор. 1 кв. 764"
+     " CN=Соколов Александр Ильич"
+     " L=п. Парголово"
+     " S=78 Санкт-Петербург"
+     " C=RU"
+     " E=sokolov_ai1982@mail.ru"
+     " INN=780620162964"
+     " SNILS=06260829053"
+     " OGRNIP=316784700059783"
+     */
     parseIp: function (selectedCertif) {
         $('.tabs-ur').css('visibility', 'hidden');
         $('.tabs-fl').css('visibility', 'hidden');
@@ -162,26 +176,35 @@ var applicant = {
         var data = selectedCertif.SubjectName;
         data = data.split(',');
         console.log(data);
-        var shortName1 = data[0];
+      /*  var shortName1 = data[0];
         shortName1 = shortName1.substr(3, shortName1.lenght);
         var shortName = data[1];
         shortName = shortName.substr(3, shortName.lenght);
         shortName = shortName1 + ' ' + shortName;
+        $('#entity-short').val(shortName); */
+        var shortName = this.parseSnUr(data, ' O=', 3, 0);
+        if(shortName == "")
+            shortName = 'ИП ' + this.parseSnUr(data, ' CN=', 4, 0);
         $('#entity-short').val(shortName);
-        var inn = data[9];
-        inn = inn.substr(5, inn.length);
+
+
+        var inn = this.parseSnUr(data, ' INN=', 5, 0);
+        if(inn == '')
+            inn = this.parseSnUr(data, ' ИНН=', 5, 0);
+        //inn = inn.substr(5, inn.length);
         $('#entity-inn').val(inn);
 
-        var city = data[6];
+        /*var city = data[6];
         city = city.substr(6, city.lenght);
         var address = data[3];
         address = address.substr(8, address.lenght);
-        $('#entity-address').val(city + ' ' + address);
-        $('#entity-fio-z').val(shortName);
+        $('#entity-address').val(city + ' ' + address); */
+
+        $('#entity-fio-z').val(this.parseSnUr(data, ' CN=', 4, 0));
 
         var email = data[8];
         email = email.substr(3, email.lenght);
-        $('#entity-email').val(email);
+        $('#entity-email').val(this.parseSnUr(data, ' E=', 3, 0));
 
 
     },
