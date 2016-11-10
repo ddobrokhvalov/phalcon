@@ -141,7 +141,7 @@ var applicant = {
         $('#entity-short').val(this.parseSnUr(data, 'O=', 3, 4));
         var inn = this.parseSnUr(data, ' INN=', 7, 4);
         if(inn == '')
-            this.parseSnUr(data, ' ИНН', 7, 4);
+            inn = this.parseSnUr(data, ' ИНН=', 7, 4);
         $('#entity-inn').val(inn);
         var kpp = data[3];
         kpp = kpp.split('/');
