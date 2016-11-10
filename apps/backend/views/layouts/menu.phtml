@@ -1,13 +1,15 @@
 {% set cur_controller = dispatcher.getControllerName() %}
 {% set cur_action = dispatcher.getActionName() %}
 <article class="admin-lm-wrap">
-    <a href="/admin/login/start" style="display: block"><div class="lm-logo">
-        <span>Административная консоль</span>
-        <div class="lm-burger">
-            <div class="lm-burger-open"></div>
-            <div class="lm-burger-close"></div>
+    <a href="/admin/login/start" style="display: block">
+        <div class="lm-logo">
+            <span>Административная консоль</span>
+            <div class="lm-burger">
+                <div class="lm-burger-open"></div>
+                <div class="lm-burger-close"></div>
+            </div>
         </div>
-    </div>
+    </a>
     <script>
         $(document).ready(function() {
             $(".form_search").submit(function () {
