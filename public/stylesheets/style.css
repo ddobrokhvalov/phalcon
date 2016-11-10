@@ -1,4 +1,4 @@
-/* line 5, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,45 +20,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
@@ -1840,7 +1840,7 @@ a:focus {
 }
 
 /* line 21, ../sass/_status_change.scss */
-.admin-popup-bg {
+.admin-popup-bg, .admin-popup-bg-hiddenClick {
   position: absolute;
   top: 0;
   left: 0;
@@ -1852,6 +1852,11 @@ a:focus {
 }
 
 /* line 31, ../sass/_status_change.scss */
+.admin-popup-bg-hiddenClick {
+  cursor: auto;
+}
+
+/* line 34, ../sass/_status_change.scss */
 .admin-popup-close {
   position: absolute;
   top: 19px;
@@ -1863,7 +1868,7 @@ a:focus {
   background: url(../images/icon-mod-close.png) no-repeat center;
 }
 
-/* line 41, ../sass/_status_change.scss */
+/* line 44, ../sass/_status_change.scss */
 .admin-popup-content {
   position: relative;
   z-index: 9999;
@@ -1876,7 +1881,7 @@ a:focus {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-/* line 50, ../sass/_status_change.scss */
+/* line 53, ../sass/_status_change.scss */
 .admin-popup-content h6 {
   position: relative;
   overflow: hidden;
@@ -1887,7 +1892,7 @@ a:focus {
   color: #ffffff;
   text-align: center;
 }
-/* line 59, ../sass/_status_change.scss */
+/* line 62, ../sass/_status_change.scss */
 .admin-popup-content h6:before {
   position: absolute;
   content: '';
@@ -1899,11 +1904,11 @@ a:focus {
   background-color: #00aeef;
   transform: rotate(-3deg);
 }
-/* line 71, ../sass/_status_change.scss */
+/* line 74, ../sass/_status_change.scss */
 .admin-popup-content ul {
   margin-top: 30px;
 }
-/* line 74, ../sass/_status_change.scss */
+/* line 77, ../sass/_status_change.scss */
 .admin-popup-content label {
   position: relative;
   margin-left: 102px;
@@ -1913,7 +1918,7 @@ a:focus {
   font-weight: 100;
   cursor: pointer;
 }
-/* line 82, ../sass/_status_change.scss */
+/* line 85, ../sass/_status_change.scss */
 .admin-popup-content label div {
   position: absolute;
   content: '';
@@ -1923,7 +1928,7 @@ a:focus {
   height: 16px;
   background: url(../images/checkbx1.png) 0 0 no-repeat;
 }
-/* line 91, ../sass/_status_change.scss */
+/* line 94, ../sass/_status_change.scss */
 .admin-popup-content label input {
   position: absolute;
   top: calc(50% - 8px);
@@ -1935,7 +1940,7 @@ a:focus {
   opacity: 0;
   cursor: pointer;
 }
-/* line 103, ../sass/_status_change.scss */
+/* line 106, ../sass/_status_change.scss */
 .admin-popup-content button {
   display: block;
   margin: 0 auto 40px;
@@ -5232,26 +5237,285 @@ body#backend-login {
   font-weight: 100;
 }
 
+/* line 1, ../sass/_applicantCertificate.scss */
+.applicantCertificate {
+  margin-bottom: 40px;
+  height: 222px;
+  overflow: hidden;
+}
+/* line 5, ../sass/_applicantCertificate.scss */
+.applicantCertificate__btnHolder {
+  position: relative;
+  margin-right: 5%;
+  width: 35%;
+  height: 100%;
+  float: right;
+}
+/* line 11, ../sass/_applicantCertificate.scss */
+.applicantCertificate__btnHolder > div {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 170px;
+  height: 50px;
+  font-size: 14px;
+  line-height: 50px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+  border-radius: 6px;
+  background-color: #00aeef;
+  cursor: pointer;
+}
+/* line 26, ../sass/_applicantCertificate.scss */
+.applicantCertificate__btnHolder > div:hover {
+  background-color: #10b8f7;
+}
+/* line 31, ../sass/_applicantCertificate.scss */
+.applicantCertificate__add {
+  top: 0;
+  bottom: auto;
+  margin-bottom: 20px;
+}
+
+/* line 37, ../sass/_applicantCertificate.scss */
+.apCerList {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  float: left;
+  margin: 0;
+  width: 60%;
+  height: 100%;
+  border: 1px solid #e0e3ea;
+  background-color: #ffffff;
+}
+
+/* line 48, ../sass/_applicantCertificate.scss */
+.apCerItem {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  padding: 0 15px;
+  font: 100 18px/55px 'Open Sans', sans-serif;
+  color: #34383e;
+  cursor: pointer;
+}
+/* line 57, ../sass/_applicantCertificate.scss */
+.apCerItem-active {
+  background-color: #f7f8fa;
+}
+/* line 60, ../sass/_applicantCertificate.scss */
+.apCerItem:hover {
+  background-color: #f7f8fa;
+}
+
+/* line 65, ../sass/_applicantCertificate.scss */
+.addAppCertificate__addBtn > a {
+  display: block;
+  font-size: 14px;
+  line-height: 50px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+}
+/* line 74, ../sass/_applicantCertificate.scss */
+.addAppCertificate__addBtn > a:hover {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* line 82, ../sass/_applicantCertificate.scss */
+.addAppCertificate__btnHolder {
+  overflow: hidden;
+  margin-bottom: 30px;
+  padding: 0 30px;
+}
+/* line 86, ../sass/_applicantCertificate.scss */
+.addAppCertificate__btnHolder > div {
+  float: left;
+  width: 170px;
+  height: 50px;
+  font-size: 14px;
+  line-height: 50px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+  border-radius: 6px;
+  background-color: #00aeef;
+  cursor: pointer;
+}
+/* line 99, ../sass/_applicantCertificate.scss */
+.addAppCertificate__btnHolder > div:hover {
+  background-color: #10b8f7;
+}
+/* line 104, ../sass/_applicantCertificate.scss */
+.addAppCertificate__cancelBtn {
+  float: right !important;
+}
+/* line 106, ../sass/_applicantCertificate.scss */
+.addAppCertificate__cancelBtn a {
+  display: block;
+  font-size: 14px;
+  line-height: 50px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+}
+/* line 115, ../sass/_applicantCertificate.scss */
+.addAppCertificate__cancelBtn a:hover {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+}
+/* line 123, ../sass/_applicantCertificate.scss */
+.addAppCertificate .admin-popup-content h6 {
+  padding: 50px 30px 60px;
+  font-size: 46px;
+  line-height: 50px;
+}
+/* line 129, ../sass/_applicantCertificate.scss */
+.addAppCertificate__dscr {
+  padding: 30px;
+  font: 18px/1.1px 'Open Sans', sans-serif;
+  color: #34383e;
+}
+/* line 134, ../sass/_applicantCertificate.scss */
+.addAppCertificate__dscrAlert {
+  margin: 30px 0 50px;
+  padding: 0 30px;
+  font-size: 22px;
+  font-weight: 100;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* line 143, ../sass/_applicantCertificate.scss */
+.existingCerListBox {
+  padding: 0 30px;
+}
+/* line 145, ../sass/_applicantCertificate.scss */
+.existingCerListBox .title-info-box {
+  padding-left: 7px;
+  font-size: 22px;
+  font-weight: 100;
+  line-height: 2.5;
+}
+/* line 151, ../sass/_applicantCertificate.scss */
+.existingCerListBox .current-option {
+  margin-bottom: 20px;
+}
+/* line 153, ../sass/_applicantCertificate.scss */
+.existingCerListBox .current-option span {
+  padding-right: 80px;
+  font-size: 20px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+/* line 161, ../sass/_applicantCertificate.scss */
+.existingCerListBox .custom-options {
+  overflow: hidden;
+  margin-top: 5px;
+  max-height: 240px;
+  background-color: #ffffff;
+}
+/* line 166, ../sass/_applicantCertificate.scss */
+.existingCerListBox .custom-options li {
+  position: relative;
+  padding: 15px 10px 14px 23px;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 100;
+  border-bottom: 1px solid #fff;
+  cursor: pointer;
+}
+/* line 174, ../sass/_applicantCertificate.scss */
+.existingCerListBox .custom-options li:hover {
+  background-color: #f7f8fa;
+}
+/* line 177, ../sass/_applicantCertificate.scss */
+.existingCerListBox .custom-options li:last-child {
+  border-bottom: none;
+}
+/* line 182, ../sass/_applicantCertificate.scss */
+.existingCerListBox__dscr {
+  margin-bottom: 50px;
+  padding-left: 7px;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+/* line 189, ../sass/_applicantCertificate.scss */
+.preloaderHolder {
+  padding: 50px 0 70px;
+}
+
+/* line 192, ../sass/_applicantCertificate.scss */
+.preloader {
+  margin: 0 auto;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 5px solid;
+  border-top-color: #00aeef;
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+  border-left-color: #00aeef;
+  border-right-color: rgba(0, 0, 0, 0.1);
+  -webkit-animation: preloader 1.2s ease-in-out infinite;
+  animation: preloader 1.2s ease-in-out infinite;
+}
+
+@keyframes preloader {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+/* line 210, ../sass/_applicantCertificate.scss */
+.hiddenClass {
+  visibility: hidden;
+}
+
 @media (max-width: 1640px) {
-  /* line 137, ../sass/style.scss */
+  /* line 138, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: 330px;
     margin-right: 0;
   }
 }
 @media (max-width: 1325px) {
-  /* line 144, ../sass/style.scss */
+  /* line 145, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* line 148, ../sass/style.scss */
+  /* line 149, ../sass/style.scss */
   .admin-lm-wrap {
     left: -242px;
   }
 
-  /* line 151, ../sass/style.scss */
+  /* line 152, ../sass/style.scss */
   .lm-burger {
     display: block;
   }

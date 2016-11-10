@@ -81,6 +81,10 @@
                         <div>Адрес местонахождения</div>
                         <input type="text" name="address" id="entity-address"  style="width: 810px;">
                     </label>
+                    <label for="post-address">
+                        <div>Почтовый адрес</div>
+                        <input type="text" name="post" id="post-address"  style="width: 610px;">
+                    </label>
                     <label for="entity-position">
                         <div>Должность заявителя</div>
                         <input type="text" name="position-fio" id="entity-position" style="width: 480px;">
@@ -89,7 +93,7 @@
                         <div>ФИО заявителя</div>
                         <input type="text" name="fio" id="entity-fio-z" style="width: 480px;">
                     </label>
-                    <label for="entity-position-k">
+                    <label for="entity-fio-k">
                         <div>ФИО контактного лица</div>
                         <input type="text" name="fio-kontakt-face" id="entity-fio-k" style="width: 480px;">
                     </label>
@@ -307,14 +311,13 @@
 </article>
 
 <article class="admin-popup-wrap addAppCertificate addAppCertificate-alert" style="display:none;">
-    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-bg-hiddenClick"></div>
     <div class="admin-popup-content index-main-popup">
-        <div class="admin-popup-close"></div>
         <h6>Импорт заявителя из данных сертификата</h6>
         <p class="addAppCertificate__dscrAlert">Для работы функции импорта из сертификата необходим плагин КриптоПРО. Установить плагин для Вашего Браузера сейчас?</p>
         <div class="addAppCertificate__btnHolder">
-            <div class="addAppCertificate__addBtn">Установить</div>
-            <div class="addAppCertificate__cancelBtn">Отменить</div>
+            <div class="addAppCertificate__addBtn"><a href="#">Установить</a></div>
+            <div class="addAppCertificate__cancelBtn"><a href="#">Отменить</a></div>
         </div>
     </div>
 </article>
