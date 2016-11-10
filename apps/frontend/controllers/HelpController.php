@@ -62,6 +62,7 @@ class HelpController extends ControllerBase
             $this->setHelpMenu();
             $this->view->showHeader = false;
         } else {
+            $this->view->host = $this->request->getHttpHost();
             $this->view->showHeader = true;
         }
     }
@@ -75,6 +76,7 @@ class HelpController extends ControllerBase
             $this->view->email = $this->user->email;
             $this->view->showHeader = false;
         } else {
+            $this->view->host = $this->request->getHttpHost();
             $this->view->showHeader = true;
         }
     }
@@ -84,6 +86,7 @@ class HelpController extends ControllerBase
             $this->setHelpMenu();
             $this->view->showHeader = false;
         } else {
+            $this->view->host = $this->request->getHttpHost();
             $this->view->showHeader = true;
         }
     }

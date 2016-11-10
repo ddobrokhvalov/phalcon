@@ -108,6 +108,7 @@ class ControllerBase extends Controller
         $this->view->complaints_num = $result['complaints_num'];
         $this->view->total = $result['total'];
         $this->view->user = $this->user;
+        $this->view->host = $this->request->getHttpHost();
         if(isset($_GET['status']))
             $this->view->menu_status = $_GET['status'];
         else

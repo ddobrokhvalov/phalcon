@@ -51,6 +51,7 @@ class ControllerBase extends Controller
 
     public function setMenu(){
         $this->view->showMenu = true;
+        $this->view->host = $this->request->getHttpHost();
         $this->view->menuItemsCount = [
             'User'=>User::count(),
             'Applicant'=>Applicant::count(),
