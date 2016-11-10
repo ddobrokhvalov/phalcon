@@ -4,27 +4,27 @@ namespace Multiple\Library\Calendar;
 class Calendar
 {
     private $api;
-    private $endDate;
+    private $date;
     private $nowDate;
     private $interval;
     private $countDiffDays;
-    private static $instance = null;
 
-    private  function __construct(ApiCalendar $api)
+    public  function __construct(ApiCalendar $api, $days)
     {
         $this->api = $api;
         $this->countDiffDays = 0;
+        $this->days = $days;
         $this->nowDate = new \DateTime('now');
         $this->interval = new \DateInterval('P1D');
     }
 
-    public function checkDate($endDate, $days = 10)
+    public function checkDateAddComplaint($date)
     {
-        $this->endDate = new \DateTime($endDate);
+        $this->date = new \DateTime($date);
         $countHolidays = 0;
         $countDays = 0;
-        $currrent = $this->endDate;
-        if($this->nowDate > $this->endDate) {
+        $currrent = $this->date;
+        if($this->nowDate > $this->date) {
             while ($currrent < $this->nowDate && $countDays < 20) {
                 $isHoliday = $this->api->checkHoliday($currrent);
                 if ($isHoliday == 'holiday') $countHolidays++;
@@ -33,17 +33,52 @@ class Calendar
                 $countDays++;
             }
             $countDays--;
-            if(($countDays - $countHolidays) >= $days ) return 1;
+            $diffDays = $countDays - $countHolidays;
+            if($diffDays > $this->days ) return 1;
+            elseif($diffDays == $this->days){
+                if($this->date->format('H:i') > $this->nowDate->format('H:i')){
+                    return 1;
+                }
+            }
         }
         return 0;
     }
 
-    public static function getInstance(ApiCalendar $api){
-        if(is_null(self::$instance)){
-            return new Calendar($api);
+    public function checkDateAbortComplaint($regDate){
+        $this->date = new \DateTime($regDate);
+        $countHolidays = 0;
+        $countDays = 0;
+        $currrent = $this->date;
+        if($this->nowDate > $this->date) {
+            while ($currrent < $this->nowDate && $countDays < 20) {
+                $isHoliday = $this->api->checkHoliday($currrent);
+                if ($isHoliday == 'holiday'){
+                    $countHolidays++;
+                } elseif($countDays == 0 && $isHoliday != 'work'){
+                    if($currrent->format('N') == 6){
+                        $currrent->add(new \DateInterval('P3D'));
+                        continue;
+                    } else if( $currrent->format('N') == 7 ){
+                        $currrent->add(new \DateInterval('P2D'));
+                        continue;
+                    }
+                } elseif($currrent->format('N') > 5){
+                    $countHolidays++;
+                }
+                $currrent->add($this->interval);
+                $countDays++;
+            }
+            $diffDays = $countDays - $countHolidays;
+            if($diffDays > $this->days) return 1;
+            elseif($diffDays == $this->days){
+                if($this->nowDate->format('H:i') > $this->date->format('H:i')){
+                    return 1;
+                }
+            }
         }
-        return self::$instance;
+        return 0;
     }
+
 }
 
 
