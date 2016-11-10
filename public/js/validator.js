@@ -22,6 +22,10 @@ var validator = {
         if (text.length < min)
             return false;
         return true;
-    }
+    },
 
+    post: function(post){
+        var re = /^[\d]{6}$/;
+        return re.test(post)
+    }
 }

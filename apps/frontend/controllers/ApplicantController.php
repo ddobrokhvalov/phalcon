@@ -92,6 +92,7 @@ class ApplicantController extends ControllerBase
                     $applicant->fid = '';
                     $applicant->is_blocked = 1;
                     $applicant->address = $_POST['address'];
+                    $applicant->post = $_POST['post'];
                     $applicant->position = $_POST['position-fio'];
                     $applicant->fio_applicant = $_POST['fio'];
                     $applicant->fio_contact_person = $_POST['fio-kontakt-face'];
@@ -99,21 +100,13 @@ class ApplicantController extends ControllerBase
                     $applicant->email = $_POST['email'];
                     break;
                 case 'indlico':
-                    if (!isset($_POST['full-name']) || !$_POST['full-name']) {
-                        $this->flashSession->error('Полное наименование не может быть пустым');
-                        return $this->dispatcher->forward(array(
-                            'module' => 'frontend',
-                            'controller' => 'applicant',
-                            'action' => 'add'
-                        ));
-                    }
                     $applicant->user_id = $user_id;
                     $applicant->type = 'ip';
-                    $applicant->name_full = $_POST['full-name'];
-                    $applicant->name_short = '';
+                    $applicant->name_short = $_POST['kratkoe-name'];
                     $applicant->inn = $_POST['inn'];
-                    $applicant->kpp = '';
+                    //$applicant->kpp = '';
                     $applicant->fid = '';
+                    $applicant->post = $_POST['post'];
                     $applicant->address = $_POST['address'];
                     $applicant->position = $_POST['position-fio'];
                     $applicant->is_blocked = 1;
@@ -141,6 +134,7 @@ class ApplicantController extends ControllerBase
                     $applicant->address = '';
                     $applicant->position = '';
                     $applicant->is_blocked = 1;
+                    $applicant->post = $_POST['post'];
                     $applicant->fio_applicant = $_POST['fio'];
                     $applicant->fio_contact_person = $_POST['fio-kontakt-face'];
                     $applicant->telefone = $_POST['phone'];
@@ -183,7 +177,7 @@ class ApplicantController extends ControllerBase
 
             $applicant->save();
             $this->flashSession->success('Заявитель сохранен');
-            Log::addAdminLog("Создание заявителя", "Заявитель  {$applicant->name_full} сохранен", $this->user);
+            Log::addAdminLog("Создание заявителя", "Заявитель  {$applicant->name_short} сохранен", $this->user);
         } else {
             $this->flashSession->error('Выбран недопустимый тип файлов или превышен размер в 5 Мб');
         }
@@ -222,10 +216,11 @@ class ApplicantController extends ControllerBase
             $form = new ApplicantForm(null, array('edit' => true, 'type' => $this->request->getPost('type')));
             $this->view->form = $form;
             $all_fields = array(
-                'name_full' => '',
+//                'name_full' => '',
                 'name_short' => '',
                 'inn' => '',
                 'kpp' => '',
+                'post' => '',
                 'address' => '',
                 'position' => '',
                 'fio_applicant' => '',
