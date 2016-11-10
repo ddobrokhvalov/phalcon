@@ -139,6 +139,8 @@ var applicant = {
         var data = selectedCertif.SubjectName;
         data = data.split(',');
         $('#entity-short').val(this.parseSnUr(data, 'O=', 3, 4));
+        console.log(data);
+        console.log(this.parseSnUr(data, ' INN=', 7, 4));
         $('#entity-inn').val(this.parseSnUr(data, ' INN=', 7, 4));
         var kpp = data[3];
         kpp = kpp.split('/');
