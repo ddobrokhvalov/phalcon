@@ -78,9 +78,7 @@ var userCertificates = false;
         for(var i in aCertificate){
             var str = aCertificate[i].ValidFromDate;
             //console.log(str.toString());
-
             str = str + '';
-
             if(+str[0] >= 0) {
                 str = str.slice(0, 10);
             } else {
