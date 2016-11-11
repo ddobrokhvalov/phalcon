@@ -38,8 +38,8 @@
             </ul>
             {% for applicant in page.items %}
                 {% if applicant.type == 'ip' %}
-                    <ul class="lt-content-main {% if applicant.is_blocked == 0 %} hidden-arg {% endif %}" sort-name="{{applicant.name_full}}" sort-phone="" sort-email="" sort-complaints="{{applicant.getCountComplaints(applicant.id)}}" detail-url="{{url('admin/applicants/info/' ~ applicant.id)}}">
-                        <li><div class="lt-psevdo-check">{{hidden_field('applicant-id', 'value':applicant.id)}}</div>{{applicant.name_full}}</li>
+                    <ul class="lt-content-main {% if applicant.is_blocked == 0 %} hidden-arg {% endif %}" sort-name="{{applicant.name_short}}" sort-phone="" sort-email="" sort-complaints="{{applicant.getCountComplaints(applicant.id)}}" detail-url="{{url('admin/applicants/info/' ~ applicant.id)}}">
+                        <li><div class="lt-psevdo-check">{{hidden_field('applicant-id', 'value':applicant.id)}}</div>{{applicant.name_short}}</li>
                         <li>{{applicant.telefone}}</li>
                         <li>{{applicant.email}}</li>
                         <li>{{applicant.getCountComplaints(applicant.id)}}</li>

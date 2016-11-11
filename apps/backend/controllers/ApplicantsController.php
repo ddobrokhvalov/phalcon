@@ -168,8 +168,8 @@ class ApplicantsController  extends ControllerBase
             $applicant = new Applicant();
             switch ($_POST['type']) {
                 case 'urlico';
-                    if (!isset($_POST['full-name']) || !$_POST['full-name']) {
-                        $this->flashSession->error('Полное наименование не может быть пустым');
+                    if (!isset($_POST['kratkoe-name']) || !$_POST['kratkoe-name']) {
+                        $this->flashSession->error('Краткое наименование не может быть пустым');
                         return $this->dispatcher->forward(array(
                             'module' => 'backend',
                             'controller' => 'applicants',
@@ -178,10 +178,11 @@ class ApplicantsController  extends ControllerBase
                     }
                     $applicant->user_id = $user_id;
                     $applicant->type = 'urlico';
-                    $applicant->name_full = $_POST['full-name'];
+                    //$applicant->name_full = $_POST['full-name'];
                     $applicant->name_short = $_POST['kratkoe-name'];
                     $applicant->inn = $_POST['inn'];
                     $applicant->kpp = $_POST['kpp'];
+                    $applicant->kpp = $_POST['post'];
                     $applicant->fid = '';
                     $applicant->is_blocked = 1;
                     $applicant->address = $_POST['address'];
@@ -192,8 +193,8 @@ class ApplicantsController  extends ControllerBase
                     $applicant->email = $_POST['email'];
                     break;
                 case 'indlico':
-                    if (!isset($_POST['full-name']) || !$_POST['full-name']) {
-                        $this->flashSession->error('Полное наименование не может быть пустым');
+                    if (!isset($_POST['kratkoe-name']) || !$_POST['kratkoe-name']) {
+                        $this->flashSession->error('Краткое наименование не может быть пустым');
                         return $this->dispatcher->forward(array(
                             'module' => 'backend',
                             'controller' => 'applicants',
@@ -202,9 +203,10 @@ class ApplicantsController  extends ControllerBase
                     }
                     $applicant->user_id = $user_id;
                     $applicant->type = 'ip';
-                    $applicant->name_full = $_POST['full-name'];
-                    $applicant->name_short = '';
+                    //$applicant->name_full = $_POST['full-name'];
+                    $applicant->name_short = $_POST['kratkoe-name'];
                     $applicant->inn = $_POST['inn'];
+                    $applicant->kpp = $_POST['post'];
                     $applicant->kpp = '';
                     $applicant->fid = '';
                     $applicant->address = $_POST['address'];
@@ -228,6 +230,7 @@ class ApplicantsController  extends ControllerBase
                     $applicant->type = 'fizlico';
                     $applicant->name_full = '';
                     $applicant->name_short = '';
+                    $applicant->kpp = $_POST['post'];
                     $applicant->inn = '';
                     $applicant->kpp = '';
                     $applicant->fid = '';

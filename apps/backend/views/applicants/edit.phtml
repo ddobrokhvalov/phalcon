@@ -14,14 +14,14 @@
             <div data-tabsLabel="individual-entrepreneur" {%if applicant.type=="ip" %}class="active-tabs-label"{%endif%}>Индивидуальный предприниматель</div>
             <div data-tabsLabel="physical-face"  {%if applicant.type=="fizlico" %}class="active-tabs-label"{%endif%}>Физическое лицо</div>
         </div>
-        <div data-tabs="legal-entity" class="tabs-content {%if applicant.type=="urlico" %}active-tabs-content{%endif%}">
+        <div data-tabs="legal-entity" class="tabs-content tabcontent-ur {%if applicant.type=="urlico" %}active-tabs-content{%endif%} ">
             <form action="/admin/applicants/save" method="POST" enctype="multipart/form-data" id="urlico">
                 {{hidden_field('id', 'value':applicant.id)}}
                 {{hidden_field('type', 'value':'urlico')}}
-                <label for="entity-textarea">
-                    <div>Полное наименование</div>
-                    {{text_area('name_full', 'value':applicant.name_full, 'id':'entity-textarea')}}
-                </label>
+<!--                <label for="entity-textarea">-->
+<!--                    <div>Полное наименование</div>-->
+<!--                    {{text_area('name_full', 'value':applicant.name_full, 'id':'entity-textarea')}}-->
+<!--                </label>-->
                 <label for="entity-short">
                     <div>Краткое наименование</div>
                     {{text_field("name_short", "value":applicant.name_short, "data-name":"kratkoe-name", "class":"upper-text",  "id":"entity-short")}}
@@ -33,6 +33,10 @@
                 <label for="entity-kpp">
                     <div>КПП</div>
                     {{numeric_field('kpp', 'value':applicant.kpp, "id":"entity-kpp")}}
+                </label>
+                <label for="entity-address">
+                    <div>Почтовый адрес</div>
+                    {{text_field('post', 'value':applicant.post, "id":"post-address", "data-name":"post")}}
                 </label>
                 <label for="entity-address">
                     <div>Адрес местонахождения</div>
@@ -121,14 +125,15 @@
                 <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'urlico');return false;" class="save-tab-form">Сохранить изменения</button>
             </form>
         </div>
-        <div data-tabs="individual-entrepreneur" class="tabs-content {%if applicant.type=="ip" %}active-tabs-content{%endif%}">
+        <div data-tabs="individual-entrepreneur" class="tabs-content tabcontent-in {%if applicant.type=="ip" %}active-tabs-content{%endif%}">
             <form action="/admin/applicants/save" method="POST" enctype="multipart/form-data" id="ip">
                 {{hidden_field('id', 'value':applicant.id)}}
                 {{hidden_field('type', 'value':'ip')}}
-                <label for="entity-textarea">
-                    <div>Полное наименование</div>
-                    {{text_area('name_full', 'value':applicant.name_full, 'id':'entity-textarea')}}
-                </label>
+<!--                <label for="entity-textarea">-->
+<!--                    <div>Полное наименование</div>-->
+<!--                    {{text_area('name_full', 'value':applicant.name_full, 'id':'entity-textarea')}}-->
+<!--                </label>-->
+
                 <label for="entity-inn">
                     <div>ИНН</div>
                     {{numeric_field('inn', 'value':applicant.inn, "id":"entity-inn", "data-name":"number")}}
@@ -148,6 +153,10 @@
                 <label for="entity-phone">
                     <div>Контактный факс, телефон</div>
                     {{numeric_field('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
+                </label>
+                <label for="entity-address">
+                    <div>Почтовый адрес</div>
+                    {{text_field('post', 'value':applicant.post, "id":"post-address", "data-name":"post")}}
                 </label>
                 <label for="entity-email">
                     <div>E-mail</div>
@@ -187,7 +196,7 @@
                 <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'ip');return false;"  class="save-tab-form">Сохранить изменения</button>
             </form>
         </div>
-        <div data-tabs="physical-face" class="tabs-content {%if applicant.type=="fizlico" %}active-tabs-content{%endif%}">
+        <div data-tabs="physical-face" class="tabs-content tabcontent-ph {%if applicant.type=="fizlico" %}active-tabs-content{%endif%}">
             <form action="/admin/applicants/save" method="POST" enctype="multipart/form-data" id="fizlico">
                 {{hidden_field('id', 'value':applicant.id)}}
                 {{hidden_field('type', 'value':'fizlico')}}

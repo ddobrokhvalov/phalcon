@@ -16,10 +16,10 @@
             <form action="/admin/applicants/create" enctype="multipart/form-data" method="POST">
                 {{hidden_field('type', 'value':'urlico')}}
                 {{hidden_field('for_user_id', 'value':for_user_id)}}
-                <label for="entity-textarea">
-                    <div>Полное наименование</div>
-                    <textarea name="full-name" id="entity-textarea" style="width: 815px;"></textarea>
-                </label>
+<!--                <label for="entity-textarea">-->
+<!--                    <div>Полное наименование</div>-->
+<!--                    <textarea name="full-name" id="entity-textarea" style="width: 815px;"></textarea>-->
+<!--                </label>-->
                 <label for="entity-short">
                     <div>Краткое наименование</div>
                     <input type="text" name="kratkoe-name" id="entity-short" style="width: 480px;">
@@ -31,6 +31,10 @@
                 <label for="entity-kpp">
                     <div>КПП</div>
                     <input type="number" name="kpp" id="entity-kpp" style="width: 260px;">
+                </label>
+                <label for="post-address">
+                    <div>Почтовый адрес</div>
+                    <input type="text" name="post" id="post-address"  style="width: 610px;">
                 </label>
                 <label for="entity-address">
                     <div>Адрес местонахождения</div>
@@ -93,10 +97,10 @@
             <form action="/admin/applicants/create" enctype="multipart/form-data" method="POST">
                 {{hidden_field('type', 'value':'indlico')}}
                 {{hidden_field('for_user_id', 'value':for_user_id)}}
-                <label for="entity-textarea">
-                    <div>Полное наименование</div>
-                    <textarea name="full-name" id="entity-textarea" style="width: 815px;"></textarea>
-                </label>
+<!--                <label for="entity-textarea">-->
+<!--                    <div>Полное наименование</div>-->
+<!--                    <textarea name="full-name" id="entity-textarea" style="width: 815px;"></textarea>-->
+<!--                </label>-->
                 <label for="entity-inn">
                     <div>ИНН</div>
                     <input type="number" name="inn" id="entity-inn" style="width: 260px;">
@@ -112,6 +116,10 @@
                 <label for="entity-fio-z">
                     <div>ФИО заявителя</div>
                     <input type="text" name="fio" id="entity-fio-z" style="width: 480px;">
+                </label>
+                <label for="post-address">
+                    <div>Почтовый адрес</div>
+                    <input type="text" name="post" id="post-address"  style="width: 610px;">
                 </label>
                 <label for="entity-phone">
                     <div>Контактный факс, телефон</div>
