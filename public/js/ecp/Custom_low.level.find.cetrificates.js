@@ -78,15 +78,13 @@ var userCertificates = false;
         for(var i in aCertificate){
             var str = aCertificate[i].ValidFromDate;
             //console.log(str.toString());
-
             str = str + '';
-
             if(+str[0] >= 0) {
                 str = str.slice(0, 10);
             } else {
                 str = str.slice(4, 16);
             }
-            var field = str + ' | ' + aCertificate[i].SubjectDNSName;         
+            var field = str + ' | ' + aCertificate[i].SubjectDNSName;
             html +='<li class="existingCerListBox__item" onclick="setCertItem('+i+')" >'+field+'</li>';
         }
 
