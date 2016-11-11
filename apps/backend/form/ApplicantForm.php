@@ -34,21 +34,21 @@ class ApplicantForm extends Form
             )
         );
         //
-        if (isset($options['type']) && $options['type'] == 'urlico') {
-            $name_full = new Text('name_full');
-            $name_full->setLabel('Полное наименование');
-            $name_full->setFilters(array('striptags', 'string'));
-            $name_full->addValidators(
-                array(
-                    new PresenceOf(
-                        array(
-                            'message' => 'Полное наименование обязательно'
-                        )
-                    )
-                )
-            );
-            $this->add($name_full);
-        }
+//        if (isset($options['type']) && $options['type'] == 'urlico') {
+//            $name_full = new Text('name_full');
+//            $name_full->setLabel('Полное наименование');
+//            $name_full->setFilters(array('striptags', 'string'));
+//            $name_full->addValidators(
+//                array(
+//                    new PresenceOf(
+//                        array(
+//                            'message' => 'Полное наименование обязательно'
+//                        )
+//                    )
+//                )
+//            );
+//            $this->add($name_full);
+//        }
         //
         if (isset($options['type']) && $options['type'] == 'urlico') {
             $name_short = new Text('name_short');
