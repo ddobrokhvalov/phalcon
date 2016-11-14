@@ -12,13 +12,13 @@ $(document).ready(function () {
                     $('#pop-recovery').css('display', 'none');
                     $('#pop-recovery input[name="email"]').val('');
                     $('.pop-done-txt').html('На указанную вами электронную почту<br>'+ res.email +' отправлено письмо для завершения<br>восстановления пароля');
-                    $('#pop-done').css('display', 'block').animate({opacity: 1, top: '35%'}, 200);
+                    $('#pop-done').css('display', 'block').animate({opacity: 1}, 200);
                     $('#overlay').css('display', 'block');
                 } else if(res.error){
                     $('#pop-recovery').css('display', 'none');
                     $('#pop-recovery input[name="email"]').val('');
                     $('.pop-done-txt').html(res.error);
-                    $('#pop-done').css('display', 'block').animate({opacity: 1, top: '35%'}, 200);
+                    $('#pop-done').css('display', 'block').animate({opacity: 1}, 200);
                 }
             },
         });
@@ -29,12 +29,12 @@ $(document).ready(function () {
         //$('#pop-done').modal('show');
         $('#pop-done h2').text('Восстановление');
         $('.pop-done-txt').html('На ваш email выслан новый пароль');
-        $('#pop-done').css('display', 'block').animate({opacity: 1, top: '35%'}, 200);
+        $('#pop-done').css('display', 'block').animate({opacity: 1}, 200);
         $('#overlay').show();
 
         $('body').on('click', '.logreg', function(){
             $('#pop-done').css('display', 'none');
-            $('#pop-login').css('display', 'block').animate({opacity: 1, top: '35%'}, 200);
+            $('#pop-login').css('display', 'block').animate({opacity: 1}, 200);
         });
     }
 });

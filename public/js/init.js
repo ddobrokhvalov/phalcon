@@ -12,7 +12,7 @@ $(document).ready(function() {
              function(){
                  $(div)
                      .css('display', 'block')
-                     .animate({opacity: 1, top: '35%'}, 200);
+                     .animate({opacity: 1}, 200);
          });
      });
      open_modal2.click( function(event){
@@ -22,18 +22,22 @@ $(document).ready(function() {
          $("#applicant-name").html(label);
          var applicant_id = $(this).attr('applicant-id');
          $(".delete-applicant").attr('href', "/applicant/delete/" + applicant_id);
-         $(div).css('display', 'block').animate({opacity: 1, top: '50%'}, 200);
+         $(div).css('display', 'block').animate({opacity: 1}, 200);
          $("#overlay").css('display', 'block');
      });
      close.click( function(){
             modal
-             .animate({opacity: 0, top: '45%'}, 200,
+             .animate({opacity: 0}, 200,
                  function(){
                      $(this).css('display', 'none');
                      overlay.fadeOut(400);
                  }
              );
      });
+
+    $('.pop-done-txt__link').click(function (e) {
+       e.preventDefault;
+    });
 });
 
 jQuery(document).ready(function($) {

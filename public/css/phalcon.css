@@ -2895,11 +2895,23 @@ input[type="radio"]:checked + label {
     display: none;
     left: 50%;
     margin-left: -350px;
-    margin-top: -300px;
+    margin-top: -338px;
     position: fixed;
-    top: 45%;
+    top: 50%;
     width: 700px;
     z-index: 9999;
+}
+.modal_div-rec {
+    margin-top: -233px;
+}
+.modal_div-fin {
+    margin-top: -190px;
+}
+.modal_div-start {
+    margin-top: -410px;
+}
+.modal_div-done {
+    margin-top: -195px;
 }
 #overlay {
     background-color: #34383e;
@@ -3047,6 +3059,11 @@ input[type="radio"]:checked + label {
     text-align: center;
     width: 100%;
     color: #292c30;
+}
+.pop-done-txt__link {
+    display: block;
+    margin-top: 20px;
+    font-size: 18px;
 }
 .pop-done2 {
     padding: 30px 45px !important;

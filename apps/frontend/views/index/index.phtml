@@ -294,7 +294,7 @@
 </div>
 
 <!-- popup start -->
- <div id="pop-start" class="modal_div">
+ <div id="pop-start" class="modal_div modal_div-start">
     <h2>Регистрация</h2>
     <form class="reg-new-user" method="POST">
 <!--        <label for="popstrt-inp1">Ваше имя</label>-->
@@ -331,7 +331,7 @@
 </div>
 
 <!-- popup start -->
-<div id="pop-done" class="modal_div">
+<div id="pop-done" class="modal_div modal_div-done">
     <h2>Начать работу</h2>
     <div class="pop-done-txt">
         На указанную вами электронную почту<br>
@@ -348,7 +348,7 @@
 </style>
 
 <!-- popup recovery -->
-<div id="pop-recovery" class="modal_div">
+<div id="pop-recovery" class="modal_div modal_div-rec">
     <h2>Восстановление пароля</h2>
     <form class="rec-pass" method="POST">
         <label for="popstrt-inp1">Введите ваш email</label>
@@ -358,10 +358,11 @@
     <div class="modal-close"></div>
 </div>
 
-<div id="pop-rec" class="modal_div">
+<div id="pop-rec" class="modal_div modal_div-fin">
     <h2>Восстановление</h2>
     <div class="pop-done-txt">
         На ваш email выслан новый пароль
+        <a class="pop-done-txt__link" href="#">Войти</a>
     </div>
     <div class="modal-close"></div>
 </div>
