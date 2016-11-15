@@ -16,6 +16,7 @@ $(document).ready(function () {
         if (userData.indexOf('OGRNIP=') != -1) {
             applicant.parseIp(selectedCertif);
         }
+
         var str = selectedCertif.ValidFromDate;
         str = str.toString().substr(0, 10);
         var field = str + ' | ' + selectedCertif.SubjectDNSName;
@@ -48,6 +49,8 @@ $(document).ready(function () {
         applicant.selectFirst(applicantSelectedId, false);
 
     $("#add_applicant, .add_applicant").on('click', function (event) {
+        applicant.checkInn($('input[name="inn"]').val());
+        if(!applicant.save) return false;
         event.preventDefault();
         if ($(".modal-dialog.modal-sm").height() != null && $(".modal-dialog.modal-sm").height() > 0) {
             return false;
@@ -147,6 +150,7 @@ var applicant = {
         if(inn == '')
             inn = this.parseSnUr(data, ' ИНН=', 7, 4);
         $('.tabcontent-ur #entity-inn').val(inn);
+        this.checkInn(inn);
         var kpp = data[3];
         kpp = kpp.split('/');
         kpp = kpp[1];
@@ -201,6 +205,7 @@ var applicant = {
         if(inn == '')
             inn = this.parseSnUr(data, ' ИНН=', 5, 0);
         //inn = inn.substr(5, inn.length);
+        this.checkInn(inn);
         $('.tabcontent-in #entity-inn').val(inn);
 
         /*var city = data[6];
@@ -218,10 +223,10 @@ var applicant = {
 
     },
     checkInn: function (inn) {
-        if (!validator.numeric($('#czvr3').val(), 10, 10)) {
+        /*if (!validator.numeric($('#czvr3').val(), 10, 10)) {
             applicantValidator.showError('#czvr3', 'Ошибка! ИНН состоит из 10 цифр');
             return false;
-        }
+        }*/
         $.ajax({
             type: 'POST',
             url: '/applicant/checkinn',
@@ -231,9 +236,9 @@ var applicant = {
                 if (msg == 'true') {
                     applicant.save = false;
                     showMessagePopup('error', 'Заявитель с таким ИНН уже зарегистрирован в системе. ');
-                    applicantValidator.showError('#czvr3', 'Ошибка! Заявитель с таким ИНН уже зарегистрирован в системе.');
+                    applicantValidator.showError('.ent-inn', 'Ошибка! Заявитель с таким ИНН уже зарегистрирован в системе.');
                 } else {
-                    applicantValidator.done('#czvr3');
+                    applicantValidator.done('#entity-inn');
                     applicant.save = true;
                 }
             },
