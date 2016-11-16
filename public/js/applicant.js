@@ -49,7 +49,13 @@ $(document).ready(function () {
         applicant.selectFirst(applicantSelectedId, false);
 
     $("#add_applicant, .add_applicant").on('click', function (event) {
-        applicant.checkInn($('input[name="inn"]').val());
+        var checkinn = false;
+        $('input[name="inn"]').each(function(){
+            if($(this).val()){
+                checkinn = $(this).val();
+            }
+        });
+        applicant.checkInn(checkinn);
         if(!applicant.save) return false;
         event.preventDefault();
         if ($(".modal-dialog.modal-sm").height() != null && $(".modal-dialog.modal-sm").height() > 0) {
@@ -64,6 +70,7 @@ $(document).ready(function () {
             return false;
         }
     });
+
 
     $('.select_applicant').click(function () {
         /*if (applicant.id) {
@@ -124,6 +131,8 @@ var applicant = {
     id: [],
     type: false,
     save: false,
+    edit_mode: true,
+    inn: false,
     applicant_info: [],
     parseSnUr: function (data, searchValue, start, lenght) {
         for (var i = 0; i < data.length; i++) {
@@ -150,7 +159,11 @@ var applicant = {
         if(inn == '')
             inn = this.parseSnUr(data, ' ИНН=', 7, 4);
         $('.tabcontent-ur #entity-inn').val(inn);
-        this.checkInn(inn);
+        if(this.edit_mode == false){
+            this.inn = inn;
+            this.checkInn(inn);
+        }
+
         var kpp = data[3];
         kpp = kpp.split('/');
         kpp = kpp[1];
@@ -205,7 +218,10 @@ var applicant = {
         if(inn == '')
             inn = this.parseSnUr(data, ' ИНН=', 5, 0);
         //inn = inn.substr(5, inn.length);
-        this.checkInn(inn);
+        if(this.edit_mode == false){
+            this.inn = inn;
+            this.checkInn(inn);
+        }
         $('.tabcontent-in #entity-inn').val(inn);
 
         /*var city = data[6];

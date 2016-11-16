@@ -1,9 +1,55 @@
+$(document).ready(function () {
+    $(".addAppCertificate__addBtn_edit").on('click', function(){
+        if (selectedCertif == false)
+            return;
+        applicant.edit_mode = true;
+        $('.addAppCertificate-main2').fadeOut().css('display', 'none');
+
+        var userData = selectedCertif.SubjectName;
+
+        if (userData.indexOf('OGRN=') != -1) {
+            applicant.parseUrLico(selectedCertif);
+        }
+        if (userData.indexOf('OGRNIP=') != -1) {
+            applicant.parseIp(selectedCertif);
+        }
+
+        var str = selectedCertif.ValidFromDate;
+        str = str.toString().substr(0, 10);
+        var field = str + ' | ' + selectedCertif.SubjectDNSName;
+
+        // $('.ecp_ur').val(selectedCertif.Thumbprint);
+        // $('.ecp_text').val(field);
+
+        count_ecp++;
+        var str = '<li class="apCerList__apCeritem apCerItem" data-thumbprint="'+ selectedCertif.Thumbprint +'">'+ field;
+        str += '<input type="hidden" name="cert['+ count_ecp +'][name]" value="'+ field +'">';
+        str += '<input type="hidden" name="cert['+ count_ecp +'][thumbprint]" value="'+ selectedCertif.Thumbprint +'">';
+        str += '</li>';
+        $("#mCSB_2_container, #mCSB_3_container").append(str);
+
+
+        $('.content').removeClass('hiddenClass');
+    });
+
+    $('.applicantCertificate__remove ').on('click', function(){
+        $('.apCerItem-active').remove();
+    });
+
+    $('.applicantCertificate__add').on('click', function(){
+        findCertificates();
+        $('.addAppCertificate').toggle();
+    });
+
+    $('.addAppCertificate__cancelBtn').on('click', function(){
+        $('.addAppCertificate').toggle();
+    });
+});
+
 var pluginNotFound = true;
 var timer_id = false;
 var userCertificates = false;
-(function() {
-
-
+function findCertificates() {
     timer_id = setTimeout(hideWaitPopup, 1000*2);
 
     // Доступ всегда осуществляется в ассинхронном режиме
@@ -32,7 +78,7 @@ var userCertificates = false;
     }).then(function(Certificates) { // Получаем объект достпупа к API Certificates
         // Получаем список сертификатов у которых не истек срок дейтсвия
         return Certificates.find(Certificates.CAPICOM_CERTIFICATE_FIND_TIME_VALID);
-       // return Certificates.find();
+        // return Certificates.find();
     }).then(function(Certificates) {
         return new Promise(function(resolve, reject) {
             // Получаем необходимые сведения по сертификатам
@@ -75,9 +121,29 @@ var userCertificates = false;
         console.log(aCertificate);
         userCertificates = aCertificate;
         var html = '';
+        var current_inn = false;
+        $('input[name="inn"]').each(function(){
+            if($(this).val()){
+                current_inn = $(this).val();
+            }
+        });
+        var checked_element = $('.apCerItem');
         for(var i in aCertificate){
+            console.log(aCertificate[i].SubjectName.indexOf(current_inn) );
+            if(aCertificate[i].SubjectName.indexOf(current_inn) == -1){
+                continue;
+            }
+            var isChecked = false;
+            for(var j = 0; j < checked_element.length; j++){
+                var th = $(checked_element[j]).attr('data-thumbprint');
+                if(th == aCertificate[i].Thumbprint){
+                    isChecked = true;
+                    break;
+                }
+            }
+            if(isChecked) continue;
+
             var str = aCertificate[i].ValidFromDate;
-            //console.log(str.toString());
             str = str + '';
             if(+str[0] >= 0) {
                 str = str.slice(0, 10);
@@ -89,16 +155,13 @@ var userCertificates = false;
         }
 
         $('.certificate-box-2').html(html);
-       // certificate-box-2
-
-
     });
 
     // Закрываем хранилище
     oStore.then(function(Store) {
         return Store.close();
     });
-})();
+};
 var selectedCertif = false;
 function setCertItem(num){
     selectedCertif = userCertificates[num];
