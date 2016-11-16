@@ -282,7 +282,16 @@ class ComplaintController extends ControllerBase
             $thumbprint = 0;
             if(isset($_POST['applicant_id'])) {
                 $applicant_id = $_POST['applicant_id'];
-                $thumbprint = ApplicantECP::findFirst("activ = 1 AND applicant_id = $applicant_id ");
+                //"activ = 1 AND applicant_id = $applicant_id "
+
+                $thumbprint = ApplicantECP::findFirst(array(
+                    "conditions" => "activ = ?1 AND applicant_id = ?2",
+                    "bind"       => [
+                        1 => 1,
+                        2 => $applicant_id,
+                    ],
+                    'order' => 'id DESC'
+                ));
                 $thumbprint = $thumbprint->thumbprint;
             }
             $data = file_get_contents($baseLocation . $name);
