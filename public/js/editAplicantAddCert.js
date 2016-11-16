@@ -121,7 +121,12 @@ function findCertificates() {
         console.log(aCertificate);
         userCertificates = aCertificate;
         var html = '';
-        var current_inn = $('input[name="inn"]').val();
+        var current_inn = false;
+        $('input[name="inn"]').each(function(){
+            if($(this).val()){
+                current_inn = $(this).val();
+            }
+        });
         var checked_element = $('.apCerItem');
         for(var i in aCertificate){
             console.log(aCertificate[i].SubjectName.indexOf(current_inn) );
