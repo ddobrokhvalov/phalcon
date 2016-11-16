@@ -4,7 +4,7 @@ var userCertificates = false;
 (function() {
 
 
-    timer_id = setTimeout(hideWaitPopup, 1000*7);
+    timer_id = setTimeout(hideWaitPopup, 1000*2);
 
     // Доступ всегда осуществляется в ассинхронном режиме
     // Получаем объект Promise для доступа к cades plugin api

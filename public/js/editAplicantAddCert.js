@@ -50,7 +50,7 @@ var pluginNotFound = true;
 var timer_id = false;
 var userCertificates = false;
 function findCertificates() {
-    timer_id = setTimeout(hideWaitPopup, 1000*7);
+    timer_id = setTimeout(hideWaitPopup, 1000*2);
 
     // Доступ всегда осуществляется в ассинхронном режиме
     // Получаем объект Promise для доступа к cades plugin api
@@ -130,9 +130,9 @@ function findCertificates() {
         var checked_element = $('.apCerItem');
         for(var i in aCertificate){
             console.log(aCertificate[i].SubjectName.indexOf(current_inn) );
-            // if(aCertificate[i].SubjectName.indexOf(current_inn) == -1){
-            //     continue;
-            // }
+            if(aCertificate[i].SubjectName.indexOf(current_inn) == -1){
+                continue;
+            }
             var isChecked = false;
             for(var j = 0; j < checked_element.length; j++){
                 var th = $(checked_element[j]).attr('data-thumbprint');
