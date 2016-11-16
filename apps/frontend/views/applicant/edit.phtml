@@ -14,22 +14,24 @@
                 <div onclick="applicant.setIp();" data-tabsLabel="individual-entrepreneur" {%if applicant.type=="ip" %}class="active-tabs-label"{%endif%}>Индивидуальный предприниматель</div>
                 <div onclick="applicant.setFizlico();" data-tabsLabel="physical-face"  {%if applicant.type=="fizlico" %}class="active-tabs-label"{%endif%}>Физическое лицо</div>
             </div>
+            {% if applicant.type == 'urlico' %}
             <div data-tabs="legal-entity" class="tabs-content {%if applicant.type=="urlico" %}active-tabs-content{%endif%}">
-
-
-            <div class="legal-entity__applicantCertificate applicantCertificate">
-                <ul class="applicantCertificate__apCerList apCerList mCustomScrollbar">
-                    {% for ecp in aplicant_ecp %}
-                      <li class="apCerList__apCeritem apCerItem">{{ ecp.name_ecp }}</li>
-                    {% endfor %}
-                </ul>
-                <div class="applicantCertificate__btnHolder">
-                    <div class="applicantCertificate__add" onclick="">Добавить</div>
-                    <div class="applicantCertificate__remove">Удалить</div>
-                </div>
-            </div>
-
             <form action="/applicant/save" method="POST" enctype="multipart/form-data" id="urlico">
+                <div class="legal-entity__applicantCertificate applicantCertificate">
+                    <ul class="applicantCertificate__apCerList apCerList mCustomScrollbar">
+                        {% for ecp in aplicant_ecp %}
+                        <li class="apCerList__apCeritem apCerItem" data-name="{{ecp.name_ecp}}" data-thumbprint="{{ecp.thumbprint}}">{{ ecp.name_ecp }}
+                            <input type="hidden" name="cert[{{loop.index0}}][name]" value="{{ecp.name_ecp}}">
+                            <input type="hidden" name="cert[{{loop.index0}}][thumbprint]" value="{{ecp.thumbprint}}">
+                            <input type="hidden" name="cert[{{loop.index0}}][already]" value="true">
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="applicantCertificate__btnHolder">
+                        <div class="applicantCertificate__add" onclick="">Добавить</div>
+                        <div class="applicantCertificate__remove">Удалить</div>
+                    </div>
+                </div>
                     {{hidden_field('id', 'value':applicant.id)}}
                     {{hidden_field('type', 'value':'urlico')}}
                     <label for="entity-short">
@@ -114,11 +116,28 @@
                             {% endif %}
                         </div>
                     </div>
-                    <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'urlico');return false;" class="save-tab-form add_applicant">Сохранить изменения</button>
+                    <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'urlico');return false;" class="save-tab-form edit_save_applicant">Сохранить изменения</button>
                 </form>
             </div>
+        {% endif %}
+        {% if applicant.type=="ip" %}
             <div data-tabs="individual-entrepreneur" class="tabs-content {%if applicant.type=="ip" %}active-tabs-content{%endif%}">
                 <form action="/applicant/save" method="POST" enctype="multipart/form-data" id="ip">
+                    <div class="legal-entity__applicantCertificate applicantCertificate">
+                        <ul class="applicantCertificate__apCerList apCerList mCustomScrollbar">
+                            {% for ecp in aplicant_ecp %}
+                            <li class="apCerList__apCeritem apCerItem" data-name="{{ecp.name_ecp}}" data-thumbprint="{{ecp.thumbprint}}">{{ ecp.name_ecp }}
+                                <input type="hidden" name="cert[{{loop.index0}}][name]" value="{{ecp.name_ecp}}">
+                                <input type="hidden" name="cert[{{loop.index0}}][thumbprint]" value="{{ecp.thumbprint}}">
+                                <input type="hidden" name="cert[{{loop.index0}}][already]" value="true">
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="applicantCertificate__btnHolder">
+                            <div class="applicantCertificate__add" onclick="">Добавить</div>
+                            <div class="applicantCertificate__remove">Удалить</div>
+                        </div>
+                    </div>
                     {{hidden_field('id', 'value':applicant.id)}}
                     {{hidden_field('type', 'value':'ip')}}
                     <label for="entity-short">
@@ -196,9 +215,11 @@
                             {% endif %}
                         </div>
                     </div>
-                    <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'ip');return false;"  class="save-tab-form add_applicant">Сохранить изменения</button>
+                    <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'ip');return false;"  class="save-tab-form edit_save_applicant">Сохранить изменения</button>
                 </form>
             </div>
+        {% endif %}
+        {% if applicant.type=="fizlico" %}
             <div data-tabs="physical-face" class="tabs-content {%if applicant.type=="fizlico" %}active-tabs-content{%endif%}">
                 <form action="/applicant/save" method="POST" enctype="multipart/form-data" id="fizlico">
                     {{hidden_field('id', 'value':applicant.id)}}
@@ -278,10 +299,12 @@
                     <button onclick="confirm_change_applicant_type(jQuery('#applicant-current-type').val(), 'fizlico');return false;" class="save-tab-form add_applicant">Сохранить изменения</button>
                 </form>
             </div>
+            {% endif %}
         </div>
     </div>
 </div>
 <script type="text/javascript">
+    var count_ecp =  {{ aplicant_ecp|length }};
     $(document).ready(function(){
         var active_tab = $(".tabs-content.active-tabs-content form").attr("id");
         switch (active_tab) {

@@ -74,7 +74,22 @@ function findCertificates() {
         userCertificates = aCertificate;
         var html = '';
         var current_inn = $('input[name="inn"]').val();
+        var checked_element = $('.apCerItem');
         for(var i in aCertificate){
+            console.log(aCertificate[i].SubjectName.indexOf(current_inn) );
+            // if(aCertificate[i].SubjectName.indexOf(current_inn) == -1){
+            //     continue;
+            // }
+            var isChecked = false;
+            for(var j = 0; j < checked_element.length; j++){
+                var th = $(checked_element[j]).attr('data-thumbprint');
+                if(th == aCertificate[i].Thumbprint){
+                    isChecked = true;
+                    break;
+                }
+            }
+            if(isChecked) continue;
+
             var str = aCertificate[i].ValidFromDate;
             str = str + '';
             if(+str[0] >= 0) {
@@ -111,6 +126,9 @@ function  hideWaitPopup(){
     }else{
         $('.addAppCertificate-main2').fadeIn().css('display', 'flex');
     }
-}/**
+}
+
+
+/**
  * Created by knubisoft on 15.11.2016.
  */

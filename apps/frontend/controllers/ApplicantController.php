@@ -40,7 +40,14 @@ class ApplicantController extends ControllerBase
                 }
             }
         }
-        $this->view->aplicant_ecp = ApplicantECP::findByApplicantId($applicant->id);
+        $this->view->aplicant_ecp = ApplicantECP::find(array(
+            'conditions' => 'applicant_id = ?1',
+            'bind'       => array(
+                1 => $applicant->id,
+            ),
+            'order' => 'id DESC'
+
+        ));
         $this->view->applicant = $applicant;
         $this->view->attached_files = $files_html;
     }
@@ -195,6 +202,8 @@ class ApplicantController extends ControllerBase
         }
         $id = $this->request->getPost("id", "int");
         $applicant = Applicant::findFirstById($id);
+        $cert = $this->request->getPost('cert');
+
         if (!$applicant) {
             //$this->flash->error("Product does not exist");
             return $this->dispatcher->forward(array(
@@ -218,7 +227,6 @@ class ApplicantController extends ControllerBase
             $all_fields = array(
 //                'name_full' => '',
                 'name_short' => '',
-                'inn' => '',
                 'kpp' => '',
                 'post' => '',
                 'address' => '',
@@ -255,6 +263,20 @@ class ApplicantController extends ControllerBase
                     'params' => ['id' => $id]
                 ));
             }
+
+            // Save sertificates
+            ApplicantECP::find(array(
+                "applicant_id = {$id}"
+            ))->delete();
+            foreach ($cert as $key){
+                $newEcp = new ApplicantECP();
+                $newEcp->name_ecp = $key['name'];
+                $newEcp->thumbprint = $key['thumbprint'];
+                $newEcp->applicant_id = $id;
+                $newEcp->activ = 1;
+                $newEcp->save();
+            }
+
             // Save attached files.
             $saved_files = array();
             if ($this->request->hasFiles() == true) {

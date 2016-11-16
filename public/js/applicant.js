@@ -65,6 +65,7 @@ $(document).ready(function () {
         }
     });
 
+
     $('.select_applicant').click(function () {
         /*if (applicant.id) {
          $('#cl' + applicant.id).prop('checked', false);
@@ -125,6 +126,7 @@ var applicant = {
     type: false,
     save: false,
     edit_mode: true,
+    inn: false,
     applicant_info: [],
     parseSnUr: function (data, searchValue, start, lenght) {
         for (var i = 0; i < data.length; i++) {
@@ -152,6 +154,7 @@ var applicant = {
             inn = this.parseSnUr(data, ' ИНН=', 7, 4);
         $('.tabcontent-ur #entity-inn').val(inn);
         if(this.edit_mode == false){
+            this.inn = inn;
             this.checkInn(inn);
         }
 
@@ -210,6 +213,7 @@ var applicant = {
             inn = this.parseSnUr(data, ' ИНН=', 5, 0);
         //inn = inn.substr(5, inn.length);
         if(this.edit_mode == false){
+            this.inn = inn;
             this.checkInn(inn);
         }
         $('.tabcontent-in #entity-inn').val(inn);
