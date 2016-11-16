@@ -49,7 +49,13 @@ $(document).ready(function () {
         applicant.selectFirst(applicantSelectedId, false);
 
     $("#add_applicant, .add_applicant").on('click', function (event) {
-        applicant.checkInn($('input[name="inn"]').val());
+        var checkinn = false;
+        $('input[name="inn"]').each(function(){
+            if($(this).val()){
+                checkinn = $(this).val();
+            }
+        });
+        applicant.checkInn(checkinn);
         if(!applicant.save) return false;
         event.preventDefault();
         if ($(".modal-dialog.modal-sm").height() != null && $(".modal-dialog.modal-sm").height() > 0) {
