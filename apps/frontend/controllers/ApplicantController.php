@@ -185,10 +185,11 @@ class ApplicantController extends ControllerBase
             $applicant->save();
             $this->flashSession->success('Заявитель сохранен');
             Log::addAdminLog("Создание заявителя", "Заявитель  {$applicant->name_short} сохранен", $this->user);
+            return $this->response->redirect('/complaint/index');
         } else {
             $this->flashSession->error('Выбран недопустимый тип файлов или превышен размер в 5 Мб');
         }
-        return $this->response->redirect('/complaint/index?applicant_id=' . $applicant->id);
+        return $this->response->redirect('/complaint/index');
     }
 
     public function saveAction()
