@@ -92,6 +92,19 @@ $(document).ready(function () {
         $('.alert-wrap, .alert-box').fadeOut(400);
     });
 
+    $('#send_yfas').on('click', function(){
+        $.ajax({
+            url: '/complaint/checkDateOnOverdueComplaint',
+            type: 'POST',
+            dataType: 'json',
+            data: {'date':auction.data.okonchanie_rassmotreniya},
+            success: function (data) {
+                if(data.status == 1){
+                    $('.overComplaint').show();
+                }
+            }
+        });
+    });
 
     $('.category-container').on('click', '.template_checkbox', function () {
         if ($(this).is(':checked')) {
@@ -1058,6 +1071,8 @@ function stopSaveCompl() {
         showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Необходимо выбрать обязательный довод");
     }
 }
+
+
 
 // oop(инкапсуляция и наследование, полиморфизм), module,
 // test app
