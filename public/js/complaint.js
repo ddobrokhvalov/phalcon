@@ -99,9 +99,18 @@ $(document).ready(function () {
             dataType: 'json',
             data: {'date':auction.data.okonchanie_rassmotreniya},
             success: function (data) {
-                if(data.status == 1){
-                    $('.overComplaint').show();
-                }
+            }
+        });
+    });
+
+
+    $('#recall_complaint').on('click', function(){
+        $.ajax({
+            url: '/complaint/checkDateOnRecallComplaint',
+            type: 'POST',
+            dataType: 'json',
+            data: {'date':$(this).attr('data-date')},
+            success: function (data) {
             }
         });
     });
