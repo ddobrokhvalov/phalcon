@@ -41,12 +41,6 @@ $(document).ready(function () {
 
     });
 
-    $('.button-recall').click(function(){
-        //if(currentStatus == 'submitted'){
-        if(!$(this).hasClass("button_copy_deactive")){
-            indexComplaint.recall();
-        }
-    });
 
 });
 

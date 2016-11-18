@@ -251,6 +251,7 @@ class ComplaintController extends ControllerBase
 
     public function saveBlobFileAction() {
         $name = false;
+        $recall = $this->request->get('recall');
         if ($this->request->hasFiles() == true) {
             $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
             foreach ($this->request->getUploadedFiles() as $file) {
@@ -258,12 +259,21 @@ class ComplaintController extends ControllerBase
                     if (!file_exists($baseLocation)) {
                         mkdir($baseLocation, 0777, true);
                     }
-                    $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
-                    $name = 'complaint_' . $unformatted . time() . '.docx';
-                    $file->moveTo($baseLocation . $name);
+                    if(empty($recall)) {
+                        $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
+                        $name = 'complaint_' . $unformatted . time() . '.docx';
+                        $file->moveTo($baseLocation . $name);
+                    } else {
+                        $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
+                        $name =  'recall_' . $unformatted . time() . '.docx';
+                        $file->moveTo($baseLocation . $name);
+                    }
                 }
             }
             $docx = new DocxFiles();
+            if(!empty($recall)){
+                $docx->complaint_id = $this->request->get('complaint_id');
+            }
             $docx->docx_file_name = $name;
             $compl_id = $this->request->getPost('complaint_id');
             $docx->complaint_name = $this->request->getPost('complaint_name');
@@ -878,5 +888,26 @@ class ComplaintController extends ControllerBase
             return 1;
         }
         return 0;
+    }
+
+    public function getInfoComplaintAction(){
+        $data = $this->request->getPost('data');
+        $complaint = Complaint::findFirst($data);
+        $applicant = null;
+        if($complaint){
+            $applicant = Applicant::findFirst($complaint->applicant_id);
+        }
+
+        $result = array(
+            'applicat_name' => $applicant->name_short,
+            'applicant_id'  => $applicant->id,
+            'applicant_position' => $applicant->position,
+            'auction_id' => $complaint->auction_id,
+            'date_create'  => $complaint->date,
+            'date_now'  => date('Y-m-d H:m'),
+        );
+
+        echo json_encode($result);
+        exit;
     }
 }
