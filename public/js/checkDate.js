@@ -1,6 +1,6 @@
 $(document).ready(function () {
     //SAVE
-    $('').on('submit', function(){
+    $('#send_yfas').on('submit', function(){
         $.ajax({
             type: 'POST',
             url: '/complaint/checkDateOnOverdueComplaint',
@@ -24,4 +24,5 @@ $(document).ready(function () {
             }
         });
     });
+
 });
