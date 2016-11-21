@@ -964,7 +964,7 @@ class ComplaintController extends ControllerBase
         $message = $this->mailer->createMessage()
             ->attachment($files)
             ->to($this->adminsEmails['ufas'])
-            ->subject('Письмо в ufas');
+            ->subject('Письмо в уфас');
         $message->send();
     }
 
