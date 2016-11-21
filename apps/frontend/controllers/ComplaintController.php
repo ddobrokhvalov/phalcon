@@ -939,15 +939,15 @@ class ComplaintController extends ControllerBase
         }
 
         $result = array(
-            'applicant_name' => $applicant->name_short,
-            'applicant_fio' => $applicant->fio_applicant,
-            'applicant_id'  => $applicant->id,
+            'applicant_name'    => $applicant->name_short,
+            'applicant_fio'     => $applicant->fio_applicant,
+            'applicant_id'      => $applicant->id,
             'applicant_position' => $applicant->position,
-            'auction_id' => $complaint->auction_id,
-            'ufas_name' => $ufas->name,
-            'date_create'  => $complaint->date,
-            'date_now'  => date('Y-m-d H:m'),
-            'thumbprint' => $ecp->thumbprint,
+            'auction_id'    => $complaint->auction_id,
+            'ufas_name'     => $ufas->name,
+            'date_create'   => $complaint->date,
+            'date_now'      => date('Y-m-d H:m'),
+            'thumbprint'    => $ecp->thumbprint,
         );
 
         $arrId = array();
