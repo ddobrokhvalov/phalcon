@@ -926,17 +926,22 @@ class ComplaintController extends ControllerBase
         $data = $this->request->getPost('data');
         $complaint = Complaint::findFirst($data);
         $applicant = null;
+        $ecp = null;
         if($complaint){
             $applicant = Applicant::findFirst($complaint->applicant_id);
+            $ecp = ApplicantECP::findFirst(array(
+                "applicant_id = ".$complaint->applicant_id
+            ));
         }
 
         $result = array(
-            'applicat_name' => $applicant->name_short,
+            'applicant_name' => $applicant->name_short,
             'applicant_id'  => $applicant->id,
             'applicant_position' => $applicant->position,
             'auction_id' => $complaint->auction_id,
             'date_create'  => $complaint->date,
             'date_now'  => date('Y-m-d H:m'),
+            'thumbprint' => $ecp->thumbprint
         );
 
         echo json_encode($result);
