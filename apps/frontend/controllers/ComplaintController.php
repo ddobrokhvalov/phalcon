@@ -944,6 +944,11 @@ class ComplaintController extends ControllerBase
             'thumbprint' => $ecp->thumbprint
         );
 
+        $arrId = array();
+        $arrId[] = $complaint->id;
+        $complaint = new Complaint();
+        $complaint->changeStatus('recalled', $arrId, $this->user->id);
+
         echo json_encode($result);
         exit;
     }

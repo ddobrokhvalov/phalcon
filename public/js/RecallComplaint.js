@@ -1,5 +1,6 @@
 $(document).ready(function () {
     $('.button-recall').on('click', function () {
+        if($(this).hasClass('button_copy_deactive')) return false;
         var input = $('.complaint-checkbox:checked').val();
         $.ajax({
             url: '/complaint/getInfoComplaint',
