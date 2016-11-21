@@ -923,25 +923,29 @@ class ComplaintController extends ControllerBase
     }
 
     public function getInfoComplaintAction(){
-        $data = $this->request->getPost('data');
+        $data = $this->request->getPost('date');
         $complaint = Complaint::findFirst($data);
         $applicant = null;
         $ecp = null;
+        $ufas = null;
         if($complaint){
             $applicant = Applicant::findFirst($complaint->applicant_id);
             $ecp = ApplicantECP::findFirst(array(
                 "applicant_id = ".$complaint->applicant_id
             ));
+            $ufas = Ufas::findFirst($complaint->ufas_id);
         }
 
         $result = array(
             'applicant_name' => $applicant->name_short,
+            'applicant_fio' => $applicant->fio_applicant,
             'applicant_id'  => $applicant->id,
             'applicant_position' => $applicant->position,
             'auction_id' => $complaint->auction_id,
+            'ufas_name' => $ufas->name,
             'date_create'  => $complaint->date,
             'date_now'  => date('Y-m-d H:m'),
-            'thumbprint' => $ecp->thumbprint
+            'thumbprint' => $ecp->thumbprint,
         );
 
         $arrId = array();

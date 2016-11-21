@@ -17,7 +17,7 @@ var onLoad = function(event)
         signFile(sBase64Data); //подписываем данные
     };
 };
-var signFile = function(contentBase64,thumbprint)
+var signFile = function(contentBase64,thumbprint, callback)
 {
     var cades = window.cades;
   //  var thumbprint = 'F170F6CF858141A44B5141D45C60DD64FC74071A'; // отпечаток сертификата для поиска
@@ -103,7 +103,9 @@ var signFile = function(contentBase64,thumbprint)
                 //  data = JSON.parse(data);
                 console.log(data);
                 alert('Подписано успешно!!!');
-
+                if(callback){
+                    callback();
+                }
                 $('#sign-ecp').removeClass('skyColor');
                 $('#send_yfas').addClass('skyColor');
                 // signMessage('certificate-select', data[1])

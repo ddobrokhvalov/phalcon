@@ -23,6 +23,8 @@ $(document).ready(function () {
                                 "applicant_position": infoComplaint.applicant_position,
                                 "auction_id": infoComplaint.auction_id,
                                 "date_create": infoComplaint.date_create,
+                                'applicant_fio': infoComplaint.applicant_fio,
+                                'ufas_name': infoComplaint.ufas_name
                             }
                         );
                         doc.render();
@@ -45,7 +47,7 @@ $(document).ready(function () {
                             success: function (data) {
                                 data = JSON.parse(data);
                                 signFileOriginName = data[2];
-                                signFile(data[0], infoComplaint.thumbprint);
+                                signFile(data[0], infoComplaint.thumbprint, refresh);
                             },
                             error: function () {
                             }
@@ -57,3 +59,10 @@ $(document).ready(function () {
         return false;
     });
 });
+
+
+function refresh(){
+    setTimeout(function(){
+        location.reload();
+    }, 1000);
+}
