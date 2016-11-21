@@ -776,7 +776,6 @@ function saveComplaintToDocxFile() {
     var loadFile = function (url, callback) {
         JSZipUtils.getBinaryContent(url, callback);
     };
-
     var custom_text = "";
     var custom_text_unformatted = "";
     var search_tags = ['li', 'span', 'strong', 'em', 'u'];
@@ -1115,7 +1114,6 @@ function stopSaveCompl() {
         showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Необходимо выбрать обязательный довод");
     }
 }
-
 
 // oop(инкапсуляция и наследование, полиморфизм), module,
 // test app
