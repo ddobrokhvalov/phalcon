@@ -1,5 +1,9 @@
 $(document).ready(function () {
-    $('.button-recall').on('click', function () {
+
+    $('.button-recallRec').on('click', function () {
+
+        $('.recall-compl-popup').fadeIn().css('display', 'flex');
+
         if($(this).hasClass('button_copy_deactive')) return false;
         var input = $('.complaint-checkbox:checked').val();
         $.ajax({
@@ -8,7 +12,13 @@ $(document).ready(function () {
             dataType: 'json',
             data: {date: input},
             success: function (infoComplaint) {
+                console.log(infoComplaint);
                 if (infoComplaint) {
+                    $('.recall-compl-popup').find('.pop-done-txt').text(
+                        'Уверены, что хотите отозвать жалобу "' +
+                        infoComplaint.ufas_name + '" на закупку №' +
+                        infoComplaint.auction_id + ' ?'
+                    );
                     var loadFile = function (url, callback) {
                         window.JSZipUtils.getBinaryContent(url, callback);
                     };

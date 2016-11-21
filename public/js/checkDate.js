@@ -13,14 +13,13 @@ $(document).ready(function () {
     });
 
     //RECALL
-    $('').on('submit', function(){
+    $('').click(function(){
         $.ajax({
             type: 'POST',
             url: '/complaint/checkDateOnRecallComplaint',
             data: $('.complaint-checkbox:checked').val(),
             dataType: "json",
             success: function(res) {
-
             }
         });
     });
