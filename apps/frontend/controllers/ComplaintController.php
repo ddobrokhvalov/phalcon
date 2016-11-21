@@ -315,19 +315,21 @@ class ComplaintController extends ControllerBase
         //  skyColor
     }
     public function signatureAction(){
-
         $signature = $this->request->getPost('signature');
         $signFileOriginName  = $this->request->getPost('signFileOriginName');
         $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
         file_put_contents($baseLocation. $signFileOriginName.'.sig',base64_decode($signature));
-        
+
+        if(preg_match('/recall/', $signFileOriginName)){
+            $this->SendRecallToUfas('../public/'.$baseLocation.$signFileOriginName.'.sig');
+        }
+
         echo 'done';
         exit;
-        
     }
+
     public function addAction()
     {
-
         $this->setMenu();
         $category = new Category();
         $arguments = $category->getArguments();
@@ -956,4 +958,14 @@ class ComplaintController extends ControllerBase
         echo json_encode($result);
         exit;
     }
+
+
+    private function SendRecallToUfas($files){
+        $message = $this->mailer->createMessage()
+            ->attachment($files)
+            ->to($this->adminsEmails['ufas'])
+            ->subject('Письмо в ufas');
+        $message->send();
+    }
+
 }
