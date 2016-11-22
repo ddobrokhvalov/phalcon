@@ -909,17 +909,24 @@ class ComplaintController extends ControllerBase
     }
 
     public function checkDateOnRecallComplaintAction(){
-        $date = $this->request->getPost('date');
-        if(empty($date)){
+        $idComp = $this->request->getPost('date');
+        if(empty($idComp)){
             echo json_encode(array(
                 'error' => 'empty'
             ));
             exit;
         }
-        $calendar = new Calendar(new BasicDataRu(), 10);
-        $result = $calendar->checkDateAbortComplaint($date, 5);
+
+        $complaint = Complaint::findFirst($idComp);
+
+        $calendar = new Calendar(new BasicDataRu(), 5);
+        $result = $calendar->checkDateAbortComplaint($complaint->date, 5);
         echo json_encode(array(
-            'status' => $result
+            'status' => $result,
+            'complaint' => array(
+                'auction_id' => $complaint->auction_id,
+                'name'  => $complaint->complaint_name,
+            )
         ));
         exit;
     }
