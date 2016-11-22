@@ -1,0 +1,43 @@
+.podpisatEp-popup {
+  display: none;
+  text-align: center;
+  .pop-done-txt-icon {
+    display: inline-block;
+    float: none;
+    position: relative;
+    padding-left: 60px;
+    width: auto;
+    &:after {
+      position: absolute;
+      content: '';
+      top: 25px;
+      left: 0;
+      width: 44px;
+      height: 37px;
+      background: url('../images/send-yes.png') 0 0 no-repeat;
+    }
+  }
+}
+.send-suc {
+  display: none;
+  .pop-done-txt-icon {
+    position: relative;
+    padding: 150px 100px 30px;
+    &:after {
+      position: absolute;
+      content: '';
+      top: 46px;
+      left: 50%;
+      margin-left: -65px;
+      width: 129px;
+      height: 65px;
+      background: url('../images/send-suc.png') 0 0 no-repeat;
+    }
+  }
+}
+.send-uf {
+  display: none;
+  .pop-done-txt {
+    padding: 0 26px 30px
+  }
+}

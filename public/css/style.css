@@ -5495,26 +5495,80 @@ body#backend-login {
   visibility: hidden;
 }
 
+/* line 1, ../sass/_popups.scss */
+.podpisatEp-popup {
+  display: none;
+  text-align: center;
+}
+/* line 4, ../sass/_popups.scss */
+.podpisatEp-popup .pop-done-txt-icon {
+  display: inline-block;
+  float: none;
+  position: relative;
+  padding-left: 60px;
+  width: auto;
+}
+/* line 10, ../sass/_popups.scss */
+.podpisatEp-popup .pop-done-txt-icon:after {
+  position: absolute;
+  content: '';
+  top: 25px;
+  left: 0;
+  width: 44px;
+  height: 37px;
+  background: url("../images/send-yes.png") 0 0 no-repeat;
+}
+
+/* line 21, ../sass/_popups.scss */
+.send-suc {
+  display: none;
+}
+/* line 23, ../sass/_popups.scss */
+.send-suc .pop-done-txt-icon {
+  position: relative;
+  padding: 150px 100px 30px;
+}
+/* line 26, ../sass/_popups.scss */
+.send-suc .pop-done-txt-icon:after {
+  position: absolute;
+  content: '';
+  top: 46px;
+  left: 50%;
+  margin-left: -65px;
+  width: 129px;
+  height: 65px;
+  background: url("../images/send-suc.png") 0 0 no-repeat;
+}
+
+/* line 38, ../sass/_popups.scss */
+.send-uf {
+  display: none;
+}
+/* line 40, ../sass/_popups.scss */
+.send-uf .pop-done-txt {
+  padding: 0 26px 30px;
+}
+
 @media (max-width: 1640px) {
-  /* line 138, ../sass/style.scss */
+  /* line 139, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: 330px;
     margin-right: 0;
   }
 }
 @media (max-width: 1325px) {
-  /* line 145, ../sass/style.scss */
+  /* line 146, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* line 149, ../sass/style.scss */
+  /* line 150, ../sass/style.scss */
   .admin-lm-wrap {
     left: -242px;
   }
 
-  /* line 152, ../sass/style.scss */
+  /* line 153, ../sass/style.scss */
   .lm-burger {
     display: block;
   }
