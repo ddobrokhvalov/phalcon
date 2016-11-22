@@ -1,20 +1,30 @@
 $(document).ready(function () {
     //SAVE
-    $('#send_yfas').on('submit', function(){
+    $('#send_yfas, .send_to_ufas').on('click', function(){
+        if(!$('#send_yfas').hasClass('skyColor')) return false;
         $.ajax({
             type: 'POST',
             url: '/complaint/checkDateOnOverdueComplaint',
-            data: auction.data.okonchanie_rassmotreniya,
+            data: {date: auction.data.okonchanie_rassmotreniya},
             dataType: "json",
             success: function(res) {
-
+                $('.send-uf').fadeIn().css('display', 'flex');
+                if(res.status == 0){
+                    $('.send-uf').find('.pop-done-txt').text(
+                        'Дата не просрочена'
+                    );
+                }
+                if(res.status == 1){
+                    $('.send-uf').find('.pop-done-txt').text(
+                       'Дата просрочена'
+                    );
+                }
             }
         });
     });
 
     //RECALL
     $('.button-recallRec').click(function(){
-
         var idComp = $('.complaint-checkbox:checked').val()
         $.ajax({
             type: 'POST',

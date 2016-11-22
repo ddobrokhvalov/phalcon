@@ -251,6 +251,8 @@ class ComplaintController extends ControllerBase
 
     public function saveBlobFileAction() {
         $name = false;
+        $format = 1;
+        $recall = 0;
         $recall = $this->request->get('recall');
         if ($this->request->hasFiles() == true) {
             $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
@@ -261,11 +263,15 @@ class ComplaintController extends ControllerBase
                     }
                     if(empty($recall)) {
                         $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
+                        if($unformatted == 'unformatted_'){
+                            $format = 0;
+                        }
                         $name = 'complaint_' . $unformatted . time() . '.docx';
                         $file->moveTo($baseLocation . $name);
                     } else {
                         $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
                         $name =  'recall_' . $unformatted . time() . '.docx';
+                        $recall = 1;
                         $file->moveTo($baseLocation . $name);
                     }
                 }
@@ -279,11 +285,24 @@ class ComplaintController extends ControllerBase
             $docx->complaint_name = $this->request->getPost('complaint_name');
             if (isset($compl_id) && $compl_id != 'undefined') {
                 $delete_docx = DocxFiles::find("complaint_id = $compl_id");
-                foreach ($delete_docx as $del_docx) {
-                    $del = unlink($baseLocation . $del_docx->docx_file_name);
-                    $del_docx->delete();
+                if(count($delete_docx) >= 2) {
+                    foreach ($delete_docx as $del_docx) {
+                        $del = unlink($baseLocation . $del_docx->docx_file_name);
+                        unlink($baseLocation . $del_docx->docx_file_name.'sig');
+                        $del_docx->delete();
+                    }
+                } else {
+                    $delete_docx = DocxFiles::find("complaint_id = $compl_id AND recall = 1");
+                    foreach ($delete_docx as $del_docx) {
+                        $del = unlink($baseLocation . $del_docx->docx_file_name);
+                        unlink($baseLocation . $del_docx->docx_file_name.'sig');
+                        $del_docx->delete();
+                    }
                 }
             }
+            $docx->recall = $recall;
+            $docx->format = $format;
+            $docx->complaint_id = $compl_id;
             $docx->user_id = $this->user->id;
             $docx->save();
         }
@@ -321,7 +340,7 @@ class ComplaintController extends ControllerBase
         file_put_contents($baseLocation. $signFileOriginName.'.sig',base64_decode($signature));
 
         if(preg_match('/recall/', $signFileOriginName)){
-            $this->SendRecallToUfas('../public/'.$baseLocation.$signFileOriginName.'.sig');
+            $this->SendToUfas('../public/'.$baseLocation.$signFileOriginName.'.sig');
         }
 
         echo 'done';
@@ -967,12 +986,34 @@ class ComplaintController extends ControllerBase
     }
 
 
-    private function SendRecallToUfas($files){
+    private function SendToUfas($files){
         $message = $this->mailer->createMessage()
             ->attachment($files)
             ->to($this->adminsEmails['ufas'])
             ->subject('Письмо в уфас');
         $message->send();
+    }
+
+    public function sendComplaintToUfasAction(){
+        $compId = $this->request->getPost('complId');
+        $file = DocxFiles::findFirst(array(
+            "complaint_id = {$compId} AND format = 1"
+        ));
+
+        $complaint = new Complaint();
+        $complaint->changeStatus('submitted', array($compId), $this->user->id);
+
+        $this->SendToUfas('../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name.'.sig');
+
+        $complaint = Complaint::findFirst($compId);
+
+        echo json_encode(array(
+            'status' => 'ok',
+            'complaint' => array(
+                'auction_id' => $complaint->auction_id,
+            )
+        ));
+        exit;
     }
 
 }

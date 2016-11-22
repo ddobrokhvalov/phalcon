@@ -102,12 +102,13 @@ var signFile = function(contentBase64,thumbprint, callback)
             success: function (data) {
                 //  data = JSON.parse(data);
                 console.log(data);
-                alert('Подписано успешно!!!');
+                //alert('Подписано успешно!!!');
                 if(callback){
                     callback();
                 }
                 $('#sign-ecp').removeClass('skyColor');
                 $('#send_yfas').addClass('skyColor');
+                $('.podpisatEp-popup').css({'display': 'flex'});
                 // signMessage('certificate-select', data[1])
             },
             error: function () {
