@@ -1,5 +1,9 @@
 var arrCheck = new Array();
 jQuery(document).ready(function($) {
+    $('.cancel-recall').click(function () {
+        $(this).parent().parent().fadeOut();
+    });
+
     $(".modal-close").click(function(){
         var obj = $(this);
         $('#overlay').fadeOut(400,

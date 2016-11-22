@@ -41,13 +41,6 @@ $(document).ready(function () {
 
     });
 
-    $('.button-recall').click(function(){
-        //if(currentStatus == 'submitted'){
-        if(!$(this).hasClass("button_copy_deactive")){
-            indexComplaint.recall();
-        }
-    });
-
 });
 
 var indexComplaint = {
@@ -251,7 +244,7 @@ var indexComplaint = {
                     this.activeButton('.to-delete');
                 } else if(this.arrComplaint.length > 1){
                     this.deActiveButton('.button-copy');
-                    this.activeButton('.button-recall');
+                    this.deActiveButton('.button-recall');
                     this.activeButton('.to-archive');
                     this.activeButton('.to-delete');
                 }

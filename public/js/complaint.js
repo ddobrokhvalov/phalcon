@@ -1,7 +1,6 @@
 var signSavedComplaint = false;
 $(document).ready(function () {
 
-
     $('.apCerList').on('click', '.apCerItem', function () {
         $('.apCerItem').removeClass('apCerItem-active');
         $(this).addClass('apCerItem-active');
