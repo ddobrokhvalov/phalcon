@@ -337,6 +337,7 @@ class ComplaintController extends ControllerBase
         $signature = $this->request->getPost('signature');
         $signFileOriginName  = $this->request->getPost('signFileOriginName');
         $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
+       // unlink($baseLocation . $signFileOriginName.'sig');
         file_put_contents($baseLocation. $signFileOriginName.'.sig',base64_decode($signature));
 
         if(preg_match('/recall/', $signFileOriginName)){
