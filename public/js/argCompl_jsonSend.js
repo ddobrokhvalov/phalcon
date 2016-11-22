@@ -21,6 +21,11 @@ $(document).ready(function() {
     $('.word-argCompl-input button').click(function(e) {
         searchStep(e);
     });
+    document.onkeyup = function (e) {
+        if (e.keyCode === 13) {
+            searchStep(e);
+        }
+    }
     $('.argCompl-review').on('click', 'li', function() {
         ajaxSendObj.showHideBtn($(this));
         argObjSend.choosenArgFunc($(this));
