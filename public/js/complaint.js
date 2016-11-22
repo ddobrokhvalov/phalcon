@@ -1059,6 +1059,13 @@ function stopSaveCompl() {
     }
 }
 
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function(searchString, position) {
+        position = position || 0;
+        return this.indexOf(searchString, position) === position;
+    };
+}
+
 // oop(инкапсуляция и наследование, полиморфизм), module,
 // test app
 // template (lodash, ...), module structure/ module data(setData(name, value), getData)
