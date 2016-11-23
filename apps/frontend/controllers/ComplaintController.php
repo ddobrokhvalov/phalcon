@@ -351,7 +351,10 @@ class ComplaintController extends ControllerBase
         file_put_contents($baseLocation. $signFileOriginName.'.sig',base64_decode($signature));
 
         if(preg_match('/recall/', $signFileOriginName)){
-            $this->SendToUfas('../public/'.$baseLocation.$signFileOriginName.'.sig');
+            $this->SendToUfas(array(
+                '../public/'.$baseLocation.$signFileOriginName.'.sig',
+                '../public/'.$baseLocation.$signFileOriginName,
+            ));
         }
 
         echo 'done';
@@ -1009,9 +1012,12 @@ class ComplaintController extends ControllerBase
 
     private function SendToUfas($files){
         $message = $this->mailer->createMessage()
-            ->attachment($files)
             ->to($this->adminsEmails['ufas'])
             ->subject('Письмо в уфас');
+        foreach ($files as $key){
+            $message->attachment($key);
+        }
+
         $message->send();
     }
 
@@ -1024,7 +1030,10 @@ class ComplaintController extends ControllerBase
         $complaint = new Complaint();
         $complaint->changeStatus('submitted', array($compId), $this->user->id);
 
-        $this->SendToUfas('../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name.'.sig');
+        $this->SendToUfas(array(
+                '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name.'.sig',
+                '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name
+            ));
 
         $complaint = Complaint::findFirst($compId);
 
