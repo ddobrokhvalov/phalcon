@@ -1038,8 +1038,9 @@ function changeStatusInComplaintList(status) {
     //});
 
 }
+var changeStatusFlag = true;
 function changeStatusInUserComplaintList(status) {
-    if (status.length) {
+    if (status.length && changeStatusFlag) {
         var id_array = [];
         $('.admin-lt-holder .lt-content-main').each(function(){
             var id = $(this).find('div.psevdo-checked #complaint-id').val();
@@ -1051,6 +1052,10 @@ function changeStatusInUserComplaintList(status) {
             change_complaint_status(id_array, status);
         }
     }
+    changeStatusFlag = false;
+    setTimeout(function () {
+        changeStatusFlag = true;
+    }, 1000);
 }
 
 function complaints_to_archive(){

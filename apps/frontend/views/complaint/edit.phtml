@@ -16,7 +16,8 @@
 <script type="application/javascript" src="/js/docx_generator/js/jszip-utils.js"></script>
 <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="/css/jquery-ui.css">
-<script type="application/javascript" src="/js/checkTenDays_ajax.js"></script>
+<script type="application/javascript" src="/js/checkDate.js"></script>
+<script type="application/javascript" src="/js/SendToUfas.js"></script>
 
 <!--  ECP -->
 <script src="/js/ecp/es6-promise.min.js" type="text/javascript"></script>
@@ -81,8 +82,9 @@
                         <a href="#" onclick="return false;" class="change-status to-archive button_copy_active" value="archive">В архив</a>
                     {%endif%}
                     <a href="#" class="change-status to-delete " value="delete">Удалить</a>
-                    {% if complaint.status == 'draft' %} <a href="#" class="c-jadd1-1-b-btn">Отправить в УФАС</a> {%
-                    endif %}
+                    {% if complaint.status == 'draft' and action_edit === true %}
+                    <a href="#" class="c-jadd1-1-b-btn send_to_ufas">Отправить в УФАС</a>
+                    {%endif %}
                 </div>
             </div>
             {% if complaint.status == 'draft' and action_edit === true %}
@@ -597,13 +599,33 @@
     </div>
 </article>
 
-<article class="admin-popup-wrap podpisatEp-popup" style="display:none;">
-    <div class="admin-popup-bg"></div>
-    <div class="admin-popup-content index-main-popup">
-        <div class="admin-popup-close"></div>
-        <h6>Подписать ЭП</h6>
-        <p class="pop-done-txt" style="padding: 0 26px 30px"></p>
-        <div class="popupBtn podpisatEp">Подписать</div>
-        <div class="popupBtn cancel-recall">Отмена</div>
-    </div>
+<!--******************************************************-->
+<article class="admin-popup-wrap podpisatEp-popup">
+  <div class="admin-popup-bg"></div>
+  <div class="admin-popup-content index-main-popup">
+    <div class="admin-popup-close"></div>
+    <h6>Подписания ЭП</h6>
+    <p class="pop-done-txt pop-done-txt-icon">Подписана успешно!</p>
+  </div>
+</article>
+<article class="admin-popup-wrap send-suc">
+  <div class="admin-popup-bg"></div>
+  <div class="admin-popup-content index-main-popup">
+    <div class="admin-popup-close"></div>
+    <h6>Отправлено успешно!</h6>
+    <p class="pop-done-txt pop-done-txt-icon">Жалоба на закупку №# в соответствии со ст. 105
+      Федерального закона от 05.04.2013 № 44-ФЗ направлена в контрольный орган в сфере
+      закупок. Регламентированный срок принятия жалобы к рассмотрению не позднее #дата.
+      Информация о статусе жалобы будет доступна Вам в личном кабинете «ФАС-ОНЛАЙН».</p>
+  </div>
+</article>
+<article class="admin-popup-wrap send-uf">
+  <div class="admin-popup-bg"></div>
+  <div class="admin-popup-content index-main-popup">
+    <div class="admin-popup-close"></div>
+    <h6>Отправление в уфас</h6>
+    <p class="pop-done-txt"></p>
+    <div class="popupBtn podpisatEp">Отправить жалобу</div>
+    <div class="popupBtn cancel-recall">Отмена</div>
+  </div>
 </article>
