@@ -11,9 +11,9 @@
         <ul class="lm-nav">
             {% if help is defined %}
                 {% for name, link in sidebarMenu %}
-                    <li>
-                        <a class="help_link"  href="{{ link }}">
-                            {{ name }}
+                    <li class="helpMenuItem">
+                        <a class="helpMenuItem__link" href="{{ link }}">
+                            {{ name }} <!-- helpMenuItem__link-active -->
                         </a>
                     </li>
                 {% endfor %}

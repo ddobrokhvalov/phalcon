@@ -196,6 +196,13 @@ ul.status-black, .notification-number-box.status-black {
   background-position: 0 bottom !important;
 }
 
+/* line 116, ../sass/style.scss */
+.c-cnt-pagename.helpTitle {
+  float: none;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
 /* line 4, ../sass/layers/_left_menu.scss */
 .admin-lm-wrap {
   position: fixed;
@@ -5549,26 +5556,86 @@ body#backend-login {
   padding: 0 26px 30px;
 }
 
+/* line 1, ../sass/_help_menu_item.scss */
+.lm-nav .helpMenuItem {
+  padding: 0;
+}
+/* line 3, ../sass/_help_menu_item.scss */
+.lm-nav .helpMenuItem__link {
+  position: static;
+  margin: 0;
+  padding: 16px 40px 16px 35px;
+  width: 293px;
+  font-size: 14px;
+  line-height: 1.2;
+  text-transform: none;
+  border: none;
+}
+/* line 12, ../sass/_help_menu_item.scss */
+.lm-nav .helpMenuItem__link .helpMenuItem__link-active {
+  background-color: #00aeef;
+}
+/* line 15, ../sass/_help_menu_item.scss */
+.lm-nav .helpMenuItem__link:hover {
+  color: #ffffff;
+  font-weight: normal;
+  background-color: #00aeef;
+}
+
+/* line 1, ../sass/_help_zakonodatelstvo.scss */
+.helpZakList {
+  padding-left: 15px;
+  column-width: 460px;
+  column-count: 2;
+  column-gap: 35px;
+  column-fill: balance;
+}
+/* line 7, ../sass/_help_zakonodatelstvo.scss */
+.helpZakList__item {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  padding-left: 30px;
+}
+/* line 13, ../sass/_help_zakonodatelstvo.scss */
+.helpZakList__item:before {
+  position: absolute;
+  content: '';
+  top: 28px;
+  left: 0;
+  width: 16px;
+  height: 7px;
+  background: url("../images/helpArrow.png") 0 0 no-repeat;
+}
+/* line 23, ../sass/_help_zakonodatelstvo.scss */
+.helpZakList__link {
+  display: inline-block;
+  padding-top: 20px;
+  color: #00aeef;
+  text-decoration: underline;
+}
+
 @media (max-width: 1640px) {
-  /* line 139, ../sass/style.scss */
+  /* line 146, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: 330px;
     margin-right: 0;
   }
 }
 @media (max-width: 1325px) {
-  /* line 146, ../sass/style.scss */
+  /* line 153, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* line 150, ../sass/style.scss */
+  /* line 157, ../sass/style.scss */
   .admin-lm-wrap {
     left: -242px;
   }
 
-  /* line 153, ../sass/style.scss */
+  /* line 160, ../sass/style.scss */
   .lm-burger {
     display: block;
   }

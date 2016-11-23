@@ -1,0 +1,21 @@
+.lm-nav .helpMenuItem {
+  padding: 0;
+  &__link {
+    position: static;
+    margin: 0;
+    padding: 16px 40px 16px 35px;
+    width: 293px;
+    font-size: 14px;
+    line-height: 1.2;
+    text-transform: none;
+    border: none;
+    .helpMenuItem__link-active {
+      background-color: #00aeef;
+    }
+    &:hover {
+      color: #ffffff;
+      font-weight: normal;
+      background-color: #00aeef;
+    }
+  }
+}
