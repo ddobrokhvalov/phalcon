@@ -284,6 +284,9 @@ var complaint = {
                                 compID = res.complaint.id;
                             }
                             createDocx(compID)
+                            setTimeout(function () {
+                                location.reload();
+                            }, 3000);
                         }
                     });
                 } else {
@@ -295,11 +298,16 @@ var complaint = {
                             if (compID == false) {
                                 compID = $('#complaint_id').val();
                             }
-                            createDocx(compID)
+                            createDocx(compID);
+                            setTimeout(function () {
+                                location.reload();
+                            }, 3000);
                         }
                     });
                 }
             }
+        } else {
+            saveComplaintToDocxFile();
         }
     },
     showError: function (element, msg, insert_here) {
@@ -858,9 +866,7 @@ function saveComplaintToDocxFile() {
                     if (signSavedComplaint == true) {
                         data = JSON.parse(data);
                         signFileOriginName = data[2];
-                        signFile(data[0],data[1], function () {
-                            location.reload()
-                        });
+                        signFile(data[0],data[1]);
                     }
                 },
                 error: function () {
@@ -922,7 +928,6 @@ function saveComplaintToDocxFile() {
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                    location.reload();
                 },
                 error: function () {
                 }
