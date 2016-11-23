@@ -3,6 +3,7 @@ namespace Multiple\Frontend\Models;
 use Multiple\Library\Parser;
 use Phalcon\Mvc\Model;
 use Multiple\Frontend\Models\Messages;
+use Multiple\Frontend\Models\UsersArguments;
 
 class Complaint extends Model
 {
@@ -240,6 +241,18 @@ class Complaint extends Model
                 $newComplaint->status = 'draft';
                 $newComplaint->fid = serialize(array());
                 $newComplaint->save();
+                $arguments =  UsersArguments::find(array(
+                    'complaint_id = '.$id
+                ));
+                foreach ($arguments as $key){
+                    $arg = new UsersArguments();
+                    $arg->argument_id = $key->argument_id;
+                    $arg->argument_category_id = $key->argument_category_id;
+                    $arg->text = $key->text;
+                    $arg->complaint_id = $newComplaint->id;
+                    $arg->argument_order = $key->argument_order;
+                    $arg->save();
+                }
                 return $newComplaint->id;
             } elseif ($status == 'recalled' && $complaint->status == 'submitted'){
                 $complaintmovinghistory = new ComplaintMovingHistory();
