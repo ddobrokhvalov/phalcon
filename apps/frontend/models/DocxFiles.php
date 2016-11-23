@@ -9,6 +9,9 @@ class DocxFiles extends Model
     public $complaint_id;
     public $complaint_name;
     public $user_id;
+    public $format;
+    public $recall;
+    public $created_at;
 
     public function initialize() {
         $this->setSource('docx_files');
