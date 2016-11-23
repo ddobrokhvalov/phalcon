@@ -16,6 +16,9 @@ $(document).ready(function () {
         if (userData.indexOf('OGRNIP=') != -1) {
             applicant.parseIp(selectedCertif);
         }
+        if (userData.indexOf('ОГРНИП=') != -1) {
+            applicant.parseIp(selectedCertif);
+        }
 
         var str = selectedCertif.ValidFromDate;
         str = str.toString().substr(0, 10);

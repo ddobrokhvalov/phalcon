@@ -85,10 +85,17 @@ var userCertificates = false;
                 str = str.slice(4, 16);
             }
             var field = str + ' | ' + aCertificate[i].SubjectDNSName;
-            html +='<li class="existingCerListBox__item" onclick="setCertItem('+i+')" >'+field+'</li>';
+            // html +='<li class="existingCerListBox__item" onclick="setCertItem('+i+')" >'+field+'</li>';
+            $('.certificate-box-2').append(
+                '<li class="existingCerListBox__item" onclick="setCertItem('+i+')" >'+field+'</li>'
+            );
         }
+        $('.certificate-box-2').mCustomScrollbar();
 
-        $('.certificate-box-2').html(html);
+        // setTimeout(function(){
+        //     $('.custom-options').addClass('mCustomScrollbar');
+        // }, 10000);
+
        // certificate-box-2
 
 
