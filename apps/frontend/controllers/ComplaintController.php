@@ -281,7 +281,12 @@ class ComplaintController extends ControllerBase
                 $docx->complaint_id = $this->request->get('complaint_id');
             }
             $docx->docx_file_name = $name;
-            $compl_id = $this->request->getPost('complaint_id');
+            if($this->request->getPost('complaint_id')){
+                $compl_id = $this->request->getPost('complaint_id');
+            } elseif($this->request->get('complaint_id')){
+                $compl_id = $this->request->get('complaint_id');
+            }
+
             $docx->complaint_name = $this->request->getPost('complaint_name');
             if (isset($compl_id) && $compl_id != 'undefined') {
                 $delete_docx = DocxFiles::find("complaint_id = $compl_id");
@@ -480,7 +485,12 @@ class ComplaintController extends ControllerBase
                 }
             }
             $this->flashSession->success('Жалоба сохранена');
-            return $this->response->redirect('complaint/edit/' . $complaint->id . '?action=edit');
+            echo json_encode(array(
+               'complaint' => array(
+                   'id' => $complaint->id
+               )
+            ));
+            //return $this->response->redirect('complaint/edit/' . $complaint->id . '?action=edit');
             //$response = array('result' => 'success', 'id' => $complaint->id);
         }
         /*header('Content-type: application/json');

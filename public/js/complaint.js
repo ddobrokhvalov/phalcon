@@ -256,7 +256,7 @@ var complaint = {
         }
         return true;
     },
-    saveAsDraft: function () {
+    saveAsDraft: function (createDocx) {
         $("#auctionData").val(this.auctionData);
         $("#arguments_data").val(complaint.arguments_data + "");
        // $("#complaint_text").val(this.complainText);
@@ -272,8 +272,22 @@ var complaint = {
         // setTimeout(function () {
         //     $("#add-complaint-form").submit();
         // }, 2000);
-        if(signSavedComplaint == false)
-         $("#add-complaint-form").submit();
+        if(signSavedComplaint == false){
+            $('#complaint_save').on('click', function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/complaint/create',
+                    data: $("#add-complaint-form").serialize(),
+                    dataType: "json",
+                    success: function (res) {
+                        if(res.complaint.id){
+                            createDocx(res.complaint.id)
+                        }
+                    }
+                });
+            });
+        }
+
 
 
 
@@ -715,7 +729,7 @@ var auction = {
     }
 };
 
-function saveComplaintToDocxFile() {
+function saveComplaintToDocxFile( compId ) {
     var loadFile = function (url, callback) {
         JSZipUtils.getBinaryContent(url, callback);
     };
@@ -726,6 +740,7 @@ function saveComplaintToDocxFile() {
     var assoc_wrong_ck_formatting = {};
     var docx_generator_allowed = true;
     var list_formatting_detected = false;
+    var compId = compId;
 
     $(".edit-textarea.cke_editable").each(function (index, elem) {
         $(search_tags).each(function (s_tag_index, s_tag_value) {
@@ -816,8 +831,13 @@ function saveComplaintToDocxFile() {
             if (signSavedComplaint == true) {
                 data.append('applicant_id',applicant.id);
             }
+
+            var url = "/complaint/saveBlobFile";
+            if(compId){
+                url += '?complaint_id' + compId;
+            }
             $.ajax({
-                url: "/complaint/saveBlobFile",
+                url: url,
                 type: 'POST',
                 data: data,
                 async: false,
@@ -825,8 +845,6 @@ function saveComplaintToDocxFile() {
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                  
-
                     if (signSavedComplaint == true) {
                         data = JSON.parse(data);
                         signFileOriginName = data[2];
