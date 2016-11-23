@@ -1282,6 +1282,7 @@ input[type="text"]:focus, textarea:focus {
     float: left;
     padding: 0 15px;
     width: 100%;
+    min-height: calc(100vh - 300px);
 }
 .c-cnt-pagename {
     color: #34383e;
@@ -2908,7 +2909,8 @@ input[type="radio"]:checked + label {
     margin-top: -190px;
 }
 .modal_div-start {
-    margin-top: -410px;
+    top: 10px;
+    margin-top: 0;
 }
 .modal_div-done {
     margin-top: -195px;
@@ -3055,7 +3057,7 @@ input[type="radio"]:checked + label {
     font-size: 22px;
     font-weight: 100;
     line-height: 32px;
-    padding: 30px 0 80px;
+    padding: 30px 26px 80px;
     text-align: center;
     width: 100%;
     color: #292c30;

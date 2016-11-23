@@ -8,6 +8,7 @@ $(document).ready(function () {
             dataType: "json",
             context: form,
             success: function(res) {
+                console.log(res);
                 if (res.status){
                     switch (res.status) {
                         case 'ok':
@@ -26,8 +27,8 @@ $(document).ready(function () {
                             $(this).find('.c-inp-err-t').text('');
                             $(this).parent().hide();
                             $('#pop-done h2').text('Подтверждение');
-                            $('.pop-done-txt').html('На указанную вами электронную почту<br>'+ res.email +' отправлено письмо для завершения<br>регистрации');
-                            $('#pop-done').show();
+                            $('.pop-done-txt').html('На указанную вами электронную почту<br>'+ res.email +' отправлено письмо для завершения регистрации');
+                            $('#pop-done').show().animate({opacity: 1}, 200);
                         break;
                     }
                 } else if(res.error){

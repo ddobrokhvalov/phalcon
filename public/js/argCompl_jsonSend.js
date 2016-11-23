@@ -21,6 +21,11 @@ $(document).ready(function() {
     $('.word-argCompl-input button').click(function(e) {
         searchStep(e);
     });
+    document.onkeyup = function (e) {
+        if (e.keyCode === 13) {
+            searchStep(e);
+        }
+    }
     $('.argCompl-review').on('click', 'li', function() {
         ajaxSendObj.showHideBtn($(this));
         argObjSend.choosenArgFunc($(this));
@@ -346,14 +351,14 @@ var ajaxSendObj = {
         $('#argComplSelect .custom-options li').remove();
         for (var i = 0; i < readyDataCatArg.cat_arguments.length; i++) {
             if (readyDataCatArg.date == 1 && readyDataCatArg.cat_arguments[i].required == 1) {
-                $('#argComplSelect .custom-options div div:first').append(
+                $('#argComplSelect .custom-options div div div:first').append(
                     '<li class="argo required"' +
                     ' data-value="' + readyDataCatArg.cat_arguments[i].id +
                     '" data-parent="' + readyDataCatArg.cat_arguments[i].parent_id +
                     '">' + readyDataCatArg.cat_arguments[i].name + '</li>'
                 );
             } else {
-                $('#argComplSelect .custom-options div div:first').append(
+                $('#argComplSelect .custom-options div div div:first').append(
                     '<li class="argo"' +
                     ' data-value="' + readyDataCatArg.cat_arguments[i].id +
                     '" data-parent="' + readyDataCatArg.cat_arguments[i].parent_id +
@@ -383,7 +388,7 @@ var ajaxSendObj = {
         }
         function lookingToFillSelect(num) {
             for (var i = 0; i < ajaxSendObj.stepsCacheArr[num].cat_arguments.length; i++) {
-                $('#argComplSelect .custom-options div div:first').append(function() {
+                $('#argComplSelect .custom-options div div div:first').append(function() {
                     if (ajaxSendObj.stepsCacheArr[num].cat_arguments[i].required == 1) {
                         return '<li class="argo required"' +
                             ' data-value="' + ajaxSendObj.stepsCacheArr[num].cat_arguments[i].id +
