@@ -281,10 +281,14 @@ class ComplaintController extends ControllerBase
                 $docx->complaint_id = $this->request->get('complaint_id');
             }
             $docx->docx_file_name = $name;
-            if($this->request->getPost('complaint_id')){
-                $compl_id = $this->request->getPost('complaint_id');
-            } elseif($this->request->get('complaint_id')){
-                $compl_id = $this->request->get('complaint_id');
+
+
+            $tempCompPost = $this->request->getPost('complaint_id');
+            $tempCompGet = $this->request->getQuery('complaint_id');
+            if(is_numeric($tempCompPost)){
+                $compl_id = $tempCompPost;
+            } elseif(is_numeric($tempCompGet)){
+                $compl_id = $tempCompGet;
             }
 
             $docx->complaint_name = $this->request->getPost('complaint_name');
@@ -292,19 +296,20 @@ class ComplaintController extends ControllerBase
                 $delete_docx = DocxFiles::find("complaint_id = $compl_id");
                 if(count($delete_docx) >= 2) {
                     foreach ($delete_docx as $del_docx) {
-                        $del = unlink($baseLocation . $del_docx->docx_file_name);
-                        unlink($baseLocation . $del_docx->docx_file_name.'sig');
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name);
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name.'.sig');
                         $del_docx->delete();
                     }
                 } else {
                     $delete_docx = DocxFiles::find("complaint_id = $compl_id AND recall = 1");
                     foreach ($delete_docx as $del_docx) {
-                        $del = unlink($baseLocation . $del_docx->docx_file_name);
-                        unlink($baseLocation . $del_docx->docx_file_name.'sig');
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name);
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name.'.sig');
                         $del_docx->delete();
                     }
                 }
             }
+            $docx->created_at = date('Y-m-d H:i:s');
             $docx->recall = $recall;
             $docx->format = $format;
             $docx->complaint_id = $compl_id;
@@ -490,6 +495,7 @@ class ComplaintController extends ControllerBase
                    'id' => $complaint->id
                )
             ));
+            exit;
             //return $this->response->redirect('complaint/edit/' . $complaint->id . '?action=edit');
             //$response = array('result' => 'success', 'id' => $complaint->id);
         }
@@ -609,7 +615,11 @@ class ComplaintController extends ControllerBase
                 }
             }
             $this->flashSession->success('Жалоба обновлена');
-            return $this->response->redirect('complaint/edit/' . $complaint->id);
+            //return $this->response->redirect('complaint/edit/' . $complaint-
+            echo json_encode(array(
+                'status' => 'ok'
+            ));
+            exit;
         }
     }
 

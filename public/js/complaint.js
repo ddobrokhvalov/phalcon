@@ -1,4 +1,5 @@
 var signSavedComplaint = false;
+var compID = false;
 $(document).ready(function () {
 
     $('.apCerList').on('click', '.apCerItem', function () {
@@ -259,38 +260,47 @@ var complaint = {
     saveAsDraft: function (createDocx) {
         $("#auctionData").val(this.auctionData);
         $("#arguments_data").val(complaint.arguments_data + "");
-       // $("#complaint_text").val(this.complainText);
         $("#complaint_name").val(this.complainName);
         $("#applicant_id").val(applicant.id);
-
-        // $(".edit-status p").text("Жалоба успешно сохранена!");
-        // $(".edit-status p").text("Жалоба успешно сохранена!");
-        // $('.admin-popup-close, .admin-popup-bg').on('click', function () {
-        //       $("#add-complaint-form").submit();
-        // });
-        //$(".edit-status").show();
-        // setTimeout(function () {
-        //     $("#add-complaint-form").submit();
-        // }, 2000);
         if(signSavedComplaint == false){
-            $('#complaint_save').on('click', function () {
+            if(window.is_admin){
                 $.ajax({
                     type: 'POST',
-                    url: '/complaint/create',
+                    url: '/admin/complaints/update',
                     data: $("#add-complaint-form").serialize(),
-                    dataType: "json",
                     success: function (res) {
-                        if(res.complaint.id){
-                            createDocx(res.complaint.id)
-                        }
+                        location.reload();
                     }
                 });
-            });
+            } else {
+                if (!window.edit_mode) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/complaint/create',
+                        data: $("#add-complaint-form").serialize(),
+                        dataType: "json",
+                        success: function (res) {
+                            if (compID == false && res.complaint.id) {
+                                compID = res.complaint.id;
+                            }
+                            createDocx(compID)
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/complaint/update',
+                        data: $("#add-complaint-form").serialize(),
+                        success: function (res) {
+                            if (compID == false) {
+                                compID = $('#complaint_id').val();
+                            }
+                            createDocx(compID)
+                        }
+                    });
+                }
+            }
         }
-
-
-
-
     },
     showError: function (element, msg, insert_here) {
         this.result = false;
@@ -729,7 +739,7 @@ var auction = {
     }
 };
 
-function saveComplaintToDocxFile( compId ) {
+function saveComplaintToDocxFile() {
     var loadFile = function (url, callback) {
         JSZipUtils.getBinaryContent(url, callback);
     };
@@ -833,8 +843,8 @@ function saveComplaintToDocxFile( compId ) {
             }
 
             var url = "/complaint/saveBlobFile";
-            if(compId){
-                url += '?complaint_id' + compId;
+            if(compID){
+                url += '?complaint_id=' + compID;
             }
             $.ajax({
                 url: url,
@@ -848,7 +858,9 @@ function saveComplaintToDocxFile( compId ) {
                     if (signSavedComplaint == true) {
                         data = JSON.parse(data);
                         signFileOriginName = data[2];
-                        signFile(data[0],data[1]);
+                        signFile(data[0],data[1], function () {
+                            location.reload()
+                        });
                     }
                 },
                 error: function () {
@@ -895,8 +907,14 @@ function saveComplaintToDocxFile( compId ) {
             data.append('file', out);
             data.append('complaint_name', $('#complaint_name').val());
             data.append('complaint_id', $("#complaint_id").val());
+
+            var url = "/complaint/saveBlobFile?unformatted=1";
+            if(compID){
+                url += '&complaint_id=' + compID;
+            }
+
             $.ajax({
-                url: "/complaint/saveBlobFile?unformatted=1",
+                url: url,
                 type: 'POST',
                 data: data,
                 async: false,
@@ -904,6 +922,7 @@ function saveComplaintToDocxFile( compId ) {
                 contentType: false,
                 processData: false,
                 success: function (data) {
+                    location.reload();
                 },
                 error: function () {
                 }
@@ -1067,9 +1086,7 @@ function stopSaveCompl() {
     if ($('#overdueOrNot').val() === '0') flag = true;
     if (flag) {
         if (complaint.prepareData()) {
-            if (saveComplaintToDocxFile()) {
-                complaint.saveAsDraft();
-            }
+            complaint.saveAsDraft(saveComplaintToDocxFile);
         }
     } else {
         showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Необходимо выбрать обязательный довод");

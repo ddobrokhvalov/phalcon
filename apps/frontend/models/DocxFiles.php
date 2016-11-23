@@ -11,6 +11,7 @@ class DocxFiles extends Model
     public $user_id;
     public $format;
     public $recall;
+    public $created_at;
 
     public function initialize() {
         $this->setSource('docx_files');
