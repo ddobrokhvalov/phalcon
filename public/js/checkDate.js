@@ -4,8 +4,12 @@ $(document).ready(function () {
         if(!$('#send_yfas').hasClass('skyColor')) return false;
         $.ajax({
             type: 'POST',
-            url: '/complaint/checkDateOnOverdueComplaint',
-            data: {date: auction.data.okonchanie_rassmotreniya},
+            url: '/complaint/checkDateComplaint',
+            data: {
+                okonchanie_rassmotreniya: auction.data.okonchanie_rassmotreniya,
+                okonchanie_podachi:     auction.data.okonchanie_podachi,
+                complaint_id: $("#complaint_id").val(),
+            },
             dataType: "json",
             success: function(res) {
                 $('.send-uf').fadeIn().css('display', 'flex');
@@ -18,6 +22,7 @@ $(document).ready(function () {
                     $('.send-uf').find('.pop-done-txt').text(
                        'Обратите внимание, сроки обжалования действий (бездействий) по закупке составляют десять дней с момента размещения в ЕИС соответствующего протокола.Подробная информация о сроках обжалования изложена в разделе «ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ», а также в ч. 3 и 4 статьи 105 Федерального закона от 05.04.2013 № 44-ФЗ  «О контрактной системе в сфере закупок товаров, работ, услуг для обеспечения государственных и муниципальных нужд».'
                     );
+                    $('.podpisatEp, .cancel-recall').css({'display': 'none'});
                 }
             }
         });

@@ -935,21 +935,30 @@ class ComplaintController extends ControllerBase
         return 0;
     }
 
-    public function checkDateOnOverdueComplaintAction(){
-        $date = $this->request->getPost('date');
-        if(empty($date)){
+    public function checkDateComplaintAction(){
+        $complaint_id = $this->request->getPost('complaint_id');
+        $okonchanie_podachi = $this->request->getPost('okonchanie_podachi');
+        $okonchanie_rassmotreniya = $this->request->getPost('okonchanie_rassmotreniya');
+        $complaint = Complaint::findFirst($complaint_id);
+
+        $currentDate = new \DateTime('now');
+        $okonchanie_podachi = new \DateTime($okonchanie_podachi);
+        $complaintDate = new \DateTime($complaint->date);
+
+        if($complaintDate < $okonchanie_podachi){
             echo json_encode(array(
-                'error' => 'empty'
-            ));
-            exit;
+                'status' => 0
+            ));exit;
+        } else {
+            $calendar = new Calendar(new BasicDataRu(), 10);
+            $result = $calendar->checkDateAddComplaint($okonchanie_rassmotreniya);
+            echo json_encode(array(
+                'status' => $result
+            ));exit;
         }
-        $calendar = new Calendar(new BasicDataRu(), 10);
-        $result = $calendar->checkDateAddComplaint($date);
-        echo json_encode(array(
-           'status' => $result
-        ));
-        exit;
     }
+
+
 
     public function checkDateOnRecallComplaintAction(){
         $idComp = $this->request->getPost('date');
