@@ -285,7 +285,7 @@ var complaint = {
                             }
                             createDocx(compID)
                             setTimeout(function () {
-                                location.href = '/complaint/edit/' + compID;
+                                location.href = '/complaint/edit/' + compID+'?action=edit';
                             }, 1000);
                         }
                     });
