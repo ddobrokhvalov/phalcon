@@ -285,8 +285,8 @@ var complaint = {
                             }
                             createDocx(compID)
                             setTimeout(function () {
-                                location.reload();
-                            }, 3000);
+                                location.href = '/complaint/edit/' + compID;
+                            }, 1000);
                         }
                     });
                 } else {
@@ -301,7 +301,7 @@ var complaint = {
                             createDocx(compID);
                             setTimeout(function () {
                                 location.reload();
-                            }, 3000);
+                            }, 1000);
                         }
                     });
                 }
