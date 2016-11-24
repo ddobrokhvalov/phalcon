@@ -69,6 +69,7 @@ $(document).ready(function () {
 
 
 function refresh(){
+    $('.podpisatEp-popup').css({'display': 'none'});
     $('.button-recallRec').css({'display': 'none'});
     $('.recall-compl-popup').find('.pop-done-txt').text(
         'Жалоба на закупку №'+ comp_id +' была успешно отозвана'
