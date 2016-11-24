@@ -23,6 +23,9 @@ $(document).ready(function () {
                         doc.setData({
                                 "applicant_name": infoComplaint.applicant_name,
                                 "applicant_position": infoComplaint.applicant_position,
+                                "applicant_address": infoComplaint.applicant_address,
+                                "applicant_phone": infoComplaint.applicant_phone,
+                                "applicant_email": infoComplaint.email,
                                 "auction_id": infoComplaint.auction_id,
                                 "date_create": infoComplaint.date_create,
                                 'applicant_fio': infoComplaint.applicant_fio,
