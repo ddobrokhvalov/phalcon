@@ -75,7 +75,7 @@ function refresh(){
         'Жалоба на закупку №'+ comp_id +' была успешно отозвана'
     );
     $('.button-recallRec').css({'display': 'flex'});
-    $('.recall-compl, .cancel-recall').css({'display': 'none'});
+   // $('.recall-compl, .cancel-recall').css({'display': 'none'});
     setTimeout(function(){
         location.reload();
     }, 2000);

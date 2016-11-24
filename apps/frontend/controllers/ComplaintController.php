@@ -1032,13 +1032,22 @@ class ComplaintController extends ControllerBase
 
         $complaint = new Complaint();
         $complaint->changeStatus('submitted', array($compId), $this->user->id);
-
-        $this->SendToUfas(array(
-                '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name.'.sig',
-                '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name
-            ));
-
         $complaint = Complaint::findFirst($compId);
+
+        $appFiles = Applicant::findFirst($complaint->applicant_id);
+        $appFiles = unserialize($appFiles->fid);
+
+        $attached = array(
+            '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name.'.sig',
+            '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name
+        );
+
+        foreach ($appFiles as $file){
+            $tempFile = Files::findFirst($file);
+            $attached[] = '../public/files/applicant/'.$tempFile->file_path;
+        }
+
+        $this->SendToUfas($attached);
 
         echo json_encode(array(
             'status' => 'ok',
