@@ -1,8 +1,9 @@
+var comp_id = 0;
 $(document).ready(function () {
-
     $('.recall-compl').on('click', function () {
         if($(this).hasClass('button_copy_deactive')) return false;
         var input = $('.complaint-checkbox:checked').val();
+        if(!input) input = $("#complaint_id").val();
         $.ajax({
             url: '/complaint/getInfoComplaint',
             type: 'POST',
@@ -20,12 +21,13 @@ $(document).ready(function () {
                             throw e;
                         }
                         doc = new Docxgen(content);
+                        comp_id = infoComplaint.auction_id;
                         doc.setData({
                                 "applicant_name": infoComplaint.applicant_name,
                                 "applicant_position": infoComplaint.applicant_position,
                                 "applicant_address": infoComplaint.applicant_address,
                                 "applicant_phone": infoComplaint.applicant_phone,
-                                "applicant_email": infoComplaint.email,
+                                "applicant_email": infoComplaint.applicant_email,
                                 "auction_id": infoComplaint.auction_id,
                                 "date_create": infoComplaint.date_create,
                                 'applicant_fio': infoComplaint.applicant_fio,
@@ -67,7 +69,13 @@ $(document).ready(function () {
 
 
 function refresh(){
+    $('.button-recallRec').css({'display': 'none'});
+    $('.recall-compl-popup').find('.pop-done-txt').text(
+        'Жалоба на закупку №'+ comp_id +' была успешно отозвана'
+    );
+    $('.button-recallRec').css({'display': 'flex'});
+    $('.recall-compl, .cancel-recall').css({'display': 'none'});
     setTimeout(function(){
         location.reload();
-    }, 1000);
+    }, 2000);
 }

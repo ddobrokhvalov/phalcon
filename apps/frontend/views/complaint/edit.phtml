@@ -25,6 +25,8 @@
 
 <script src="/js/ecp/Custom_low.level.signFile.js" type="text/javascript"></script>
 <!-- ECP -->
+<script type="text/javascript" src="/js/RecallComplaint.js"></script>
+<script type="text/javascript" src="/js/checkDate.js"></script>
 <div class="content edit-complaint-page {% if complaint.status == 'draft' and action_edit === true %}edit-now {% endif %}">
     <div class="wrapper wrap-with-menuPanel">
         <div class="c-content">
@@ -72,7 +74,7 @@
                     {% endif %}
                     <a class="button-copy-edit-page" value="{{ complaint.id }}" >Копировать</a>
                     {% if complaint.status == 'submitted' %}
-                      <a  href="/complaint/recall/{{ complaint.id }}" value="recalled">Отозвать</a>
+                      <a  href="#" class="button-recallRec">Отозвать</a>
                     {% else %}
                         <a class="grey" href="#">Отозвать</a>
                     {% endif %}
@@ -360,6 +362,7 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="auc_id" value="{{complaint.auction_id}}">
 <input type="hidden" name="categories_id" id="categories_id" value="{{ categories_id }}">
 <input type="hidden" name="arguments_id" id="arguments_id" value="{{ arguments_id }}">
 {% if complaint.status == 'draft' and action_edit === true %}
@@ -628,4 +631,15 @@
     <div class="popupBtn podpisatEp">Отправить жалобу</div>
     <div class="popupBtn cancel-recall">Отмена</div>
   </div>
+</article>
+
+<article class="admin-popup-wrap recall-compl-popup" style="display:none;">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content index-main-popup">
+        <div class="admin-popup-close"></div>
+        <h6>Отзыв жалобы</h6>
+        <p class="pop-done-txt" style="padding: 0 26px 30px"></p>
+        <div class="popupBtn recall-compl">Отозвать</div>
+        <div class="popupBtn cancel-recall">Отмена</div>
+    </div>
 </article>
