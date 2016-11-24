@@ -92,9 +92,6 @@ class UsersController extends Controller
         if(!$user->conversion){
             $res_arr['conversion'] = 'Как к вам обращаться, необходимо заполнить';
         }
-        if(!$user->phone){
-            $res_arr['phone'] = 'Телефон, необходимо заполнить ';
-        }
         if(!$user->mobile_phone){
             $res_arr['mobile_phone'] = 'Мобильный телефон, необходимо заполнить ';
         }
