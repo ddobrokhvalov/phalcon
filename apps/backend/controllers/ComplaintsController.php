@@ -434,7 +434,10 @@ class ComplaintsController extends ControllerBase
             if (isset($complaint_id) && $complaint_id) {
                 $toid = $complaint->getComplaintOwner($complaint_id);
                 $subject = "Системное сообщение";
-                $body = "Юрист дал ответ на ваш вопрос";
+
+                $complaint = Complaint::findFirst($complaint_id);
+
+                $body = "Юрист дал ответ на ваш вопрос. Закупка №".$complaint->auction_id ;
                 if ($toid) {
                     $message = new Messages();
                     $message->from_uid = $from;
@@ -443,7 +446,7 @@ class ComplaintsController extends ControllerBase
                     $message->body = $body;
                     $message->time = date('Y-m-d H:i:s');
                     $message->comp_id = $complaint_id;
-                    //$message->save();
+                    $message->save();
 
                     $quest = Question::findFirstById($answer->question_id);
                     if($quest){
@@ -464,6 +467,7 @@ class ComplaintsController extends ControllerBase
                             ->subject('Ответ юриста в системе ФАС-Онлайн');
                         $message->send();
                     }
+
                 }
             }
             $response = new \Phalcon\Http\Response();
@@ -642,6 +646,7 @@ class ComplaintsController extends ControllerBase
             $new_question->date = date('Y-m-d H:i:s');
             $new_question->is_read = 'n';
             $new_question->save();
+
             $this->flashSession->success('Ваш вопрос отправлен юристу');
             return $this->response->redirect('/admin/complaints/edit/' . $complaint_id);
         }
