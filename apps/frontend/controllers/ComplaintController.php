@@ -1057,6 +1057,13 @@ class ComplaintController extends ControllerBase
             '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name
         );
 
+
+        $compFiles = unserialize($complaint->fid);
+        foreach ($compFiles as $compfile){
+            $tempFile = Files::findFirst($compfile);
+            $attached[] = '../public/files/complaints/'.$tempFile->file_path;
+        }
+
         foreach ($appFiles as $file){
             $tempFile = Files::findFirst($file);
             $attached[] = '../public/files/applicant/'.$tempFile->file_path;
