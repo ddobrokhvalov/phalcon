@@ -1,9 +1,11 @@
-var comp_id = 0;
+var auction_id = 0;
+var comp_id = null;
 $(document).ready(function () {
     $('.recall-compl').on('click', function () {
         if($(this).hasClass('button_copy_deactive')) return false;
         var input = $('.complaint-checkbox:checked').val();
         if(!input) input = $("#complaint_id").val();
+        comp_id = input;
         $.ajax({
             url: '/complaint/getInfoComplaint',
             type: 'POST',
@@ -21,7 +23,7 @@ $(document).ready(function () {
                             throw e;
                         }
                         doc = new Docxgen(content);
-                        comp_id = infoComplaint.auction_id;
+                        auction_id = infoComplaint.auction_id;
                         doc.setData({
                                 "applicant_name": infoComplaint.applicant_name,
                                 "applicant_position": infoComplaint.applicant_position,
@@ -72,11 +74,23 @@ function refresh(){
     $('.podpisatEp-popup').css({'display': 'none'});
     $('.button-recallRec').css({'display': 'none'});
     $('.recall-compl-popup').find('.pop-done-txt').text(
-        'Жалоба на закупку №'+ comp_id +' была успешно отозвана'
+        'Жалоба на закупку №'+ auction_id +' была успешно отозвана'
     );
     $('.button-recallRec').css({'display': 'flex'});
     $('.recall-compl, .cancel-recall').css({'display': 'none'});
-    setTimeout(function(){
-        location.reload();
-    }, 2000);
+     $.ajax({
+         url: "/complaint/recallChangeStaAndSendUfas",
+         type: 'POST',
+         data: {complaint_id: comp_id},
+         dataType: 'json',
+         success: function (data) {
+             if(data.status == 'ok') {
+                 setTimeout(function () {
+                     location.reload();
+                 }, 1000);
+             }
+         },
+         error: function () {
+         }
+     });
 }

@@ -274,10 +274,14 @@ var complaint = {
                 });
             } else {
                 if (!window.edit_mode) {
+                    var form = $("#add-complaint-form")[0];
+                    form = new FormData(form);
                     $.ajax({
                         type: 'POST',
                         url: '/complaint/create',
-                        data: $("#add-complaint-form").serialize(),
+                        data: form,
+                        processData: false,
+                        contentType: false,
                         dataType: "json",
                         success: function (res) {
                             if (compID == false && res.complaint.id) {
@@ -290,10 +294,14 @@ var complaint = {
                         }
                     });
                 } else {
+                    var form = $("#add-complaint-form")[0];
+                    form = new FormData(form);
                     $.ajax({
                         type: 'POST',
                         url: '/complaint/update',
-                        data: $("#add-complaint-form").serialize(),
+                        processData: false,
+                        contentType: false,
+                        data: form,
                         success: function (res) {
                             if (compID == false) {
                                 compID = $('#complaint_id').val();
