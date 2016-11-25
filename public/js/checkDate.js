@@ -10,6 +10,7 @@ $(document).ready(function () {
                 okonchanie_rassmotreniya: auction.data.okonchanie_rassmotreniya,
                 okonchanie_podachi:     auction.data.okonchanie_podachi,
                 data_rassmotreniya: auction.data.data_rassmotreniya,
+                vskrytie_konvertov: auction.data.vskrytie_konvertov,
                 complaint_id: $("#complaint_id").val(),
             },
             dataType: "json",

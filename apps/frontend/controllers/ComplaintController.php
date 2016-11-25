@@ -943,6 +943,9 @@ class ComplaintController extends ControllerBase
         if(!$okonchanie_rassmotreniya){
             $okonchanie_rassmotreniya = $this->request->getPost('data_rassmotreniya');
         }
+        if(!$okonchanie_rassmotreniya){
+            $okonchanie_rassmotreniya = $this->request->getPost('vskrytie_konvertov');
+        }
 
 
         $complaint = Complaint::findFirst($complaint_id);
