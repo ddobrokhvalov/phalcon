@@ -350,13 +350,13 @@ class ComplaintController extends ControllerBase
        // unlink($baseLocation . $signFileOriginName.'sig');
         file_put_contents($baseLocation. $signFileOriginName.'.sig',base64_decode($signature));
 
-        if(preg_match('/recall/', $signFileOriginName)){
+        /*if(preg_match('/recall/', $signFileOriginName)){
 
             $this->SendToUfas(array(
                 '../public/'.$baseLocation.$signFileOriginName.'.sig',
                 '../public/'.$baseLocation.$signFileOriginName,
             ));
-        }
+        }*/
 
         echo 'done';
         exit;
@@ -1075,9 +1075,13 @@ class ComplaintController extends ControllerBase
 
         $attached = array(
             '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name.'.sig',
+            '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name,
         );
 
-        $appFiles = Applicant::findFirst($compId);
+        $complaint = Complaint::findFirst($compId);
+
+
+        $appFiles = Applicant::findFirst($complaint->applicant_id);
         $appFiles = unserialize($appFiles->fid);
 
         foreach ($appFiles as $file){
