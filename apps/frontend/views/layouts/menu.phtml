@@ -1,3 +1,9 @@
+<script type="text/javascript" src="/js/input_mask.js"></script>
+<script>
+    $(document).ready(function() {
+        $('input[name="mobile_phone"]').mask("+7 (999) 999-9999");
+    });
+</script>
 <div class="left-menu-block">
     <div class="left-menu-holder scroll-pane">
         <div class="lm-opcl-btnb">
@@ -208,7 +214,7 @@
                             <label for="cr1">Получать уведомления на e-mail</label>
                         </div>
                         <div class="ch-r-s-inf-f userData" style="font-weight: normal">
-                            <p>Личные данные</p>
+<!--                            <p>Личные данные</p> -->
 <!--                            <label for="adm-set-name" class="set-same-lable">-->
 <!--                                <p>Имя</p>-->
 <!--                                <div class="c-inp-err-t c-inp-err-t-minMrgTop"></div>-->
@@ -229,11 +235,11 @@
                                 <div class="c-inp-err-t c-inp-err-t-minMrgTop"></div>
                                 <input type="text" id="usri1" name="conversion" required value="{{user.conversion}}">
                             </label>
-                            <label for="adm-set-name" class="set-same-lable">
-                                <p>Телефон</p>
-                                <div class="c-inp-err-t c-inp-err-t-minMrgTop"></div>
-                                <input type="text" id="usri1" name="phone" required value="{{user.phone}}">
-                            </label>
+<!--                            <label for="adm-set-name" class="set-same-lable">-->
+<!--                                <p>Телефон</p>-->
+<!--                                <div class="c-inp-err-t c-inp-err-t-minMrgTop"></div>-->
+<!--                                <input type="text" id="usri1" name="phone" required value="{{user.phone}}">-->
+<!--                            </label>-->
                             <label for="adm-set-name" class="set-same-lable">
                                 <p>Мобильный телефон</p>
                                 <div class="c-inp-err-t c-inp-err-t-minMrgTop"></div>

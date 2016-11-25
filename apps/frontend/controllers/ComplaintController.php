@@ -251,6 +251,8 @@ class ComplaintController extends ControllerBase
 
     public function saveBlobFileAction() {
         $name = false;
+        $format = 1;
+        $recall = 0;
         $recall = $this->request->get('recall');
         if ($this->request->hasFiles() == true) {
             $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
@@ -261,11 +263,15 @@ class ComplaintController extends ControllerBase
                     }
                     if(empty($recall)) {
                         $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
+                        if($unformatted == 'unformatted_'){
+                            $format = 0;
+                        }
                         $name = 'complaint_' . $unformatted . time() . '.docx';
                         $file->moveTo($baseLocation . $name);
                     } else {
                         $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
                         $name =  'recall_' . $unformatted . time() . '.docx';
+                        $recall = 1;
                         $file->moveTo($baseLocation . $name);
                     }
                 }
@@ -275,15 +281,38 @@ class ComplaintController extends ControllerBase
                 $docx->complaint_id = $this->request->get('complaint_id');
             }
             $docx->docx_file_name = $name;
-            $compl_id = $this->request->getPost('complaint_id');
+
+
+            $tempCompPost = $this->request->getPost('complaint_id');
+            $tempCompGet = $this->request->getQuery('complaint_id');
+            if(is_numeric($tempCompPost)){
+                $compl_id = $tempCompPost;
+            } elseif(is_numeric($tempCompGet)){
+                $compl_id = $tempCompGet;
+            }
+
             $docx->complaint_name = $this->request->getPost('complaint_name');
             if (isset($compl_id) && $compl_id != 'undefined') {
                 $delete_docx = DocxFiles::find("complaint_id = $compl_id");
-                foreach ($delete_docx as $del_docx) {
-                    $del = unlink($baseLocation . $del_docx->docx_file_name);
-                    $del_docx->delete();
+                if(count($delete_docx) >= 2) {
+                    foreach ($delete_docx as $del_docx) {
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name);
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name.'.sig');
+                        $del_docx->delete();
+                    }
+                } else {
+                    $delete_docx = DocxFiles::find("complaint_id = $compl_id AND recall = 1");
+                    foreach ($delete_docx as $del_docx) {
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name);
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name.'.sig');
+                        $del_docx->delete();
+                    }
                 }
             }
+            $docx->created_at = date('Y-m-d H:i:s');
+            $docx->recall = $recall;
+            $docx->format = $format;
+            $docx->complaint_id = $compl_id;
             $docx->user_id = $this->user->id;
             $docx->save();
         }
@@ -318,11 +347,16 @@ class ComplaintController extends ControllerBase
         $signature = $this->request->getPost('signature');
         $signFileOriginName  = $this->request->getPost('signFileOriginName');
         $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
+       // unlink($baseLocation . $signFileOriginName.'sig');
         file_put_contents($baseLocation. $signFileOriginName.'.sig',base64_decode($signature));
 
-        if(preg_match('/recall/', $signFileOriginName)){
-            $this->SendRecallToUfas('../public/'.$baseLocation.$signFileOriginName.'.sig');
-        }
+        /*if(preg_match('/recall/', $signFileOriginName)){
+
+            $this->SendToUfas(array(
+                '../public/'.$baseLocation.$signFileOriginName.'.sig',
+                '../public/'.$baseLocation.$signFileOriginName,
+            ));
+        }*/
 
         echo 'done';
         exit;
@@ -460,7 +494,13 @@ class ComplaintController extends ControllerBase
                 }
             }
             $this->flashSession->success('Жалоба сохранена');
-            return $this->response->redirect('complaint/edit/' . $complaint->id . '?action=edit');
+            echo json_encode(array(
+               'complaint' => array(
+                   'id' => $complaint->id
+               )
+            ));
+            exit;
+            //return $this->response->redirect('complaint/edit/' . $complaint->id . '?action=edit');
             //$response = array('result' => 'success', 'id' => $complaint->id);
         }
         /*header('Content-type: application/json');
@@ -579,7 +619,11 @@ class ComplaintController extends ControllerBase
                 }
             }
             $this->flashSession->success('Жалоба обновлена');
-            return $this->response->redirect('complaint/edit/' . $complaint->id);
+            //return $this->response->redirect('complaint/edit/' . $complaint-
+            echo json_encode(array(
+                'status' => 'ok'
+            ));
+            exit;
         }
     }
 
@@ -892,21 +936,30 @@ class ComplaintController extends ControllerBase
         return 0;
     }
 
-    public function checkDateOnOverdueComplaintAction(){
-        $date = $this->request->getPost('date');
-        if(empty($date)){
+    public function checkDateComplaintAction(){
+        $complaint_id = $this->request->getPost('complaint_id');
+        $okonchanie_podachi = $this->request->getPost('okonchanie_podachi');
+        $okonchanie_rassmotreniya = $this->request->getPost('okonchanie_rassmotreniya');
+        $complaint = Complaint::findFirst($complaint_id);
+
+        $currentDate = new \DateTime('now');
+        $okonchanie_podachi = new \DateTime($okonchanie_podachi);
+        $complaintDate = new \DateTime($complaint->date);
+
+        if($complaintDate < $okonchanie_podachi){
             echo json_encode(array(
-                'error' => 'empty'
-            ));
-            exit;
+                'status' => 0
+            ));exit;
+        } else {
+            $calendar = new Calendar(new BasicDataRu(), 10);
+            $result = $calendar->checkDateAddComplaint($okonchanie_rassmotreniya);
+            echo json_encode(array(
+                'status' => $result
+            ));exit;
         }
-        $calendar = new Calendar(new BasicDataRu(), 10);
-        $result = $calendar->checkDateAddComplaint($date);
-        echo json_encode(array(
-           'status' => $result
-        ));
-        exit;
     }
+
+
 
     public function checkDateOnRecallComplaintAction(){
         $idComp = $this->request->getPost('date');
@@ -949,6 +1002,9 @@ class ComplaintController extends ControllerBase
             'applicant_name'    => $applicant->name_short,
             'applicant_fio'     => $applicant->fio_applicant,
             'applicant_id'      => $applicant->id,
+            'applicant_address' => $applicant->address,
+            'applicant_phone'   => $applicant->telefone,
+            'applicant_email'   => $applicant->email,
             'applicant_position' => $applicant->position,
             'auction_id'    => $complaint->auction_id,
             'ufas_name'     => $ufas->name,
@@ -957,22 +1013,89 @@ class ComplaintController extends ControllerBase
             'thumbprint'    => $ecp->thumbprint,
         );
 
-        $arrId = array();
-        $arrId[] = $complaint->id;
-        $complaint = new Complaint();
-        $complaint->changeStatus('recalled', $arrId, $this->user->id);
-
         echo json_encode($result);
         exit;
     }
 
 
-    private function SendRecallToUfas($files){
+    private function SendToUfas($files){
         $message = $this->mailer->createMessage()
-            ->attachment($files)
             ->to($this->adminsEmails['ufas'])
             ->subject('Письмо в уфас');
+        foreach ($files as $key){
+            $message->attachment($key);
+        }
+
         $message->send();
+    }
+
+    public function sendComplaintToUfasAction(){
+        $compId = $this->request->getPost('complId');
+        $file = DocxFiles::findFirst(array(
+            "complaint_id = {$compId} AND format = 1"
+        ));
+
+        $complaint = new Complaint();
+        $complaint->changeStatus('submitted', array($compId), $this->user->id);
+        $complaint = Complaint::findFirst($compId);
+
+        $appFiles = Applicant::findFirst($complaint->applicant_id);
+        $appFiles = unserialize($appFiles->fid);
+
+        $attached = array(
+            '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name.'.sig',
+            '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name
+        );
+
+        foreach ($appFiles as $file){
+            $tempFile = Files::findFirst($file);
+            $attached[] = '../public/files/applicant/'.$tempFile->file_path;
+        }
+
+        $this->SendToUfas($attached);
+
+        echo json_encode(array(
+            'status' => 'ok',
+            'complaint' => array(
+                'auction_id' => $complaint->auction_id,
+            )
+        ));
+        exit;
+    }
+
+    public function recallChangeStaAndSendUfasAction(){
+        $compId = $this->request->getPost('complaint_id');
+        $arrId = array();
+        $arrId[] = $compId;
+        $complaint = new Complaint();
+
+        $file = DocxFiles::findFirst(array(
+            "complaint_id = {$compId} AND recall=1"
+        ));
+
+        $attached = array(
+            '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name.'.sig',
+            '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name,
+        );
+
+        $complaint = Complaint::findFirst($compId);
+
+
+        $appFiles = Applicant::findFirst($complaint->applicant_id);
+        $appFiles = unserialize($appFiles->fid);
+
+        foreach ($appFiles as $file){
+            $tempFile = Files::findFirst($file);
+            $attached[] = '../public/files/applicant/'.$tempFile->file_path;
+        }
+
+        $this->SendToUfas($attached);
+
+        $complaint->changeStatus('recalled', $arrId, $this->user->id);
+        echo json_encode(array(
+           'status' => 'ok'
+        ));
+        exit;
     }
 
 }

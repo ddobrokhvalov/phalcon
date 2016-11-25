@@ -43,7 +43,7 @@
                     </div>
                     <div class="c-cs-cb">
                         <input class="operator_etp" id="operator_etp" type="checkbox" name="operator_etp" hidden>
-                        <label for="operator_etp">Жалоба на оператора ЭТП</label>
+                        <!--<label for="operator_etp">Жалоба на оператора ЭТП</label>-->
                     </div>
                 </div>
 
@@ -169,7 +169,7 @@
                             <input id="complaint_save" class="complaint_save-blue" type="submit" value="Сохранить черновик" style="display: none">
                         </div>
                     </form>
-                    <div class="c-jd2-f-cat">
+                    <div class="c-jd2-f-cat" style="display: none;">
                         <span class="">Подписать ЭП</span>
                         <span id="send_yfas" class="skyColor">Отправить в УФАС</span>
                         <!--<input type="radio" name="jd2cat" id="jd2cat1" checked hidden>-->
@@ -259,8 +259,12 @@
         <div class="argDescrBox">
             <h5>Описание довода</h5>
             <div class="argDescrBoxHolder mCustomScrollbar">
-                <p class="argDescrBox_descr"></p>
-                <p class="argDescrBox_comment"></p>
+                <div class="argDescrBox_comment">
+                    <span>Комментарий юриста:</span>
+                </div>
+                <div class="argDescrBox_descr">
+                    <span>Описание:</span>
+                </div>
             </div>
         </div>
     </div>
@@ -300,35 +304,35 @@
 </article>
 
 <!--******************************************************-->
-<article class="admin-popup-wrap podpisatEp-popup">
-    <div class="admin-popup-bg"></div>
-    <div class="admin-popup-content index-main-popup">
-        <div class="admin-popup-close"></div>
-        <h6>Подписания ЭП</h6>
-        <p class="pop-done-txt pop-done-txt-icon">Подписана успешно!</p>
-    </div>
-</article>
-<article class="admin-popup-wrap send-suc">
-    <div class="admin-popup-bg"></div>
-    <div class="admin-popup-content index-main-popup">
-        <div class="admin-popup-close"></div>
-        <h6>Отправлено успешно!</h6>
-        <p class="pop-done-txt pop-done-txt-icon">Жалоба на закупку №# в соответствии со ст. 105
-            Федерального закона от 05.04.2013 № 44-ФЗ направлена в контрольный орган в сфере
-            закупок. Регламентированный срок принятия жалобы к рассмотрению не позднее #дата.
-            Информация о статусе жалобы будет доступна Вам в личном кабинете «ФАС-ОНЛАЙН».</p>
-    </div>
-</article>
-<article class="admin-popup-wrap send-uf">
-    <div class="admin-popup-bg"></div>
-    <div class="admin-popup-content index-main-popup">
-        <div class="admin-popup-close"></div>
-        <h6>Отправление в уфас</h6>
-        <p class="pop-done-txt"></p>
-        <div class="popupBtn podpisatEp">Отправить жалобу</div>
-        <div class="popupBtn cancel-recall">Отмена</div>
-    </div>
-</article>
+<!--<article class="admin-popup-wrap podpisatEp-popup">-->
+<!--    <div class="admin-popup-bg"></div>-->
+<!--    <div class="admin-popup-content index-main-popup">-->
+<!--        <div class="admin-popup-close"></div>-->
+<!--        <h6>Подписания ЭП</h6>-->
+<!--        <p class="pop-done-txt pop-done-txt-icon">Подписана успешно!</p>-->
+<!--    </div>-->
+<!--</article>-->
+<!--<article class="admin-popup-wrap send-suc">-->
+<!--    <div class="admin-popup-bg"></div>-->
+<!--    <div class="admin-popup-content index-main-popup">-->
+<!--        <div class="admin-popup-close"></div>-->
+<!--        <h6>Отправлено успешно!</h6>-->
+<!--        <p class="pop-done-txt pop-done-txt-icon">Жалоба на закупку №# в соответствии со ст. 105-->
+<!--            Федерального закона от 05.04.2013 № 44-ФЗ направлена в контрольный орган в сфере-->
+<!--            закупок. Регламентированный срок принятия жалобы к рассмотрению не позднее #дата.-->
+<!--            Информация о статусе жалобы будет доступна Вам в личном кабинете «ФАС-ОНЛАЙН».</p>-->
+<!--    </div>-->
+<!--</article>-->
+<!--<article class="admin-popup-wrap send-uf">-->
+<!--    <div class="admin-popup-bg"></div>-->
+<!--    <div class="admin-popup-content index-main-popup">-->
+<!--        <div class="admin-popup-close"></div>-->
+<!--        <h6>Отправление в уфас</h6>-->
+<!--        <p class="pop-done-txt"></p>-->
+<!--        <div class="popupBtn podpisatEp">Отправить жалобу</div>-->
+<!--        <div class="popupBtn cancel-recall">Отмена</div>-->
+<!--    </div>-->
+<!--</article>-->
 
 <style>
     .marker_yellow{

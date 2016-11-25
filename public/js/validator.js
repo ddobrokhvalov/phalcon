@@ -10,6 +10,8 @@ var validator = {
             return false;
         if (parseInt(value) != value)
             return false;
+        if (value[0] != 0)
+            return false;
 
         return true;
     },
