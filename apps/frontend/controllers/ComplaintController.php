@@ -948,13 +948,15 @@ class ComplaintController extends ControllerBase
 
         if($complaintDate < $okonchanie_podachi){
             echo json_encode(array(
-                'status' => 0
+                'status' => 0,
+                'rule' => 1,
             ));exit;
         } else {
             $calendar = new Calendar(new BasicDataRu(), 10);
             $result = $calendar->checkDateAddComplaint($okonchanie_rassmotreniya);
             echo json_encode(array(
-                'status' => $result
+                'status' => $result,
+                'rule' => 2,
             ));exit;
         }
     }
