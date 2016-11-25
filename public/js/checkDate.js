@@ -6,23 +6,35 @@ $(document).ready(function () {
             type: 'POST',
             url: '/complaint/checkDateComplaint',
             data: {
+                type:auction.data.type,
                 okonchanie_rassmotreniya: auction.data.okonchanie_rassmotreniya,
                 okonchanie_podachi:     auction.data.okonchanie_podachi,
+                data_rassmotreniya: auction.data.data_rassmotreniya,
                 complaint_id: $("#complaint_id").val(),
             },
             dataType: "json",
             success: function(res) {
-                $('.send-uf').fadeIn().css('display', 'flex');
                 if(res.status == 0){
-                    $('.send-uf').find('.pop-done-txt').text(
-                        'Дата не просрочена'
-                    );
+                    if(res.rule == 2) {
+                        $('.send-uf').fadeIn().css('display', 'flex');
+                        $('.send-uf').find('.pop-done-txt').text(
+                            'Подтвердите отправку'
+                        );
+                        //$('.podpisatEp, .cancel-recall').css({'display': 'none'});
+                    } else if( res.rule == 1 ){
+                        $('.podpisatEp').trigger( "click" );
+                    }
                 }
                 if(res.status == 1){
-                    $('.send-uf').find('.pop-done-txt').text(
-                       'Обратите внимание, сроки обжалования действий (бездействий) по закупке составляют десять дней с момента размещения в ЕИС соответствующего протокола.Подробная информация о сроках обжалования изложена в разделе «ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ», а также в ч. 3 и 4 статьи 105 Федерального закона от 05.04.2013 № 44-ФЗ  «О контрактной системе в сфере закупок товаров, работ, услуг для обеспечения государственных и муниципальных нужд».'
-                    );
+                    if(res.rule == 2){
+                        $('.send-uf').fadeIn().css('display', 'flex');
+                        $('.send-uf').find('.pop-done-txt').text(
+                            'Обратите внимание, сроки обжалования действий (бездействий) по закупке составляют десять дней с момента размещения в ЕИС соответствующего протокола.Подробная информация о сроках обжалования изложена в разделе «ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ», а также в ч. 3 и 4 статьи 105 Федерального закона от 05.04.2013 № 44-ФЗ  «О контрактной системе в сфере закупок товаров, работ, услуг для обеспечения государственных и муниципальных нужд».'
+                        );
+                    }
+
                     if(res.rule != 2) {
+                        $('.send-uf').fadeIn().css('display', 'flex');
                         $('.podpisatEp, .cancel-recall').css({'display': 'none'});
                     }
                 }
