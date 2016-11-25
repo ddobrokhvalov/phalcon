@@ -72,7 +72,10 @@ $(document).ready(function () {
     
     $('#sign-ecp').click(function () {
         signSavedComplaint = true;
-        stopSaveCompl();
+        if (complaint.prepareData()) {
+            complaint.saveAsDraft(saveComplaintToDocxFile);
+        }
+        //stopSaveCompl();
     });
     $('#complaint_save').click(function (evt) {
         //$('#complaint_save').unbind('click').bind('click', function (evt) {
