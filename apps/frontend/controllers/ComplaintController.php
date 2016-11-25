@@ -940,6 +940,11 @@ class ComplaintController extends ControllerBase
         $complaint_id = $this->request->getPost('complaint_id');
         $okonchanie_podachi = $this->request->getPost('okonchanie_podachi');
         $okonchanie_rassmotreniya = $this->request->getPost('okonchanie_rassmotreniya');
+        if(!$okonchanie_rassmotreniya){
+            $okonchanie_rassmotreniya = $this->request->getPost('data_rassmotreniya');
+        }
+
+
         $complaint = Complaint::findFirst($complaint_id);
 
         $currentDate = new \DateTime('now');
