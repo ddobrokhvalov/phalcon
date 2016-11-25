@@ -351,6 +351,7 @@ class ComplaintController extends ControllerBase
         file_put_contents($baseLocation. $signFileOriginName.'.sig',base64_decode($signature));
 
         if(preg_match('/recall/', $signFileOriginName)){
+
             $this->SendToUfas(array(
                 '../public/'.$baseLocation.$signFileOriginName.'.sig',
                 '../public/'.$baseLocation.$signFileOriginName,
@@ -1003,11 +1004,6 @@ class ComplaintController extends ControllerBase
             'thumbprint'    => $ecp->thumbprint,
         );
 
-        $arrId = array();
-        $arrId[] = $complaint->id;
-        $complaint = new Complaint();
-        $complaint->changeStatus('recalled', $arrId, $this->user->id);
-
         echo json_encode($result);
         exit;
     }
@@ -1054,6 +1050,37 @@ class ComplaintController extends ControllerBase
             'complaint' => array(
                 'auction_id' => $complaint->auction_id,
             )
+        ));
+        exit;
+    }
+
+    public function recallChangeStaAndSendUfasAction(){
+        $compId = $this->request->getPost('complaint_id');
+        $arrId = array();
+        $arrId[] = $compId;
+        $complaint = new Complaint();
+
+        $file = DocxFiles::findFirst(array(
+            "complaint_id = {$compId} AND recall=1"
+        ));
+
+        $attached = array(
+            '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name.'.sig',
+        );
+
+        $appFiles = Applicant::findFirst($compId);
+        $appFiles = unserialize($appFiles->fid);
+
+        foreach ($appFiles as $file){
+            $tempFile = Files::findFirst($file);
+            $attached[] = '../public/files/applicant/'.$tempFile->file_path;
+        }
+
+        $this->SendToUfas($attached);
+
+        $complaint->changeStatus('recalled', $arrId, $this->user->id);
+        echo json_encode(array(
+           'status' => 'ok'
         ));
         exit;
     }
