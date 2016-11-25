@@ -5620,26 +5620,108 @@ body#backend-login {
   text-decoration: underline;
 }
 
+/* line 1, ../sass/_pamyatka.scss */
+.pamyatka {
+  padding: 20px 40px 0;
+}
+/* line 3, ../sass/_pamyatka.scss */
+.pamyatka__titleDscr {
+  margin-bottom: 24px;
+  font-size: 22px;
+  font-weight: 100;
+}
+/* line 7, ../sass/_pamyatka.scss */
+.pamyatka__titleDscr-minMg {
+  margin-bottom: 8px;
+}
+/* line 10, ../sass/_pamyatka.scss */
+.pamyatka__titleDscr-bottom {
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+
+/* line 17, ../sass/_pamyatka.scss */
+.pamyatkaDscrBox__pamyatkaListTile {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+/* line 20, ../sass/_pamyatka.scss */
+.pamyatkaDscrBox__pamyatkaListTile-maxMg {
+  margin-bottom: 26px;
+}
+
+/* line 25, ../sass/_pamyatka.scss */
+.pamyatkaList {
+  margin-bottom: 26px;
+  padding: 0 34px;
+}
+/* line 28, ../sass/_pamyatka.scss */
+.pamyatkaList-minMg {
+  margin-bottom: 10px;
+}
+/* line 31, ../sass/_pamyatka.scss */
+.pamyatkaList__item {
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 22px;
+  font-size: 16px;
+}
+/* line 36, ../sass/_pamyatka.scss */
+.pamyatkaList__item:before {
+  position: absolute;
+  content: '';
+  top: 10px;
+  left: 0;
+  width: 16px;
+  height: 7px;
+  background: url("../images/helpArrow-black.png") 0 0 no-repeat;
+}
+/* line 46, ../sass/_pamyatka.scss */
+.pamyatkaList__doubleList {
+  padding-top: 10px;
+}
+/* line 49, ../sass/_pamyatka.scss */
+.pamyatkaList__doubleItem {
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 28px;
+  font-size: 16px;
+}
+/* line 54, ../sass/_pamyatka.scss */
+.pamyatkaList__doubleItem:before {
+  position: absolute;
+  content: '';
+  top: 12px;
+  left: 12px;
+  width: 10px;
+  height: 1px;
+  background-color: #000000;
+}
+/* line 64, ../sass/_pamyatka.scss */
+.pamyatkaList__doubleItem-dscr:before {
+  position: static;
+}
+
 @media (max-width: 1640px) {
-  /* line 146, ../sass/style.scss */
+  /* line 147, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: 330px;
     margin-right: 0;
   }
 }
 @media (max-width: 1325px) {
-  /* line 153, ../sass/style.scss */
+  /* line 154, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* line 157, ../sass/style.scss */
+  /* line 158, ../sass/style.scss */
   .admin-lm-wrap {
     left: -242px;
   }
 
-  /* line 160, ../sass/style.scss */
+  /* line 161, ../sass/style.scss */
   .lm-burger {
     display: block;
   }
