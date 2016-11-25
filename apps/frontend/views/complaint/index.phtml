@@ -11,22 +11,20 @@
 <script type="text/javascript" src="/js/checkDate.js"></script>
 <div id="chsort">
     <div class="wrapper wrap-with-menuPanel">
-        <div class="c-content">
-            <div class="c-c-sort">
-                <div class="c-cs-cb">
-                    <input class="select_all_complaint" id="csall" type="checkbox" name="csall" hidden>
-                    <label  for="csall">Выбрать все</label>
-                </div>
-                <div class="c-cs-btns">
-                    <a class="button-copy">Копировать</a>
-                    <a class="button-recall" value="recalled" >Отозвать</a>
-                    {% if menu_status == 'archive' %}
-                    <a class="change-status set-active" value="activate" >Активировать</a>
-                    {% else %}
-                    <a class="change-status to-archive" value="archive" >В архив</a>
-                    {% endif %}
-                    <a class="change-status to-delete" value="delete">Удалить</a>
-                </div>
+        <div class="c-c-sort">
+            <div class="c-cs-cb">
+                <input class="select_all_complaint" id="csall" type="checkbox" name="csall" hidden>
+                <label  for="csall">Выбрать все</label>
+            </div>
+            <div class="c-cs-btns">
+                <a class="button-copy">Копировать</a>
+                <a class="button-recall" value="recalled" >Отозвать</a>
+                {% if menu_status == 'archive' %}
+                <a class="change-status set-active" value="activate" >Активировать</a>
+                {% else %}
+                <a class="change-status to-archive" value="archive" >В архив</a>
+                {% endif %}
+                <a class="change-status to-delete" value="delete">Удалить</a>
             </div>
         </div>
     </div>
