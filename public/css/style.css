@@ -5806,9 +5806,9 @@ body#backend-login {
 /* line 19, ../sass/_helpTable.scss */
 .helpTableBox-title {
   display: block;
-  height: 60px;
+  padding: 16px 0;
   font-size: 22px;
-  line-height: 58px;
+  line-height: 1.2;
   font-weight: 100;
   text-align: center;
 }
@@ -5887,6 +5887,34 @@ body#backend-login {
 /* line 89, ../sass/_helpTable.scss */
 .helpTableBox-sroki .helpTableBox__item:nth-child(6) {
   max-width: 10%;
+}
+/* line 97, ../sass/_helpTable.scss */
+.helpTableBox-shtraf.helpTableBox-head .helpTableBox__item:first-child {
+  padding: 24px 10px 0;
+}
+/* line 100, ../sass/_helpTable.scss */
+.helpTableBox-shtraf.helpTableBox-head .helpTableBox__item:last-child {
+  padding: 24px 14px 0;
+  line-height: 1.2;
+}
+/* line 107, ../sass/_helpTable.scss */
+.helpTableBox-shtraf .helpTableBox__item:first-child {
+  padding: 14px 0 0;
+  max-width: 6%;
+  line-height: 1.2;
+  text-align: center;
+}
+/* line 113, ../sass/_helpTable.scss */
+.helpTableBox-shtraf .helpTableBox__item:nth-child(2) {
+  max-width: 56%;
+}
+/* line 116, ../sass/_helpTable.scss */
+.helpTableBox-shtraf .helpTableBox__item:nth-child(3) {
+  max-width: 19%;
+}
+/* line 119, ../sass/_helpTable.scss */
+.helpTableBox-shtraf .helpTableBox__item:nth-child(4) {
+  max-width: 19%;
 }
 
 @media (max-width: 1640px) {

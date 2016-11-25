@@ -18,9 +18,9 @@
   }
   &-title {
     display: block;
-    height: 60px;
+    padding: 16px 0;
     font-size: 22px;
-    line-height: 58px;
+    line-height: 1.2;
     font-weight: 100;
     text-align: center;
   }
@@ -88,6 +88,36 @@
       }
       &:nth-child(6) {
         max-width: 10%;
+      }
+    }
+  }
+  &-shtraf {
+    &.helpTableBox-head {
+      .helpTableBox__item {
+        &:first-child {
+          padding: 24px 10px 0;
+        }
+        &:last-child {
+          padding: 24px 14px 0;
+          line-height: 1.2;
+        }
+      }
+    }
+    .helpTableBox__item {
+      &:first-child {
+        padding: 14px 0 0;
+        max-width: 6%;
+        line-height: 1.2;
+        text-align: center;
+      }
+      &:nth-child(2) {
+        max-width: 56%;
+      }
+      &:nth-child(3) {
+        max-width: 19%;
+      }
+      &:nth-child(4) {
+        max-width: 19%;
       }
     }
   }
