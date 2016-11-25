@@ -19,8 +19,9 @@ $(document).ready(function () {
                     if(res.rule == 2) {
                         $('.send-uf').fadeIn().css('display', 'flex');
                         $('.send-uf').find('.pop-done-txt').text(
-                            'Подтвердите отправку'
+                            'Дата просрочена, отправка невозможна'
                         );
+                        $('.podpisatEp').unbind('click');
                         //$('.podpisatEp, .cancel-recall').css({'display': 'none'});
                     } else if( res.rule == 1 ){
                         $('.podpisatEp').trigger( "click" );
