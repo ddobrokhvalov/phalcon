@@ -240,6 +240,7 @@ class Complaint extends Model
                 $newComplaint->complaint_name .= ' (Копия)';
                 $newComplaint->status = 'draft';
                 $newComplaint->fid = serialize(array());
+                $newComplaint->date = date('Y-m-d H:i:s');
                 $newComplaint->save();
                 $arguments =  UsersArguments::find(array(
                     'complaint_id = '.$id
