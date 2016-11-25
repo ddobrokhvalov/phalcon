@@ -5779,26 +5779,82 @@ body#backend-login {
   font-weight: 700;
 }
 
+/* line 1, ../sass/_helpTable.scss */
+.helpTable {
+  margin: 40px 15px 0;
+  border: 1px solid #ebebeb;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+/* line 8, ../sass/_helpTable.scss */
+.helpTableBox {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  border-bottom: 1px solid #ebebeb;
+}
+/* line 13, ../sass/_helpTable.scss */
+.helpTableBox:last-of-type {
+  border-bottom: none;
+}
+/* line 16, ../sass/_helpTable.scss */
+.helpTableBox-head {
+  height: 78px;
+  line-height: 50px;
+  border-right: none;
+  text-transform: uppercase;
+  background-color: #f7f8fa;
+}
+/* line 23, ../sass/_helpTable.scss */
+.helpTableBox__item {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-flex-basis: 100%;
+  flex-basis: 100%;
+  padding: 14px;
+  font-size: 14px;
+  border-right: 1px solid #ebebeb;
+}
+/* line 32, ../sass/_helpTable.scss */
+.helpTableBox__item:first-child {
+  max-width: 27%;
+}
+/* line 35, ../sass/_helpTable.scss */
+.helpTableBox__item:nth-child(2) {
+  max-width: 40%;
+}
+/* line 38, ../sass/_helpTable.scss */
+.helpTableBox__item:nth-child(3) {
+  max-width: 33%;
+}
+/* line 41, ../sass/_helpTable.scss */
+.helpTableBox__item:last-child {
+  border-right: none;
+}
+
 @media (max-width: 1640px) {
-  /* line 148, ../sass/style.scss */
+  /* line 149, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: 330px;
     margin-right: 0;
   }
 }
 @media (max-width: 1325px) {
-  /* line 155, ../sass/style.scss */
+  /* line 156, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* line 159, ../sass/style.scss */
+  /* line 160, ../sass/style.scss */
   .admin-lm-wrap {
     left: -242px;
   }
 
-  /* line 162, ../sass/style.scss */
+  /* line 163, ../sass/style.scss */
   .lm-burger {
     display: block;
   }
