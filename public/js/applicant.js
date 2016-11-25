@@ -358,19 +358,19 @@ var applicantValidator = {
                     this.done(field_selector);
                 }
                 var field_selector = '.tabcontent-ur #entity-inn';
-                if (!validator.numeric($(field_selector).val(), 10, 10)) {
-                    this.showError(field_selector, 'Ошибка! ИНН состоит из 10 цифр');
-                    this.result = false;
-                } else {
-                    this.done(field_selector);
-                }
-                var field_selector = '.tabcontent-ur #entity-kpp';
-                if (!validator.numeric($(field_selector).val(), 9, 9)) {
-                    this.showError(field_selector, 'Ошибка! КПП состоит из 9 цифр');
-                    this.result = false;
-                } else {
-                    this.done(field_selector);
-                }
+                // if (!validator.numeric($(field_selector).val(), 10, 10)) {
+                //     this.showError(field_selector, 'Ошибка! ИНН состоит из 10 цифр');
+                //     this.result = false;
+                // } else {
+                //     this.done(field_selector);
+                // }
+                // var field_selector = '.tabcontent-ur #entity-kpp';
+                // if (!validator.numeric($(field_selector).val(), 9, 9)) {
+                //     this.showError(field_selector, 'Ошибка! КПП состоит из 9 цифр');
+                //     this.result = false;
+                // } else {
+                //     this.done(field_selector);
+                // }
                 var field_selector = '.tabcontent-ur #entity-address';
                 if (!validator.text($(field_selector).val(), 3, 255)) {
                     this.showError(field_selector, 'Ошибка! Адрес местонахождения должен быть от 3 до 255 символов');
@@ -436,13 +436,13 @@ var applicantValidator = {
                 } else {
                     this.done(field_selector);
                 }
-                var field_selector = '.tabcontent-in #entity-inn';
-                if (!validator.numeric($(field_selector).val(), 12, 12)) {
-                    this.showError(field_selector, 'Ошибка! ИНН состоит из 12 цифр');
-                    this.result = false;
-                } else {
-                    this.done(field_selector);
-                }
+                // var field_selector = '.tabcontent-in #entity-inn';
+                // if (!validator.numeric($(field_selector).val(), 12, 12)) {
+                //     this.showError(field_selector, 'Ошибка! ИНН состоит из 12 цифр');
+                //     this.result = false;
+                // } else {
+                //     this.done(field_selector);
+                // }
                 var field_selector = '.tabcontent-in #entity-address';
                 if (!validator.text($(field_selector).val(), 3, 255)) {
                     this.showError(field_selector, 'Ошибка! Адрес местонахождения должен быть от 3 до 255 символов');
