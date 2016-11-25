@@ -4977,20 +4977,24 @@ body#backend-login {
   transform: rotate(-4.5deg);
 }
 /* line 465, ../sass/_arguments_complaints_popup.scss */
-.argDescrBox p {
+.argDescrBox_comment, .argDescrBox_descr {
   font-size: 18px;
   font-weight: 400;
   line-height: 1.3;
 }
-
-/* line 471, ../sass/_arguments_complaints_popup.scss */
-.argDescrBoxHolder {
-  max-height: 500px;
+/* line 470, ../sass/_arguments_complaints_popup.scss */
+.argDescrBox_comment span, .argDescrBox_descr span {
+  display: block;
+  font-weight: 700;
+}
+/* line 475, ../sass/_arguments_complaints_popup.scss */
+.argDescrBox_comment {
+  margin: 0 0 20px;
 }
 
-/* line 474, ../sass/_arguments_complaints_popup.scss */
-.argDescrBox_descr {
-  margin: 0 0 20px;
+/* line 479, ../sass/_arguments_complaints_popup.scss */
+.argDescrBoxHolder {
+  max-height: 500px;
 }
 
 /* line 1, ../sass/_complaint_add.scss */
