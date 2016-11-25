@@ -264,10 +264,14 @@ var complaint = {
         $("#applicant_id").val(applicant.id);
         if(signSavedComplaint == false){
             if(window.is_admin){
+                var form = $("#add-complaint-form")[0];
+                form = new FormData(form);
                 $.ajax({
                     type: 'POST',
                     url: '/admin/complaints/update',
-                    data: $("#add-complaint-form").serialize(),
+                    data: form,
+                    processData: false,
+                    contentType: false,
                     success: function (res) {
                         location.reload();
                     }
