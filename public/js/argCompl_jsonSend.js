@@ -166,8 +166,8 @@ var argObjSend = {
         //this.complaint_text = data[0].innerText;
         this.complaint_descr = data.find('.argTextCome').html();
         this.complaint_comment = data.find('.argCommentCome').text();
-        $('.argDescrBox_descr').html(this.complaint_descr);
-        $('.argDescrBox_comment').text(this.complaint_comment);
+        $('.argDescrBox_descr').append(this.complaint_descr);
+        $('.argDescrBox_comment').append(this.complaint_comment);
     }
 };
 var readyDataCatArg;
@@ -230,16 +230,16 @@ var ajaxSendObj = {
                             '<li class="required" data-value="' + data.arguments[i].id +
                             '" data-parent="' + data.arguments[i].category_id + '">' +
                             data.arguments[i].name +
-                            '<div class="argTextCome">Описание: ' + data.arguments[i].text + '</div>' +
-                            '<p class="argCommentCome">Комментарий юриста: ' + data.arguments[i].comment + '</p></li>'
+                            '<div class="argTextCome">' + data.arguments[i].text + '</div>' +
+                            '<p class="argCommentCome">' + data.arguments[i].comment + '</p></li>'
                         );
                     } else {
                         $('.argCompl-review ul').append(
                             '<li data-value="' + data.arguments[i].id +
                             '" data-parent="' + data.arguments[i].category_id + '">' +
                             data.arguments[i].name +
-                            '<div class="argTextCome">Описание: ' + data.arguments[i].text + '</div>' +
-                            '<p class="argCommentCome">Комментарий юриста: ' + data.arguments[i].comment + '</p></li>'
+                            '<div class="argTextCome">' + data.arguments[i].text + '</div>' +
+                            '<p class="argCommentCome">' + data.arguments[i].comment + '</p></li>'
                         );
                     }
                 }
@@ -459,16 +459,16 @@ var ajaxSendObj = {
                         '<li class="required" data-value="' + data.arguments[i].id +
                         '" data-parent="' + data.arguments[i].category_id + '">' +
                         data.arguments[i].name +
-                        '<div class="argTextCome">Описание: ' + data.arguments[i].text + '</div>' +
-                        '<p class="argCommentCome">Комментарий юриста: ' + data.arguments[i].comment + '</p></li>'
+                        '<div class="argTextCome">' + data.arguments[i].text + '</div>' +
+                        '<p class="argCommentCome">' + data.arguments[i].comment + '</p></li>'
                     );
                 } else {
                     $('.argCompl-review ul').append(
                         '<li data-value="' + data.arguments[i].id +
                         '" data-parent="' + data.arguments[i].category_id + '">' +
                         data.arguments[i].name +
-                        '<div class="argTextCome">Описание: ' + data.arguments[i].text + '</div>' +
-                        '<p class="argCommentCome">Комментарий юриста: ' + data.arguments[i].comment + '</p></li>'
+                        '<div class="argTextCome">' + data.arguments[i].text + '</div>' +
+                        '<p class="argCommentCome">' + data.arguments[i].comment + '</p></li>'
                     );
                 }
             }
