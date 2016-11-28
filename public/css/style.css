@@ -196,6 +196,13 @@ ul.status-black, .notification-number-box.status-black {
   background-position: 0 bottom !important;
 }
 
+/* line 116, ../sass/style.scss */
+.c-cnt-pagename.helpTitle {
+  float: none;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
 /* line 4, ../sass/layers/_left_menu.scss */
 .admin-lm-wrap {
   position: fixed;
@@ -5553,26 +5560,383 @@ body#backend-login {
   padding: 0 26px 30px;
 }
 
+/* line 1, ../sass/_help_menu_item.scss */
+.lm-nav .helpMenuItem {
+  padding: 0;
+}
+/* line 3, ../sass/_help_menu_item.scss */
+.lm-nav .helpMenuItem__link {
+  position: static;
+  margin: 0;
+  padding: 16px 40px 16px 35px;
+  width: 293px;
+  font-size: 14px;
+  line-height: 1.2;
+  text-transform: none;
+  border: none;
+}
+/* line 12, ../sass/_help_menu_item.scss */
+.lm-nav .helpMenuItem__link .helpMenuItem__link-active {
+  background-color: #00aeef;
+}
+/* line 15, ../sass/_help_menu_item.scss */
+.lm-nav .helpMenuItem__link:hover {
+  color: #ffffff;
+  font-weight: normal;
+  background-color: #00aeef;
+}
+
+/* line 1, ../sass/_help_zakonodatelstvo.scss */
+.helpZakList {
+  padding-left: 15px;
+  column-width: 460px;
+  column-count: 2;
+  column-gap: 35px;
+  column-fill: balance;
+}
+/* line 7, ../sass/_help_zakonodatelstvo.scss */
+.helpZakList__item {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  padding-left: 30px;
+}
+/* line 13, ../sass/_help_zakonodatelstvo.scss */
+.helpZakList__item:before {
+  position: absolute;
+  content: '';
+  top: 28px;
+  left: 0;
+  width: 16px;
+  height: 7px;
+  background: url("../images/helpArrow.png") 0 0 no-repeat;
+}
+/* line 23, ../sass/_help_zakonodatelstvo.scss */
+.helpZakList__link {
+  display: inline-block;
+  padding-top: 20px;
+  color: #00aeef;
+  text-decoration: underline;
+}
+
+/* line 1, ../sass/_pamyatka.scss */
+.pamyatka {
+  padding: 20px 40px 0;
+}
+/* line 3, ../sass/_pamyatka.scss */
+.pamyatka__titleDscr {
+  margin-bottom: 24px;
+  font-size: 22px;
+  font-weight: 100;
+}
+/* line 7, ../sass/_pamyatka.scss */
+.pamyatka__titleDscr-minMg {
+  margin-bottom: 8px;
+}
+/* line 10, ../sass/_pamyatka.scss */
+.pamyatka__titleDscr-bottom {
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+
+/* line 17, ../sass/_pamyatka.scss */
+.pamyatkaDscrBox__pamyatkaListTile {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+/* line 20, ../sass/_pamyatka.scss */
+.pamyatkaDscrBox__pamyatkaListTile-maxMg {
+  margin-bottom: 26px;
+}
+
+/* line 25, ../sass/_pamyatka.scss */
+.pamyatkaList {
+  margin-bottom: 26px;
+  padding: 0 34px;
+}
+/* line 28, ../sass/_pamyatka.scss */
+.pamyatkaList-minMg {
+  margin-bottom: 10px;
+}
+/* line 31, ../sass/_pamyatka.scss */
+.pamyatkaList__item {
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 22px;
+  font-size: 16px;
+}
+/* line 36, ../sass/_pamyatka.scss */
+.pamyatkaList__item:before {
+  position: absolute;
+  content: '';
+  top: 10px;
+  left: 0;
+  width: 16px;
+  height: 7px;
+  background: url("../images/helpArrow-black.png") 0 0 no-repeat;
+}
+/* line 46, ../sass/_pamyatka.scss */
+.pamyatkaList__doubleList {
+  padding-top: 10px;
+}
+/* line 49, ../sass/_pamyatka.scss */
+.pamyatkaList__doubleItem {
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 28px;
+  font-size: 16px;
+}
+/* line 54, ../sass/_pamyatka.scss */
+.pamyatkaList__doubleItem:before {
+  position: absolute;
+  content: '';
+  top: 12px;
+  left: 12px;
+  width: 10px;
+  height: 1px;
+  background-color: #000000;
+}
+/* line 64, ../sass/_pamyatka.scss */
+.pamyatkaList__doubleItem-dscr:before {
+  position: static;
+}
+
+/* line 1, ../sass/_faqPo.scss */
+.faqPo {
+  overflow: hidden;
+  margin: 0 15px;
+  border-bottom: 1px solid #ebebeb;
+}
+/* line 5, ../sass/_faqPo.scss */
+.faqPo:first-of-type {
+  margin-top: 40px;
+  border-top: 1px solid #ebebeb;
+}
+
+/* line 10, ../sass/_faqPo.scss */
+.faqQuestionBox {
+  display: inline-block;
+  position: relative;
+  width: 436px;
+  height: 328px;
+  text-align: center;
+}
+/* line 16, ../sass/_faqPo.scss */
+.faqQuestionBox-top {
+  vertical-align: top;
+}
+/* line 19, ../sass/_faqPo.scss */
+.faqQuestionBox:after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("../images/help-questionIcon.png") 50% 50% no-repeat;
+}
+/* line 28, ../sass/_faqPo.scss */
+.faqQuestionBox:before {
+  display: inline-block;
+  content: '';
+  width: 1%;
+  height: 100%;
+  vertical-align: middle;
+}
+/* line 35, ../sass/_faqPo.scss */
+.faqQuestionBox__text {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  max-width: 330px;
+  font-size: 34px;
+  font-weight: 100;
+  color: #00aeef;
+  vertical-align: middle;
+}
+
+/* line 47, ../sass/_faqPo.scss */
+.faqDscr {
+  display: inline-block;
+  padding: 30px 0;
+  width: 500px;
+  vertical-align: middle;
+}
+/* line 52, ../sass/_faqPo.scss */
+.faqDscr__text {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+/* line 55, ../sass/_faqPo.scss */
+.faqDscr__text a {
+  color: #00aeef;
+  text-decoration: underline;
+}
+/* line 59, ../sass/_faqPo.scss */
+.faqDscr__text-statya {
+  font-weight: 700;
+}
+
+/* line 1, ../sass/_helpTable.scss */
+.helpTable {
+  margin: 40px 15px 0;
+  border: 1px solid #ebebeb;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+/* line 7, ../sass/_helpTable.scss */
+.helpTable-minMg {
+  margin-top: 20px;
+}
+
+/* line 11, ../sass/_helpTable.scss */
+.helpTableBox {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  border-bottom: 1px solid #ebebeb;
+}
+/* line 16, ../sass/_helpTable.scss */
+.helpTableBox:last-of-type {
+  border-bottom: none;
+}
+/* line 19, ../sass/_helpTable.scss */
+.helpTableBox-title {
+  display: block;
+  padding: 16px 0;
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 100;
+  text-align: center;
+}
+/* line 27, ../sass/_helpTable.scss */
+.helpTableBox-head {
+  height: 78px;
+  line-height: 50px;
+  border-right: none;
+  text-transform: uppercase;
+  background-color: #f7f8fa;
+}
+/* line 34, ../sass/_helpTable.scss */
+.helpTableBox__item {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-flex-basis: 100%;
+  flex-basis: 100%;
+  padding: 14px;
+  font-size: 14px;
+  border-right: 1px solid #ebebeb;
+}
+/* line 43, ../sass/_helpTable.scss */
+.helpTableBox__item:first-child {
+  max-width: 27%;
+}
+/* line 46, ../sass/_helpTable.scss */
+.helpTableBox__item:nth-child(2) {
+  max-width: 40%;
+}
+/* line 49, ../sass/_helpTable.scss */
+.helpTableBox__item:nth-child(3) {
+  max-width: 33%;
+}
+/* line 52, ../sass/_helpTable.scss */
+.helpTableBox__item:last-child {
+  border-right: none;
+}
+/* line 59, ../sass/_helpTable.scss */
+.helpTableBox-sroki.helpTableBox-head .helpTableBox__item:first-child {
+  padding: 24px 0 0;
+}
+/* line 62, ../sass/_helpTable.scss */
+.helpTableBox-sroki.helpTableBox-head .helpTableBox__item:last-child {
+  padding: 24px 0 0;
+  line-height: 1.2;
+  text-align: center;
+}
+/* line 69, ../sass/_helpTable.scss */
+.helpTableBox-sroki .helpTableBox__item {
+  padding: 14px 10px;
+}
+/* line 71, ../sass/_helpTable.scss */
+.helpTableBox-sroki .helpTableBox__item:first-child {
+  padding: 14px 0 0;
+  max-width: 4%;
+  line-height: 1.2;
+  text-align: center;
+}
+/* line 77, ../sass/_helpTable.scss */
+.helpTableBox-sroki .helpTableBox__item:nth-child(2) {
+  max-width: 16%;
+}
+/* line 80, ../sass/_helpTable.scss */
+.helpTableBox-sroki .helpTableBox__item:nth-child(3) {
+  max-width: 14%;
+}
+/* line 83, ../sass/_helpTable.scss */
+.helpTableBox-sroki .helpTableBox__item:nth-child(4) {
+  max-width: 38%;
+}
+/* line 86, ../sass/_helpTable.scss */
+.helpTableBox-sroki .helpTableBox__item:nth-child(5) {
+  max-width: 18%;
+}
+/* line 89, ../sass/_helpTable.scss */
+.helpTableBox-sroki .helpTableBox__item:nth-child(6) {
+  max-width: 10%;
+}
+/* line 97, ../sass/_helpTable.scss */
+.helpTableBox-shtraf.helpTableBox-head .helpTableBox__item:first-child {
+  padding: 24px 10px 0;
+}
+/* line 100, ../sass/_helpTable.scss */
+.helpTableBox-shtraf.helpTableBox-head .helpTableBox__item:last-child {
+  padding: 24px 14px 0;
+  line-height: 1.2;
+}
+/* line 107, ../sass/_helpTable.scss */
+.helpTableBox-shtraf .helpTableBox__item:first-child {
+  padding: 14px 0 0;
+  max-width: 6%;
+  line-height: 1.2;
+  text-align: center;
+}
+/* line 113, ../sass/_helpTable.scss */
+.helpTableBox-shtraf .helpTableBox__item:nth-child(2) {
+  max-width: 56%;
+}
+/* line 116, ../sass/_helpTable.scss */
+.helpTableBox-shtraf .helpTableBox__item:nth-child(3) {
+  max-width: 19%;
+}
+/* line 119, ../sass/_helpTable.scss */
+.helpTableBox-shtraf .helpTableBox__item:nth-child(4) {
+  max-width: 19%;
+}
+
 @media (max-width: 1640px) {
-  /* line 139, ../sass/style.scss */
+  /* line 149, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: 330px;
     margin-right: 0;
   }
 }
 @media (max-width: 1325px) {
-  /* line 146, ../sass/style.scss */
+  /* line 156, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* line 150, ../sass/style.scss */
+  /* line 160, ../sass/style.scss */
   .admin-lm-wrap {
     left: -242px;
   }
 
-  /* line 153, ../sass/style.scss */
+  /* line 163, ../sass/style.scss */
   .lm-burger {
     display: block;
   }

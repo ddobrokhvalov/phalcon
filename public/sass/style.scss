@@ -113,6 +113,11 @@ ul.status-black, .notification-number-box.status-black {
     background-position: 0 bottom !important;
   }
 }
+.c-cnt-pagename.helpTitle {
+  float: none;
+  margin-bottom: 14px;
+  text-align: center;
+}
 
 @import "layers/left_menu";
 @import "layers/header_footer";
@@ -134,6 +139,11 @@ ul.status-black, .notification-number-box.status-black {
 @import "customScroll";
 @import "applicantCertificate";
 @import "popups";
+@import "help_menu_item";
+@import "help_zakonodatelstvo";
+@import "pamyatka";
+@import "faqPo";
+@import "helpTable";
 
 @media (max-width: 1640px) {
   .page-wrap, .header-wrap #admin-header {

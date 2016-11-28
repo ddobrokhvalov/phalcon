@@ -1,0 +1,124 @@
+.helpTable {
+  margin: 40px 15px 0;
+  border: 1px solid #ebebeb;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  &-minMg {
+    margin-top: 20px;
+  }
+}
+.helpTableBox {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  border-bottom: 1px solid #ebebeb;
+  &:last-of-type {
+    border-bottom: none;
+  }
+  &-title {
+    display: block;
+    padding: 16px 0;
+    font-size: 22px;
+    line-height: 1.2;
+    font-weight: 100;
+    text-align: center;
+  }
+  &-head {
+    height: 78px;
+    line-height: 50px;
+    border-right: none;
+    text-transform: uppercase;
+    background-color: #f7f8fa;
+  }
+  &__item {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-flex-basis: 100%;
+    flex-basis: 100%;
+    padding: 14px;
+    font-size: 14px;
+    border-right: 1px solid #ebebeb;
+    &:first-child {
+      max-width: 27%;
+    }
+    &:nth-child(2) {
+      max-width: 40%;
+    }
+    &:nth-child(3) {
+      max-width: 33%;
+    }
+    &:last-child {
+      border-right: none;
+    }
+  }
+  &-sroki {
+    &.helpTableBox-head {
+      .helpTableBox__item {
+        &:first-child {
+          padding: 24px 0 0;
+        }
+        &:last-child {
+          padding: 24px 0 0;
+          line-height: 1.2;
+          text-align: center;
+        }
+      }
+    }
+    .helpTableBox__item {
+      padding: 14px 10px;
+      &:first-child {
+        padding: 14px 0 0;
+        max-width: 4%;
+        line-height: 1.2;
+        text-align: center;
+      }
+      &:nth-child(2) {
+        max-width: 16%;
+      }
+      &:nth-child(3) {
+        max-width: 14%;
+      }
+      &:nth-child(4) {
+        max-width: 38%;
+      }
+      &:nth-child(5) {
+        max-width: 18%;
+      }
+      &:nth-child(6) {
+        max-width: 10%;
+      }
+    }
+  }
+  &-shtraf {
+    &.helpTableBox-head {
+      .helpTableBox__item {
+        &:first-child {
+          padding: 24px 10px 0;
+        }
+        &:last-child {
+          padding: 24px 14px 0;
+          line-height: 1.2;
+        }
+      }
+    }
+    .helpTableBox__item {
+      &:first-child {
+        padding: 14px 0 0;
+        max-width: 6%;
+        line-height: 1.2;
+        text-align: center;
+      }
+      &:nth-child(2) {
+        max-width: 56%;
+      }
+      &:nth-child(3) {
+        max-width: 19%;
+      }
+      &:nth-child(4) {
+        max-width: 19%;
+      }
+    }
+  }
+}

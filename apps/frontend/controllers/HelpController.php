@@ -11,13 +11,13 @@ class HelpController extends ControllerBase
 {
     private $arrMenu = array(
         'FAQ по пользованию сервисом' => '/help/faq',
-        'Часто задаваемые вопросы' => '/help/question',
-        'Нормативные документы' => '/help/documents',
-        'Сроки в 44-Ф3' => '/help/terms44',
-        'Подведомственность' => '/help/jurisdiction',
-        'Спорные случаи' => '/help/contrcases',
-        'Штрафы' => '/help/penalty',
-        'Типичные доводы жалоб' => '/help/arguments',
+        'Законодательство в сфере закупок' => '/help/question',
+        // 'Нормативные документы' => '/help/documents',
+        'Памятка о направлении жалобы по подведомственности' => '/help/terms44',
+        'FAQ по 44-Ф3 редакция' => '/help/jurisdiction',
+        'Спорные случаи по 44-Ф3 и правила описания объетиа закупки' => '/help/contrcases',
+        'Сроки, предусмотренные законодательством о контрактноий системе' => '/help/penalty',
+        'Штрафы за нарушениезаконодательтва о контрактноий системе' => '/help/arguments',
     );
 
 

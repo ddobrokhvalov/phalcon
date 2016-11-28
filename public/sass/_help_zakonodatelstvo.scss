@@ -1,0 +1,29 @@
+.helpZakList {
+  padding-left: 15px;
+  column-width: 460px;
+  column-count: 2;
+  column-gap: 35px;
+  column-fill: balance;
+  &__item {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    padding-left: 30px;
+    &:before {
+      position: absolute;
+      content: '';
+      top: 28px;
+      left: 0;
+      width: 16px;
+      height: 7px;
+      background: url('../images/helpArrow.png') 0 0 no-repeat;
+    }
+  }
+  &__link {
+    display: inline-block;
+    padding-top: 20px;
+    color: #00aeef;
+    text-decoration: underline;
+  }
+}
