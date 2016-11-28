@@ -26,6 +26,7 @@ class Complaint extends Model
     public $vremya_provedeniya;
     public $complaint_text_order;
     public $ufas_id;
+    public $date_submit;
 
     public function initialize()
     {
@@ -271,6 +272,10 @@ class Complaint extends Model
                 $complaintmovinghistory = new ComplaintMovingHistory();
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
                 $complaint->status = $status;
+                if($complaint->status == 'submitted'){
+                    $complaint->date_submit = date('Y-m-d H:i:s');
+                }
+
                 $complaint->save();
                 $history_id = $complaintmovinghistory->id;
             }
