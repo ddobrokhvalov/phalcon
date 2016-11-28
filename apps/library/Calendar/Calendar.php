@@ -25,14 +25,24 @@ class Calendar
         $countDays = 0;
         $currrent = $this->date;
         if($this->nowDate > $this->date) {
-            while ($currrent < $this->nowDate && $countDays < 20) {
-                $isHoliday = $this->api->checkHoliday($currrent);
-                if ($isHoliday == 'holiday') $countHolidays++;
-                elseif ($isHoliday != 'work' && $currrent->format('N') > 5) $countHolidays++;
+            if($currrent->format('N') == 6){
+                $currrent->add(new \DateInterval('P2D'));
+            } else if($currrent->format('N') == 7){
+                $currrent->add(new \DateInterval('P1D'));
+            }
+
+            while($this->api->checkHoliday($currrent) == 'holiday'){
+                $currrent->add($this->interval);
+            }
+
+            while ($currrent < $this->nowDate && $countDays <= 10) {
+                //$isHoliday = $this->api->checkHoliday($currrent);
+                //if ($isHoliday == 'holiday') $countHolidays++;
+                //elseif ($isHoliday != 'work' && $currrent->format('N') > 5) $countHolidays++;
                 $currrent->add($this->interval);
                 $countDays++;
             }
-            $countDays--;
+
             $diffDays = $countDays - $countHolidays;
             if($diffDays > $this->days ) return 1;
             elseif($diffDays == $this->days){

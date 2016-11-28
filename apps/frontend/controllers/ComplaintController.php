@@ -940,6 +940,14 @@ class ComplaintController extends ControllerBase
         $complaint_id = $this->request->getPost('complaint_id');
         $okonchanie_podachi = $this->request->getPost('okonchanie_podachi');
         $okonchanie_rassmotreniya = $this->request->getPost('okonchanie_rassmotreniya');
+        if(!$okonchanie_rassmotreniya){
+            $okonchanie_rassmotreniya = $this->request->getPost('data_rassmotreniya');
+        }
+        if(!$okonchanie_rassmotreniya){
+            $okonchanie_rassmotreniya = $this->request->getPost('vskrytie_konvertov');
+        }
+
+
         $complaint = Complaint::findFirst($complaint_id);
 
         $currentDate = new \DateTime('now');
@@ -1020,10 +1028,13 @@ class ComplaintController extends ControllerBase
     }
 
 
-    private function SendToUfas($files){
+    private function SendToUfas($files, $ufasEmail, $subject, $content){
+
         $message = $this->mailer->createMessage()
-            ->to($this->adminsEmails['ufas'])
-            ->subject('Письмо в уфас');
+            ->to($ufasEmail)
+            ->bcc($this->adminsEmails['ufas'])
+            ->subject($subject)
+            ->content($content);
         foreach ($files as $key){
             $message->attachment($key);
         }
@@ -1049,12 +1060,32 @@ class ComplaintController extends ControllerBase
             '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name
         );
 
+
+        $compFiles = unserialize($complaint->fid);
+        foreach ($compFiles as $compfile){
+            $tempFile = Files::findFirst($compfile);
+            $attached[] = '../public/files/complaints/'.$tempFile->file_path;
+        }
+
         foreach ($appFiles as $file){
             $tempFile = Files::findFirst($file);
             $attached[] = '../public/files/applicant/'.$tempFile->file_path;
         }
 
-        $this->SendToUfas($attached);
+        $ufas = Ufas::findFirst($complaint->ufas_id);
+
+        $content ='Добрый день. <br\/>
+В соответствии со ст. 105 Федерального закона от 05.04.2013 № 44-ФЗ «О контрактной системе в сфере закупок товаров, работ, услуг для обеспечения государственных и муниципальных нужд» направляем в ваш адрес жалобу на закупку, опубликованную на официальном сайте Единой информационной системы в сфере закупок.<br\/>
+Прилагаемый файл жалобы в формате «docx» подписан электронной подписью заявителя.<br\/><br\/>
+Формат подписи - квалифицированная отсоединенная подпись - «Разновидность электронной подписи, при создании которой, файл подписи создается отдельно от подписываемого файла. Поскольку подписываемый файл никак не изменяется, его можно читать, не прибегая к специальным программам, работающим с электронной подписью. Для проверки подписи нужно будет использовать программы либо сервисы, работающие с электронной подписью. При этом входными данными для таких программ будут служить файл с электронной подписью и подписанный ей файл.»<br\/><br\/>
+Действительность подписи может быть проверена следующими способами:<br\/><br\/>
+1. Онлайн - на сайте ГОСУСЛУГИ -  https://www.gosuslugi.ru/pgu/eds/. Для проверки выбрать раздел "отсоединенная, в формате PKCS#7», загрузить 2 файла (файл жалобы и файл подписи), после чего нажать «проверить»<br\/>
+2. Онлайн - https://crypto.kontur.ru/verify - следуя инструкции можно проверить подпись в 2 клика<br\/>
+3. Локально - при помощи БЕСПЛАТНОЙ программы http://www.taxcom.ru/upload/help/documents/uslugi/CryptoLine.zip <br\/>
+4. Локально - при помощи БЕСПЛАТНОЙ программы http://cryptoarm.ru/bitrix/redirect.php?event1=download&event2=cryptoarm5&goto=http://www.trusted.ru/wp-content/uploads/trusteddesktop.exe<br\/>';
+
+
+        $this->SendToUfas($attached,  $ufas->email, 'Жалоба 44-ФЗ', $content);
 
         echo json_encode(array(
             'status' => 'ok',
@@ -1091,7 +1122,19 @@ class ComplaintController extends ControllerBase
             $attached[] = '../public/files/applicant/'.$tempFile->file_path;
         }
 
-        $this->SendToUfas($attached);
+        $ufas = Ufas::findFirst($complaint->ufas_id);
+
+
+        $content = 'Просим отозвать поданную ранее жалобу на закупку. Прилагаемый файл отзыва жалобы в формате «docx» подписан электронной подписью заявителя.<br\/><br\/>
+Формат подписи - квалифицированная отсоединенная подпись - «Разновидность электронной подписи, при создании которой, файл подписи создается отдельно от подписываемого файла. Поскольку подписываемый файл никак не изменяется, его можно читать, не прибегая к специальным программам, работающим с электронной подписью. Для проверки подписи нужно будет использовать программы либо сервисы, работающие с электронной подписью. При этом входными данными для таких программ будут служить файл с электронной подписью и подписанный ей файл.»<br\/><br\/>
+Действительность подписи может быть проверена следующими способами:<br\/>
+1. Онлайн - на сайте ГОСУСЛУГИ -  https://www.gosuslugi.ru/pgu/eds/. Для проверки выбрать раздел "отсоединенная, в формате PKCS#7», загрузить 2 файла (файл жалобы и файл подписи), после чего нажать «проверить»<br\/>
+2. Онлайн - https://crypto.kontur.ru/verify - следуя инструкции можно проверить подпись в 2 клика<br\/>
+3. Локально - при помощи БЕСПЛАТНОЙ программы http://www.taxcom.ru/upload/help/documents/uslugi/CryptoLine.zip <br\/>
+4. Локально - при помощи БЕСПЛАТНОЙ программы http://cryptoarm.ru/bitrix/redirect.php?event1=download&event2=cryptoarm5&goto=http://www.trusted.ru/wp-content/uploads/trusteddesktop.exe<br\/>';
+
+
+        $this->SendToUfas( $attached, $ufas->email, 'Отзыв жалобы 44-ФЗ', $content);
 
         $complaint->changeStatus('recalled', $arrId, $this->user->id);
         echo json_encode(array(
