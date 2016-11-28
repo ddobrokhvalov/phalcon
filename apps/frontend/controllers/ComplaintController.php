@@ -434,7 +434,6 @@ class ComplaintController extends ControllerBase
         $complaint = new Complaint();
         $complaint->addComplaint($data);
 
-
         if ($complaint->save() == false) {
             //$this->flashSession->error('Не выбран заявитель');
             foreach ($complaint->getMessages() as $message) {
@@ -955,28 +954,27 @@ class ComplaintController extends ControllerBase
         $complaintDate = new \DateTime($complaint->date);
 
 
-        if($complaintDate < $okonchanie_podachi){
-            echo json_encode(array(
-                'status' => 0,
-                'rule' => 1,
-            ));exit;
-        }
 
-        if($complaintDate > $okonchanie_podachi){
-            $rule = 2;
-            $status = 0;
-
+        if($complaintDate < $okonchanie_podachi ) {
+            if ($currentDate < $okonchanie_podachi) {
+                echo json_encode([
+                    'rule' => 1,
+                    'status' => 0,
+                ]);
+                exit;
+            } elseif ($currentDate > $okonchanie_podachi) {
+                echo json_encode([
+                    'rule' => 1,
+                    'status' => 1,
+                ]);
+                exit;
+            }
+        } else {
             $calendar = new Calendar(new BasicDataRu(), 10);
             $result = $calendar->checkDateAddComplaint($okonchanie_rassmotreniya);
-
-            if($result == 1){
-                $rule = 2;
-                $status = 1;
-            }
-
             echo json_encode(array(
-                'status' => $status,
-                'rule' => $rule,
+                'status' => $result,
+                'rule' => 2,
             ));exit;
         }
     }
@@ -1043,9 +1041,9 @@ class ComplaintController extends ControllerBase
     private function SendToUfas($files, $ufasEmail, $subject, $content){
 
         $message = $this->mailer->createMessage()
-            //->to()
-            ->to($ufasEmail)
-            ->bcc($this->adminsEmails['ufas'])
+            ->to('vadim-antropov@ukr.net')
+            //->to($ufasEmail)
+            //->bcc($this->adminsEmails['ufas'])
             ->subject($subject)
             ->content($content);
         foreach ($files as $key){
