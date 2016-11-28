@@ -77,10 +77,10 @@ class StatusTask extends \Phalcon\Cli\Task{
     function getComplaint($auctionId, $zayavitel ,$date, $complaintNum = false) {
         if($complaintNum) {
             $complaintNum = trim(preg_replace('/№/ui', '', $complaintNum));
-            $data = $this->getUrl('http://new.zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $complaintNum . '&strictEqual=on&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
+            $data = $this->getUrl('http://zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $complaintNum . '&strictEqual=on&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
         }
         else {
-            $data = $this->getUrl('http://new.zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $auctionId . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
+            $data = $this->getUrl('http://zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $auctionId . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
         }
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
@@ -280,22 +280,25 @@ class StatusTask extends \Phalcon\Cli\Task{
         $complaints = Complaint::find(array(
             "status = 'submitted'"
         ));
-
+//        $response = $this->getComplaint('0346200015616000115', 'ООО "Альянс-КБ"', '21.11.2016' );
+//        var_dump($response['complaint']['status'][1] == 'Признана необоснованной');
         foreach ($complaints as $comp){
             echo $comp->date_submit."\n";
             $applicant = Applicant::findFirst($comp->applicant_id);
             $response = $this->getComplaint($comp->auction_id, $applicant->name_short, $comp->date_submit );
-            if(!$response['error']){
+            if($response['complaint']){
                 $status = $response['complaint']['status'];
                 $changeStatus = new Complaint();
-                switch ($status){
-                    case 'Обоснована':
+                switch ($status[1]){
+                    //No break
+                    case 'Признана обоснованной':
+                    case 'Признана обоснованной частично':
                         $changeStatus->changeStatus('justified', array($comp->id));
                         break;
                     case 'Рассмотрена':
                         $changeStatus->changeStatus('under_consideration', array($comp->id));
                         break;
-                    case 'Необоснована':
+                    case 'Признана необоснованной':
                         $changeStatus->changeStatus('unfounded', array($comp->id));
                         break;
                 }
@@ -303,5 +306,6 @@ class StatusTask extends \Phalcon\Cli\Task{
 
             }
         }
+        sleep(30);
     }
 }
