@@ -954,12 +954,21 @@ class ComplaintController extends ControllerBase
         $okonchanie_podachi = new \DateTime($okonchanie_podachi);
         $complaintDate = new \DateTime($complaint->date);
 
+
+        if($complaintDate < $okonchanie_podachi){
+            echo json_encode(array(
+                'status' => 0,
+                'rule' => 1,
+            ));exit;
+        }
+
         if($complaintDate > $okonchanie_podachi){
-            $rule = 1;
-            $status = 1;
+            $rule = 2;
+            $status = 0;
 
             $calendar = new Calendar(new BasicDataRu(), 10);
             $result = $calendar->checkDateAddComplaint($okonchanie_rassmotreniya);
+
             if($result == 1){
                 $rule = 2;
                 $status = 1;
@@ -969,24 +978,7 @@ class ComplaintController extends ControllerBase
                 'status' => $status,
                 'rule' => $rule,
             ));exit;
-        } else {
-            echo json_encode(array(
-                'status' => 0,
-                'rule' => 1,
-            ));exit;
         }
-
-
-//        if($complaintDate < $okonchanie_podachi){
-//
-//        } else {
-//            $calendar = new Calendar(new BasicDataRu(), 10);
-//            $result = $calendar->checkDateAddComplaint($okonchanie_rassmotreniya);
-//            echo json_encode(array(
-//                'status' => $result,
-//                'rule' => 2,
-//            ));exit;
-//        }
     }
 
 
