@@ -303,7 +303,5 @@ class StatusTask extends \Phalcon\Cli\Task{
 
             }
         }
-
-        //$this->getComplaint();
     }
 }
