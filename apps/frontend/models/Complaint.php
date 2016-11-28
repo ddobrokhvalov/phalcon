@@ -273,7 +273,7 @@ class Complaint extends Model
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
                 $complaint->status = $status;
                 if($complaint->status == 'submitted'){
-                    $complaint->date_submit = date('Y-m-d H:i:s');
+                    $complaint->date_submit = date('d.m.Y');
                 }
 
                 $complaint->save();
