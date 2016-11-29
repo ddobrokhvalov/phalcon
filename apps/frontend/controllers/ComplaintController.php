@@ -1041,9 +1041,9 @@ class ComplaintController extends ControllerBase
     private function SendToUfas($files, $ufasEmail, $subject, $content){
 
         $message = $this->mailer->createMessage()
-            //->to('vadim-antropov@ukr.net')
-            ->to($ufasEmail)
-            ->bcc($this->adminsEmails['ufas'])
+            ->to('vadim-antropov@ukr.net')
+            //->to($ufasEmail)
+            //->bcc($this->adminsEmails['ufas'])
             ->subject($subject)
             ->content($content);
         foreach ($files as $key){
@@ -1096,7 +1096,9 @@ class ComplaintController extends ControllerBase
 4. Локально - при помощи БЕСПЛАТНОЙ программы http://cryptoarm.ru/bitrix/redirect.php?event1=download&event2=cryptoarm5&goto=http://www.trusted.ru/wp-content/uploads/trusteddesktop.exe<br/>';
 
 
-        $this->SendToUfas($attached,  $ufas->email, 'Жалоба 44-ФЗ', $content);
+        if($complaint->status != 'submitted') {
+            $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content);
+        }
 
         echo json_encode(array(
             'status' => 'ok',
@@ -1145,7 +1147,9 @@ class ComplaintController extends ControllerBase
 4. Локально - при помощи БЕСПЛАТНОЙ программы http://cryptoarm.ru/bitrix/redirect.php?event1=download&event2=cryptoarm5&goto=http://www.trusted.ru/wp-content/uploads/trusteddesktop.exe<br/>';
 
 
-        $this->SendToUfas( $attached, $ufas->email, 'Отзыв жалобы 44-ФЗ', $content);
+        if($complaint->status != 'recalled') {
+            $this->SendToUfas($attached, $ufas->email, 'Отзыв жалобы 44-ФЗ', $content);
+        }
 
         $complaint->changeStatus('recalled', $arrId, $this->user->id);
         echo json_encode(array(
