@@ -1018,6 +1018,7 @@ function initEditor(id) {
         }
     });
     // };
+    editor.config.forcePasteAsPlainText = true;
     editor.disableAutoInline = true;
     editor.config.extraPlugins = 'sharedspace,font';
     editor.config.allowedContent = true;
