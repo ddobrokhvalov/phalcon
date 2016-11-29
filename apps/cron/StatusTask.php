@@ -329,8 +329,8 @@ class StatusTask extends \Phalcon\Cli\Task{
                     $adminsEmail = $temp_conf->adminsEmails->toArray();
                     $message = $mailer->createMessage()
                         ->to($adminsEmail['error'])
-                        ->subject('Ошибка парсера)')
-                        ->content('ntcn');
+                        ->subject('Ошибка при парсинге данных')
+                        ->content($error_text);
                     $message->send();
 
                 }
