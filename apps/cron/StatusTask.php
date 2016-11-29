@@ -283,6 +283,20 @@ class StatusTask extends \Phalcon\Cli\Task{
             "status = 'submitted'"
         ));
 
+        $temp_conf = new ConfigIni("../apps/frontend/config/config.ini");
+        $mail = $temp_conf->mailer->toArray();
+        $adminsEmail = $temp_conf->adminsEmails->toArray();
+        $config = array();
+        $config['driver'] = $mail['driver'];
+        $config['host'] = $mail['host'];
+        $config['port'] = $mail['port'];
+        $config['encryption'] = $mail['encryption'];
+        $config['username'] = $mail['username'];
+        $config['password'] = $mail['password'];
+        $config['from']['email'] = $mail['femail'];
+        $config['from']['name'] = $mail['fname'];
+        $mailer = new \Phalcon\Ext\Mailer\Manager($config);
+
         foreach ($complaints as $comp) {
             echo $comp->date_submit . "\n";
             $applicant = Applicant::findFirst($comp->applicant_id);
@@ -312,27 +326,11 @@ class StatusTask extends \Phalcon\Cli\Task{
                     $error_text .= ' | Дата подачи жалобы: ' . $applicant->date_submit . "<br/>";
                     $error_text .= ' | Время работы парсера: ' . date('now') . "<br/>";
 
-                    $temp_conf = new ConfigIni("../apps/frontend/config/config.ini");
-                    $mail = $temp_conf->mailer->toArray();
-                    $config = array();
-                    $config['driver'] = $mail['driver'];
-                    $config['host'] = $mail['host'];
-                    $config['port'] = $mail['port'];
-                    $config['encryption'] = $mail['encryption'];
-                    $config['username'] = $mail['username'];
-                    $config['password'] = $mail['password'];
-                    $config['from']['email'] = $mail['femail'];
-                    $config['from']['name'] = $mail['fname'];
-
-                    $mailer = new \Phalcon\Ext\Mailer\Manager($config);
-
-                    $adminsEmail = $temp_conf->adminsEmails->toArray();
                     $message = $mailer->createMessage()
                         ->to($adminsEmail['error'])
                         ->subject('Ошибка при парсинге данных')
                         ->content($error_text);
                     $message->send();
-
                 }
             }
             sleep(10);
