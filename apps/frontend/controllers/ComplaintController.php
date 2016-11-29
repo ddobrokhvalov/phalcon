@@ -1041,9 +1041,8 @@ class ComplaintController extends ControllerBase
     private function SendToUfas($files, $ufasEmail, $subject, $content){
 
         $message = $this->mailer->createMessage()
-            ->to('vadim-antropov@ukr.net')
-            //->to($ufasEmail)
-            //->bcc($this->adminsEmails['ufas'])
+            ->to($ufasEmail)
+            ->bcc($this->adminsEmails['ufas'])
             ->subject($subject)
             ->content($content);
         foreach ($files as $key){
