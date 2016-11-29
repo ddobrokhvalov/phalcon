@@ -17,6 +17,7 @@ $(document).ready(function () {
             success: function(res) {
                 if(res.status == 0){
                     if( res.rule == 1 || res.rule == 2 ){
+                        $('.send-suc').css({'display': 'none'});
                         $('.podpisatEp').trigger("click");
                     }
                 }
