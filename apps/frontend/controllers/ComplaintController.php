@@ -1095,9 +1095,8 @@ class ComplaintController extends ControllerBase
 4. Локально - при помощи БЕСПЛАТНОЙ программы http://cryptoarm.ru/bitrix/redirect.php?event1=download&event2=cryptoarm5&goto=http://www.trusted.ru/wp-content/uploads/trusteddesktop.exe<br/>';
 
 
-        if($complaint->status != 'submitted') {
-            $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content);
-        }
+        $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content);
+
 
         echo json_encode(array(
             'status' => 'ok',
