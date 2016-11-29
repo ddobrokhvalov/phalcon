@@ -94,7 +94,7 @@
                             <tr>
                                 <td>
                                     <span>Жалоба от</span>
-                                    {{ complaint['date'] }}<br>
+                                    {{ date('d.m.Y', complaint['date']|strtotime) }}<br>
                                     {{ complaint['apname'] }}
                                 </td>
                                 <td>
