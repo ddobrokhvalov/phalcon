@@ -298,7 +298,6 @@ class StatusTask extends \Phalcon\Cli\Task{
         $mailer = new \Phalcon\Ext\Mailer\Manager($config);
 
         foreach ($complaints as $comp) {
-            echo $comp->date_submit . "\n";
             $applicant = Applicant::findFirst($comp->applicant_id);
             $response = $this->getComplaint($comp->auction_id, $applicant->name_short, $comp->date_submit);
             if ($response['complaint']) {
