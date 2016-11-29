@@ -880,9 +880,10 @@ function saveComplaintToDocxFile() {
                 cache: false,
                 contentType: false,
                 processData: false,
+                dataType: 'json',
                 success: function (data) {
                     if (signSavedComplaint == true) {
-                        data = JSON.parse(data);
+                        //data = JSON.parse(data);
                         signFileOriginName = data[2];
                         signFile(data[0],data[1]);
                     }
