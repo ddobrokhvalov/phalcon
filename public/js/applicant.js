@@ -414,12 +414,12 @@ var applicantValidator = {
                     this.done(field_selector);
                 }
                 var field_selector = '.tabcontent-ur #post-address';
-                if (!validator.post($(field_selector).val())) {
-                    this.showError(field_selector, 'Ошибка! Неверный почтовый индекс');
-                    this.result = false;
-                } else {
-                    this.done(field_selector);
-                }
+                // if (!validator.post($(field_selector).val())) {
+                //     this.showError(field_selector, 'Ошибка! Неверный почтовый индекс');
+                //     this.result = false;
+                // } else {
+                //     this.done(field_selector);
+                // }
                 break;
             case 'ip':
                 /*  var field_selector = '.active-tabs-content #entity-textarea';
@@ -485,13 +485,13 @@ var applicantValidator = {
                 } else {
                     this.done(field_selector);
                 }
-                var field_selector = '.tabcontent-in #post-address';
-                if (!validator.post($(field_selector).val())) {
-                    this.showError(field_selector, 'Ошибка! Неверный почтовый индекс');
-                    this.result = false;
-                } else {
-                    this.done(field_selector);
-                }
+                // var field_selector = '.tabcontent-in #post-address';
+                // if (!validator.post($(field_selector).val())) {
+                //     this.showError(field_selector, 'Ошибка! Неверный почтовый индекс');
+                //     this.result = false;
+                // } else {
+                //     this.done(field_selector);
+                // }
                 break;
             case 'fizlico':
                 var field_selector = '.active-tabs-content #entity-fio-z';
@@ -529,14 +529,14 @@ var applicantValidator = {
                 } else {
                     this.done(field_selector);
                 }
-                var field_selector = '.active-tabs-content #post-address';
-                if (!validator.post($(field_selector).val())) {
-                    this.showError(field_selector, 'Ошибка! Неверный почтовый индекс');
-                    this.result = false;
-                } else {
-                    this.done(field_selector);
-                }
-                break;
+                // var field_selector = '.active-tabs-content #post-address';
+                // if (!validator.post($(field_selector).val())) {
+                //     this.showError(field_selector, 'Ошибка! Неверный почтовый индекс');
+                //     this.result = false;
+                // } else {
+                //     this.done(field_selector);
+                // }
+                // break;
             default:
                 this.result = false;
                 break;
