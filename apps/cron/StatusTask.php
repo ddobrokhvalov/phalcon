@@ -2,6 +2,8 @@
 
 use Multiple\Backend\Models\Complaint;
 use Multiple\Backend\Models\Applicant;
+use Phalcon\Config\Adapter\Ini as ConfigIni;
+require_once('../vendor/autoload.php');
 
 class StatusTask extends \Phalcon\Cli\Task{
     function Parser() {
@@ -280,16 +282,15 @@ class StatusTask extends \Phalcon\Cli\Task{
         $complaints = Complaint::find(array(
             "status = 'submitted'"
         ));
-//        $response = $this->getComplaint('0346200015616000115', 'ООО "Альянс-КБ"', '21.11.2016' );
-//        var_dump($response['complaint']['status'][1] == 'Признана необоснованной');
-        foreach ($complaints as $comp){
-            echo $comp->date_submit."\n";
+
+        foreach ($complaints as $comp) {
+            echo $comp->date_submit . "\n";
             $applicant = Applicant::findFirst($comp->applicant_id);
-            $response = $this->getComplaint($comp->auction_id, $applicant->name_short, $comp->date_submit );
-            if($response['complaint']){
+            $response = $this->getComplaint($comp->auction_id, $applicant->name_short, $comp->date_submit);
+            if ($response['complaint']) {
                 $status = $response['complaint']['status'];
                 $changeStatus = new Complaint();
-                switch ($status[1]){
+                switch ($status[1]) {
                     //No break
                     case 'Признана обоснованной':
                     case 'Признана обоснованной частично':
@@ -303,9 +304,38 @@ class StatusTask extends \Phalcon\Cli\Task{
                         break;
                 }
             } else {
+                if ($response['error']) {
+                    $error_text = 'Текст ошибки: ' . $response['error'] . "<br/>";
+                    $error_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
+                    $error_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
+                    $error_text .= ' | Имя заявителя: ' . $applicant->name_short . "<br/>";
+                    $error_text .= ' | Дата подачи жалобы: ' . $applicant->date_submit . "<br/>";
+                    $error_text .= ' | Время работы парсера: ' . date('now') . "<br/>";
 
+                    $temp_conf = new ConfigIni("../apps/frontend/config/config.ini");
+                    $mail = $temp_conf->mailer->toArray();
+                    $config = array();
+                    $config['driver'] = $mail['driver'];
+                    $config['host'] = $mail['host'];
+                    $config['port'] = $mail['port'];
+                    $config['encryption'] = $mail['encryption'];
+                    $config['username'] = $mail['username'];
+                    $config['password'] = $mail['password'];
+                    $config['from']['email'] = $mail['femail'];
+                    $config['from']['name'] = $mail['fname'];
+
+                    $mailer = new \Phalcon\Ext\Mailer\Manager($config);
+
+                    $adminsEmail = $temp_conf->adminsEmails->toArray();
+                    $message = $mailer->createMessage()
+                        ->to($adminsEmail['error'])
+                        ->subject('Ошибка при парсинге данных')
+                        ->content($error_text);
+                    $message->send();
+
+                }
             }
+            sleep(10);
         }
-        sleep(30);
     }
 }
