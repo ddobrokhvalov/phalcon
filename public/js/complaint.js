@@ -72,6 +72,7 @@ $(document).ready(function () {
     
     $('#sign-ecp').click(function () {
         signSavedComplaint = true;
+        if(!checkTextBeforeSave()) return false;
         if (complaint.prepareData()) {
             complaint.saveAsDraft(saveComplaintToDocxFile);
         }
@@ -771,216 +772,150 @@ function saveComplaintToDocxFile() {
     };
     var custom_text = "";
     var custom_text_unformatted = "";
-    var search_tags = ['li', 'span', 'strong', 'em', 'u'];
-    var wrong_ck_formatting = [];
-    var assoc_wrong_ck_formatting = {};
-    var docx_generator_allowed = true;
-    var list_formatting_detected = false;
     var compId = compId;
 
     $(".edit-textarea.cke_editable").each(function (index, elem) {
-        $(search_tags).each(function (s_tag_index, s_tag_value) {
-            var entered_text = $(elem).html();
-            $(entered_text).find(s_tag_value).each(function (inner_ind, inner_elem) {
-                var find_search_tags = $.grep(search_tags, function (value) {
-                    return value != s_tag_value;
-                });
-                $(find_search_tags).each(function (f_s_index, f_s_value) {
-                    if (s_tag_value == 'li') {
-                        if ($(inner_elem).html().search('<' + f_s_value + '>') >= 0) {
-                            docx_generator_allowed = false;
-                            if ($.inArray($(inner_elem).html(), wrong_ck_formatting) == -1) {
-                                wrong_ck_formatting.push($(inner_elem).html());
-                                assoc_wrong_ck_formatting[s_tag_value] = $(inner_elem).html();
-                            }
-                            list_formatting_detected = true;
-                            showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Форматирование внутри списка недопустимо");
-                            return false;
-                        }
-                    } else {
-                        if ($(inner_elem).html()[0] != '<' && !$(inner_elem).html().startsWith('<' + f_s_value) && $(inner_elem).html().search('<' + f_s_value + '>') > 0) {
-                            docx_generator_allowed = false;
-                            if ($.inArray($(inner_elem).html(), wrong_ck_formatting) == -1) {
-                                wrong_ck_formatting.push($(inner_elem).html());
-                                assoc_wrong_ck_formatting[s_tag_value] = $(inner_elem).html();
-                            }
-                        }
-                    }
-                });
-            });
+        custom_text += replaceWordTags($(elem).html() + "<br>", $(elem).attr("id"));
+        custom_text_unformatted += replaceWordTags($(elem).text() + "<br>", $(elem).attr("id"));
+    });
+
+    if ($("#operator_etp").is(":checked")) {
+        $file_to_load = "operator_etp.docx";
+    } else {
+        if (compare_dates(procedura.info.okonchanie)) {
+            $file_to_load = "documentation.docx";
+        } else {
+            $file_to_load = "decline.docx";
+        }
+    }
+    loadFile("/js/docx_generator/docx_templates/" + $file_to_load, function (err, content) {
+        if (err) {
+            console.log("eee");
+            throw e;
+        }
+        doc = new Docxgen(content);
+        doc.setData({
+                "applicant_fio": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : applicant.applicant_info.fio_applicant,
+                "applicant_fio2": applicant.applicant_info.fio_applicant,
+                "applicant_address": applicant.applicant_info.address,
+                "applicant_phone": applicant.applicant_info.telefone,
+                "applicant_position": applicant.applicant_info.position,
+                "applicant_email": applicant.applicant_info.email,
+                "tip_zakupki": zakupka.info.type,
+                "ufas": $('.ui-selectmenu-text').text(),
+                "dovod": custom_text,
+                "zakaz_phone": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.tel : auction.responseData.zakazchik[0].tel,
+                "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].kontaktnoe_lico,
+                "zakaz_kontaktnoe_name1": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.name : '',
+                "zakaz_kontaktnoe_name2": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].name,
+                "kontakt": auction.responseData.zakazchik[0] == null ? 'Контактное лицо:' : 'Название организации:',
+                "zakaz_address": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.pochtovy_adres : auction.responseData.zakazchik[0].pochtovy_adres,
+                "zakaz_mesto": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.mesto_nahogdeniya : "",
+                "organiz_fio1": auction.responseData.contact.name,
+                "organiz_fio2": auction.responseData.contact.dolg_lico,
+                "organiz_phone": auction.responseData.contact.tel,
+                "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
+                "organiz_address": auction.responseData.contact.pochtovy_adres,
+                "izveshchenie": $("#auction_id").val(),
+                "zakupka_name": auction.responseData.info.object_zakupki,
+                "zayavitel": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : "Заявитель"
+            }
+        );
+        doc.render();
+        out = doc.getZip().generate({type: "blob"});
+        var data = new FormData();
+        data.append('file', out);
+        data.append('complaint_name', $('#complaint_name').val());
+        data.append('complaint_id', $("#complaint_id").val());
+        if (signSavedComplaint == true) {
+            data.append('applicant_id',applicant.id);
+        }
+
+        var url = "/complaint/saveBlobFile";
+        if(compID){
+            url += '?complaint_id=' + compID;
+        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function (data) {
+                if (signSavedComplaint == true) {
+                    //data = JSON.parse(data);
+                    signFileOriginName = data[2];
+                    signFile(data[0],data[1]);
+                }
+            },
+            error: function () {
+            }
         });
     });
-    if (docx_generator_allowed) {
-        $(".edit-textarea.cke_editable").each(function (index, elem) {
-            custom_text += replaceWordTags($(elem).html() + "<br>", $(elem).attr("id"));
-            custom_text_unformatted += replaceWordTags($(elem).text() + "<br>", $(elem).attr("id"));
-        });
 
-        if ($("#operator_etp").is(":checked")) {
-            $file_to_load = "operator_etp.docx";
-        } else {
-            if (compare_dates(procedura.info.okonchanie)) {
-                $file_to_load = "documentation.docx";
-            } else {
-                $file_to_load = "decline.docx";
-            }
+    loadFile("/js/docx_generator/docx_templates/" + $file_to_load, function (err, content) {
+        if (err) {
+            console.log("eee");
+            throw e;
         }
-        loadFile("/js/docx_generator/docx_templates/" + $file_to_load, function (err, content) {
-            if (err) {
-                console.log("eee");
-                throw e;
+        doc = new Docxgen(content);
+        doc.setData({
+                "applicant_fio": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : applicant.applicant_info.fio_applicant,
+                "applicant_fio2": applicant.applicant_info.fio_applicant,
+                "applicant_address": applicant.applicant_info.address,
+                "applicant_phone": applicant.applicant_info.telefone,
+                "applicant_position": applicant.applicant_info.position,
+                "applicant_email": applicant.applicant_info.email,
+                "tip_zakupki": zakupka.info.type,
+                "ufas": $('.c-jadd-lr-sel').text(),
+                "dovod": custom_text_unformatted,
+                "zakaz_phone": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.tel : auction.responseData.zakazchik[0].tel,
+                "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].kontaktnoe_lico,
+                "zakaz_kontaktnoe_name1": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.name : '',
+                "zakaz_kontaktnoe_name2": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].name,
+                "kontakt": auction.responseData.zakazchik[0] == null ? 'Контактное лицо:' : 'Название организации:',
+                "zakaz_address": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.pochtovy_adres : auction.responseData.zakazchik[0].pochtovy_adres,
+                "zakaz_mesto": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.mesto_nahogdeniya : "",
+                "organiz_fio1": auction.responseData.contact.name,
+                "organiz_fio2": auction.responseData.contact.dolg_lico,
+                "organiz_phone": auction.responseData.contact.tel,
+                "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
+                "organiz_address": auction.responseData.contact.pochtovy_adres,
+                "izveshchenie": $("#auction_id").val(),
+                "zakupka_name": auction.responseData.info.object_zakupki,
+                "zayavitel": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : "Заявитель"
             }
-            doc = new Docxgen(content);
-            doc.setData({
-                    "applicant_fio": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : applicant.applicant_info.fio_applicant,
-                    "applicant_fio2": applicant.applicant_info.fio_applicant,
-                    "applicant_address": applicant.applicant_info.address,
-                    "applicant_phone": applicant.applicant_info.telefone,
-                    "applicant_position": applicant.applicant_info.position,
-                    "applicant_email": applicant.applicant_info.email,
-                    "tip_zakupki": zakupka.info.type,
-                    "ufas": $('.ui-selectmenu-text').text(),
-                    "dovod": custom_text,
-                    "zakaz_phone": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.tel : auction.responseData.zakazchik[0].tel,
-                    "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].kontaktnoe_lico,
-                    "zakaz_kontaktnoe_name1": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.name : '',
-                    "zakaz_kontaktnoe_name2": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].name,
-                    "kontakt": auction.responseData.zakazchik[0] == null ? 'Контактное лицо:' : 'Название организации:',
-                    "zakaz_address": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.pochtovy_adres : auction.responseData.zakazchik[0].pochtovy_adres,
-                    "zakaz_mesto": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.mesto_nahogdeniya : "",
-                    "organiz_fio1": auction.responseData.contact.name,
-                    "organiz_fio2": auction.responseData.contact.dolg_lico,
-                    "organiz_phone": auction.responseData.contact.tel,
-                    "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
-                    "organiz_address": auction.responseData.contact.pochtovy_adres,
-                    "izveshchenie": $("#auction_id").val(),
-                    "zakupka_name": auction.responseData.info.object_zakupki,
-                    "zayavitel": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : "Заявитель"
-                }
-            );
-            doc.render();
-            out = doc.getZip().generate({type: "blob"});
-            var data = new FormData();
-            data.append('file', out);
-            data.append('complaint_name', $('#complaint_name').val());
-            data.append('complaint_id', $("#complaint_id").val());
-            if (signSavedComplaint == true) {
-                data.append('applicant_id',applicant.id);
-            }
+        );
+        doc.render();
+        out = doc.getZip().generate({type: "blob"});
+        var data = new FormData();
+        data.append('file', out);
+        data.append('complaint_name', $('#complaint_name').val());
+        data.append('complaint_id', $("#complaint_id").val());
 
-            var url = "/complaint/saveBlobFile";
-            if(compID){
-                url += '?complaint_id=' + compID;
-            }
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: data,
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                dataType: 'json',
-                success: function (data) {
-                    if (signSavedComplaint == true) {
-                        //data = JSON.parse(data);
-                        signFileOriginName = data[2];
-                        signFile(data[0],data[1]);
-                    }
-                },
-                error: function () {
-                }
-            });
-        });
-
-        loadFile("/js/docx_generator/docx_templates/" + $file_to_load, function (err, content) {
-            if (err) {
-                console.log("eee");
-                throw e;
-            }
-            doc = new Docxgen(content);
-            doc.setData({
-                    "applicant_fio": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : applicant.applicant_info.fio_applicant,
-                    "applicant_fio2": applicant.applicant_info.fio_applicant,
-                    "applicant_address": applicant.applicant_info.address,
-                    "applicant_phone": applicant.applicant_info.telefone,
-                    "applicant_position": applicant.applicant_info.position,
-                    "applicant_email": applicant.applicant_info.email,
-                    "tip_zakupki": zakupka.info.type,
-                    "ufas": $('.c-jadd-lr-sel').text(),
-                    "dovod": custom_text_unformatted,
-                    "zakaz_phone": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.tel : auction.responseData.zakazchik[0].tel,
-                    "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].kontaktnoe_lico,
-                    "zakaz_kontaktnoe_name1": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.name : '',
-                    "zakaz_kontaktnoe_name2": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].name,
-                    "kontakt": auction.responseData.zakazchik[0] == null ? 'Контактное лицо:' : 'Название организации:',
-                    "zakaz_address": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.pochtovy_adres : auction.responseData.zakazchik[0].pochtovy_adres,
-                    "zakaz_mesto": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.mesto_nahogdeniya : "",
-                    "organiz_fio1": auction.responseData.contact.name,
-                    "organiz_fio2": auction.responseData.contact.dolg_lico,
-                    "organiz_phone": auction.responseData.contact.tel,
-                    "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
-                    "organiz_address": auction.responseData.contact.pochtovy_adres,
-                    "izveshchenie": $("#auction_id").val(),
-                    "zakupka_name": auction.responseData.info.object_zakupki,
-                    "zayavitel": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : "Заявитель"
-                }
-            );
-            doc.render();
-            out = doc.getZip().generate({type: "blob"});
-            var data = new FormData();
-            data.append('file', out);
-            data.append('complaint_name', $('#complaint_name').val());
-            data.append('complaint_id', $("#complaint_id").val());
-
-            var url = "/complaint/saveBlobFile?unformatted=1";
-            if(compID){
-                url += '&complaint_id=' + compID;
-            }
-
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: data,
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                },
-                error: function () {
-                }
-            });
-        });
-        return true;
-    } else {
-        var wrong_format_text = '';
-        var open_close_tag = {
-            '<span>': '</span>',
-            '<strong>': '</strong>',
-            '<em>': '</em>',
-            '<u>': '</u>',
-            '<li>': '</li>'
-        };
-        $.each(assoc_wrong_ck_formatting, function (key, value) {
-            var _en_text = '<' + key + '>' + value + open_close_tag['<' + key + '>'];
-            wrong_format_text += '&bull;&nbsp;' + _en_text + '</br>';
-            $(".edit-textarea.cke_editable").each(function (index, elem) {
-                var entered_text = $(elem).html();
-                if (key == 'li') {
-                    var _en_text2 = '<li><font class="marker_red">' + _en_text.substr(4, _en_text.length - 9) + '</font></li>';
-                    entered_text = entered_text.replace(_en_text, _en_text2);
-                } else {
-                    entered_text = entered_text.replace(_en_text, '<font class="marker_red">' + _en_text + '</font>');
-                }
-                $(elem).html(entered_text);
-            });
-        });
-        if (!list_formatting_detected) {
-            showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Такое форматирование недопустимо:</br>" + wrong_format_text);
+        var url = "/complaint/saveBlobFile?unformatted=1";
+        if(compID){
+            url += '&complaint_id=' + compID;
         }
-        return false;
-    }
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+            },
+            error: function () {
+            }
+        });
+    });
+    return true;
 }
 var signFileOriginName = false;
 function incrementMenuCount() {
@@ -1110,6 +1045,7 @@ function stopSaveCompl() {
     });
     if ($('#overdueOrNot').val() === '0') flag = true;
     if (flag) {
+        if(!checkTextBeforeSave()) return false;
         if (complaint.prepareData()) {
             complaint.saveAsDraft(saveComplaintToDocxFile);
         }
@@ -1123,6 +1059,75 @@ if (!String.prototype.startsWith) {
         position = position || 0;
         return this.indexOf(searchString, position) === position;
     };
+}
+
+function checkTextBeforeSave() {
+    var wrong_ck_formatting = [];
+    var assoc_wrong_ck_formatting = {};
+    var search_tags = ['li', 'span', 'strong', 'em', 'u'];
+    var docx_generator_allowed = true;
+    var list_formatting_detected = false;
+    $(".edit-textarea.cke_editable").each(function (index, elem) {
+        $(search_tags).each(function (s_tag_index, s_tag_value) {
+            var entered_text = $(elem).html();
+            $(entered_text).find(s_tag_value).each(function (inner_ind, inner_elem) {
+                var find_search_tags = $.grep(search_tags, function (value) {
+                    return value != s_tag_value;
+                });
+                $(find_search_tags).each(function (f_s_index, f_s_value) {
+                    if (s_tag_value == 'li') {
+                        if ($(inner_elem).html().search('<' + f_s_value + '>') >= 0) {
+                            docx_generator_allowed = false;
+                            if ($.inArray($(inner_elem).html(), wrong_ck_formatting) == -1) {
+                                wrong_ck_formatting.push($(inner_elem).html());
+                                assoc_wrong_ck_formatting[s_tag_value] = $(inner_elem).html();
+                            }
+                            list_formatting_detected = true;
+                            showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Форматирование внутри списка недопустимо");
+                            return false;
+                        }
+                    } else {
+                        if ($(inner_elem).html()[0] != '<' && !$(inner_elem).html().startsWith('<' + f_s_value) && $(inner_elem).html().search('<' + f_s_value + '>') > 0) {
+                            docx_generator_allowed = false;
+                            if ($.inArray($(inner_elem).html(), wrong_ck_formatting) == -1) {
+                                wrong_ck_formatting.push($(inner_elem).html());
+                                assoc_wrong_ck_formatting[s_tag_value] = $(inner_elem).html();
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    });
+
+    if(!docx_generator_allowed) {
+        var wrong_format_text = '';
+        var open_close_tag = {
+            '<span>': '</span>',
+            '<strong>': '</strong>',
+            '<em>': '</em>',
+            '<u>': '</u>',
+            '<li>': '</li>'
+        };
+        $.each(assoc_wrong_ck_formatting, function (key, value) {
+            var _en_text = '<' + key + '>' + value + open_close_tag['<' + key + '>'];
+            wrong_format_text += '&bull;&nbsp;' + _en_text + '</br>';
+            $(".edit-textarea.cke_editable").each(function (index, elem) {
+                var entered_text = $(elem).html();
+                if (key == 'li') {
+                    var _en_text2 = '<li><font class="marker_red">' + _en_text.substr(4, _en_text.length - 9) + '</font></li>';
+                    entered_text = entered_text.replace(_en_text, _en_text2);
+                } else {
+                    entered_text = entered_text.replace(_en_text, '<font class="marker_red">' + _en_text + '</font>');
+                }
+                $(elem).html(entered_text);
+            });
+        });
+        if (!list_formatting_detected) {
+            showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Такое форматирование недопустимо:</br>" + wrong_format_text);
+        }
+    }
+    return docx_generator_allowed;
 }
 
 // oop(инкапсуляция и наследование, полиморфизм), module,
