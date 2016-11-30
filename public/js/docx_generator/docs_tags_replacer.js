@@ -1,11 +1,9 @@
 
 function replaceWordTags(text, ckeditor_id) {
-    while(text.search("<br>") >= 0 || text.search("<p>") >= 0 || text.search("</p>") >= 0 || text.search("&nbsp;") >= 0){
-        text = text.replace("<br>", '\r\n');
-        text = text.replace("<p>", '');
-        text = text.replace("</p>", '\r\n');
-        text = text.replace("&nbsp;", ' ');
-    }
+    text = text.replace(/<br>/g, '\n');
+    text = text.replace(/<p>/g, '');
+    text = text.replace(/<\/p>/g, '\r\n');
+    text = text.replace(/&nbsp;/g, ' ');
     text = text.replace(/<em><\/em>/g, '');
     text = text.replace(/<strong><\/strong>/g, '');
     text = text.replace(/<u><\/u>/g, '');
