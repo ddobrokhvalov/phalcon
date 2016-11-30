@@ -15,7 +15,7 @@ class DumpTask extends \Phalcon\Cli\Task
         $this->_dumpdir = realpath(APP_PATH . '/../../mysqldump/');
         //php /var/www/bca/bca/public/cli.php dump
         try {
-            $this->arhiveLastTree();
+            //$this->arhiveLastTree();
             $this->makeBU();
 //            $mail = Mailer::getCronMail();
 //            $mail->Subject = "Cron 2 Success " . date('Y-m-d');
@@ -38,10 +38,10 @@ class DumpTask extends \Phalcon\Cli\Task
         $di = Di::getDefault();
         $db = $di->get("dbconfig");
         $dump = new Mysqldump('mysql:host=' . $db->host . ';dbname=' . $db->dbname, $db->username, $db->password);
-        $dump->start($this->_dumpdir . DIRECTORY_SEPARATOR . 'dump_' . date('Ymd') . '.sql');
+        $dump->start($this->_dumpdir . DIRECTORY_SEPARATOR . 'dump_' . date('Y_m_d_H') . '.sql');
         $zip = new ZipArchive();
-        if ($zip->open($this->_dumpdir . DIRECTORY_SEPARATOR . 'dump_' . date('Ymd') . '.sql.zip', ZipArchive::CREATE) === true) {
-            if ($zip->addFile($this->_dumpdir . DIRECTORY_SEPARATOR . 'dump_' . date('Ymd') . '.sql', 'dump_' . date('Ymd') . '.sql') !== true)
+        if ($zip->open($this->_dumpdir . DIRECTORY_SEPARATOR . 'dump_' . date('Y_m_d_H') . '.sql.zip', ZipArchive::CREATE) === true) {
+            if ($zip->addFile($this->_dumpdir . DIRECTORY_SEPARATOR . 'dump_' . date('Y_m_d_H') . '.sql', 'dump_' . date('Y_m_d_H') . '.sql') !== true)
                 throw new Exception('File Created, but not saved to arhive');
             $zip->close();
         } else {
@@ -60,12 +60,12 @@ class DumpTask extends \Phalcon\Cli\Task
                 if (!is_dir($this->_dumpdir . DIRECTORY_SEPARATOR . $file)) {
                     $info = pathinfo($this->_dumpdir . DIRECTORY_SEPARATOR . $file);
                     if ($info['extension'] == 'sql') {
-                        if ($info['basename'] !== 'dump_' . date('Ymd') . '.sql')
+                        if ($info['basename'] !== 'dump_' . date('Y_m_d') . '.sql')
                             @unlink($this->_dumpdir . DIRECTORY_SEPARATOR . $file);
                     } else if ($info['extension'] == 'zip') {
-                        if (date('d', $weekday) != 1 && $info['basename'] === 'dump_' . date('Ymd', $weekday) . '.sql.zip')
+                        if (date('d', $weekday) != 1 && $info['basename'] === 'dump_' . date('Y_m_d', $weekday) . '.sql.zip')
                             @unlink($this->_dumpdir . DIRECTORY_SEPARATOR . $file);
-                        else if ($info['basename'] === 'dump_' . date('Ym', $month) . '01.sql.zip')
+                        else if ($info['basename'] === 'dump_' . date('Y_m', $month) . '01.sql.zip')
                             @unlink($this->_dumpdir . DIRECTORY_SEPARATOR . $file);
                     }
                 }
