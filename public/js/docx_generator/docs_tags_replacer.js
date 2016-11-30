@@ -6,6 +6,16 @@ function replaceWordTags(text, ckeditor_id) {
         text = text.replace("</p>", '\r\n');
         text = text.replace("&nbsp;", ' ');
     }
+    text = text.replace(/<em><\/em>/g, '');
+    text = text.replace(/<strong><\/strong>/g, '');
+    text = text.replace(/<u><\/u>/g, '');
+    text = text.replace(/<ol><\/ol>/g, '');
+    text = text.replace(/<li><\/li>/g, '');
+    text = text.replace(/<ol> <\/ol>/g, ' ');
+    text = text.replace(/<em> <\/em>/g, ' ');
+    text = text.replace(/<strong> <\/strong>/g, ' ');
+    text = text.replace(/<u> <\/u>/g, ' ');
+
     text = remove_marker(text);
     text = replace_hard_tags(text);
     text = replace_easy_tags(text);
