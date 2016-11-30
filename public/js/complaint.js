@@ -122,10 +122,10 @@ $(document).ready(function () {
         }, 500);
     });
 
-    $('#complaint_name').focusout(function () {
-        var cmpl_name = $(this).val();
-        checkComplaintName(cmpl_name);
-    });
+    // $('#complaint_name').focusout(function () {
+    //     var cmpl_name = $(this).val();
+    //     checkComplaintName(cmpl_name);
+    // });
 
 });
 
@@ -224,9 +224,9 @@ var complaint = {
             this.showError('#complaint_name', 'Ошибка! Полное наименование должно быть от 3 до 255 символов', 'before');
             return false;
         }
-        if (!checkComplaintName(this.complainName)) {
-            return false;
-        }
+        // if (!checkComplaintName(this.complainName)) {
+        //     return false;
+        // }
         complaint.arguments_data = '';
         $('#complaint_name').addClass('c-inp-done');
         var ind = 0;
