@@ -28,7 +28,7 @@ $di->set('config', function () {
 });
 
 $di->set('db', function () {
-    $config = new ConfigIni(APP_PATH . '/../config/config.ini');
+    $config = new ConfigIni(APP_PATH . '/../apps/frontend/config/config.ini');
     return new Database($config->database->toArray());
 });
 
