@@ -138,9 +138,14 @@ class ComplaintController extends ControllerBase
         $arr_sub_cat = array();
 
         foreach ($arguments as $argument) {
+            $text = $argument->text;
             $categories_id[] = $argument->argument_category_id;
             $arguments_id[] = $argument->argument_id;
-            $arr_users_arg[$argument->argument_id] = preg_replace('/[\r\n\t]/', '', $argument->text);
+            $text = preg_replace('/[\r\n\t]/', '', $text);
+            $text = str_replace("'", '', $text);
+            $text = str_replace('"', '', $text);
+            $arr_users_arg[$argument->argument_id] = $text;
+
             /*if ($argument_order == $complaint->complaint_text_order) {
                 $user_arguments .= $complaint->complaint_text . '</br>';
                 $user_arguments .= $argument->text . '</br>';
@@ -149,7 +154,7 @@ class ComplaintController extends ControllerBase
             //}
             $arr_sub_cat[] = array(
                 'id' => $argument->argument_id,
-                'text' =>  preg_replace('/[\r\n\t]/', '', $argument->text)
+                'text' =>  preg_replace('/[\r\n\t]/', '', $text)
             );
             ++$argument_order;
         }
