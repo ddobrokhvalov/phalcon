@@ -28,12 +28,12 @@ $di->set('config', function () {
 });
 
 $di->set('db', function () {
-    $config = new ConfigIni(APP_PATH . '/../apps/backend/config/config.ini');
+    $config = new ConfigIni(APP_PATH . '/../config/config.ini');
     return new Database($config->database->toArray());
 });
 
 $di->set('dbconfig', function () {
-    $config = new ConfigIni(APP_PATH . '/../config/config.ini');//get from backend
+    $config = new ConfigIni(APP_PATH . '/../apps/frontend/config/config.ini');//get from backend
     return $config->database;
 });
 $di->set('logger', function ($logfile) {
