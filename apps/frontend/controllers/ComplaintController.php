@@ -1032,7 +1032,7 @@ class ComplaintController extends ControllerBase
             'applicant_position' => $applicant->position,
             'auction_id'    => $complaint->auction_id,
             'ufas_name'     => $ufas->name,
-            'date_create'   => $complaint->date,
+            'date_create'   => $complaint->date_submit,
             'date_now'      => date('Y-m-d H:m'),
             'thumbprint'    => $ecp->thumbprint,
         );
