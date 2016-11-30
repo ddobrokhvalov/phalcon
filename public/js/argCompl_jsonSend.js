@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $('.opacity-cap-compl').click(function() {
+        if(!complaint.checkApplicant()) return false;
         var fieldsUserCheck = $(this).attr('data-userfields');
         if (fieldsUserCheck === '1') {
             return false;

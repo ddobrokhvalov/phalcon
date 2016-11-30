@@ -192,6 +192,15 @@ var complaint = {
         }
 
     },
+    checkApplicant: function(){
+        if (applicant.id == 'All' || applicant.id == '' || applicant.id == ' ' || applicant.id == undefined || applicant.id.length == 0) {
+            //$("html, body").animate({ scrollTop: 0 }, 1);
+            showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Заявитель не выбран");
+            return false;
+        }
+        return true;
+    },
+
     prepareData: function () {
         if (applicant.id == 'All' || applicant.id == '' || applicant.id == ' ' || applicant.id == undefined || applicant.id.length == 0) {
             //$("html, body").animate({ scrollTop: 0 }, 1);
