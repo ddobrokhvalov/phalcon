@@ -303,7 +303,7 @@ class StatusTask extends \Phalcon\Cli\Task{
 
         foreach ($complaints as $comp) {
             $applicant = Applicant::findFirst($comp->applicant_id);
-            $response = $this->getComplaint($comp->auction_id, $applicant->name_short, $comp->date_submit);
+            $response = $this->getComplaint($comp->auction_id, 'Смирнов Алексей', $comp->date_submit);
             var_dump($response);
             if (!empty($response['complaint'])) {
                 var_dump($response['complaint']);
@@ -329,7 +329,7 @@ class StatusTask extends \Phalcon\Cli\Task{
                     $error_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
                     $error_text .= ' | Имя заявителя: ' . $applicant->name_short . "<br/>";
                     $error_text .= ' | Дата подачи жалобы: ' . $comp->date_submit . "<br/>";
-                    $error_text .= ' | Время работы парсера: ' . date('now') . "<br/>";
+                    $error_text .= ' | Время работы парсера: ' . date('Y.m.d H-m-s') . "<br/>";
                     $error_text .= '<br/>';
                     $error_text .= '<br/>';
                     $error_text .= '---------------------------------';
