@@ -332,7 +332,7 @@ class StatusTask extends \Phalcon\Cli\Task{
                     $error_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
                     $error_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
                     $error_text .= ' | Имя заявителя: ' . $applicant->name_short . "<br/>";
-                    $error_text .= ' | Дата подачи жалобы: ' . $applicant->date_submit . "<br/>";
+                    $error_text .= ' | Дата подачи жалобы: ' . $comp->date_submit . "<br/>";
                     $error_text .= ' | Время работы парсера: ' . date('now') . "<br/>";
                     $error_text .= '<br/>';
                     $error_text .= '<br/>';
