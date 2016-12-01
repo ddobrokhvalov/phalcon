@@ -315,7 +315,7 @@ class StatusTask extends \Phalcon\Cli\Task{
                 var_dump($response['complaint']);
                 $status = $response['complaint']['status'];
                 $changeStatus = new Complaint();
-                switch ($status[1]) {
+                switch ($status[0]) {
                     //No break
                     case 'Признана обоснованной':
                     case 'Признана обоснованной частично':
