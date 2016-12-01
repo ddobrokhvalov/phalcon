@@ -84,8 +84,6 @@ class StatusTask extends \Phalcon\Cli\Task{
             $data = $this->getUrl('http://zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $complaintNum . '&strictEqual=on&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
         }
         else {
-            $urrl = 'http://zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $auctionId . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU';
-            echo $urrl;
             $data = $this->getUrl('http://zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $auctionId . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
         }
         libxml_use_internal_errors(true);
@@ -312,13 +310,13 @@ class StatusTask extends \Phalcon\Cli\Task{
 
         foreach ($complaints as $comp) {
             $applicant = Applicant::findFirst($comp->applicant_id);
-            $response = $this->getComplaint($comp->auction_id, $applicant->name_short, $comp->date_submit);
+            $response = $this->getComplaint($comp->auction_id, $applicant->name_short, '30.11.2016');
                 if($comp->auction_id == '0342100022216000063'){
                     var_dump($applicant->name_short,$comp->date_submit );
                 }
             //var_dump($response, $comp->auction_id);
             if (!empty($response['complaint'])) {
-
+                var_dump($response['complaint']);
                 $status = $response['complaint']['status'];
                 $changeStatus = new Complaint();
                 switch ($status[1]) {
