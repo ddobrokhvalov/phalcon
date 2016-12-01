@@ -282,6 +282,7 @@ class StatusTask extends \Phalcon\Cli\Task{
         $complaints = Complaint::find(array(
             "status = 'submitted'"
         ));
+        $error_text = '';
 
         $temp_conf = new ConfigIni("../apps/frontend/config/config.ini");
         $mail = $temp_conf->mailer->toArray();
@@ -296,6 +297,13 @@ class StatusTask extends \Phalcon\Cli\Task{
         $config['from']['email'] = $mail['femail'];
         $config['from']['name'] = $mail['fname'];
         $mailer = new \Phalcon\Ext\Mailer\Manager($config);
+
+        $message = $mailer->createMessage()
+            ->to($adminsEmail['error'])
+            ->bcc('vadim-antropov@ukr.net')
+            ->subject('Работает парсер')
+            ->content('Работает парсер');
+        $message->send();
 
         foreach ($complaints as $comp) {
             $applicant = Applicant::findFirst($comp->applicant_id);
@@ -318,21 +326,34 @@ class StatusTask extends \Phalcon\Cli\Task{
                 }
             } else {
                 if ($response['error']) {
-                    $error_text = 'Текст ошибки: ' . $response['error'] . "<br/>";
+                    $error_text .= 'Текст ошибки: ' . $response['error'] . "<br/>";
                     $error_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
                     $error_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
                     $error_text .= ' | Имя заявителя: ' . $applicant->name_short . "<br/>";
                     $error_text .= ' | Дата подачи жалобы: ' . $applicant->date_submit . "<br/>";
                     $error_text .= ' | Время работы парсера: ' . date('now') . "<br/>";
-
-                    $message = $mailer->createMessage()
-                        ->to($adminsEmail['error'])
-                        ->subject('Ошибка при парсинге данных')
-                        ->content($error_text);
-                    $message->send();
+                    $error_text .= '<br/>';
+                    $error_text .= '<br/>';
+                    $error_text .= '---------------------------------';
                 }
             }
             sleep(10);
         }
+
+        if(strlen($error_text) > 0) {
+            $message = $mailer->createMessage()
+                ->to($adminsEmail['error'])
+                ->bcc('vadim-antropov@ukr.net')
+                ->subject('Ошибка при парсинге данных')
+                ->content($error_text);
+            $message->send();
+        }
+
+        $message = $mailer->createMessage()
+            ->to($adminsEmail['error'])
+            ->bcc('vadim-antropov@ukr.net')
+            ->subject('Парсер завершил работу')
+            ->content('Парсер завершил работу');
+        $message->send();
     }
 }
