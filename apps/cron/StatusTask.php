@@ -98,6 +98,7 @@ class StatusTask extends \Phalcon\Cli\Task{
 
 //        $zayavitel2 = trim(preg_replace(array('/ООО/ui', '/«|»|\"/ui'), array('', ''), $zayavitel));
         $zayavitel2 = trim(preg_replace(array('/ООО/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $zayavitel));
+        $zayavitel2 = trim(preg_replace(array('/ИП/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $zayavitel));
         $zayavitel2 = trim(preg_replace('/\s+/ui', ' ', $zayavitel2));
         foreach($xpath->query('//div[contains(@class,"registerBox")]') as $tender) {
             $complaint = array();
