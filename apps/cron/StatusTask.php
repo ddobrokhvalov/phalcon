@@ -5,6 +5,8 @@ use Multiple\Backend\Models\Applicant;
 use Phalcon\Config\Adapter\Ini as ConfigIni;
 //require_once('../vendor/autoload.php');
 
+defined('APP_PATH') || define('APP_PATH', realpath(dirname(__FILE__)));
+
 class StatusTask extends \Phalcon\Cli\Task{
     function Parser() {
     libxml_use_internal_errors(true);
@@ -284,7 +286,7 @@ class StatusTask extends \Phalcon\Cli\Task{
         ));
         $error_text = '';
 
-        $temp_conf = new ConfigIni("/../../apps/frontend/config/config.ini");
+        $temp_conf = new ConfigIni(APP_PATH."/../apps/frontend/config/config.ini");
         $mail = $temp_conf->mailer->toArray();
         $adminsEmail = $temp_conf->adminsEmails->toArray();
         $config = array();
