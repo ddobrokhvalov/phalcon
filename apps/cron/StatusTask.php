@@ -3,7 +3,7 @@
 use Multiple\Backend\Models\Complaint;
 use Multiple\Backend\Models\Applicant;
 use Phalcon\Config\Adapter\Ini as ConfigIni;
-require_once('../vendor/autoload.php');
+//require_once('../vendor/autoload.php');
 
 class StatusTask extends \Phalcon\Cli\Task{
     function Parser() {
