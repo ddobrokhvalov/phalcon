@@ -1,7 +1,7 @@
 <?php
 
-use Multiple\Backend\Models\Complaint;
-use Multiple\Backend\Models\Applicant;
+use Multiple\Frontend\Models\Complaint;
+use Multiple\Frontend\Models\Applicant;
 use Phalcon\Config\Adapter\Ini as ConfigIni;
 require_once('../../../vendor/autoload.php');
 
