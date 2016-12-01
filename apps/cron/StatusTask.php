@@ -322,6 +322,7 @@ class StatusTask extends \Phalcon\Cli\Task{
                 }
             } else {
                 if (!empty($response['error'])) {
+                    $error_text .= '<br/>';
                     $error_text .= 'Текст ошибки: ' . $response['error'] . "<br/>";
                     $error_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
                     $error_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
