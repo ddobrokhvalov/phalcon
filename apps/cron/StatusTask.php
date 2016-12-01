@@ -303,23 +303,21 @@ class StatusTask extends \Phalcon\Cli\Task{
 
         foreach ($complaints as $comp) {
             $applicant = Applicant::findFirst($comp->applicant_id);
-            $response = $this->getComplaint($comp->auction_id, 'Смирнов Алексей', $comp->date_submit);
-            var_dump($response);
+            $response = $this->getComplaint($comp->auction_id, $comp->name_short, $comp->date_submit);
             if (!empty($response['complaint'])) {
-                var_dump($response['complaint']);
                 $status = $response['complaint']['status'];
                 $changeStatus = new Complaint();
                 switch ($status[0]) {
                     //No break
                     case 'Признана обоснованной':
                     case 'Признана обоснованной частично':
-                        //$changeStatus->changeStatus('justified', array($comp->id));
+                        $changeStatus->changeStatus('justified', array($comp->id));
                         break;
                     case 'Рассматривается / 44-ФЗ':
-                        //$changeStatus->changeStatus('under_consideration', array($comp->id));
+                        $changeStatus->changeStatus('under_consideration', array($comp->id));
                         break;
                     case 'Признана необоснованной':
-                        //$changeStatus->changeStatus('unfounded', array($comp->id));
+                        $changeStatus->changeStatus('unfounded', array($comp->id));
                         break;
                 }
             } else {
@@ -329,7 +327,7 @@ class StatusTask extends \Phalcon\Cli\Task{
                     $error_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
                     $error_text .= ' | Имя заявителя: ' . $applicant->name_short . "<br/>";
                     $error_text .= ' | Дата подачи жалобы: ' . $comp->date_submit . "<br/>";
-                    $error_text .= ' | Время работы парсера: ' . date('Y.m.d H-m-s') . "<br/>";
+                    $error_text .= ' | Время работы парсера: ' . date('Y-m-d H:i:s') . "<br/>";
                     $error_text .= '<br/>';
                     $error_text .= '<br/>';
                     $error_text .= '---------------------------------';
@@ -337,13 +335,13 @@ class StatusTask extends \Phalcon\Cli\Task{
             }
         }
 
-//        if(strlen($error_text) > 0) {
-//            $message = $mailer->createMessage()
-//                ->to($adminsEmail['error'])
-//                ->bcc('vadim-antropov@ukr.net')
-//                ->subject('Ошибка при парсинге данных')
-//                ->content($error_text);
-//            $message->send();
-//        }
+        if(strlen($error_text) > 0) {
+            $message = $mailer->createMessage()
+                ->to($adminsEmail['error'])
+                ->bcc('vadim-antropov@ukr.net')
+                ->subject('Ошибка при парсинге данных')
+                ->content($error_text);
+            $message->send();
+        }
     }
 }
