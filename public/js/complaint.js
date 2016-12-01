@@ -813,7 +813,7 @@ function saveComplaintToDocxFile() {
                 "tip_zakupki": zakupka.info.type,
                 "ufas": $('.ui-selectmenu-text').text(),
                 "dovod": custom_text,
-                "zakaz_phone": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.tel : auction.responseData.zakazchik[0].tel,
+                "zakaz_phone": (auction.responseData.zakazchik[0] && auction.responseData.zakazchik[0].tel) ? auction.responseData.zakazchik[0].tel : auction.responseData.contact.tel,
                 "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].kontaktnoe_lico,
                 "zakaz_kontaktnoe_name1": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.name : '',
                 "zakaz_kontaktnoe_name2": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].name,
