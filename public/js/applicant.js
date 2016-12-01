@@ -156,8 +156,12 @@ var applicant = {
 
         this.setUrlico();
         var data = selectedCertif.SubjectName;
+        var name = this.getName(selectedCertif.SubjectName);
+        var position = this.getPosition(selectedCertif.SubjectName);
+
+
         data = data.split(',');
-        $('.tabcontent-ur #entity-short').val(this.parseSnUr(data, 'O=', 3, 4));
+        $('.tabcontent-ur #entity-short').val(name);
         var inn = this.parseSnUr(data, ' INN=', 7, 4);
         if(inn == '')
             inn = this.parseSnUr(data, ' ИНН=', 7, 4);
@@ -190,9 +194,17 @@ var applicant = {
 
     getPosition: function(data){
        var position = data.match(/[\s\,]T=([a-zA-Zа-яА-Я\s]+)/i );
-       if(data[1] !== undefined) return position[1];
+       if(position[1] !== undefined) return position[1];
        return false;
     },
+
+    getName: function(data){
+        var name = data.match(/[\s\,]O=([a-zA-Zа-яА-Я\s\"\']+)/i );
+        if(name[1] !== undefined) return name[1];
+        return false;
+    },
+
+
 
     /*
      "SN=Соколов"
