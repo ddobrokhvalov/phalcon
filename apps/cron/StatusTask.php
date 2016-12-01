@@ -307,10 +307,8 @@ class StatusTask extends \Phalcon\Cli\Task{
 //            ->content('Работает парсер');
 //        $message->send();
 
-        $i = 0;
-        echo 'tyt';
+
         foreach ($complaints as $comp) {
-            echo $i++;
             $applicant = Applicant::findFirst($comp->applicant_id);
             $response = $this->getComplaint($comp->auction_id, $applicant->name_short, $comp->date_submit);
             var_dump($response, $comp->auction_id);
