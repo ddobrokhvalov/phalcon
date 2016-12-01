@@ -313,8 +313,9 @@ class StatusTask extends \Phalcon\Cli\Task{
             echo $i++;
             $applicant = Applicant::findFirst($comp->applicant_id);
             $response = $this->getComplaint($comp->auction_id, $applicant->name_short, $comp->date_submit);
+            var_dump($response, $comp->auction_id);
             if (!empty($response['complaint'])) {
-                var_dump($response['complaint']);
+
                 $status = $response['complaint']['status'];
                 $changeStatus = new Complaint();
                 switch ($status[1]) {
