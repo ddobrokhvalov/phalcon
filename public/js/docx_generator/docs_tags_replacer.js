@@ -2,14 +2,14 @@
 function replaceWordTags(text, ckeditor_id) {
     text = text.replace(/<br>/g, '\n');
     text = text.replace(/<p>/g, '');
-    text = text.replace(/<\/p>/g, '\r\n');
+    text = text.replace(/<\/p>/g, '\n');
     text = text.replace(/&nbsp;/g, ' ');
     text = text.replace(/<em><\/em>/g, '');
     text = text.replace(/<strong><\/strong>/g, '');
     text = text.replace(/<u><\/u>/g, '');
-    text = text.replace(/<ol><\/ol>/g, '');
-    text = text.replace(/<li><\/li>/g, '');
-    text = text.replace(/<ol> <\/ol>/g, ' ');
+    // text = text.replace(/<ol><\/ol>/g, '');
+    // text = text.replace(/<li><\/li>/g, '');
+    // text = text.replace(/<ol> <\/ol>/g, ' ');
     text = text.replace(/<em> <\/em>/g, ' ');
     text = text.replace(/<strong> <\/strong>/g, ' ');
     text = text.replace(/<u> <\/u>/g, ' ');
@@ -196,7 +196,7 @@ function add_list(text, ckeditor_id) {
             $("#" + ckeditor_id + " ol").each(function(ul_index, ul_item) {
                 var list = "<ol>" + $(ul_item).html() + "</ol>";
                 while (list.search('<br>') >= 0/* || list.search("\r\n") >= 0*/) {
-                    list = list.replace("<br>", '\r\n');
+                    list = list.replace("<br>", '\n');
                     //list = list.replace("\r\n", '');
                 }
                 var list_li = [];
@@ -207,7 +207,8 @@ function add_list(text, ckeditor_id) {
                 for (var li_i = 0; li_i < list_li.length; li_i++) {
                     li_i_html += '<w:p><w:pPr><w:numPr><w:ilvl w:val="0"/><w:numId w:val="1"/></w:numPr></w:pPr><w:r><w:t>' + list_li[li_i] + '</w:t></w:r></w:p>';
                 }
-                text = text.replace(list, li_i_html + '\r\n');
+                //text = text.replace(list, li_i_html + '\n');
+                text = li_i_html;
             });
         } else {
             return text;
