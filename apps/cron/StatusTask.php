@@ -300,20 +300,13 @@ class StatusTask extends \Phalcon\Cli\Task{
         $config['from']['name'] = $mail['fname'];
         $mailer = new \Phalcon\Ext\Mailer\Manager($config);
 
-//        $message = $mailer->createMessage()
-//            ->to($adminsEmail['error'])
-//            ->bcc('vadim-antropov@ukr.net')
-//            ->subject('Работает парсер')
-//            ->content('Работает парсер');
-//        $message->send();
-
-
         foreach ($complaints as $comp) {
             $applicant = Applicant::findFirst($comp->applicant_id);
             $nameShort = str_replace('"', '', $applicant->name_short);
             $nameShort = str_replace("'", '', $nameShort);
+            $nameShort = str_replace("ИП", '', $nameShort);
             var_dump($comp->auction_id, $nameShort, $comp->date_submit);
-            $response = $this->getComplaint($comp->auction_id, $nameShort, $comp->date_submit);
+            $response = $this->getComplaint($comp->auction_id, trim($nameShort), $comp->date_submit);
             if (!empty($response['complaint'])) {
                 var_dump($response['complaint']);
                 $status = $response['complaint']['status'];
@@ -344,23 +337,15 @@ class StatusTask extends \Phalcon\Cli\Task{
                     $error_text .= '---------------------------------';
                 }
             }
-            //sleep(10);
         }
 
-//        if(strlen($error_text) > 0) {
-//            $message = $mailer->createMessage()
-//                ->to($adminsEmail['error'])
-//                ->bcc('vadim-antropov@ukr.net')
-//                ->subject('Ошибка при парсинге данных')
-//                ->content($error_text);
-//            $message->send();
-//        }
-//
-//        $message = $mailer->createMessage()
-//            ->to($adminsEmail['error'])
-//            ->bcc('vadim-antropov@ukr.net')
-//            ->subject('Парсер завершил работу')
-//            ->content('Парсер завершил работу');
-//        $message->send();
+        if(strlen($error_text) > 0) {
+            $message = $mailer->createMessage()
+                ->to($adminsEmail['error'])
+                ->bcc('vadim-antropov@ukr.net')
+                ->subject('Ошибка при парсинге данных')
+                ->content($error_text);
+            $message->send();
+        }
     }
 }
