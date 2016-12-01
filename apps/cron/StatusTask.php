@@ -316,13 +316,13 @@ class StatusTask extends \Phalcon\Cli\Task{
                 var_dump($response['complaint']);
                 $status = $response['complaint']['status'];
                 $changeStatus = new Complaint();
-                switch ($status[1]) {
+                switch ($status[0]) {
                     //No break
                     case 'Признана обоснованной':
                     case 'Признана обоснованной частично':
                         $changeStatus->changeStatus('justified', array($comp->id));
                         break;
-                    case 'Рассмотрена':
+                    case 'Рассматривается / 44-ФЗ':
                         $changeStatus->changeStatus('under_consideration', array($comp->id));
                         break;
                     case 'Признана необоснованной':
