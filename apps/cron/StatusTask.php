@@ -310,8 +310,7 @@ class StatusTask extends \Phalcon\Cli\Task{
 
         foreach ($complaints as $comp) {
             $applicant = Applicant::findFirst($comp->applicant_id);
-            $response = $this->getComplaint($comp->auction_id, 'Смирнов Алексей', '30.11.2016');
-            var_dump($response);
+            $response = $this->getComplaint($comp->auction_id, $applicant->name_short, $comp->date_submit);
             if (!empty($response['complaint'])) {
                 var_dump($response['complaint']);
                 $status = $response['complaint']['status'];
