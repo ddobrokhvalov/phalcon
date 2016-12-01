@@ -209,7 +209,7 @@ class StatusTask extends \Phalcon\Cli\Task{
         return $new_date;
     }
 
-    function reglamentTime($date, $add_day = 5) {
+    function reglamentTime($date, $add_day = 3) {
         for($i = 1; $i <= $add_day; $i++) {
             $date = $this->nextBusinessDay($date);
         }
