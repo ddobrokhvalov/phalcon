@@ -316,13 +316,13 @@ class StatusTask extends \Phalcon\Cli\Task{
                     //No break
                     case 'Признана обоснованной':
                     case 'Признана обоснованной частично':
-                        $changeStatus->changeStatus('justified', array($comp->id));
+                        //$changeStatus->changeStatus('justified', array($comp->id));
                         break;
                     case 'Рассматривается / 44-ФЗ':
-                        $changeStatus->changeStatus('under_consideration', array($comp->id));
+                        //$changeStatus->changeStatus('under_consideration', array($comp->id));
                         break;
                     case 'Признана необоснованной':
-                        $changeStatus->changeStatus('unfounded', array($comp->id));
+                        //$changeStatus->changeStatus('unfounded', array($comp->id));
                         break;
                 }
             } else {
@@ -340,13 +340,13 @@ class StatusTask extends \Phalcon\Cli\Task{
             }
         }
 
-        if(strlen($error_text) > 0) {
-            $message = $mailer->createMessage()
-                ->to($adminsEmail['error'])
-                ->bcc('vadim-antropov@ukr.net')
-                ->subject('Ошибка при парсинге данных')
-                ->content($error_text);
-            $message->send();
-        }
+//        if(strlen($error_text) > 0) {
+//            $message = $mailer->createMessage()
+//                ->to($adminsEmail['error'])
+//                ->bcc('vadim-antropov@ukr.net')
+//                ->subject('Ошибка при парсинге данных')
+//                ->content($error_text);
+//            $message->send();
+//        }
     }
 }
