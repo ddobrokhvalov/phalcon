@@ -310,7 +310,7 @@ class StatusTask extends \Phalcon\Cli\Task{
         foreach ($complaints as $comp) {
             $applicant = Applicant::findFirst($comp->applicant_id);
             $response = $this->getComplaint($comp->auction_id, $applicant->name_short, $comp->date_submit);
-            if ($response['complaint']) {
+            if (!empty($response['complaint'])) {
                 $status = $response['complaint']['status'];
                 $changeStatus = new Complaint();
                 switch ($status[1]) {
@@ -327,7 +327,7 @@ class StatusTask extends \Phalcon\Cli\Task{
                         break;
                 }
             } else {
-                if ($response['error']) {
+                if (!empty($response['error'])) {
                     $error_text .= 'Текст ошибки: ' . $response['error'] . "<br/>";
                     $error_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
                     $error_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
