@@ -343,7 +343,7 @@ class StatusTask extends \Phalcon\Cli\Task{
                     $error_text .= '---------------------------------';
                 }
             }
-            sleep(10);
+            //sleep(10);
         }
 
 //        if(strlen($error_text) > 0) {
