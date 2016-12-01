@@ -170,15 +170,30 @@ var applicant = {
         var kpp = data[3];
         kpp = kpp.split('/');
         kpp = kpp[1];
-        kpp = kpp.substr(4, kpp.length);
+        if(kpp !== undefined) {
+            kpp = kpp.substr(4, kpp.length);
+        } else {
+            kpp = data[2];
+            kpp = kpp.match( /KPP=(\d+)/i );
+            kpp = kpp[1];
+        }
+
+        var position = this.getPosition(selectedCertif.SubjectName);
         $('.tabcontent-ur #entity-kpp').val(kpp);
         $('.tabcontent-ur #entity-address').val(this.parseSnUr(data, ' L=', 3, 0) + ' ' + this.parseSnUr(data, 'STREET=', 8, 1));
-        $('.tabcontent-ur #entity-position').val(this.parseSnUr(data, 'T=', 3, 0));
+        $('.tabcontent-ur #entity-position').val(position);
         $('.tabcontent-ur #entity-fio-z').val(this.parseSnUr(data, 'CN=', 4, 0));
         $('.tabcontent-ur #entity-email').val(this.parseSnUr(data, ' E=', 3, 0));
 
 
     },
+
+    getPosition: function(data){
+       var position = data.match(/[\s\,]T=([a-zA-Zа-яА-Я\s]+)/i );
+       if(data[1] !== undefined) return position[1];
+       return false;
+    },
+
     /*
      "SN=Соколов"
      " G=Александр Ильич"
