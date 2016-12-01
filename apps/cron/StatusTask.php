@@ -304,9 +304,10 @@ class StatusTask extends \Phalcon\Cli\Task{
             $applicant = Applicant::findFirst($comp->applicant_id);
             $nameShort = str_replace('"', '', $applicant->name_short);
             $nameShort = str_replace("'", '', $nameShort);
-            //$nameShort = str_replace("ИП", '', $nameShort);
+            $nameShort = str_replace("ИП", '', $nameShort);
             var_dump($comp->auction_id, $nameShort, $comp->date_submit);
             $response = $this->getComplaint($comp->auction_id, trim($nameShort), $comp->date_submit);
+            var_dump($response);
             if (!empty($response['complaint'])) {
                 var_dump($response['complaint']);
                 $status = $response['complaint']['status'];
