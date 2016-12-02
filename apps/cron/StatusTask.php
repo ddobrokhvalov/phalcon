@@ -337,13 +337,13 @@ class StatusTask extends \Phalcon\Cli\Task{
             }
         }
 
-//        if(strlen($error_text) > 0) {
-//            $message = $mailer->createMessage()
-//                ->to($adminsEmail['error'])
-//                ->bcc('vadim-antropov@ukr.net')
-//                ->subject('Ошибка при парсинге данных')
-//                ->content($error_text);
-//            $message->send();
-//        }
+        if(strlen($error_text) > 0) {
+            $message = $mailer->createMessage()
+                ->to($adminsEmail['error'])
+                ->bcc('vadim-antropov@ukr.net')
+                ->subject('Ошибка при парсинге данных')
+                ->content($error_text);
+            $message->send();
+        }
     }
 }
