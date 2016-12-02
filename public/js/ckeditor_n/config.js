@@ -31,4 +31,8 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Dialog windows are also simplified.
 	config.removeDialogTabs = 'link:advanced';
+
+    config.pasteFilter = 'plain-text';
+    config.allowedContent = false;
+    config.forcePasteAsPlainText = false;
 };
