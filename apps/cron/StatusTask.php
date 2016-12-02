@@ -4,7 +4,7 @@ use Multiple\Frontend\Models\Complaint;
 use Multiple\Frontend\Models\Applicant;
 use Phalcon\Config\Adapter\Ini as ConfigIni;
 defined('APP_PATH') || define('APP_PATH', realpath(dirname(__FILE__)));
-require_once(APP_PATH.'../vendor/autoload.php');
+require_once(APP_PATH.'/../vendor/autoload.php');
 
 
 
@@ -288,7 +288,7 @@ class StatusTask extends \Phalcon\Cli\Task{
         ));
         $error_text = '';
 
-        $temp_conf = new ConfigIni("../../frontend/config/config.ini");
+        $temp_conf = new ConfigIni(APP_PATH."/../apps/frontend/config/config.ini");
         $mail = $temp_conf->mailer->toArray();
         $adminsEmail = $temp_conf->adminsEmails->toArray();
         $config = array();
