@@ -10,13 +10,13 @@ require_once(APP_PATH.'/../vendor/autoload.php');
 
 class StatusTask extends \Phalcon\Cli\Task{
     function Parser() {
-    libxml_use_internal_errors(true);
+        libxml_use_internal_errors(true);
     }
 
     // передавать строку, не число!
     function parseAuction($auctionId) {
         $auction = array('info' => array(), 'contact' => array(), 'procedura' => array(), 'zakazchik' => array());
-        $data = $this->getUrl('http://new.zakupki.gov.ru/epz/order/notice/ea44/view/common-info.html?regNumber='.$auctionId);
+        $data = $this->getUrl('http://zakupki.gov.ru/epz/order/notice/ea44/view/common-info.html?regNumber='.$auctionId);
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
         $doc->loadHTML($data);
@@ -27,7 +27,7 @@ class StatusTask extends \Phalcon\Cli\Task{
         $auction['info']['zakupku_osushestvlyaet'] = trim($xpath->evaluate('string(//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Закупку осуществляет") or contains(text(),"Размещение осуществляет")]/following-sibling::td[1]/text()[1])'));
         $auction['info']['object_zakupki'] = trim($xpath->evaluate('string(//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Объект закупки")]/following-sibling::td[1]/span[@id="notice_orderName"]/text())'));
 
-        //        $auction['contact']['name'] = trim($xpath->evaluate('string(//h2[text()="Контактная информация"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Наименование организации")]/following-sibling::td[1]/text())'));
+//        $auction['contact']['name'] = trim($xpath->evaluate('string(//h2[text()="Контактная информация"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Наименование организации")]/following-sibling::td[1]/text())'));
         $auction['contact']['name'] = trim($xpath->evaluate('string(//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Закупку осуществляет") or contains(text(),"Размещение осуществляет")]/following-sibling::td[1]/a/text())'));
         $auction['contact']['pochtovy_adres'] = trim($xpath->evaluate('string(//h2[text()="Контактная информация" or contains(text(),"Информация об организации")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Почтовый адрес")]/following-sibling::td[1]/text())'));
         $auction['contact']['mesto_nahogdeniya'] = trim($xpath->evaluate('string(//h2[text()="Контактная информация" or contains(text(),"Информация об организации")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Место нахождения")]/following-sibling::td[1]/text())'));
@@ -58,7 +58,7 @@ class StatusTask extends \Phalcon\Cli\Task{
         $zakazchik['name'] = $name;
         $name = trim(preg_replace('/«|»|"/ui', '', $name));
         $name = trim(preg_replace('/\s+/ui', ' ', $name));
-        $data = $this->getUrl('http://new.zakupki.gov.ru/epz/organization/quicksearch/search.html?searchString=' . urlencode($name) . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&sortBy=PO_NAZVANIYU&fz94=on&fz223=on&regions=');
+        $data = $this->getUrl('http://zakupki.gov.ru/epz/organization/quicksearch/search.html?searchString=' . urlencode($name) . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&sortBy=PO_NAZVANIYU&fz94=on&fz223=on&regions=');
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
         $doc->loadHTML($data);
@@ -66,16 +66,16 @@ class StatusTask extends \Phalcon\Cli\Task{
 
         $url = trim($xpath->evaluate('string(//div[@id="exceedSphinxPageSizeDiv"]/div[1]//tr/td[@class="descriptTenderTd"]//a/@href)'));
         if(strlen($url) > 0) {
-        $data = $this->getUrl($url);
-        $doc = new DOMDocument();
-        $doc->loadHTML('<?xml encoding="UTF-8">' . $data);
-                    $xpath = new DOMXpath($doc);
-                    $zakazchik['tel'] = trim($xpath->evaluate('string(//h2/span[text()="Контактная информация"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Телефон")]/../following-sibling::td[1]//text())'));
+            $data = $this->getUrl($url);
+            $doc = new DOMDocument();
+            $doc->loadHTML('<?xml encoding="UTF-8">' . $data);
+            $xpath = new DOMXpath($doc);
+            $zakazchik['tel'] = trim($xpath->evaluate('string(//h2/span[text()="Контактная информация"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Телефон")]/../following-sibling::td[1]//text())'));
             $zakazchik['fax'] = trim($xpath->evaluate('string(//h2[span[text()="Контактная информация"]]/following-sibling::div[1]/table[1]//tr/td[contains(span/text(),"Факс")]/following-sibling::td[1]//text())'));
-                    $zakazchik['pochtovy_adres'] = trim($xpath->evaluate('string(//h2[span[text()="Контактная информация"]]/following-sibling::div[1]/table[1]//tr/td[contains(span/text(),"Почтовый адрес")]/following-sibling::td[1]//text())'));
-                    $zakazchik['email'] = trim($xpath->evaluate('string(//h2[span[text()="Контактная информация"]]/following-sibling::div[1]/table[1]//tr/td[contains(span/text(),"адрес электронной почты")]/following-sibling::td[1]//text())'));
-                    $zakazchik['kontaktnoe_lico'] = trim($xpath->evaluate('string(//h2[span[text()="Контактная информация"]]/following-sibling::div[1]/table[1]//tr/td[contains(span/text(),"Контактное лицо")]/following-sibling::td[1]//text())'));
-                }
+            $zakazchik['pochtovy_adres'] = trim($xpath->evaluate('string(//h2[span[text()="Контактная информация"]]/following-sibling::div[1]/table[1]//tr/td[contains(span/text(),"Почтовый адрес")]/following-sibling::td[1]//text())'));
+            $zakazchik['email'] = trim($xpath->evaluate('string(//h2[span[text()="Контактная информация"]]/following-sibling::div[1]/table[1]//tr/td[contains(span/text(),"адрес электронной почты")]/following-sibling::td[1]//text())'));
+            $zakazchik['kontaktnoe_lico'] = trim($xpath->evaluate('string(//h2[span[text()="Контактная информация"]]/following-sibling::div[1]/table[1]//tr/td[contains(span/text(),"Контактное лицо")]/following-sibling::td[1]//text())'));
+        }
         return $zakazchik;
     }
 
@@ -88,6 +88,7 @@ class StatusTask extends \Phalcon\Cli\Task{
             $data = $this->getUrl('http://zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $auctionId . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
         }
         libxml_use_internal_errors(true);
+        file_put_contents('data.html', $data);
         $doc = new DOMDocument();
         $doc->loadHTML($data);
         $xpath = new DOMXpath($doc);
@@ -99,19 +100,25 @@ class StatusTask extends \Phalcon\Cli\Task{
 
 //        $zayavitel2 = trim(preg_replace(array('/ООО/ui', '/«|»|\"/ui'), array('', ''), $zayavitel));
         $zayavitel2 = trim(preg_replace(array('/ООО/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $zayavitel));
-        $zayavitel2 = trim(preg_replace(array('/ИП/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $zayavitel2));
         $zayavitel2 = trim(preg_replace('/\s+/ui', ' ', $zayavitel2));
         foreach($xpath->query('//div[contains(@class,"registerBox")]') as $tender) {
             $complaint = array();
-            $complaint['lico'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]//tr/td[contains(text(),"Лицо, подавшее жалобу:")]/following-sibling::td[1]//text())', $tender));
-            $lico = trim(preg_replace(array('/ООО/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $complaint['lico']));
-            $lico = trim(preg_replace('/\s+/ui', ' ', $lico));
-            if(!mb_stristr($lico, $zayavitel2, false, "utf-8")) {
-                continue;
-            }
             $complaint['complaint_id'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]/table[1]//tr[1]/td[1]//a/@href)', $tender));
             preg_match('/complaintId=(\d+)/ui', $complaint['complaint_id'], $matches);
             $complaint['complaint_id'] = $matches[1];
+
+            $tmp = $this->getComplaintInfo($complaint['complaint_id']);
+
+            //$complaint['lico'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]//tr/td[contains(text(),"Лицо, подавшее жалобу:")]/following-sibling::td[1]//text())', $tender));
+            $complaint['lico'] = $tmp['lico'];
+
+            $lico = trim(preg_replace(array('/ООО|ИП\s|АО\s/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $complaint['lico']));
+            $lico = trim(preg_replace('/\s+/ui', ' ', $lico));
+            //echo "lico $lico\n";
+            if(!mb_stristr($lico, $zayavitel2, false, "utf-8")) {
+                //echo "ne sovpalo\n";
+                continue;
+            }
             $complaint['complaintNum'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]/table[1]//tr[1]/td[1]//a/span/text())', $tender));
             $complaint['date'] = trim($xpath->query('.//td[contains(@class,"amountTenderTd")]//label[contains(text(),"Дата поступления:")]', $tender)->item(0)->nextSibling->nodeValue);
             $complaint['status'] = array();
@@ -164,7 +171,7 @@ class StatusTask extends \Phalcon\Cli\Task{
     }
 
     function getComplaintInfo($id) {
-        $data = $this->getUrl('http://new.zakupki.gov.ru/controls/public/action/complaint/info?source=epz&complaintId='.$id);
+        $data = $this->getUrl('http://zakupki.gov.ru/controls/public/action/complaint/info?source=epz&complaintId='.$id);
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
         $doc->loadHTML('<?xml encoding="UTF-8">' . $data);
@@ -172,12 +179,13 @@ class StatusTask extends \Phalcon\Cli\Task{
 
         $complaint = array();
         $complaint['number'] = trim($xpath->evaluate('string(//h1/span/text())'));
-        $complaint['date'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[text()="Дата поступления жалобы"]/../following-sibling::td[1]//text())'));
-        $complaint['date_organ'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата поступления жалобы в уполномоченный орган")]/../following-sibling::td[1]//text())'));
-        $complaint['date_svedeniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время размещения сведений о жалобе")]/../following-sibling::td[1]//text())'));
-        $complaint['date_resheniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время размещения решения по жалобе")]/../following-sibling::td[1]//text())'));
-        $complaint['date_rassmotreniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время рассмотрения жалобы")]/../following-sibling::td[1]//text())'));
-        $complaint['date_obnovleniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время последнего обновления")]/../following-sibling::td[1]//text())'));
+        $complaint['date'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы" or text()="Сведения жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[text()="Дата поступления жалобы"]/../following-sibling::td[1]//text())'));
+        $complaint['lico'] = trim($xpath->evaluate('string(//h2/span[text()="Данные участника контрактной системы в сфере закупок, подавшего жалобу"]/../following-sibling::div[1]/table[1]//tr/td/span[text()="Полное наименование" or text()="Фамилия, имя и отчество"]/../following-sibling::td[1]//text())'));
+        $complaint['date_organ'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы" or text()="Сведения жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата поступления жалобы в уполномоченный орган")]/../following-sibling::td[1]//text())'));
+        $complaint['date_svedeniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы" or text()="Сведения жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время размещения сведений о жалобе")]/../following-sibling::td[1]//text())'));
+        $complaint['date_resheniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы" or text()="Сведения жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время размещения решения по жалобе")]/../following-sibling::td[1]//text())'));
+        $complaint['date_rassmotreniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы" or text()="Сведения жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время рассмотрения жалобы")]/../following-sibling::td[1]//text())'));
+        $complaint['date_obnovleniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы" or text()="Сведения жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время последнего обновления")]/../following-sibling::td[1]//text())'));
         $complaint['dop_docs'] = array();
         foreach($xpath->query('//h2/span[text()="Содержание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дополнительные документы")]/../following-sibling::td[1]//table//tr/td[position()=last()]/a') as $a) {
             $complaint['dop_docs'][] = array(
@@ -209,7 +217,6 @@ class StatusTask extends \Phalcon\Cli\Task{
 
         return $new_date;
     }
-
     function reglamentTime($date, $add_day = 3) {
         for($i = 1; $i <= $add_day; $i++) {
             $date = $this->nextBusinessDay($date);
@@ -218,7 +225,6 @@ class StatusTask extends \Phalcon\Cli\Task{
         $date = "{$matches[3]}-{$matches[2]}-{$matches[1]}";
         return strtotime($date);
     }
-
     function getTime($date) {
         preg_match('/(\d+)\.(\d+)\.(\d+)/ui', $date, $matches);
         $date = "{$matches[3]}-{$matches[2]}-{$matches[1]}";
