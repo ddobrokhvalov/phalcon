@@ -3,9 +3,10 @@
 use Multiple\Frontend\Models\Complaint;
 use Multiple\Frontend\Models\Applicant;
 use Phalcon\Config\Adapter\Ini as ConfigIni;
-require_once('../../../vendor/autoload.php');
-
 defined('APP_PATH') || define('APP_PATH', realpath(dirname(__FILE__)));
+require_once(APP_PATH.'../vendor/autoload.php');
+
+
 
 class StatusTask extends \Phalcon\Cli\Task{
     function Parser() {
