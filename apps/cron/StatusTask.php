@@ -10,79 +10,71 @@ require_once(APP_PATH.'/../vendor/autoload.php');
 
 class StatusTask extends \Phalcon\Cli\Task{
     public function mainAction(){
+        $complaints = Complaint::find(array(
+            "status = 'submitted'"
+        ));
+        $error_text = '';
 
-        $p = new Parser();
-        print_r($p->getComplaint('0342100022216000063', 'ИП Смирнов Алексей Борисович', '29.11.2016'));
+        $temp_conf = new ConfigIni(APP_PATH."/../apps/frontend/config/config.ini");
+        $mail = $temp_conf->mailer->toArray();
+        $adminsEmail = $temp_conf->adminsEmails->toArray();
+        $config = array();
+        $config['driver'] = $mail['driver'];
+        $config['host'] = $mail['host'];
+        $config['port'] = $mail['port'];
+        $config['encryption'] = $mail['encryption'];
+        $config['username'] = $mail['username'];
+        $config['password'] = $mail['password'];
+        $config['from']['email'] = $mail['femail'];
+        $config['from']['name'] = $mail['fname'];
+        $mailer = new \Phalcon\Ext\Mailer\Manager($config);
 
+        foreach ($complaints as $comp) {
+            $applicant = Applicant::findFirst($comp->applicant_id);
+            //echo $comp->auction_id." ".$applicant->name_short." ".$comp->date_submit."\n";
+            $parser = new Parser();
+            $response = $parser->getComplaint((string)$comp->auction_id, trim($applicant->name_short), $comp->date_submit);
+            var_dump($response);
+            if (!empty($response['complaint'])) {
+                $status = $response['complaint']['status'];
+                $changeStatus = new Complaint();
+                switch ($status[0]) {
+                    //No break
+                    case 'Признана обоснованной':
+                    case 'Признана обоснованной частично':
+                        $changeStatus->changeStatus('justified', array($comp->id));
+                        break;
+                    case 'Рассматривается / 44-ФЗ':
+                        $changeStatus->changeStatus('under_consideration', array($comp->id));
+                        break;
+                    case 'Признана необоснованной':
+                        $changeStatus->changeStatus('unfounded', array($comp->id));
+                        break;
+                }
+            } else {
+                if (!empty($response['error'])) {
+                    $error_text .= '<br/>';
+                    $error_text .= 'Текст ошибки: ' . $response['error'] . "<br/>";
+                    $error_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
+                    $error_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
+                    $error_text .= ' | Имя заявителя: ' . $applicant->name_short . "<br/>";
+                    $error_text .= ' | Дата подачи жалобы: ' . $comp->date_submit . "<br/>";
+                    $error_text .= ' | Время работы парсера: ' . date('Y-m-d H:i:s') . "<br/>";
+                    $error_text .= '<br/>';
+                    $error_text .= '<br/>';
+                    $error_text .= '---------------------------------';
+                }
+            }
+        }
 
-
-
-
-//        $complaints = Complaint::find(array(
-//            "status = 'submitted'"
-//        ));
-//        $error_text = '';
-//
-//        $temp_conf = new ConfigIni(APP_PATH."/../apps/frontend/config/config.ini");
-//        $mail = $temp_conf->mailer->toArray();
-//        $adminsEmail = $temp_conf->adminsEmails->toArray();
-//        $config = array();
-//        $config['driver'] = $mail['driver'];
-//        $config['host'] = $mail['host'];
-//        $config['port'] = $mail['port'];
-//        $config['encryption'] = $mail['encryption'];
-//        $config['username'] = $mail['username'];
-//        $config['password'] = $mail['password'];
-//        $config['from']['email'] = $mail['femail'];
-//        $config['from']['name'] = $mail['fname'];
-//        $mailer = new \Phalcon\Ext\Mailer\Manager($config);
-//
-//        foreach ($complaints as $comp) {
-//            $applicant = Applicant::findFirst($comp->applicant_id);
-//            //echo $comp->auction_id." ".$applicant->name_short." ".$comp->date_submit."\n";
-//            $parser = new Parser();
-//            $response = $parser->getComplaint($comp->auction_id, trim($applicant->name_short), $comp->date_submit);
-//            var_dump($response);
-//            if (!empty($response['complaint'])) {
-//                $status = $response['complaint']['status'];
-//                $changeStatus = new Complaint();
-//                switch ($status[0]) {
-//                    //No break
-//                    case 'Признана обоснованной':
-//                    case 'Признана обоснованной частично':
-//                        $changeStatus->changeStatus('justified', array($comp->id));
-//                        break;
-//                    case 'Рассматривается / 44-ФЗ':
-//                        $changeStatus->changeStatus('under_consideration', array($comp->id));
-//                        break;
-//                    case 'Признана необоснованной':
-//                        $changeStatus->changeStatus('unfounded', array($comp->id));
-//                        break;
-//                }
-//            } else {
-//                if (!empty($response['error'])) {
-//                    $error_text .= '<br/>';
-//                    $error_text .= 'Текст ошибки: ' . $response['error'] . "<br/>";
-//                    $error_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
-//                    $error_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
-//                    $error_text .= ' | Имя заявителя: ' . $applicant->name_short . "<br/>";
-//                    $error_text .= ' | Дата подачи жалобы: ' . $comp->date_submit . "<br/>";
-//                    $error_text .= ' | Время работы парсера: ' . date('Y-m-d H:i:s') . "<br/>";
-//                    $error_text .= '<br/>';
-//                    $error_text .= '<br/>';
-//                    $error_text .= '---------------------------------';
-//                }
-//            }
-//        }
-//
-//        if(strlen($error_text) > 0) {
-//            $message = $mailer->createMessage()
-//                ->to($adminsEmail['error'])
-//                ->bcc('vadim-antropov@ukr.net')
-//                ->subject('Ошибка при парсинге данных')
-//                ->content($error_text);
-//            $message->send();
-//        }
+        if(strlen($error_text) > 0) {
+            $message = $mailer->createMessage()
+                ->to($adminsEmail['error'])
+                ->bcc('vadim-antropov@ukr.net')
+                ->subject('Ошибка при парсинге данных')
+                ->content($error_text);
+            $message->send();
+        }
     }
 }
 
