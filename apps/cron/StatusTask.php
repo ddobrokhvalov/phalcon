@@ -115,8 +115,8 @@ class StatusTask extends \Phalcon\Cli\Task{
             $lico = trim(preg_replace(array('/ООО|ИП\s|АО\s/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $complaint['lico']));
             $lico = trim(preg_replace('/\s+/ui', ' ', $lico));
             //echo "lico $lico\n";
-            if(!mb_stristr($lico, $zayavitel2, false, "utf-8")) {
-                //echo "ne sovpalo\n";
+            if(!mb_stristr($zayavitel2, $lico, false, "utf-8")) {
+                echo "ne sovpalo $lico $zayavitel2\n";
                 continue;
             }
             $complaint['complaintNum'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]/table[1]//tr[1]/td[1]//a/span/text())', $tender));
