@@ -78,15 +78,18 @@ class StatusTask extends \Phalcon\Cli\Task{
     }
 }
 
-class Parser {
-    function Parser() {
+class Parser
+{
+    function Parser()
+    {
         libxml_use_internal_errors(true);
     }
 
     // передавать строку, не число!
-    function parseAuction($auctionId) {
+    function parseAuction($auctionId)
+    {
         $auction = array('info' => array(), 'contact' => array(), 'procedura' => array(), 'zakazchik' => array());
-        $data = $this->getUrl('http://zakupki.gov.ru/epz/order/notice/ea44/view/common-info.html?regNumber='.$auctionId);
+        $data = $this->getUrl('http://zakupki.gov.ru/epz/order/notice/ea44/view/common-info.html?regNumber=' . $auctionId);
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
         $doc->loadHTML($data);
@@ -115,7 +118,7 @@ class Parser {
         $auction['procedura']['okonchanie_rassmotreniya'] = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Дата окончания срока рассмотрения первых частей заявок участников")]/following-sibling::td[1]/text())'));
         $auction['procedura']['data_provedeniya'] = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Дата проведения аукциона в электронной форме")]/following-sibling::td[1]/text())'));
         $auction['procedura']['vremya_provedeniya'] = trim($xpath->evaluate('string(//h2[contains(text(),"Информация о процедуре закупки")]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Время проведения аукциона")]/following-sibling::td[1]/text())'));
-        foreach($xpath->query('//h3[contains(text(),"Требования")]') as $zakazchik) {
+        foreach ($xpath->query('//h3[contains(text(),"Требования")]') as $zakazchik) {
             $zakazchik_name = trim($xpath->evaluate('string(./text())', $zakazchik));
             $zakazchik_name = trim(preg_replace('/Требования заказчика/ui', '', $zakazchik_name));
             $auction['zakazchik'][] = $this->getZakazchikInfo($zakazchik_name);
@@ -123,7 +126,8 @@ class Parser {
         return $auction;
     }
 
-    function getZakazchikInfo($name) {
+    function getZakazchikInfo($name)
+    {
         $zakazchik = array();
         $zakazchik['name'] = $name;
         $name = trim(preg_replace('/«|»|"/ui', '', $name));
@@ -135,7 +139,7 @@ class Parser {
         $xpath = new DOMXpath($doc);
 
         $url = trim($xpath->evaluate('string(//div[@id="exceedSphinxPageSizeDiv"]/div[1]//tr/td[@class="descriptTenderTd"]//a/@href)'));
-        if(strlen($url) > 0) {
+        if (strlen($url) > 0) {
             $data = $this->getUrl($url);
             $doc = new DOMDocument();
             $doc->loadHTML('<?xml encoding="UTF-8">' . $data);
@@ -149,12 +153,12 @@ class Parser {
         return $zakazchik;
     }
 
-    function getComplaint($auctionId, $zayavitel ,$date, $complaintNum = false) {
-        if($complaintNum) {
+    function getComplaint($auctionId, $zayavitel, $date, $complaintNum = false)
+    {
+        if ($complaintNum) {
             $complaintNum = trim(preg_replace('/№/ui', '', $complaintNum));
             $data = $this->getUrl('http://zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $complaintNum . '&strictEqual=on&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
-        }
-        else {
+        } else {
             $data = $this->getUrl('http://zakupki.gov.ru/epz/complaint/quicksearch/search.html?searchString=' . $auctionId . '&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU');
         }
         libxml_use_internal_errors(true);
@@ -171,7 +175,7 @@ class Parser {
 //        $zayavitel2 = trim(preg_replace(array('/ООО/ui', '/«|»|\"/ui'), array('', ''), $zayavitel));
         $zayavitel2 = trim(preg_replace(array('/ООО/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $zayavitel));
         $zayavitel2 = trim(preg_replace('/\s+/ui', ' ', $zayavitel2));
-        foreach($xpath->query('//div[contains(@class,"registerBox")]') as $tender) {
+        foreach ($xpath->query('//div[contains(@class,"registerBox")]') as $tender) {
             $complaint = array();
             $complaint['complaint_id'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]/table[1]//tr[1]/td[1]//a/@href)', $tender));
             preg_match('/complaintId=(\d+)/ui', $complaint['complaint_id'], $matches);
@@ -185,63 +189,59 @@ class Parser {
             $lico = trim(preg_replace(array('/ООО|ИП\s|АО\s/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $complaint['lico']));
             $lico = trim(preg_replace('/\s+/ui', ' ', $lico));
             //echo "lico $lico\n";
-            if(!mb_stristr($zayavitel2, $lico, false, "utf-8")) {
+            if (!mb_stristr($zayavitel2, $lico, false, "utf-8")) {
                 //echo "ne sovpalo $lico $zayavitel2\n";
                 continue;
             }
             $complaint['complaintNum'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]/table[1]//tr[1]/td[1]//a/span/text())', $tender));
             $complaint['date'] = trim($xpath->query('.//td[contains(@class,"amountTenderTd")]//label[contains(text(),"Дата поступления:")]', $tender)->item(0)->nextSibling->nodeValue);
             $complaint['status'] = array();
-            foreach($xpath->query('.//td[@class="tenderTd"]//dd', $tender) as $dd) {
+            foreach ($xpath->query('.//td[@class="tenderTd"]//dd', $tender) as $dd) {
                 $complaint['status'][] = trim(preg_replace('/\s+/ui', ' ', $dd->nodeValue));
             }
             $complaints[] = $complaint;
         }
         //print_r($complaints);
-        if(count($complaints) == 0) {
-            if($reglamentTime <= time()) {
+        if (count($complaints) == 0) {
+            if ($reglamentTime <= time()) {
                 $response['error'] = 'Ничего не найдено. Вышел регламентированный срок принятия к рассмотрению.';
-            }
-            else {
+            } else {
                 $response['error'] = 'Ничего не найдено';
             }
             return $response;
-        }
-        elseif(count($complaints) == 1) {
+        } elseif (count($complaints) == 1) {
             $response['complaint'] = $complaints[0];
             $response['complaint']['info'] = $this->getComplaintInfo($complaints[0]['complaint_id']);
-            if($reglamentTime <= $this->getTime($complaints[0]['date'])) {
+            if ($reglamentTime <= $this->getTime($complaints[0]['date'])) {
                 $response['error'] = 'Нарушение регламентного срока!';
             }
             return $response;
-        }
-        else {
+        } else {
             $nbd = $this->nextBusinessDay($date);
             $indexes = array();
-            foreach($complaints as $k => &$c) {
+            foreach ($complaints as $k => &$c) {
                 //echo date('d.m.Y', $reglamentTime) . " " . $c['date'] . " " . $date . "\n";
-                if($reglamentTime > $this->getTime($c['date']) && $this->getTime($c['date']) > $this->getTime($date)) {
+                if ($reglamentTime > $this->getTime($c['date']) && $this->getTime($c['date']) > $this->getTime($date)) {
                     $indexes[] = $k;
                     $c['info'] = $this->getComplaintInfo($complaint['complaint_id']);
                 }
             }
             $complaints['index'] = $indexes;
-            if(count($complaints['index']) == 0) {
+            if (count($complaints['index']) == 0) {
                 $response['error'] = 'С нужной датой ничего нет';
-            }
-            elseif(count($complaints['index']) == 1) {
+            } elseif (count($complaints['index']) == 1) {
                 $response['complaint'] = $complaints[$complaints['index'][0]];
                 return $response;
-            }
-            else {
+            } else {
                 $response['error'] = 'Много данных с нужной датой';
             }
             return $response;
         }
     }
 
-    function getComplaintInfo($id) {
-        $data = $this->getUrl('http://zakupki.gov.ru/controls/public/action/complaint/info?source=epz&complaintId='.$id);
+    function getComplaintInfo($id)
+    {
+        $data = $this->getUrl('http://zakupki.gov.ru/controls/public/action/complaint/info?source=epz&complaintId=' . $id);
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
         $doc->loadHTML('<?xml encoding="UTF-8">' . $data);
@@ -257,7 +257,7 @@ class Parser {
         $complaint['date_rassmotreniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы" or text()="Сведения жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время рассмотрения жалобы")]/../following-sibling::td[1]//text())'));
         $complaint['date_obnovleniya'] = trim($xpath->evaluate('string(//h2/span[text()="Описание жалобы" or text()="Сведения жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дата и время последнего обновления")]/../following-sibling::td[1]//text())'));
         $complaint['dop_docs'] = array();
-        foreach($xpath->query('//h2/span[text()="Содержание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дополнительные документы")]/../following-sibling::td[1]//table//tr/td[position()=last()]/a') as $a) {
+        foreach ($xpath->query('//h2/span[text()="Содержание жалобы"]/../following-sibling::div[1]/table[1]//tr/td/span[contains(text(),"Дополнительные документы")]/../following-sibling::td[1]//table//tr/td[position()=last()]/a') as $a) {
             $complaint['dop_docs'][] = array(
                 'name' => trim($xpath->evaluate('string(./text())', $a)),
                 'url' => trim($xpath->evaluate('string(./@href)', $a))
@@ -275,7 +275,8 @@ class Parser {
         return $complaint;
     }
 
-    function nextBusinessDay($date) {
+    function nextBusinessDay($date)
+    {
         preg_match('/(\d+)\.(\d+)\.(\d+)/ui', $date, $matches);
         $date = "{$matches[3]}-{$matches[2]}-{$matches[1]}";
         $add_day = 0;
@@ -283,19 +284,23 @@ class Parser {
             $add_day++;
             $new_date = date('d.m.Y', strtotime("$date +$add_day Days"));
             $new_day_of_week = date('w', strtotime("$date +$add_day Days"));
-        } while($new_day_of_week == 6 || $new_day_of_week == 0);
+        } while ($new_day_of_week == 6 || $new_day_of_week == 0);
 
         return $new_date;
     }
-    function reglamentTime($date, $add_day = 3) {
-        for($i = 1; $i <= $add_day; $i++) {
+
+    function reglamentTime($date, $add_day = 3)
+    {
+        for ($i = 1; $i <= $add_day; $i++) {
             $date = $this->nextBusinessDay($date);
         }
         preg_match('/(\d+)\.(\d+)\.(\d+)/ui', $date, $matches);
         $date = "{$matches[3]}-{$matches[2]}-{$matches[1]}";
         return strtotime($date);
     }
-    function getTime($date) {
+
+    function getTime($date)
+    {
         preg_match('/(\d+)\.(\d+)\.(\d+)/ui', $date, $matches);
         $date = "{$matches[3]}-{$matches[2]}-{$matches[1]}";
         return strtotime($date);
@@ -303,11 +308,11 @@ class Parser {
 
     function getUrl($url, $ref = null, $save_cookie = false, $post = false, $add = array())
     {
-        for($try = 0; $try < 5; $try++) {
+        for ($try = 0; $try < 5; $try++) {
             $ch = curl_init($url);
 
             //curl_setopt($ch, CURLOPT_VERBOSE, true);
-            if($post) {
+            if ($post) {
                 curl_setopt($ch, CURLOPT_POST, TRUE);
                 //if (is_array($post))
                 //  curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
@@ -322,13 +327,13 @@ class Parser {
             curl_setopt($ch, CURLOPT_AUTOREFERER, true);
             curl_setopt($ch, CURLOPT_DNS_USE_GLOBAL_CACHE, true);
             //curl_setopt($ch, CURLOPT_COOKIESESSION, true);
-            if($ref)
+            if ($ref)
                 curl_setopt($ch, CURLOPT_REFERER, $ref);
             else
                 curl_setopt($ch, CURLOPT_REFERER, $url);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_COOKIEFILE, dirname(__FILE__) . '/cookie');
-            if($save_cookie)
+            if ($save_cookie)
                 curl_setopt($ch, CURLOPT_COOKIEJAR, dirname(__FILE__) . '/cookie');
 
             curl_setopt($ch, CURLOPT_ENCODING, 'gzip,deflate');
@@ -344,14 +349,14 @@ class Parser {
             );
             $headers = array_merge($headers, $add);
             $h = array();
-            foreach($headers as $k => $v) {
-                $h[] = $k . ': '. $v;
+            foreach ($headers as $k => $v) {
+                $h[] = $k . ': ' . $v;
             }
             curl_setopt($ch, CURLOPT_HTTPHEADER, $h);
 
             $res = curl_exec($ch);
             curl_close($ch);
-            if($res !== FALSE)
+            if ($res !== FALSE)
                 return $res;
         }
         echo "many try!!!";
