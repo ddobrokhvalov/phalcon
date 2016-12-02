@@ -10,6 +10,10 @@ require_once(APP_PATH.'/../vendor/autoload.php');
 
 class StatusTask extends \Phalcon\Cli\Task{
     public function mainAction(){
+
+        $p = new Parser();
+        print_r($p->getComplaint('0342100022216000063', 'ИП Смирнов Алексей Борисович', '29.11.2016')); exit;
+
         $complaints = Complaint::find(array(
             "status = 'submitted'"
         ));
