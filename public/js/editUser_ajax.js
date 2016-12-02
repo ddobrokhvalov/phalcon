@@ -15,6 +15,7 @@ $(document).ready(function () {
                     $('.opacity-cap-compl').attr('data-userfields', '0');
                     $('.ch-r-s-inf-f.userData .c-inp-err-t').text('');
                 } else if (res.error) {
+                    console.log(res.error);
                     $('.ch-r-s-inf-f.userData .c-inp-err-t').text('');
                     for (error in res.error) {
                         var keyName = error,

@@ -46,10 +46,10 @@ class UsersController extends Controller
                     if ($data['new_password'] == $data['new_password_confirm']) {
                         $user->password = sha1($data['new_password']);
                     } else {
-                        throw new FieldException('Непраильное подтверждние пароля', 'confpassword');
+                        throw new FieldException('Непраильное подтверждние пароля', 'new_password_confirm');
                     }
                 } else {
-                    throw new FieldException('Неправильный старый пароль', 'oldpassword');
+                    throw new FieldException('Неправильный старый пароль', 'old_password');
                 }
             }
 

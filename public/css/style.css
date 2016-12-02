@@ -5248,6 +5248,13 @@ body#backend-login {
   font-weight: 100;
 }
 
+/* line 41, ../sass/_menu.scss */
+.ch-r-s-inf-f label span {
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+}
+
 /* line 1, ../sass/_applicantCertificate.scss */
 .applicantCertificate {
   margin-bottom: 40px;
