@@ -195,10 +195,10 @@ function add_list(text, ckeditor_id) {
         if (text.search("<ol>") >= 0) {
             $("#" + ckeditor_id + " ol").each(function(ul_index, ul_item) {
                 var list = "<ol>" + $(ul_item).html() + "</ol>";
-                while (list.search('<br>') >= 0/* || list.search("\r\n") >= 0*/) {
-                    list = list.replace("<br>", '\n');
-                    //list = list.replace("\r\n", '');
-                }
+                // while (list.search('<br>') >= 0/* || list.search("\r\n") >= 0*/) {
+                //     list = list.replace("<br>", '\n');
+                //     //list = list.replace("\r\n", '');
+                // }
                 var list_li = [];
                 $(ul_item).find("li").each(function(li_index, li_item){
                     list_li.push($(li_item).text());
@@ -207,8 +207,7 @@ function add_list(text, ckeditor_id) {
                 for (var li_i = 0; li_i < list_li.length; li_i++) {
                     li_i_html += '<w:p><w:pPr><w:numPr><w:ilvl w:val="0"/><w:numId w:val="1"/></w:numPr></w:pPr><w:r><w:t>' + list_li[li_i] + '</w:t></w:r></w:p>';
                 }
-                //text = text.replace(list, li_i_html + '\n');
-                text = li_i_html;
+                text = text.replace(list, li_i_html + '\n');
             });
         } else {
             return text;
