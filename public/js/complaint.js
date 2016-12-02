@@ -963,11 +963,12 @@ function initEditor(id) {
         }
     });
     // };
-    editor.config.forcePasteAsPlainText = true;
+
     editor.disableAutoInline = true;
     editor.config.extraPlugins = 'sharedspace,font';
-    editor.config.allowedContent = true;
-
+    editor.pasteFilter = 'plain-text';
+    editor.allowedContent = false;
+    editor.forcePasteAsPlainText = false;
 }
 
 function getOffsetSum(elem) {

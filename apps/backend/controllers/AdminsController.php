@@ -323,14 +323,19 @@ class AdminsController extends ControllerBase
             if (strlen($post['password']) > 0 || strlen($post['opassword']) > 0 || strlen($post['rpassword']) > 0) {
                 if(!strlen($post['opassword']))
                     $messages[] = 'Введите старый пароль';
-                elseif(sha1($post['opassword'])==$admin->password)
+                elseif(strlen($post['password']) < 8 )
+                    $messages[] = 'Пароль менее 8 сиволов';
+                elseif(sha1($post['opassword']) != $admin->password)
                     $messages[] = 'Cтарый пароль не верен';
                 elseif(!strlen($post['password']))
                     $messages[] = 'Введите новый пароль';
                 elseif($post['password']!==$post['rpassword'])
                     $messages[] = 'Пароли не совпадают';
-                else
+                else {
                     $data['password'] = sha1($post['password']);
+                    $admin->password = sha1($post['password']);
+                    $admin->save();
+                }
             }
             if (!count($messages)) {
                 if ($this->request->hasFiles() == true)
