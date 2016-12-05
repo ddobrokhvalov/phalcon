@@ -20,7 +20,7 @@ $(document).ready(function () {
         var auction_id = $('#auction_id').val();
         if (validator.numeric(auction_id, 5, 25)) {
 
-
+            $('.c-inp-err-t.c-inp-err-t-numberIzv').hide();
             $('#auction_id').removeClass('c-inp-error');
             $('#auction_id').removeClass('c-inp-done');
             $('.msg_status_parser').remove();
@@ -31,6 +31,7 @@ $(document).ready(function () {
             auction.sendRequest(auction_id, false);
         } else {
             $('#auction_id').addClass('c-inp-error');
+            $('#auction_id').parent().find('.c-inp-err-t.c-inp-err-t-numberIzv').show();
         }
     });
 
