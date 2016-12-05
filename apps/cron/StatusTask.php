@@ -61,7 +61,7 @@ class StatusTask extends \Phalcon\Cli\Task{
                 $success_text .= ' | Время работы парсера: ' . date('Y-m-d H:i:s') . "<br/>";
                 $success_text .= '<br/>';
                 $success_text .= '<br/>';
-                $success_text .= '---------------------------------';
+                $success_text .= '---------------------------------<br/>';
             } else {
                 if (!empty($response['error'])) {
                     $error_text .= '<br/>';
@@ -75,7 +75,7 @@ class StatusTask extends \Phalcon\Cli\Task{
                     $error_text .= ' | Время работы парсера: ' . date('Y-m-d H:i:s') . "<br/>";
                     $error_text .= '<br/>';
                     $error_text .= '<br/>';
-                    $error_text .= '---------------------------------';
+                    $error_text .= '---------------------------------<br/>';
                 }
             }
         }
