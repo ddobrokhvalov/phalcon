@@ -27,6 +27,7 @@ class Complaint extends Model
     public $complaint_text_order;
     public $ufas_id;
     public $date_submit;
+    public $user_id;
 
     public function initialize()
     {
@@ -289,9 +290,10 @@ class Complaint extends Model
                 if($status == 'archive') $stat = 'Архив';
                 //if($status == 'activate') $stat = 'Активирована';
 
+                var_dump($user_id, $complaint->user_id);
 
                 $message = new Messages();
-                $message->to_uid = $user_id;
+                $message->to_uid = ($user_id != false) ? $user_id : $complaint->user_id;
                 $message->subject = "Изменение статуса жалобы";
                 $message->body = "Статус вашей жалобы на закупку №{$complaint->auction_id} был изменен на '{$stat}'";
                 $message->time = date('Y-m-d H:i:s');

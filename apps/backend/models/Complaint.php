@@ -30,6 +30,7 @@ class Complaint extends Model
     public $text;
     public $fid;
     public $date_submit;
+    public $user_id;
 
     public function initialize()
     {

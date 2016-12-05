@@ -13,7 +13,8 @@ class StatusTask extends \Phalcon\Cli\Task{
         $complaints = Complaint::find(array(
             "status = 'submitted'"
         ));
-        $error_text = '';
+        $error_text = '<strong>Ошибки парсинга:</strong><br/>';
+        $success_text = '<strong>Успешные изменения статусов:</strong><br/>';
 
         $temp_conf = new ConfigIni(APP_PATH."/../apps/frontend/config/config.ini");
         $mail = $temp_conf->mailer->toArray();
@@ -31,7 +32,6 @@ class StatusTask extends \Phalcon\Cli\Task{
 
         foreach ($complaints as $comp) {
             $applicant = Applicant::findFirst($comp->applicant_id);
-            //echo $comp->auction_id." ".$applicant->name_short." ".$comp->date_submit."\n";
             $parser = new Parser();
             $response = $parser->getComplaint((string)$comp->auction_id, (string)$applicant->name_short, (string)$comp->date_submit);
             if (!empty($response['complaint'])) {
@@ -50,14 +50,28 @@ class StatusTask extends \Phalcon\Cli\Task{
                         $changeStatus->changeStatus('unfounded', array($comp->id));
                         break;
                 }
+                $success_text .= '<br/>';
+                $success_text .= 'Новый статус жалобы: ' . $status[0] . "<br/>";
+                $success_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
+                $success_text .= ' | Название жалобы: ' . $comp->complaint_name . "<br/>";
+                $success_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
+                $success_text .= ' | Имя заявителя: ' . $applicant->name_short . "<br/>";
+                $success_text .= ' | Дата подачи жалобы: ' . $comp->date_submit . "<br/>";
+                $success_text .= ' | Ссылка: <a href="http://fas-online.ru/complaint/edit/'.$comp->id.'">Перейти к жалобе</a>';
+                $success_text .= ' | Время работы парсера: ' . date('Y-m-d H:i:s') . "<br/>";
+                $success_text .= '<br/>';
+                $success_text .= '<br/>';
+                $success_text .= '---------------------------------';
             } else {
                 if (!empty($response['error'])) {
                     $error_text .= '<br/>';
                     $error_text .= 'Текст ошибки: ' . $response['error'] . "<br/>";
                     $error_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
+                    $error_text .= ' | Название жалобы: ' . $comp->complaint_name . "<br/>";
                     $error_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
                     $error_text .= ' | Имя заявителя: ' . $applicant->name_short . "<br/>";
                     $error_text .= ' | Дата подачи жалобы: ' . $comp->date_submit . "<br/>";
+                    $error_text .= ' | Ссылка: <a href="http://fas-online.ru/complaint/edit/'.$comp->id.'">Перейти к жалобе</a>';
                     $error_text .= ' | Время работы парсера: ' . date('Y-m-d H:i:s') . "<br/>";
                     $error_text .= '<br/>';
                     $error_text .= '<br/>';
@@ -66,14 +80,12 @@ class StatusTask extends \Phalcon\Cli\Task{
             }
         }
 
-        if(strlen($error_text) > 0) {
-            $message = $mailer->createMessage()
-                ->to($adminsEmail['error'])
-                ->bcc('vadim-antropov@ukr.net')
-                ->subject('Ошибка при парсинге данных')
-                ->content($error_text);
-            $message->send();
-        }
+        $message = $mailer->createMessage()
+            ->to($adminsEmail['error'])
+            ->bcc('vadim-antropov@ukr.net')
+            ->subject('Результат парсинга данных')
+            ->content($success_text.$error_text);
+        $message->send();
     }
 }
 
