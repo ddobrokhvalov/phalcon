@@ -7,6 +7,7 @@
 <!--[if IE]>
 <script type="text/javascript" src="/js/docx_generator/js/jszip-utils-ie.js"></script>
 <![endif]-->
+<script type="text/javascript" src="/js/checkPlugin.js"></script>
 <script type="text/javascript" src="/js/RecallComplaint.js"></script>
 <script type="text/javascript" src="/js/checkDate.js"></script>
 <div id="chsort">
@@ -212,5 +213,17 @@ var currentStatus ='{{ status }}';
         <p class="pop-done-txt" style="padding: 0 26px 30px"></p>
         <div class="popupBtn recall-compl">Отозвать</div>
         <div class="popupBtn cancel-recall">Отмена</div>
+    </div>
+</article>
+
+<article class="admin-popup-wrap addAppCertificate addAppCertificate-alert" style="display:none;">
+    <div class="admin-popup-bg-hiddenClick"></div>
+    <div class="admin-popup-content index-main-popup">
+        <h6>Импорт заявителя из данных сертификата</h6>
+        <p class="addAppCertificate__dscrAlert">Для работы функции импорта из сертификата необходим плагин КриптоПРО. Установить плагин для Вашего Браузера сейчас?</p>
+        <div class="addAppCertificate__btnHolder">
+            <div class="addAppCertificate__addBtn"><a href="https://www.cryptopro.ru/products/cades/plugin/get_2_0">Установить</a></div>
+            <div class="addAppCertificate__cancelBtn"><a href="/complaint/index">Отменить</a></div>
+        </div>
     </div>
 </article>

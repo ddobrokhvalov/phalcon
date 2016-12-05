@@ -54,8 +54,10 @@ $(document).ready(function () {
 
     //RECALL
     $('.button-recallRec').click(function(){
+        checkPlugin();
         var idComp = $('.complaint-checkbox:checked').val()
         if(!idComp) idComp = $("#complaint_id").val();
+        if(!pluginNotFound) return false;
         $.ajax({
             type: 'POST',
             url: '/complaint/checkDateOnRecallComplaint',
