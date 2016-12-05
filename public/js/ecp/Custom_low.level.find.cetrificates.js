@@ -115,7 +115,6 @@ function  hideWaitPopup(){
     $('.addAppCertificate-preloader').hide();
 
     if(pluginNotFound == true){
-
         $('.addAppCertificate-alert').fadeIn().css('display', 'flex');
     }else{
         $('.addAppCertificate-main2').fadeIn().css('display', 'flex');

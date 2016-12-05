@@ -1,5 +1,6 @@
 var pluginNotFound = true;
-function checkPlugin() {
+function checkPlugin(callback) {
+    timer_id = setTimeout(hideWaitPopup, 1000*2);
 // Доступ всегда осуществляется в ассинхронном режиме
 // Получаем объект Promise для доступа к cades plugin api
     var cades = window.cades;
@@ -12,7 +13,7 @@ function checkPlugin() {
 // Получаем доступ к хранилищу сертификатов пользователя
     oStore.then(function (Store) {
         pluginNotFound = false;
-        hideWaitPopup();
+        hideWaitPopup(callback);
         return Store.open.apply(Store, [
             Store.CAPICOM_CURRENT_USER_STORE, // Хранилище текущего пользователя
             Store.CAPICOM_MY_STORE, // Имя хранилища "My"
@@ -25,15 +26,14 @@ function checkPlugin() {
     });
 }
 
-function  hideWaitPopup(){
+function  hideWaitPopup(callback){
     clearTimeout(timer_id);
     $('.addAppCertificate-preloader').hide();
 
     if(pluginNotFound == true){
-
         $('.addAppCertificate-alert').fadeIn().css('display', 'flex');
     }else{
-        $('.addAppCertificate-main2').fadeIn().css('display', 'flex');
+        callback();
     }
 }
 
