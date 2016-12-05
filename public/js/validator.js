@@ -10,7 +10,7 @@ var validator = {
             return false;
         if (parseInt(value) != value)
             return false;
-        if (value[0] != 0)
+        if (value[0] != 0 || value.length != 19)
             return false;
 
         return true;
