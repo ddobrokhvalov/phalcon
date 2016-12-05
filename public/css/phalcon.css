@@ -97,6 +97,9 @@ a:visited {
     .wrapper.marginLeftWrapper {
         margin: 0 0 0 300px;
     }
+    .wrap-with-menuPanel-pd {
+        padding-left: 15px;
+    }
 }
 .mheader {
     float: left;

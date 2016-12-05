@@ -5924,26 +5924,40 @@ body#backend-login {
   max-width: 19%;
 }
 
+/* line 1, ../sass/_wantReg.scss */
+.wantReg {
+  clear: both;
+  float: right;
+  width: 170px;
+  line-height: 30px;
+  text-align: center;
+  text-decoration: underline;
+}
+/* line 8, ../sass/_wantReg.scss */
+.wantReg:hover {
+  text-decoration: underline !important;
+}
+
 @media (max-width: 1640px) {
-  /* line 149, ../sass/style.scss */
+  /* line 150, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: 330px;
     margin-right: 0;
   }
 }
 @media (max-width: 1325px) {
-  /* line 156, ../sass/style.scss */
+  /* line 157, ../sass/style.scss */
   .page-wrap, .header-wrap #admin-header {
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* line 160, ../sass/style.scss */
+  /* line 161, ../sass/style.scss */
   .admin-lm-wrap {
     left: -242px;
   }
 
-  /* line 163, ../sass/style.scss */
+  /* line 164, ../sass/style.scss */
   .lm-burger {
     display: block;
   }

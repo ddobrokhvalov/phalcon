@@ -3,7 +3,10 @@ jQuery(document).ready(function($) {
     $('.cancel-recall').click(function () {
         $(this).parent().parent().fadeOut();
     });
-
+    $('.wantReg').click(function () {
+        $('#overlay').fadeIn();
+        $('#pop-start').fadeIn().animate({opacity: 1}, 400);
+    });
     $(".modal-close").click(function(){
         var obj = $(this);
         $('#overlay').fadeOut(400,

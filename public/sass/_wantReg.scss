@@ -1,0 +1,11 @@
+.wantReg {
+  clear: both;
+  float: right;
+  width: 170px;
+  line-height: 30px;
+  text-align: center;
+  text-decoration: underline;
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
