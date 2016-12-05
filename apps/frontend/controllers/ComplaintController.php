@@ -489,6 +489,7 @@ class ComplaintController extends ControllerBase
                 }
                 $complaint->fid = serialize($saved_files);
                 //$this->flashSession->error($applicant->fid);
+                $complaint->user_id = $this->user->id;
                 $complaint->save();
                 $docx_s = DocxFiles::find("complaint_name = '{$complaint->complaint_name}'");
                 foreach ($docx_s as $docx) {

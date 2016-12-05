@@ -1775,6 +1775,11 @@ input[type="radio"]:checked + label {
     margin: 5px 0 0;
     width: 100%;
 }
+.c-inp-err-t-numberIzv {
+    display: none;
+    margin: 0 0 10px 40px;
+    line-height: 12px;
+}
 .c-inp-err-t-minMrgTop {
     margin: -10px 0 0;
 }
