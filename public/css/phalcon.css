@@ -3595,3 +3595,15 @@ input#upload-files::-webkit-file-upload-button {
 .help_link:before{
     top: 16px !important;
 }
+
+
+.reg_form input[type="text"], input[type="password"]{
+    font-size: 17px !important;
+    height: 50px !important;
+}
+.reg_form h2{
+    line-height: 122px!important;
+}
+.reg_form input[type="submit"]{
+    height: 55px!important;
+}
