@@ -1,24 +1,19 @@
 var pluginNotFound = true;
-var timer_id = false;
-var userCertificates = false;
-(function() {
-
-
+function checkPlugin(callback) {
     timer_id = setTimeout(hideWaitPopup, 1000*2);
-
-    // Доступ всегда осуществляется в ассинхронном режиме
-    // Получаем объект Promise для доступа к cades plugin api
+// Доступ всегда осуществляется в ассинхронном режиме
+// Получаем объект Promise для доступа к cades plugin api
     var cades = window.cades;
 
-    // Создание объекта хранилища сертификатов CAPICOM.Store
-    var oStore = cades.then(function() {
+// Создание объекта хранилища сертификатов CAPICOM.Store
+    var oStore = cades.then(function () {
         return cades.store();
     }.bind(this));
 
-    // Получаем доступ к хранилищу сертификатов пользователя
-    oStore.then(function(Store) {
+// Получаем доступ к хранилищу сертификатов пользователя
+    oStore.then(function (Store) {
         pluginNotFound = false;
-        hideWaitPopup();
+        hideWaitPopup(callback);
         return Store.open.apply(Store, [
             Store.CAPICOM_CURRENT_USER_STORE, // Хранилище текущего пользователя
             Store.CAPICOM_MY_STORE, // Имя хранилища "My"
@@ -26,13 +21,12 @@ var userCertificates = false;
         ]);
     });
 
-    // Получение списка сертификатов из хранилища
     oStore.then(function(Store) {
         return Store.getCertificates();
     }).then(function(Certificates) { // Получаем объект достпупа к API Certificates
         // Получаем список сертификатов у которых не истек срок дейтсвия
         return Certificates.find(Certificates.CAPICOM_CERTIFICATE_FIND_TIME_VALID);
-       // return Certificates.find();
+        // return Certificates.find();
     }).then(function(Certificates) {
         return new Promise(function(resolve, reject) {
             // Получаем необходимые сведения по сертификатам
@@ -96,27 +90,24 @@ var userCertificates = false;
         //     $('.custom-options').addClass('mCustomScrollbar');
         // }, 10000);
 
-       // certificate-box-2
+        // certificate-box-2
 
 
     });
 
-    // Закрываем хранилище
     oStore.then(function(Store) {
         return Store.close();
     });
-})();
-var selectedCertif = false;
-function setCertItem(num){
-    selectedCertif = userCertificates[num];
 }
-function  hideWaitPopup(){
+
+function  hideWaitPopup(callback){
     clearTimeout(timer_id);
     $('.addAppCertificate-preloader').hide();
 
     if(pluginNotFound == true){
         $('.addAppCertificate-alert').fadeIn().css('display', 'flex');
     }else{
-        $('.addAppCertificate-main2').fadeIn().css('display', 'flex');
+        callback();
     }
 }
+
