@@ -103,3 +103,41 @@
 </div>
 <div id="overlay"></div>
 <script src="/js/login_ajax.js"></script>
+
+<!-- popup start -->
+<div id="pop-start" class="modal_div modal_div-start reg_form">
+    <h2>Регистрация</h2>
+    <form class="reg-new-user" method="POST">
+        <!--        <label for="popstrt-inp1">Ваше имя</label>-->
+        <!--        <input type="text" id="popstrt-inp1" required="required" name="name">-->
+        <label class="fontNormal" for="popstrt-inp1">E-mail</label>
+        <div class="c-inp-err-t"></div>
+        <input type="text" id="popstrt-inp1" required="required" name="email">
+        <!--        <label for="popstrt-inp1">Телефон</label>-->
+        <!--        <input type="text" id="popstrt-inp1" required="required" name="phone">-->
+        <label class="fontNormal" for="popstrt-inp1">Пароль</label>
+        <div class="c-inp-err-t"></div>
+        <input type="password" id="popstrt-inp1" required="required" name="password">
+        <label class="fontNormal" for="popstrt-inp1">Повторите пароль</label>
+        <div class="c-inp-err-t"></div>
+        <input type="password" id="popstrt-inp1" required="required" name="confpassword">
+        <div class="error-reg" style="color:red"></div>
+        <div class="g-recaptcha inlineBlock" data-sitekey="6LdzsQkUAAAAABZTg2NJB9EVfnY0VUOPGgm9bhlN"></div>
+        <label class="reqReg">
+            <input type="checkbox" id="popstrt-inp1" class="reqReg__input" required="required" name="offerta" value="1" checked>
+            <a href="#">Принимаю условия оферты</a>
+        </label>
+        <!--<div class="pop-str1">
+            <input type="checkbox" id="popstrt-inp2">
+            <label for="popstrt-inp2">Согласен с правилами</label>
+           <a href="#">Правила использования сервиса</a>
+        </div>-->
+        <input class="entryBtn" type="submit" value="Зарегистрироваться">
+        <div class="already-reg">
+            <p>Регистрация в системе подтверждает Ваше согласие с условиями пользовательского соглашения сервиса «ФАС-Онлайн». <a href="#">Просмотреть</a></p>
+            <p>Уже зарегистрированы – <a href="#pop-login" class="open_modal" onclick="$('#pop-start').hide()">авторизируйтесь</a></p>
+        </div>
+    </form>
+
+    <div class="modal-close"></div>
+</div>
