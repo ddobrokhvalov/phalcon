@@ -3597,14 +3597,19 @@ input#upload-files::-webkit-file-upload-button {
 }
 
 
-.reg_form input[type="text"], input[type="password"]{
+.reg_form input[type="text"], .reg_form input[type="password"]{
     font-size: 17px !important;
     height: 45px !important;
+    margin: 5px 0 10px!important;
 }
 .reg_form h2{
     line-height: 56px!important;
-    padding-bottom: 50px!important;
+    padding-bottom: 31px!important;
     font-size: 38px!important;
+    margin-bottom: 0!important;
+}
+.reg_form h2:after {
+    top: 127%!important;
 }
 .reg_form input[type="submit"]{
     height: 55px!important;
