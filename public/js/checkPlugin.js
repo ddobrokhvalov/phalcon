@@ -22,6 +22,80 @@ function checkPlugin(callback) {
     });
 
     oStore.then(function(Store) {
+        return Store.getCertificates();
+    }).then(function(Certificates) { // Получаем объект достпупа к API Certificates
+        // Получаем список сертификатов у которых не истек срок дейтсвия
+        return Certificates.find(Certificates.CAPICOM_CERTIFICATE_FIND_TIME_VALID);
+        // return Certificates.find();
+    }).then(function(Certificates) {
+        return new Promise(function(resolve, reject) {
+            // Получаем необходимые сведения по сертификатам
+            Certificates.getCount().then(function(count) {
+                var promises = [];
+                for (var index = 1; index <= count; index++) {
+                    promises.push(new Promise(function(resolve, reject) {
+                        // Получаем объект доступа к сертификату из полученно списка по ключу
+                        Certificates.getItem(index).then(function(Certificate) {
+                            // Получаем необходимые данные из сертификата
+                            return {
+                                SerialNumber: Certificate.getSerialNumber(), // Серийный номер
+                                IssuerName: Certificate.getIssuerName(), // Строка издателя сертификата
+                                SubjectName: Certificate.getSubjectName(), // Наименование сертификата
+                                Thumbprint: Certificate.getThumbprint(), // Отпечаток сертификата
+                                ValidFromDate: Certificate.getValidFromDate(), // Дата с которой сертификат считается валидным
+                                ValidToDate: Certificate.getValidToDate(), // Дата после который сертификат считается истекшим
+                                UserName: Certificate.getInfo(Certificate.CAPICOM_CERT_INFO_SUBJECT_SIMPLE_NAME),
+                                UserEmail: Certificate.getInfo(Certificate.CAPICOM_CERT_INFO_SUBJECT_EMAIL_NAME),
+                                certificateName: Certificate.getInfo(Certificate.CAPICOM_CERT_INFO_ISSUER_SIMPLE_NAME),
+                                certificateEmail: Certificate.getInfo(Certificate.CAPICOM_CERT_INFO_ISSUER_EMAIL_NAME),
+                                SubjectUPN: Certificate.getInfo(Certificate.CAPICOM_CERT_INFO_SUBJECT_UPN),
+                                IssuerUPN: Certificate.getInfo(Certificate.CAPICOM_CERT_INFO_ISSUER_UPN),
+                                SubjectDNSName: Certificate.getInfo(Certificate.CAPICOM_CERT_INFO_SUBJECT_DNS_NAME),
+                                IssuerDNSName: Certificate.getInfo(Certificate.CAPICOM_CERT_INFO_ISSUER_DNS_NAME)
+                            };
+                        }).then(function(SimpleCertificate) {
+                            resolve(PromiseHelper.prototype.all(SimpleCertificate));
+                        }).then(null, function(error) {
+                            reject(error);
+                        });
+                    }.bind(this)));
+                }
+                resolve(Promise.all(promises));
+            });
+        }.bind(this));
+    }).then(function(aCertificate) {
+        // Получаем массыв сертификатов с необходимыми данным
+        // ...
+        console.log(aCertificate);
+        userCertificates = aCertificate;
+        var html = '';
+        for(var i in aCertificate){
+            var str = aCertificate[i].ValidFromDate;
+            //console.log(str.toString());
+            str = str + '';
+            if(+str[0] >= 0) {
+                str = str.slice(0, 10);
+            } else {
+                str = str.slice(4, 16);
+            }
+            var field = str + ' | ' + aCertificate[i].SubjectDNSName;
+            // html +='<li class="existingCerListBox__item" onclick="setCertItem('+i+')" >'+field+'</li>';
+            $('.certificate-box-2').append(
+                '<li class="existingCerListBox__item" onclick="setCertItem('+i+')" >'+field+'</li>'
+            );
+        }
+        $('.certificate-box-2').mCustomScrollbar();
+
+        // setTimeout(function(){
+        //     $('.custom-options').addClass('mCustomScrollbar');
+        // }, 10000);
+
+        // certificate-box-2
+
+
+    });
+
+    oStore.then(function(Store) {
         return Store.close();
     });
 }
