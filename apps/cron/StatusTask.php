@@ -11,7 +11,7 @@ require_once(APP_PATH.'/../vendor/autoload.php');
 class StatusTask extends \Phalcon\Cli\Task{
     public function mainAction(){
         $complaints = Complaint::find(array(
-            "status = 'submitted'"
+            "status = 'submitted' OR status = 'under_consideration'"
         ));
         $error_text = '<strong>Ошибки парсинга:</strong><br/>';
         $success_text = '<strong>Успешные изменения статусов:</strong><br/>';
