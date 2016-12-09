@@ -35,6 +35,7 @@ class StatusTask extends \Phalcon\Cli\Task{
             $parser = new Parser();
             $response = $parser->getComplaint((string)$comp->auction_id, (string)$applicant->name_short, (string)$comp->date_submit);
             if (!empty($response['complaint'])) {
+                var_dump($response['complaint']['info']);
                 $status = $response['complaint']['status'];
                 $result = (!empty($response['complaint']['info']['rezultat_rassmotreniya'])) ? $response['complaint']['info']['rezultat_rassmotreniya'] : '';
                 $changeStatus = new Complaint();
@@ -46,7 +47,6 @@ class StatusTask extends \Phalcon\Cli\Task{
                             break;
                     }
                 } else {
-                    var_dump($result);
                     $success_text .= 'Новый статус жалобы: ' . $result . "<br/>";
                     switch ($result) {
                         case 'Признана обоснованной':
