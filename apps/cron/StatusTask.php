@@ -59,7 +59,6 @@ class StatusTask extends \Phalcon\Cli\Task{
                 }
 
                 $success_text .= '<br/>';
-                $success_text .= 'Новый статус жалобы: ' . $status[0] . "<br/>";
                 $success_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
                 $success_text .= ' | Название жалобы: ' . $comp->complaint_name . "<br/>";
                 $success_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
