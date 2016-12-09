@@ -88,12 +88,12 @@ class StatusTask extends \Phalcon\Cli\Task{
             }
         }
 
-//        $message = $mailer->createMessage()
-//            ->to($adminsEmail['error'])
-//            ->bcc('vadim-antropov@ukr.net')
-//            ->subject('Результат парсинга данных')
-//            ->content($success_text.$error_text);
-//        $message->send();
+        $message = $mailer->createMessage()
+            ->to($adminsEmail['error'])
+            ->bcc('vadim-antropov@ukr.net')
+            ->subject('Результат парсинга данных')
+            ->content($success_text.$error_text);
+        $message->send();
     }
 }
 
