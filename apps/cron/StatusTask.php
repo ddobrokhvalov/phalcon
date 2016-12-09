@@ -34,8 +34,8 @@ class StatusTask extends \Phalcon\Cli\Task{
             $applicant = Applicant::findFirst($comp->applicant_id);
             $parser = new Parser();
             $response = $parser->getComplaint((string)$comp->auction_id, (string)$applicant->name_short, (string)$comp->date_submit);
-            var_dump($response);
             if (!empty($response['complaint'])) {
+                var_dump($response['complaint']['info']);
                 $status = $response['complaint']['status'];
                 $result = (!empty($response['complaint']['info']['rezultat_rassmotreniya'])) ? $response['complaint']['info']['rezultat_rassmotreniya'] : '';
                 $changeStatus = new Complaint();
@@ -88,12 +88,12 @@ class StatusTask extends \Phalcon\Cli\Task{
             }
         }
 
-        $message = $mailer->createMessage()
-            ->to($adminsEmail['error'])
-            ->bcc('vadim-antropov@ukr.net')
-            ->subject('Результат парсинга данных')
-            ->content($success_text.$error_text);
-        $message->send();
+//        $message = $mailer->createMessage()
+//            ->to($adminsEmail['error'])
+//            ->bcc('vadim-antropov@ukr.net')
+//            ->subject('Результат парсинга данных')
+//            ->content($success_text.$error_text);
+//        $message->send();
     }
 }
 
