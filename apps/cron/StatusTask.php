@@ -36,20 +36,28 @@ class StatusTask extends \Phalcon\Cli\Task{
             $response = $parser->getComplaint((string)$comp->auction_id, (string)$applicant->name_short, (string)$comp->date_submit);
             if (!empty($response['complaint'])) {
                 $status = $response['complaint']['status'];
+                $result = $response['complaint']['rezultat_rassmotreniya'];
                 $changeStatus = new Complaint();
-                switch ($status[0]) {
-                    //No break
-                    case 'Признана обоснованной':
-                    case 'Признана обоснованной частично':
-                        $changeStatus->changeStatus('justified', array($comp->id));
-                        break;
-                    case 'Рассматривается / 44-ФЗ':
-                        $changeStatus->changeStatus('under_consideration', array($comp->id));
-                        break;
-                    case 'Признана необоснованной':
-                        $changeStatus->changeStatus('unfounded', array($comp->id));
-                        break;
+                if(empty($result)) {
+                    $success_text .= 'Новый статус жалобы: ' . $status[0] . "<br/>";
+                    switch ($status[0]) {
+                        case 'Рассматривается / 44-ФЗ':
+                            $changeStatus->changeStatus('under_consideration', array($comp->id));
+                            break;
+                    }
+                } else {
+                    $success_text .= 'Новый статус жалобы: ' . $result . "<br/>";
+                    switch ($result) {
+                        case 'Признана обоснованной':
+                        case 'Признана обоснованной частично':
+                            $changeStatus->changeStatus('justified', array($comp->id));
+                            break;
+                        case 'Признана необоснованной':
+                            $changeStatus->changeStatus('unfounded', array($comp->id));
+                            break;
+                    }
                 }
+
                 $success_text .= '<br/>';
                 $success_text .= 'Новый статус жалобы: ' . $status[0] . "<br/>";
                 $success_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
@@ -80,12 +88,12 @@ class StatusTask extends \Phalcon\Cli\Task{
             }
         }
 
-        $message = $mailer->createMessage()
+        /*$message = $mailer->createMessage()
             ->to($adminsEmail['error'])
             ->bcc('vadim-antropov@ukr.net')
             ->subject('Результат парсинга данных')
             ->content($success_text.$error_text);
-        $message->send();
+        $message->send();*/
     }
 }
 
