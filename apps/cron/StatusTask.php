@@ -46,7 +46,7 @@ class StatusTask extends \Phalcon\Cli\Task{
                             break;
                     }
                 } else {
-                    $success_text .= 'Новый статус жалобы: ' . $result . "<br/>";
+                    $success_text .= 'Результат рассмотрения: ' . $result . "<br/>";
                     switch ($result) {
                         case 'Признана обоснованной':
                         case 'Признана обоснованной частично':
@@ -58,7 +58,6 @@ class StatusTask extends \Phalcon\Cli\Task{
                     }
                 }
 
-                $success_text .= ' | rezultat_rassmotreniya: '.$result.'<br/>';
                 $success_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
                 $success_text .= ' | Название жалобы: ' . $comp->complaint_name . "<br/>";
                 $success_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
