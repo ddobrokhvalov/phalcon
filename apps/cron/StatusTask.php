@@ -46,7 +46,7 @@ class StatusTask extends \Phalcon\Cli\Task{
                             break;
                     }
                 } else {
-                    $success_text .= 'Результат рассмотрения: ' . $result . "<br/>";
+                    $success_text .= '**Результат рассмотрения: ' . $result . "<br/>";
                     switch ($result) {
                         case 'Признана обоснованной':
                         case 'Признана обоснованной частично':
