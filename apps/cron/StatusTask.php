@@ -34,66 +34,67 @@ class StatusTask extends \Phalcon\Cli\Task{
             $applicant = Applicant::findFirst($comp->applicant_id);
             $parser = new Parser();
             $response = $parser->getComplaint((string)$comp->auction_id, (string)$applicant->name_short, (string)$comp->date_submit);
-            if (!empty($response['complaint'])) {
-                $status = $response['complaint']['status'];
-                $result = $response['complaint']['rezultat_rassmotreniya'];
-                $changeStatus = new Complaint();
-                if(empty($result)) {
-                    $success_text .= 'Новый статус жалобы: ' . $status[0] . "<br/>";
-                    switch ($status[0]) {
-                        case 'Рассматривается / 44-ФЗ':
-                            $changeStatus->changeStatus('under_consideration', array($comp->id));
-                            break;
-                    }
-                } else {
-                    $success_text .= 'Новый статус жалобы: ' . $result . "<br/>";
-                    switch ($result) {
-                        case 'Признана обоснованной':
-                        case 'Признана обоснованной частично':
-                            $changeStatus->changeStatus('justified', array($comp->id));
-                            break;
-                        case 'Признана необоснованной':
-                            $changeStatus->changeStatus('unfounded', array($comp->id));
-                            break;
-                    }
-                }
-
-                $success_text .= '<br/>';
-                $success_text .= 'Новый статус жалобы: ' . $status[0] . "<br/>";
-                $success_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
-                $success_text .= ' | Название жалобы: ' . $comp->complaint_name . "<br/>";
-                $success_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
-                $success_text .= ' | Имя заявителя: ' . $applicant->name_short . "<br/>";
-                $success_text .= ' | Дата подачи жалобы: ' . $comp->date_submit . "<br/>";
-                $success_text .= ' | Ссылка: <a href="http://fas-online.ru/complaint/edit/'.$comp->id.'">Перейти к жалобе</a>';
-                $success_text .= ' | Время работы парсера: ' . date('Y-m-d H:i:s') . "<br/>";
-                $success_text .= '<br/>';
-                $success_text .= '<br/>';
-                $success_text .= '---------------------------------<br/>';
-            } else {
-                if (!empty($response['error'])) {
-                    $error_text .= '<br/>';
-                    $error_text .= 'Текст ошибки: ' . $response['error'] . "<br/>";
-                    $error_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
-                    $error_text .= ' | Название жалобы: ' . $comp->complaint_name . "<br/>";
-                    $error_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
-                    $error_text .= ' | Имя заявителя: ' . $applicant->name_short . "<br/>";
-                    $error_text .= ' | Дата подачи жалобы: ' . $comp->date_submit . "<br/>";
-                    $error_text .= ' | Ссылка: <a href="http://fas-online.ru/complaint/edit/'.$comp->id.'">Перейти к жалобе</a>';
-                    $error_text .= ' | Время работы парсера: ' . date('Y-m-d H:i:s') . "<br/>";
-                    $error_text .= '<br/>';
-                    $error_text .= '<br/>';
-                    $error_text .= '---------------------------------<br/>';
-                }
-            }
+            var_dump($response);
+//            if (!empty($response['complaint'])) {
+//                $status = $response['complaint']['status'];
+//                $result = $response['complaint']['rezultat_rassmotreniya'];
+//                $changeStatus = new Complaint();
+//                if(empty($result)) {
+//                    $success_text .= 'Новый статус жалобы: ' . $status[0] . "<br/>";
+//                    switch ($status[0]) {
+//                        case 'Рассматривается / 44-ФЗ':
+//                            $changeStatus->changeStatus('under_consideration', array($comp->id));
+//                            break;
+//                    }
+//                } else {
+//                    $success_text .= 'Новый статус жалобы: ' . $result . "<br/>";
+//                    switch ($result) {
+//                        case 'Признана обоснованной':
+//                        case 'Признана обоснованной частично':
+//                            $changeStatus->changeStatus('justified', array($comp->id));
+//                            break;
+//                        case 'Признана необоснованной':
+//                            $changeStatus->changeStatus('unfounded', array($comp->id));
+//                            break;
+//                    }
+//                }
+//
+//                $success_text .= '<br/>';
+//                $success_text .= 'Новый статус жалобы: ' . $status[0] . "<br/>";
+//                $success_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
+//                $success_text .= ' | Название жалобы: ' . $comp->complaint_name . "<br/>";
+//                $success_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
+//                $success_text .= ' | Имя заявителя: ' . $applicant->name_short . "<br/>";
+//                $success_text .= ' | Дата подачи жалобы: ' . $comp->date_submit . "<br/>";
+//                $success_text .= ' | Ссылка: <a href="http://fas-online.ru/complaint/edit/'.$comp->id.'">Перейти к жалобе</a>';
+//                $success_text .= ' | Время работы парсера: ' . date('Y-m-d H:i:s') . "<br/>";
+//                $success_text .= '<br/>';
+//                $success_text .= '<br/>';
+//                $success_text .= '---------------------------------<br/>';
+//            } else {
+//                if (!empty($response['error'])) {
+//                    $error_text .= '<br/>';
+//                    $error_text .= 'Текст ошибки: ' . $response['error'] . "<br/>";
+//                    $error_text .= ' | ID жалобы: ' . $comp->id . "<br/>";
+//                    $error_text .= ' | Название жалобы: ' . $comp->complaint_name . "<br/>";
+//                    $error_text .= ' | Номер извещения жалобы: ' . $comp->auction_id . "<br/>";
+//                    $error_text .= ' | Имя заявителя: ' . $applicant->name_short . "<br/>";
+//                    $error_text .= ' | Дата подачи жалобы: ' . $comp->date_submit . "<br/>";
+//                    $error_text .= ' | Ссылка: <a href="http://fas-online.ru/complaint/edit/'.$comp->id.'">Перейти к жалобе</a>';
+//                    $error_text .= ' | Время работы парсера: ' . date('Y-m-d H:i:s') . "<br/>";
+//                    $error_text .= '<br/>';
+//                    $error_text .= '<br/>';
+//                    $error_text .= '---------------------------------<br/>';
+//                }
+//            }
         }
 
-        $message = $mailer->createMessage()
-            ->to($adminsEmail['error'])
-            ->bcc('vadim-antropov@ukr.net')
-            ->subject('Результат парсинга данных')
-            ->content($success_text.$error_text);
-        $message->send();
+//        $message = $mailer->createMessage()
+//            ->to($adminsEmail['error'])
+//            ->bcc('vadim-antropov@ukr.net')
+//            ->subject('Результат парсинга данных')
+//            ->content($success_text.$error_text);
+//        $message->send();
     }
 }
 
