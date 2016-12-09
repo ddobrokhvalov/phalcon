@@ -36,7 +36,7 @@ class StatusTask extends \Phalcon\Cli\Task{
             $response = $parser->getComplaint((string)$comp->auction_id, (string)$applicant->name_short, (string)$comp->date_submit);
             if (!empty($response['complaint'])) {
                 $status = $response['complaint']['status'];
-                $result = (empty($response['complaint']['rezultat_rassmotreniya'])) ? $response['complaint']['rezultat_rassmotreniya'] : '';
+                $result = (!empty($response['complaint']['rezultat_rassmotreniya'])) ? $response['complaint']['rezultat_rassmotreniya'] : '';
                 $changeStatus = new Complaint();
                 if(empty($result)) {
                     $success_text .= 'Новый статус жалобы: ' . $status[0] . "<br/>";
