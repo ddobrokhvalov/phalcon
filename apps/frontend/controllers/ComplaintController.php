@@ -352,8 +352,26 @@ class ComplaintController extends ControllerBase
         $signFileOriginName  = $this->request->getPost('signFileOriginName');
         $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
        // unlink($baseLocation . $signFileOriginName.'sig');
-        file_put_contents($baseLocation. $signFileOriginName.'.sig',base64_decode($signature));
 
+        $file = file_get_contents($baseLocation. $signFileOriginName);
+        $sendData = array(
+            "method" => 'Signature.verifyMessageSignature',
+            "id" => 1,
+            "params" => array(
+                "signature" => $signature,
+                "message" => base64_encode($file)
+            )
+        );
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, 'http://185.20.225.233/api/v1/json');
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($sendData));
+        $out = curl_exec($curl);
+
+
+        file_put_contents($baseLocation. $signFileOriginName.'.sig', base64_decode($signature));
         /*if(preg_match('/recall/', $signFileOriginName)){
 
             $this->SendToUfas(array(
