@@ -20,7 +20,7 @@ class MessageController extends ControllerBase
 
         $item_per_page = 20 + $next_items;
         $messages = Messages::find(array(
-            'to_uid = :to_uid: AND is_deleted = 0',
+            'to_uid = :to_uid:',
             "order" => "time DESC",
             'bind' => array(
                 'to_uid' => $this->user->id,
@@ -61,8 +61,8 @@ class MessageController extends ControllerBase
             );
             if ($messages) {
                 foreach ($messages as $message) {
-                    $message->is_deleted = 1;
-                    $message->update();
+                    //$message->is_deleted = 1;
+                    $message->delete();
                 }
             }
         }
