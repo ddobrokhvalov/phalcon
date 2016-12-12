@@ -99,7 +99,7 @@ class ControllerBase extends Controller
             }
         }
         $this->view->messages = $messages;
-        $this->view->count_unread = $this->view->count_unread = Messages::count(['to_uid = :to_user: AND is_read = 0 AND is_deleted = 0','bind' => ['to_user' => $this->user->id]]);
+        $this->view->count_unread = $this->view->count_unread = Messages::count(['to_uid = :to_user: AND is_read = 0','bind' => ['to_user' => $this->user->id]]);
         $this->view->setTemplateAfter('menu');
         $this->view->applicants = $userApplicants;
         $complaint = new Complaint();
