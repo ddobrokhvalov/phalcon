@@ -74,7 +74,7 @@ class ControllerBase extends Controller
             ->addFrom('Multiple\Frontend\Models\Messages', 'm')
             ->leftJoin('Multiple\Frontend\Models\ComplaintMovingHistory', 'm.history_id = h.id', 'h')
             ->leftJoin('Multiple\Frontend\Models\Complaint', 'c.id = h.complaint_id', 'c')
-            ->andWhere('m.to_uid = :to_user: AND m.is_deleted = 0', ['to_user' => $this->user->id])
+            ->andWhere('m.to_uid = :to_user: ',['to_user' => $this->user->id])
             ->orderBy('m.time desc')
             ->Limit(4)
             ->getQuery()
