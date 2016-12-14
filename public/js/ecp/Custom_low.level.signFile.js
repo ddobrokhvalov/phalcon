@@ -46,7 +46,7 @@ var signFile = function(contentBase64,thumbprint, callback)
         return new Promise(function(resolve, reject){
             Certificates.getCount().then(function(count) {
                 if (count == 0) {
-                    throw 'Cert not found'
+                    $('.error-compl').css({'display':'flex'});
                 }
                 Certificates.getItem(1).then(function(Certificate) {
                     resolve(Certificate.getObject());
