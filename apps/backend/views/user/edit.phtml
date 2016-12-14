@@ -3,6 +3,13 @@
 {% block body %}
 <!-- ****************** user page ***************** -->
 {{flashSession.output()}}
+{{flashSession.output()}}
+<script type="text/javascript" src="/js/input_mask.js"></script>
+<script>
+    $(document).ready(function() {
+        $('input[name="mobile_phone"]').mask("+7 (999) 999-9999");
+    });
+</script>
 <div class="admin-main-wrap user-page">
     <div class="bread-crumbs-holder">
         <a href="/admin/user/index">Вернуться к списку пользователей</a>
@@ -195,7 +202,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                <button type="button" onclick="jQuery('#user-form').attr('action', '/admin/user/deleteUser/{{edituser.id}}')" class="btn btn-primary">Удалить</button>
+                <a type="button" href="/admin/user/deleteUser/{{edituser.id}}" class="btn btn-primary">Удалить</a>
             </div>
         </div>
     </div>
@@ -213,5 +220,7 @@
             $('.confirm-deletion-admin-lg').modal('show');
         });
     });
+
+
 </script>
 {% endblock %}
