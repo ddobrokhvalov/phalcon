@@ -23,7 +23,7 @@
                 </label>
                 <label for="telFaxUser">
                     <p>Телефон</p>
-                    {{ numeric_field('phone', 'value':edituser.phone, 'id':'phone')}}
+                    {{ text_field('mobile_phone', 'value':edituser.mobile_phone, 'id':'mobile_phone')}}
                 </label>
                 <label for="userEmail">
                     <p>E-mail</p>
@@ -46,7 +46,7 @@
                 </label>
             </div>
             <div class="delete-or-save">
-                <button class="delete" onclick="jQuery('#user-form').attr('action', '/admin/user/deleteUser/{{edituser.id}}')">Удалить пользователя</button>
+                <button class="delete" onclick="">Удалить пользователя</button>
                 <button>Сохранить изменения</button>
             </div>
         </form>
@@ -186,7 +186,20 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade confirm-deletion-admin-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Удалить пользователя?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="button" onclick="jQuery('#user-form').attr('action', '/admin/user/deleteUser/{{edituser.id}}')" class="btn btn-primary">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         $( "#password" ).val('');
@@ -194,6 +207,11 @@
             $("label[for=sendEmailNotice]").addClass("main-active-checkbox");
             $("#sendEmailNotice").prop("checked", "checked");
         }
+
+        $(".delete").click(function(evt){
+            evt.preventDefault();
+            $('.confirm-deletion-admin-lg').modal('show');
+        });
     });
 </script>
 {% endblock %}
