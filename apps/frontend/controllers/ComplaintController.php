@@ -950,9 +950,7 @@ class ComplaintController extends ControllerBase
     private function checkUser(){
         $user = User::findFirstById($this->session->get('auth')['id']);
 
-        if(!$user->firstname || !$user->lastname
-            || !$user->patronymic || !$user->conversion
-            || !$user->phone || !$user->mobile_phone){
+        if(!$user->conversion || !$user->mobile_phone){
             return 1;
         }
         return 0;
