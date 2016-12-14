@@ -3,6 +3,12 @@
 {% block body %}
 <!-- ****************** user page ***************** -->
 {{flashSession.output()}}
+<script type="text/javascript" src="/js/input_mask.js"></script>
+<script>
+    $(document).ready(function() {
+        $('input[name="mobile_phone"]').mask("+7 (999) 999-9999");
+    });
+</script>
 <div class="admin-main-wrap user-page">
     <div class="bread-crumbs-holder">
         <a href="/admin/user/index">Вернуться к списку пользователей</a>
@@ -17,12 +23,8 @@
                     {{text_field('conversion', 'value':params['conversion'], 'id':'fUser')}}
                 </label>
                 <label for="telFaxUser">
-                    <p>Контактный факс, телефон</p>
-                    {{ numeric_field('phone', 'value':params['phone'], 'id':'telFaxUser')}}
-                </label>
-                <label for="telFaxUser">
                     <p>Мобильный телефон</p>
-                    {{ numeric_field('mobile_phone', 'value':params['mobile_phone'], 'id':'mobile_phone')}}
+                    {{ text_field('mobile_phone', 'value':params['mobile_phone'], 'id':'mobile_phone')}}
                 </label>
                 <label for="userEmail">
                     <p>E-mail</p>
@@ -73,17 +75,17 @@
             this.result = true;
             var field_selector = '#fUser';
             if (!validator.text($(field_selector).val(), 3, 100)) {
-               this.showError(field_selector, 'Ошибка! фамилия должна быть от 3 до 100 символов');
-               this.result = false;
+                this.showError(field_selector, 'Ошибка! фамилия должна быть от 3 до 100 символов');
+                this.result = false;
             } else {
-               this.done(field_selector);
+                this.done(field_selector);
             }
-            var field_selector = '#telFaxUser';
-            if (!validator.numeric($(field_selector).val(), 5, 100)) {
-               this.showError(field_selector, 'Ошибка! Поле факс, телефон не может быть пустым');
-               this.result = false;
+            var field_selector = '#mobile_phone';
+            if (!validator.text($(field_selector).val(), 3, 100)) {
+                this.showError(field_selector, 'Ошибка! Телефон не может быть пустым');
+                this.result = false;
             } else {
-               this.done(field_selector);
+                this.done(field_selector);
             }
             var field_selector = '#userEmail';
             if (!validator.email($(field_selector).val())) {
