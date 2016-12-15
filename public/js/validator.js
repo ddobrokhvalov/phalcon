@@ -6,6 +6,7 @@ var validator = {
         return true;
     },
     numeric: function (value, min, max) {
+        value = value.trim();
         if (value.length < min || value.length > max)
             return false;
         if (parseInt(value) != value)
