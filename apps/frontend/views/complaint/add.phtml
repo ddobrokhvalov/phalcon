@@ -121,7 +121,7 @@
                                 <div class="complaint-attachment">
                                     <div class="file-wrapper">
                                         <div class="text-above">Прикрепить файлы</div>
-                                        <input id="upload-files" class="upload_f first" data-filedid="first" type="file" name="upload-files[]">
+                                        <input id="upload-files" class="upload_f first" data-filedid="first" type="file" name="upload-files[]" accept=".pdf,.rtf,.rar,.zio,.jpg,.jpeg,.png,.bmp,.doc,.docx,.tiff">
                                     </div>
 
                                     <script type="text/javascript">
@@ -132,7 +132,7 @@
                                                 if(cnt > 0){
                                                     var count = jQuery('.upload_f').length + 1;
                                                     classNameInputFile = 'file' + parseInt(Math.random() * 10000);
-                                                    jQuery(".file-wrapper").append('<input id="upload-files" class="upload_f '+ classNameInputFile +'" data-filedid="'+ classNameInputFile + '" type="file" name="upload-files[]">');
+                                                    jQuery(".file-wrapper").append('<input id="upload-files" class="upload_f '+ classNameInputFile +'" data-filedid="'+ classNameInputFile + '" type="file" name="upload-files[]" accept=".pdf,.rtf,.rar,.zio,.jpg,.jpeg,.png,.bmp,.doc,.docx,.tiff">');
                                                     jQuery(this).off('change');
                                                 }
                                                 var html = '';
