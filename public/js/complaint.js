@@ -79,8 +79,10 @@ $(document).ready(function () {
         }
         //stopSaveCompl();
     });
-    $('#complaint_save').click(function (evt) {
+    $('#complaint_save').on('click', function (evt) {
         //$('#complaint_save').unbind('click').bind('click', function (evt) {
+        $('.loading_save').css({'display':'inline-block'});
+        $('#complaint_save').unbind('click');
         signSavedComplaint = false;
         evt.preventDefault();
         stopSaveCompl();
