@@ -290,8 +290,6 @@ class Complaint extends Model
                 if($status == 'archive') $stat = 'Архив';
                 //if($status == 'activate') $stat = 'Активирована';
 
-                var_dump($user_id, $complaint->user_id);
-
                 $message = new Messages();
                 $message->to_uid = ($user_id != false) ? $user_id : $complaint->user_id;
                 $message->subject = "Изменение статуса жалобы";
