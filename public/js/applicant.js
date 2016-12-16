@@ -199,7 +199,7 @@ var applicant = {
     },
 
     getName: function(data){
-        var name = data.match(/[\s\,]O=([a-zA-Zа-яА-Я\s\"\']+)/i );
+        var name = data.match(/[\s\,]O=([«»a-zA-Zа-яА-Я\s\"\']+)/i );
         if(name[1] !== undefined) return name[1];
         return false;
     },
