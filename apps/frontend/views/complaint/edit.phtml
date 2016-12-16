@@ -1,4 +1,4 @@
-<script>
+﻿<script>
     {% if edit_now %}
         var ufasArr = new Array();
         {% for uf in ufas  %}
@@ -255,7 +255,7 @@
                                             {{ file }}
                                         {% endfor %}
                                         {% else %}
-                                            {{ 'Нет прикрепленных файлов' }}
+                                            {{ 'Нет прикрепленных файлов (до 5 Мб, doc, docx, pdf, jpg, rar, zip)' }}
                                     {% endif %}
                                     <div class="attached-files-wrap"></div>
                                 </div>
@@ -293,7 +293,7 @@
                                         {{ file }}
                                     {% endfor %}
                                     {% else %}
-                                        {{ 'Нет прикрепленных файлов' }}
+                                        {{ 'Нет прикрепленных файлов (до 5 Мб, doc, docx, pdf, jpg, rar, zip)' }}
                                 {% endif %}
                             </div>
                             <script type="text/javascript">
