@@ -299,6 +299,7 @@ a:visited {
     height: 542px;
     margin: -470px 0 60px 30px;
     width: 940px;
+    padding: 31px 0px 0px 113px;
 }
 .ms3-macbook div {
     background: #e4e4e4 none repeat scroll 0 0;
@@ -2796,6 +2797,7 @@ input[type="radio"]:checked + label {
     height: 542px;
     margin: 30px 0 0 30px;
     width: 940px;
+    padding: 31px 0px 0px 1px;
 }
 .faq-macbook div {
     background: #e4e4e4 none repeat scroll 0 0;
