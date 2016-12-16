@@ -71,7 +71,7 @@
                 <div class="file-attachment tab1">
                     <div class="file-wrapper" style="margin-bottom: 20px; height: 30px;">
                         <div class="text-above">Прикрепить файлы</div>
-                        <input id="upload-files" class="upload_f" type="file" multiple="multiple" name="upload-files[]">
+                        <input id="upload-files" class="upload_f" type="file" multiple="multiple" accept=".pdf,.rtf,.rar,.zio,.jpg,.jpeg,.png,.bmp,.doc,.docx,.tiff" name="upload-files[]">
                     </div>
                     <div class="file-names"></div>
                     <script type="text/javascript">
@@ -80,7 +80,7 @@
                                 var cnt = jQuery(this)[0].files.length;
                                 if(cnt > 0){
                                     var count = jQuery('.file-attachment .upload_f').length + 1;
-                                    jQuery(".file-wrapper").append('<input id="upload-files" class="upload_f" type="file" multiple="multiple" name="upload-files[]">');
+                                    jQuery(".file-wrapper").append('<input id="upload-files" class="upload_f" type="file" multiple="multiple" accept=".pdf,.rtf,.rar,.zio,.jpg,.jpeg,.png,.bmp,.doc,.docx,.tiff" name="upload-files[]">');
                                     jQuery(this).off('change');
                                 }
                                 var html = '';
@@ -169,7 +169,7 @@
                 <div class="file-attachment tab2">
                     <div class="file-wrapper">
                         <div class="text-above">Прикрепить файлы</div>
-                        <input id="upload-files" type="file" multiple name="upload-files[]">
+                        <input id="upload-files" type="file" multiple name="upload-files[]" accept=".pdf,.rtf,.rar,.zio,.jpg,.jpeg,.png,.bmp,.doc,.docx,.tiff">
                     </div>
                     <div class="file-names"></div>
                     <script type="text/javascript">
@@ -223,7 +223,7 @@
                 <div class="file-attachment tab3">
                     <div class="file-wrapper">
                         <div class="text-above">Прикрепить файлы</div>
-                        <input id="upload-files" type="file" multiple name="upload-files[]">
+                        <input id="upload-files" type="file" multiple name="upload-files[]" accept=".pdf,.rtf,.rar,.zio,.jpg,.jpeg,.png,.bmp,.doc,.docx,.tiff">
                     </div>
                     <div class="file-names"></div>
                     <script type="text/javascript">

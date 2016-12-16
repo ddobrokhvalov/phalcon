@@ -118,7 +118,7 @@
                     <div class="file-attachment tab1">
                         <div class="file-wrapper" style="margin-bottom: 20px; height: 30px">
                             <div class="text-above">Прикрепить файлы</div>
-                            <input id="upload-files" class="upload_f first" data-filedid="first" type="file" name="upload-files[]" style="width:100%; height 100%">
+                            <input id="upload-files" class="upload_f first" data-filedid="first" type="file" name="upload-files[]" accept=".pdf,.rtf,.rar,.zio,.jpg,.jpeg,.png,.bmp,.doc,.docx,.tiff" style="width:100%; height 100%">
                         </div>
                         <div class="file-names">
                             <div class="attached-files"></div>
@@ -131,7 +131,7 @@
                                     if(cnt > 0){
                                         var count = jQuery('.tab1 .upload_f').length + 1;
                                         classNameInputFile = 'file' + parseInt(Math.random() * 10000);
-                                        jQuery(".tab1 .file-wrapper").append('<input id="upload-files" class="upload_f '+ classNameInputFile +'" data-filedid="'+ classNameInputFile + '" type="file" name="upload-files[]">');
+                                        jQuery(".tab1 .file-wrapper").append('<input id="upload-files" class="upload_f '+ classNameInputFile +'" data-filedid="'+ classNameInputFile + '" type="file" name="upload-files[]" accept=".pdf,.rtf,.rar,.zio,.jpg,.jpeg,.png,.bmp,.doc,.docx,.tiff">');
                                         var upload_file = jQuery(this)[0];
                                         var file_data = upload_file.files[0]['name'].split('.');
                                         var file_type = file_data[file_data.length - 1];
