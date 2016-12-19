@@ -161,11 +161,8 @@ var applicant = {
 
 
         data = data.split(',');
-        $('.tabcontent-ur #entity-short').val(name);
-        var inn = this.parseSnUr(data, ' INN=', 7, 4);
-        if(inn == '')
-            inn = this.parseSnUr(data, ' ИНН=', 7, 4);
-        $('.tabcontent-ur #entity-inn').val(inn);
+
+        var inn = this.getInn(selectedCertif.SubjectName);
         if(this.edit_mode == false){
             this.inn = inn;
             this.checkInn(inn);
@@ -183,6 +180,8 @@ var applicant = {
         }
 
         var position = this.getPosition(selectedCertif.SubjectName);
+        $('.tabcontent-ur #entity-inn').val(inn);
+        $('.tabcontent-ur #entity-short').val(name);
         $('.tabcontent-ur #entity-kpp').val(kpp);
         $('.tabcontent-ur #entity-address').val(this.parseSnUr(data, ' L=', 3, 0) + ' ' + this.parseSnUr(data, 'STREET=', 8, 1));
         $('.tabcontent-ur #entity-position').val(position);
@@ -204,6 +203,12 @@ var applicant = {
         return false;
     },
 
+    getInn: function(data) {
+        var inn = data.match(/[\s\,]?INN=([\d]+)[\/,\,\s]?/i);
+        if (!inn) inn = data.match(/[\s\,]?ИНН=([\d]+)[\/,\,\s]?/i);
+        if(inn) return inn[1];
+        return false;
+    },
 
 
     /*
@@ -244,9 +249,7 @@ var applicant = {
         $('.tabcontent-in #entity-short').val(shortName);
 
 
-        var inn = this.parseSnUr(data, ' INN=', 5, 0);
-        if(inn == '')
-            inn = this.parseSnUr(data, ' ИНН=', 5, 0);
+        var inn = this.getInn(selectedCertif.SubjectName);
         //inn = inn.substr(5, inn.length);
         if(this.edit_mode == false){
             this.inn = inn;
