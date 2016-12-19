@@ -210,6 +210,33 @@ var applicant = {
         return false;
     },
 
+    getStreet: function(data){
+        var street = data.match(/[\s\,]?STREET=[\"]?([a-zA-Zа-яА-Я\s\"\'\.\,\d\/\-]+)([\"]|[\,])/);
+        if(street){
+            return street[1].replace(/\"/g, '');
+        }
+        return false;
+    },
+
+    getFio: function(data){
+        var fio = data.match(/[\s\,]CN=([a-zA-Zа-яА-Я\s]+)[\/,\,\s]?/i );
+        if(fio) return fio[1];
+        return false;
+    },
+
+    getEmail: function(data){
+        var email = data.match(/[\s\,]E=([\w@\-\.]+)[\/,\,\s]?/i );
+        if(email) return email[1];
+        return false;
+    },
+
+    getKpp: function(data){
+        var kpp = data.match(/[\s\,]?КПП=([\d]+)[\/,\,\s]?/i);
+        if (!kpp) kpp = data.match(/[\s\,]?KPP=([\d]+)[\/,\,\s]?/i);
+        if(kpp) return kpp[1];
+        return false;
+    },
+
 
     /*
      "SN=Соколов"
