@@ -211,7 +211,7 @@ var applicant = {
     },
 
     getStreet: function(data){
-        var street = data.match(/[\s\,]?STREET=[\"]?([a-zA-Zа-яА-Я\s\"\'\.\,\d\/\-]+)([\"]|[\,])/);
+        var street = data.match(/[\s\,]?STREET=[\"]?([«»a-zA-Zа-яА-Я\s\"\'\.\,\d\/\-]+)([\"]|[\,])/);
         if(street){
             return street[1].replace(/\"/g, '');
         }
