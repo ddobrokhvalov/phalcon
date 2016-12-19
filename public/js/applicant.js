@@ -173,7 +173,7 @@ var applicant = {
     },
 
     getPosition: function(data){
-       var position = data.match(/[\s\,]T=([a-zA-Zа-яА-Я\s]+)/i );
+       var position = data.match(/[\s\,]T=([«»a-zA-Zа-яА-Я\s]+)/i );
        if(position[1] !== undefined) return position[1];
        return false;
     },
