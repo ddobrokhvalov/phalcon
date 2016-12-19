@@ -155,40 +155,21 @@ var applicant = {
         $('.tabcontent-ip').css('display', 'none');
 
         this.setUrlico();
-        var data = selectedCertif.SubjectName;
         var name = this.getName(selectedCertif.SubjectName);
         var position = this.getPosition(selectedCertif.SubjectName);
-
-
-        data = data.split(',');
-
+        var street = this.getStreet(selectedCertif.SubjectName);
+        var fio = this.getFio(selectedCertif.SubjectName);
+        var email = this.getEmail(selectedCertif.SubjectName);
         var inn = this.getInn(selectedCertif.SubjectName);
-        if(this.edit_mode == false){
-            this.inn = inn;
-            this.checkInn(inn);
-        }
+        var kpp = this.getKpp(selectedCertif.SubjectName);
 
-        var kpp = data[3];
-        kpp = kpp.split('/');
-        kpp = kpp[1];
-        if(kpp !== undefined) {
-            kpp = kpp.substr(4, kpp.length);
-        } else {
-            kpp = data[2];
-            kpp = kpp.match( /KPP=(\d+)/i );
-            kpp = kpp[1];
-        }
-
-        var position = this.getPosition(selectedCertif.SubjectName);
-        $('.tabcontent-ur #entity-inn').val(inn);
-        $('.tabcontent-ur #entity-short').val(name);
-        $('.tabcontent-ur #entity-kpp').val(kpp);
-        $('.tabcontent-ur #entity-address').val(this.parseSnUr(data, ' L=', 3, 0) + ' ' + this.parseSnUr(data, 'STREET=', 8, 1));
-        $('.tabcontent-ur #entity-position').val(position);
-        $('.tabcontent-ur #entity-fio-z').val(this.parseSnUr(data, 'CN=', 4, 0));
-        $('.tabcontent-ur #entity-email').val(this.parseSnUr(data, ' E=', 3, 0));
-
-
+        $('.tabcontent-ur #entity-short').val((name) ? name : '');
+        $('.tabcontent-ur #entity-inn').val((inn) ? inn : '');
+        $('.tabcontent-ur #entity-kpp').val((kpp) ? kpp : '');
+        $('.tabcontent-ur #entity-address').val((street) ? street : '');
+        $('.tabcontent-ur #entity-position').val((position) ? position : '');
+        $('.tabcontent-ur #entity-fio-z').val((fio) ? fio : '' );
+        $('.tabcontent-ur #entity-email').val((email) ? email : ''  );
     },
 
     getPosition: function(data){
@@ -199,7 +180,7 @@ var applicant = {
 
     getName: function(data){
         var name = data.match(/[\s\,]O=([«»a-zA-Zа-яА-Я\s\"\']+)/i );
-        if(name[1] !== undefined) return name[1];
+        if(name) return name[1];
         return false;
     },
 
@@ -207,6 +188,33 @@ var applicant = {
         var inn = data.match(/[\s\,]?INN=([\d]+)[\/,\,\s]?/i);
         if (!inn) inn = data.match(/[\s\,]?ИНН=([\d]+)[\/,\,\s]?/i);
         if(inn) return inn[1];
+        return false;
+    },
+
+    getStreet: function(data){
+        var street = data.match(/[\s\,]?STREET=[\"]?([«»a-zA-Zа-яА-Я\s\"\'\.\,\d\/\-]+)([\"]|[\,])/);
+        if(street){
+            return street[1].replace(/\"/g, '');
+        }
+        return false;
+    },
+
+    getFio: function(data){
+        var fio = data.match(/[\s\,]CN=([a-zA-Zа-яА-Я\s]+)[\/,\,\s]?/i );
+        if(fio) return fio[1];
+        return false;
+    },
+
+    getEmail: function(data){
+        var email = data.match(/[\s\,]E=([\w@\-\.]+)[\/,\,\s]?/i );
+        if(email) return email[1];
+        return false;
+    },
+
+    getKpp: function(data){
+        var kpp = data.match(/[\s\,]?КПП=([\d]+)[\/,\,\s]?/i);
+        if (!kpp) kpp = data.match(/[\s\,]?KPP=([\d]+)[\/,\,\s]?/i);
+        if(kpp) return kpp[1];
         return false;
     },
 
@@ -234,42 +242,27 @@ var applicant = {
         $('.tabcontent-in').css('display', 'block');
 
         this.setIp();
-        var data = selectedCertif.SubjectName;
-        data = data.split(',');
-        console.log(data);
-      /*  var shortName1 = data[0];
-        shortName1 = shortName1.substr(3, shortName1.lenght);
-        var shortName = data[1];
-        shortName = shortName.substr(3, shortName.lenght);
-        shortName = shortName1 + ' ' + shortName;
-        $('#entity-short').val(shortName); */
-        var shortName = this.parseSnUr(data, ' O=', 3, 0);
-        if(shortName == "")
-            shortName = 'ИП ' + this.parseSnUr(data, ' CN=', 4, 0);
-        $('.tabcontent-in #entity-short').val(shortName);
-
-
+        var name = this.getName(selectedCertif.SubjectName);
+        var street = this.getStreet(selectedCertif.SubjectName);
+        var fio = this.getFio(selectedCertif.SubjectName);
         var inn = this.getInn(selectedCertif.SubjectName);
-        //inn = inn.substr(5, inn.length);
+        var email = this.getEmail(selectedCertif.SubjectName);
+
+
+        $('.tabcontent-in #entity-email').val((email) ? email : '' );
+        $('.tabcontent-in #entity-inn').val((inn) ? inn : '');
+        $('.tabcontent-in #entity-address').val((street) ? street : '');
+        $('.tabcontent-in #entity-fio-z').val((fio) ? fio : '' );
+        if(!name){
+            $('.tabcontent-in #entity-short').val('ИП ' + fio);
+        } else{
+            $('.tabcontent-in #entity-short').val(name);
+        }
+
         if(this.edit_mode == false){
             this.inn = inn;
             this.checkInn(inn);
         }
-        $('.tabcontent-in #entity-inn').val(inn);
-
-        /*var city = data[6];
-        city = city.substr(6, city.lenght);
-        var address = data[3];
-        address = address.substr(8, address.lenght);
-        $('#entity-address').val(city + ' ' + address); */
-
-        $('.tabcontent-in #entity-fio-z').val(this.parseSnUr(data, ' CN=', 4, 0));
-
-        var email = data[8];
-        email = email.substr(3, email.lenght);
-        $('.tabcontent-in #entity-email').val(this.parseSnUr(data, ' E=', 3, 0));
-
-
     },
     checkInn: function (inn) {
         /*if (!validator.numeric($('#czvr3').val(), 10, 10)) {
