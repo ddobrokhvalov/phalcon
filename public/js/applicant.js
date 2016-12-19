@@ -155,40 +155,21 @@ var applicant = {
         $('.tabcontent-ip').css('display', 'none');
 
         this.setUrlico();
-        var data = selectedCertif.SubjectName;
         var name = this.getName(selectedCertif.SubjectName);
         var position = this.getPosition(selectedCertif.SubjectName);
-
-
-        data = data.split(',');
-
+        var street = this.getStreet(selectedCertif.SubjectName);
+        var fio = this.getFio(selectedCertif.SubjectName);
+        var email = this.getEmail(selectedCertif.SubjectName);
         var inn = this.getInn(selectedCertif.SubjectName);
-        if(this.edit_mode == false){
-            this.inn = inn;
-            this.checkInn(inn);
-        }
+        var kpp = this.getKpp(selectedCertif.SubjectName);
 
-        var kpp = data[3];
-        kpp = kpp.split('/');
-        kpp = kpp[1];
-        if(kpp !== undefined) {
-            kpp = kpp.substr(4, kpp.length);
-        } else {
-            kpp = data[2];
-            kpp = kpp.match( /KPP=(\d+)/i );
-            kpp = kpp[1];
-        }
-
-        var position = this.getPosition(selectedCertif.SubjectName);
-        $('.tabcontent-ur #entity-inn').val(inn);
-        $('.tabcontent-ur #entity-short').val(name);
-        $('.tabcontent-ur #entity-kpp').val(kpp);
-        $('.tabcontent-ur #entity-address').val(this.parseSnUr(data, ' L=', 3, 0) + ' ' + this.parseSnUr(data, 'STREET=', 8, 1));
-        $('.tabcontent-ur #entity-position').val(position);
-        $('.tabcontent-ur #entity-fio-z').val(this.parseSnUr(data, 'CN=', 4, 0));
-        $('.tabcontent-ur #entity-email').val(this.parseSnUr(data, ' E=', 3, 0));
-
-
+        $('.tabcontent-ur #entity-short').val((name) ? name : '');
+        $('.tabcontent-ur #entity-inn').val((inn) ? inn : '');
+        $('.tabcontent-ur #entity-kpp').val((kpp) ? kpp : '');
+        $('.tabcontent-ur #entity-address').val((street) ? street : '');
+        $('.tabcontent-ur #entity-position').val((position) ? position : '');
+        $('.tabcontent-ur #entity-fio-z').val((fio) ? fio : '' );
+        $('.tabcontent-ur #entity-email').val((email) ? email : ''  );
     },
 
     getPosition: function(data){
