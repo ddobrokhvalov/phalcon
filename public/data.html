@@ -1,0 +1,1708 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+
+
+
+
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+    <title>Жалобы</title>
+
+    <script type="text/javascript">
+        var contextPath = "/epz/complaint";
+    </script>
+
+    
+    <link type="text/css" rel="stylesheet" media="all" href="/epz/complaint/css/style.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="/epz/complaint/css/skin.css"/>
+    <link type="text/css" rel="stylesheet" href="/epz/complaint/css/jquery.datepick.css"/>
+    <link type="text/css" rel="stylesheet" href="/epz/complaint/css/barChart.css"/>
+    <link type="text/css" rel="stylesheet" href="/epz/complaint/css/ui.dynatree.css"/>
+    <link type="text/css" rel="stylesheet" href="/epz/complaint/css/jquery_msgbox.css"/>
+    
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/epz/complaint/js/jquery-1.8.3.js"><\/script>')</script>
+    <script type="text/javascript" src="/epz/complaint/js/baseLayout.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/script.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/jquery-ui-1.8.24.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/ui_autocomplete.js"></script>
+
+    
+    <script type="text/javascript" src="/epz/complaint/js/jquery.ui.datepicker-ru.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/jquery.price_format.1.7.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/jquery.jcarousel.min.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/jquery.maskedinput.min.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/jquery.dynatree.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/validation/jquery.numeric.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/common/config.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/common/choose-headagency.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/common/choose-okpd.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/custom.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/popupCommon.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/common/choose-organization.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/validation/jquery.validate.js"></script>
+    <script type="text/javascript" src="/epz/complaint/js/jquery_msgBox.js"></script>
+    <script type="text/javascript">if (!window.console) console = {log: function() {}};</script>
+
+    
+
+
+
+<script type="text/javascript">
+    epzCommonConfig.initCommonConfig({
+        contextPath: '/epz/complaint',
+        smartSearchEnable: true,
+
+        urls: {
+            epzMainPublicUrl: '/epz/main/public/',
+            epzNsiUrl: '/epz/nsi/',
+            epzOrderUrl: '/epz/order/',
+            epzOrderPlanUrl: '/epz/orderplan/',
+            epzOrderClauseUrl: '/epz/orderclause/',
+            epzContractUrl: '/epz/contract/',
+            epzContractFz223Url: '/epz/contractfz223/',
+            epzContractReportingUrl: '/epz/contractreporting/',
+            epzCustomerReportsUrl: '/epz/customerreports/',
+            epzOrganizationUrl: '/epz/organization/',
+            epzDishonestSupplierUrl: '/epz/dishonestsupplier/',
+            epzComplaintUrl: '/epz/complaint/',
+            epzBankGuaranteeUrl: '/epz/bankguarantee/',
+            epzInspectionPlanUrl: '/epz/inspectionplan/',
+            epzUnscheduledInspectionUrl: '/epz/unscheduledinspection/',
+            epzControlResultUrl: '/epz/controlresult/',
+            epzDizkUrl: '/epz/dizk/'
+        }
+    });
+</script>
+
+</head>
+<body>
+
+    
+
+<div class="outerWrapper mainPage mainPage">
+
+    <div class="wrapper">
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+
+<script type="text/javascript">
+    var isRegisteredUserObozApp = Boolean("");
+    var sessionMaxInactiveInterval = "180";
+    $(document).ready(function () {
+
+        /* fix console.log in IE */
+        if (!window.console) window.console = {};
+        if (!window.console.log) window.console.log = function () { };
+        /* fix console.log in IE */
+
+        var userRegionName = $.cookie("userRegionName"),
+                userRegionId = $.cookie("userRegionId"),
+                doNotShowKladrPopUp = $.cookie("doNotShowKladrPopUp"),
+                doNotUseRegionToFind = $.cookie("doNotUseRegionToFind"),
+                doNotAdviseToChangeLocation = $.cookie("doNotAdviseToChangeLocation");
+
+        function detectGeolocation(callback) {
+            ymaps.ready(function () {
+                ymaps.geolocation.get({
+                    provider: 'yandex',
+                    autoReverseGeocode: true
+                }).then(function (result) {
+                    callback(result);
+                });
+            });
+        }
+
+        function getRegionIdByName(regionName, callback) {
+            $.get('/epz/nsi/kladr/regionIdByName.json', {regionName : regionName}).done(function(data) {
+                callback(data);
+            });
+        }
+
+        function getAdministrativeAreaName(responseFromYandexGeolocationService) {
+            return responseFromYandexGeolocationService.geoObjects.get(0).properties.get('metaDataProperty.GeocoderMetaData.AddressDetails.Country.AdministrativeArea.AdministrativeAreaName');
+        }
+
+        function getSubAdministrativeAreaName(responseFromYandexGeolocationService) {
+            return responseFromYandexGeolocationService.geoObjects.get(0).properties.get('metaDataProperty.GeocoderMetaData.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.SubAdministrativeAreaName');
+        }
+
+        if (userRegionId != null && userRegionId != 0) {
+            setRegionNameHeader(userRegionName);
+            if(doNotUseRegionToFind != 'true' && doNotAdviseToChangeLocation != 'true') {
+                detectGeolocation(function(responseFromYandexGeolocationService) {
+                    var administrativeAreaName = getAdministrativeAreaName(responseFromYandexGeolocationService),
+                            subAdministrativeAreaName = getSubAdministrativeAreaName(responseFromYandexGeolocationService),
+                            preparedUserRegionName = null;
+
+                    if (findFederalRegionYandexAnswer(administrativeAreaName)) {
+                        userRegionName = subAdministrativeAreaName;
+                    } else {
+                        userRegionName = administrativeAreaName;
+                    }
+
+                    preparedUserRegionName = prepareYandexRegionName(userRegionName);
+
+                    if(preparedUserRegionName && preparedUserRegionName.trim()) {
+                        getRegionIdByName(preparedUserRegionName, function(data) {
+                            var regionId = data ? data.regionId : null;
+                            if(regionId && regionId != userRegionId) {
+                                $.cookie("possibleRegionIdChange", regionId, { path: '/epz', expires: 1 });
+                                $("#chooseRegion").click();
+                            }
+                        });
+                    }
+
+                });
+            }
+        } else {
+            setRegionNameHeader("Не выбран");
+
+            detectGeolocation(function(responseFromYandexGeolocationService) {
+                var administrativeAreaName = getAdministrativeAreaName(responseFromYandexGeolocationService),
+                    subAdministrativeAreaName = getSubAdministrativeAreaName(responseFromYandexGeolocationService);
+
+                if (findFederalRegionYandexAnswer(administrativeAreaName)) {
+                    userRegionName = subAdministrativeAreaName;
+                } else {
+                    userRegionName = administrativeAreaName;
+                }
+
+                $.cookie("userRegionName", prepareYandexRegionName(userRegionName), { path: '/epz', expires: 182 });
+                $.cookie("yandexRegionName", administrativeAreaName + ', ' + subAdministrativeAreaName, { path: '/epz', expires: 182 });
+
+                if (doNotShowKladrPopUp != 'true') {
+                    $("#chooseRegion").click();
+                }
+            });
+        }
+    });
+
+    function setRegionNameHeader(regionName) {
+        $("#headerUserRegionName").text(regionName);
+    }
+
+    function prepareYandexRegionName(regionName) {
+        if (regionName === 'Москва и Московская область') {
+            return 'Московская';
+        }
+
+        if (regionName === 'Москва и область') {
+            return 'Московская';
+        }
+
+        if (regionName === 'Санкт-Петербург и Ленинградская область') {
+            return 'Ленинградская';
+        }
+
+        if (regionName === 'Санкт-Петербург и область') {
+            return 'Ленинградская';
+        }
+
+        var resultRegionName = null;
+        var stringToRemoveArray = [' автономный округ', ' автономная область', ' АО', ' область', ' край', 'Республика ', ' Республика', ' республика'];
+
+        for (var j = 0; j < stringToRemoveArray.length; j++) {
+            if (regionName.search(stringToRemoveArray[j]) > -1) {
+                resultRegionName = regionName.replace(stringToRemoveArray[j], '');
+
+                break;
+            } else {
+                resultRegionName = regionName;
+            }
+        }
+
+        return resultRegionName.split('-')[0];
+    }
+
+    function findFederalRegionYandexAnswer(yandexAnswer) {
+        var answerArray = yandexAnswer.split(' ');
+
+        for (var i = 0; i < answerArray.length; i++) {
+            if (answerArray[i] === 'округ') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /*Отладочная информация - все регионы РФ из ответа Яндекса https://yandex.ru/yaca/geo.c2n */
+    /*var yandexRegionNameArray = ['Москва и область', 'Белгородская область', 'Брянская область', 'Владимирcкая область', 'Воронежcкая область', 'Ивановская область', 'Калужская область', 'Костромская область', 'Курская область',
+     'Липецкая область', 'Орловская область', 'Рязанская область', 'Смоленская область', 'Тамбовская область', 'Тверская область', 'Тульская область', 'Ярославская область',
+     'Санкт-Петербург и Ленинградская область', 'Архангельская область', 'Вологодская область', 'Калининградская область', 'Мурманская область',
+     'Новгородская область', 'Псковская область', 'Республика Коми', 'Республика Карелия', 'Ненецкий АО',
+     'Астраханская область', 'Волгоградская область', 'Краснодарский край', 'Республика Адыгея', 'Республика Калмыкия', 'Ростовская область',
+     'Кировская область', 'Республика Марий Эл', 'Нижегородская область', 'Оренбургская область', 'Пензенская область', 'Пермский край', 'Республика Башкортостан',
+     'Республика Мордовия', 'Татарстан', 'Самарская область', 'Саратовская область', 'Удмуртская республика', 'Ульяновская область', 'Чувашская республика',
+     'Курганская область', 'Свердловская область', 'Тюменская область', 'Ханты-Мансийский АО', 'Челябинская область', 'Ямало-Ненецкий АО',
+     'Алтайский край', 'Иркутская область', 'Кемеровская область', 'Красноярский край', 'Новосибирская область', 'Омская область',
+     'Республика Алтай', 'Республика Бурятия', 'Республика Тыва', 'Республика Хакасия', 'Томская область', 'Забайкальский край',
+     'Магаданская область', 'Камчатский край', 'Еврейская автономная область', 'Чукотский автономный округ', 'Хабаровский край', 'Приморский край', 'Амурская область', 'Республика Саха (Якутия)', 'Сахалинская область',
+     'Республика Дагестан', 'Республика Ингушетия', 'Республика Кабардино-Балкария', 'Республика Северная Осетия-Алания', 'Ставропольский край', 'Карачаево-Черкесская Республика', 'Чеченская Республика', 'Крым', 'Севастополь'];*/
+</script>
+
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter36706425 = new Ya.Metrika({
+                    id:36706425,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+
+    function yandexCounterHit(url) {
+        if (typeof(yaCounter36706425) != "undefined") {
+            yaCounter36706425.hit(url);
+        }
+    }
+
+    $(document).ready(function () {
+        $("a[target=_blank]:not([initialHref])").click(function (event) {
+            yandexCounterHit($(this).attr("href"));
+        });
+
+        $(document).ajaxSend(function (event, request, settings) {
+            yandexCounterHit(settings.url);
+        });
+    });
+
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/36706425" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+
+
+
+<div class="header">
+    <table class="" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <a href="/epz/main/public/home.html" class="logo"></a>
+            </td>
+            <td class="">
+                <ul>
+                    <li class="titlePart">
+                        <a href="/epz/main/public/home.html" class="headerLinkCaption">Официальный сайт</a>
+                    </li>
+                    <li class="titleCite">
+                        <a href="/epz/main/public/home.html" class="headerLinkCaption">
+                            <strong>ЕДИНОЙ ИНФОРМАЦИОННОЙ<br/>СИСТЕМЫ В СФЕРЕ ЗАКУПОК</strong>
+                        </a>
+                        <a class="linkPopUp" href="/epz/main/public/information.html"><span class="info"></span></a>
+                    </li>
+                    <li>
+                        <a href="/epz/main/public/forCustomers.html?tmstmp=1481286038916" class="clientIco">ЗАКАЗЧИКАМ</a>
+                        <a href="/epz/main/public/forSuppliers.html?tmstmp=1481286038916" class="catererIco">ПОСТАВЩИКАМ</a>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul class="fullTime">
+                    <li class="titlePart">Служба поддержки</li>
+                    <li class=""><strong>8 495 134-41-24</strong></li>
+                    <li class="padBtm8"><strong>8 800 333-48-01</strong></li>
+                    <li class=""><a href="/epz/main/public/user-feedback.html">Обратная связь</a></li>
+                    <li class=""><a href="/epz/main/public/qa/view.html">Вопросы и ответы</a></li>
+                </ul>
+            </td>
+            <td>
+                <ul class="locationIco">
+                    <li class="titlePart">Ваш субъект РФ <span class="help"
+                                                               title="Информация о местоположении пользователя используется в поисковых запросах для динамической детализации результатов поиска"></span>
+                    </li>
+                    <li><strong><span id="headerUserRegionName"></span></strong></li>
+                    <li><a id="chooseRegion" class="linkPopUp" href="/epz/nsi/kladr/chooseRegion.html">Сменить</a></li>
+                </ul>
+            </td>
+            <td>
+                <dl class="lkBox">
+                    <dt class=""></dt>
+                    <dd class="cabinet"><span>Личный<br/>кабинет</span>
+
+                        <div class="personalCabinetPopUp">
+                            <div class="imgArr"></div>
+                            <div class="cabinetItem"><a class="linkPopUp" href="/epz/main/public/chooseAuth44.html" target="_blank">Личный кабинет 44-ФЗ</a></div>
+                            <div class="cabinetItem"><a href="https://zakupki.gov.ru/223/clause/private" target="_blank">Личный кабинет 223-ФЗ</a></div>
+                        </div>
+                    </dd>
+                </dl>
+            </td>
+        </tr>
+    </table>
+</div>
+
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="navigation">
+    <div class="fixed">
+    <ul class="topLevel">
+        <li class="nav1 oneLine"><a class="_homePage" href="/epz/main/public/home.html">Главная страница</a></li>
+    </ul>
+    <ul class="topLevel"><li class="nav2"><span>Планирование </br>закупок</span></li></ul>
+    <ul class="nextLevel">
+        <li><a class="_purchasePlanFz44Search" href="/epz/purchaseplanfz44/quicksearch/search.html">Планы закупок (44-ФЗ)</a></li>
+        <li><a class="_planSearch" href="/epz/orderplan/quicksearch/search.html">Планы-графики закупок (44-ФЗ) и планы закупки (223-ФЗ)</a></li>
+        <li><a class="_pricereqSearch" href="/epz/pricereq/quicksearch/search.html">Запросы цен товаров, работ, услуг (44-ФЗ)</a></li>
+        <li><a class="_normalizationRulesSearch" href="/epz/normalizationrules/quicksearch/search.html">Правила нормирования в сфере закупок (44-ФЗ)</a></li>
+        <li><a class="_orderClauseSearch" href="/epz/orderclause/quicksearch/search.html">Положения о закупке (223-ФЗ)</a></li>
+    </ul>
+
+    <ul class="topLevel"><li class="nav3"><span>Осуществление<br />закупок</span></li></ul>
+    <ul class="nextLevel">
+        <li><a class="_orderSearch" href="/epz/order/quicksearch/search.html">Все закупки</a></li>
+        
+            <li><a class="_obozSearch" href="/epz/oboz/public/quicksearch/search.html">Обязательное общественное обсуждение закупок</a></li>
+        
+        <li><a class="_bankGuaranteeSearch" href="/epz/bankguarantee/quicksearch/search.html">Реестр банковских гарантий</a></li>
+        
+            <li><a class="_gwsSearch" href="/epz/gws/quicksearch/search.html">Перечни товаров, работ, услуг (223-ФЗ)</a></li>
+        
+        <li><a class="_mechProducts" href="/epz/mechproducts/quicksearch/search.html">Перечни перспективных потребностей в продукции машиностроения (223-ФЗ)</a></li>
+    </ul>
+
+    <ul class="topLevel"><li class="nav4"><span>Информация о контрактах<br />и договорах</span></li></ul>
+    <ul class="nextLevel">
+        <li><a class="_contractSearch" href="/epz/contract/quicksearch/search.html">Реестр контрактов, заключенных заказчиками</a></li>
+        
+            <li><a class="_contractfz223" href="/epz/contractfz223/quicksearch/search.html">Реестр договоров, заключенных заказчиками по результатам закупки</a></li>
+        
+        <li><a class="_customerReportsSearch" href="/epz/customerreports/quicksearch/search.html">Отчеты заказчиков</a></li>
+        <li><a class="_contract/reporting" href="/epz/contractreporting/quicksearch/search.html">Отчетность по договорам (223-ФЗ)</a></li>
+        
+        <li><a class="_btkSearch" href="/epz/btk/quicksearch/search.html">Библиотека типовых контрактов, типовых условий контрактов (44-ФЗ)</a></li>
+    </ul>
+
+    <ul class="topLevel"><li class="nav5"><span>Мониторинг, аудит <br />и контроль в сфере закупок</span></li></ul>
+    <ul class="nextLevel padTop0">
+        <li class="itemLastLevel"><span>Нормативно-методическая<br />и справочная информация<br />по регулированию <br/> контрактной системы<br />в сфере закупок (44-ФЗ)</span>
+            <ul class="lastLevel">
+                <li><a class="_freeAnalyticalReport" href="/epz/legalacts/report/quicksearch/search.html">Сводные аналитические отчеты</a></li>
+                <li><a class="_legalActsSearch" href="/epz/legalacts/quicksearch/search.html">Иная информация</a></li>
+            </ul>
+        </li>
+        <li><a class="_auditSearch" href="/epz/audit/quicksearch/search.html">Информации о результатах деятельности органов аудита в сфере закупок (44-ФЗ)</a></li>
+        <li><a class="_dishonestSupplierSearch" href="/epz/dishonestsupplier/quicksearch/search.html">Реестр недобросовестных поставщиков</a></li>
+        <li class="itemLastLevel"><span><a class="_aggregateFeedback" href="/epz/main/public/aggregate-feedback.html" style="color: white">
+                                        Реестр жалоб, плановых и внеплановых проверок, их результатов и выданных предписаний</a></span>
+            <ul class="lastLevel">
+                <li><a class="_complaintSearch" href="/epz/complaint/quicksearch/search_eis.html">Жалобы</a></li>
+                <li><a class="_unscheduledInspectionSearch" href="/epz/unscheduledinspection/quicksearch/search_eis.html">Внеплановые проверки</a></li>
+                <li><a class="_inspectionPlanSearch" href="/epz/inspectionplan/quicksearch/search_eis.html">Плановые проверки</a></li>
+                <li><a class="_controlResultSearch" href="/epz/controlresult/quicksearch/search_eis.html">Результаты контроля</a></li>
+                <li><a class="_activitySearch" href="/epz/activity/quicksearch/search.html">Отчеты о проведенных <br>мероприятиях</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <ul class="topLevel"><li class="nav6"><span>Дополнительная<br />информация</span></li></ul>
+    <ul class="nextLevel">
+        <li><a class="_dizkSearch" href="/epz/dizk/quicksearch/search.html">Дополнительная информация о закупках, об исполнении контрактов (44-ФЗ)</a></li>
+        <li><a class="_organization/search" href="/epz/organization/quicksearch/search.html">Реестр организаций</a></li>
+        <li><a class="_revenueSearch" href="/epz/revenue/quicksearch/search.html">Реестр сведений об объеме выручки (223-ФЗ)</a></li>
+        <li><a class="_ispSearch" href="/epz/isp/quicksearch/search.html">Перечень информационных систем, зарегистрированных в ЕИС</a></li>
+        <li><a class="_openData" href="/epz/opendata/search.html">Открытые данные</a></li>
+        <li><a class="_etp" href="/epz/etp/list/index.html">Перечень отобранных операторов электронных площадок</a></li>
+    </ul>
+
+    <ul class="topLevel"><li class="nav7 oneLine"><a class="_documents" href="/epz/main/public/document/view.html">Документы</a></li></ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    
+        var sectionSelector = "li:has(a[class*='_complaintSearch'])";
+        $(sectionSelector).addClass("current");
+        $(sectionSelector).parents('ul').prev('ul.topLevel').find('li').addClass('current');
+    
+</script>
+
+        
+        <div class="mainBox">
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/epz/complaint/js/search/quickSearch.js"></script>
+<script type="text/javascript" src="/epz/complaint/js/search/saveQuickSearchSettingsPopup.js"></script>
+<script type="text/javascript" src="/epz/complaint/js/search/search.js"></script>
+<script type="text/javascript" src="/epz/complaint/js/quickSearchForm.js"></script>
+<script type="text/javascript" src="/epz/complaint/js/jquery.ui.datepicker.validation.js"></script>
+<script type="text/javascript" src="/epz/complaint/js/validation/jqueryCustomValidateFields.js"></script>
+
+<form id="quickSearchForm_header" action="/epz/complaint/quicksearch/search_eis.html" method="GET" class="formValidation">
+
+    
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/epz/complaint/js/searchString.js"></script>
+
+<div class="searchBlockAll zakupkiSearch">
+  <div class="searchBox titleTop">
+    
+      <span class="titleField padBtm5"
+                                       >Жалобы</span>
+      
+      
+    
+
+    <div class="searchField">
+      <input type="text" id="searchString" class="autocompleteOrder hint clearValue"
+             name="searchString"
+              
+                  
+                      value="0148300050716001465"
+                  
+                  
+              
+              
+             title="Введите полностью или часть номера реестровой записи или закупки/заказа, наименования закупки/заказа, описания плана-графика или плана закупок, наименования лица, подавшего жалобу, или субъекта жалобы"/>
+        <div class="clearButton"></div>
+      <input type="button" value="" onclick="submitQuickSearchForm();"/>
+    </div>
+    <p class="accounting">
+        
+            
+            
+                
+                    
+                    
+                        <a href="#" onclick="goExtendedSearch('/epz/complaint/extendedsearch/search.html')" class="extendedSearchLink floatRight">Расширенный поиск</a>
+                    
+                
+            
+            
+        
+
+        <label>
+                <span id="morphologyWrapper" class='customCheck
+                 
+                        
+                             
+                        
+                        
+                    ' onclick="morphologyWrapperClick()">
+                    <input type="checkbox" id="morphology" name="morphology"
+                           
+                           class="margLeft1"
+                           onclick="uncheckSearchStringCheckBox($('#strictEqual'));"/>
+                </span>
+            С учетом всех форм слов
+        </label>
+
+        <label>
+                <span id="strictEqualWrapper" class='mainPageStrictEqual customCheck ' onclick="strictEqualWrapperClick()">
+                    <input type="checkbox" id="strictEqual" name="strictEqual"
+                           
+                           class="margLeft3"
+                           onclick="uncheckSearchStringCheckBox($('#morphology'));"/>
+                </span>
+            Строгое соответствие
+        </label>
+    </p>
+  </div>
+</div>
+
+    
+
+    
+
+    
+
+    <div class="filterParametrs">
+        <div class="collapceBox collapceAdd"><span class="collapce">Свернуть фильтр</span><span class="expand">Развернуть фильтр</span>
+        </div>
+        <ul>
+            <li class="currentPar" id="setParametersTitle">Установленные параметры</li>
+            <li class="currentPar" id="editParametersTitle" style="display: none;">Уточняющие параметры</li>
+            <li onclick="showSearchParameters()" id="setParametersLink" class="withoutBorder">
+                <a href="#">Уточнить параметры поиска</a>
+            </li>
+            
+        </ul>
+        <div class="clear"></div>
+    </div>
+
+    <div class="filterBlock">
+
+        
+
+        <div class="greyBox">
+            <ul class="listParametrsSearch" id="searchOptionsViewContainer">
+                
+                    
+                
+                    
+                        
+                        
+                        
+                        
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li><label>Закон:</label>
+        
+            <span class="resultItem" data-input="fz94">44-ФЗ<span></span></span>
+            
+
+
+
+
+
+        
+        
+    </li>
+
+                    
+                
+                    
+                        
+                        
+                        
+                        
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li>
+        <label>Статус жалобы:</label>
+        
+            <span class="resultItem" data-input="regarded">Рассматривается<span></span></span>
+            
+
+
+
+
+
+        
+        
+            <span class="resultItem" data-input="considered">Рассмотрена<span></span></span>
+            
+
+
+
+
+
+        
+        
+            <span class="resultItem" data-input="returned">Возвращена<span></span></span>
+            
+
+
+
+
+
+        
+        
+            <span class="resultItem" data-input="cancelled">Отозвана<span></span></span>
+            
+
+
+
+
+
+        
+    </li>
+
+
+                    
+                
+                    
+                        
+                        
+                        
+                        
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
+                
+                    
+                        
+                        
+                        
+                        
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
+                
+                    
+                        
+                        
+                        
+                        
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
+                
+                    
+                
+
+                <li class="clear"></li>
+            </ul>
+
+            <ul class="listParametrsChoice reestrQuaranty" id="searchOptionsEditContainer">
+                
+
+                    
+                    
+                    
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<input type="hidden" id="pageNumber" name="pageNumber" value="1">
+<input type="hidden" name="sortDirection" value="false">
+<input type="hidden" name="recordsPerPage" value="_10">
+
+
+                
+
+                    
+                    
+                    
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#complaintPlaceOfSearchTag").on("setDefaultValues", function() {
+            $("#fz94").prop("checked", true);
+            $("#fz223").prop("checked", true);
+            _placeOfSearchDispatchEvent();
+        });
+
+        $("#complaintPlaceOfSearchTag input[type='checkbox']").on("delete", function(event) {
+            $(this).prop("checked", false);
+        });
+
+        _placeOfSearchDispatchEvent();
+    });
+
+    function _placeOfSearchDispatchEvent() {
+        var checkedList = $("#complaintPlaceOfSearchTag input[type='checkbox']:checked");
+        var classesList = "";
+        $.each(checkedList, function (i, item) {
+            classesList = classesList +  $(item).attr("data-className");
+        });
+        _changeTagsVisibility(classesList ? classesList : ".fz94_tag.fz223_tag");
+        $(".contractPlaceOfSearchEventListeners").trigger("contractPlaceOfSearchEvent", {
+            is94 : classesList.indexOf(".fz94_tag") > -1,
+            is223 : classesList.indexOf(".fz223_tag") > -1
+        });
+    }
+</script>
+
+<li id="complaintPlaceOfSearchTag"><label>Закон:</label>
+    <ul class="lowList">
+        <li><label><input type="checkbox"
+                
+                    checked
+                id="fz94" name="fz94"
+                data-className=".fz94_tag"
+                onchange="_placeOfSearchDispatchEvent()"/>44-ФЗ (94-ФЗ)</label></li>
+        <li><label><input type="checkbox"
+                id="fz223" name="fz223"
+                data-className=".fz223_tag"
+                onchange="_placeOfSearchDispatchEvent()"/>223-ФЗ</label></li>
+    </ul>
+</li>
+
+
+                
+
+                    
+                    
+                    
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#complaintStatuses").on("setDefaultValues", function() {
+            $("#regarded").prop("checked", true);
+            $("#considered").prop("checked", true);
+            $("#returned").prop("checked", false);
+            $("#cancelled").prop("checked", false);
+        });
+
+        $("#complaintStatuses input[type='checkbox']").on("delete", function(event) {
+            $(this).prop("checked", false);
+        });
+    });
+</script>
+
+
+<li id="complaintStatuses"><label>Статус жалобы:</label>
+    <ul class="lowList">
+        <li>
+            <label>
+                <input type="checkbox" checked id="regarded" name="regarded"/>Рассматривается
+            </label>
+        </li>
+        <li>
+            <label>
+                <input type="checkbox" checked id="considered" name="considered"/>Рассмотрена
+            </label>
+        </li>
+        <li>
+            <label>
+                <input type="checkbox" checked id="returned" name="returned"/>Возвращена
+            </label>
+        </li>
+        <li>
+            <label>
+                <input type="checkbox" checked id="cancelled" name="cancelled"/>Отозвана
+            </label>
+        </li>
+    </ul>
+</li>
+
+
+                
+
+                    
+                    
+                    
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li id="decisionOnTheComplaintTypeResultTag" class=""><label class="vAlignTop padTop8">Результат рассмотрения жалобы:</label>
+    <div class="manySelect width630 inlineBlock">
+        <div class="collapsed height30">
+            <span class="msExpandButton"></span>
+            
+                
+                
+                    <span data-initial="Выберите одно или несколько значений" class="msPlaceholder">Выберите одно или несколько значений</span>
+                
+                
+            
+        </div>
+        <div class="selectChose">
+            <div class="expanded decisionOnTheComplaintTypeResultExpanded">
+                <ul>
+                    
+                        
+                        <li
+                           
+                                ><span><input type="checkbox"
+                            id="decisionOnTheComplaintTypeResult_3" data-initial="true"/>Признана обоснованной</span></li>
+                    
+                        
+                        <li
+                           
+                                ><span><input type="checkbox"
+                            id="decisionOnTheComplaintTypeResult_4" data-initial="true"/>Признана обоснованной (частично)</span></li>
+                    
+                        
+                        <li
+                           
+                                ><span><input type="checkbox"
+                            id="decisionOnTheComplaintTypeResult_5" data-initial="true"/>Признана необоснованной</span></li>
+                    
+                </ul>
+            </div>
+            <div id="decisionOnTheComplaintTypeResultSelectBtn" class="msButtonIn"><span class="btnBtn blueBtn">Выбрать</span></div>
+        </div>
+    </div>
+    <input type="hidden" id="decisionOnTheComplaintTypeResult" name="decisionOnTheComplaintTypeResult" value="">
+</li>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#decisionOnTheComplaintTypeResultTag").on("setDefaultValues", function() {
+            $("div.selectChose :checkbox", this).prop("checked", function () {
+                return $(this).data("initial");
+            });
+            setManySelectPlaceholderText("decisionOnTheComplaintTypeResultSelectBtn");
+            refreshHiddenValue();
+        });
+        setManySelectPlaceholderText("decisionOnTheComplaintTypeResultSelectBtn");
+        $("#decisionOnTheComplaintTypeResultSelectBtn").click(refreshHiddenValue);
+
+        $("#decisionOnTheComplaintTypeResultTag input[type='checkbox']").on("delete", function(event) {
+            $(this).prop("checked", false);
+            refreshHiddenValue();
+        });
+
+        refreshHiddenValue();
+
+        function refreshHiddenValue() {
+            setHiddenValue($("div.decisionOnTheComplaintTypeResultExpanded input:checked:enabled"), $("#decisionOnTheComplaintTypeResult"), 33);
+        }
+    });
+</script>
+
+                
+
+                    
+                    
+                    
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#" + "dateOfReceiptTag").on("setDefaultValues", function() {
+      $("#" + "dateOfReceiptStart").prop("value", "");
+      $("#" + "dateOfReceiptEnd").prop("value", "");
+    });
+
+    $("#" + "dateOfReceiptTag" +" input[type='text']").on("delete", function(event) {
+      $("#" + "dateOfReceiptTag" +" input[type='text']").val("");
+    });
+  });
+</script>
+
+
+
+<li id="dateOfReceiptTag" class="">
+    <label class="vAlignTop">Дата поступления:</label>
+  <span class="padRight12">с</span>
+  <input type="text"
+         value=""
+         name="dateOfReceiptStart"
+         id="dateOfReceiptStart"
+         class="size110 height30 datepicker_ru margRight10"
+         title="Дата начала"
+         data-validate='{"required": "false", "validDate": "true"}'
+         data-validate_message='{"validDate": "Неправильная дата начала"}'/>
+  <span class="padRight12">по</span>
+  <input type="text"
+         value=""
+         name="dateOfReceiptEnd"
+         id="dateOfReceiptEnd"
+         class="size110 height30 datepicker_ru margRight10"
+         title="Дата окончания"
+         data-validate='{"required": "false", "validDate": "true", "validPeriod": "#dateOfReceiptStart"}'
+         data-validate_message='{"validDate": "Неправильная дата окончания", "validPeriod": "Дата начала периода должна быть меньше даты окончания периода"}'/>
+</li>
+
+                
+
+                    
+                    
+                    
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#" + "updateDateTag").on("setDefaultValues", function() {
+      $("#" + "updateDateFrom").prop("value", "");
+      $("#" + "updateDateTo").prop("value", "");
+    });
+
+    $("#" + "updateDateTag" +" input[type='text']").on("delete", function(event) {
+      $("#" + "updateDateTag" +" input[type='text']").val("");
+    });
+  });
+</script>
+
+
+
+<li id="updateDateTag" class="">
+    <label class="vAlignTop">Дата обновления:</label>
+  <span class="padRight12">с</span>
+  <input type="text"
+         value=""
+         name="updateDateFrom"
+         id="updateDateFrom"
+         class="size110 height30 datepicker_ru margRight10"
+         title="Дата начала"
+         data-validate='{"required": "false", "validDate": "true"}'
+         data-validate_message='{"validDate": "Неправильная дата начала"}'/>
+  <span class="padRight12">по</span>
+  <input type="text"
+         value=""
+         name="updateDateTo"
+         id="updateDateTo"
+         class="size110 height30 datepicker_ru margRight10"
+         title="Дата окончания"
+         data-validate='{"required": "false", "validDate": "true", "validPeriod": "#updateDateFrom"}'
+         data-validate_message='{"validDate": "Неправильная дата окончания", "validPeriod": "Дата начала периода должна быть меньше даты окончания периода"}'/>
+</li>
+
+                
+
+                    
+                    
+                    
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<input type="hidden" name="sortBy" value="PO_NOMERU">
+
+
+                
+            </ul>
+        </div>
+        <div class="darkGreyBox" id="searchButtonsBlock">
+            <div class="floatRight">
+                <span class="clearAll" id="setDefValue"><em>Очистить все</em></span>
+                <span class="bigOrangeBtn margLeft20" onclick="submitQuickSearchForm();">уточнить результаты</span>
+            </div>
+            
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var bannersBlockSvg =  document.getElementById("bannersBlockSvg");
+        var line  = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        line.setAttribute("fill-opacity", "0");
+        line.setAttribute("stroke", "#018ccd");
+        line.setAttribute("stroke-width", "2");
+        if (bannersBlockSvg)
+            bannersBlockSvg.appendChild(line);
+
+        if ($(".bannersMainBlock div.currentTab").index() == 0){
+            line.setAttribute("d", "M 1 75 L 1 10 C 1 10 1 1  10 1 L 200 1 C 200 1 210 1 210 10 L 210 65 C 210 65 210 75 220 75 L 910 75");
+            $(".bannersMainBlock div.currentTab img").attr('src', '/epz/complaint/images/convert_open_blue.png');
+        } else if($(".bannersMainBlock div.currentTab").index() == 1){
+            line.setAttribute("d", "M 1 75 L 230 75 C 230 75 240 75  240 65 L 240 10 C 240 10 240 1 250 1 L 430 1 C 430 1 440 1 440 10 L 440 65 C 440 65 440 75 450 75 L 910 75");
+            $(".bannersMainBlock div.currentTab img").attr('src', '/epz/complaint/images/bell_rings_blue.png');
+        } else if ($(".bannersMainBlock div.currentTab").index() == 2){
+            line.setAttribute("d", "M 1 75 L 450 75 C 450 75 460 75  460 65 L 460 10 C 460 10 460 1 470 1 L 660 1 C 660 1 670 1 670 10 L 670 65 C 670 65 670 75 680 75 L 910 75");
+            $(".bannersMainBlock div.currentTab img").attr('src', '/epz/complaint/images/calendar_check_blue.png');
+        } else if ($(".bannersMainBlock div.currentTab").index() == 3) {
+            line.setAttribute("d", "M 1 75 L 680 75 C 680 75 690 75  690 65 L 690 10 C 690 10 690 1 700 1 L 890 1 C 890 1 900 1 900 10 L 900 75");
+            $(".bannersMainBlock div.currentTab img").attr('src', '/epz/complaint/images/shield_blue.png');
+        }
+
+        var tittleText = $("ul.tuningQuickSearchList .currentSetting").text();
+        if (tittleText != "") {
+            $("div.tuningQuickSearchBlock .pseudoInput").removeClass("greyText").text(tittleText);
+        }
+        
+
+        var ulContainer = $("#searchOptionsViewContainer");
+
+        if (ulContainer[0].childElementCount == 1) {
+            ulContainer.append("<li><label>Параметры поиска не установлены<label/><li/>");
+        }
+    });
+    
+    
+</script>
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/epz/complaint/js/tiny_url.js"></script>
+
+
+
+
+
+
+<style>
+    .amountTenderTd {
+        width: 120px;
+    }
+    .paginator .greyBox {
+        border-radius: 0px;
+        background-color: transparent;
+        padding: 0px;
+        display: inline-block;
+        width: 510px;
+    }
+    .paginator .greyBox .paging {
+        width: 370px;
+    }
+    .registerBox2 {
+        border: 2px solid #d3d7db;
+        border-radius: 5px;
+        padding: 0px;
+        position: relative;
+    }
+    .tenderTd dd {
+        padding: 0;
+        margin-bottom: 5px;
+    }
+    .amountTenderTd ul {
+        padding-top: 0px;
+    }
+
+    .amountTenderTd ul li {
+        padding-bottom: 5px;
+    }
+
+    .errorMessageValidation {
+        background: url("../images/newDesign/warning_ico.png") no-repeat 0px 0px;
+        color: #e2351e;
+        padding-left: 25px;
+    }
+    .descriptTenderTd dt {
+        color: #41484e;
+        font-size: 16px;
+        font-weight: bold;
+        padding-bottom: 0px;
+    }
+    /*.registerBox td td {*/
+        /*padding-left: 0px;*/
+        /*padding-top: 0px;*/
+    /*}*/
+    .descriptTenderTd dl {
+        margin: 0px;
+    }
+    .descriptTenderTd tr td {
+        padding-bottom: 7px;
+    }
+    .registerBox .subComplaintBox h4 {
+        border: 0;
+        /*
+        margin-top: 5px;
+        padding-bottom: 5px;
+        padding-top: 5px;
+        */
+    }
+    .registerBox h4 {
+        display:  inline-block;
+        width: 540px;
+    }
+    div.padRight20 dl {
+        display:  inline-block;
+    }
+    .doc-col {
+        display:  inline-block;
+        width: 200px;
+    }
+
+    .registerBox .boxIcons {
+        position: absolute;
+        top: -15px;
+        right: -25px;
+    }
+    /*.printLink {*/
+        /*background: url("../images/newDesign/print_ico.png") no-repeat 0px 0px;*/
+        /*display: inline-block;*/
+        /*height: 40px;*/
+        /*position: absolute;*/
+        /*right: -10px;*/
+        /*top: -10px;*/
+        /*width: 41px;*/
+        /*background-size: 30px 30px;*/
+    /*}*/
+
+    td{
+        word-break: break-word;
+    }
+    .imgDocAlign{
+        float:left;
+        display: block;
+    }
+    .fileDocAlign{
+        /*padding-left: 20px;*/
+        display: block;
+    }
+
+</style>
+
+<div class="parametrs margBtm10">
+    <div>
+        <div class="sortBy">
+            
+
+
+
+
+
+<ul>
+    <li>Показывать по:</li>
+    <li class="pageSelect">
+        <span class=""><i>10</i></span>
+        <ul>
+            
+                
+                    <li id="_10">10</li>
+                
+            
+                
+            
+                
+                    <li id="_20">20</li>
+                
+            
+                
+            
+                
+                    <li id="_50">50</li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+    </li>
+</ul>
+
+
+            <ul>
+                <li>Сортировать по:</li>
+                
+                    <li type="PO_DATE_OBNOVLENIYA" class="sortItem  ">
+                        <span>Дате обновления</span>
+                    </li>
+                
+                    <li type="PO_DATE_POSTUPLENIYA" class="sortItem  ">
+                        <span>Дате поступления</span>
+                    </li>
+                
+                    <li type="PO_DATE_RAZMESCHENIA" class="sortItem  ">
+                        <span>Дате размещения</span>
+                    </li>
+                
+                    <li type="PO_NOMERU" class="sortItem activeSort ">
+                        <span>Номеру</span>
+                    </li>
+                
+                    <li type="PO_RELEVANTNOSTI" class="sortItem  ">
+                        <span>Релевантности</span>
+                    </li>
+                
+            </ul>
+        </div>
+
+        
+        <div class="paginator greyBox extendedVariant margBtm20">
+            <a href="javascript:void(0)" class="rssBox" title="Подписаться на RSS-ленту"
+               onclick="checkURILength('/epz/complaint/quicksearch/rss?searchString=0148300050716001465&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU', 256)">rss</a>
+
+            
+
+            <label><input type="checkbox" value="0" id="expandLotsInfo"
+                
+                   onclick="$('input#showSubCompaintsInfoHidden').val(this.checked)">Развернуть дополнительную информацию</input>
+            </label>
+            
+            <div class="clear"></div>
+        </div>
+
+        
+
+        <div class="margBtm50">
+            
+                
+                
+                    <div class="paginator greyBox greyText">
+                        <i>Поиск не дал результатов</i>
+                    </div>
+                
+            
+        </div>
+
+        
+
+    </div>
+
+</div>
+<div class="clear"></div>
+
+<script type="text/javascript">
+    if ($("input#showLotsInfoHidden").val() == "true") {
+        $("#expandLotsInfo").attr("checked", "checked");
+        expandLots($("#expandLotsInfo"));
+    }
+
+    function lotInfoClick(id, el){
+        if($("#"+id).css("display")=="none"){
+            //alert(1);
+            $("#"+id).slideDown(300);
+            $(el).find("p").addClass("collapse");
+        } else {
+            //alert(2);
+            $("#"+id).slideUp(300);
+            $(el).find("p").removeClass("collapse");
+        }
+    }
+
+    function downloadCsv(totalCount, contextPath) {
+        if (totalCount > 500) {
+            var submitTitle = "Продолжить";
+            var cancelTitle = "Отменить";
+
+            $.msgBox({
+                type: "confirm",
+                content: "Результаты поиска превышают допустимое количество записей для выгрузки. В случае продолжения операции в файл будут выгружены первые 500 найденных записей",
+                buttons: [
+                    {type: "cancel", value: cancelTitle},
+                    {type: "submit", value: submitTitle}
+
+                ],
+                success: function (result) {
+                    if (result === submitTitle) {
+                        window.location = "/epz/complaint/extendedsearch/csv.html?searchString=0148300050716001465&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU";
+                    }
+                }
+            });
+            $("div.msgBoxTitle").remove();
+            $("div.msgBoxBackGround").off('click');
+        } else {
+            window.location = "/epz/complaint/extendedsearch/csv.html?searchString=0148300050716001465&pageNumber=1&sortDirection=false&recordsPerPage=_10&fz94=on&regarded=on&considered=on&returned=on&cancelled=on&hasDecision=on&noDecision=on&dateOfReceiptStart=&dateOfReceiptEnd=&updateDateFrom=&updateDateTo=&sortBy=PO_NOMERU";
+        }
+    }
+
+    function loadCsvSettings(contextPath, criteria_csv_url, quickSearch) {
+        var url = contextPath + '/csv-settings/load-settings.html?' + criteria_csv_url + '&quickSearch=' + quickSearch;
+        $('.loadSettings').attr('href', url).click();
+    }
+
+
+
+</script>
+        </div>
+    </div>
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="expandFooterBlock" class="collapceBox collapseBoxFooter">
+    <span class="collapce">Свернуть</span><span class="expand">Развернуть</span>
+</div>
+<div class="footer">
+    <div class="wrapperFooter">
+        <div class="footerBannersBlock">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                    <td><a target="_blank" href="http://www.sberbank-ast.ru/" class="banner1">Система<br />торгов<br />Сбербанк-АСТ</a></td>
+                    <td><a target="_blank" href="http://www.roseltorg.ru/"    class="banner2">Единая электронная торговая площадка</a></td>
+                    <td><a target="_blank" href="http://etp.zakazrf.ru/"      class="banner3">Общероссийская система электронной торговли</a></td>
+                    <td><a target="_blank" href="http://www.rts-tender.ru/"   class="banner4">Электронная площадка России</a></td>
+                    <td><a target="_blank" href="http://www.etp-micex.ru/"    class="banner5">Электронная торговая площадка Госзакупки</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <ul>
+            <li class="footerFirstRow"><strong>© 2016, ФЕДЕРАЛЬНОЕ КАЗНАЧЕЙСТВО</strong><br />
+                
+                    Версия "hotfix-6.4.2#10 rev 62ea87b<br />
+                    от 02.12.2016
+                
+                <ul>
+                    <li><a href="/epz/main/public/forCustomersAndSuppliers.html">Информация для заказчиков и поставщиков</a></li>
+                    <li><a href="/epz/main/public/quiz/list.html">Опросы</a></li>
+                    <li><a href="/epz/main/public/userFeedback/openFeedbackForm.html" class="linkPopUp pWidth_840">Ваши идеи по улучшению сайта</a></li>
+                    <li><a href="/epz/main/public/document/view.html?sectionId=364&pageNo=1&categories=FZ94&_categories=on&categories=FZ223&_categories=on&categories=FZ44&_categories=on&categories=FZALL&_categories=on">Журнал версий системы</a></li>
+                    <li><a href="/epz/main/public/user-feedback.html">Техническая поддержка</a></li>
+                    <li><a target="_blank" href="http://zakupki.gov.ru/forum/forums/list.page">Форум</a></li>
+                    <li><a href="/epz/main/public/siteMap.html" class="linkPopUp">Карта сайта</a></li>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a target="_blank" href="http://www.kremlin.ru">Президент Российской Федерации</a></li>
+                    <li><a target="_blank" href="http://www.minfin.ru">Министерство финансов Российской Федерации</a></li>
+                    
+                    
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a target="_blank" href="http://www.government.ru">Правительство Российской Федерации</a></li>
+                    <li><a target="_blank" href="http://www.fas.gov.ru">Федеральная антимонопольная служба</a></li>
+                    
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a target="_blank" href="http://www.economy.gov.ru">Министерство экономического развития Российской Федерации</a></li>
+                    <li><a target="_blank" href="http://roskazna.ru">Федеральное казначейство</a></li>
+                    
+                </ul>
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+</div>
+</body>
+
+</html>
