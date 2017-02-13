@@ -26,6 +26,12 @@ class ControllerBase extends Controller
 
         if($_SERVER['REQUEST_URI'] == '/help/about' ||
             $_SERVER['REQUEST_URI'] == '/help/faq' ||
+            $_SERVER['REQUEST_URI'] == '/help/question' ||
+            $_SERVER['REQUEST_URI'] == '/help/terms44' ||
+            $_SERVER['REQUEST_URI'] == '/help/jurisdiction' ||
+            $_SERVER['REQUEST_URI'] == '/help/contrcases' ||
+            $_SERVER['REQUEST_URI'] == '/help/penalty' ||
+            $_SERVER['REQUEST_URI'] == '/help/arguments' ||
             $_SERVER['REQUEST_URI'] == '/help/contact' ||
             $_SERVER['REQUEST_URI'] == '/help/sendMailFromContact') {
             if(!$user_id) $user_id = true;

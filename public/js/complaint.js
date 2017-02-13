@@ -788,7 +788,7 @@ function saveComplaintToDocxFile() {
         custom_text += replaceWordTags($(elem).html() + "<br>", $(elem).attr("id"));
         custom_text_unformatted += replaceWordTags($(elem).text() + "<br>", $(elem).attr("id"));
     });
-
+console.log(custom_text);
     if ($("#operator_etp").is(":checked")) {
         $file_to_load = "operator_etp.docx";
     } else {

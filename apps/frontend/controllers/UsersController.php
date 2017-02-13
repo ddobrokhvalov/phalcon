@@ -25,6 +25,10 @@ class UsersController extends Controller
             $data = $this->request->getPost();
             $user = User::findFirstById($this->session->get('auth')['id']);
             $data['current_path'] = str_replace('public//', '', $data['current_path']);
+            
+            if(trim($data['old_password']) =='')
+                throw new FieldException('Неправильный старый пароль', 'old_password');
+            
             if (!$user) throw new FieldException('not user', 'user');
             if (empty($data['new_password']) && empty($data['old_password'] && empty($data['new_password_confirm']))) {
                 $validation = new EditUserValidator();
@@ -46,13 +50,21 @@ class UsersController extends Controller
                     if ($data['new_password'] == $data['new_password_confirm']) {
                         $user->password = sha1($data['new_password']);
                     } else {
-                        throw new FieldException('Непраильное подтверждние пароля', 'new_password_confirm');
+                        throw new FieldException('Неправильное подтверждние пароля', 'new_password_confirm');
                     }
                 } else {
                     throw new FieldException('Неправильный старый пароль', 'old_password');
                 }
             }
 
+            $message = $this->mailer->createMessageFromView('../views/emails/new_password', array(
+                'host'      => $this->request->getHttpHost(),
+                'password'  => $data['new_password']
+            ))
+                ->to($user->email)
+                ->subject('Восстановление пароля в системе ФАС-Онлайн');
+            $message->send();
+            
             echo json_encode(array('status' => 'ok'));
         } catch (MessageException $messages){
             $temp_arr = array();
@@ -61,7 +73,7 @@ class UsersController extends Controller
             }
             echo json_encode(array('error' => $temp_arr));
         } catch (FieldException $e){
-            echo json_encode(array('error' => array( $e->getField() => $e->getMessage())));
+            echo json_encode(array('error' => array( ($e->getField()=='password'?'new_password':$e->getField()) => $e->getMessage())));
         } finally{
             $user->phone = empty($data['phone']) ? $user->phone : $data['phone'];
             $user->conversion = empty($data['conversion']) ? $user->conversion : $data['conversion'];

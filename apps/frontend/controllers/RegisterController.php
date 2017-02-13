@@ -1,5 +1,4 @@
 <?php
-
 namespace Multiple\Frontend\Controllers;
 use Phalcon\Mvc\Controller;
 use Multiple\Frontend\Validator\RegisterValidator;
@@ -11,11 +10,32 @@ use Phalcon\Security\Random;
 
 class RegisterController extends Controller
 {
+    protected function generate_password($number)
+    {
+        $arr = array('a','b','c','d','e','f',
+            'g','h','i','j','k','l',
+            'm','n','o','p','r','s',
+            't','u','v','x','y','z',
+            '1','2','3','4','5','6',
+            '7','8','9','0');
+        // Генерируем пароль
+        $pass = "";
+        for($i = 0; $i < $number; $i++)
+        {
+            // Вычисляем случайный индекс массива
+            $index = rand(0, count($arr) - 1);
+            $pass .= $arr[$index];
+        }
+        return $pass;
+    }
+
     public function indexAction(){
         try{
             if(! $this->request->isPost()) throw new FieldException('Некорректный метод отправки');
             $random = new Random();
             $data = $this->request->getPost();
+            $data['password'] = $this->generate_password(8);
+            $data['confpassword'] = $data['password'];
             $this->checkUser( $data );
 
             $user = new User();
@@ -28,7 +48,8 @@ class RegisterController extends Controller
 
             $message = $this->mailer->createMessageFromView('../views/emails/register', array(
                             'hashreg'   => $user->hashreg,
-                            'host'      => $this->request->getHttpHost()
+                            'host'      => $this->request->getHttpHost(),
+                            'password'      => $data['password']
                         ))
                 ->to($user->email)
                 ->subject('Регистрация в интеллектуальной системе ФАС-Онлайн');

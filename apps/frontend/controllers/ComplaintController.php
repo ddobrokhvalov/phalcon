@@ -640,6 +640,7 @@ class ComplaintController extends ControllerBase
                     $docx->save();
                 }
             }
+
             $this->flashSession->success('Жалоба обновлена');
             //return $this->response->redirect('complaint/edit/' . $complaint-
             echo json_encode(array(

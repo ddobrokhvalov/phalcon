@@ -22,15 +22,15 @@
         <div class="c-c-sort">
             <div class="c-cs-cb">
                 <input class="select_all_complaint" id="csall" type="checkbox" name="csall" hidden>
-                <label  for="csall">Выбрать все</label>
+                <label for="csall">Выбрать все</label>
             </div>
             <div class="c-cs-btns">
                 <a class="button-copy">Копировать</a>
-                <a class="button-recall" value="recalled" >Отозвать</a>
+                <a class="button-recall" value="recalled">Отозвать</a>
                 {% if menu_status == 'archive' %}
-                <a class="change-status set-active" value="activate" >Активировать</a>
+                <a class="change-status set-active" value="activate">Активировать</a>
                 {% else %}
-                <a class="change-status to-archive" value="archive" >В архив</a>
+                <a class="change-status to-archive" value="archive">В архив</a>
                 {% endif %}
                 <a class="change-status to-delete" value="delete">Удалить</a>
             </div>
@@ -48,15 +48,15 @@
             <div class="c-c-sort">
                 <div class="c-cs-cb">
                     <input class="select_all_complaint" id="csall1" type="checkbox" name="csall1" hidden>
-                    <label  for="csall1">Выбрать все</label>
+                    <label for="csall1">Выбрать все</label>
                 </div>
                 <div class="c-cs-btns">
                     <a class="button-copy">Копировать</a>
-                    <a class="button-recall button-recallRec" value="recalled" >Отозвать</a>
+                    <a class="button-recall button-recallRec" value="recalled">Отозвать</a>
                     {% if menu_status == 'archive' %}
-                    <a class="change-status set-active" value="activate" >Активировать</a>
+                    <a class="change-status set-active" value="activate">Активировать</a>
                     {% else %}
-                    <a class="change-status to-archive" value="archive" >В архив</a>
+                    <a class="change-status to-archive" value="archive">В архив</a>
                     {% endif %}
                     <a class="change-status to-delete" value="delete">Удалить</a>
                 </div>
@@ -131,21 +131,21 @@
                 {{ link_to("complaint/index?page=" ~ page.before ~ "&status="~status~ "&search="~searhparam, 'Предыдущая', 'id' : 'user-pag-prev') }}
                 {% endif %}
                 <ul>
-                {% for page_item in paginator_builder %}
-                <li>
-                {% if page_item['type'] == 'page' %}
-                {{ link_to("complaint/index?page=" ~ page_item['num'] ~ "&status="~status~ "&search="~searhparam, page_item['num']) }}
-                {% elseif page_item['type'] == 'delimer' %}
-                <span>...</span>
-                {% elseif page_item['type'] == 'current' %}
-                <span class="active-user-pag-page">{{page_item['num']}}</span>
-                {% endif %}
-                </li>
-                {% endfor %}
+                    {% for page_item in paginator_builder %}
+                    <li>
+                        {% if page_item['type'] == 'page' %}
+                        {{ link_to("complaint/index?page=" ~ page_item['num'] ~ "&status="~status~ "&search="~searhparam, page_item['num']) }}
+                        {% elseif page_item['type'] == 'delimer' %}
+                        <span>...</span>
+                        {% elseif page_item['type'] == 'current' %}
+                        <span class="active-user-pag-page">{{page_item['num']}}</span>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
                 </ul>
-                    {% if page.total_pages > page.current %}
-                        {{ link_to("complaint/index?page=" ~ page.next ~ "&status="~status ~ "&search="~searhparam, 'Следующая', 'id' : 'user-pag-next') }}
-                    {% endif %}
+                {% if page.total_pages > page.current %}
+                {{ link_to("complaint/index?page=" ~ page.next ~ "&status="~status ~ "&search="~searhparam, 'Следующая', 'id' : 'user-pag-next') }}
+                {% endif %}
             </div>
 
 
@@ -153,8 +153,8 @@
     </div>
 </div>
 <script>
-var currentPage = 'complaint/index';
-var currentStatus ='{{ status }}';
+    var currentPage = 'complaint/index';
+    var currentStatus = '{{ status }}';
 </script>
 
 <div id="pop-before-ask-question" class="modal_div">
@@ -164,12 +164,14 @@ var currentStatus ='{{ status }}';
 </div>
 
 <style>
-    .edit-status .admin-popup-content.index-main-popup{
+    .edit-status .admin-popup-content.index-main-popup {
         text-align: center;
     }
-    .edit-status .admin-popup-content.index-main-popup p{
+
+    .edit-status .admin-popup-content.index-main-popup p {
         font-size: 25px;
     }
+
     .edit-status .admin-popup-content.index-main-popup h6 {
         position: relative;
         overflow: hidden;
@@ -180,7 +182,8 @@ var currentStatus ='{{ status }}';
         color: #ffffff;
         text-align: center;
     }
-    .edit-status .admin-popup-content.index-popup{
+
+    .edit-status .admin-popup-content.index-popup {
         width: 500px;
     }
 </style>
@@ -212,6 +215,18 @@ var currentStatus ='{{ status }}';
     <div class="modal-close"></div>
 </div>
 
+<div id="pop-delete-complaint" class="modal_div">
+    <h2></h2>
+    <div class="pop-done-txt">
+        Жалоба будет безвозвратно удалена. Продолжить?
+        <div class="action-buttons">
+            <div class="popup-button apr">Удалить</div>
+            <div class="popup-button cnc popup-close">Отменить</div>
+        </div>
+    </div>
+    <div class="modal-close"></div>
+</div>
+
 <article class="admin-popup-wrap recall-compl-popup" style="display:none;">
     <div class="admin-popup-bg"></div>
     <div class="admin-popup-content index-main-popup">
@@ -229,8 +244,12 @@ var currentStatus ='{{ status }}';
         <h6>Импорт заявителя из данных сертификата</h6>
         <p class="addAppCertificate__dscrAlert">Для работы функции импорта из сертификата необходим плагин КриптоПРО. Установить плагин для Вашего Браузера сейчас?</p>
         <div class="addAppCertificate__btnHolder">
-            <div class="addAppCertificate__addBtn"><a href="https://www.cryptopro.ru/products/cades/plugin/get_2_0">Установить</a></div>
-            <div class="addAppCertificate__cancelBtn"><a href="/complaint/index?status=submitted">Отменить</a></div>
+            <div class="addAppCertificate__addBtn">
+                <a href="https://www.cryptopro.ru/products/cades/plugin/get_2_0">Установить</a>
+            </div>
+            <div class="addAppCertificate__cancelBtn">
+                <a href="/complaint/index?status=submitted">Отменить</a>
+            </div>
         </div>
     </div>
 </article>

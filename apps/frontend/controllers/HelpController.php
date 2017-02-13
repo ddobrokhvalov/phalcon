@@ -1,11 +1,9 @@
 <?php
-
 namespace Multiple\Frontend\Controllers;
 use Phalcon\Mvc\Controller;
 use Multiple\Library\Exceptions\FieldException;
 use Multiple\Library\Exceptions\MessageException;
 use Multiple\Frontend\Validator\CallbackValidator;
-
 
 class HelpController extends ControllerBase
 {
@@ -15,20 +13,20 @@ class HelpController extends ControllerBase
         // 'Нормативные документы' => '/help/documents',
         'Памятка о направлении жалобы по подведомственности' => '/help/terms44',
         'FAQ по 44-Ф3 редакция' => '/help/jurisdiction',
-        'Спорные случаи по 44-Ф3 и правила описания объетиа закупки' => '/help/contrcases',
+        'Спорные случаи по 44-Ф3 и правила описания объектиа закупки' => '/help/contrcases',
         'Сроки, предусмотренные законодательством о контрактноий системе' => '/help/penalty',
-        'Штрафы за нарушениезаконодательтва о контрактноий системе' => '/help/arguments',
+        'Штрафы за нарушение законодательтва о контрактноий системе' => '/help/arguments',
     );
 
 
     public function questionAction()
     {
-        $this->setHelpMenu();
+        $this->setHelpMenuGuest();
     }
 
     public function argumentsAction()
     {
-        $this->setHelpMenu();
+        $this->setHelpMenuGuest();
     }
 
     public function documentsAction()
@@ -38,22 +36,22 @@ class HelpController extends ControllerBase
 
     public function penaltyAction()
     {
-        $this->setHelpMenu();
+        $this->setHelpMenuGuest();
     }
 
     public function terms44Action()
     {
-        $this->setHelpMenu();
+        $this->setHelpMenuGuest();
     }
 
     public function contrcasesAction()
     {
-        $this->setHelpMenu();
+        $this->setHelpMenuGuest();
     }
 
     public function jurisdictionAction()
     {
-        $this->setHelpMenu();
+        $this->setHelpMenuGuest();
     }
 
     public function aboutAction()
@@ -87,8 +85,12 @@ class HelpController extends ControllerBase
             $this->view->showHeader = false;
         } else {
             $this->view->host = $this->request->getHttpHost();
-            $this->view->showHeader = true;
-        }
+            $this->view->showHeader = false;
+            
+            $this->view->help = true;
+            $this->view->sidebarMenu = $this->arrMenu;
+            $this->view->setTemplateAfter('menu');
+        } 
     }
 
     public function sendMailFromContactAction(){
@@ -122,6 +124,12 @@ class HelpController extends ControllerBase
 
     private function setHelpMenu(){
         $this->setMenu();
+        $this->view->help = true;
+        $this->view->sidebarMenu = $this->arrMenu;
+    }
+    
+    private function setHelpMenuGuest(){
+        $this->view->setTemplateAfter('menu');
         $this->view->help = true;
         $this->view->sidebarMenu = $this->arrMenu;
     }

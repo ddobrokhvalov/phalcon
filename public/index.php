@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_ALL);
+error_reporting(E_ERROR);
 
 use Phalcon\Loader;
 use Phalcon\Mvc\Router;

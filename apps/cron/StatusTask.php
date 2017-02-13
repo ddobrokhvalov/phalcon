@@ -186,7 +186,7 @@ class Parser {
         $reglamentTime = $this->reglamentTime($date);
 
 //        $zayavitel2 = trim(preg_replace(array('/ООО/ui', '/«|»|\"/ui'), array('', ''), $zayavitel));
-        $zayavitel2 = trim(preg_replace(array('/ООО/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $zayavitel));
+        $zayavitel2 = trim(preg_replace(array('/ООО|Общество с ограниченной ответственностью|Акционерное общество|ООО|ИП\s|АО\s/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $zayavitel));
         $zayavitel2 = trim(preg_replace('/\s+/ui', ' ', $zayavitel2));
         foreach($xpath->query('//div[contains(@class,"registerBox")]') as $tender) {
             $complaint = array();
@@ -199,7 +199,7 @@ class Parser {
             //$complaint['lico'] = trim($xpath->evaluate('string(.//td[@class="descriptTenderTd"]//tr/td[contains(text(),"Лицо, подавшее жалобу:")]/following-sibling::td[1]//text())', $tender));
             $complaint['lico'] = $tmp['lico'];
 
-            $lico = trim(preg_replace(array('/ООО|ИП\s|АО\s/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $complaint['lico']));
+            $lico = trim(preg_replace(array('/Общество с ограниченной ответственностью|Акционерное общество|ООО|ИП\s|АО\s/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $complaint['lico']));
             $lico = trim(preg_replace('/\s+/ui', ' ', $lico));
             //echo "lico $lico\n";
             if(!mb_stristr($zayavitel2, $lico, false, "utf-8")) {

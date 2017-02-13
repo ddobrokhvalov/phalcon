@@ -17,13 +17,27 @@ $(document).ready(function () {
         }
     });
 
-    $('.change-status').click(function () {
+    $('.change-status:not(.to-delete)').click(function () {
         var status = $(this).attr("value");
 
         if(!$(this).hasClass("button_copy_deactive")){
             indexComplaint.changeStatus(status);
         }
     });
+    
+    $('.content .change-status[value="delete"]').on('click', function () {
+        var status = $(this).attr("value");
+
+        if(!$(this).hasClass("button_copy_deactive")){
+            showStyledPopupMessageWithButtons(
+                "#pop-delete-complaint",
+                "Подтвердите действие",
+                "Жалоба будет безвозвратно удалена. Продолжить?",
+                "indexComplaint.changeStatus('"+status+"');"
+            );
+        }
+    });
+    
     $('.button-copy').click(function(){
         if(indexComplaint.copyButton === true && indexComplaint.selectedComplaint.length == 1){
             indexComplaint.changeStatus('copy');

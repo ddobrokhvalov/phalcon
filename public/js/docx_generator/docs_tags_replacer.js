@@ -1,8 +1,9 @@
 
 function replaceWordTags(text, ckeditor_id) {
     text = text.replace(/<br>/g, '\n');
-    text = text.replace(/<p>/g, '');
-    text = text.replace(/<\/p>/g, '\n');
+    //text = text.replace(/<p>/g, '');
+    text = text.replace(/<p>/g, '\r\n');
+    text = text.replace(/<\/p>/g, '\r\n');
     text = text.replace(/&nbsp;/g, ' ');
     text = text.replace(/<em><\/em>/g, '');
     text = text.replace(/<strong><\/strong>/g, '');

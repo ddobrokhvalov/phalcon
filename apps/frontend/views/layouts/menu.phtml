@@ -116,7 +116,7 @@
 
 <div class="c-header">
     <div class="wrapper marginLeftWrapper">
-        <div class="ch-left">
+         {% if user is defined %}<div class="ch-left">
             <b class="applicant-name-container"></b>
             <span>Изменить Заявителя</span>
         </div>
@@ -177,17 +177,18 @@
             </div>
             <div class="modal-close"></div>
         </div>
-
+{% endif %}
         <div class="ch-right">
-            <div class="ch-r-name">
-                {{ user.email }}
-            </div>
-            <div class="ch-r-mail">
-                <span>{% if count_unread %} {{count_unread}} {% else %} 0 {% endif %}</span>
-            </div>
-            <div class="ch-r-sett"></div>
-            <a href="/login/logout" class="ch-r-logout"></a>
-
+            {% if user is defined %} 
+                <div class="ch-r-name">
+                    {{ user.email }}
+                </div>
+                <div class="ch-r-mail">
+                    <span>{% if count_unread is defined %}{% if count_unread %} {{count_unread}} {% else %} 0 {% endif %}{% endif %}</span>
+                </div>
+                <div class="ch-r-sett"></div>
+                <a href="/login/logout" class="ch-r-logout"></a>
+            {% endif %}
             <!-- Ниже всплывающее окно сообщений (закомментировано) -->
 
             <!--<div class="ch-r-notif-dd">
