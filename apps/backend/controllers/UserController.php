@@ -166,7 +166,8 @@ class UserController extends ControllerBase
                 'phone'         => '',
                 'mobile_phone'         => '',
                 'admin_comment' => '',
-                'sendEmail'     => ''
+                'sendEmail'     => '1',
+                'new_pass'     => ''
             );
         }
         $this->setMenu();

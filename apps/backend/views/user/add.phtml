@@ -45,6 +45,11 @@
                     <p>Комментарий админа (только для админа!)</p>
                     {{text_area('admin_comment', 'value':params['admin_comment'], 'id':'userComment')}}
                 </label>
+                <label for="newPass">
+                    <p>Новый пароль</p>
+                    {{ text_field('new_pass', 'value':params['new_pass'], 'id':'new_pass')}}
+                    <a href="#" id="genPass">Сгенерировать</a>
+                </label>
             </div>
             <div class="delete-or-save">
                 <button>Сохранить изменения</button>
@@ -55,6 +60,33 @@
 
 <script>
     $(document).ready(function() {
+        $('#genPass').click(function(evt){
+            var pass = generate(8);
+            $("#new_pass").val(pass);
+            $("#userPass").val(pass);
+            return false;
+        });
+        
+        function generate(len)
+        {
+           var ints =[0,1,2,3,4,5,6,7,8,9,10]; 
+           var chars=['a','b','c','d','e','f','g','h','j','k','l','m','n','o','p','r','s','t','u','v','w','x','y','z'];
+            var out='';
+            for(var i=0;i<len;i++){
+                var ch=Math.random(1,2);
+                if(ch<0.5){
+                   var ch2=Math.ceil(Math.random(1,ints.length)*10);
+                   out+=ints[ch2];
+                }else{
+                   var ch2=Math.ceil(Math.random(1,chars.length)*10);
+                   out+=chars[ch2];            
+                }
+                console.log(ch2);
+                console.log(chars[ch2]);
+            }
+            return out;
+        }
+        
         setTimeout(function(){
             $("#userPass").val("");
             $('#userEmail').val("");
