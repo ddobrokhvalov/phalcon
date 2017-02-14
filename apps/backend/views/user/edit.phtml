@@ -159,10 +159,10 @@
                 <ul class="j-user-info lt-content-main {{ edituser.getComplaintColor(complaint['status'])}}" sort-name="{{complaint['complaint_name']}}" sort-number="{{complaint['auction_id']}}" sort-applicant="{{complaint['apname']}}" sort-date="{{complaint['date']|strtotime}}" sort-status="{{complaint['status']}}">
                     <li>
                         <div class="lt-psevdo-check">{{hidden_field('complaint-id', 'value':complaint['id'])}}</div>
-                        {{complaint['complaint_name']}}
+                        <a href="/admin/complaints/preview/{{complaint['id']}}">{{complaint['complaint_name']}}</a>
                     </li>
                     <li>{{complaint['auction_id']}}</li>
-                    <li>{{complaint['apname']}}</li>
+                    <li><a href="/admin/applicants/info/{{complaint['applicant_id']}}">{{complaint['apname']}}</a></li>
                     <li>{{date('d.m.Y', complaint['date']|strtotime)}}</li>
                     <!--<li class="j-user-status-info">
                         <div class="appll-status-icon">
