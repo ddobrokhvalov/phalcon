@@ -20,7 +20,7 @@ jQuery(document).ready(function($) {
             showStyledPopupMessageWithButtons(
                 "#pop-browser-alert",
                 "Подтвердите действие",
-                "Для корректной работы системы обновите браузер 'Yandex Browser' до последней версии. <a href='https://browser.yandex.ru/?from=wizard___one_|&banerid=0500000134'>Скачать</a>",
+                "Для корректной работы системы обновите браузер 'Yandex Browser' до последней версии. <a href='https://browser.yandex.ru/?from=wizard___one_|&banerid=0500000134'>Скачать</a><br/>",
                 "alert('ok')"
             );
         
@@ -49,6 +49,9 @@ jQuery(document).ready(function($) {
 });
 
 var checkIfPluginEnabled = function() { 
+ /* if(typeof window.cades != "undefined")
+      return true;*/
+  
   var isCryptoEnabled = false; 
   // Проверка для всех браузеров, кроме IE 
   if (typeof(navigator.plugins)!="undefined" && typeof(navigator.plugins["CryptoPro CAdES NPAPI Browser Plug-in"])=="object") isCryptoEnabled = true; 
