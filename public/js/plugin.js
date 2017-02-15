@@ -3,23 +3,47 @@ jQuery(document).ready(function($) {
 
     if (bowser.firefox || bowser.chrome || bowser.name=='Yandex Browser') {
         if(bowser.firefox && bowser.version < 51)
-            alert("Для корректной работы системы обновите браузер 'Mozilla Firefox' до последней версии. <a href='https://download.mozilla.org/?product=firefox-stub&os=win&lang=ru'>Скачать</a>");
+            showStyledPopupMessageWithButtons(
+                "#pop-browser-alert",
+                "Подтвердите действие",
+                "Для корректной работы системы обновите браузер 'Mozilla Firefox' до последней версии. <a href='https://download.mozilla.org/?product=firefox-stub&os=win&lang=ru'>Скачать</a>",
+                "alert('ok')"
+            );
         else if(bowser.chrome && bowser.version < 56)
-            alert("Для корректной работы системы обновите браузер 'Chrome' до последней версии. <a href='https://www.google.ru/chrome/browser/desktop/index.html#'>Скачать</a>");
+            showStyledPopupMessageWithButtons(
+                "#pop-browser-alert",
+                "Подтвердите действие",
+                "Для корректной работы системы обновите браузер 'Chrome' до последней версии. <a href='https://www.google.ru/chrome/browser/desktop/index.html#'>Скачать</a>",
+                "alert('ok')"
+            );
         else if(bowser.name=='Yandex Browser' && bowser.version < 17)
-            alert("Для корректной работы системы обновите браузер 'Yandex Browser' до последней версии. <a href='https://browser.yandex.ru/?from=wizard___one_|&banerid=0500000134'>Скачать</a>");
+            showStyledPopupMessageWithButtons(
+                "#pop-browser-alert",
+                "Подтвердите действие",
+                "Для корректной работы системы обновите браузер 'Yandex Browser' до последней версии. <a href='https://browser.yandex.ru/?from=wizard___one_|&banerid=0500000134'>Скачать</a>",
+                "alert('ok')"
+            );
         
         if(!checkIfPluginEnabled())
         {
-            alert('Для работы с электронной подписью необходимо установить плагин "Cades browser plug-in". http://www.cryptopro.ru/products/cades/plugin/get_2_0');
+            showStyledPopupMessageWithButtons(
+                "#pop-browser-alert",
+                "Подтвердите действие",
+                'Для работы с электронной подписью необходимо установить плагин "Cades browser plug-in". <a href="http://www.cryptopro.ru/products/cades/plugin/get_2_0">Скачать</a>',
+                "alert('ok')"
+            );
         }
     }
     else
     {
-        alert('Для работы с системой необходимо использовать один из перечисленных браузеров:\r\n\
-        - Mozilla FireFox\r\n\
-        - Chrome\r\n\
-        - Yandex браузер\r\n'
+        showStyledPopupMessageWithButtons(
+            "#pop-browser-alert",
+            "Подтвердите действие",
+            '<form>Для работы с системой необходимо использовать один из перечисленных браузеров:<br/>\
+        - Mozilla FireFox<br/>\
+        - Chrome<br/>\
+        - Yandex браузер<br/></form>',
+            "alert('ok')"
         );
     }
 });
