@@ -5,21 +5,21 @@ jQuery(document).ready(function($) {
         if(bowser.firefox && bowser.version < 51)
             showStyledPopupMessageWithButtons(
                 "#pop-browser-alert",
-                "Подтвердите действие",
+                "Обратите внимание",
                 "Для корректной работы системы обновите браузер 'Mozilla Firefox' до последней версии. <a href='https://download.mozilla.org/?product=firefox-stub&os=win&lang=ru'>Скачать</a>",
                 "alert('ok')"
             );
         else if(bowser.chrome && bowser.version < 56)
             showStyledPopupMessageWithButtons(
                 "#pop-browser-alert",
-                "Подтвердите действие",
+                "Обратите внимание",
                 "Для корректной работы системы обновите браузер 'Chrome' до последней версии. <a href='https://www.google.ru/chrome/browser/desktop/index.html#'>Скачать</a>",
                 "alert('ok')"
             );
         else if(bowser.name=='Yandex Browser' && bowser.version < 17)
             showStyledPopupMessageWithButtons(
                 "#pop-browser-alert",
-                "Подтвердите действие",
+                "Обратите внимание",
                 "Для корректной работы системы обновите браузер 'Yandex Browser' до последней версии. <a href='https://browser.yandex.ru/?from=wizard___one_|&banerid=0500000134'>Скачать</a><br/>",
                 "alert('ok')"
             );
@@ -28,8 +28,8 @@ jQuery(document).ready(function($) {
         {
             showStyledPopupMessageWithButtons(
                 "#pop-browser-alert",
-                "Подтвердите действие",
-                'Для работы с электронной подписью необходимо установить плагин "Cades browser plug-in". <a href="http://www.cryptopro.ru/products/cades/plugin/get_2_0">Скачать</a>',
+                "Обратите внимание",
+                'Для корректной работы с электронной подписью необходимо установить плагин "Cades browser plug-in" (<a href="http://www.cryptopro.ru/products/cades/plugin/get_2_0">Скачать</a>) и убедиться, что данный плагин находится в статусе "Включен".',
                 "alert('ok')"
             );
         }
@@ -38,7 +38,7 @@ jQuery(document).ready(function($) {
     {
         showStyledPopupMessageWithButtons(
             "#pop-browser-alert",
-            "Подтвердите действие",
+            "Обратите внимание",
             '<form>Для работы с системой необходимо использовать один из перечисленных браузеров:<br/>\
         - Mozilla FireFox<br/>\
         - Chrome<br/>\
