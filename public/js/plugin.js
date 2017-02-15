@@ -26,12 +26,15 @@ jQuery(document).ready(function($) {
         
         if(!checkIfPluginEnabled())
         {
-            showStyledPopupMessageWithButtons(
-                "#pop-browser-alert",
-                "Обратите внимание",
-                'Для корректной работы с электронной подписью необходимо установить плагин "Cades browser plug-in" (<a href="http://www.cryptopro.ru/products/cades/plugin/get_2_0">Скачать</a>) и убедиться, что данный плагин находится в статусе "Включен".',
-                "alert('ok')"
-            );
+            if((bowser.chrome || bowser.name=='Yandex Browser') && typeof window.cades != "undefined")
+            {}
+              else
+                  showStyledPopupMessageWithButtons(
+                    "#pop-browser-alert",
+                    "Обратите внимание",
+                    'Для корректной работы с электронной подписью необходимо установить плагин "Cades browser plug-in" (<a href="http://www.cryptopro.ru/products/cades/plugin/get_2_0">Скачать</a>) и убедиться, что данный плагин находится в статусе "Включен".',
+                    "alert('ok')"
+                );
         }
     }
     else
@@ -49,9 +52,6 @@ jQuery(document).ready(function($) {
 });
 
 var checkIfPluginEnabled = function() { 
-  if(typeof window.cades != "undefined")
-      return true;
-  
   var isCryptoEnabled = false; 
   // Проверка для всех браузеров, кроме IE 
   if (typeof(navigator.plugins)!="undefined" && typeof(navigator.plugins["CryptoPro CAdES NPAPI Browser Plug-in"])=="object") isCryptoEnabled = true; 
