@@ -49,8 +49,8 @@ jQuery(document).ready(function($) {
 });
 
 var checkIfPluginEnabled = function() { 
- /* if(typeof window.cades != "undefined")
-      return true;*/
+  if(typeof window.cades != "undefined")
+      return true;
   
   var isCryptoEnabled = false; 
   // Проверка для всех браузеров, кроме IE 
