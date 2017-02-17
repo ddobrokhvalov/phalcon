@@ -10,7 +10,7 @@ $(document).ready(function () {
 
         var userData = selectedCertif.SubjectName;
 
-        if (userData.indexOf('OGRN=') != -1) {
+        if (userData.indexOf('OGRN=') != -1 || userData.indexOf('ОГРН=') != -1) {
             applicant.parseUrLico(selectedCertif);
         }
         if (userData.indexOf('OGRNIP=') != -1) {

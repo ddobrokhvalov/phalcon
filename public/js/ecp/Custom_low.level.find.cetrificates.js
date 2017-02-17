@@ -72,7 +72,6 @@ var userCertificates = false;
     }).then(function(aCertificate) {
         // Получаем массыв сертификатов с необходимыми данным
         // ...
-        console.log(aCertificate);
         userCertificates = aCertificate;
         var html = '';
         for(var i in aCertificate){
