@@ -8,15 +8,16 @@ use Multiple\Frontend\Validator\CallbackValidator;
 class HelpController extends ControllerBase
 {
     private $arrMenu = array(
-        'FAQ по пользованию сервисом' => '/help/faq',
+        'Инструкция и ответы на вопросы по пользованию сервисом' => '/help/faq',
+        'Ответы на вопросы по 44-Ф3' => '/help/jurisdiction',
+		'Как проверить закупку - типичные нарушения заказчика' => '/help/offense',
+        'Спорные случаи по закупкам' => '/help/contrcases',
+		'Памятка о направлении жалобы по подведомственности' => '/help/terms44',
+        'Сроки, предусмотренные законодательством о контрактной системе' => '/help/penalty',
+        'Штрафы за нарушение законодательтва о контрактной системе' => '/help/arguments',
         'Законодательство в сфере закупок' => '/help/question',
-        // 'Нормативные документы' => '/help/documents',
-        'Памятка о направлении жалобы по подведомственности' => '/help/terms44',
-        'FAQ по 44-Ф3 редакция' => '/help/jurisdiction',
-        'Спорные случаи по 44-Ф3 и правила описания объектиа закупки' => '/help/contrcases',
-        'Сроки, предусмотренные законодательством о контрактноий системе' => '/help/penalty',
-        'Штрафы за нарушение законодательтва о контрактноий системе' => '/help/arguments',
-    );
+		'Образы документов по жалобе на закупку' => '/help/documents',
+	);
 
 
     public function questionAction()
@@ -28,10 +29,14 @@ class HelpController extends ControllerBase
     {
         $this->setHelpMenuGuest();
     }
-
+    
+	public function offenseAction()
+    {
+        $this->setHelpMenuGuest();
+    }
     public function documentsAction()
     {
-        $this->setHelpMenu();
+        $this->setHelpMenuGuest();
     }
 
     public function penaltyAction()
