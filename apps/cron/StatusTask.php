@@ -355,11 +355,14 @@ class Parser {
 
         elseif(count($complaints) == 1) {
 
+            //echo "$reglamentTime\n";
             $response['complaint'] = $complaints[0];
 
             $response['complaint']['info'] = $this->getComplaintInfo($complaints[0]['complaint_id']);
 
-            if($reglamentTime <= $this->getTime($complaints[0]['date'])) {
+            //echo "reglamentTime $reglamentTime <= " . $this->getTime($complaints[0]['date']) . "\n";
+            if($reglamentTime <= $this->getTime($complaints[0]['date']) || $this->getTime($complaints[0]['date']) < $this->getTime($date)) {
+//            if($reglamentTime <= $this->getTime($complaints[0]['date'])) {
 
                 $response['error'] = 'Нарушение регламентного срока!';
 
@@ -383,7 +386,7 @@ class Parser {
 
                     $indexes[] = $k;
 
-                    $c['info'] = $this->getComplaintInfo($complaint['complaint_id']);
+                    $c['info'] = $this->getComplaintInfo($c['complaint_id']);
 
                 }
 
@@ -553,11 +556,14 @@ class Parser {
 
             $date = $this->nextBusinessDay($date);
 
+            //echo $date."\n";
         }
+        //echo $date."\n";
 
         preg_match('/(\d+)\.(\d+)\.(\d+)/ui', $date, $matches);
 
         $date = "{$matches[3]}-{$matches[2]}-{$matches[1]}";
+        //echo date('l jS \of F Y h:i:s A', strtotime($date)) . "!!!\n";
 
         return strtotime($date);
 
