@@ -1,6 +1,5 @@
 {
   "require": {
-    "phalcon-ext/mailer": "~2.0",
-    "phpoffice/phpword": "v0.13.*"
+    "phalcon-ext/mailer": "~2.0"
   }
 }
