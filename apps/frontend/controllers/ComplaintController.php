@@ -312,9 +312,14 @@ ini_set('display_errors', 1);
     public function browseAction($id)
     {
         $dir = 'files/generated_complaints/user_' . $this->user->id . '/';
-        $sorted = scandir($dir);
+        //$sorted = scandir($dir);
         $file_read = array('docx');
 
+        $files = array();
+        foreach (scandir($dir) as $file) $files[$file] = filemtime("$dir/$file");
+        asort($files);
+        $sorted = array_keys($files);
+        
         foreach ($sorted as $key => $value) {
             if (!in_array($value, array('.', '..'))) {
                 $type = explode('.', $value);
