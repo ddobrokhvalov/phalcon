@@ -252,9 +252,13 @@ class ComplaintController extends ControllerBase
 
     public function test1Action()
     {
+        error_reporting(E_ALL);
+ini_set('display_errors', 1);
+        header('Content-Type: text/html; charset=UTF-8');
         $value = '<p>На основании решения контрольного органа в сфере закупок <em>«указать реквизиты решения»</em> выдано предписание, согласно которому <em>«указать кому и какие действия предписаны».</em></p><p><img src="' . $_SERVER['DOCUMENT_ROOT'] . '/files/generated_complaints/user_169/2017.png"/></p><p>В силу пункта 2 части 22 статьи 99 Закона о контрактной системе предписания об устранении нарушений законодательства Российской Федерации и иных нормативных правовых актов о контрактной системе, выданные контрольным органом в сфере закупок обязательны для исполнения.</p><p>х.</p><p><br></p>';
-        require_once $_SERVER['DOCUMENT_ROOT'] . '/phpdocx/classes/CreateDocx.inc';
-        $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/js/docx_generator/docx_templates/documentation_phpword.docx");
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/public/phpdocx/classes/CreateDocx.inc';
+        $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/public/js/docx_generator/docx_templates/documentation_phpword.docx");
+        //$docx->setEncodeUTF8(true);
 
         /*preg_match_all('/<img.*?src\s*=(.*?)>/', $value, $out);
         if (count($out[1])) {
@@ -323,7 +327,7 @@ class ComplaintController extends ControllerBase
         }
         //$this->setMenu();
         //$this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src='.'http%3A%2F%2Fufa.ru%2Fcomplaint_1488558920.docx';
-        $this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src=http://5.63.154.36/' . $dir . $file;
+        $this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src=https://fasonline.ru/' . $dir . $file;
     }
 
     public function saveHtmlFileAction()
