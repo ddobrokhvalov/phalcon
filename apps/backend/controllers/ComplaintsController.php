@@ -1,4 +1,5 @@
 <?php
+
 namespace Multiple\Backend\Controllers;
 
 use Phalcon\Mvc\Controller;
@@ -23,15 +24,16 @@ use Multiple\Library\Translit;
 class ComplaintsController extends ControllerBase
 {
 
-    public function indexAction(){
+    public function indexAction()
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'index')) {
-           $this->view->pick("access/denied");
-           $this->setMenu();
+            $this->view->pick("access/denied");
+            $this->setMenu();
         } else {
             setlocale(LC_ALL, 'ru_RU.UTF-8');
             $search = $this->request->get('search');
-            $search =  preg_replace ("/[^a-zA-ZА-Яа-я0-9\s]/u","",$search);
+            $search = preg_replace("/[^a-zA-ZА-Яа-я0-9\s]/u", "", $search);
             $next_items = $this->request->getPost('next-portions-items');
             if (!isset($next_items)) {
                 $next_items = 0;
@@ -46,10 +48,11 @@ class ComplaintsController extends ControllerBase
                 "conditions" => "complaint_name LIKE '%{$search}%' OR auction_id LIKE '%{$search}%'",
                 "order" => "date DESC"
             ));
+
             $paginator = new Paginator(array(
-                "data"  => $complaints,
+                "data" => $complaints,
                 "limit" => $item_per_page,
-                "page"  => $numberPage
+                "page" => $numberPage
             ));
             $pages = $paginator->getPaginate();
             $this->view->page = $pages;
@@ -60,7 +63,8 @@ class ComplaintsController extends ControllerBase
         }
     }
 
-    public function editAction( $id ){
+    public function editAction($id)
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'edit')) {
             $this->view->pick("access/denied");
@@ -68,7 +72,7 @@ class ComplaintsController extends ControllerBase
         } else {
             $this->view->is_admin = true;
             $this->view->show_applicant = true;
-            $complaint = Complaint::findFirstById( $id );
+            $complaint = Complaint::findFirstById($id);
             if (!$complaint) return $this->forward('admin/complaint/index');
 
 
@@ -103,12 +107,12 @@ class ComplaintsController extends ControllerBase
                     $user_arguments .= $argument->text . '</br>';
                 }
                 $arr_sub_cat[] = array(
-                    'id'   => $argument->argument_id,
+                    'id' => $argument->argument_id,
                     'text' => preg_replace('/[\r\n\t]/', '', $text),
                 );
                 ++$argument_order;
             }
-            if(!empty($arr_sub_cat)){
+            if (!empty($arr_sub_cat)) {
                 $this->view->arr_sub_cat = $arr_sub_cat;
             }
             $this->view->arr_users_arg = $arr_users_arg;
@@ -135,11 +139,11 @@ class ComplaintsController extends ControllerBase
             }
 
             $this->view->ufas_name = 'Уфас не определен';
-            if($complaint->ufas_id != null){
+            if ($complaint->ufas_id != null) {
                 $ufas_name = Ufas::findFirst(array(
                     "id={$complaint->ufas_id}"
                 ));
-                if($ufas_name){
+                if ($ufas_name) {
                     $this->view->ufas_name = $ufas_name->name;
                     $this->view->comp_inn = $ufas_name->number;
                 }
@@ -168,18 +172,19 @@ class ComplaintsController extends ControllerBase
             $this->view->date_end = $this->checkDateEndSendApp($complaint->okonchanie_podachi);
             $this->view->complaint_question = $complaintQuestion;
             $this->view->action_edit = false;
-            if (isset($_GET['action']) && $_GET['action'] == 'edit' && $complaint->status =='draft')
+            if (isset($_GET['action']) && $_GET['action'] == 'edit' && $complaint->status == 'draft')
                 $this->view->action_edit = true;
 
 
         }
     }
 
-    public function previewAction($id){
+    public function previewAction($id)
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'edit') && !$perm->actionIsAllowed($this->user->id, 'complaints', 'edit')) {
-           $this->view->pick("access/denied");
-           $this->setMenu();
+            $this->view->pick("access/denied");
+            $this->setMenu();
         } else {
             $files_html = [];
             $complaint = Complaint::findFirstById($id);
@@ -210,11 +215,11 @@ class ComplaintsController extends ControllerBase
             );
 
             $this->view->ufas_name = 'Уфас не определен';
-            if($complaint->ufas_id != null){
+            if ($complaint->ufas_id != null) {
                 $ufas_name = Ufas::findFirst(array(
                     "id={$complaint->ufas_id}"
                 ));
-                if($ufas_name){
+                if ($ufas_name) {
                     $this->view->ufas_name = $ufas_name->name;
                 }
             }
@@ -224,8 +229,12 @@ class ComplaintsController extends ControllerBase
                 $user_arguments .= $argument->text . '</br>';
             }
 
+            $user = User::findFirst(array(
+                "id={$complaint->user_id}"
+            ));
+
             if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'index') && $this->user->id != 1) {
-               $this->view->allow_answer = 0;
+                $this->view->allow_answer = 0;
             } else {
                 $this->view->allow_answer = 1;
             }
@@ -240,16 +249,19 @@ class ComplaintsController extends ControllerBase
 //            $complaint->vremya_provedeniya =        isset($data['procedura']['vremya_provedeniya'])         ? $data['procedura']['vremya_provedeniya']      : null;
 //            $complaint->vskrytie_konvertov =        isset($data['procedura']['vskrytie_konvertov'])         ? $data['procedura']['vskrytie_konvertov']      : null;
 //            $complaint->data_rassmotreniya =        isset($data['procedura']['data_rassmotreniya'])         ? $data['procedura']['data_rassmotreniya']      : null;
-            if(is_null($complaint->date_start)) $complaint->date_start = $complaint->nachalo_podachi;
+            if (is_null($complaint->date_start)) $complaint->date_start = $complaint->nachalo_podachi;
             $this->view->complaint = $complaint;
+            $this->view->user = $user;
+            $this->view->applicant = $complaint->Applicant;
             $this->setMenu();
         }
     }
 
-    public function deleteComplaintAction(){
+    public function deleteComplaintAction()
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'edit')) {
-           $data = "access_denied";
+            $data = "access_denied";
         } else {
             $complaint_id = $this->request->getPost("id");
             if ((isset($_GET['is_array']) && $complaint_id && count($complaint_id)) || (isset($_POST['is_array']) && $complaint_id && count($complaint_id))) {
@@ -263,7 +275,7 @@ class ComplaintsController extends ControllerBase
                 )->delete();
                 $this->flashSession->success('Жалобы удалены');
                 $data = "ok";
-            } elseif($complaint_id){
+            } elseif ($complaint_id) {
                 $complaint = Complaint::find(
                     array(
                         'id = :id:',
@@ -280,10 +292,11 @@ class ComplaintsController extends ControllerBase
         echo json_encode($data);
     }
 
-    public function deleteAnswerAction(){
+    public function deleteAnswerAction()
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'index') && $this->user->id != 1) {
-           $data = "access_denied";
+            $data = "access_denied";
         } else {
             $answer_id = $this->request->getPost("id");
             if (isset($answer_id) && $answer_id) {
@@ -303,10 +316,11 @@ class ComplaintsController extends ControllerBase
         echo json_encode($data);
     }
 
-    public function updateAnswerAction(){
+    public function updateAnswerAction()
+    {
         $perm = new Permission();//&& $this->user->id != 1
         if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'edit')) {
-           $data = "access_denied";
+            $data = "access_denied";
         } else {
             $answer_id = $this->request->getPost("id");
             $answer_text = $this->request->getPost("text");
@@ -322,15 +336,16 @@ class ComplaintsController extends ControllerBase
         echo json_encode($data);
     }
 
-    public function changeComplaintStatusAction() {
+    public function changeComplaintStatusAction()
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'edit')) {
-           $data = "access_denied";
+            $data = "access_denied";
         } else {
             $status = $this->request->getPost("status");
             $complaint_id = $this->request->getPost("id");
 
-            if($status && $complaint_id){
+            if ($status && $complaint_id) {
                 if (is_array($complaint_id)) {
                     foreach ($complaint_id as $id) {
                         $complaint = Complaint::findFirstById($id);
@@ -339,21 +354,21 @@ class ComplaintsController extends ControllerBase
                                 if ($complaint->status == 'submitted') {
                                     Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
                                     @Complaint::changeStatus($status, array($id));
-                                  //  $this->flashSession->success('Статус изменен');
+                                    //  $this->flashSession->success('Статус изменен');
                                 }
                                 break;
                             case 'draft':
                                 if ($complaint->status == 'archive') {
                                     Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
                                     @Complaint::changeStatus($status, array($id));
-                                   // $this->flashSession->success('Статус изменен');
+                                    // $this->flashSession->success('Статус изменен');
                                 }
                                 break;
                             case 'archive':
                                 if ($complaint->status == 'draft' || $complaint->status == 'unfounded' || $complaint->status == 'recalled') {
                                     Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
                                     @Complaint::changeStatus($status, array($id));
-                                   // $this->flashSession->success('Статус изменен');
+                                    // $this->flashSession->success('Статус изменен');
                                 }
                                 break;
                             default:
@@ -409,7 +424,7 @@ class ComplaintsController extends ControllerBase
         $this->view->disable();
 
     }
-    
+
     public function addAnswerAction()
     {
         $perm = new Permission();
@@ -440,7 +455,7 @@ class ComplaintsController extends ControllerBase
 
                 $complaint = Complaint::findFirst($complaint_id);
 
-                $body = "Юрист дал ответ на ваш вопрос. Закупка №".$complaint->auction_id ;
+                $body = "Юрист дал ответ на ваш вопрос. Закупка №" . $complaint->auction_id;
                 if ($toid) {
                     $message = new Messages();
                     $message->from_uid = $from;
@@ -452,13 +467,13 @@ class ComplaintsController extends ControllerBase
                     $message->save();
 
                     $quest = Question::findFirstById($answer->question_id);
-                    if($quest){
+                    if ($quest) {
                         $quest->is_read = 'y';
                         $quest->save();
                     }
 
                     $user = User::findFirst($toid);
-                    if($user && $user->notifications == 1) {
+                    if ($user && $user->notifications == 1) {
                         $message = $this->mailer->createMessageFromView('../views/emails/lawyer', array(
                             'host' => $this->request->getHttpHost(),
                             'firstname' => $user->firstname,
@@ -479,7 +494,8 @@ class ComplaintsController extends ControllerBase
         }
     }
 
-    public function deleteAction($id){
+    public function deleteAction($id)
+    {
         $perm = new Permission();
         if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'edit')) {
             $this->view->pick("access/denied");
@@ -505,7 +521,7 @@ class ComplaintsController extends ControllerBase
         }
         $data = $this->request->getPost();
         $complaint = Complaint::findFirstById($data['complaint_id']);
-        if (!$complaint || $complaint->status!='draft' ) {
+        if (!$complaint || $complaint->status != 'draft') {
             echo 'error';
             exit;
         }
@@ -513,6 +529,7 @@ class ComplaintsController extends ControllerBase
         exit;
 
     }
+
     public function updateAction()
     {
         if (!$this->request->isPost()) {
@@ -538,11 +555,11 @@ class ComplaintsController extends ControllerBase
         }
         $complaint = Complaint::findFirstById($data['update-complaint-id']);
         if ($complaint) {
-            if(!empty($data['complaint_text']) && $data['complaint_text'] == '<p>Пользовательский текст</p>'){
-                $data['complaint_text'] = '<p>'.str_replace($data['argument_text'],'Пользовательский текст', '').'</p>';
+            if (!empty($data['complaint_text']) && $data['complaint_text'] == '<p>Пользовательский текст</p>') {
+                $data['complaint_text'] = '<p>' . str_replace($data['argument_text'], 'Пользовательский текст', '') . '</p>';
             }
-            if(!empty($data['complaint_text']) && $data['complaint_text'] == '<p>Вам необходимо выбрать хотябы одну обязательную жалобу!</p>'){
-                $data['complaint_text'] = '<p>'.str_replace($data['argument_text'],'Вам необходимо выбрать хотябы одну обязательную жалобу!', '').'</p>';
+            if (!empty($data['complaint_text']) && $data['complaint_text'] == '<p>Вам необходимо выбрать хотябы одну обязательную жалобу!</p>') {
+                $data['complaint_text'] = '<p>' . str_replace($data['argument_text'], 'Вам необходимо выбрать хотябы одну обязательную жалобу!', '') . '</p>';
             }
             $complaint->complaint_name = $data['complaint_name'];
             $complaint->complaint_text = (!empty($data['complaint_text'])) ? $data['complaint_text'] : '';
@@ -550,7 +567,7 @@ class ComplaintsController extends ControllerBase
             $ufas = Ufas::findFirst(array(
                 "number = {$data['ufas_id']}"
             ));
-            if($ufas){
+            if ($ufas) {
                 $complaint->ufas_id = $ufas->id;
             }
         }
@@ -625,6 +642,7 @@ class ComplaintsController extends ControllerBase
             return $this->response->redirect('admin/complaints/preview/' . $complaint->id);
         }
     }
+
     public function statusAction()
     {
         if (!$this->request->isPost()) {
@@ -638,7 +656,9 @@ class ComplaintsController extends ControllerBase
         echo $result;
         exit;
     }
-    public function askQuestionAction(){
+
+    public function askQuestionAction()
+    {
         $question = $this->request->getPost('new-question');
         $complaint_id = $this->request->getPost('complaint_id');
         if (isset($question) && strlen($question) && isset($complaint_id) && $complaint_id) {
@@ -657,11 +677,12 @@ class ComplaintsController extends ControllerBase
         return $this->response->redirect('/admin/complaints/edit/' . $complaint_id);
     }
 
-    private function checkDateEndSendApp($dateOff, &$result = false){
+    private function checkDateEndSendApp($dateOff, &$result = false)
+    {
         $dateOff = strtotime($dateOff);
         $nowTime = strtotime("now");
 
-        if($nowTime > $dateOff){
+        if ($nowTime > $dateOff) {
             return 1;
         }
         return 0;

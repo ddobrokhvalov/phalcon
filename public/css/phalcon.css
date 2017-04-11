@@ -3616,3 +3616,31 @@ input#upload-files::-webkit-file-upload-button {
 .reg_form input[type="submit"]{
     height: 55px!important;
 }
+a.complaint_save-blue {
+    background: transparent none repeat scroll 0 0;
+    border: 1px solid #00aeef;
+    border-radius: 5px;
+    color: #00aeef;
+    float: right;
+    font-weight: bold;
+    height: 50px;
+    text-transform: uppercase;
+    width: 225px;
+    padding-top:14px;
+    padding-left:25px;
+}
+a.complaint_save-blue:hover {
+    text-decoration:none;
+    color: #00aeef;
+}
+
+.browse-div
+{
+    width:100%;
+    height:100px;
+    position:absolute;
+    top:0px;
+    z-index:100;
+    background: transparent none repeat scroll 0 0;
+    background-color:white;
+}

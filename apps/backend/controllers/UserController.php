@@ -35,7 +35,9 @@ class UserController extends ControllerBase
             if (isset($show_all_items) && $show_all_items == 'all_items') {
                 $item_per_page = 99999;
             }
-            $users = User::find();
+            $users = User::find(array(
+                "order" => "id desc"
+            ));
             $paginator = new Paginator(array(
                 "data" => $users,
                 "limit" => $item_per_page,

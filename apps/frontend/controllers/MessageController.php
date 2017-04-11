@@ -43,6 +43,7 @@ class MessageController extends ControllerBase
         $this->view->page = $pages;
         $this->view->item_per_page = $item_per_page;
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
+        $this->view->count_items = count($messages);
         $this->setMenu();
     }
 

@@ -128,7 +128,60 @@
                 {% endfor %}
 
             </ul>
+
             <div class="user-pagination-box">
+                {% if count_items==0 and status=='0'%}
+                <div style="margin-top:20px; position:relative; text-align:center;">Пока у Вас нет жалоб. Для создания жалобы необходимо
+                    <div class="ch-l-i-btn" style="padding:10px; display: inline;float:none; width:263px;">
+                        <a style="float:none; padding:10px; " href="/applicant/add">добавить заявителя</a>
+                    </div>
+                    , после чего нажать на кнопку «Добавить жалобу» в левом верхнем углу».
+                </div>
+                {% elseif count_items==0 and status=='draft'%}
+                <div style="margin-top:20px; position:relative; text-align:center;">Пока Вы не создали ни один черновик жалобы.
+
+                    Для создания жалобы необходимо нажать на кнопку «Добавить жалобу» в левом верхнем углу.
+                </div>
+                {% elseif count_items==0 and status=='submitted'%}
+                <div style="margin-top:20px; position:relative; text-align:center;">Пока у Вас нет поданных жалоб.
+
+                    Как только Вы подпишите и отправите жалобу, она появится в данном разделе.
+                </div>
+                {% elseif count_items==0 and status=='under_consideration'%}
+                <div style="margin-top:20px; position:relative; text-align:center;">Пока Ваших жалоб нет на рассмотрении.
+
+                    Когда Вы подадите жалобу и контрольный орган примет её, она появится в данном разделе.
+                </div>
+                {% elseif count_items==0 and status=='justified'%}
+                <div style="margin-top:20px; position:relative; text-align:center;">Пока у Вас нет жалоб, признанных обоснованными.
+
+                    В случае если контрольный орган признает Вашу жалобу обоснованной (частично обоснованной),
+
+                    она появится в данном разделе.
+                </div>
+                {% elseif count_items==0 and status=='unfounded'%}
+                <div style="margin-top:20px; position:relative; text-align:center;">Ни одна из Ваших жалоб не признана необоснованной.
+
+                    В случае если контрольный орган признает Вашу жалобу необоснованной, она появится в данном
+
+                    разделе.
+                </div>
+                {% elseif count_items==0 and status=='recalled'%}
+                <div style="margin-top:20px; position:relative; text-align:center;">Вы не отзывали свои жалобы после подачи.
+
+                    В случае если жалоба будет со статусом «Подана» или «На рассмотрении» и Вы нажмёте на кнопку
+
+                    «отозвать», то такая жалоба появится в данном разделе.
+                </div>
+                {% elseif count_items==0 and status=='archive'%}
+                <div style="margin-top:20px; position:relative; text-align:center;">В архиве нет жалоб.
+
+                    Вы можете отправить любую свою жалобу в архив, после чего она появится в данном
+
+                    разделе.
+                </div>
+                {% endif %}
+
                 {% if page.current>1 %}
                 {{ link_to("complaint/index?page=" ~ page.before ~ "&status="~status~ "&search="~searhparam, 'Предыдущая', 'id' : 'user-pag-prev') }}
                 {% endif %}
@@ -235,8 +288,9 @@
     <div class="action-buttons" style="padding-bottom:40px;">
         <div class="popup-button cnc popup-close" style="background: #00aeef none repeat scroll 0 0; margin: 10px 80px 0; text-align:center;">Закрыть</div>
         <p>&nbsp;</p>
-    </div>     
-    <div class="modal-close"></div><br/>
+    </div>
+    <div class="modal-close"></div>
+    <br/>
 </div>
 
 <article class="admin-popup-wrap recall-compl-popup" style="display:none;">

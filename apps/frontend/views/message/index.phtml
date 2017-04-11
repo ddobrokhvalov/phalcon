@@ -3,24 +3,26 @@
         <div class="c-cnt-pagename" style="float: none;">Сообщения</div>
         <div class="admin-lt-head">
             <div class="select-all">
-                <div></div>Выбрать все
+                <div></div>
+                Выбрать все
             </div>
             <div class="lt-head-btns">
                 <div id="delete-button" class="disabled-btn" onclick="if(!jQuery(this).hasClass('disabled-btn')){jQuery('.confirm-deletion-message').modal('show');}">Удалить</div>
             </div>
             <div class="modal fade confirm-deletion-message" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-              <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Удалить сообщения?</h4>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <button type="button" onclick="delete_messages()" class="btn btn-primary">Удалить</button>
-                  </div>
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Удалить сообщения?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                            <button type="button" onclick="delete_messages()" class="btn btn-primary">Удалить</button>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
         </div>
         <div class="admin-lt-content" id="sort-table">
@@ -39,26 +41,34 @@
                     {{ message.subject }}
                 </li>
                 <li>{{ message.body }}</li>
-                <li>{{ date('d.m.Y H:i', message.time|strtotime) }} </li>
+                <li>{{ date('d.m.Y H:i', message.time|strtotime) }}</li>
             </ul>
             {% endfor %}
         </div>
-
         {% if page.total_items > item_per_page %}
-            <div class="admin-table-footer">
-                {% if page.current * item_per_page < page.total_items %}
-                    {% set cnt = page.total_items - (page.current * item_per_page) %}
-                    <a href="#" onclick="$('#next_items').submit()">Еще <span>20 сообщений</span></a><!--todo: -->
-                    {% else %}
-                        <div></div>
-                {% endif %}
-                <a href="/message/index?all-portions-items=all_items">Показать все сообщения (<span>{{page.total_items}}</span>)</a><!--todo: -->
-            </div>
-            <form id="next_items" method="post">
-                <input type="hidden" id="next_items" name="next-portions-items" value="{{item_per_page}}">
-            </form>
+        <div class="admin-table-footer">
+            {% if page.current * item_per_page < page.total_items %}
+            {% set cnt = page.total_items - (page.current * item_per_page) %}
+            <a href="#" onclick="$('#next_items').submit()">Еще <span>20 сообщений</span></a><!--todo: -->
+            {% else %}
+            <div></div>
+            {% endif %}
+            <a href="/message/index?all-portions-items=all_items">Показать все сообщения (<span>{{page.total_items}}</span>)
+            </a><!--todo: -->
+        </div>
+        <form id="next_items" method="post">
+            <input type="hidden" id="next_items" name="next-portions-items" value="{{item_per_page}}">
+        </form>
         {% endif %}
         <div class="admin-pagination-box">
+            {% if count_items==0 %}
+            <div style="margin-top:20px; position:relative; text-align:center;">Пока у Вас нет сообщений.
+
+                В случае изменения статуса жалобы, дачи ответа юристом на Ваш вопрос, изменения учётных
+
+                данных, а также в иных случаях, Вам придёт сообщение.
+            </div>
+            {% endif %}
             {% if page.current>1 %}{{ link_to("message/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
             <ul>
                 {% for page_item in paginator_builder %}

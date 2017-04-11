@@ -1,193 +1,232 @@
 {% extends "base-template.phtml" %}
 {% block title %}ФАС ОНЛАЙН - Жалобы{% endblock %}
 {% block body %}
-    <!-- ****************** complaints preview ***************** -->
-    <div class="admin-main-wrap complaints-preview-wrap">
-        <div class="bread-crumbs-holder">
-            <a href="#" onclick="history.back();return false;">Вернуться на страницу жалоб</a>
-        </div>
-        <h1>Просмотр жалобы</h1>
-        <div class="notification-number-box {{complaint.getComplaintColor(complaint.status)}}"> <!-- if notification is rightly - remoove class "notif-unreasonably" -->
-            <p>Номер извещения №
-                <span>{{complaint.auction_id}}</span>
-                {{ complaint.getComplaintStatus(complaint.status) }}
-            </p>
-        </div>
-        <div class="edit-notification-box">
-            {% if complaint.status == 'draft' %}
-            <a href="/admin/complaints/edit/{{complaint.id}}?action=edit">Редактировать</a>
-            {% else %}
-            <a href="#" class="edit-notif-active">Редактировать</a>
-            {% endif %}
-            <a href="#" onclick="change_complaint_status({{complaint.id}}, 'copy')">Копировать</a>
-            {% if complaint.status == 'under_consideration' %}
-            <a href="#" onclick="change_complaint_status({{complaint.id}}, 'recalled')">Отозвать</a>
-            {% else %}
-            <a class="edit-notif-active" href="#" onclick="return false;">Отозвать</a>
-            {% endif %}
-            <a href="#" onclick="change_complaint_status({{complaint.id}}, {% if complaint.status != 'archive' %}'archive'{% else %}'draft'{% endif %})">{% if complaint.status != 'archive' %}В архив{% else%}Активировать{% endif %}</a>
-            <a href="#"><div data-toggle="modal" data-target=".confirm-deletion-complaint-lg">Удалить</div></a>
-        </div>
-        <div class="modal fade confirm-deletion-complaint-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-          <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Удалить жалобу?</h4>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                <button type="button" onclick="delete_complaint({{complaint.id}})" class="btn btn-primary">Удалить</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="details-complaint">
-            <div class="c-jadd-text">
-                <div class="c-jadd1-z">
-                    <span>Данные о закупке</span>
-                </div>
-                <div class="c-jadd-l">
-                   <div class="c-jadd-lr-row">
-                        <span>Способ проведения закупки</span>
-                        <span class="auction-data" id="type">{{ complaint.type }}</span>
-                    </div>
-                    <div class="c-jadd-lr-row">
-                        <span>Закупку осуществляет</span>
-                        <span class="auction-data" id="purchases_made">{{ complaint.purchases_made }}</span>
-                    </div>
-                    <div class="c-jadd-lr-row">
-                        <span>Наименование закупки</span>
-                       <span class="auction-data" id="purchases_name"> {{ complaint.purchases_name }}</span>
-                    </div>
-                    <div class="c-jadd-lr-row">
-                        <span>Контакты</span>
-                       <span class="auction-data" id="contact"> {{ complaint.contact }}</span>
-                    </div>
-                </div>
-                <div class="c-jadd-r date-container">
+<!-- ****************** complaints preview ***************** -->
+<div class="admin-main-wrap complaints-preview-wrap">
+    <div class="bread-crumbs-holder">
+        <a href="#" onclick="history.back();return false;">Вернуться на страницу жалоб</a>
+    </div>
+    <h1>Просмотр жалобы</h1>
+    <div class="notification-number-box {{complaint.getComplaintColor(complaint.status)}}"> <!-- if notification is rightly - remoove class "notif-unreasonably" -->
+        <p>Номер извещения №
+            <span>{{complaint.auction_id}}</span>
+        {{ complaint.getComplaintStatus(complaint.status) }}
+        </p>
+    </div>
+    <div style="padding:0px; margin:0px; font-size:12px;line-height: 14px; padding-left:20px;" class="edit-notification-box">
+        <a href="/admin/user/edit/{{user.id}}">{{user.email}}</a>
 
-                </div>
-            </div>
-            <div class="c-jadd-spoiler"><span>Показать подробно</span></div>
-        </div>
-        <div class="complaints-content">
-                <h2>{{complaint.complaint_name}}</h2>
-                <div class="attached-files">
-                    {% if attached_files|count > 0 %}
-                        {% for file in attached_files %}
-                            {{ file }}
-                        {% endfor %}
-                        {% else %}
-                            {{ 'Нет прикрепленных файлов' }}
-                    {% endif %}
-                </div>
-                <div class="complaints-main mCustomScrollbar">
-                    <h3>{{complaint.purchases_name}}</h3>
-                    <!--{{complaint.complaint_text}}-->
-
-                    {{ user_arguments }}
-                </div>
-            </div>
-        {% set questions = complaint.getComplaintQuestion() %}
-        {% if questions|count > 0 %}
-        <div class="complaints-lawyer-quest">
-            <h3>Вопросы юристу</h3>
-            {% for question in questions %}
-            <div class="compl-quest-cont">
-                {% set answers = complaint.getComplaintQuestionAnswer(question.id) %}
-                {% if answers.count() == 0 %}
-                    <form action="/admin/complaints/addAnswer?complaint={{complaint.id}}&question={{question.id}}" method="POST">
-                        <p>— {{question.text}}</p>
-                        <label for="" class="hidden-textarea">
-                            <span>Новое сообщение</span>
-                            <div></div>
-                            <textarea name="lawyer-answer"></textarea>
-                        </label>
-                        <div class="opacity-btn">Ответить</div>
-                        {% if allow_answer == 1 %}
-                            <button class="sendAnswer">Ответить</button>
-                        {% endif %}
-
-                    </form>
-                {% else %}
-                    <p>— {{question.text}}</p>
-                    <div class="edit-buttons">
-                        <ul class="edit-buttons-ul">
-                            <li onclick="jQuery('.modal-edit-answer').modal('show');">Редактировать</li>
-                            <li onclick="jQuery('.confirm-deletion-answer').modal('show');">Удалить</li>
-                            <li style="clear: both;"></li>
-                        </ul>
-                        <div style="clear: both;"></div>
-                    </div>
-                    {% set answers = complaint.getComplaintQuestionAnswer(question.id) %}
-                    {% for answer in answers %}
-                        {% if answer.text | length %}
-                        <div class="clarifying-issue" data-answer-id="{{answer.id}}">
-                            <div class="answer-flag"></div>
-                            <p>
-                                {{ nl2br(answer.text) }}
-                            </p>
-                            <div style="clear: both;"></div>
-                        </div>
-                        <div class="legal-advisor">
-                            {% set answer_owner = complaint.getAnswerOwner(answer.admin_id) %}
-                            {% if answer_owner['photo'] %}
-                                <div><img src="/files/avatars/{{answer_owner['photo']}}" alt=""></div>
-                            {% endif %}
-                            <p>{{answer_owner['user']}}</p>
-                            <span>Ваш юридический консультант</span>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
+        <a href="/admin/applicants/info/{{applicant.id}}">{{applicant.name_short}}</a>
+    </div>
+    <div class="edit-notification-box">
+        <a href="#" data-toggle="modal" id="show-send-massage-dialog">Cообщение</a>
+        <div class="admin-lt-holder"><div class="lt-content-main"><div class="lt-psevdo-check psevdo-checked"><input id="user-id" name="user-id" value="{{user.id}}" type="hidden"></div></div></div>
+        {% if complaint.status == 'draft' %}
+        <a href="/admin/complaints/edit/{{complaint.id}}?action=edit">Редактировать</a>
+        {% else %}
+        <a href="#" class="edit-notif-active">Редактировать</a>
         {% endif %}
+        <a href="#" onclick="change_complaint_status({{complaint.id}}, 'copy')">Копировать</a>
+        {% if complaint.status == 'under_consideration' %}
+        <a href="#" onclick="change_complaint_status({{complaint.id}}, 'recalled')">Отозвать</a>
+        {% else %}
+        <a class="edit-notif-active" href="#" onclick="return false;">Отозвать</a>
+        {% endif %}
+        <a href="#" onclick="change_complaint_status({{complaint.id}}, {% if complaint.status != 'archive' %}'archive'{% else %}'draft'{% endif %})">{% if complaint.status != 'archive' %}В архив{% else%}Активировать{% endif %}</a>
+        <a href="#">
+            <div data-toggle="modal" data-target=".confirm-deletion-complaint-lg">Удалить</div>
+        </a>
     </div>
-    <div class="modal fade confirm-deletion-answer" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Удалить ответ на жалобу?</h4>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-            <button id="delete_answer_buttton" type="button" answer-id="" onclick="delete_answer(jQuery(this).attr('answer-id'))" class="btn btn-primary">Удалить</button>
-          </div>
+    <div class="modal fade confirm-deletion-complaint-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Удалить жалобу?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <button type="button" onclick="delete_complaint({{complaint.id}})" class="btn btn-primary">Удалить</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    <div class="modal fade modal-edit-answer" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Редактировать ответ</h4>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <textarea class="form-control" style="min-height: 285px;" id="answer-text"></textarea>
-              </div>
+    <div class="details-complaint">
+        <div class="c-jadd-text">
+            <div class="c-jadd1-z">
+                <span>Данные о закупке</span>
+            </div>
+            <div class="c-jadd-l">
+                <div class="c-jadd-lr-row">
+                    <span>Способ проведения закупки</span>
+                    <span class="auction-data" id="type">{{ complaint.type }}</span>
+                </div>
+                <div class="c-jadd-lr-row">
+                    <span>Закупку осуществляет</span>
+                    <span class="auction-data" id="purchases_made">{{ complaint.purchases_made }}</span>
+                </div>
+                <div class="c-jadd-lr-row">
+                    <span>Наименование закупки</span>
+                    <span class="auction-data" id="purchases_name"> {{ complaint.purchases_name }}</span>
+                </div>
+                <div class="c-jadd-lr-row">
+                    <span>Контакты</span>
+                    <span class="auction-data" id="contact"> {{ complaint.contact }}</span>
+                </div>
+            </div>
+            <div class="c-jadd-r date-container">
+
+            </div>
+        </div>
+        <div class="c-jadd-spoiler"><span>Показать подробно</span></div>
+    </div>
+    <div class="complaints-content">
+        <h2>{{complaint.complaint_name}}</h2>
+        <div class="attached-files">
+            {% if attached_files|count > 0 %}
+            {% for file in attached_files %}
+            {{ file }}
+            {% endfor %}
+            {% else %}
+            {{ 'Нет прикрепленных файлов' }}
+            {% endif %}
+        </div>
+        <div class="complaints-main mCustomScrollbar">
+            <h3>{{complaint.purchases_name}}</h3>
+            <!--{{complaint.complaint_text}}-->
+
+            {{ user_arguments }}
+        </div>
+    </div>
+    {% set questions = complaint.getComplaintQuestion() %}
+    {% if questions|count > 0 %}
+    <div class="complaints-lawyer-quest">
+        <h3>Вопросы юристу</h3>
+        {% for question in questions %}
+        <div class="compl-quest-cont">
+            {% set answers = complaint.getComplaintQuestionAnswer(question.id) %}
+            {% if answers.count() == 0 %}
+            <form action="/admin/complaints/addAnswer?complaint={{complaint.id}}&question={{question.id}}" method="POST">
+                <p>— {{question.text}}</p>
+                <label for="" class="hidden-textarea">
+                    <span>Новое сообщение</span>
+                    <div></div>
+                    <textarea name="lawyer-answer"></textarea>
+                </label>
+                <div class="opacity-btn">Ответить</div>
+                {% if allow_answer == 1 %}
+                <button class="sendAnswer">Ответить</button>
+                {% endif %}
+
             </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-            <button id="button-save-answer" answer-id="" type="button" onclick="save_answer(jQuery(this).attr('answer-id'), jQuery(this).parent().parent().find('#answer-text').val());" class="btn btn-primary">Сохранить</button>
-          </div>
+            {% else %}
+            <p>— {{question.text}}</p>
+            <div class="edit-buttons">
+                <ul class="edit-buttons-ul">
+                    <li onclick="jQuery('.modal-edit-answer').modal('show');">Редактировать</li>
+                    <li onclick="jQuery('.confirm-deletion-answer').modal('show');">Удалить</li>
+                    <li style="clear: both;"></li>
+                </ul>
+                <div style="clear: both;"></div>
+            </div>
+            {% set answers = complaint.getComplaintQuestionAnswer(question.id) %}
+            {% for answer in answers %}
+            {% if answer.text | length %}
+            <div class="clarifying-issue" data-answer-id="{{answer.id}}">
+                <div class="answer-flag"></div>
+                <p>
+                    {{ nl2br(answer.text) }}
+                </p>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="legal-advisor">
+                {% set answer_owner = complaint.getAnswerOwner(answer.admin_id) %}
+                {% if answer_owner['photo'] %}
+                <div><img src="/files/avatars/{{answer_owner['photo']}}" alt=""></div>
+                {% endif %}
+                <p>{{answer_owner['user']}}</p>
+                <span>Ваш юридический консультант</span>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
         </div>
-      </div>
+        {% endfor %}
     </div>
+    {% endif %}
+</div>
+<div class="modal fade confirm-deletion-answer" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Удалить ответ на жалобу?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button id="delete_answer_buttton" type="button" answer-id="" onclick="delete_answer(jQuery(this).attr('answer-id'))" class="btn btn-primary">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modal-edit-answer" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Редактировать ответ</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <textarea class="form-control" style="min-height: 285px;" id="answer-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button id="button-save-answer" answer-id="" type="button" onclick="save_answer(jQuery(this).attr('answer-id'), jQuery(this).parent().parent().find('#answer-text').val());" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modal-send-message-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Отправить сообщение</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="message-subject" class="control-label">Тема:</label>
+                        <input type="text" class="form-control" id="message-subject">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">Сообщение:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="button" onclick="send_message($('#message-subject').val(), $('#message-text').val())" class="btn btn-primary">Отправить</button>
+            </div>
+        </div>
+    </div>
+</div>
 <style>
-    .sendAnswer{
+    .sendAnswer {
         display: none;
         top: 0 !important;
         left: 0 !important;
     }
-    .opacity-btn{
+
+    .opacity-btn {
         display: block;
         position: relative;
         top: 0px;
@@ -203,7 +242,8 @@
         outline: none;
         text-align: center;
     }
-    .opacity-btn:hover{
+
+    .opacity-btn:hover {
         display: block;
         position: relative;
         top: 0px;
@@ -218,32 +258,40 @@
         cursor: pointer;
         outline: none;
     }
-    .hidden-textarea{
+
+    .hidden-textarea {
         position: relative;
     }
-    .hidden-textarea div{
+
+    .hidden-textarea div {
         top: 69px;
         right: 9px;
     }
-    .complaints-lawyer-quest form button{
+
+    .complaints-lawyer-quest form button {
         position: relative;
         float: right;
         top: 0;
         left: 0;
     }
-    .complaints-lawyer-quest form{
+
+    .complaints-lawyer-quest form {
         padding-bottom: 30px;
         margin-bottom: 22px;
     }
+
     .clarifying-issue {
         padding: 45px 30px 0px 35px;
     }
-    .edit-status .admin-popup-content.index-main-popup{
+
+    .edit-status .admin-popup-content.index-main-popup {
         text-align: center;
     }
-    .edit-status .admin-popup-content.index-main-popup p{
+
+    .edit-status .admin-popup-content.index-main-popup p {
         font-size: 25px;
     }
+
     .edit-status .admin-popup-content.index-main-popup h6 {
         position: relative;
         overflow: hidden;
@@ -254,7 +302,8 @@
         color: #ffffff;
         text-align: center;
     }
-    .edit-status .admin-popup-content.index-popup{
+
+    .edit-status .admin-popup-content.index-popup {
         width: 500px;
     }
 </style>
@@ -267,125 +316,125 @@
     </div>
 </article>
 
-    <script type="text/javascript">
+<script type="text/javascript">
     var auction = {
-        auctionReady: false,
-        /* data: {
-         auction_id: '',
-         type: '',
-         purchases_made: '',
-         purchases_name: '',
-         contact: '',
-         date_start: '',
-         date_end: '',
-         date_opening: '',
-         date_review: ''
-         }, */
+            auctionReady: false,
+                /* data: {
+                 auction_id: '',
+                 type: '',
+                 purchases_made: '',
+                 purchases_name: '',
+                 contact: '',
+                 date_start: '',
+                 date_end: '',
+                 date_opening: '',
+                 date_review: ''
+                 }, */
 
-        data: {},
+            data: {},
 
-        setData: function () {
+            setData: function () {
 
-            /*$('#type').html(this.data.type);
-            $('#purchases_made').html(this.data.purchases_made);
-            $('#purchases_name').html(this.data.purchases_name);
-            $('#contact').html(this.data.contact);*/
-            var html = '<div class="c-jadd-lr-row"><span>Наименование закупки</span><div class="c-jadd-lr-sel">'+ this.data.ufas_name +'</div></div>';
-            if (this.data.type == 'Открытый конкурс') {
-                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
-                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
-                html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
-                html += this.processHTML('Дата рассмотрения и оценки заявок', this.data.data_rassmotreniya);
-            }
-            if (this.data.type == 'Электронный аукцион') {
-                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
-                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
-                html += this.processHTML('Дата проведения электронного аукциона', this.data.data_provedeniya);
-                html += this.processHTML('Дата окончания срока рассмотрения первых частей заявок', this.data.okonchanie_rassmotreniya);
-                html += this.processHTML('Время проведения электронного аукциона', this.data.vremya_provedeniya);
-            }
-            if (this.data.type == 'Конкурс с ограниченным участием') {
-                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
-                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
-                html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
-                html += this.processHTML('Дата проведения предквалификационного отбора', this.data.data_provedeniya);
-                html += this.processHTML('Дата рассмотрения и оценки заявок', this.data.data_rassmotreniya);
-            }
-            if (this.data.type == 'Запрос котировок') {
-                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
-                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
-                html += this.processHTML('Дата и время проведения вскрытия конвертов, открытия доступа к электронным документам заявок', this.data.vskrytie_konvertov);
-            }
-            if (this.data.type == 'Повторный конкурс с ограниченным участием') {
-                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
-                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
-                html += this.processHTML('Дата и время проведения вскрытия конвертов, открытия доступа к электронным документам заявок', this.data.vskrytie_konvertov);
+                /*$('#type').html(this.data.type);
+                 $('#purchases_made').html(this.data.purchases_made);
+                 $('#purchases_name').html(this.data.purchases_name);
+                 $('#contact').html(this.data.contact);*/
+                var html = '<div class="c-jadd-lr-row"><span>Наименование закупки</span><div class="c-jadd-lr-sel">' + this.data.ufas_name + '</div></div>';
+                if (this.data.type == 'Открытый конкурс') {
+                    html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                    html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                    html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
+                    html += this.processHTML('Дата рассмотрения и оценки заявок', this.data.data_rassmotreniya);
+                }
+                if (this.data.type == 'Электронный аукцион') {
+                    html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                    html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                    html += this.processHTML('Дата проведения электронного аукциона', this.data.data_provedeniya);
+                    html += this.processHTML('Дата окончания срока рассмотрения первых частей заявок', this.data.okonchanie_rassmotreniya);
+                    html += this.processHTML('Время проведения электронного аукциона', this.data.vremya_provedeniya);
+                }
+                if (this.data.type == 'Конкурс с ограниченным участием') {
+                    html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                    html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                    html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
+                    html += this.processHTML('Дата проведения предквалификационного отбора', this.data.data_provedeniya);
+                    html += this.processHTML('Дата рассмотрения и оценки заявок', this.data.data_rassmotreniya);
+                }
+                if (this.data.type == 'Запрос котировок') {
+                    html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                    html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                    html += this.processHTML('Дата и время проведения вскрытия конвертов, открытия доступа к электронным документам заявок', this.data.vskrytie_konvertov);
+                }
+                if (this.data.type == 'Повторный конкурс с ограниченным участием') {
+                    html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                    html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                    html += this.processHTML('Дата и время проведения вскрытия конвертов, открытия доступа к электронным документам заявок', this.data.vskrytie_konvertov);
 
-                html += this.processHTML('Дата проведения предквалификационного отбора', this.data.data_provedeniya);
-                html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе', this.data.data_rassmotreniya);
-            }
-            if (this.data.type == 'Закрытый конкурс') {
-                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
-                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
-                html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
-                html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе', this.data.data_rassmotreniya);
-            }
-            if (this.data.type == 'Закрытый конкурс с ограниченным участием') {
-                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
-                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
-                html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
-                html += this.processHTML('Дата проведения предквалификационного отбора', this.data.data_provedeniya);
-                html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе', this.data.data_rassmotreniya);
-            }
-            if (this.data.type == 'Запрос предложений') {
-                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
-                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
-                html += this.processHTML('Дата и время вскрытия конвертов, открытия доступа к электронным документам заявок', this.data.vskrytie_konvertov);
-                html += this.processHTML('Дата и время рассмотрения и оценки заявок участников', this.data.data_rassmotreniya);
-                html += this.processHTML('Дата и время вскрытия конвертов с окончательными предложениями, открытия доступа к электронным документам окончательных документов', this.data.okonchanie_rassmotreniya);
-            }
-            if (this.data.type == 'Предварительный отбор') {
-                html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
-                html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
-                html += this.processHTML('Дата и время проведения предварительного отбора', this.data.data_provedeniya);
-            }
+                    html += this.processHTML('Дата проведения предквалификационного отбора', this.data.data_provedeniya);
+                    html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе', this.data.data_rassmotreniya);
+                }
+                if (this.data.type == 'Закрытый конкурс') {
+                    html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                    html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                    html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
+                    html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе', this.data.data_rassmotreniya);
+                }
+                if (this.data.type == 'Закрытый конкурс с ограниченным участием') {
+                    html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                    html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                    html += this.processHTML('Дата и время вскрытия конвертов', this.data.vskrytie_konvertov);
+                    html += this.processHTML('Дата проведения предквалификационного отбора', this.data.data_provedeniya);
+                    html += this.processHTML('Дата рассмотрения и оценки заявок на участие в конкурсе', this.data.data_rassmotreniya);
+                }
+                if (this.data.type == 'Запрос предложений') {
+                    html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                    html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                    html += this.processHTML('Дата и время вскрытия конвертов, открытия доступа к электронным документам заявок', this.data.vskrytie_konvertov);
+                    html += this.processHTML('Дата и время рассмотрения и оценки заявок участников', this.data.data_rassmotreniya);
+                    html += this.processHTML('Дата и время вскрытия конвертов с окончательными предложениями, открытия доступа к электронным документам окончательных документов', this.data.okonchanie_rassmotreniya);
+                }
+                if (this.data.type == 'Предварительный отбор') {
+                    html += this.processHTML('Дата и время начала подачи заявок', this.data.nachalo_podachi);
+                    html += this.processHTML('Дата и время окончания подачи заявок', this.data.okonchanie_podachi);
+                    html += this.processHTML('Дата и время проведения предварительного отбора', this.data.data_provedeniya);
+                }
 
 
-            $('.date-container').html(html);
+                $('.date-container').html(html);
+
+            }
+            ,
+            processHTML: function (text, value) {
+                return '<div class="c-jadd-lr-row"><span>' + text + '</span><span class="auction-data" >' + value + '</span></div>';
+
+            }
+            ,
+            clearData: function () {
+                for (var key in this.data) {
+                    this.data[key] = '';
+                }
+            }
+
 
         }
-        ,
-        processHTML: function (text, value) {
-            return '<div class="c-jadd-lr-row"><span>' + text + '</span><span class="auction-data" >' + value + '</span></div>';
-
-        }
-        ,
-        clearData: function () {
-            for (var key in this.data) {
-                this.data[key] = '';
-            }
-        }
-
-
-    }
     ;
     auction.data['complaint_id'] = '{{complaint.id }}';
 
-        auction.data['type'] = '{{complaint.type }}';
-        auction.data['purchases_made'] = '{{delete_slash(complaint.purchases_made) }}';
-        auction.data['purchases_name'] = '{{delete_slash(complaint.purchases_name) }}';
-        auction.data['contact'] = '{{delete_slash(complaint.contact) }}';
-        auction.data['nachalo_podachi'] = '{{complaint.date_start }}';
-        auction.data['okonchanie_podachi'] = '{{complaint.okonchanie_podachi }}';
-        auction.data['vskrytie_konvertov'] = '{{complaint.vskrytie_konvertov }}';
-        auction.data['data_rassmotreniya'] = '{{complaint.data_rassmotreniya }}';
-        auction.data['data_provedeniya'] = '{{complaint.data_provedeniya }}';
-        auction.data['okonchanie_rassmotreniya'] = '{{complaint.okonchanie_rassmotreniya }}';
-        auction.data['vremya_provedeniya'] = '{{complaint.vremya_provedeniya }}';
-        auction.data['ufas_name']   = '{{ufas_name}}';
-        auction.setData();
-        $(document).ready(function() {
-            //jQuery('.c-jadd-text').hide();
+    auction.data['type'] = '{{complaint.type }}';
+    auction.data['purchases_made'] = '{{delete_slash(complaint.purchases_made) }}';
+    auction.data['purchases_name'] = '{{delete_slash(complaint.purchases_name) }}';
+    auction.data['contact'] = '{{delete_slash(complaint.contact) }}';
+    auction.data['nachalo_podachi'] = '{{complaint.date_start }}';
+    auction.data['okonchanie_podachi'] = '{{complaint.okonchanie_podachi }}';
+    auction.data['vskrytie_konvertov'] = '{{complaint.vskrytie_konvertov }}';
+    auction.data['data_rassmotreniya'] = '{{complaint.data_rassmotreniya }}';
+    auction.data['data_provedeniya'] = '{{complaint.data_provedeniya }}';
+    auction.data['okonchanie_rassmotreniya'] = '{{complaint.okonchanie_rassmotreniya }}';
+    auction.data['vremya_provedeniya'] = '{{complaint.vremya_provedeniya }}';
+    auction.data['ufas_name'] = '{{ufas_name}}';
+    auction.setData();
+    $(document).ready(function () {
+        //jQuery('.c-jadd-text').hide();
 //            jQuery('.c-jadd-spoiler').click(function(){
 //                jQuery(this).toggleClass("folded").toggleClass("unfolded").prev().slideToggle();
 //                var txt = jQuery('.c-jadd-spoiler span').text();
@@ -397,47 +446,48 @@
 //                    jQuery('.c-jadd-spoiler span').removeClass("dep-up");
 //                }
 //            });
-            //$('.deploy-complaint').trigger('click');
-            $('.clarifying-issue').hover(function(event) {
-                //$('.complaints-preview-wrap').find('.edit-buttons-ul').css('display', 'none');
-                var par = $(this).parent();
-                $('#delete_answer_buttton').attr('answer-id', par.find('.clarifying-issue').attr('data-answer-id'));
-                $('#button-save-answer').attr('answer-id', par.find('.clarifying-issue').attr('data-answer-id'));
-                var p_html = '';
-                par.find('.clarifying-issue p').each(function(){
-                    if ($(this).text().length) {
-                        p_html += $(this).html().trim();
-                    }
-                });
-                $('.modal-edit-answer #answer-text').val(p_html.replace(/<br>/g, ''));
-                //var parentOffset = $(this).parent().offset(); 
-                //var relX = event.pageX - 79/* - parentOffset.left*/;
-                //var relY = event.pageY - parentOffset.top;
-                window.initHandler = setTimeout( handler, 700 );
-                var $this = $(this);
-                function handler() {
-                    par.find('.edit-buttons-ul').css('display', 'block');
-                    var relX = event.pageX;
+        //$('.deploy-complaint').trigger('click');
+        $('.clarifying-issue').hover(function (event) {
+            //$('.complaints-preview-wrap').find('.edit-buttons-ul').css('display', 'none');
+            var par = $(this).parent();
+            $('#delete_answer_buttton').attr('answer-id', par.find('.clarifying-issue').attr('data-answer-id'));
+            $('#button-save-answer').attr('answer-id', par.find('.clarifying-issue').attr('data-answer-id'));
+            var p_html = '';
+            par.find('.clarifying-issue p').each(function () {
+                if ($(this).text().length) {
+                    p_html += $(this).html().trim();
                 }
-            }, function() {
-                clearTimeout(window.initHandler);
-                /*var ccc = $(this).parent().parent().parent().length;
-                console.log(ccc);*/
-                    //var hhh  = $(this).parent().parent().parent().ismouseover();
-                //var hhh = $(this).parent().find('.edit-buttons').is(":hover");
-                //console.log(hhh);
-                //window.initHandler = setTimeout( handler2, 1000 );
-//                $('.complaints-preview-wrap .edit-buttons-ul').css('display', 'none');
             });
-            /*$('.complaints-lawyer-quest').hover(function(event){
-                console.log("hovered");
-            });
-            function handler2(){
-                
-            }*/
-            /*$.mlp ={x:0,y:0};function documentHandler(){var $current =this=== document ? $(this): $(this).contents(); $current.mousemove(function(e){jQuery.mlp ={x:e.pageX,y:e.pageY}}); $current.find("iframe").load(documentHandler);}$(documentHandler); $.fn.ismouseover =function(overThis){var result =false;this.eq(0).each(function(){var $current = $(this).is("iframe")? $(this).contents().find("body"): $(this);var offset = $current.offset(); result = offset.left<=$.mlp.x && offset.left + $current.outerWidth()> $.mlp.x && offset.top<=$.mlp.y && offset.top + $current.outerHeight()> $.mlp.y;});return result;};*/
-        });
-    </script>
+            $('.modal-edit-answer #answer-text').val(p_html.replace(/<br>/g, ''));
+            //var parentOffset = $(this).parent().offset();
+            //var relX = event.pageX - 79/* - parentOffset.left*/;
+            //var relY = event.pageY - parentOffset.top;
+            window.initHandler = setTimeout(handler, 700);
+            var $this = $(this);
 
-    <!-- ******************************************************* -->
+            function handler() {
+                par.find('.edit-buttons-ul').css('display', 'block');
+                var relX = event.pageX;
+            }
+        }, function () {
+            clearTimeout(window.initHandler);
+            /*var ccc = $(this).parent().parent().parent().length;
+             console.log(ccc);*/
+            //var hhh  = $(this).parent().parent().parent().ismouseover();
+            //var hhh = $(this).parent().find('.edit-buttons').is(":hover");
+            //console.log(hhh);
+            //window.initHandler = setTimeout( handler2, 1000 );
+//                $('.complaints-preview-wrap .edit-buttons-ul').css('display', 'none');
+        });
+        /*$('.complaints-lawyer-quest').hover(function(event){
+         console.log("hovered");
+         });
+         function handler2(){
+
+         }*/
+        /*$.mlp ={x:0,y:0};function documentHandler(){var $current =this=== document ? $(this): $(this).contents(); $current.mousemove(function(e){jQuery.mlp ={x:e.pageX,y:e.pageY}}); $current.find("iframe").load(documentHandler);}$(documentHandler); $.fn.ismouseover =function(overThis){var result =false;this.eq(0).each(function(){var $current = $(this).is("iframe")? $(this).contents().find("body"): $(this);var offset = $current.offset(); result = offset.left<=$.mlp.x && offset.left + $current.outerWidth()> $.mlp.x && offset.top<=$.mlp.y && offset.top + $current.outerHeight()> $.mlp.y;});return result;};*/
+    });
+</script>
+
+<!-- ******************************************************* -->
 {% endblock %}

@@ -12,6 +12,7 @@ use Multiple\Frontend\Models\UsersArguments;
 use Multiple\Frontend\Models\DocxFiles;
 use Multiple\Frontend\Models\Files;
 use Multiple\Backend\Models\Ufas;
+use Multiple\Library\Log;
 use Multiple\Library\Calendar\BasicDataRu;
 use Multiple\Library\Parser;
 use Phalcon\Acl\Exception;
@@ -28,7 +29,6 @@ use Multiple\Frontend\Models\User;
 use Multiple\Library\Calendar\Calendar;
 
 
-
 class ComplaintController extends ControllerBase
 {
     const STEP_ONE = 1;
@@ -37,41 +37,35 @@ class ComplaintController extends ControllerBase
     const STEP_FOUR = 4;
     const STEP_SEARCH = 6;
 
-
-    public function testAction(){
-
-    }
-
     public function indexAction()
     {
         if (!$this->user) {
-             $this->flashSession->error('Вы не залогинены в системе');
-             return $this->response->redirect('/');
+            $this->flashSession->error('Вы не залогинены в системе');
+            return $this->response->redirect('/');
         }
         $search = $this->request->get('search');
-        $search =  preg_replace ("/[^a-zA-ZА-Яа-я0-9\s]/u","", $search);
-
+        $search = preg_replace("/[^a-zA-ZА-Яа-я0-9\s]/u", "", $search);
 
 
         $this->setMenu();
         $complaint = new Complaint();
         $status = 0;
         $numberPage = $this->request->getQuery("page", "int");
-        if($numberPage===null) $numberPage = 1;
+        if ($numberPage === null) $numberPage = 1;
         if (isset($_GET['status']))
             $status = $_GET['status'];
-      
+
         $complaints = $complaint->findUserComplaints($this->user->id, $status, $this->applicant_id, $search);
         #$this->view->complaints = $complaints;
         $this->view->status = $status;
         $paginator = new Paginator(array(
-            "data"  => $complaints,
+            "data" => $complaints,
             "limit" => 10,
-            "page"  => $numberPage
+            "page" => $numberPage
         ));
         $pages = $paginator->getPaginate();
-        if($status){
-            $url = '/complaint/index?status='.$status;
+        if ($status) {
+            $url = '/complaint/index?status=' . $status;
         } else {
             $url = '/complaint/index';
         }
@@ -81,10 +75,13 @@ class ComplaintController extends ControllerBase
         $this->view->page = $pages;
         $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
         $this->view->index_action = true;
+        $this->view->count_items = count($complaints);
+        $this->view->status = $status;
 
     }
 
-    public function deleteFileAction() {
+    public function deleteFileAction()
+    {
         $file_id = $this->request->getPost('file_id');
         $complaint_id = $this->request->getPost('complaint_id');
         if ($file_id && $complaint_id) {
@@ -149,14 +146,15 @@ class ComplaintController extends ControllerBase
                 $user_arguments .= $complaint->complaint_text . '</br>';
                 $user_arguments .= $argument->text . '</br>';
             } else {*/
-                $user_arguments .= $argument->text . '</br>';
+            $user_arguments .= $argument->text . '</br>';
             //}
             $arr_sub_cat[] = array(
                 'id' => $argument->argument_id,
-                'text' =>  preg_replace('/[\r\n\t]/', '', $text)
+                'text' => preg_replace('/[\r\n\t]/', '', $text)
             );
             ++$argument_order;
         }
+
         if (!empty($arr_sub_cat)) {
             $this->view->arr_sub_cat = $arr_sub_cat;
         }
@@ -230,58 +228,173 @@ class ComplaintController extends ControllerBase
 
         $this->view->ufas_name = 'Уфас не определен';
         $this->view->comp_inn = 'null';
-        if($complaint->ufas_id != null){
+        if ($complaint->ufas_id != null) {
             $ufas_name = Ufas::findFirst(array(
                 "id={$complaint->ufas_id}"
             ));
-            if($ufas_name){
+            if ($ufas_name) {
                 $this->view->ufas_name = $ufas_name->name;
                 $this->view->comp_inn = $ufas_name->number;
             }
         }
 
 
-
-        if(is_null($complaint->date_start)) $complaint->date_start = $complaint->nachalo_podachi;
+        if (is_null($complaint->date_start)) $complaint->date_start = $complaint->nachalo_podachi;
         $this->view->date_end = $this->checkDateEndSendApp($complaint->okonchanie_podachi);
         $this->view->edit_mode = 1;
         $this->view->complaint = $complaint;
         $this->view->complaint_question = $complaintQuestion;
         $this->view->action_edit = false;
-        if (isset($_GET['action']) && $_GET['action'] == 'edit' && $complaint->status =='draft')
+        if (isset($_GET['action']) && $_GET['action'] == 'edit' && $complaint->status == 'draft')
             $this->view->action_edit = true;
         unset($data);
     }
 
-    public function saveBlobFileAction() {
+    public function test1Action()
+    {
+        $value = '<p>На основании решения контрольного органа в сфере закупок <em>«указать реквизиты решения»</em> выдано предписание, согласно которому <em>«указать кому и какие действия предписаны».</em></p><p><img src="' . $_SERVER['DOCUMENT_ROOT'] . '/files/generated_complaints/user_169/2017.png"/></p><p>В силу пункта 2 части 22 статьи 99 Закона о контрактной системе предписания об устранении нарушений законодательства Российской Федерации и иных нормативных правовых актов о контрактной системе, выданные контрольным органом в сфере закупок обязательны для исполнения.</p><p>х.</p><p><br></p>';
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/phpdocx/classes/CreateDocx.inc';
+        $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/js/docx_generator/docx_templates/documentation_phpword.docx");
+
+        /*preg_match_all('/<img.*?src\s*=(.*?)>/', $value, $out);
+        if (count($out[1])) {
+            foreach ($out[1] as $image) {
+                $explode = explode(" ", $image);
+
+                $image = trim($explode[0], '"');
+                $file_name = time() + rand();
+
+                $value = str_replace("", '<img src="' . $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_169/" . $this->save_base64_image($image, time() + rand(), $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_169/") . '" width="35" height="35" style="vertical-align: middle">', $value);
+            }
+        }*/
+
+        $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
+        $name = 'complaint_' . time() . '.docx';
+        $docx->replaceVariableByHTML('dovod', 'block', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));
+        $docx->createDocx($baseLocation . $name);
+    }
+
+    public function test2Action()
+    {
+        $fileName = 'w.jpg';
+        //header('Content-Type: image/png');
+
+        $this->create_thumbnail($_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/" . $fileName, 'true', 700, 500);
+    }
+
+    /*function save_base64_image($base64_image_string, $output_file_without_extentnion, $path_with_end_slash = "")
+    {
+        //usage:  if( substr( $img_src, 0, 5 ) === "data:" ) {  $filename=save_base64_image($base64_image_string, $output_file_without_extentnion, getcwd() . "/application/assets/pins/$user_id/"); }      
+        //
+        //data is like:    data:image/png;base64,asdfasdfasdf
+        $splited = explode(',', substr($base64_image_string, 5), 2);
+        $mime = $splited[0];
+        $data = $splited[1];
+
+        $mime_split_without_base64 = explode(';', $mime, 2);
+        $mime_split = explode('/', $mime_split_without_base64[0], 2);
+        if (count($mime_split) == 2) {
+            $extension = $mime_split[1];
+            if ($extension == 'jpeg') $extension = 'jpg';
+            //if($extension=='javascript')$extension='js';
+            //if($extension=='text')$extension='txt';
+            $output_file_with_extentnion .= $output_file_without_extentnion . '.' . $extension;
+        }
+
+        file_put_contents($path_with_end_slash . $output_file_with_extentnion, base64_decode($data));
+        return $output_file_with_extentnion;
+    }*/
+
+    public function browseAction($id)
+    {
+        $dir = 'files/generated_complaints/user_' . $this->user->id . '/';
+        $sorted = scandir($dir);
+        $file_read = array('docx');
+
+        foreach ($sorted as $key => $value) {
+            if (!in_array($value, array('.', '..'))) {
+                $type = explode('.', $value);
+                $type = array_reverse($type);
+                if (!in_array($type[0], $file_read)) {
+                    continue;
+                }
+                $file = $value;
+            }
+        }
+        //$this->setMenu();
+        //$this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src='.'http%3A%2F%2Fufa.ru%2Fcomplaint_1488558920.docx';
+        $this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src=http://5.63.154.36/' . $dir . $file;
+    }
+
+    public function saveHtmlFileAction()
+    {
         $name = false;
         $format = 1;
         $recall = 0;
         $recall = $this->request->get('recall');
-        if ($this->request->hasFiles() == true) {
+
+        if ($this->request->getPost('doc')) {
             $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
-            foreach ($this->request->getUploadedFiles() as $file) {
-                if (strlen($file->getName())) {
-                    if (!file_exists($baseLocation)) {
-                        mkdir($baseLocation, 0777, true);
+            if (strlen($this->request->getPost('doc'))) {
+
+                if (!file_exists($baseLocation)) {
+                    mkdir($baseLocation, 0777, true);
+                }
+                if (empty($recall)) {
+                    $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
+                    if ($unformatted == 'unformatted_') {
+                        $format = 0;
                     }
-                    if(empty($recall)) {
-                        $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
-                        if($unformatted == 'unformatted_'){
-                            $format = 0;
-                        }
-                        $name = 'complaint_' . $unformatted . time() . '.docx';
-                        $file->moveTo($baseLocation . $name);
-                    } else {
-                        $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
-                        $name =  'recall_' . $unformatted . time() . '.docx';
-                        $recall = 1;
-                        $file->moveTo($baseLocation . $name);
+                    $name = 'complaint_' . $unformatted . time() . '.docx';
+                    $data = json_decode($this->request->getPost('doc'));
+
+                    require_once $_SERVER['DOCUMENT_ROOT'] . '/phpdocx/classes/CreateDocx.inc';
+                    $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
+
+                    foreach ($data as $key => $value) {
+                        if ($key == 'dovod') {
+                            /*preg_match_all('/<img.*?src\s*=(.*?)>/', $value, $out);
+                            if (count($out[1])) {
+                                foreach ($out[1] as $key1 => $image) {
+                                    $explode = explode(" ", $image);
+                                    $image = trim($explode[0], '"');
+
+                                    $file_name = time() + rand();
+
+                                    if(substr_count($image, 'data:image'))
+                                        $value = str_replace($out[0][$key1], '<img src="' . $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/" . $this->save_base64_image($image, time() + rand(), $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/") . '"><br/>', $value);
+                                }
+                            }*/
+
+                            $docx->replaceVariableByHTML($key, 'block', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));
+                        } else
+                            $docx->replaceVariableByHTML($key, 'inline', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));
                     }
+
+                    //$templateProcessor->saveAs($baseLocation . $name);
+                    $docx->createDocx($baseLocation . $name);
+
+                    //$file->moveTo($baseLocation . $name);
+                } else {
+                    $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
+                    $name = 'recall_' . $unformatted . time() . '.docx';
+                    $recall = 1;
+
+                    $data = json_decode($this->request->getPost('doc'));
+                    require_once $_SERVER['DOCUMENT_ROOT'] . '/phpdocx/classes/CreateDocx.inc';
+                    $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
+
+                    foreach ($data as $key => $value) {
+                        $docx->replaceVariableByHTML($key, 'block', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => false));
+                    }
+
+                    $docx->createDocx($baseLocation . $name);
+
+                    //$file->moveTo($baseLocation . $name);
                 }
             }
             $docx = new DocxFiles();
-            if(!empty($recall)){
+            if (!empty($recall)) {
                 $docx->complaint_id = $this->request->get('complaint_id');
             }
             $docx->docx_file_name = $name;
@@ -289,26 +402,26 @@ class ComplaintController extends ControllerBase
 
             $tempCompPost = $this->request->getPost('complaint_id');
             $tempCompGet = $this->request->getQuery('complaint_id');
-            if(is_numeric($tempCompPost)){
+            if (is_numeric($tempCompPost)) {
                 $compl_id = $tempCompPost;
-            } elseif(is_numeric($tempCompGet)){
+            } elseif (is_numeric($tempCompGet)) {
                 $compl_id = $tempCompGet;
             }
 
             $docx->complaint_name = $this->request->getPost('complaint_name');
             if (isset($compl_id) && $compl_id != 'undefined') {
                 $delete_docx = DocxFiles::find("complaint_id = $compl_id");
-                if(count($delete_docx) >= 2) {
+                if (count($delete_docx) >= 2) {
                     foreach ($delete_docx as $del_docx) {
                         $del = @unlink($baseLocation . $del_docx->docx_file_name);
-                        $del = @unlink($baseLocation . $del_docx->docx_file_name.'.sig');
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name . '.sig');
                         $del_docx->delete();
                     }
                 } else {
                     $delete_docx = DocxFiles::find("complaint_id = $compl_id AND recall = 1");
                     foreach ($delete_docx as $del_docx) {
                         $del = @unlink($baseLocation . $del_docx->docx_file_name);
-                        $del = @unlink($baseLocation . $del_docx->docx_file_name.'.sig');
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name . '.sig');
                         $del_docx->delete();
                     }
                 }
@@ -321,15 +434,15 @@ class ComplaintController extends ControllerBase
             $docx->save();
         }
         $this->view->disable();
-        if($name) {
+        if ($name) {
             $thumbprint = 0;
-            if(isset($_POST['applicant_id'])) {
+            if (isset($_POST['applicant_id'])) {
                 $applicant_id = $_POST['applicant_id'];
                 //"activ = 1 AND applicant_id = $applicant_id "
 
                 $thumbprint = ApplicantECP::findFirst(array(
                     "conditions" => "activ = ?1 AND applicant_id = ?2",
-                    "bind"       => [
+                    "bind" => [
                         1 => 1,
                         2 => $applicant_id,
                     ],
@@ -339,21 +452,119 @@ class ComplaintController extends ControllerBase
             }
             $data = file_get_contents($baseLocation . $name);
             $File_data = base64_encode($data);
-            echo json_encode([$File_data,$thumbprint,$name]);
-        }else{
+            echo json_encode([$File_data, $thumbprint, $name]);
+        } else {
             echo 'error';
         }
         die();
         //0190300004615000296
         //  skyColor
     }
-    public function signatureAction(){
-        $signature = $this->request->getPost('signature');
-        $signFileOriginName  = $this->request->getPost('signFileOriginName');
-        $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
-       // unlink($baseLocation . $signFileOriginName.'sig');
 
-        $file = file_get_contents($baseLocation. $signFileOriginName);
+    public function saveBlobFileAction()
+    {
+        $name = false;
+        $format = 1;
+        $recall = 0;
+        $recall = $this->request->get('recall');
+        if ($this->request->hasFiles() == true) {
+            $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
+            foreach ($this->request->getUploadedFiles() as $file) {
+                if (strlen($file->getName())) {
+                    if (!file_exists($baseLocation)) {
+                        mkdir($baseLocation, 0777, true);
+                    }
+                    if (empty($recall)) {
+                        $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
+                        if ($unformatted == 'unformatted_') {
+                            $format = 0;
+                        }
+                        $name = 'complaint_' . $unformatted . time() . '.docx';
+                        $file->moveTo($baseLocation . $name);
+                    } else {
+                        $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
+                        $name = 'recall_' . $unformatted . time() . '.docx';
+                        $recall = 1;
+                        $file->moveTo($baseLocation . $name);
+                    }
+                }
+            }
+            $docx = new DocxFiles();
+            if (!empty($recall)) {
+                $docx->complaint_id = $this->request->get('complaint_id');
+            }
+            $docx->docx_file_name = $name;
+
+
+            $tempCompPost = $this->request->getPost('complaint_id');
+            $tempCompGet = $this->request->getQuery('complaint_id');
+            if (is_numeric($tempCompPost)) {
+                $compl_id = $tempCompPost;
+            } elseif (is_numeric($tempCompGet)) {
+                $compl_id = $tempCompGet;
+            }
+
+            $docx->complaint_name = $this->request->getPost('complaint_name');
+            if (isset($compl_id) && $compl_id != 'undefined') {
+                $delete_docx = DocxFiles::find("complaint_id = $compl_id");
+                if (count($delete_docx) >= 2) {
+                    foreach ($delete_docx as $del_docx) {
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name);
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name . '.sig');
+                        $del_docx->delete();
+                    }
+                } else {
+                    $delete_docx = DocxFiles::find("complaint_id = $compl_id AND recall = 1");
+                    foreach ($delete_docx as $del_docx) {
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name);
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name . '.sig');
+                        $del_docx->delete();
+                    }
+                }
+            }
+            $docx->created_at = date('Y-m-d H:i:s');
+            $docx->recall = $recall;
+            $docx->format = $format;
+            $docx->complaint_id = $compl_id;
+            $docx->user_id = $this->user->id;
+            $docx->save();
+        }
+        $this->view->disable();
+        if ($name) {
+            $thumbprint = 0;
+            if (isset($_POST['applicant_id'])) {
+                $applicant_id = $_POST['applicant_id'];
+                //"activ = 1 AND applicant_id = $applicant_id "
+
+                $thumbprint = ApplicantECP::findFirst(array(
+                    "conditions" => "activ = ?1 AND applicant_id = ?2",
+                    "bind" => [
+                        1 => 1,
+                        2 => $applicant_id,
+                    ],
+                    'order' => 'id DESC'
+                ));
+                $thumbprint = $thumbprint->thumbprint;
+            }
+            $data = file_get_contents($baseLocation . $name);
+            $File_data = base64_encode($data);
+            echo json_encode([$File_data, $thumbprint, $name]);
+        } else {
+            echo 'error';
+        }
+        die();
+        //0190300004615000296
+        //  skyColor
+    }
+
+    public function signatureAction()
+    {
+        $signature = $this->request->getPost('signature');
+        $signFileOriginName = $this->request->getPost('signFileOriginName');
+        $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
+        // unlink($baseLocation . $signFileOriginName.'sig');
+
+        $file = file_get_contents($baseLocation . $signFileOriginName);
         $sendData = array(
             "method" => 'Signature.verifyMessageSignature',
             "id" => 1,
@@ -365,13 +576,12 @@ class ComplaintController extends ControllerBase
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, 'http://185.20.225.233/api/v1/json');
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($sendData));
         $out = curl_exec($curl);
 
-
-        file_put_contents($baseLocation. $signFileOriginName.'.sig', base64_decode($signature));
+        file_put_contents($baseLocation . $signFileOriginName . '.sig', base64_decode($signature));
         /*if(preg_match('/recall/', $signFileOriginName)){
 
             $this->SendToUfas(array(
@@ -397,7 +607,8 @@ class ComplaintController extends ControllerBase
         $this->view->arguments = $arguments;
     }
 
-    public function deleteAction($id){
+    public function deleteAction($id)
+    {
         $complaint = Complaint::findFirst($id);
         if (!$complaint || !$complaint->checkComplaintOwner($id, $this->user->id))
             return $this->forward('complaint/index');
@@ -421,11 +632,11 @@ class ComplaintController extends ControllerBase
         $users_arguments = explode('_?_', $data['arguments_data']);
 
         $ufas_id = null;
-        if(isset($data['ufas_id']) && is_numeric($data['ufas_id'])){
+        if (isset($data['ufas_id']) && is_numeric($data['ufas_id'])) {
             $ufas_id = Ufas::findFirst(array(
                 "number={$data['ufas_id']}"
             ));
-            if($ufas_id) $ufas_id = $ufas_id->id;
+            if ($ufas_id) $ufas_id = $ufas_id->id;
         }
         $data['ufas_id'] = $ufas_id;
 
@@ -515,11 +726,12 @@ class ComplaintController extends ControllerBase
                     $docx->save();
                 }
             }
+            Log::addAdminLog("Создание жалобы", "Добавлена жалоба {$complaint->id}", $this->user, null, 'пользователь');
             $this->flashSession->success('Жалоба сохранена');
             echo json_encode(array(
-               'complaint' => array(
-                   'id' => $complaint->id
-               )
+                'complaint' => array(
+                    'id' => $complaint->id
+                )
             ));
             exit;
             //return $this->response->redirect('complaint/edit/' . $complaint->id . '?action=edit');
@@ -529,7 +741,7 @@ class ComplaintController extends ControllerBase
         echo json_encode($response);
         exit;*/
     }
-    
+
     public function updateAction()
     {
         if (!$this->request->isPost()) {
@@ -543,9 +755,25 @@ class ComplaintController extends ControllerBase
         foreach ($users_arguments as $key => $row) {
             $users_arguments[$key] = explode('?|||?', $row);
         }
+
         foreach ($users_arguments as $key => &$row) {
             foreach ($row as $data_) {
                 $data_ = explode('===', $data_);
+
+                /* if ($data_[0] == 'argument_text') {
+                     preg_match_all('/<img.*?src\s*=(.*?)>/', $data_[1], $out);
+                     if (count($out[1])) {
+                         foreach ($out[1] as $key => $image) {
+                             $explode = explode(" ", $image);
+                             $image = trim($explode[0], '"');
+
+                             $file_name = time() + rand();
+
+                             $data_[1] = str_replace($out[0][$key], '<img src="' . $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/" . $this->save_base64_image($image, time() + rand(), $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/") . '"><br/>', $data_[1]);
+                         }
+                     }
+                 }*/
+
                 $users_arguments_[$key][$data_[0]] = $data_[1];
                 /*if (isset($users_arguments_[$key]['argument_id']) && $users_arguments_[$key]['argument_id'] == 'just_text') {
                     $data['complaint_text'] = $data_[1];
@@ -563,7 +791,7 @@ class ComplaintController extends ControllerBase
             $ufas = Ufas::findFirst(array(
                 "number = {$data['ufas_id']}"
             ));
-            if($ufas){
+            if ($ufas) {
                 $complaint->ufas_id = $ufas->id;
             }
         }
@@ -650,7 +878,8 @@ class ComplaintController extends ControllerBase
         }
     }
 
-    public function askQuestionAction(){
+    public function askQuestionAction()
+    {
         $question = $this->request->getPost('new-question');
         $complaint_id = $this->request->getPost('complaint_id');
         if (isset($question) && strlen($question) && isset($complaint_id) && $complaint_id) {
@@ -682,7 +911,8 @@ class ComplaintController extends ControllerBase
         exit;
     }
 
-    function isComplaintNameUnicAction() {
+    function isComplaintNameUnicAction()
+    {
         $this->view->disable();
         $complaint_name = $this->request->get('complaint_name');
         $complaint_id = $this->request->get('complaint_id');
@@ -703,7 +933,7 @@ class ComplaintController extends ControllerBase
         echo json_encode($response);
         die();
     }
-    
+
     public function recallAction($id)
     {
 
@@ -722,7 +952,7 @@ class ComplaintController extends ControllerBase
                 return $this->forward('complaint/index');
             if (!$complaint->checkComplaintOwner($v, $this->user->id))
                 return $this->forward('complaint/index');
-            if($complaint->status=='submitted') {
+            if ($complaint->status == 'submitted') {
                 $complaint = new Complaint();
                 $complaint->changeStatus('recalled', [$v], $this->user->id);
             }
@@ -730,7 +960,7 @@ class ComplaintController extends ControllerBase
         if ($id == '0') { //todo: maby we need json response
             echo 'true';
             exit;
-        }else
+        } else
             header('Location: http://' . $_SERVER['HTTP_HOST'] . '/complaint/edit/' . $id);
 
 
@@ -740,7 +970,7 @@ class ComplaintController extends ControllerBase
     {
         $data = $this->request->getPost();
         $complaint = Complaint::findFirstById($data['complaint_id']);
-        if (!$complaint || $complaint->status!='draft' || !$complaint->checkComplaintOwner($data['complaint_id'], $this->user->id)) {
+        if (!$complaint || $complaint->status != 'draft' || !$complaint->checkComplaintOwner($data['complaint_id'], $this->user->id)) {
             echo 'error';
             exit;
         }
@@ -750,7 +980,8 @@ class ComplaintController extends ControllerBase
     }
 
     /* ADD COMPLICANT */
-    public function ajaxStepsAddComplaintAction(){
+    public function ajaxStepsAddComplaintAction()
+    {
         try {
             $data = array();
             $result = array(
@@ -758,7 +989,7 @@ class ComplaintController extends ControllerBase
                 "arguments" => array(),
                 "date" => 0
             );
-            $CurrentStep =  $this->request->get('step');
+            $CurrentStep = $this->request->get('step');
             $data['type'] = $this->request->getPost('type');
             $data['dateOff'] = $this->request->getPost('dateoff');
 
@@ -767,10 +998,10 @@ class ComplaintController extends ControllerBase
 
             if (!$CurrentStep || !is_numeric($CurrentStep)) throw new Exception('bad step');
             if (!$data['type'] || !$this->checkTypePurchase($data['type'])) throw new Exception('bad type');
-            if (!$data['dateOff'] || trim($data['dateOff']) == '')  throw new Exception('bad date');
+            if (!$data['dateOff'] || trim($data['dateOff']) == '') throw new Exception('bad date');
 
             // 0 - не просрочено // 1 - просрочено
-            $data['checkDate'] =  $this->checkDateEndSendApp($data['dateOff'], $result);
+            $data['checkDate'] = $this->checkDateEndSendApp($data['dateOff'], $result);
 
             switch ($CurrentStep) {
                 case self::STEP_ONE:
@@ -790,7 +1021,7 @@ class ComplaintController extends ControllerBase
                         }
                     }
                     echo json_encode($result);
-                break;
+                    break;
                 case self::STEP_TWO:
                     $parent_id = $this->request->getPost('id');
                     if (!$parent_id || !is_numeric($parent_id)) throw new Exception('bad data');
@@ -813,7 +1044,7 @@ class ComplaintController extends ControllerBase
                         }
                     }
                     echo json_encode($result);
-                break;
+                    break;
                 case self::STEP_THREE:
                     $id = $this->request->getPost('id');
 
@@ -830,7 +1061,7 @@ class ComplaintController extends ControllerBase
                     if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) {
                         $cat_arguments->andWhere("ArgumentsCategory.required = 1");
                         $cat_arguments->andWhere("Multiple\Frontend\Models\Arguments.required = 1");
-                    } else if($data['checkDate'] == 0){
+                    } else if ($data['checkDate'] == 0) {
                         $cat_arguments->andWhere("ArgumentsCategory.required = 0");
                         $cat_arguments->andWhere("Multiple\Frontend\Models\Arguments.required = 0");
                     }
@@ -838,7 +1069,7 @@ class ComplaintController extends ControllerBase
                     $cat_arguments = $cat_arguments->getQuery()->execute();
 
                     //Если категорий нет, то получаем доводы и добавляем их в результирующий массив $result
-                    if(count($cat_arguments) == 0) {
+                    if (count($cat_arguments) == 0) {
                         $arguments = Arguments::query();
                         $arguments->where("category_id = {$id}");
                         $this->showRequiredOrNotRequired($arguments, $data);
@@ -856,7 +1087,7 @@ class ComplaintController extends ControllerBase
                         }
                     }
                     echo json_encode($result);
-                break;
+                    break;
                 case self::STEP_FOUR:
                     $id = $this->request->getPost('id');
                     if (!$id || !is_numeric($id)) throw new Exception('bad data');
@@ -869,7 +1100,7 @@ class ComplaintController extends ControllerBase
 
                     $this->setArgumentsInResult($arguments, $data['type'], $result);
                     echo json_encode($result);
-                break;
+                    break;
                 case self::STEP_SEARCH:
                     $search = $this->request->getPost('search');
                     $search = (!empty($search)) ? trim($search) : '';
@@ -887,9 +1118,9 @@ class ComplaintController extends ControllerBase
 
                     $this->setArgumentsInResult($arguments, $data['type'], $result);
                     echo json_encode($result);
-                break;
+                    break;
             }
-        } catch (Exception $e){
+        } catch (Exception $e) {
             echo json_encode(array(
                 "error" => $e->getMessage()
             ));
@@ -897,45 +1128,48 @@ class ComplaintController extends ControllerBase
         exit;
     }
 
-    private function checkTypePurchase($type ){
+    private function checkTypePurchase($type)
+    {
         $checkType = false;
-        switch ($type){
+        switch ($type) {
             case 'electr_auction':
                 $checkType = true;
-            break;
+                break;
             case 'concurs':
                 $checkType = true;
-            break;
+                break;
             case 'kotirovok':
                 $checkType = true;
-            break;
+                break;
             case 'offer':
                 $checkType = true;
-            break;
+                break;
         }
         return $checkType;
     }
 
-    private function setArgumentsInResult($arguments, $type, &$result ){
-        foreach($arguments as $argument){
+    private function setArgumentsInResult($arguments, $type, &$result)
+    {
+        foreach ($arguments as $argument) {
             $result['arguments'][] = array(
-                'id'            => $argument->id,
-                'text'          => $argument->text,
-                'name'          => $argument->name,
-                'category_id'   => $argument->category_id,
-                'comment'       => $argument->comment,
-                'required'      => $argument->required,
-                'type'          => ($argument->type != '') ? explode(',', $argument->type) : array()
+                'id' => $argument->id,
+                'text' => $argument->text,
+                'name' => $argument->name,
+                'category_id' => $argument->category_id,
+                'comment' => $argument->comment,
+                'required' => $argument->required,
+                'type' => ($argument->type != '') ? explode(',', $argument->type) : array()
             );
         }
     }
 
-    private function checkDateEndSendApp($dateOff, &$result = false){
+    private function checkDateEndSendApp($dateOff, &$result = false)
+    {
         $dateOff = strtotime($dateOff);
         $nowTime = strtotime("now");
 
-        if($nowTime > $dateOff){
-            if($result) {
+        if ($nowTime > $dateOff) {
+            if ($result) {
                 $result['date'] = 1;
             }
             return 1;
@@ -943,28 +1177,31 @@ class ComplaintController extends ControllerBase
         return 0;
     }
 
-    private function showRequiredOrNotRequired($arguments, $data){
+    private function showRequiredOrNotRequired($arguments, $data)
+    {
         if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) $arguments->andWhere("required = 1");
         if ($data['checkDate'] == 0) $arguments->andWhere("required = 0");
     }
 
-    private function checkUser(){
+    private function checkUser()
+    {
         $user = User::findFirstById($this->session->get('auth')['id']);
 
-        if(!$user->conversion || !$user->mobile_phone){
+        if (!$user->conversion || !$user->mobile_phone) {
             return 1;
         }
         return 0;
     }
 
-    public function checkDateComplaintAction(){
+    public function checkDateComplaintAction()
+    {
         $complaint_id = $this->request->getPost('complaint_id');
         $okonchanie_podachi = $this->request->getPost('okonchanie_podachi');
         $okonchanie_rassmotreniya = $this->request->getPost('okonchanie_rassmotreniya');
-        if(!$okonchanie_rassmotreniya){
+        if (!$okonchanie_rassmotreniya) {
             $okonchanie_rassmotreniya = $this->request->getPost('data_rassmotreniya');
         }
-        if(!$okonchanie_rassmotreniya){
+        if (!$okonchanie_rassmotreniya) {
             $okonchanie_rassmotreniya = $this->request->getPost('vskrytie_konvertov');
         }
 
@@ -976,8 +1213,7 @@ class ComplaintController extends ControllerBase
         $complaintDate = new \DateTime($complaint->date);
 
 
-
-        if($complaintDate < $okonchanie_podachi ) {
+        if ($complaintDate < $okonchanie_podachi) {
             if ($currentDate < $okonchanie_podachi) {
                 echo json_encode([
                     'rule' => 1,
@@ -997,15 +1233,16 @@ class ComplaintController extends ControllerBase
             echo json_encode(array(
                 'status' => $result,
                 'rule' => 2,
-            ));exit;
+            ));
+            exit;
         }
     }
 
 
-
-    public function checkDateOnRecallComplaintAction(){
+    public function checkDateOnRecallComplaintAction()
+    {
         $idComp = $this->request->getPost('date');
-        if(empty($idComp)){
+        if (empty($idComp)) {
             echo json_encode(array(
                 'error' => 'empty'
             ));
@@ -1020,61 +1257,62 @@ class ComplaintController extends ControllerBase
             'status' => $result,
             'complaint' => array(
                 'auction_id' => $complaint->auction_id,
-                'name'  => $complaint->complaint_name,
+                'name' => $complaint->complaint_name,
             )
         ));
         exit;
     }
 
-    public function getInfoComplaintAction(){
+    public function getInfoComplaintAction()
+    {
         $data = $this->request->getPost('date');
         $complaint = Complaint::findFirst($data);
         $applicant = null;
         $ecp = null;
         $ufas = null;
-        if($complaint){
+        if ($complaint) {
             $applicant = Applicant::findFirst($complaint->applicant_id);
             $ecp = ApplicantECP::findFirst(array(
-                "applicant_id = ".$complaint->applicant_id
+                "applicant_id = " . $complaint->applicant_id
             ));
             $ufas = Ufas::findFirst($complaint->ufas_id);
         }
 
         $result = array(
-            'applicant_name'    => $applicant->name_short,
-            'applicant_fio'     => $applicant->fio_applicant,
-            'applicant_id'      => $applicant->id,
+            'applicant_name' => $applicant->name_short,
+            'applicant_fio' => $applicant->fio_applicant,
+            'applicant_id' => $applicant->id,
             'applicant_address' => $applicant->address,
-            'applicant_phone'   => $applicant->telefone,
-            'applicant_email'   => $applicant->email,
+            'applicant_phone' => $applicant->telefone,
+            'applicant_email' => $applicant->email,
             'applicant_position' => $applicant->position,
-            'auction_id'    => $complaint->auction_id,
-            'ufas_name'     => $ufas->name,
-            'date_create'   => $complaint->date_submit,
-            'date_now'      => date('Y-m-d H:m'),
-            'thumbprint'    => $ecp->thumbprint,
+            'auction_id' => $complaint->auction_id,
+            'ufas_name' => $ufas->name,
+            'date_create' => $complaint->date_submit,
+            'date_now' => date('Y-m-d H:m'),
+            'thumbprint' => $ecp->thumbprint,
         );
 
         echo json_encode($result);
         exit;
     }
 
-
-    private function SendToUfas($files, $ufasEmail, $subject, $content){
-
+    private function SendToUfas($files, $ufasEmail, $subject, $content)
+    {
         $message = $this->mailer->createMessage()
             ->to($ufasEmail)
             ->bcc($this->adminsEmails['ufas'])
             ->subject($subject)
             ->content($content);
-        foreach ($files as $key){
+        foreach ($files as $key) {
             $message->attachment($key);
         }
-
+        Log::addAdminLog("Отправка в УФАС", $content, $this->user, null, 'пользователь');
         $message->send();
     }
 
-    public function sendComplaintToUfasAction(){
+    public function sendComplaintToUfasAction()
+    {
         $compId = $this->request->getPost('complId');
         $file = DocxFiles::findFirst(array(
             "complaint_id = {$compId} AND format = 1"
@@ -1088,25 +1326,24 @@ class ComplaintController extends ControllerBase
         $appFiles = unserialize($appFiles->fid);
 
         $attached = array(
-            '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name.'.sig',
-            '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name
+            '../public/files/generated_complaints/user_' . $this->user->id . '/' . $file->docx_file_name . '.sig',
+            '../public/files/generated_complaints/user_' . $this->user->id . '/' . $file->docx_file_name
         );
 
-
         $compFiles = unserialize($complaint->fid);
-        foreach ($compFiles as $compfile){
+        foreach ($compFiles as $compfile) {
             $tempFile = Files::findFirst($compfile);
-            $attached[] = '../public/files/complaints/'.$tempFile->file_path;
+            $attached[] = '../public/files/complaints/' . $tempFile->file_path;
         }
 
-        foreach ($appFiles as $file){
+        foreach ($appFiles as $file) {
             $tempFile = Files::findFirst($file);
-            $attached[] = '../public/files/applicant/'.$tempFile->file_path;
+            $attached[] = '../public/files/applicant/' . $tempFile->file_path;
         }
 
         $ufas = Ufas::findFirst($complaint->ufas_id);
 
-        $content ='Добрый день. <br/>
+        $content = 'Добрый день. <br/>
 В соответствии со ст. 105 Федерального закона от 05.04.2013 № 44-ФЗ «О контрактной системе в сфере закупок товаров, работ, услуг для обеспечения государственных и муниципальных нужд» направляем в ваш адрес жалобу на закупку, опубликованную на официальном сайте Единой информационной системы в сфере закупок.<br/>
 Прилагаемый файл жалобы в формате «docx» подписан электронной подписью заявителя.<br/><br/>
 Формат подписи - квалифицированная отсоединенная подпись - «Разновидность электронной подписи, при создании которой, файл подписи создается отдельно от подписываемого файла. Поскольку подписываемый файл никак не изменяется, его можно читать, не прибегая к специальным программам, работающим с электронной подписью. Для проверки подписи нужно будет использовать программы либо сервисы, работающие с электронной подписью. При этом входными данными для таких программ будут служить файл с электронной подписью и подписанный ей файл.»<br/><br/>
@@ -1129,7 +1366,8 @@ class ComplaintController extends ControllerBase
         exit;
     }
 
-    public function recallChangeStaAndSendUfasAction(){
+    public function recallChangeStaAndSendUfasAction()
+    {
         $compId = $this->request->getPost('complaint_id');
         $arrId = array();
         $arrId[] = $compId;
@@ -1140,8 +1378,8 @@ class ComplaintController extends ControllerBase
         ));
 
         $attached = array(
-            '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name.'.sig',
-            '../public/files/generated_complaints/user_'.$this->user->id.'/'.$file->docx_file_name,
+            '../public/files/generated_complaints/user_' . $this->user->id . '/' . $file->docx_file_name . '.sig',
+            '../public/files/generated_complaints/user_' . $this->user->id . '/' . $file->docx_file_name,
         );
 
         $complaint = Complaint::findFirst($compId);
@@ -1150,9 +1388,9 @@ class ComplaintController extends ControllerBase
         $appFiles = Applicant::findFirst($complaint->applicant_id);
         $appFiles = unserialize($appFiles->fid);
 
-        foreach ($appFiles as $file){
+        foreach ($appFiles as $file) {
             $tempFile = Files::findFirst($file);
-            $attached[] = '../public/files/applicant/'.$tempFile->file_path;
+            $attached[] = '../public/files/applicant/' . $tempFile->file_path;
         }
 
         $ufas = Ufas::findFirst($complaint->ufas_id);
@@ -1167,15 +1405,99 @@ class ComplaintController extends ControllerBase
 4. Локально - при помощи БЕСПЛАТНОЙ программы http://cryptoarm.ru/bitrix/redirect.php?event1=download&event2=cryptoarm5&goto=http://www.trusted.ru/wp-content/uploads/trusteddesktop.exe<br/>';
 
 
-        if($complaint->status != 'recalled') {
+        if ($complaint->status != 'recalled') {
             $this->SendToUfas($attached, $ufas->email, 'Отзыв жалобы 44-ФЗ', $content);
         }
 
         $complaint->changeStatus('recalled', $arrId, $this->user->id);
         echo json_encode(array(
-           'status' => 'ok'
+            'status' => 'ok'
         ));
         exit;
     }
 
+    public function uploadAction()
+    {
+        ini_set('display_errors', true);
+        $fileName = $_FILES['upload']['name'];
+        $fileType = $_FILES['upload']['type'];
+        $fileError = $_FILES['upload']['error'];
+        $fileTmpName = $_FILES['upload']['tmp_name'];
+        if ($fileError == UPLOAD_ERR_OK) {
+            if (is_uploaded_file($fileTmpName)) {
+                #todo: если имена совпадают, то нужно генерить случайное
+                if (move_uploaded_file($fileTmpName, $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/" . $fileName)) {
+                    $url = '/files/generated_complaints/user_' . $this->user->id . "/" . $fileName;
+
+                    $this->create_thumbnail($_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/" . $fileName, 'true', 700);
+
+                    $funcNum = $_GET['CKEditorFuncNum'];
+                    // Optional: instance name (might be used to load a specific configuration file or anything else).
+                    $CKEditor = $_GET['CKEditor'];
+                    // Optional: might be used to provide localized messages.
+                    $langCode = $_GET['langCode'];
+
+                    echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>";
+                }
+            }
+        }
+        exit();
+    }
+
+    protected function create_thumbnail($path, $save, $width)
+    {
+        $info = \getimagesize($path); //получаем размеры картинки и ее тип
+        $size = array($info[0], $info[1]); //закидываем размеры в массив
+
+        if ($size[0] > 700) {
+            $width = 700;
+            $height = ($width / $size[0]) * $size[1];
+        } else {
+            $width = $size[0];
+            $height = $size[1];
+        }
+
+        //В зависимости от расширения картинки вызываем соответствующую функцию
+        if ($info['mime'] == 'image/png') {
+            $src = \imagecreatefrompng($path); //создаём новое изображение из файла
+        } else if ($info['mime'] == 'image/jpeg') {
+            $src = \imagecreatefromjpeg($path);
+        } else if ($info['mime'] == 'image/gif') {
+            $src = \imagecreatefromgif($path);
+        } else {
+            return false;
+        }
+
+        $thumb = \imagecreatetruecolor($width, $height); //возвращает идентификатор изображения, представляющий черное изображение заданного размера
+        $src_aspect = $size[0] / $size[1]; //отношение ширины к высоте исходника
+        $thumb_aspect = $width / $height; //отношение ширины к высоте аватарки
+
+        if ($src_aspect <= $thumb_aspect) {
+            //узкий вариант (фиксированная ширина)      
+            $scale = $width / $size[0];
+            $new_size = array($width, $width / $src_aspect);
+            $src_pos = array(0, ($size[1] * $scale - $height) / $scale / 2); //Ищем расстояние по высоте от края картинки до начала картины после обрезки   
+        } else if ($src_aspect > $thumb_aspect) {
+            //широкий вариант (фиксированная высота)
+            $scale = $height / $size[1];
+            $new_size = array($height * $src_aspect, $height);
+            $src_pos = array(($size[0] * $scale - $width) / $scale / 2, 0); //Ищем расстояние по ширине от края картинки до начала картины после обрезки
+        } else {
+            //другое
+            $new_size = array($width, $height);
+            $src_pos = array(0, 0);
+        }
+
+        $new_size[0] = max($new_size[0], 1);
+        $new_size[1] = max($new_size[1], 1);
+
+        \imagecopyresampled($thumb, $src, 0, 0, $src_pos[0], $src_pos[1], $new_size[0], $new_size[1], $size[0], $size[1]);
+        //Копирование и изменение размера изображения с ресемплированием
+
+        if ($save === false) {
+            return \imagepng($thumb); //Выводит JPEG/PNG/GIF изображение
+        } else {
+            return \imagepng($thumb, $path);//Сохраняет JPEG/PNG/GIF изображение
+        }
+    }
 }

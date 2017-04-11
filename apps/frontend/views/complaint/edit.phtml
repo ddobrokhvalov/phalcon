@@ -11,9 +11,9 @@
     var comp_inn = '{{comp_inn}}';
 </script>
 <script type="application/javascript" src="/js/argCompl_jsonSend.js"></script>
-<script type="application/javascript" src="/js/docx_generator/js/docxtemplater.v2.js"></script>
+<!--<script type="application/javascript" src="/js/docx_generator/js/docxtemplater.v2.js"></script>
 <script type="application/javascript" src="/js/docx_generator/js/FileSaver.min.js"></script>
-<script type="application/javascript" src="/js/docx_generator/js/jszip-utils.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/jszip-utils.js"></script>-->
 <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="/css/jquery-ui.css">
 <script type="text/javascript" src="/js/checkPlugin.js"></script>
@@ -262,14 +262,15 @@
                             </div>
                             <div class="c-jd2-f-edit-text mCustomScrollbar">
                                 <div id="edit_container" class="c-jd2-f-edit-t">
-                               </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="c-jd2-f-save" style="width: auto; float: right;">
+                        <div class="c-jd2-f-save">
                             <span class="loading-gif loading_save" style="display: none; margin: 8px 19px 0px 0px;" >
                                 <img width="30px" height="30px" src="/img/loading.gif">
                             </span>
+                            <a href="/complaint/browse/{{ complaint.id }}" target="_blank" class="complaint_save-blue" style="float:left; margin-right:20px;">Просмотреть жалобу</a>
                             <input id="complaint_save" class="complaint_save-blue" type="submit" value="Сохранить черновик" onclick="auction.auctionReady=true;">
                         </div>
                         </form>
@@ -452,17 +453,47 @@
     </div>
 </article>
 
-
-
-
 <script>
+    function oncopy1() {
+
+        var editor = CKEDITOR.instances.edit_textarea_617;
+        editor.focus();
+
+        var sel = editor.getSelection();
+        var element = sel.getStartElement();
+        sel.selectElement(element);
+
+        var ranges = editor.getSelection().getRanges();
+        var startIndex = 0;
+        if (startIndex != -1) {
+            ranges[0].setStart(element, 0);
+            ranges[0].setEnd(element.getFirst(), 0);
+           //sel.selectRanges([ranges[0]]);
+            sel.selectRanges([ranges[0]]);
+        }
+
+        //editor.document.$.execCommand( 'copy', false, null );
+
+
+
+        //editor.execCommand( 'selectAll' );
+        setTimeout( function(e) {
+            editor.execCommand( 'copy');
+        }, 0 );
+        return false;
+    }
+
+
     var edit_mode = {{ edit_mode }};
+
+
+
     $(document).ready(function(){
         $('body').on('click', '.c-edit-j-t', function(){
             if(!$(this).hasClass('delete_marker')) {
-                $(this).find('font.marker_yellow').each(function(i,el){
+                /*$(this).find('font.marker_yellow').each(function(i,el){
                     $(el).before($(el).html()).remove();
-                });
+                });*/
                 $(this).find('font.marker_white').each(function(i,el){
                     $(el).before($(el).html()).remove();
                 });
