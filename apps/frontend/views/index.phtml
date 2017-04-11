@@ -1,20 +1,23 @@
 <!doctype html>
 <head>
     <meta http-equiv="Cache-Control" content="no-cache">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8">
     <title>ФАС-онлайн</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
+    <link rel="stylesheet" href="js/pips/jquery-ui-slider-pips.min.css">
     <link href="/css/style.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/css/phalcon.css" />
-    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/phalcon.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
 
     <link href="/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css">
     <link href="/fonts/fonts.css" rel="stylesheet" type="text/css">
     <link href="/css/dragula.css" rel="stylesheet" type="text/css">
     <link href="/css/jquery.jscrollpane.css" rel="stylesheet" type="text/css">
-    <link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script type="text/javascript" src="/js/jquery.jscrollpane.min.js"></script>
@@ -36,10 +39,10 @@
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <script type="text/javascript" src="/js/editUser_ajax.js"></script>
 </head>
-<body>
+<body<?=($this->router->getControllerName() == 'complaint')?' oncopy="return false;"':''?>>
 
 <?php echo $this->getContent();
-$this->partial('layouts/footer');?>
+$this->partial('layouts/footer'); ?>
 <div class="alert-wrap">
     <div class="alert-substrate"></div>
     <div class="alert-box"></div>

@@ -1,5 +1,4 @@
 <?php
-
 /*
     SQLyog
     Copyright 2003-2009, Webyog
