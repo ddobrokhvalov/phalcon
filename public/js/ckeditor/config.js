@@ -37,6 +37,9 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 
     config.pasteFilter = 'plain-text';
-    config.allowedContent = false;
+    config.allowedContent = true;
     config.forcePasteAsPlainText = false;
+     config.filebrowserBrowseUrl= '/browser/browse.php';
+     config.filebrowserUploadUrl= '/complaint/upload';
+     //config.extraAllowedContent = 'font(*); span(*); p(*); ul(*); li(*); ';
 };

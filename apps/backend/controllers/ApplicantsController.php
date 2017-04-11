@@ -25,7 +25,9 @@ class ApplicantsController  extends ControllerBase
         if (isset($show_all_items) && $show_all_items == 'all_items') {
             $item_per_page = 99999;
         }
-        $applicant = Applicant::find();
+        $applicant = Applicant::find(array(
+            "order" => "id desc"
+        ));
         $paginator = new Paginator(array(
             "data"  => $applicant,
             "limit" => $item_per_page,

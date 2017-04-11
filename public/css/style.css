@@ -1500,14 +1500,14 @@ ul.status-black, .notification-number-box.status-black {
 }
 /* line 436, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(2) {
-  width: 425px;
+  width: 325px;
   border-left: none;
   line-height: 24px;
   overflow: hidden;
 }
 /* line 442, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(3) {
-  width: 175px;
+  width: 190px;
 }
 /* line 445, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(4) {
@@ -1515,18 +1515,18 @@ ul.status-black, .notification-number-box.status-black {
 }
 /* line 448, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(5) {
-  width: 85px;
-  padding-right: 11px;
+  width: 200px;
+  1padding-right: 11px;
 }
 /* line 452, ../sass/_complaints_preview.scss */
 .complaints-list .admin-lt-content li:nth-child(6) {
-  width: 185px;
+  width: 155px;
 }
 /* line 456, ../sass/_complaints_preview.scss */
 .complaints-list .lt-content-top li:nth-child(2) {
   border-left: medium none;
   line-height: 75px;
-  width: 425px;
+  width: 325px;
   /*li:first-child {
       
   }*/
@@ -1567,7 +1567,7 @@ ul.status-black, .notification-number-box.status-black {
 }
 /* line 494, ../sass/_complaints_preview.scss */
 .complaints-list .jl-status {
-  line-height: 75px;
+  line-height: 45px;
 }
 /* line 497, ../sass/_complaints_preview.scss */
 .complaints-list .dropdown-menu {

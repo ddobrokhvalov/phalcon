@@ -99,7 +99,7 @@
         <ul class="lt-content-main {% if applicant['is_blocked'] == 0 %} hidden-arg {% endif %}" sort-name="{{applicant['name_short']}}" sort-type="{{applicant['type']}}" sort-inn="{{applicant['inn']}}" sort-fio="{{applicant['fio_applicant']}}" sort-complaints="{{applicant['cnt']}}">
             <li>
                 <div class="lt-psevdo-check">{{hidden_field('applicant-id', 'value':applicant['id'])}}</div>
-                {{applicant['name_short']}}
+                <a href="/admin/applicants/info/{{applicant['id']}}">{{applicant['name_short']}}</a>
             </li>
             <li>
                 {% if applicant['type'] == 'urlico' %}

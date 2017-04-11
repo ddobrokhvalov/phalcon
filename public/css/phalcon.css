@@ -3744,16 +3744,14 @@ background: #f26d7d;
         position: relative;
 }
 
-
 .t-i-g .ui-slider-pips .ui-slider-pip-selected .ui-slider-label {
 color: #29d3b2;
-font-weight: bold !important;
 }
 
 .t-i-r .ui-slider-pips .ui-slider-pip-selected .ui-slider-label {
 color: #f26d7d;
-font-weight: bold !important;
 }
+
 .rub {
     font-family: 'Rouble';
 }
@@ -3766,7 +3764,3 @@ font-weight: bold !important;
     top: -8px;
     left: 185px;
 }
-
-.tariffs_box .ui-slider-pips .ui-slider-label {
-    color: #999 !important;
-    font-weight: 400 !important;}

@@ -36,7 +36,7 @@
                 <li><span>Название жалобы</span></li>
                 <li sort-field="sort-number"><span class="sortable">№</span></li>
                 <li sort-field="sort-date"><span class="sortable">Дата</span></li>
-                <li sort-field="sort-questions"><span class="sortable">Вопросы</span></li>
+                <li sort-field="sort-questions"><span class="sortable">Заявитель</span></li>
                 <li sort-field="sort-status"><span class="sortable">Статус</span></li>
             </ul>
             {% for complaint in page.items %}
@@ -49,8 +49,8 @@
                 {% endif %}
                 <li>{{ complaint.auction_id }}</li>
                 <li>{{ date('d.m.Y', complaint.date|strtotime) }}</li>
-                <li>{{ complaint.getCountQuestions(complaint.Question) }}</li>
-                <li class='with-dropdown'>
+                <li style="font-size:12px; line-height: 18px;padding-top:25px;"><a href="/admin/applicants/info/{{ complaint.Applicant.id }}">{{ complaint.Applicant.name_short }}</a></li>
+                <li class='with-dropdown' style="line-height: 15px !important; font-size:12px !important;">
                     <div class="dropdown">
                       <div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{complaint.getComplaintStatus(complaint.status)}}

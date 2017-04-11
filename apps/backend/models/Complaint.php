@@ -36,6 +36,7 @@ class Complaint extends Model
     {
         $this->setSource('complaint');
         $this->hasMany('id', 'Multiple\Backend\Models\Question', 'complaint_id', array('alias' => 'Question'));
+        $this->hasOne('applicant_id', 'Multiple\Backend\Models\Applicant', 'id', array('alias' => 'Applicant'));
     }
 
     public function getSource()
