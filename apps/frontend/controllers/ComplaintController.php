@@ -348,8 +348,8 @@ class ComplaintController extends ControllerBase
                     $name = 'complaint_' . $unformatted . time() . '.docx';
                     $data = json_decode($this->request->getPost('doc'));
 
-                    require_once $_SERVER['DOCUMENT_ROOT'] . '/phpdocx/classes/CreateDocx.inc';
-                    $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
+                    require_once $_SERVER['DOCUMENT_ROOT'] . '/public/phpdocx/classes/CreateDocx.inc';
+                    $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/public/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
 
                     foreach ($data as $key => $value) {
                         if ($key == 'dovod') {
@@ -381,8 +381,8 @@ class ComplaintController extends ControllerBase
                     $recall = 1;
 
                     $data = json_decode($this->request->getPost('doc'));
-                    require_once $_SERVER['DOCUMENT_ROOT'] . '/phpdocx/classes/CreateDocx.inc';
-                    $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
+                    require_once $_SERVER['DOCUMENT_ROOT'] . '/public/phpdocx/classes/CreateDocx.inc';
+                    $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/public/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
 
                     foreach ($data as $key => $value) {
                         $docx->replaceVariableByHTML($key, 'block', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => false));
@@ -1426,10 +1426,10 @@ class ComplaintController extends ControllerBase
         if ($fileError == UPLOAD_ERR_OK) {
             if (is_uploaded_file($fileTmpName)) {
                 #todo: если имена совпадают, то нужно генерить случайное
-                if (move_uploaded_file($fileTmpName, $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/" . $fileName)) {
+                if (move_uploaded_file($fileTmpName, $_SERVER['DOCUMENT_ROOT'] . "/public/files/generated_complaints/user_" . $this->user->id . "/" . $fileName)) {
                     $url = '/files/generated_complaints/user_' . $this->user->id . "/" . $fileName;
 
-                    $this->create_thumbnail($_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/" . $fileName, 'true', 700);
+                    $this->create_thumbnail($_SERVER['DOCUMENT_ROOT'] . "/public/files/generated_complaints/user_" . $this->user->id . "/" . $fileName, 'true', 700);
 
                     $funcNum = $_GET['CKEditorFuncNum'];
                     // Optional: instance name (might be used to load a specific configuration file or anything else).
