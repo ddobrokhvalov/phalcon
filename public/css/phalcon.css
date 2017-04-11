@@ -1,3 +1,14 @@
+@font-face {
+    font-family: 'Rouble';
+    src: url('../fonts/rouble.eot');
+    src: local('ALS Ruble'),
+    url('../fonts/rouble.woff') format('woff'),
+    url('../fonts/rouble.svg')  format('svg'),
+    url('../fonts/rouble.otf')  format('opentype');
+}
+
+
+
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
     border: 0 none;
     box-sizing: border-box;
@@ -380,7 +391,7 @@ a:visited {
     background: #fefcf6 url("../images/ms4-bg.jpg") no-repeat scroll center bottom / 100% auto;
     float: left;
     overflow: hidden;
-    padding: 100px 0 355px;
+    padding: 100px 0 5px;
     position: relative;
     width: 100%;
 }
@@ -3643,4 +3654,113 @@ a.complaint_save-blue:hover {
     z-index:100;
     background: transparent none repeat scroll 0 0;
     background-color:white;
+}
+
+
+
+
+.tariffs_box { text-align: center;}
+.tariffs_item { display: inline-block; vertical-align: top;     width: 309px; margin: 10px 10px; background: #fff;
+        -moz-box-shadow: 0px 0px 9px 0px rgba(0,0,0, 0.2);
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0, 0.2);
+    -webkit-box-shadow: 0px 0px 9px 0px rgba(0,0,0, 0.2); padding: 20px; border-top: 5px solid #fff; min-height: 480px;
+}
+.t-i-b {}
+.problem_frequency { font: 400 12px/14px 'Open Sans', sans-serif; line-height: 1.1em; text-transform: uppercase;}
+.tariff_price_box { min-height: 110px;}
+.tariff_price { font: 300 24px/14px 'Open Sans', sans-serif; line-height: 1.1em; margin-bottom: 25px;}
+.t-summ { font: 300 16px/14px 'Open Sans', sans-serif; line-height: 1.1em; color: #303030; margin-top: 45px;}
+
+.tariffs_item h3 {
+ font: 300 46px/14px 'Open Sans', sans-serif;
+ line-height: 1.1em;
+}
+
+.t-i-b {
+    border-color: #10b8f7;
+    color: #10b8f7;
+}
+
+.t-i-g {
+    border-color: #29d3b2;
+    color: #29d3b2;
+}
+
+.t-i-r {
+    border-color: #f26d7d;
+    color: #f26d7d;
+}
+
+
+.tariffs_item ul {
+    width: 215px;
+    margin: 0 auto;
+    text-align: left;
+    margin-top: 30px;
+    font: 400 14px/14px 'Open Sans', sans-serif; line-height: 1.1em;
+    font-style: italic;
+    color: #303030;
+}
+
+.tariffs_item ul li {
+        background:  url(../images/li.png) no-repeat;
+  background-position: 0px 5px;
+        padding-left:  20px;
+        margin:  10px 0px;
+}
+
+.t-i-b .tariff_price { padding-top: 38px;}
+
+.tariffs_item .ui-slider-horizontal .ui-slider-handle {
+width: 12px;
+height: 12px;
+border-radius: 100px;
+outline: none;
+margin-left: -5px;
+}
+
+.tariffs_item .ui-slider-pips .ui-slider-pip {
+    top: 10px;
+}
+
+
+.t-i-g .ui-slider-horizontal .ui-slider-handle {
+background: #29d3b2;
+}
+
+.t-i-r .ui-slider-horizontal .ui-slider-handle {
+background: #f26d7d;
+}
+
+#t-price-2 .ui-slider-horizontal, #t-price-3 .ui-slider-horizontal {
+    height: 1px;
+    background: #eee;
+}
+
+#t-price-2, #t-price-3 {
+        max-width: 175px;
+            margin: 0 auto;
+        height: 1px;
+        position: relative;
+}
+
+.t-i-g .ui-slider-pips .ui-slider-pip-selected .ui-slider-label {
+color: #29d3b2;
+}
+
+.t-i-r .ui-slider-pips .ui-slider-pip-selected .ui-slider-label {
+color: #f26d7d;
+}
+
+.rub {
+    font-family: 'Rouble';
+}
+
+.sl_label {
+    color: #d2d2d2;
+     font: 400 12px/14px 'Open Sans', sans-serif;
+ line-height: 1.1em;
+    position: absolute;
+    top: -8px;
+    left: 185px;
 }
