@@ -1,1 +1,1731 @@
-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
+<?php
+
+/**
+ * Use an existing DOCX as the document template
+ *
+ * @category   Phpdocx
+ * @package    create
+ * @copyright  Copyright (c) Narcea Producciones Multimedia S.L.
+ *             (http://www.2mdc.com)
+ * @license    phpdocx LICENSE
+ * @version    2016.08.25
+ * @link       http://www.phpdocx.com
+ */
+class CreateDocxFromTemplate extends CreateDocx
+{
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var string
+     */
+    public static $_templateSymbol = '$';
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var boolean
+     */
+    public static $_preprocessed = false;
+
+    /**
+     * Construct
+     * @param mixed $docxTemplatePath path to the template we wish to use
+     * @param array $options
+     * The available keys and values are:
+     *  'preprocessed' (boolean) if true the variables will not be 'repaired'. Default value is false
+     * @access public
+     */
+    public function __construct($docxTemplatePath, $options = array())
+    {
+        if (empty($docxTemplatePath)) {
+            PhpdocxLogger::logger('The template path can not be empty', 'fatal');
+        }
+        parent::__construct($baseTemplatePath = PHPDOCX_BASE_TEMPLATE, $docxTemplatePath);
+        if (!empty($options['preprocessed'])) {
+            self::$_preprocessed = true;
+        }
+    }
+
+    /**
+     * Destruct
+     *
+     * @access public
+     */
+    public function __destruct()
+    {
+        
+    }
+
+    /**
+     * Getter. Return template symbol
+     *
+     * @access public
+     * @return string
+     */
+    public function getTemplateSymbol()
+    {
+        return self::$_templateSymbol;
+    }
+
+    /**
+     * Setter. Set template symbol
+     *
+     * @access public
+     * @param string $templateSymbol
+     */
+    public function setTemplateSymbol($templateSymbol = '$')
+    {
+        self::$_templateSymbol = $templateSymbol;
+    }
+
+    /**
+     * Clear all the placeholders variables which start with 'BLOCK_'
+     *
+     * @access public
+     */
+    public function clearBlocks()
+    {
+        $loadContent = $this->_documentXMLElement . '<w:body>' .
+                $this->_wordDocumentC . '</w:body></w:document>';
+        // Sometimes Word splits tags so they have to be repared
+        // Like this time we do not know the exact variable name we can not use 
+        // the repairVariable method directly
+        $documentSymbol = explode(self::$_templateSymbol, $loadContent);
+        foreach ($documentSymbol as $documentSymbolValue) {
+            if (strpos(strip_tags($documentSymbolValue), 'BLOCK_') !== false) {
+                $loadContent = str_replace($documentSymbolValue, strip_tags($documentSymbolValue), $loadContent);
+            }
+        }
+        $domDocument = new DomDocument();
+        $optionEntityLoader = libxml_disable_entity_loader(true);
+        $domDocument->loadXML($loadContent);
+        libxml_disable_entity_loader($optionEntityLoader);
+
+        //Use XPath to find all paragraphs that include a BLOCK variable name
+        $name = self::$_templateSymbol . 'BLOCK_';
+        $xpath = new DOMXPath($domDocument);
+        $xpath->registerNamespace('w', 'http://schemas.openxmlformats.org/wordprocessingml/2006/main');
+        $query = '//w:p[w:r/w:t[text()[contains(.,"' . $name . '")]]]';
+        $affectedNodes = $xpath->query($query);
+        foreach ($affectedNodes as $node) {
+            $paragraphContents = $node->ownerDocument->saveXML($node);
+            $paragraphText = strip_tags($paragraphContents);
+            if (($pos = strpos($paragraphText, $name, 0)) !== false) {
+                //If we remove a paragraph inside a table cell we need to take special care
+                if ($node->parentNode->nodeName == 'w:tc') {
+                    $tcChilds = $node->parentNode->getElementsByTagNameNS('http://schemas.openxmlformats.org/wordprocessingml/2006/main', 'p');
+                    if ($tcChilds->length > 1) {
+                        $node->parentNode->removeChild($node);
+                    } else {
+                        $emptyP = $domDocument->createElement("w:p");
+                        $node->parentNode->appendChild($emptyP);
+                        $node->parentNode->removeChild($node);
+                    }
+                } else {
+                    $node->parentNode->removeChild($node);
+                }
+            }
+        }
+        $stringDoc = $domDocument->saveXML();
+        $bodyTag = explode('<w:body>', $stringDoc);
+        $this->_wordDocumentC = str_replace('</w:body></w:document>', '', $bodyTag[1]);
+    }
+
+    /**
+     * Removes all content between two 'BLOCK_*' variables
+     *
+     * @access public
+     * @param string $blockName Block name
+     */
+    public function deleteTemplateBlock($blockName)
+    {
+        $aType = array('BLOCK_'/* , 'TAB_' */); //deletables types
+        foreach ($aType as $type) {
+            $variableName = $type . $blockName;
+            $loadContent = $this->_documentXMLElement . '<w:body>' .
+                    $this->_wordDocumentC . '</w:body></w:document>';
+            if (!self::$_preprocessed) {
+                $loadContent = $this->repairVariables(array($variableName => ''), $loadContent);
+            }
+            $loadContent = preg_replace('/\\' . self::$_templateSymbol . $type . $blockName . '\\' . self::$_templateSymbol . '[.|\s|\S]*?\\' . self::$_templateSymbol . $type . $blockName . '\\' . self::$_templateSymbol . '/ms', self::$_templateSymbol . $variableName . self::$_templateSymbol, $loadContent);
+            //Use XPath to find all paragraphs that include the variable name
+            $name = self::$_templateSymbol . $variableName . self::$_templateSymbol;
+            $domDocument = new DOMDocument();
+            $optionEntityLoader = libxml_disable_entity_loader(true);
+            $domDocument->loadXML($loadContent);
+            libxml_disable_entity_loader($optionEntityLoader);
+            $xpath = new DOMXPath($domDocument);
+            $xpath->registerNamespace('w', 'http://schemas.openxmlformats.org/wordprocessingml/2006/main');
+            $query = '//w:p[w:r/w:t[text()[contains(.,"' . $variableName . '")]]]';
+            $affectedNodes = $xpath->query($query);
+            foreach ($affectedNodes as $node) {
+                $paragraphContents = $node->ownerDocument->saveXML($node);
+                $paragraphText = strip_tags($paragraphContents);
+                if (($pos = strpos($paragraphText, $name, 0)) !== false) {
+                    //If we remove a paragraph inside a table cell we need to take special care
+                    if ($node->parentNode->nodeName == 'w:tc') {
+                        $tcChilds = $node->parentNode->getElementsByTagNameNS('http://schemas.openxmlformats.org/wordprocessingml/2006/main', 'p');
+                        if ($tcChilds->length > 1) {
+                            $node->parentNode->removeChild($node);
+                        } else {
+                            $emptyP = $domDocument->createElement("w:p");
+                            $node->parentNode->appendChild($emptyP);
+                            $node->parentNode->removeChild($node);
+                        }
+                    } else {
+                        $node->parentNode->removeChild($node);
+                    }
+                }
+            }
+            $bodyTag = explode('<w:body>', $domDocument->saveXML());
+            $this->_wordDocumentC = str_replace('</w:body></w:document>', '', $bodyTag[1]);
+        }
+    }
+    
+    /**
+     * Returns the template variables
+     *
+     * @access public
+     * @param $target may be all (default), document, header, footer, footnotes, endnotes or comments
+     * @param array $prefixes (optional) if nonempty it will only return the 
+     * variables that start with the given prefixes
+     * @return array
+     */
+    public function getTemplateVariables($target = 'all', $prefixes = array(), $variables = array())
+    {
+        $targetTypes = array('document', 'header', 'footer', 'footnotes', 'endnotes', 'comments');
+
+        if ($target == 'document') {
+            $documentSymbol = explode(self::$_templateSymbol, $this->_wordDocumentC);
+            $variables = $this->extractVariables($target, $documentSymbol, $variables);
+        } else if ($target == 'header') {
+            $xpathHeaders = simplexml_import_dom($this->_contentTypeT);
+            $xpathHeaders->registerXPathNamespace('ns', 'http://schemas.openxmlformats.org/package/2006/content-types');
+            $xpathHeadersResults = $xpathHeaders->xpath('ns:Override[@ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"]');
+            foreach ($xpathHeadersResults as $headersResults) {
+                $header = substr($headersResults['PartName'], 1);
+                $loadContent = $this->getFromZip($header);
+                if (empty($loadContent)) {
+                    $loadContent = $this->_modifiedHeadersFooters[$header];
+                }
+                $documentSymbol = explode(self::$_templateSymbol, $loadContent);
+                $variables = $this->extractVariables($target, $documentSymbol, $variables);
+            }
+        } else if ($target == 'footer') {
+            $xpathFooters = simplexml_import_dom($this->_contentTypeT);
+            $xpathFooters->registerXPathNamespace('ns', 'http://schemas.openxmlformats.org/package/2006/content-types');
+            $xpathFootersResults = $xpathFooters->xpath('ns:Override[@ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"]');
+            foreach ($xpathFootersResults as $footersResults) {
+                $footer = substr($footersResults['PartName'], 1);
+                $loadContent = $this->getFromZip($footer);
+                if (empty($loadContent)) {
+                    $loadContent = $this->_modifiedHeadersFooters[$footer];
+                }
+                $documentSymbol = explode(self::$_templateSymbol, $loadContent);
+                $variables = $this->extractVariables($target, $documentSymbol, $variables);
+            }
+        } else if ($target == 'footnotes') {
+            $documentSymbol = explode(self::$_templateSymbol, $this->_wordFootnotesT->saveXML());
+            $variables = $this->extractVariables($target, $documentSymbol, $variables);
+        } else if ($target == 'endnotes') {
+            $documentSymbol = explode(self::$_templateSymbol, $this->_wordEndnotesT->saveXML());
+            $variables = $this->extractVariables($target, $documentSymbol, $variables);
+        } else if ($target == 'comments') {
+            $documentSymbol = explode(self::$_templateSymbol, $this->_wordCommentsT->saveXML());
+            $variables = $this->extractVariables($target, $documentSymbol, $variables);
+        } else if ($target == 'all') {
+            foreach ($targetTypes as $targets) {
+                $variables = $this->getTemplateVariables($targets, $prefixes, $variables);
+            }
+        }
+
+        return $variables;
+    }
+
+    /**
+     * Modify the value of an input field
+     *
+     * @access public
+     * @param array $data with the key the name of the variable and the value the value of the input text
+     *
+     */
+    public function modifyInputFields($data)
+    {
+        $loadContent = $this->_documentXMLElement . '<w:body>' .
+                $this->_wordDocumentC . '</w:body></w:document>';
+        $domDocument = new DOMDocument();
+        $optionEntityLoader = libxml_disable_entity_loader(true);
+        $domDocument->loadXML($loadContent);
+        libxml_disable_entity_loader($optionEntityLoader);
+        $docXPath = new DOMXPath($domDocument);
+        $docXPath->registerNamespace('w', 'http://schemas.openxmlformats.org/wordprocessingml/2006/main');
+        $docXPath->registerNamespace('w14', 'http://schemas.microsoft.com/office/word/2010/wordml');
+        foreach ($data as $var => $value) {
+            //check for legacy checkboxes
+            $queryDoc = '//w:ffData[w:name[@w:val="' . $var . '"]]';
+            $affectedNodes = $docXPath->query($queryDoc);
+            foreach ($affectedNodes as $node) {
+                //get the parent p Node
+                $pNode = $node->parentNode->parentNode->parentNode;
+                //we should take into account that there could be more than one firld per paragraph
+                $preliminaryQuery = './/w:r[descendant::w:ffData and count(preceding-sibling::w:r[descendant::w:name[@w:val = "' . $var . '"]]) < 1]';
+                $previousInputs = $docXPath->query($preliminaryQuery, $pNode)->length;
+                $position = $previousInputs - 1;
+                $query = './/w:r[count(preceding-sibling::w:r[descendant::w:fldChar[@w:fldCharType = "separate"]]) >= ' . ($position + 1);
+                $query .= ' and count(preceding-sibling::w:r[descendant::w:fldChar[@w:fldCharType = "end"]]) < ' . ($position + 1);
+                $query .= ' and not(descendant::w:fldChar)]';
+                $rNodes = $docXPath->query($query, $pNode);
+                $rCount = 0;
+                foreach ($rNodes as $rNode) {
+                    if ($rCount == 0) {
+                        $rNode->getElementsByTagName('t')->item(0)->nodeValue = $value;
+                    } else {
+                        $rNode->setAttribute('w:remove', 1);
+                    }
+                    $rCount++;
+                }
+                //remove the unwanted rNodes
+                $query = './/w:r[@w:remove="1"]';
+                $removeNodes = $docXPath->query($query, $pNode);
+                $length = $removeNodes->length;
+                for ($j = $length - 1; $j > -1; $j--) {
+                    $removeNodes->item($j)->parentNode->removeChild($removeNodes->item($j));
+                }
+            }
+            //Now we look for Word 2010 sdt checkboxes
+            $queryDoc = '//w:sdtPr[w:tag[@w:val="' . $var . '"]]';
+            $affectedNodes = $docXPath->query($queryDoc);
+            foreach ($affectedNodes as $node) {
+                $sdtNode = $node->parentNode;
+                $query = './/w:t[1]';
+                $tNode = $docXPath->query($query, $sdtNode)->item(0)->nodeValue = $value;
+            }
+        }
+
+        $stringDoc = $domDocument->saveXML();
+        $bodyTag = explode('<w:body>', $stringDoc);
+        $this->_wordDocumentC = str_replace('</w:body></w:document>', '', $bodyTag[1]);
+    }
+
+    /**
+     * process the template to repair all listed variables
+     *
+     * @access public
+     * @param array $variables an array of arrays of variables that should be repaired. 
+     * Posible keys and values are:
+     *  'document' array of variables within the main document
+     *  'headers' array of variables within the headers
+     *  'footers' array of variables within the footers
+     *  'footnotes' array of variables within the footnotes
+     *  'endnotes' array of variables within the endnotes
+     *  'comments' array of variables within the comments
+     * If the array is empty the variables will be tried to be extracted automatically.
+     * @return array
+     */
+    public function processTemplate($variables = array())
+    {
+        self::$_preprocessed = true;
+        if (is_array($variables) && count($variables) == 0) {
+            $variables = $this->getTemplateVariables();
+        }
+        foreach ($variables as $target => $varList) {
+            $variableList = array_flip($varList);
+            if ($target == 'document') {
+                $loadContent = $this->_documentXMLElement . '<w:body>' .
+                        $this->_wordDocumentC . '</w:body></w:document>';
+                $stringDoc = $this->repairVariables($variableList, $loadContent);
+                $bodyTag = explode('<w:body>', $stringDoc);
+                $this->_wordDocumentC = str_replace('</w:body></w:document>', '', $bodyTag[1]);
+            } else if ($target == 'footnotes') {
+                $content = $this->_wordFootnotesT->saveXML();
+                $XML = $this->repairVariables($variableList, $content);
+                $this->_wordFootnotesT = new DOMDocument();
+                $optionEntityLoader = libxml_disable_entity_loader(true);
+                $this->_wordFootnotesT->loadXML($XML);
+                libxml_disable_entity_loader($optionEntityLoader);
+            } else if ($target == 'endnotes') {
+                $content = $this->_wordEndnotesT->saveXML();
+                $XML = $this->repairVariables($variableList, $content);
+                $this->_wordEndnotesT = new DOMDocument();
+                $optionEntityLoader = libxml_disable_entity_loader(true);
+                $this->_wordEndnotesT->loadXML($XML);
+                libxml_disable_entity_loader($optionEntityLoader);
+            } else if ($target == 'comments') {
+                $content = $this->_wordCommentsT->saveXML();
+                $XML = $this->repairVariables($variableList, $content);
+                $this->_wordCommentsT = new DOMDocument();
+                $optionEntityLoader = libxml_disable_entity_loader(true);
+                $this->_wordCommentsT->loadXML($XML);
+                libxml_disable_entity_loader($optionEntityLoader);
+            } else if ($target == 'headers') {
+                $xpathHeaders = simplexml_import_dom($this->_contentTypeT);
+                $xpathHeaders->registerXPathNamespace('ns', 'http://schemas.openxmlformats.org/package/2006/content-types');
+                $xpathHeadersResults = $xpathHeaders->xpath('ns:Override[@ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"]');
+                foreach ($xpathHeadersResults as $headersResults) {
+                    $header = substr($headersResults['PartName'], 1);
+                    $loadContent = $this->getFromZip($header);
+                    if (empty($loadContent)) {
+                        $loadContent = $this->_modifiedHeadersFooters[$header];
+                    }
+                    $dom = $this->repairVariables($variableList, $loadContent);
+                    $this->_modifiedHeadersFooters[$header] = $dom->saveXML();
+                    $this->saveToZip($dom, $header);
+                }
+            } else if ($target == 'footers') {
+                $xpathFooters = simplexml_import_dom($this->_contentTypeT);
+                $xpathFooters->registerXPathNamespace('ns', 'http://schemas.openxmlformats.org/package/2006/content-types');
+                $xpathFootersResults = $xpathFooters->xpath('ns:Override[@ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"]');
+                foreach ($xpathFootersResults as $footersResults) {
+                    $footer = substr($footersResults['PartName'], 1);
+                    $loadContent = $this->getFromZip($footer);
+                    if (empty($loadContent)) {
+                        $loadContent = $this->_modifiedHeadersFooters[$footer];
+                    }
+                    $dom = $this->repairVariables($variableList, $loadContent);
+                    $this->_modifiedHeadersFooters[$footer] = $dom->saveXML();
+                    $this->saveToZip($dom, $footer);
+                }
+            }
+        }
+    }
+
+    /**
+     * Removes a template variable with its container paragraph
+     *
+     * @access public
+     * @param string $variableName
+     * @param string $type can be block or inline
+     * @param string $target it can be document (default value), header, footer, footnote, endnote, comment
+     */
+    public function removeTemplateVariable($variableName, $type = 'block', $target = 'document')
+    {
+
+        if ($type == 'inline') {
+            $this->replaceVariableByText(array($variableName => ''), array('target' => $target));
+        } else {
+            if ($target == 'document') {
+                $loadContent = $this->_documentXMLElement . '<w:body>' .
+                        $this->_wordDocumentC . '</w:body></w:document>';
+                $stringDoc = $this->removeVariableBlock($variableName, $loadContent);
+                $bodyTag = explode('<w:body>', $stringDoc);
+                $this->_wordDocumentC = str_replace('</w:body></w:document>', '', $bodyTag[1]);
+            } else if ($target == 'footnote') {
+                $dom = $this->removeVariableBlock($variableName, $this->_wordFootnotesT->saveXML());
+                $optionEntityLoader = libxml_disable_entity_loader(true);
+                $this->_wordFootnotesT->loadXML($dom);
+                libxml_disable_entity_loader($optionEntityLoader);
+            } else if ($target == 'endnote') {
+                $dom = $this->removeVariableBlock($variableName, $this->_wordEndnotesT->saveXML());
+                $optionEntityLoader = libxml_disable_entity_loader(true);
+                $this->_wordEndnotesT->loadXML($dom);
+                libxml_disable_entity_loader($optionEntityLoader);
+            } else if ($target == 'comment') {
+                $dom = $this->removeVariableBlock($variableName, $this->_wordCommentsT->saveXML());
+                $optionEntityLoader = libxml_disable_entity_loader(true);
+                $this->_wordCommentsT->loadXML($dom);
+                libxml_disable_entity_loader($optionEntityLoader);
+            } else if ($target == 'header') {
+                $xpathHeaders = simplexml_import_dom($this->_contentTypeT);
+                $xpathHeaders->registerXPathNamespace('ns', 'http://schemas.openxmlformats.org/package/2006/content-types');
+                $xpathHeadersResults = $xpathHeaders->xpath('ns:Override[@ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"]');
+                foreach ($xpathHeadersResults as $headersResults) {
+                    $header = substr($headersResults['PartName'], 1);
+                    $loadContent = $this->getFromZip($header);
+                    if (empty($loadContent)) {
+                        $loadContent = $this->_modifiedHeadersFooters[$header];
+                    }
+                    $dom = $this->removeVariableBlock($variableName, $loadContent);
+                    if (is_string($dom)) {
+                        $this->_modifiedHeadersFooters[$header] = $dom;
+                    } else {
+                        $this->_modifiedHeadersFooters[$header] = $dom->saveXML();
+                    }
+                    $this->saveToZip($dom, $header);
+                }
+            } else if ($target == 'footer') {
+                $xpathFooters = simplexml_import_dom($this->_contentTypeT);
+                $xpathFooters->registerXPathNamespace('ns', 'http://schemas.openxmlformats.org/package/2006/content-types');
+                $xpathFootersResults = $xpathFooters->xpath('ns:Override[@ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"]');
+                foreach ($xpathFootersResults as $footersResults) {
+                    $footer = substr($footersResults['PartName'], 1);
+                    $loadContent = $this->getFromZip($footer);
+                    if (empty($loadContent)) {
+                        $loadContent = $this->_modifiedHeadersFooters[$footer];
+                    }
+                    $dom = $this->removeVariableBlock($variableName, $loadContent);
+		            if (is_string($dom)){
+                        $this->_modifiedHeadersFooters[$footer] = $dom;
+                    } else {
+                        $this->_modifiedHeadersFooters[$footer] = $dom->saveXML();
+                    }
+                    $this->saveToZip($dom, $footer);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Replaces a single variable within a list by a list of items
+     *
+     * @access public
+     * @param string $variable
+     * @param array $listValues
+     * @param string $options
+     * 'firstMatch (boolean) if true it only replaces the first variable match. Default is set to false.
+     * 'parseLineBreaks' (boolean) if true (default is false) parses the line breaks to include them in the Word document
+     * 'type' (string) inline (default) or block; used by WordFragment values
+     * @return void
+     */
+    public function replaceListVariable($variable, $listValues, $options = array())
+    {
+        if (isset($options['firstMatch'])) {
+            $firstMatch = $options['firstMatch'];
+        } else {
+            $firstMatch = false;
+        }
+
+        $type = 'inline';
+        if (isset($options['type'])) {
+            $type = $options['type'];
+        }
+
+        $loadContent = $this->_documentXMLElement . '<w:body>' .
+                $this->_wordDocumentC . '</w:body></w:document>';
+        if (!self::$_preprocessed) {
+            $loadContent = $this->repairVariables(array($variable => ''), $loadContent);
+        }
+        $optionEntityLoader = libxml_disable_entity_loader(true);
+        $dom = simplexml_load_string($loadContent);
+        libxml_disable_entity_loader($optionEntityLoader);
+        $dom->registerXPathNamespace('w', 'http://schemas.openxmlformats.org/wordprocessingml/2006/main');
+        $search = self::$_templateSymbol . $variable . self::$_templateSymbol;
+        $query = '//w:p[w:r/w:t[text()[contains(., "' . $search . '")]]]';
+        if ($firstMatch) {
+            $query = '(' . $query . ')[1]';
+        }
+
+        // if the content has WordFragments, replace each WordFragmen by a plain placeholder. This holder
+        // is replaced by the WordFragment value using the replaceVariableByWordFragment method
+        $wordFragmentsValues = array();
+        foreach ($listValues as $listKey => $listValue) {
+            if ($listValue instanceof WordFragment) {
+                $uniqueId = uniqid(mt_rand(999, 9999));
+                $uniqueKey = $this->getTemplateSymbol() . $uniqueId . $this->getTemplateSymbol();
+                $wordFragmentsValues[$uniqueId] = $listValues[$listKey];
+                $listValues[$listKey] = $uniqueKey;
+            }
+        }
+
+        $foundNodes = $dom->xpath($query);
+        foreach ($foundNodes as $node) {
+            $domNode = dom_import_simplexml($node);
+            foreach ($listValues as $key => $value) {
+                $newNode = $domNode->cloneNode(true);
+                $textNodes = $newNode->getElementsBytagName('t');
+                foreach ($textNodes as $text) {
+                    $sxText = simplexml_import_dom($text);
+                    $strNode = (string) $sxText;
+                    if (isset($options['parseLineBreaks']) && $options['parseLineBreaks']) {
+                        //parse $val for \n\r, \r\n, \n or \r and carriage returns
+                        $value = str_replace(array('\n\r', '\r\n', '\n', '\r', "\n\r", "\r\n", "\n", "\r"), '__LINEBREAK__', $value);
+                    }
+                    $strNodeReplaced = str_replace($search, $value, $strNode);
+                    $sxText[0] = $strNodeReplaced;
+                }
+                $domNode->parentNode->insertBefore($newNode, $domNode);
+            }
+            $domNode->parentNode->removeChild($domNode);
+        }
+        $stringDoc = $dom->asXML();
+        $bodyTag = explode('<w:body>', $stringDoc);
+        $this->_wordDocumentC = str_replace('</w:body></w:document>', '', $bodyTag[1]);
+        $this->_wordDocumentC = str_replace('__LINEBREAK__', '</w:t><w:br/><w:t>', $this->_wordDocumentC);
+
+        // replace existing WordFragment placeholders
+        if (count($wordFragmentsValues) > 0) {
+            $this->replaceVariableByWordFragment($wordFragmentsValues, array('type' => $type));
+        }
+    }
+    
+    /**
+     * Replaces a placeholder image by an external image
+     * 
+     * @access public
+     * @param string $variable this variable uniquely identifies the image we want to replace
+     * @param string $src path to the substitution image
+     * @param string $options
+     * 'firstMatch (boolean) if true it only replaces the first variable match. Default is set to false.
+     * 'target': document, header, footer, footnote, endnote, comment
+     * 'width' (mixed): the value in cm (float) or 'auto' (use image size)
+     * 'height' (mixed): the value in cm (float) or 'auto' (use image size)
+     * 'dpi' (int): dots per inch. This parameter is only taken into account if width or height are set to auto.
+     * If any of these formatting parameters is not set, the width and/or height of the placeholder image will be preserved
+     * @return void
+     */
+    public function replacePlaceholderImage($variable, $src, $options = array())
+    {
+        if (!file_exists($src)) {
+            PhpdocxLogger::logger('The' . $src . ' path seems not to be correct. Unable to obtain image file.', 'fatal');
+        }
+        if (isset($options['target'])) {
+            $target = $options['target'];
+        } else {
+            $target = 'document';
+        }
+
+        if ($target == 'document') {
+            $loadContent = $this->_documentXMLElement . '<w:body>' .
+                    $this->_wordDocumentC . '</w:body></w:document>';
+            $stringDoc = $this->Image4Image($variable, $src, $options, $loadContent)->saveXML();
+            $bodyTag = explode('<w:body>', $stringDoc);
+            $this->_wordDocumentC = str_replace('</w:body></w:document>', '', $bodyTag[1]);
+        } else if ($target == 'footnote') {
+            $dom = $this->Image4Image($variable, $src, $options, $this->_wordFootnotesT->saveXML(), $target)->saveXML();
+            $optionEntityLoader = libxml_disable_entity_loader(true);
+            $this->_wordFootnotesT->loadXML($dom);
+            libxml_disable_entity_loader($optionEntityLoader);
+        } else if ($target == 'endnote') {
+            $dom = $this->Image4Image($variable, $src, $options, $this->_wordEndnotesT->saveXML(), $target)->saveXML();
+            $optionEntityLoader = libxml_disable_entity_loader(true);
+            $this->_wordEndnotesT->loadXML($dom);
+            libxml_disable_entity_loader($optionEntityLoader);
+        } else if ($target == 'comment') {
+            $dom = $this->Image4Image($variable, $src, $options, $this->_wordCommentsT->saveXML(), $target)->saveXML();
+            $optionEntityLoader = libxml_disable_entity_loader(true);
+            $this->_wordCommentsT->loadXML($dom);
+            libxml_disable_entity_loader($optionEntityLoader);
+        } else if ($target == 'header') {
+            $xpathHeaders = simplexml_import_dom($this->_contentTypeT);
+            $xpathHeaders->registerXPathNamespace('ns', 'http://schemas.openxmlformats.org/package/2006/content-types');
+            $xpathHeadersResults = $xpathHeaders->xpath('ns:Override[@ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"]');
+            foreach ($xpathHeadersResults as $headersResults) {
+                $header = substr($headersResults['PartName'], 1);
+                $rels = substr($header, 5);
+                $rels = substr($rels, 0, -4);
+                $loadContent = $this->getFromZip($header);
+                if (empty($loadContent)) {
+                    $loadContent = $this->_modifiedHeadersFooters[$header];
+                }
+                $dom = $this->Image4Image($variable, $src, $options, $loadContent, $rels);
+                $this->_modifiedHeadersFooters[$header] = $dom->saveXML();
+                $this->saveToZip($dom, $header);
+            }
+        } else if ($target == 'footer') {
+            $xpathFooters = simplexml_import_dom($this->_contentTypeT);
+            $xpathFooters->registerXPathNamespace('ns', 'http://schemas.openxmlformats.org/package/2006/content-types');
+            $xpathFootersResults = $xpathFooters->xpath('ns:Override[@ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"]');
+            foreach ($xpathFootersResults as $footersResults) {
+                $footer = substr($footersResults['PartName'], 1);
+                $rels = substr($footer, 5);
+                $rels = substr($rels, 0, -4);
+                $loadContent = $this->getFromZip($footer);
+                if (empty($loadContent)) {
+                    $loadContent = $this->_modifiedHeadersFooters[$footer];
+                }
+                $dom = $this->Image4Image($variable, $src, $options, $loadContent, $rels);
+                $this->_modifiedHeadersFooters[$footer] = $dom->saveXML();
+                $this->saveToZip($dom, $footer);
+            }
+        }
+    }
+    
+    /**
+     * Do the actual substitution of the variables in a 'table set of rows'
+     *
+     * @access public 
+     * @param array $vars
+     * @param string $options
+     * 'firstMatch (boolean) if true it only replaces the first variable match. Default is set to false.
+     * 'parseLineBreaks' (boolean) if true (default is false) parses the line breaks to include them in the Word document
+     * 'type' (string) inline or block (default); used by WordFragment values
+     * @return void
+     */
+    public function replaceTableVariable($vars, $options = array())
+    {
+        if (isset($options['firstMatch'])) {
+            $firstMatch = $options['firstMatch'];
+        } else {
+            $firstMatch = false;
+        }
+
+        $type = 'block';
+        if (isset($options['type'])) {
+            $type = $options['type'];
+        }
+
+        $varKeys = array_keys($vars[0]);
+        //We build an array to clean the table variables
+        $toRepair = array();
+        foreach ($varKeys as $key => $value) {
+            $toRepair[$value] = '';
+        }
+        $loadContent = $this->_documentXMLElement . '<w:body>' .
+                $this->_wordDocumentC . '</w:body></w:document>';
+        if (!self::$_preprocessed) {
+            $loadContent = $this->repairVariables($toRepair, $loadContent);
+        }
+        $optionEntityLoader = libxml_disable_entity_loader(true);
+        $dom = simplexml_load_string($loadContent);
+        libxml_disable_entity_loader($optionEntityLoader);
+        $dom->registerXPathNamespace('w', 'http://schemas.openxmlformats.org/wordprocessingml/2006/main');
+        $search = array();
+        for ($j = 0; $j < count($varKeys); $j++) {
+            $search[$j] = self::$_templateSymbol . $varKeys[$j] . self::$_templateSymbol;
+        }
+        $queryArray = array();
+        for ($j = 0; $j < count($search); $j++) {
+            $queryArray[$j] = '//w:tr[w:tc/w:p/w:r/w:t[text()[contains(., "' . $search[$j] . '")]]]';
+        }
+        $query = join(' | ', $queryArray);
+        $foundNodes = $dom->xpath($query);
+        $tableCounter = 0;
+        $referenceNode = '';
+        $parentNode = '';
+
+        // if the content has WordFragments, replace each WordFragmen by a plain placeholder. This holder
+        // is replaced by the WordFragment value using the replaceVariableByWordFragment method
+        $wordFragmentsValues = array();
+        foreach ($vars as &$varsRow) {
+            foreach ($varsRow as $varKeyRow => $varValueRow) {
+                if ($varValueRow instanceof WordFragment) {
+                    $uniqueId = uniqid(mt_rand(999, 9999));
+                    $uniqueKey = $this->getTemplateSymbol() . $uniqueId . $this->getTemplateSymbol();
+                    $wordFragmentsValues[$uniqueId] = $varsRow[$varKeyRow];
+                    $varsRow[$varKeyRow] = $uniqueKey;
+                }
+            }
+        }
+
+        foreach ($vars as $key => $rowValue) {
+            foreach ($foundNodes as $node) {
+                $domNode = dom_import_simplexml($node);
+                if (!is_object($referenceNode) || !$domNode->parentNode->isSameNode($parentNode)) {
+                    $referenceNode = $domNode;
+                    $parentNode = $domNode->parentNode;
+                    $tableCounter++;
+                }
+                if (!$firstMatch || ($firstMatch && $tableCounter < 2)) {
+                    $newNode = $domNode->cloneNode(true);
+                    $textNodes = $newNode->getElementsBytagName('t');
+                    foreach ($textNodes as $text) {
+                        for ($k = 0; $k < count($search); $k++) {
+                            $sxText = simplexml_import_dom($text);
+                            $strNode = (string) $sxText;
+                            if (!empty($rowValue[$varKeys[$k]]) ||
+                                    $rowValue[$varKeys[$k]] === 0 ||
+                                    $rowValue[$varKeys[$k]] === "0") {
+                                if (isset($options['parseLineBreaks']) && $options['parseLineBreaks']) {
+                                    //parse $val for \n\r, \r\n, \n or \r and carriage returns
+                                    $rowValue[$varKeys[$k]] = str_replace(array('\n\r', '\r\n', '\n', '\r', "\n\r", "\r\n", "\n", "\r"), '__LINEBREAK__', $rowValue[$varKeys[$k]]);
+                                }
+                                $strNode = str_replace($search[$k], $rowValue[$varKeys[$k]], $strNode);
+                            } else {
+                                $strNode = str_replace($search[$k], '', $strNode);
+                            }
+                            $sxText[0] = $strNode;
+                        }
+                    }
+                    $parentNode->insertBefore($newNode, $referenceNode);
+                }
+            }
+        }
+        //Remove the original nodes
+        $tableCounter2 = 0;
+        foreach ($foundNodes as $node) {
+            $domNode = dom_import_simplexml($node);
+            if ($firstMatch && !$domNode->parentNode->isSameNode($parentNode)) {
+                $parentNode = $domNode->parentNode;
+                $tableCounter2++;
+            }
+            if ($tableCounter2 < 2) {
+                $domNode->parentNode->removeChild($domNode);
+            }
+        }
+
+        $stringDoc = $dom->asXML();
+        $bodyTag = explode('<w:body>', $stringDoc);
+        $this->_wordDocumentC = str_replace('</w:body></w:document>', '', $bodyTag[1]);
+        $this->_wordDocumentC = str_replace('__LINEBREAK__', '</w:t><w:br/><w:t>', $this->_wordDocumentC);
+
+        // replace existing WordFragment placeholders
+        if (count($wordFragmentsValues) > 0) {
+            $this->replaceVariableByWordFragment($wordFragmentsValues, array('type' => $type));
+        }
+    }
+    
+    /**
+     * Replaces an array of variables by external files
+     *
+     * @access public
+     * @param array $variables
+     *  keys: variable names
+     *  values: path to the external DOCX, RTF, HTML or MHT file
+     * @param array $options
+     * 'firstMatch (boolean) if true it only replaces the first variable match. Default is set to false.
+     * 'matchSource' (boolean) if true (default value)tries to preserve as much as posible the styles of the docx to be included
+     * 'preprocess' (boolean) if true does some preprocessing on the docx file to add
+     *  WARNING: beware that the docx to insert gets modified so please make a safeguard copy first
+     * @return void
+     */
+    public function replaceVariableByExternalFile($variables, $options = array())
+    {
+        foreach ($variables as $key => $value) {
+            $options['src'] = $value;
+            $extension = strtoupper($this->getFileExtension($value));
+            switch ($extension) {
+                case 'DOCX':
+                    if (!isset($options['matchSource'])) {
+                        $options['matchSource'] = true;
+                    }
+                    $file = new WordFragment($this);
+                    $file->addDOCX($options);
+                    $this->replaceVariableByWordFragment(array($key => $file), $options);
+                    break;
+                case 'HTML':
+                    $options['html'] = file_get_contents($value);
+                    $file = new WordFragment($this);
+                    $file->addHTML($options);
+                    $this->replaceVariableByWordFragment(array($key => $file), $options);
+                    break;
+                case 'RTF':
+                    $file = new WordFragment($this);
+                    $file->addRTF($options);
+                    $this->replaceVariableByWordFragment(array($key => $file), $options);
+                    break;
+                case 'MHT':
+                    $file = new WordFragment($this);
+                    $file->addMHT($options);
+                    $this->replaceVariableByWordFragment(array($key => $file), $options);
+                    break;
+                default:
+                    PhpdocxLogger::logger('Invalid file extension', 'fatal');
+            }
+        }
+    }
+
+    /**
+     * Replace a template variable with WordML obtained from HTML via the
+     * embedHTML method.
+     *
+     * @access public
+     * @param string $var Value of the variable.
+     * @param type inline or block
+     * @param string $html HTML source
+     * @param array $options:
+     * isFile (boolean),
+     * customListStyles (bool) if true try to use the predefined customm lists
+     * baseURL (string),
+     * downloadImages (boolean),
+     * filter (string) could be an string denoting the id, class or tag to be filtered.
+     * If you want only a class introduce .classname, #idName for an id or <htmlTag> for a particular tag. One can also use
+     * standard XPath expresions supported by PHP.
+     * 'firstMatch (boolean) if true it only replaces the first variable match. Default is set to false.
+     * 'parseAnchors' (boolean),
+     * 'parseDivs' (paragraph, table): parses divs as paragraphs or tables,
+     * 'parseFloats' (boolean),
+     * 'strictWordStyles' (boolean) if true ignores all CSS styles and uses the styles set via the wordStyles option (see next)
+     * 'wordStyles' (array) associates a particular class, id or HTML tag to a Word style
+     *
+     * @return void
+     */
+    public function replaceVariableByHTML($var, $type = 'block', $html = '<html><body></body></html>', $options = array())
+    {
+        if (isset($options['target'])) {
+            $target = $options['target'];
+        } else {
+            $target = 'document';
+        }
+        if (isset($options['firstMatch'])) {
+            $firstMatch = $options['firstMatch'];
+        } else {
+            $firstMatch = false;
+        }
+        $options['type'] = $type;
+        $htmlFragment = new WordFragment($this, $target);
+        $htmlFragment->embedHTML($html, $options);
+        $this->replaceVariableByWordFragment(array($var => $htmlFragment), $options);
+    }
+
+    /**
+     * Replaces an array of variables by their values
+     *
+     * @access public
+     * @param array $variables
+     *  keys: variable names
+     *  values: text we want to insert
+     * @param string $options
+     * 'target': document (default), header, footer, footnote, endnote, comment
+     * 'firstMatch (boolean) if true it only replaces the first variable match. Default is set to false.
+     * 'parseLineBreaks' (boolean) if true (default is false) parses the line breaks to include them in the Word document
+     * 'raw' (boolean) if true (default is false) replaces the variable by a string regardless the variable scope (tag values, attributes...). 
+     *     Only allows to replace a variable by a plain string. Use with caution
+     * @return void
+     */
+    public function replaceVariableByText($variables, $options = array())
+    {
+        if (isset($options['target'])) {
+            $target = $options['target'];
+        } else {
+            $target = 'document';
+        }
+
+        if (isset($options['raw']) && $options['raw'] === true) {
+            foreach ($variables as $keyVariable => $valueVariable) {
+                if ($target == 'document') {
+                    $this->_wordDocumentC = str_replace(self::$_templateSymbol . $keyVariable . self::$_templateSymbol, $valueVariable, $this->_wordDocumentC);
+                } else if ($target == 'footnote') {
+                    $newFootnotesTXML = str_replace(self::$_templateSymbol . $keyVariable . self::$_templateSymbol, $valueVariable, $this->_wordFootnotesT->saveXML());
+                    $this->_wordFootnotesT->loadXML($newFootnotesTXML);
+                } else if ($target == 'endnote') {
+                    $newEndnotesTXML = str_replace(self::$_templateSymbol . $keyVariable . self::$_templateSymbol, $valueVariable, $this->_wordEndnotesT->saveXML());
+                    $this->_wordEndnotesT->loadXML($newEndnotesTXML);
+                } else if ($target == 'comment') {
+                    $newCommentsTXML = str_replace(self::$_templateSymbol . $keyVariable . self::$_templateSymbol, $valueVariable, $this->_wordCommentsT->saveXML());
+                    $this->_wordCommentsT->loadXML($newCommentsTXML);
+                } else if ($target == 'header') {
+                    $xpathHeaders = simplexml_import_dom($this->_contentTypeT);
+                    $xpathHeaders->registerXPathNamespace('ns', 'http://schemas.openxmlformats.org/package/2006/content-types');
+                    $xpathHeadersResults = $xpathHeaders->xpath('ns:Override[@ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"]');
+                    foreach ($xpathHeadersResults as $headersResults) {
+                        $header = substr($headersResults['PartName'], 1);
+                        $loadContent = $this->getFromZip($header);
+                        if (empty($loadContent)) {
+                            $loadContent = $this->_modifiedHeadersFooters[$header];
+                        }
+                        if (!empty($loadContent)) {
+                            $newHeaderTXML = str_replace(self::$_templateSymbol . $keyVariable . self::$_templateSymbol, $valueVariable, $loadContent);
+                            $this->_modifiedHeadersFooters[$header] = $newHeaderTXML;
+                            $this->saveToZip($newHeaderTXML, $header);
+                        }
+                    }
+                } else if ($target == 'footer') {
+                    $xpathFooters = simplexml_import_dom($this->_contentTypeT);
+                    $xpathFooters->registerXPathNamespace('ns', 'http://schemas.openxmlformats.org/package/2006/content-types');
+                    $xpathFootersResults = $xpathFooters->xpath('ns:Override[@ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"]');
+                    foreach ($xpathFootersResults as $footersResults) {
+                        $footer = substr($footersResults['PartName'], 1);
+                        $loadContent = $this->getFromZip($footer);
+                        if (empty($loadContent)) {
+                            $loadContent = $this->_modifiedHeadersFooters[$footer];
+                        }
+                        if (!empty($loadContent)) {
+                            $newFooterTXML = str_replace(self::$_templateSymbol . $keyVariable . self::$_templateSymbol, $valueVariable, $loadContent);
+                            $this->_modifiedHeadersFooters[$footer] = $newHeaderTXML;
+                            $this->saveToZip($newFooterTXML, $footer);
+                        }
+                    }
+                }
+            }
+        } else {
+            if ($target == 'document') {
+                $loadContent = $this->_documentXMLElement . '<w:body>' . $this->_wordDocumentC . '</w:body></w:document>';
+                $dom = $this->variable2Text($variables, $loadContent, $options);
+                $stringDoc = $dom->asXML();
+                $bodyTag = explode('<w:body>', $stringDoc);
+                $this->_wordDocumentC = str_replace('</w:body></w:document>', '', $bodyTag[1]);
+            } else if ($target == 'footnote') {
+                $dom = $this->variable2Text($variables, $this->_wordFootnotesT->saveXML(), $options)->saveXML();
+                $optionEntityLoader = libxml_disable_entity_loader(true);
+                $this->_wordFootnotesT->loadXML($dom);
+                libxml_disable_entity_loader($optionEntityLoader);
+            } else if ($target == 'endnote') {
+                $dom = $this->variable2Text($variables, $this->_wordEndnotesT->saveXML(), $options)->saveXML();
+                $optionEntityLoader = libxml_disable_entity_loader(true);
+                $this->_wordEndnotesT->loadXML($dom);
+                libxml_disable_entity_loader($optionEntityLoader);
+            } else if ($target == 'comment') {
+                $dom = $this->variable2Text($variables, $this->_wordCommentsT->saveXML(), $options)->saveXML();
+                $optionEntityLoader = libxml_disable_entity_loader(true);
+                $this->_wordCommentsT->loadXML($dom);
+                libxml_disable_entity_loader($optionEntityLoader);
+            } else if ($target == 'header') {
+                $xpathHeaders = simplexml_import_dom($this->_contentTypeT);
+                $xpathHeaders->registerXPathNamespace('ns', 'http://schemas.openxmlformats.org/package/2006/content-types');
+                $xpathHeadersResults = $xpathHeaders->xpath('ns:Override[@ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"]');
+                foreach ($xpathHeadersResults as $headersResults) {
+                    $header = substr($headersResults['PartName'], 1);
+                    $loadContent = $this->getFromZip($header);
+                    if (empty($loadContent)) {
+                        $loadContent = $this->_modifiedHeadersFooters[$header];
+                    }
+                    if (!empty($loadContent)) {
+                        $dom = $this->variable2Text($variables, $loadContent, $options);
+                        $this->_modifiedHeadersFooters[$header] = $dom->saveXML();
+                        $this->saveToZip($dom, $header);
+                    }
+                }
+            } else if ($target == 'footer') {
+                $xpathFooters = simplexml_import_dom($this->_contentTypeT);
+                $xpathFooters->registerXPathNamespace('ns', 'http://schemas.openxmlformats.org/package/2006/content-types');
+                $xpathFootersResults = $xpathFooters->xpath('ns:Override[@ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"]');
+                foreach ($xpathFootersResults as $footersResults) {
+                    $footer = substr($footersResults['PartName'], 1);
+                    $loadContent = $this->getFromZip($footer);
+                    if (empty($loadContent)) {
+                        $loadContent = $this->_modifiedHeadersFooters[$footer];
+                    }
+                    if (!empty($loadContent)) {
+                        $dom = $this->variable2Text($variables, $loadContent, $options);
+                        $this->_modifiedHeadersFooters[$footer] = $dom->saveXML();
+                        $this->saveToZip($dom, $footer);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Replaces an array of variables by Word Fragments
+     *
+     * @access public
+     * @param array $variables
+     *  keys: variable names
+     *  values: instances of the WordFragment or DOCXPath result objects
+     * @param string $options
+     * 'firstMatch (boolean) if true it only replaces the first variable match. Default is set to false.
+     * 'type': inline (only replaces the variable) or block (removes the variable and its containing paragraph)
+     * 'target': document (default), header, footer, footnote, endnote or comment
+     * @return void
+     */
+    public function replaceVariableByWordFragment($variables, $options = array())
+    {
+        if (isset($options['firstMatch'])) {
+            $firstMatch = $options['firstMatch'];
+        } else {
+            $firstMatch = false;
+        }
+        if (isset($options['target'])) {
+            $target = $options['target'];
+        } else {
+            $target = 'document';
+        }
+        if (isset($options['type'])) {
+            $type = $options['type'];
+        } else {
+            $type = 'block';
+        }
+        if ($target == 'document') {
+            $loadContent = $this->_documentXMLElement . '<w:body>' .
+                    $this->_wordDocumentC . '</w:body></w:document>';
+            $stringDoc = $this->variable4WordFragment($variables, $type, $loadContent, $firstMatch);
+            $bodyTag = explode('<w:body>', $stringDoc);
+            $this->_wordDocumentC = str_replace('</w:body></w:document>', '', $bodyTag[1]);
+        } else if ($target == 'footnote') {
+            $stringDoc = $this->variable4WordFragment($variables, $type, $this->_wordFootnotesT->saveXML(), $firstMatch);
+            $optionEntityLoader = libxml_disable_entity_loader(true);
+            $this->_wordFootnotesT->loadXML($stringDoc);
+            libxml_disable_entity_loader($optionEntityLoader);
+        } else if ($target == 'endnote') {
+            $stringDoc = $this->variable4WordFragment($variables, $type, $this->_wordEndnotesT->saveXML(), $firstMatch);
+            $optionEntityLoader = libxml_disable_entity_loader(true);
+            $this->_wordEndnotesT->loadXML($stringDoc);
+            libxml_disable_entity_loader($optionEntityLoader);
+        } else if ($target == 'comment') {
+            $stringDoc = $this->variable4WordFragment($variables, $type, $this->_wordCommentsT->saveXML(), $firstMatch);
+            $optionEntityLoader = libxml_disable_entity_loader(true);
+            $this->_wordCommentsT->loadXML($stringDoc);
+            libxml_disable_entity_loader($optionEntityLoader);
+        } else if ($target == 'header') {
+            $xpathHeaders = simplexml_import_dom($this->_contentTypeT);
+            $xpathHeaders->registerXPathNamespace('ns', 'http://schemas.openxmlformats.org/package/2006/content-types');
+            $xpathHeadersResults = $xpathHeaders->xpath('ns:Override[@ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"]');
+            foreach ($xpathHeadersResults as $headersResults) {
+                $header = substr($headersResults['PartName'], 1);
+                $headerContent = $this->getFromZip($header);
+                if (empty($headerContent)) {
+                    $headerContent = $this->_modifiedHeadersFooters[$header];
+                }
+                $headerName = explode('/', $header);
+                $domHeader = $this->variableHeaderFooterByWordFragments($variables, $type, $headerName[1], $headerContent, $firstMatch);
+                $this->_modifiedHeadersFooters[$header] = $domHeader;
+                $this->saveToZip($domHeader, $header);
+            }
+        } else if ($target == 'footer') {
+            $xpathFooters = simplexml_import_dom($this->_contentTypeT);
+            $xpathFooters->registerXPathNamespace('ns', 'http://schemas.openxmlformats.org/package/2006/content-types');
+            $xpathFootersResults = $xpathFooters->xpath('ns:Override[@ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"]');
+            foreach ($xpathFootersResults as $footersResults) {
+                $footer = substr($footersResults['PartName'], 1);
+                $footerContent = $this->getFromZip($footer);
+                if (empty($footerContent)) {
+                    $footerContent = $this->_modifiedHeadersFooters[$footer];
+                }
+                $footerName = explode('/', $footer);
+                $domFooter = $this->variableHeaderFooterByWordFragments($variables, $type, $footerName[1], $footerContent, $firstMatch);
+                $this->_modifiedHeadersFooters[$footer] = $domFooter;
+                $this->saveToZip($domFooter, $footer);
+            }
+        }
+    }
+    
+    /**
+     * Replaces an array of variables by plain WordML
+     * WARNING: the system does not validate the WordML against any scheme so
+     * you have to make sure by your own that the used WORDML is correctly encoded
+     * and moreover has NO relationships that require to modify the rels files.
+     *
+     * @access public
+     * @param array $variables
+     *  keys: variable names
+     *  values: WordML code
+     * @param string $options
+     * 'firstMatch (boolean) if true it only replaces the first variable match. Default is set to false.
+     * 'type': inline (only replaces the variable) or block (removes the variable and its containing paragraph)
+     * 'target': document (default). By the time being header, footer, footnote, endnote, comment are not supported
+     * @return void
+     */
+    public function replaceVariableByWordML($variables, $options = array('type' => 'block'))
+    {
+        $counter = 0;
+        foreach ($variables as $key => $value) {
+            ${'wf_' . $counter} = new WordFragment();
+            ${'wf_' . $counter}->addRawWordML($value);
+            $variables[$key] = ${'wf_' . $counter};
+            $counter++;
+        }
+        $this->replaceVariableByWordFragment($variables, $options);
+    }
+    
+    /**
+     * Checks or unchecks template checkboxes
+     *
+     * @access public
+     * @param array $variables 
+     *  keys: variable names
+     *  values: 1 (check), 0 (uncheck)
+     */
+    public function tickCheckboxes($variables)
+    {
+        $loadContent = $this->_documentXMLElement . '<w:body>' .
+                $this->_wordDocumentC . '</w:body></w:document>';
+        $domDocument = new DOMDocument();
+        $optionEntityLoader = libxml_disable_entity_loader(true);
+        $domDocument->loadXML($loadContent);
+        libxml_disable_entity_loader($optionEntityLoader);
+        $docXPath = new DOMXPath($domDocument);
+        $docXPath->registerNamespace('w', 'http://schemas.openxmlformats.org/wordprocessingml/2006/main');
+        $docXPath->registerNamespace('w14', 'http://schemas.microsoft.com/office/word/2010/wordml');
+        foreach ($variables as $var => $value) {
+            if (empty($value)) {
+                $value = 0;
+            } else {
+                $value = 1;
+            }
+            //First we check for legacy checkboxes
+            $searchTerm = self::$_templateSymbol . $var . self::$_templateSymbol;
+            $queryDoc = '//w:ffData[w:statusText[@w:val="' . $searchTerm . '"]]';
+            $affectedNodes = $docXPath->query($queryDoc);
+            foreach ($affectedNodes as $node) {
+                $nodeVals = $node->getElementsByTagNameNS('http://schemas.openxmlformats.org/wordprocessingml/2006/main', 'default');
+                $nodeVals->item(0)->setAttribute('w:val', $value);
+            }
+            //Now we look for Word 2010 sdt checkboxes
+            $queryDoc = '//w:sdtPr[w:tag[@w:val="' . $searchTerm . '"]]';
+            $affectedNodes = $docXPath->query($queryDoc);
+            foreach ($affectedNodes as $node) {
+                $nodeVals = $node->getElementsByTagNameNS('http://schemas.microsoft.com/office/word/2010/wordml', 'checked');
+                $nodeVals->item(0)->setAttribute('w14:val', $value);
+                //Now change the selected symbol for checked or unchecked
+                $sdt = $node->parentNode;
+                $txt = $sdt->getElementsByTagNameNS('http://schemas.openxmlformats.org/wordprocessingml/2006/main', 't');
+                if ($value == 1) {
+                    $txt->item(0)->nodeValue = '☒';
+                } else {
+                    $txt->item(0)->nodeValue = '☐';
+                }
+            }
+        }
+
+        $stringDoc = $domDocument->saveXML();
+        $bodyTag = explode('<w:body>', $stringDoc);
+        $this->_wordDocumentC = str_replace('</w:body></w:document>', '', $bodyTag[1]);
+    }
+
+    /**
+     * Extract the PHPDocX type variables from an existing template
+     *
+     * @access private
+     */
+    private function extractVariables($target, $documentSymbol, $variables)
+    {
+        $i = 0;
+        foreach ($documentSymbol as $documentSymbolValue) {
+            // avoid first and last values and even positions
+            if ($i == 0 || $i == count($documentSymbol) || $i % 2 == 0) {
+                $i++;
+                continue;
+            } else {
+                $i++;
+                if (empty($prefixes)) {
+                    $variables[$target][] = strip_tags($documentSymbolValue);
+                } else {
+                    foreach ($prefixes as $value) {
+                        if (($pos = strpos($documentSymbolValue, $value, 0)) !== false) {
+                            $variables[$target][] = strip_tags($documentSymbolValue);
+                        }
+                    }
+                }
+            }
+        }
+        return $variables;
+    }
+    
+    
+    /**
+     * Gets jpg image dpi
+     *
+     * @access private
+     * @param string $filename
+     * @return array
+     */
+    private function getDpiJpg($filename)
+    {
+        $a = fopen($filename, 'r');
+        $string = fread($a, 20);
+        fclose($a);
+        $type = hexdec(bin2hex(substr($string, 13, 1)));
+        $data = bin2hex(substr($string, 14, 4));
+        if ($type == 1) {
+            $x = substr($data, 0, 4);
+            $y = substr($data, 4, 4);
+            return array(hexdec($x), hexdec($y));
+        } else if ($type == 2) {
+            $x = floor(hexdec(substr($data, 0, 4)) / 2.54);
+            $y = floor(hexdec(substr($data, 4, 4)) / 2.54);
+            return array($x, $y);
+        } else {
+            return array(96, 96);
+        }
+    }
+
+    /**
+     * Gets png image dpi
+     *
+     * @access private
+     * @param string $filename
+     * @return array
+     */
+    private function getDpiPng($filename)
+    {
+        $pngScaleFactor = 29.5;
+        $a = fopen($filename, 'r');
+        $string = fread($a, 1000);
+        $aux = strpos($string, 'pHYs');
+        if ($aux > 0) {
+            $type = hexdec(bin2hex(substr($string, $aux + strlen('pHYs') + 16, 1)));
+        }
+        if ($aux > 0 && $type = 1) {
+            $data = bin2hex(substr($string, $aux + strlen('pHYs'), 16));
+            fclose($a);
+            $x = substr($data, 0, 8);
+            $y = substr($data, 8, 8);
+            return array(round(hexdec($x) / $pngScaleFactor), round(hexdec($y) / $pngScaleFactor));
+        } else {
+            return array(96, 96);
+        }
+    }
+
+    /**
+     * Gets the file extension
+     *
+     * @access private
+     * @param string $filename
+     * @return string
+     */
+    private function getFileExtension($filename)
+    {
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        
+        return $extension;
+    }
+
+    /**
+     * Replaces a placeholder images by external images
+     * 
+     * @access public
+     * @param string $variable this variable uniquely identifies the image we want to replace
+     * @param string $src path to the substitution image
+     * @param string $options
+     * 'target': document, header, footer, footnote, endnote, comment
+     * 'width' (mixed): the value in cm (float) or 'auto' (use image size)
+     * 'height' (mixed): the value in cm (float) or 'auto' (use image size)
+     * 'dpi' (int): dots per inch. This parameter is only taken into account if width or height are set to auto.
+     * If any of these formatting parameters is not set, the width and/or height of the placeholder image will be preserved
+     * @param (string) $loadContent st
+     * @param (string) $rels
+     * @return DOMDocument Object
+     */
+    private function Image4Image($variable, $src, $options = array(), $loadContent, $rels = 'document')
+    {
+        if (isset($options['firstMatch'])) {
+            $firstMatch = $options['firstMatch'];
+        } else {
+            $firstMatch = false;
+        }
+
+        $cx = 0;
+        $cy = 0;
+        //Get the name and extension of the replacement image
+        $imageNameArray = explode('/', $src);
+        if (count($imageNameArray) > 1) {
+            $imageName = array_pop($imageNameArray);
+        } else {
+            $imageName = $src;
+        }
+        $imageExtensionArray = explode('.', $src);
+        $extension = strtolower(array_pop($imageExtensionArray));
+
+        $wordScaleFactor = 360000;
+        if (isset($options['dpi'])) {
+            $dpiX = $options['dpi'];
+            $dpiY = $options['dpi'];
+        } else {
+            if ((isset($options['width']) && $options['width'] == 'auto') ||
+                    (isset($options['height']) && $options['height'] == 'auto')) {
+                if ($extension == 'jpg' || $extension == 'jpeg') {
+                    list($dpiX, $dpiY) = $this->getDpiJpg($src);
+                } else if ($extension == 'png') {
+                    list($dpiX, $dpiY) = $this->getDpiPng($src);
+                } else {
+                    $dpiX = 96;
+                    $dpiY = 96;
+                }
+            }
+        }
+
+        //Check if a width and height have been set
+        $width = 0;
+        $height = 0;
+        if (isset($options['width']) && $options['width'] != 'auto') {
+            $cx = (int) round($options['width'] * $wordScaleFactor);
+        }
+        if (isset($options['height']) && $options['height'] != 'auto') {
+            $cy = (int) round($options['height'] * $wordScaleFactor);
+        }
+        //Proceed to compute the sizes if the width or height are set to auto
+        if ((isset($options['width']) && $options['width'] == 'auto') ||
+                (isset($options['height']) && $options['height'] == 'auto')) {
+            $realSize = getimagesize($src);
+        }
+        if (isset($options['width']) && $options['width'] == 'auto') {
+            $cx = (int) round($realSize[0] * 2.54 / $dpiX * $wordScaleFactor);
+        }
+        if (isset($options['height']) && $options['height'] == 'auto') {
+            $cy = (int) round($realSize[1] * 2.54 / $dpiY * $wordScaleFactor);
+        }
+        $docDOM = new DOMDocument();
+        $optionEntityLoader = libxml_disable_entity_loader(true);
+        $docDOM->loadXML($loadContent);
+        libxml_disable_entity_loader($optionEntityLoader);
+        $domImages = $docDOM->getElementsByTagNameNS('http://schemas.openxmlformats.org/drawingml/2006/' .
+                'wordprocessingDrawing', 'docPr');
+
+        $imageCounter = 0;
+        //create a new Id
+        $id = uniqid(rand(99,9999999), true);
+        $ind = 'rId' . $id;
+        $relsCounter = 0;
+        for ($i = 0; $i < $domImages->length; $i++) {
+            if ($domImages->item($i)->getAttribute('descr') ==
+                    self::$_templateSymbol . $variable . self::$_templateSymbol &&
+                    $imageCounter == 0) {
+
+                //generate new relationship
+                $relString = '<Relationship Id="' . $ind . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/img' . $id . '.' . $extension . '" />';
+                if ($rels == 'document') {
+                    if ($relsCounter == 0) {
+                        $this->generateRELATIONSHIP($ind, 'image', 'media/img' . $id . '.' . $extension);
+                        $relsCounter++;
+                    }
+                } else if ($rels == 'footnote' || $rels == 'endnote' || $rels == 'comment') {
+                    self::$_relsNotesImage[$rels][] = array('rId' => 'rId' . $id, 'name' => $id, 'extension' => $extension);
+                } else {
+                    $relsXML = $this->getFromZip('word/_rels/' . $rels . '.xml.rels');
+                    if (empty($relsXML)){
+                      $relsXML = $this->_modifiedRels['word/_rels/' . $rels . '.xml.rels'];  
+                    }
+                    $relationship = '<Relationship Target="media/img' . $id . '.' . $extension . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Id="rId' . $id . '"/>';
+                    $relsXML = str_replace('</Relationships>', $relationship . '</Relationships>', $relsXML);
+                    $this->_modifiedRels['word/_rels/' . $rels . '.xml.rels'] = $relsXML;
+                    $this->saveToZip($relsXML, 'word/_rels/' . $rels . '.xml.rels');
+                }
+                //generate content type if it does not exist yet
+                $this->generateDEFAULT($extension, 'image/' . $extension);
+                //modify the image data to modify the r:embed attribute
+                $domImages->item($i)->parentNode
+                        ->getElementsByTagNameNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'blip')
+                        ->item(0)->setAttribute('r:embed', $ind);
+                if ($cx != 0) {
+                    $domImages->item($i)->parentNode
+                            ->getElementsByTagNameNS('http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing', 'extent')
+                            ->item(0)->setAttribute('cx', $cx);
+                    $xfrmNode = $domImages->item($i)->parentNode
+                                    ->getElementsByTagNameNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'xfrm')->item(0);
+                    $xfrmNode->getElementsByTagNameNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'ext')
+                            ->item(0)->setAttribute('cx', $cx);
+                }
+                if ($cy != 0) {
+                    $domImages->item($i)->parentNode
+                            ->getElementsByTagNameNS('http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing', 'extent')
+                            ->item(0)->setAttribute('cy', $cy);
+                    $xfrmNode = $domImages->item($i)->parentNode
+                                    ->getElementsByTagNameNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'xfrm')->item(0);
+                    $xfrmNode->getElementsByTagNameNS('http://schemas.openxmlformats.org/drawingml/2006/main', 'ext')
+                            ->item(0)->setAttribute('cy', $cy);
+                }
+                if ($options['firstMatch']) {
+                    $imageCounter++;
+                    $domImages->item($i)->setAttribute('descr', '');
+                }
+            }
+        }
+        //We copy the image in the (base) template with the new name
+        $this->saveToZip($src, 'word/media/img' . $id . '.' . $extension);
+
+        return $docDOM;
+    }
+    
+    /**
+     * Removes a template variable with its container paragraph
+     *
+     * @access private
+     * @param string $variableName
+     * @param string $loadContent
+     */
+    private function removeVariableBlock($variableName, $loadContent)
+    {
+        if (!self::$_preprocessed) {
+            $loadContent = $this->repairVariables(array($variableName => ''), $loadContent);
+        }
+        $domDocument = new DomDocument();
+        $optionEntityLoader = libxml_disable_entity_loader(true);
+        $domDocument->loadXML($loadContent);
+        libxml_disable_entity_loader($optionEntityLoader);
+        //Use XPath to find all paragraphs that include the variable name
+        $name = self::$_templateSymbol . $variableName . self::$_templateSymbol;
+        $xpath = new DOMXPath($domDocument);
+        $xpath->registerNamespace('w', 'http://schemas.openxmlformats.org/wordprocessingml/2006/main');
+        $query = '//w:p[w:r/w:t[text()[contains(.,"' . $variableName . '")]]]';
+        $affectedNodes = $xpath->query($query);
+        foreach ($affectedNodes as $node) {
+            $paragraphContents = $node->ownerDocument->saveXML($node);
+            $paragraphText = strip_tags($paragraphContents);
+            if (($pos = strpos($paragraphText, $name, 0)) !== false) {
+                //If we remove a paragraph inside a table cell we need to take special care
+                if ($node->parentNode->nodeName == 'w:tc') {
+                    $tcChilds = $node->parentNode->getElementsByTagNameNS('http://schemas.openxmlformats.org/wordprocessingml/2006/main', 'p');
+                    if ($tcChilds->length > 1) {
+                        $node->parentNode->removeChild($node);
+                    } else {
+                        $emptyP = $domDocument->createElement("w:p");
+                        $node->parentNode->appendChild($emptyP);
+                        $node->parentNode->removeChild($node);
+                    }
+                } else {
+                    $node->parentNode->removeChild($node);
+                }
+            }
+        }
+        $stringDoc = $domDocument->saveXML();
+        return $stringDoc;
+    }
+
+    /**
+     * Prepares a single PHPDocX variable for substitution
+     *
+     * @access private
+     * @param array $variables
+     * @param string $content
+     * @return string
+     */
+    private function repairVariables($variables, $content)
+    {
+        $documentSymbol = explode(self::$_templateSymbol, $content);
+        foreach ($variables as $var => $value) {
+            foreach ($documentSymbol as $documentSymbolValue) {
+                $tempSearch = trim(strip_tags($documentSymbolValue));
+                if ($tempSearch == $var) {
+                    $pos = strpos($content, $documentSymbolValue);
+                    if ($pos !== false) {
+                        $content = substr_replace($content, $var, $pos, strlen($documentSymbolValue));
+                    }
+                }
+                if (strpos($documentSymbolValue, 'xml:space="preserve"')) {
+                    $preserve = true;
+                }
+            }
+            if (isset($preserve) && $preserve) {
+                $query = '//w:t[text()[contains(., "' . self::$_templateSymbol . $var . self::$_templateSymbol . '")]]';
+                $docDOM = new DOMDocument();
+                $optionEntityLoader = libxml_disable_entity_loader(true);
+                $docDOM->loadXML($content);
+                libxml_disable_entity_loader($optionEntityLoader);
+                $docXPath = new DOMXPath($docDOM);
+                $docXPath->registerNamespace('w', 'http://schemas.openxmlformats.org/wordprocessingml/2006/main');
+                $affectedNodes = $docXPath->query($query);
+                foreach ($affectedNodes as $node) {
+                    $space = $node->getAttribute('xml:space');
+                    if (isset($space) && $space == 'preserve') {
+                        //Do nothing 
+                    } else {
+                        $str = $node->nodeValue;
+                        $firstChar = $str[0];
+                        if ($firstChar == ' ') {
+                            $node->nodeValue = substr($str, 1);
+                        }
+                        $node->setAttribute('xml:space', 'preserve');
+                    }
+                }
+                $content = $docDOM->saveXML($docDOM->documentElement);
+                //$content = html_entity_decode($content, ENT_NOQUOTES, 'UTF-8');
+            }
+        }
+        return $content;
+    }
+
+    /**
+     * Replaces a single variable by a Word fragment Word Fragment
+     *
+     * @access private
+     * @param string $var
+     * @param WordFragment $val
+     * @param string $type
+     * @param string $loadContent
+     * @param bool $firstMatch
+     */
+    private function singleVariable4WordFragment($var, $val, $type, $loadContent, $firstMatch)
+    {
+        $docDOM = new DOMDocument();
+        $optionEntityLoader = libxml_disable_entity_loader(true);
+        $docDOM->loadXML($loadContent);
+        libxml_disable_entity_loader($optionEntityLoader);
+        $docXpath = new DOMXPath($docDOM);
+
+        
+        if ($val instanceof WordFragment) {
+            PhpdocxLogger::logger('Replacing a variable by a WordML fragment', 'info');
+        } else if ($val instanceof DOCXPathResult) {
+            PhpdocxLogger::logger('Replacing a variable by a DOCXPath result', 'info');
+        } else {
+            PhpdocxLogger::logger('This methods requires that the variable value is a WordML fragment', 'fatal');
+        }
+        $wordML = (string) $val;
+        if ($type == 'inline') {
+            $wordML = $this->cleanWordMLBlockElements($wordML);
+        }
+        $searchString = self::$_templateSymbol;
+        $searchVariable = self::$_templateSymbol . $var . self::$_templateSymbol;
+        $query = '//w:p[w:r/w:t[text()[contains(., "' . $searchVariable . '")]]]';
+        if (isset($firstMatch) && $firstMatch) {
+            $query = '(' . $query . ')[1]';
+        }
+
+        $docNodes = $docXpath->query($query);
+        foreach ($docNodes as $node) {
+            $nodeText = $node->ownerDocument->saveXML($node);
+            $cleanNodeText = strip_tags($nodeText);
+            if (strpos($cleanNodeText, $searchVariable) !== false) {
+                if ($type == 'block') {
+                    $cursorNode = $docDOM->createElement('cursorWordML');
+                    //We should take care of the case that is empty and inside a table cell (fix word bug empty cells)
+                    if ($wordML == '' && $node->parentNode->nodeName == 'w:tc') {
+                        $wordML = '<w:p />';
+                    }
+                    $node->parentNode->insertBefore($cursorNode, $node);
+                    $node->parentNode->removeChild($node);
+                } else if ($type == 'inline') {
+                    $textNode = $node->ownerDocument->saveXML($node);
+                    $textChunks = explode($searchString, $textNode);
+                    $limit = count($textChunks);
+                    for ($j = 0; $j < $limit; $j++) {
+                        $cleanValue = strip_tags($textChunks[$j]);
+                        if ($cleanValue == $var) {
+                            $textChunks[$j] = '</w:t></w:r><cursorWordML/><w:r><w:t xml:space="preserve">';
+                        }
+                    }
+                    $newNodeText = implode($searchString, $textChunks);
+                    $newNodeText = str_replace(self::$_templateSymbol . '</w:t></w:r><cursorWordML/><w:r><w:t xml:space="preserve">', '</w:t></w:r><cursorWordML/><w:r><w:t xml:space="preserve">', $newNodeText);
+                    $newNodeText = str_replace('</w:t></w:r><cursorWordML/><w:r><w:t xml:space="preserve">' . self::$_templateSymbol, '</w:t></w:r><cursorWordML/><w:r><w:t xml:space="preserve">', $newNodeText);
+                    $tempDoc = new DOMDocument();
+                    $optionEntityLoader = libxml_disable_entity_loader(true);
+                    $tempDoc->loadXML('<w:root xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas" 
+                                               xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main" 
+                                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                                               xmlns:mv="urn:schemas-microsoft-com:mac:vml" 
+                                               xmlns:o="urn:schemas-microsoft-com:office:office" 
+                                               xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" 
+                                               xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" 
+                                               xmlns:v="urn:schemas-microsoft-com:vml" 
+                                               xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing" 
+                                               xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" 
+                                               xmlns:w10="urn:schemas-microsoft-com:office:word" 
+                                               xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" 
+                                               xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" 
+                                               xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" 
+                                               xmlns:wpi="http://schemas.microsoft.com/office/word/2010/wordprocessingInk" 
+                                               xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" 
+                                               xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" 
+                                               mc:Ignorable="w14 wp14">' . $newNodeText . '</w:root>');
+                    libxml_disable_entity_loader($optionEntityLoader);
+                    $newCursorNode = $tempDoc->documentElement->firstChild;
+                    $cursorNode = $docDOM->importNode($newCursorNode, true);
+                    $node->parentNode->insertBefore($cursorNode, $node);
+                    $node->parentNode->removeChild($node);
+                }
+            }
+        }
+        
+        $stringDoc = $docDOM->saveXML();
+        $stringDoc = str_replace('<cursorWordML/>', $wordML, $stringDoc);
+
+        return $stringDoc;
+    }
+
+    /**
+     * Update the rels header file content
+     *
+     * @access private
+     */
+    private function updateRelsHeader($headerName, $wordFragmentHeaderRels)
+    {
+        $nodes = $wordFragmentHeaderRels->getElementsBytagName('Relationship');
+        $relName = 'word/_rels/' . $headerName . '.rels';
+        $stringRels = $this->getFromZip($relName);
+        if (!$stringRels) {
+            $stringRels = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"></Relationships>';
+        }
+        foreach ($nodes as $node) {
+            $nodeType = $node->getAttribute('Type'); 
+            if ($nodeType == 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/image' || $nodeType == 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink' || $nodeType == 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart') {
+               $xmlRels = new DomDocument();
+               $optionEntityLoader = libxml_disable_entity_loader(true);
+               $xmlRels->loadXML($stringRels);
+               libxml_disable_entity_loader($optionEntityLoader);
+               $newRelNode = $xmlRels->createElement('relationship');
+               $xmlRels->getElementsBytagName('Relationships')->item(0)->appendChild($newRelNode);
+               $stringRels = $xmlRels->saveXML();
+               $stringRels = str_replace('<relationship/>', $wordFragmentHeaderRels->saveXML($node), $stringRels);
+            }
+        }
+        $this->saveToZip($stringRels, 'word/_rels/' . $headerName . '.rels');
+    }
+
+    /**
+     * Replaces an array of variables by their values
+     *
+     * @access public 
+     * @param array $variables
+     *  keys: variable names
+     *  values: text we want to insert
+     * @param string $loadContent
+     * @param array $options
+     * @return SimpleXML Object
+     */
+    private function variable2Text($variables, $loadContent, $options)
+    {
+        if (isset($options['firstMatch'])) {
+            $firstMatch = $options['firstMatch'];
+        } else {
+            $firstMatch = false;
+        }
+        if (!self::$_preprocessed) {
+            $loadContent = $this->repairVariables($variables, $loadContent);
+        }
+        $optionEntityLoader = libxml_disable_entity_loader(true);
+        $dom = simplexml_load_string($loadContent);
+        libxml_disable_entity_loader($optionEntityLoader);
+        $dom->registerXPathNamespace('w', 'http://schemas.openxmlformats.org/wordprocessingml/2006/main');
+        foreach ($variables as $var => $val) {
+            $search = self::$_templateSymbol . $var . self::$_templateSymbol;
+            $query = '//w:t[text()[contains(., "' . $search . '")]]';
+            if ($firstMatch) {
+                $query = '(' . $query . ')[1]';
+            }
+            $foundNodes = $dom->xpath($query);
+            foreach ($foundNodes as $node) {
+                $strNode = (string) $node;
+                if (isset($options['parseLineBreaks']) && $options['parseLineBreaks']) {
+                    $domNode = dom_import_simplexml($node);
+                    //parse $val for \n\r, \r\n, \n or \r and carriage returns
+                    $val = str_replace(array('\n\r', '\r\n', '\n', '\r', "\n\r", "\r\n", "\n", "\r"), '<linebreak/>', $val);
+                    $strNode = str_replace($search, $val, $strNode);
+                    $runs = explode('<linebreak/>', $strNode);
+                    $preserveWS = false;
+                    $preserveWhiteSpace = $domNode->getAttribute('xml:space');
+                    if ($preserveWhiteSpace == 'preserve') {
+                        $preserveWS = true;
+                    }
+                    $numberOfRuns = count($runs);
+                    $counter = 0;
+                    foreach ($runs as $run) {
+                        $counter++;
+                        $newT = $domNode->ownerDocument->createElementNS('http://schemas.openxmlformats.org/wordprocessingml/2006/main', 't', htmlspecialchars($run));
+                        if ($preserveWS) {
+                            $newT->setAttribute('xml:space', 'preserve');
+                        }
+                        $domNode->parentNode->insertBefore($newT, $domNode);
+                        if ($counter < $numberOfRuns) {
+                            $br = $domNode->ownerDocument->createElementNS('http://schemas.openxmlformats.org/wordprocessingml/2006/main', 'br');
+                            $domNode->parentNode->insertBefore($br, $domNode);
+                        }
+                    }
+                    $domNode->parentNode->removeChild($domNode);
+                } else {
+                    $strNode = str_replace($search, $val, $strNode);
+                    $node[0] = $strNode;
+                }
+            }
+        }
+
+        return $dom;
+    }
+
+    /**
+     * Does the actual parsing of the content for the replacement by a Word Fragment
+     *
+     * @access private
+     * @param array $variables
+     * @param string $type
+     * @param string $loadContent
+     * @param bool $firstMatch
+     */
+    private function variable4WordFragment($variables, $type, $loadContent, $firstMatch)
+    {
+        if (!self::$_preprocessed) {
+            $loadContent = $this->repairVariables($variables, $loadContent);
+        }
+
+        foreach ($variables as $var => $val) {
+            $loadContent = $this->singleVariable4WordFragment($var, $val, $type, $loadContent, $firstMatch);
+        }
+
+        return $loadContent;
+    }
+
+    /**
+     * Does the actual parsing of the content for the replacement by a Word Fragment
+     *
+     * @access private
+     * @param array $variables
+     * @param string $type
+     * @param string $headerFooterName
+     * @param string $headerFooterContent
+     * @param bool $firstMatch
+     */
+    private function variableHeaderFooterByWordFragments($variables, $type, $headerFooterName , $headerFooterContent, $firstMatch) {
+        if (!self::$_preprocessed) {
+            $headerFooterContent = $this->repairVariables($variables, $headerFooterContent);
+        }
+
+        foreach ($variables as $var => $wf) {
+            $domHeaderFooter = $this->singleVariable4WordFragment($var, $wf, $type, $headerFooterContent, $firstMatch);
+            $this->updateRelsHeader($headerFooterName, $wf->_wordRelsDocumentRelsT);
+        }
+
+        return $domHeaderFooter;
+    }
+
+}

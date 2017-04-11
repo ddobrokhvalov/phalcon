@@ -1,1 +1,480 @@
-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
+<?php
+
+/**
+ * Create XLSX
+ *
+ * @category   Phpdocx
+ * @package    elements
+ * @copyright  Copyright (c) Narcea Producciones Multimedia S.L.
+ *             (http://www.2mdc.com)
+ * @license    phpdocx LICENSE
+ * @version    2016.05.01
+ * @link       http://www.phpdocx.com
+ */
+class CreateXlsx extends CreateElement
+{
+
+    /**
+     *
+     * @access private
+     * @var <type>
+     */
+    private $_zipXlsx;
+
+    /**
+     *
+     * @access private
+     * @var <type>
+     */
+    private $_xmlXlTablesContent;
+
+    /**
+     *
+     * @access private
+     * @var <type>
+     */
+    private $_xmlXlSharedStringsContent;
+
+    /**
+     *
+     * @access private
+     * @var <type>
+     */
+    private $_xmlXlSheetContent;
+
+    /**
+     * Construct
+     *
+     * @access public
+     */
+    public function __construct()
+    {
+        
+    }
+
+    /**
+     * Destruct
+     *
+     * @access public
+     */
+    public function __destruct()
+    {
+        
+    }
+
+    /**
+     *
+     * @access public
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->_zipXlsx;
+    }
+
+    /**
+     * Create XLSX
+     * 
+     * @access public
+     * @return bool
+     */
+    public function createXlsx()
+    {
+        $args = func_get_args();
+        $this->_zipXlsx = new DOCXStructure();
+
+        $this->_xmlXlTablesContent = '';
+        $this->_xmlXlSharedStringsContent = '';
+        $this->_xmlXlSheetContent = '';
+
+        $dirname = dirname(__FILE__) . '/../excel/';
+
+        $this->_zipXlsx->addFile('[Content_Types].xml', $dirname . '[Content_Types].xml');
+        $this->_zipXlsx->addFile('docProps/core.xml', $dirname . 'docProps/core.xml');
+        $this->_zipXlsx->addFile('docProps/app.xml', $dirname . 'docProps/app.xml');
+        $this->_zipXlsx->addFile('_rels/.rels', $dirname . '_rels/.rels');
+        $this->_zipXlsx->addFile('xl/_rels/workbook.xml.rels', $dirname . 'xl/_rels/workbook.xml.rels');
+        $this->_zipXlsx->addFile('xl/theme/theme1.xml', $dirname . 'xl/theme/theme1.xml');
+        $this->_zipXlsx->addFile('xl/worksheets/_rels/sheet1.xml.rels', $dirname . 'xl/worksheets/_rels/sheet1.xml.rels');
+        $this->_zipXlsx->addFile('xl/styles.xml', $dirname . 'xl/styles.xml');
+        $this->_zipXlsx->addFile('xl/workbook.xml', $dirname . 'xl/workbook.xml');
+        $this->_zipXlsx->addContent('xl/tables/table1.xml', $this->createExcelTable($args[1]));
+        $this->_zipXlsx->addContent('xl/sharedStrings.xml', $this->createExcelSharedStrings($args[1]));
+        $this->_zipXlsx->addContent('xl/worksheets/sheet1.xml', $this->createExcelSheet($args[1]));
+
+        return $this->_zipXlsx;
+    }
+
+    /**
+     * Generate sst
+     *
+     * @param string $num
+     * @access protected
+     */
+    protected function generateSST($num)
+    {
+        $this->_xml = '<?xml version="1.0" encoding="UTF-8" ' .
+                'standalone="yes" ?><sst xmlns="http://schemas.' .
+                'openxmlformats.org/spreadsheetml/2006/main" ' .
+                'count="' . $num . '" uniqueCount="' . $num .
+                '">__GENERATESST__</sst>';
+    }
+
+    /**
+     * Generate si
+     * @access protected
+     */
+    protected function generateSI()
+    {
+        $xml = '<si>__GENERATESI__</si>__GENERATESST__';
+        $this->_xml = str_replace('__GENERATESST__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate t
+     *
+     * @param string $name
+     * @param string $space
+     * @access protected
+     */
+    protected function generateT($name, $space = '')
+    {
+        $xmlAux = '<t';
+        if ($space != '') {
+            $xmlAux .= ' xml:space="' . $space . '"';
+        }
+        $xmlAux .= '>' . htmlspecialchars($name) . '</t>';
+        $this->_xml = str_replace('__GENERATESI__', $xmlAux, $this->_xml);
+    }
+
+    /**
+     * Generate c
+     *
+     * @param string $r
+     * @param string $s
+     * @param string $t
+     * @access protected
+     */
+    protected function generateC($r, $s, $t = '')
+    {
+        $xmlAux = '<c r="' . $r . '"';
+        if ($s != '') {
+            $xmlAux .= ' s="' . $s . '"';
+        }
+        if ($t != '') {
+            $xmlAux .= ' t="' . $t . '"';
+        }
+        $xmlAux .= '>__GENERATEC__</c>__GENERATEROW__';
+        $this->_xml = str_replace('__GENERATEROW__', $xmlAux, $this->_xml);
+    }
+
+    /**
+     * Generate col
+     *
+     * @param string $min
+     * @param string $max
+     * @param string $width
+     * @param string $customWidth
+     * @access protected
+     */
+    protected function generateCOL($min = '1', $max = '1', $width = '11.85546875', $customWidth = '1')
+    {
+        $xml = '<col min="' . $min . '" max="' . $max . '" width="' . $width .
+                '" customWidth="' . $customWidth . '"></col>';
+
+        $this->_xml = str_replace('__GENERATECOLS__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate cols
+     *
+     * @access protected
+     */
+    protected function generateCOLS()
+    {
+        $xml = '<cols>__GENERATECOLS__</cols>__GENERATEWORKSHEET__';
+        $this->_xml = str_replace('__GENERATEWORKSHEET__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate dimension
+     *
+     * @param int $sizeX
+     * @param int $sizeY
+     * @access protected
+     */
+    protected function generateDIMENSION($sizeX, $sizeY)
+    {
+        $char = 'A';
+        for ($i = 0; $i < $sizeY; $i++) {
+            $char++;
+        }
+        $sizeX += $sizeY;
+        $xml = '<dimension ref="A1:' . $char . $sizeX .
+                '"></dimension>__GENERATEWORKSHEET__';
+
+        $this->_xml = str_replace('__GENERATEWORKSHEET__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate pagemargins
+     *
+     * @param string $left
+     * @param string $rigth
+     * @param string $bottom
+     * @param string $top
+     * @param string $header
+     * @param string $footer
+     * @access protected
+     */
+    protected function generatePAGEMARGINS($left = '0.7', $rigth = '0.7', $bottom = '0.75', $top = '0.75', $header = '0.3', $footer = '0.3')
+    {
+        $xml = '<pageMargins left="' . $left . '" right="' . $rigth .
+                '" top="' . $top . '" bottom="' . $bottom .
+                '" header="' . $header . '" footer="' . $footer .
+                '"></pageMargins>__GENERATEWORKSHEET__';
+
+        $this->_xml = str_replace('__GENERATEWORKSHEET__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate pagesetup
+     *
+     * @param string $paperSize
+     * @param string $orientation
+     * @param string $id
+     * @access protected
+     */
+    protected function generatePAGESETUP($paperSize = '9', $orientation = 'portrait', $id = '1')
+    {
+        $xml = '<pageSetup paperSize="' . $paperSize .
+                '" orientation="' . $orientation . '" r:id="rId' . $id .
+                '"></pageSetup>__GENERATEWORKSHEET__';
+
+        $this->_xml = str_replace('__GENERATEWORKSHEET__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate row
+     *
+     * @param string $r
+     * @param string $spans
+     * @access protected
+     */
+    protected function generateROW($r, $spans)
+    {
+        $spans = '1:' . ($spans + 1);
+        $xml = '<row r="' . $r . '" spans="' . $spans .
+                '">__GENERATEROW__</row>__GENERATESHEETDATA__';
+
+        $this->_xml = str_replace('__GENERATESHEETDATA__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate selection
+     *
+     * @param string $num
+     * @access protected
+     */
+    protected function generateSELECTION($num)
+    {
+        $xml = '<selection activeCell="B' . $num .
+                '" sqref="B' . $num . '"></selection>';
+
+        $this->_xml = str_replace('__GENERATESHEETVIEW__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate sheetdata
+     *
+     * @access protected
+     */
+    protected function generateSHEETDATA()
+    {
+        $xml = '<sheetData>__GENERATESHEETDATA__</sheetData>' .
+                '__GENERATEWORKSHEET__';
+        $this->_xml = str_replace('__GENERATEWORKSHEET__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate sheetformatpr
+     *
+     * @param string $baseColWidth
+     * @param string $defaultRowHeight
+     * @access protected
+     */
+    protected function generateSHEETFORMATPR($baseColWidth = '10', $defaultRowHeight = '15')
+    {
+        $xml = '<sheetFormatPr baseColWidth="' . $baseColWidth .
+                '" defaultRowHeight="' . $defaultRowHeight .
+                '"></sheetFormatPr>__GENERATEWORKSHEET__';
+
+        $this->_xml = str_replace('__GENERATEWORKSHEET__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate sheetview
+     *
+     * @param string $tabSelected
+     * @param string $workbookViewId
+     * @access protected
+     */
+    protected function generateSHEETVIEW($tabSelected = '1', $workbookViewId = '0')
+    {
+        $xml = '<sheetView tabSelected="' . $tabSelected .
+                '" workbookViewId="' . $workbookViewId .
+                '">__GENERATESHEETVIEW__</sheetView>';
+
+        $this->_xml = str_replace('__GENERATESHEETVIEWS__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate sheetviews
+     *
+     * @access protected
+     */
+    protected function generateSHEETVIEWS()
+    {
+        $xml = '<sheetViews>__GENERATESHEETVIEWS__' .
+                '</sheetViews>__GENERATEWORKSHEET__';
+        $this->_xml = str_replace('__GENERATEWORKSHEET__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate tablepart
+     *
+     * @param string $id
+     * @access protected
+     */
+    protected function generateTABLEPART($id = '1')
+    {
+        $xml = '<tablePart r:id="rId' . $id . '"></tablePart>';
+        $this->_xml = str_replace('__GENERATETABLEPARTS__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate tableparts
+     *
+     * @param string $count
+     * @access protected
+     */
+    protected function generateTABLEPARTS($count = '1')
+    {
+        $xml = '<tableParts count="' . $count .
+                '">__GENERATETABLEPARTS__</tableParts>';
+
+        $this->_xml = str_replace('__GENERATEWORKSHEET__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate v
+     *
+     * @param string $num
+     * @access protected
+     */
+    protected function generateV($num)
+    {
+        $this->_xml = str_replace(
+                '__GENERATEC__', '<v>' . $num . '</v>', $this->_xml
+        );
+    }
+
+    /**
+     * Generate worksheet
+     *
+     * @access protected
+     */
+    protected function generateWORKSHEET()
+    {
+        $this->_xml = '<?xml version="1.0" encoding="UTF-8" ' .
+                'standalone="yes" ?><worksheet ' .
+                'xmlns="http://schemas.openxmlformats.org/' .
+                'spreadsheetml/2006/main" ' . 'xmlns:r="http://schemas.' .
+                'openxmlformats.org/officeDocument/2006/relationships"' .
+                '>__GENERATEWORKSHEET__</worksheet>';
+    }
+
+    /**
+     * Clean template row tags
+     *
+     * @access private
+     */
+    protected function cleanTemplateROW()
+    {
+        $this->_xml = str_replace('__GENERATEROW__', '', $this->_xml);
+    }
+
+    /**
+     * Generate table
+     *
+     * @param int $rows
+     * @param int $cols
+     * @access protected
+     */
+    protected function generateTABLE($rows, $cols)
+    {
+        $word = 'A';
+        for ($i = 0; $i < $cols; $i++) {
+            $word++;
+        }
+        $rows++;
+        $this->_xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' .
+                '<table xmlns="http://schemas.openxmlformats.org/spreads' .
+                'heetml/2006/main" id="1" name="Tabla1" displayName=' .
+                '"Tabla1" ref="A1:' . $word . $rows .
+                '" totalsRowShown="0" tableBorderDxfId="0">' .
+                '__GENERATETABLE__</table>';
+    }
+
+    /**
+     * Generate tablecolumn
+     *
+     * @param string $id
+     * @param string $name
+     * @access protected
+     */
+    protected function generateTABLECOLUMN($id = '2', $name = '')
+    {
+        $xml = '<tableColumn id="' . $id . '" name="' . $name .
+                '"></tableColumn >__GENERATETABLECOLUMNS__';
+
+        $this->_xml = str_replace(
+                '__GENERATETABLECOLUMNS__', $xml, $this->_xml
+        );
+    }
+
+    /**
+     * Generate tablecolumns
+     *
+     * @param string $count
+     * @access protected
+     */
+    protected function generateTABLECOLUMNS($count = '2')
+    {
+        $xml = '<tableColumns count="' . $count .
+                '">__GENERATETABLECOLUMNS__</tableColumns>__GENERATETABLE__';
+
+        $this->_xml = str_replace('__GENERATETABLE__', $xml, $this->_xml);
+    }
+
+    /**
+     * Generate tablestyleinfo
+     *
+     * @param string $showFirstColumn
+     * @param string $showLastColumn
+     * @param string $showRowStripes
+     * @param string $showColumnStripes
+     * @access protected
+     */
+    protected function generateTABLESTYLEINFO($showFirstColumn = '0', $showLastColumn = "0", $showRowStripes = "1", $showColumnStripes = "0")
+    {
+        $xml = '<tableStyleInfo   showFirstColumn="' . $showFirstColumn .
+                '" showLastColumn="' . $showLastColumn .
+                '" showRowStripes="' . $showRowStripes .
+                '" showColumnStripes="' . $showColumnStripes .
+                '"></tableStyleInfo >';
+
+        $this->_xml = str_replace('__GENERATETABLE__', $xml, $this->_xml);
+    }
+
+}

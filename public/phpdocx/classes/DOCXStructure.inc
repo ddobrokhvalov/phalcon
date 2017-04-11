@@ -1,1 +1,147 @@
-xVdrb9s2FP3uX3ELGLWcJnIWoMOQzEEDxxkCpFlQd8DQoTBoiraI6AWSspO1+e+7l5RkWZadZNiDQByZuq9z7oN0pzM4OOjAAUxMqthCwOWvo99BJkaohEWgjcq5yZUgEfr7wJkRi1Q9AsBdmAUpf7DbGeP3pI4rNzKSRgrt5NPsUclFaABG1aPH+3DLFBcM7lQa5JzLNBEaPuaRkbEIJIOJf+OTgfryQmOy08FgtVr5J3HAfZ7Gfeslklwk2rrPXFRwcz0a307G9vVSKI0e6PXJ8Q8/+sc/+SfvC8XkvrBeM17YIPsoNejwiGltqZlUhHzrkJJlj9aBY65GmNv9wDgXqJwpuUTqqu0lU8CUYo/FzsD+L6SgS+4rX2edpq87phAtcz7nMqrsbrnNZ8hNtZsxxWIKUiYL6GbMhHCF2kBPm4FYPZjnCTfE3HTK08SB8/rwDZ62QvpFGCwa2Ah8h995qmJmHHxIFe0LFlfCSqBuArF8EEE7q+0xLoS5RO9eYR/D7JSVU5hs0kqvtpFcBAEkYgWI2IjEgEnBhK4zdgAq+4W4vCNS7YdMntMrPYzWnmaY1iAQwV6kKFGoeFu+Dyuzfau7JqFrQqmPzjc4+GNL/ysMKwv7GGKWI6q9f5Ega76q0NfwQ0qt5JDJv88MaU+x0KYFQ9pzBncxdSkigf1cJvp5xC9lqh14YN3trI0mbjkHT2otUPRlDPTrTUUrT16jfVbpPu3gC6cIiAepDZFRsjZXafz/tWBjINlqLLVweM1ZpJ+dS/9hRspR9zL1ekaa09Ii21XYxQmUrLO1h+RXHDQZ2XVjPGvhp/unzLANafR8kdmF4qFcCq9/1tlgkKSOztNMJIUVGA6H8PnTb+MmW3hUoLhEk8dnWETwMzjdJI8pXk2b7941tWwk1Pe3LBY0L60O5pm+XyeBwOhlrdorndaktCp/rZu9wgagt17ltGH8aZ1GEJi1RrwmVOnKkjZ+4CIjor3eWCkEvwrtBFePlCgsfiLN9ow3Y1r0wYg4i+hKwjSOfGKfQui9oJUnbCk2rwNk48v13WuKpBSapWlkLw5cWJErenKXAzRKIR0iPoFda1PKQ6aMRnAIZpWqe3KwkmjfXTX03hLUGPi6Ag/rboeuKer1MBigN8HvqfCINwsjJLY09gZ2Pd08a9Xp6XyGUZTGj9734Q0WZ88nqnrNSnOs+NX71n6th+AAQpwGAqTGxOZiozXsAWZ7VnuBxFmAVTWdXl3fjKfTPvjQG2BfTawRXyYcA3r7Fkb41VhOTk+7zsNHckBdRR5Ips7SsIUni4YwFEQWLexcbXQwLTQmGA+hdQwStd178QjDc+guWZRvOdpwdnRe3QdQ6bBU2dVBDd2FSIRC9EWgbp6c7e+3Fpxto6rIHaYlENq4uxSmBgtXiTjF7pH2PGLLVAYQ5BlWKVtfJjbMNFNbjD3Mi9TTlZKGzQi/3W0jK0/ol9AWukahlZ5q9KyH7GEN5unp6NP44vN49+D9h5LckmiclRM7UvaluwVYwxSPUr2drpKBN9u0wvfvQNuIKXiGbVqBFLtmMBm2t+oeNmQxAfA5iwSO5KLVnYz7lef3WtFtfGsrU1qvOBq2w9p9CnXWn52nvwA=
+<?php
+
+/**
+ * Storage DOCX internal structure
+ * 
+ * @category   Phpdocx
+ * @package    utilities
+ * @copyright  Copyright (c) Narcea Producciones Multimedia S.L.
+ *             (http://www.2mdc.com)
+ * @license    phpdocx LICENSE
+ * @version    2016.08.25
+ * @link       http://www.phpdocx.com
+ */
+class DOCXStructure
+{
+    /**
+     * DOCX structure
+     * @access private
+     * @var array
+     */
+    private $docxStructure;
+
+    /**
+     * Parse a DOCX file
+     * 
+     * @access public
+     * @param string $path File path
+     */
+    public function __construct() { }
+
+    /**
+     * Getter docxStructure
+     * @param string $format array or stream
+     * @return mixed DOCX structure
+     */
+    public function getDocx($format) {
+        return $docxStructure;
+    }
+
+    /**
+     * Add new content to the DOCX
+     * @param string $internalFilePath Path in the DOCX
+     * @param string $content Content to be added
+     */
+    public function addContent($internalFilePath, $content)
+    {
+        $this->docxStructure[$internalFilePath] = $content;
+    }
+
+    /**
+     * Add a new file to the DOCX
+     * @param string $internalFilePath Path in the DOCX
+     * @param string $file File path to be added
+     */
+    public function addFile($internalFilePath, $file)
+    {
+        $this->docxStructure[$internalFilePath] = file_get_contents($file);
+    }
+
+    /**
+     * Delete content in the DOCX
+     * @param string $internalFilePath Path in the DOCX
+     */
+    public function deleteContent($internalFilePath)
+    {
+        if (isset($this->docxStructure[$internalFilePath])) {
+            unset($this->docxStructure[$internalFilePath]);
+        }
+    }
+
+    /**
+     * Get existing content from the DOCX
+     * @param string $internalFilePath Path in the DOCX
+     * @param string $content Content to be added
+     * @return mixed File content or false
+     */
+    public function getContent($internalFilePath)
+    {
+        if (isset($this->docxStructure[$internalFilePath])) {
+            return $this->docxStructure[$internalFilePath];
+        }
+
+        return false;
+    }
+
+    /**
+     * Parse an existing DOCX
+     * @param string $path File path
+     */
+    public function parseDocx($path)
+    {
+        $zip = new ZipArchive();
+
+        if ($zip->open($path) === TRUE) {
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+                $fileName = $zip->getNameIndex($i);
+                $this->docxStructure[$zip->getNameIndex($i)] = $zip->getFromName($fileName);
+            }
+        } else {
+            throw new Exception('Error while trying to open the (base) template as a zip file');
+        }
+    }
+
+    /**
+     * Save docxStructure as ZIP
+     * @param string $path File path
+     * @param bool $forceFile Force DOCX as file, needed for charts when working with streams
+     */
+    public function saveDocx($path, $forceFile = false) {
+        // check if the path has as extension
+        if(substr($path, -5) !== '.docx') {
+            $path .= '.docx';
+        }
+
+        // check if stream mode is true
+        if (file_exists(dirname(__FILE__) . '/ZipStream.inc') && CreateDocx::$streamMode === true && $forceFile === false) {
+            $docxFile = new ZipStream();
+
+            foreach ($this->docxStructure as $key => $value) {
+                $docxFile->addFile($key, $value);
+            }
+            $docxFile->generateStream($path);
+        } else {
+            $docxFile = new ZipArchive();
+
+            // if dest file exits remove it to avoid duplicate content
+            if (file_exists($path) && is_writable($path)) {
+                unlink($path);
+            }
+
+            if ($docxFile->open($path, ZipArchive::CREATE) === TRUE) {
+                foreach ($this->docxStructure as $key => $value) {
+                    $docxFile->addFromString($key, $value);
+                }
+
+                $docxFile->close();
+
+                if (!is_writable($path) || !is_readable($path)) {
+                    die('Error while trying to write to ' . $path . ' please check write access.');
+                }
+            } else {
+                throw new Exception('Error while trying to write to ' . $path);
+            }
+        }
+    }
+    
+}

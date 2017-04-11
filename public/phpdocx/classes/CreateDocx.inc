@@ -8,7 +8,7 @@
  * @copyright  Copyright (c) Narcea Producciones Multimedia S.L.
  *             (http://www.2mdc.com)
  * @license    phpdocx LICENSE
- * @version    2016.10.18
+ * @version    2016.08.25
  * @link       http://www.phpdocx.com
  */
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
@@ -585,7 +585,385 @@ class CreateDocx extends CreateDocument
      */
     public function __construct($baseTemplatePath = PHPDOCX_BASE_TEMPLATE, $docxTemplatePath = '')
     {
-        /** PHPDOCX trial package**/ /** PHPDOCX trial package**/ /** PHPDOCX trial package**/ /** PHPDOCX trial package**/ /** PHPDOCX trial package**/ eval(gzinflate(base64_decode('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')));
+        // general settings
+        $this->_phpdocxconfig = PhpdocxUtilities::parseConfig();
+
+        $this->_docxTemplate = false;
+        if ($baseTemplatePath == 'docm') {
+            $this->_baseTemplatePath = PHPDOCX_BASE_FOLDER . 'phpdocxBaseTemplate.docm'; // base template path
+            $this->_docm = true;
+            $this->_defaultTemplate = true;
+            $this->_extension = 'docm';
+        } else if ($baseTemplatePath == 'docx') {
+            $this->_baseTemplatePath = PHPDOCX_BASE_FOLDER . 'phpdocxBaseTemplate.docx'; // base template path
+            $this->_docm = false;
+            $this->_defaultTemplate = true;
+            $this->_extension = 'docx';
+        } else if (!empty($docxTemplatePath)) {
+            $this->_defaultTemplate = false;
+            $this->_docxTemplate = true;
+            $this->_baseTemplatePath = $docxTemplatePath; // external template path
+            if ($docxTemplatePath instanceof DOCXStructure) {
+                $this->_docm = false;
+            } else {
+                $extension = pathinfo($this->_baseTemplatePath, PATHINFO_EXTENSION);
+                $this->_extension = $extension;
+                if ($extension == 'docm') {
+                    $this->_docm = true;
+                } else if ($extension == 'docx') {
+                    $this->_docm = false;
+                } else {
+                    PhpdocxLogger::logger('Invalid template extension', 'fatal');
+                }
+            }
+        } else {
+            if ($baseTemplatePath == PHPDOCX_BASE_TEMPLATE) {
+                $this->_defaultTemplate = true;
+            } else {
+                $this->_defaultTemplate = false;
+            }
+            $this->_baseTemplatePath = $baseTemplatePath; //base template path
+            $extension = pathinfo($this->_baseTemplatePath, PATHINFO_EXTENSION);
+            $this->_extension = $extension;
+            if ($extension == 'docm') {
+                $this->_docm = true;
+            } else if ($extension == 'docx') {
+                $this->_docm = false;
+            } else {
+                PhpdocxLogger::logger('Invalid base template extension', 'fatal');
+            }
+        }
+
+        // allow storing the template in memory
+        if (file_exists(dirname(__FILE__) . '/DOCXStructureTemplate.inc')) {
+            if (PHPDOCX_BASE_TEMPLATE == PHPDOCX_BASE_FOLDER . 'phpdocxBaseTemplate.docx' && !isset($docxTemplatePath)) {
+                $templateStructure = new DOCXStructureTemplate();
+                $this->_zipDocx = $templateStructure->getStructure();
+            } elseif ($docxTemplatePath instanceof DOCXStructure) {
+                $this->_zipDocx = $docxTemplatePath;
+            } else {
+                // keep the DOCX content so the base template is not overwritten
+                $this->_zipDocx = new DOCXStructure();
+                $this->_zipDocx->parseDocx($this->_baseTemplatePath);
+            }
+        } else {
+            // keep the DOCX content so the base template is not overwritten
+            $this->_zipDocx = new DOCXStructure();
+            $this->_zipDocx->parseDocx($this->_baseTemplatePath);
+        }
+
+        // initialize some required variables
+        $this->_background = ''; // w:background OOXML element
+        $this->_backgroundColor = 'FFFFFF'; // docx background color
+        self::$bookmarksIds = array();
+        $this->_idWords = array();
+        self::$intIdWord = rand(9999999, 99999999);
+        self::$_encodeUTF = 0;
+        $this->_language = 'en-US';
+        $this->_markAsFinal = 0;
+        $this->_compatibilityMode = false;
+        $this->_relsRelsC = '';
+        $this->_relsRelsT = '';
+        $this->_contentTypeC = '';
+        $this->_contentTypeT = NULL;
+        $this->_defaultFont = '';
+        $this->_macro = 0;
+        $this->_modifiedDocxProperties = false;
+        $this->_modifiedHeadersFooters= array();
+        $this->_relsHeader = array();
+        $this->_relsFooter = array();
+        $this->_parsedStyles = array();
+        self::$_relsHeaderFooterImage = array();
+        self::$_relsHeaderFooterExternalImage = array();
+        self::$_relsHeaderFooterLink = array();
+        self::$_relsNotesExternalImage = array();
+        self::$_relsNotesImage = array();
+        self::$_relsNotesLink = array();
+        $this->_sectPr = NULL;
+        $this->_tempDocumentDOM = NULL;
+        $this->_tempFileXLSX = array();
+        $this->_uniqid = 'phpdocx_' . uniqid(mt_rand(999, 9999));
+        $this->_wordCommentsT = new DOMDocument();
+        $this->_wordCommentsRelsT = new DOMDocument();
+        $this->_wordDocumentT = '';
+        $this->_wordDocumentC = '';
+        $this->_wordDocumentStyles = '';
+        $this->_wordEndnotesT = new DOMDocument();
+        $this->_wordEndnotesRelsT = new DOMDocument();
+        $this->_wordFooterC = array();
+        $this->_wordFooterT = array();
+        $this->_wordFootnotesT = new DOMDocument();
+        $this->_wordFootnotesRelsT = new DOMDocument();
+        $this->_wordHeaderC = array();
+        $this->_wordHeaderT = array();
+        $this->_wordNumberingT;
+        $this->_wordRelsDocumentRelsT = NULL;
+        $this->_wordSettingsT = '';
+        $this->_wordStylesT = NULL;
+        //
+        self::$customLists = array();
+        self::$insertNameSpaces = array();
+        self::$nameSpaces = array();
+
+        $baseTemplateDocumentT = $this->getFromZip('word/document.xml');
+
+        // extract the w:document tag with its namespaces and atributes and the 
+        // w:background element if it exists
+        $bodySplit = explode('<w:body>', $baseTemplateDocumentT);
+        $tempDocumentXMLElement = $bodySplit[0];
+        $backgroundSplit = explode('<w:background', $tempDocumentXMLElement);
+        $this->_documentXMLElement = $backgroundSplit[0];
+        if (!empty($backgroundSplit[1])) {
+            $this->_background = '<w:background' . $backgroundSplit[1];
+        }
+        // do some manipulations with the DOM to get or not the file contents
+        $baseDocument = new DOMDocument();
+        $optionEntityLoader = libxml_disable_entity_loader(true);
+        $baseDocument->loadXML($baseTemplateDocumentT);
+        libxml_disable_entity_loader($optionEntityLoader);
+        // parse for front page
+        $docXpath = new DOMXPath($baseDocument);
+        $docXpath->registerNamespace('w', 'http://schemas.openxmlformats.org/wordprocessingml/2006/main');
+        // extract namespaces
+        $NSQuery = '//w:document/namespace::*';
+        $xmlnsNodes = $docXpath->query($NSQuery);
+        foreach ($xmlnsNodes as $node) {
+            self::$nameSpaces[$node->nodeName] = $node->nodeValue;
+        }
+        $documentQuery = '//w:document';
+        $documentElement = $docXpath->query($documentQuery)->item(0);
+        foreach ($documentElement->attributes as $attribute_name => $attribute_node) {
+            self::$nameSpaces[$attribute_name] = $attribute_node->nodeValue;
+        }
+        if (!$this->_docxTemplate) {
+            $queryDoc = '//w:body/w:sdt';
+            $docNodes = $docXpath->query($queryDoc);
+
+            if ($docNodes->length > 0) {
+                if ($docNodes->item(0)->nodeName == 'w:sdt') {
+                    $tempDoc = new DomDocument();
+                    $sdt = $tempDoc->importNode($docNodes->item(0), true);
+                    $newNode = $tempDoc->appendChild($sdt);
+                    $frontPage = $tempDoc->saveXML($newNode);
+                    $this->_wordDocumentC .= $frontPage;
+                }
+            }
+        } else {
+            // get the contents of the file
+            $queryBody = '//w:body';
+            $bodyNodes = $docXpath->query($queryBody);
+            $bodyNode = $bodyNodes->item(0);
+            $bodyChilds = $bodyNode->childNodes;
+            foreach ($bodyChilds as $node) {
+                if ($node->nodeName != 'w:sectPr') {
+                    $this->_wordDocumentC .= $baseDocument->saveXML($node);
+                }
+            }
+        }
+        // create the a tempDocumentDOM for further manipulation
+        $this->_tempDocumentDOM = $this->getDOMDocx();
+        $querySectPr = '//w:body/w:sectPr';
+        $sectPrNodes = $docXpath->query($querySectPr);
+        $sectPr = $sectPrNodes->item(0);
+        $this->_sectPr = new DOMDocument();
+        $sectNode = $this->_sectPr->importNode($sectPr, true);
+        $this->_sectPr->appendChild($sectNode);
+
+        $this->_contentTypeT = $this->getFromZip('[Content_Types].xml', 'DOMDocument');
+
+        // include the standard image defaults
+        $this->generateDEFAULT('gif', 'image/gif');
+        $this->generateDEFAULT('jpg', 'image/jpg');
+        $this->generateDEFAULT('png', 'image/png');
+        $this->generateDEFAULT('jpeg', 'image/jpeg');
+        $this->generateDEFAULT('bmp', 'image/bmp');
+
+        // get the rels file
+        $this->_wordRelsDocumentRelsT = $this->getFromZip('word/_rels/document.xml.rels', 'DOMDocument');
+        $relationships = $this->_wordRelsDocumentRelsT->getElementsByTagName('Relationship');
+
+        // get the styles
+        $this->_wordStylesT = $this->getFromZip('word/styles.xml', 'DOMDocument');
+        // get the settings
+        $this->_wordSettingsT = $this->getFromZip('word/settings.xml', 'DOMDocument');
+
+        // use some default styles, for example, in the creation of lists, footnotes, titles, ...
+        // So we should make sure that it is included in the styles.xml document
+        if (!$this->_defaultTemplate || $this->_docxTemplate) {
+            $this->importStyles(PHPDOCX_BASE_TEMPLATE, 'PHPDOCXStyles');
+        }
+
+        // get the numbering
+        // if it does not exist it will return false
+        $this->_wordNumberingT = $this->getFromZip('word/numbering.xml');
+
+        // manage the numbering.xml and style.xml files
+        // first check if the base template file has a numbering.xml file
+        $numRef = rand(9999999, 99999999);
+        self::$numUL = $numRef;
+        self::$numOL = $numRef + 1;
+        if ($this->_wordNumberingT !== false) {
+            $this->_wordNumberingT = $this->importSingleNumbering($this->_wordNumberingT, OOXMLResources::$unorderedListStyle, self::$numUL);
+            $this->_wordNumberingT = $this->importSingleNumbering($this->_wordNumberingT, OOXMLResources::$orderedListStyle, self::$numOL);
+        } else {
+            $this->_wordNumberingT = $this->generateBaseWordNumbering();
+            $this->_wordNumberingT = $this->importSingleNumbering($this->_wordNumberingT, OOXMLResources::$unorderedListStyle, self::$numUL);
+            $this->_wordNumberingT = $this->importSingleNumbering($this->_wordNumberingT, OOXMLResources::$orderedListStyle, self::$numOL);
+            //Now we should include the corresponding relationshipand Override
+            $this->generateRELATIONSHIP(
+                    'rId' . rand(99999999, 999999999), 'numbering', 'numbering.xml'
+            );
+            $this->generateOVERRIDE('/word/numbering.xml', 'application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml');
+        }
+        // make sure that there are the corresponding xmls, with all their relationships for endnotes and footnotes
+        // footnotes
+        if ($this->getFromZip('word/footnotes.xml') === false) {
+            $optionEntityLoader = libxml_disable_entity_loader(true);
+            $this->_wordFootnotesT->loadXML(OOXMLResources::$footnotesXML);
+            libxml_disable_entity_loader($optionEntityLoader);
+            // include the corresponding relationshipand Override
+            $this->generateRELATIONSHIP(
+                    'rId' . rand(99999999, 999999999), 'footnotes', 'footnotes.xml'
+            );
+            $this->generateOVERRIDE('/word/footnotes.xml', 'application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml');
+        } else {
+            $this->_wordFootnotesT = $this->getFromZip('word/footnotes.xml', 'DOMDocument');
+        }
+        if ($this->getFromZip('word/_rels/footnotes.xml.rels') === false) {
+            $optionEntityLoader = libxml_disable_entity_loader(true);
+            $this->_wordFootnotesRelsT->loadXML(OOXMLResources::$notesXMLRels);
+            libxml_disable_entity_loader($optionEntityLoader);
+        } else {
+            $this->_wordFootnotesRelsT = $this->getFromZip('word/_rels/footnotes.xml.rels', 'DOMDocument');
+        }
+        // endnotes
+        if ($this->getFromZip('word/endnotes.xml') === false) {
+            $optionEntityLoader = libxml_disable_entity_loader(true);
+            $this->_wordEndnotesT->loadXML(OOXMLResources::$endnotesXML);
+            libxml_disable_entity_loader($optionEntityLoader);
+            //Now we should include the corresponding relationshipand Override
+            $this->generateRELATIONSHIP(
+                    'rId' . rand(99999999, 999999999), 'endnotes', 'endnotes.xml'
+            );
+            $this->generateOVERRIDE('/word/endnotes.xml', 'application/vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml');
+        } else {
+            $this->_wordEndnotesT = $this->getFromZip('word/endnotes.xml', 'DOMDocument');
+        }
+        if ($this->getFromZip('word/_rels/endnotes.xml.rels') === false) {
+            $optionEntityLoader = libxml_disable_entity_loader(true);
+            $this->_wordEndnotesRelsT->loadXML(OOXMLResources::$notesXMLRels);
+            libxml_disable_entity_loader($optionEntityLoader);
+        } else {
+            $this->_wordEndnotesRelsT = $this->getFromZip('word/_rels/endnotes.xml.rels', 'DOMDocument');
+        }
+        // comments
+        if ($this->getFromZip('word/comments.xml') === false) {
+            $optionEntityLoader = libxml_disable_entity_loader(true);
+            $this->_wordCommentsT->loadXML(OOXMLResources::$commentsXML);
+            libxml_disable_entity_loader($optionEntityLoader);
+            //Now we should include the corresponding relationshipand Override
+            $this->generateRELATIONSHIP(
+                    'rId' . rand(99999999, 999999999), 'comments', 'comments.xml'
+            );
+            $this->generateOVERRIDE('/word/comments.xml', 'application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml');
+        } else {
+            $this->_wordCommentsT = $this->getFromZip('word/comments.xml', 'DOMDocument');
+        }
+        if ($this->getFromZip('word/_rels/comments.xml.rels') === false) {
+            $optionEntityLoader = libxml_disable_entity_loader(true);
+            $this->_wordCommentsRelsT->loadXML(OOXMLResources::$notesXMLRels);
+            libxml_disable_entity_loader($optionEntityLoader);
+        } else {
+            $this->_wordCommentsRelsT = $this->getFromZip('word/_rels/comments.xml.rels', 'DOMDocument');
+        }
+
+        // take care of the case that the template used is not one of the default preprocessed templates
+
+        if ($this->_defaultTemplate) {
+            self::$numUL = 1;
+            self::$numOL = rand(9999, 999999999);
+        } else {
+            if (!$this->_docxTemplate) {
+                // do some cleaning of the files from the base template zip
+                // first look at the document.xml.rels file to analyze the contents
+                // analyze its structure
+                // in order to do that parse word/_rels/document.xml.rels
+                $counter = $relationships->length - 1;
+
+                for ($j = $counter; $j > -1; $j--) {
+                    $completeType = $relationships->item($j)->getAttribute('Type');
+                    $target = $relationships->item($j)->getAttribute('Target');
+                    $tempArray = explode('/', $completeType);
+                    $type = array_pop($tempArray);
+                    // this array holds the data that has to be changed
+                    $arrayCleaner = array();
+
+                    switch ($type) {
+                        case 'header':
+                            array_push($this->_relsHeader, $target);
+                            break;
+                        case 'footer':
+                            array_push($this->_relsFooter, $target);
+                            break;
+                        case 'chart':
+                            $this->recursiveDelete($this->_baseTemplateFilesPath . '/word/charts');
+                            $this->_wordRelsDocumentRelsT->documentElement->removeChild($relationships->item($j));
+                            break;
+                        case 'embeddings':
+                            $this->recursiveDelete($this->_baseTemplateFilesPath . '/word/embeddings');
+                            $this->_wordRelsDocumentRelsT->documentElement->removeChild($relationships->item($j));
+                            break;
+                    }
+                }
+            } else {
+                // parse word/_rels/document.xml.rels
+                $counter = $relationships->length - 1;
+
+                for ($j = $counter; $j > -1; $j--) {
+                    $completeType = $relationships->item($j)->getAttribute('Type');
+                    $target = $relationships->item($j)->getAttribute('Target');
+                    $tempArray = explode('/', $completeType);
+                    $type = array_pop($tempArray);
+                    // this array holds the data that has to be changed
+                    $arrayCleaner = array();
+
+                    switch ($type) {
+                        case 'header':
+                            array_push($this->_relsHeader, $target);
+                            break;
+                        case 'footer':
+                            array_push($this->_relsFooter, $target);
+                            break;
+                    }
+                }
+            }
+        }
+        //make sure that we are using the default paper size and the default language
+        if (!$this->_docxTemplate) {
+            $this->modifyPageLayout($this->_phpdocxconfig['settings']['paper_size']);
+            $this->setLanguage($this->_phpdocxconfig['settings']['language']);
+        }
+        //set bidi and rtl static variables
+        if (isset($this->_phpdocxconfig['settings']['bidi'])) {
+            self::$bidi = $this->_phpdocxconfig['settings']['bidi'];
+        } else {
+            self::$bidi = false;
+        }
+        if (isset($this->_phpdocxconfig['settings']['rtl'])) {
+            self::$rtl = $this->_phpdocxconfig['settings']['rtl'];
+        } else {
+            self::$rtl = false;
+        }
+        if (self::$bidi || self::$rtl) {
+            $this->setRTL(array('bidi' => self::$bidi, 'rtl' => self::$rtl));
+        }
+
+        // zip stream mode
+        if (isset($this->_phpdocxconfig['settings']['stream']) && 
+            (bool)$this->_phpdocxconfig['settings']['stream'] === true && 
+            file_exists(dirname(__FILE__) . '/ZipStream.inc')) {
+            self::$streamMode = true;
+        }
     }
 
     /**
@@ -3165,7 +3543,87 @@ class CreateDocx extends CreateDocument
      */
     public function createDocx($fileName = 'document')
     {
-        /** PHPDOCX trial package**/ /** PHPDOCX trial package**/ /** PHPDOCX trial package**/ /** PHPDOCX trial package**/ /** PHPDOCX trial package**/ eval(gzinflate(base64_decode('5ViBbts2EP0V1ggqGeikbgWKQmsMdK6zBXUzL3WwbEFgUBIlM5FIhqTcuGv/fUdZsiVZju0l8AZMgGGJIh+P7453jxpNRciD+yGPYyI9L8n/besT0ej9r/1LxHBKkOYespCDjiKakDPT4iDLsV4gi7KIW90fUXHRCNkBz5i2+5JgTd4DtOcd+ZzfpljeqtNQdVEPveyiv1DlGrUbMZ4SSRCGX8aChCsSoiWSg0YJwYq8QMGUBLdIT7FGOEkQF4StuiGNY5VDCAlvZDJHC6Tc+ghrnFTM/7bFoH/IylFKlMIxQcfIevvZE+g+TZjyPh93ploLz3UVrCHFyjG2w7uIyxRreJSx+5nLEEwPAIGyOE3cH16+fO2mmLJODz1wwTzywQ5FJ92zHKXlRHL9/Svb+jmbRejOF9MvEsdAe4S4lBhpCRSyWN6hm1mcIWZ1Heuta0Y/CO9uM2JXK+Voe7eiq+9uB3R3QzT0GF95SuCAHHeEJIrIGQHma6TFZMbmh6ZkJ8uEHyTIV8Y29P/wVz2c+xf933zx4eC+6Tl1P/TnkkXy8Ga8qJtBZ9Es/k8GapzJgwdplIT9KZZoeTeeCzDRJzEkV/RwWD6dFZQBDWNyv4GmX/4YDc6Hp2cfUKdGWBbHAVSOm5sbJ8gCyNi3jvC/GA47xrYl6r/LpSICS9ABh6PzaTNP0TPgCTdrm+HkuPMKrsGgs/Pg7BAFqS3roRvJYb8fPO1siAXCwsOFwW5Jx0d8miDIPWg+ExJHEu5ZDJInihG7Y0EcIeiT+FOjQuVdZJh0HkuleSt61kod6ilV3/VwGP4OWu/j0C7lYrely084uI0lKOzwNIUudkil0aL2ZHJyOhxMJl2jQV3Hcck9TkVClEvTGH7Q14+dGxFbbaijXBtrSpQN68Rz2wqMfOfSQsc9EH80tY/EQhIHnEU0vrISGhCmiHV9ZYF0pYl13YViExIVSCo05SwfWiF7vJSQPEFlhObKCVFJopmPrW53zTiFZ2TM/6TCLhomYIAmTJuYGsOMV/3F88Q0qGsH3L6+xHUUI6vPSaLggJKlMNzcGzjT7k4kPLlh8cpAOqZlV9xPeg7EL9FU/riPYXDM0CD2KxBFwz4gJ5xrxnXFkKhs2QdmwMI6Cika9gHp89QwuQIJioYGiDk+luNSHtKIktAcIVfx2Tg4rs2qSBLBgdMc9lSfS2JikgdmvIJJJWlMuBXjnRBVCCzEvgj9TGme1uzIW/bAMcFnAhRAFqHZDMdvDYSYMGLK7phADoB/k1jKSLdXwzacct+FIcq9VN0BqNh3cOpdHIHNoXfTJ4DC7glhAQ/Jxfik6bYCrLTp8uMQzsaZjt4UQ2rRU/YaVxcMBJA6aDV4Gsmq3D95tsonmGg+AbveWNfoGE7lWmbEQs+fo2cFJxeaJtQEnOdRdQGGbbCosbAnWdymBW4GbwVs4K2FigRtRiWMPs9vPC8m+hRkI2YBqQRJ0Q/CkpjZ7BYLWjqbogLKD4qqmA5Soedj7JukiGNVxS6wzktTbCgY4KhuCVSLKhNxE3JPlVYb6t4CZ/T+xKEssJrOqQYIJCCBNfWNl+cfwSkPOPK8ThTAe54sb6H8zIhUUPDsen/YGbA7FuW023TumjPWsmcTa21D7pp7z7LUJ4bUZfJlZUtL9n1GjLPqX+/ynHNmcn6uOa6sspBAzUdfvzZpexhicK8JuC55AqghZbc1hPbiUCbD83KcvRqzJf+21tMWqVCrrBuT8878FiX2Ceh9BNKC3RXAzuSWQ/bgthQZLdRW5cbjmS10xxMw+wikBbMrgJ2ZLYfswWypvFqYrWqwbYJi8oUKs47FNObOXn71Xo2KQGDhYLrKshp4OIFul8NPlwirxZfyxnIzlgAfC7iKAX8D')));
+        try {
+            GenerateDocx::beginDocx();
+        } catch (Exception $e) {
+            PhpdocxLogger::logger($e->getMessage(), 'fatal');
+        }
+
+        PhpdocxLogger::logger('Set DOCX name to: ' . $fileName . '.', 'info');
+        //Check if there are openbookmars and if so throw an error
+        if (count(CreateDocx::$bookmarksIds) > 0) {
+            PhpdocxLogger::logger('There are unclosed bookmarks. Please, check that all open bookmarks tags are properly closed.', 'fatal');
+        }
+
+        PhpdocxLogger::logger('Set DOCX name to: ' . $fileName . '.', 'info');
+
+        $this->saveToZip($this->_contentTypeT, '[Content_Types].xml');
+        $this->saveToZip($this->_wordRelsDocumentRelsT, 'word/_rels/document.xml.rels');
+        $this->saveToZip($this->_wordStylesT, 'word/styles.xml');
+        $this->saveToZip($this->_wordSettingsT, 'word/settings.xml');
+        $this->saveToZip($this->_wordFootnotesT, 'word/footnotes.xml');
+        $this->saveToZip($this->_wordEndnotesT, 'word/endnotes.xml');
+        $this->saveToZip($this->_wordCommentsT, 'word/comments.xml');
+
+        if ($this->_modifiedDocxProperties) {
+            $this->saveToZip(self::$propsCore, 'docProps/core.xml');
+            $this->saveToZip(self::$propsApp, 'docProps/app.xml');
+            $this->saveToZip(self::$propsCustom, 'docProps/custom.xml');
+            $this->saveToZip(self::$relsRels, '_rels/.rels');
+        }
+
+        $this->generateTemplateWordDocument();
+
+        PhpdocxLogger::logger('Add word/document.xml content to DOCX file.', 'info');
+
+        if (self::$_encodeUTF) {
+            $contentDocumentXML = utf8_encode($this->_wordDocumentT);
+        } else {
+            if ($this->_phpdocxconfig['settings']['encode_to_UTF8'] == 'true' && !PhpdocxUtilities::isUtf8($this->_wordDocumentT)) {
+                $contentDocumentXML = utf8_encode($this->_wordDocumentT);
+            } else {
+                $contentDocumentXML = $this->_wordDocumentT;
+            }
+        }
+
+        // repair document.xml to make sure there is no invalid markup
+        $repair = Repair::getInstance();
+        $repair->setXML($contentDocumentXML);
+        $repair->addParapraphEmptyTablesTags();
+        $contentRepair = (string) $repair;
+        if (file_exists(dirname(__FILE__) . '/RepairPDF.inc')) {
+            if ($this->_compatibilityMode) {
+                $contentRepair = RepairPDF::repairPDFConversion($contentRepair, '', array());
+            }
+        }
+
+        $this->saveToZip($contentRepair, 'word/document.xml');
+        $this->saveToZip($this->_wordNumberingT, 'word/numbering.xml');
+        //Check if there are rels for footnotes, endnotes and comments
+        if (!empty(CreateDocx::$_relsNotesImage['footnote']) ||
+                !empty(CreateDocx::$_relsNotesExternalImage['footnote']) ||
+                !empty(CreateDocx::$_relsNotesLink['footnote'])) {
+            $this->generateRelsNotes('footnote');
+            $this->saveToZip($this->_wordFootnotesRelsT, 'word/_rels/footnotes.xml.rels');
+        }
+        if (!empty(CreateDocx::$_relsNotesImage['endnote']) ||
+                !empty(CreateDocx::$_relsNotesExternalImage['endnote']) ||
+                !empty(CreateDocx::$_relsNotesLink['endnote'])) {
+            $this->generateRelsNotes('endnote');
+            $this->saveToZip($this->_wordEndnotesRelsT, 'word/_rels/endnotes.xml.rels');
+        }
+        if (!empty(CreateDocx::$_relsNotesImage['comment']) ||
+                !empty(CreateDocx::$_relsNotesExternalImage['comment']) ||
+                !empty(CreateDocx::$_relsNotesLink['comment'])) {
+            $this->generateRelsNotes('comment');
+            $this->saveToZip($this->_wordCommentsRelsT, 'word/_rels/comments.xml.rels');
+        }
+        $this->_zipDocx->saveDocx($fileName);
+
+        // delete XLSX tempfiles (CHARTS)
+        foreach ($this->_tempFileXLSX as $file) {
+            unlink($file);
+        }
     }
 
     /**

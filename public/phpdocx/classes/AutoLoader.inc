@@ -8,7 +8,7 @@
  * @copyright  Copyright (c) Narcea Producciones Multimedia S.L.
  *             (http://www.2mdc.com)
  * @license    phpdocx LICENSE
- * @version    2016.25.08
+ * @version    2016.05.01
  * @link       http://www.phpdocx.com
  */
 class AutoLoader
@@ -49,19 +49,9 @@ class AutoLoader
     {
         $pathPhpdocx = dirname(__FILE__) . '/' . $className . '.inc';
         if (file_exists($pathPhpdocx)) {
-            $arrayClassesEnc = array(
-                'CreateDocx',
-                'AutoLoader',
-                'Phpdocx_config',
-                'CreateElement',
-                'Helpers',
-            );
-            if (in_array($className, $arrayClassesEnc)) {
-                require_once $pathPhpdocx;
-            } else {
-                eval (gzinflate(base64_decode(file_get_contents($pathPhpdocx))));
-            }
+            require_once $pathPhpdocx;
         }
+        require_once dirname(__FILE__) . '/Helpers.inc';
     }
 
     /**

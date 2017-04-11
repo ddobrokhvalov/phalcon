@@ -12,7 +12,7 @@ $style = array(
 	'borderRightColor' => '000099',
 	'borderWidth' => 12,
 	'borderTopWidth' => 24,
-	'indentLeft' => 20
+	'indentLeft' => 920
 	);
 //Create custom style
 $docx->createParagraphStyle('myStyle', $style);

@@ -1,1 +1,2695 @@
-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
+<?php
+
+/**
+ * Embedd HTML as WordML
+ *
+ * @category   Phpdocx
+ * @package    transform
+ * @copyright  Copyright (c) Narcea Producciones Multimedia S.L.
+ *             (http://www.2mdc.com)
+ * @license    phpdocx LICENSE
+ * @version    2016.05.01
+ * @link       http://www.phpdocx.com
+ */
+class HTML2WordML
+{
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var aray
+     */
+    public static $borderRow;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var array
+     */
+    public static $colors;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var string
+     */
+    public static $currentCustomList;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var array 
+     */
+    public static $customLists;
+
+    /**
+     *
+     * @access public
+     * @var string
+     */
+    public $customListStyles;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var array
+     */
+    public static $linkImages;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var array
+     */
+    public static $linkTargets;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var array
+     */
+    public static $borders;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var array
+     */
+    public static $borderStyles;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var array
+     */
+    public static $imageBorderStyles;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var array
+     */
+    public static $imageVertAlignProps;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var int
+     */
+    public static $openBookmark;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var int
+     */
+    public static $openBr;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var boolean
+     */
+    public static $openLinks;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var boolean
+     */
+    public static $openPs;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var boolean
+     */
+    public static $openSelect;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var string
+     */
+    public static $openScript;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var integer
+     */
+    public static $openTable;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var array
+     */
+    public static $openTags;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var boolean
+     */
+    public static $openTextArea;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var array
+     */
+    public static $orderedLists;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var string
+     */
+    public static $rowColor;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var boolean
+     */
+    public static $selectedOption;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var array
+     */
+    public static $selectOptions;
+
+    /**
+     *
+     * @access public
+     * @var boolean
+     */
+    public $strictWordStyles;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var array
+     */
+    public static $tableGrid;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var array
+     */
+    public static $text_align;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var array
+     */
+    public static $text_direction;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var string
+     */
+    public static $textArea;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var string
+     */
+    public static $WordML;
+
+    /**
+     *
+     * @access public
+     * @static
+     * @var string
+     */
+    public static $zipDocx;
+
+    /**
+     *
+     * @access private
+     * @var Logger
+     */
+    private $log;
+
+    /**
+     * Class constructor
+     */
+    public function __construct($zipDocx)
+    {
+        self::$zipDocx = $zipDocx;
+        self::$openBookmark = 0;
+        self::$openBr = 0;
+        self::$openTags = array();
+        self::$openPs = false;
+        self::$openSelect = false;
+        self::$selectOptions = array();
+        self::$openTextArea = false;
+        self::$textArea = '';
+        self::$tableGrid = array();
+        self::$openScript = '';
+        self::$currentCustomList = NULL;
+        self::$customLists = array();
+        self::$orderedLists = array();
+        self::$openTable = 0;
+        self::$openLinks = false;
+        self::$WordML = '';
+        self::$linkTargets = array();
+        self::$linkImages = array();
+        self::$borderRow = array();
+        self::$borders = array('top', 'left', 'bottom', 'right');
+        self::$colors = array(
+            'AliceBlue' => 'F0F8FF',
+            'AntiqueWhite' => 'FAEBD7',
+            'Aqua' => '00FFFF',
+            'Aquamarine' => '7FFFD4',
+            'Azure' => 'F0FFFF',
+            'Beige' => 'F5F5DC',
+            'Bisque' => 'FFE4C4',
+            'Black' => '000000',
+            'BlanchedAlmond' => 'FFEBCD',
+            'Blue' => '0000FF',
+            'BlueViolet' => '8A2BE2',
+            'Brown' => 'A52A2A',
+            'BurlyWood' => 'DEB887',
+            'CadetBlue' => '5F9EA0',
+            'Chartreuse' => '7FFF00',
+            'Chocolate' => 'D2691E',
+            'Coral' => 'FF7F50',
+            'CornflowerBlue' => '6495ED',
+            'Cornsilk' => 'FFF8DC',
+            'Crimson' => 'DC143C',
+            'Cyan' => '00FFFF',
+            'DarkBlue' => '00008B',
+            'DarkCyan' => '008B8B',
+            'DarkGoldenRod' => 'B8860B',
+            'DarkGray' => 'A9A9A9',
+            'DarkGrey' => 'A9A9A9',
+            'DarkGreen' => '006400',
+            'DarkKhaki' => 'BDB76B',
+            'DarkMagenta' => '8B008B',
+            'DarkOliveGreen' => '556B2F',
+            'Darkorange' => 'FF8C00',
+            'DarkOrchid' => '9932CC',
+            'DarkRed' => '8B0000',
+            'DarkSalmon' => 'E9967A',
+            'DarkSeaGreen' => '8FBC8F',
+            'DarkSlateBlue' => '483D8B',
+            'DarkSlateGray' => '2F4F4F',
+            'DarkSlateGrey' => '2F4F4F',
+            'DarkTurquoise' => '00CED1',
+            'DarkViolet' => '9400D3',
+            'DeepPink' => 'FF1493',
+            'DeepSkyBlue' => '00BFFF',
+            'DimGray' => '696969',
+            'DimGrey' => '696969',
+            'DodgerBlue' => '1E90FF',
+            'FireBrick' => 'B22222',
+            'FloralWhite' => 'FFFAF0',
+            'ForestGreen' => '228B22',
+            'Fuchsia' => 'FF00FF',
+            'Gainsboro' => 'DCDCDC',
+            'GhostWhite' => 'F8F8FF',
+            'Gold' => 'FFD700',
+            'GoldenRod' => 'DAA520',
+            'Gray' => '808080',
+            'Grey' => '808080',
+            'Green' => '008000',
+            'GreenYellow' => 'ADFF2F',
+            'HoneyDew' => 'F0FFF0',
+            'HotPink' => 'FF69B4',
+            'IndianRed' => 'CD5C5C',
+            'Indigo' => '4B0082',
+            'Ivory' => 'FFFFF0',
+            'Khaki' => 'F0E68C',
+            'Lavender' => 'E6E6FA',
+            'LavenderBlush' => 'FFF0F5',
+            'LawnGreen' => '7CFC00',
+            'LemonChiffon' => 'FFFACD',
+            'LightBlue' => 'ADD8E6',
+            'LightCoral' => 'F08080',
+            'LightCyan' => 'E0FFFF',
+            'LightGoldenRodYellow' => 'FAFAD2',
+            'LightGray' => 'D3D3D3',
+            'LightGrey' => 'D3D3D3',
+            'LightGreen' => '90EE90',
+            'LightPink' => 'FFB6C1',
+            'LightSalmon' => 'FFA07A',
+            'LightSeaGreen' => '20B2AA',
+            'LightSkyBlue' => '87CEFA',
+            'LightSlateGray' => '778899',
+            'LightSlateGrey' => '778899',
+            'LightSteelBlue' => 'B0C4DE',
+            'LightYellow' => 'FFFFE0',
+            'Lime' => '00FF00',
+            'LimeGreen' => '32CD32',
+            'Linen' => 'FAF0E6',
+            'Magenta' => 'FF00FF',
+            'Maroon' => '800000',
+            'MediumAquaMarine' => '66CDAA',
+            'MediumBlue' => '0000CD',
+            'MediumOrchid' => 'BA55D3',
+            'MediumPurple' => '9370D8',
+            'MediumSeaGreen' => '3CB371',
+            'MediumSlateBlue' => '7B68EE',
+            'MediumSpringGreen' => '00FA9A',
+            'MediumTurquoise' => '48D1CC',
+            'MediumVioletRed' => 'C71585',
+            'MidnightBlue' => '191970',
+            'MintCream' => 'F5FFFA',
+            'MistyRose' => 'FFE4E1',
+            'Moccasin' => 'FFE4B5',
+            'NavajoWhite' => 'FFDEAD',
+            'Navy' => '000080',
+            'OldLace' => 'FDF5E6',
+            'Olive' => '808000',
+            'OliveDrab' => '6B8E23',
+            'Orange' => 'FFA500',
+            'OrangeRed' => 'FF4500',
+            'Orchid' => 'DA70D6',
+            'PaleGoldenRod' => 'EEE8AA',
+            'PaleGreen' => '98FB98',
+            'PaleTurquoise' => 'AFEEEE',
+            'PaleVioletRed' => 'D87093',
+            'PapayaWhip' => 'FFEFD5',
+            'PeachPuff' => 'FFDAB9',
+            'Peru' => 'CD853F',
+            'Pink' => 'FFC0CB',
+            'Plum' => 'DDA0DD',
+            'PowderBlue' => 'B0E0E6',
+            'Purple' => '800080',
+            'Red' => 'FF0000',
+            'RosyBrown' => 'BC8F8F',
+            'RoyalBlue' => '4169E1',
+            'SaddleBrown' => '8B4513',
+            'Salmon' => 'FA8072',
+            'SandyBrown' => 'F4A460',
+            'SeaGreen' => '2E8B57',
+            'SeaShell' => 'FFF5EE',
+            'Sienna' => 'A0522D',
+            'Silver' => 'C0C0C0',
+            'SkyBlue' => '87CEEB',
+            'SlateBlue' => '6A5ACD',
+            'SlateGray' => '708090',
+            'SlateGrey' => '708090',
+            'Snow' => 'FFFAFA',
+            'SpringGreen' => '00FF7F',
+            'SteelBlue' => '4682B4',
+            'Tan' => 'D2B48C',
+            'Teal' => '008080',
+            'Thistle' => 'D8BFD8',
+            'Tomato' => 'FF6347',
+            'Turquoise' => '40E0D0',
+            'Violet' => 'EE82EE',
+            'Wheat' => 'F5DEB3',
+            'White' => 'FFFFFF',
+            'WhiteSmoke' => 'F5F5F5',
+            'Yellow' => 'FFFF00',
+            'YellowGreen' => '9ACD32'
+        );
+
+        self::$borderStyles = array(
+            'none' => 'nil',
+            'dotted' => 'dotted',
+            'dashed' => 'dashed',
+            'solid' => 'single',
+            'double' => 'double',
+            'groove' => 'threeDEngrave',
+            'ridge' => 'single', //threeDEmboss: we have overriden this border style that is the one by default in HTML tables
+            'inset' => 'inset',
+            'outset' => 'outset'
+        );
+        self::$imageBorderStyles = array(
+            'none' => 'nil',
+            'dotted' => 'dot',
+            'dashed' => 'dash',
+            'solid' => 'solid',
+            //By the time being we parse all other types as solid
+            'double' => 'solid',
+            'groove' => 'solid',
+            'ridge' => 'solid',
+            'inset' => 'solid',
+            'outset' => 'solid'
+        );
+        self::$imageVertAlignProps = array(
+            'top' => 'top',
+            'text-top' => 'top',
+            'middle' => 'center'
+        );
+
+        self::$text_align = array(
+            'left' => 'left',
+            'center' => 'center',
+            'right' => 'right',
+            'justify' => 'both'
+        );
+
+        self::$text_direction = array(
+            'ltr' => 'lrTb', //Left to Right, Top to Bottom
+            'rtl' => 'tbRl', //Right to Left, Top to Bottom
+            'lrTb' => 'lrTb', //Left to Right, Top to Bottom
+            'tbRl' => 'tbRl', //	Top to Bottom, Right to Left
+            'btLr' => 'btLr', //	Bottom to Top, Left to Right
+            'lrTbV' => 'lrTbV', //Left to Right, Top to Bottom Rotated
+            'tbRlV' => 'tbRlV', //Top to Bottom, Right to Left Rotated
+            'tbLrV' => 'tbLrV', //Top to Bottom, Left to Right Rotated  
+            'lrtb' => 'lrTb', //Left to Right, Top to Bottom
+            'tbrl' => 'tbRl', //	Top to Bottom, Right to Left
+            'btlr' => 'btLr', //	Bottom to Top, Left to Right
+            'lrtbv' => 'lrTbV', //Left to Right, Top to Bottom Rotated
+            'tbrlv' => 'tbRlV', //Top to Bottom, Right to Left Rotated
+            'tblrv' => 'tbLrV', //Top to Bottom, Left to Right Rotated 
+        );
+
+        $this->isFile = false;
+        $this->baseURL = '';
+        $this->context = '';
+        $this->customListStyles = false;
+        $this->parseDivs = false;
+        $this->parseFloats = false;
+        $this->wordStyles = array();
+        $this->tableStyle = ''; //FIXME deprecated
+        $this->paragraphStyle = ''; //FIXME deprecated
+        $this->downloadImages = false;
+        $this->parseAnchors = false;
+        $this->strictWordStyles = false;
+    }
+
+    /**
+     * Class destructor
+     */
+    public function __destruct()
+    {
+        
+    }
+
+    /**
+     * This is the function that launches the HTML parsing
+     *
+     * @access public
+     * @param string $html
+     * @param array $options
+     * @param mixed $filter
+     * @return array
+     */
+    public function render($html, $options)
+    {
+        if (isset($options['isFile'])) {
+            $this->isFile = $options['isFile'];
+        }
+        if (isset($options['baseURL'])) {
+            $this->baseURL = $options['baseURL'];
+        } else if (!empty($options['isFile'])) {
+            if ($html[strlen($html) - 1] == '/') {
+                $this->baseURL = $html;
+            } else {
+                $parsedURL = parse_url($html);
+                $pathParts = @explode('/', $parsedURL['path']); //TODO bad parsing if "http://domain.tld" or if "http://domain.tld/path/path.with.point"
+                $last = array_pop($pathParts);
+                if (strpos($last, '.') > 0) {
+                    //Do nothing
+                } else {
+                    $pathParts[] = $last;
+                }
+                $newPath = implode('/', $pathParts);
+                $this->baseURL = $parsedURL['scheme'] . '://' . $parsedURL['host'] . $newPath . '/';
+            }
+        }
+        if (isset($options['context'])) {
+            $this->context = $options['context'];
+        }
+        if (isset($options['customListStyles'])) {
+            $this->customListStyles = $options['customListStyles'];
+        }
+        if (isset($options['parseAnchors'])) {
+            $this->parseAnchors = $options['parseAnchors'];
+        }
+        if (isset($options['parseDivsAsPs']) && $options['parseDivsAsPs']) {//For backwards compatibility with v2.7
+            $options['parseDivs'] = 'paragraph';
+        }
+        if (isset($options['parseDivs'])) {
+            if ($options['parseDivs'] == 'table' || $options['parseDivs'] == 'paragraph')
+                $this->parseDivs = $options['parseDivs'];
+            else
+                $this->parseDivs = false;
+        }
+        if (isset($options['parseFloats'])) {
+            $this->parseFloats = empty($options['parseFloats']) ? false : true;
+        }
+        if (isset($options['tableStyle'])) { //FIXME deprecated
+            //$this->tableStyle = $options['tableStyle'];
+            $this->wordStyles['<table>'] = $options['tableStyle'];
+            PhpdocxLogger::logger('"tableStyle" option is DEPRECATED, use "wordStyles" instead. ', 'info');
+        }
+        if (isset($options['paragraphStyle'])) { //FIXME deprecated
+            //$this->paragraphStyle = $options['paragraphStyle'];
+            $this->wordStyles['<p>'] = $options['paragraphStyle'];
+            PhpdocxLogger::logger('"paragraphStyle" option is DEPRECATED, use "wordStyles" instead. ', 'info');
+        }
+        if (isset($options['strictWordStyles'])) {
+            $this->strictWordStyles = $options['strictWordStyles'];
+        }
+        if (isset($options['wordStyles']) && is_array($options['wordStyles'])) {
+            if (empty($this->wordStyles)) {
+                $this->wordStyles = $options['wordStyles'];
+            } else { //FIXME change this when "tableStyle" and "paragraphStyle" dissapears
+                foreach ($options['wordStyles'] as $key => $value) {
+                    $this->wordStyles[$key] = $value;
+                }
+            }
+        }
+        if (isset($options['downloadImages'])) {
+            $this->downloadImages = $options['downloadImages'];
+        }
+
+        $filter = isset($options['filter']) ? $options['filter'] : '*';
+        $dompdfTree = $this->renderDompdf($html, $this->isFile, $filter, $this->parseDivs, $this->baseURL);
+        $this->_render($dompdfTree);
+
+        if (self::$openPs) {
+            self::$WordML .= '</w:p>';
+        }
+
+        self::$WordML = $this->repairWordML(self::$WordML);
+
+        return(array(self::$WordML, self::$linkTargets, self::$linkImages, self::$orderedLists, self::$customLists));
+    }
+
+    /**
+     * Get the HTML DOM tree from DOMPDF
+     *
+     * @access private
+     * @param string $html
+     * @param boolean $isFile
+     * @param string $filter
+     * @return array
+     */
+    private function renderDompdf($html, $isFile = false, $filter = '*', $parseDivs = false, $baseURL = '')
+    {
+        /* require_once(DIR_DOMPDF . "/dompdf_config.inc.php");
+          require_once(DOMPDF_INC_DIR . '/dompdf_treeOut.php');
+          $dompdf = new dompdf_treeOut(); */
+        require_once PHPDOCX_DIR_PARSER . '/parserhtml_config.inc.php';
+        $dompdf = new PARSERHTML();
+        $aTemp = $dompdf->getDompdfTree($html, $isFile, $filter, $parseDivs, $baseURL);
+        return($aTemp);
+    }
+
+    /**
+     * This function renders the HTML DOM elements recursively
+     *
+     * @access private
+     * @param array $nodo
+     * @param integer $depth
+     * @return array
+     */
+    private function _render($nodo, $depth = 0)
+    {
+        $this->_level = $depth;
+        if (isset($nodo['attributes']['id']) && $this->parseAnchors) {
+            $bookmarkId = rand(999999, 99999999);
+            self::$WordML .= '<w:bookmarkStart w:id="' . $bookmarkId . '" w:name="' . $nodo['attributes']['id'] . '" /><w:bookmarkEnd w:id="' . $bookmarkId . '" />';
+        }
+        $properties = isset($nodo['properties']) ? $nodo['properties'] : array();
+        switch ($nodo['nodeName']) {
+            case 'div':
+                if (!$this->parseDivs) {
+                    self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                    self::$openTags[$depth] = $nodo['nodeName'];
+                    //Test if the page_break_before property is set up
+                    if ((isset($properties['page_break_before']) && $properties['page_break_before'] == 'always')
+                        || (isset($properties['page_break_after']) && $properties['page_break_after'] == 'always')) {
+                        //Take care of open p tags
+                        if (self::$openPs) {
+                            if (self::$openLinks) {
+                                self::$WordML .= '</w:hyperlink>';
+                                self::$openLinks = false;
+                            }
+                            if (self::$openBookmark > 0) {
+                                $sRet.= '<w:bookmarkEnd w:id="' . self::$openBookmark . '" />';
+                                self::$openBookmark = 0;
+                            }
+                            self::$WordML .= '<w:r><w:br w:type="page"/></w:r></w:p>';
+                            self::$openPs = false;
+                        } else {
+                            if (isset($properties['page_break_after']) && $properties['page_break_after'] == 'always') {
+                                self::$WordML .= '<w:p><w:r><w:br w:type="page"/></w:r></w:p>';
+                            } else {
+                                //insert a page break within a paragraph
+                                self::$WordML .= '<w:p><w:pPr><w:pageBreakBefore w:val="on" /></w:pPr><w:r></w:r></w:p>';
+                            }
+                        }
+                    }
+                    break;
+                }
+            case 'h1':
+            case 'h2':
+            case 'h3':
+            case 'h4':
+            case 'h5':
+            case 'h6':
+            case 'p':
+            case 'dt':
+            case 'dd':
+                // extract the heading level
+                $level = substr($nodo['nodeName'], 1, 1);
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                if (self::$openPs) {
+                    if (self::$openLinks) {
+                        self::$WordML .= '</w:hyperlink>';
+                        self::$openLinks = false;
+                    }
+                    if (self::$openBookmark > 0) {
+                        $sRet.= '<w:bookmarkEnd w:id="' . self::$openBookmark . '" />';
+                        self::$openBookmark = 0;
+                    }
+                    self::$WordML .= '</w:p><w:p>';
+                } else {
+                    self::$WordML .= '<w:p>';
+                    self::$openPs = true;
+                }
+                self::$WordML .= $this->generatePPr($properties, $level, $nodo['attributes'], $nodo['nodeName']);
+                self::$openTags[$depth] = $nodo['nodeName'];
+                break;
+            case 'dl':
+            case 'caption':
+                self::$openTags[$depth] = $nodo['nodeName'];
+                break;
+            case 'ol':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+
+                $this->countTags = array_count_values(self::$openTags);
+                $listLevel = max((@$this->countTags['ul'] + @$this->countTags['ol']), 0);
+
+                if ($listLevel == 0) {
+                    CreateDocx::$numOL++;
+                    self::$orderedLists[] = CreateDocx::$numOL;
+                    self::$currentCustomList = NULL;
+                }
+            case 'ul':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                if ($this->customListStyles) {
+                    //Check if it is the first list or is nested within a existing list
+                    //and if custom list styles are to be used
+                    $this->countTags = array_count_values(self::$openTags);
+                    $listLevel = max((@$this->countTags['ul'] + @$this->countTags['ol']), 0);
+                    if ($listLevel == 0) {
+                        if (isset($nodo['attributes']) && isset($nodo['attributes']['class'])) {
+                            $currentListStyle = NULL;
+                            foreach ($nodo['attributes']['class'] as $value) {
+                                if (!empty(CreateDocx::$customLists[$value])) {
+                                    $currentListStyle = $value;
+                                }
+                            }
+                        }
+                        if (!empty($currentListStyle)) {
+                            self::$currentCustomList = rand(9999, 999999999);
+                            self::$customLists[] = array('name' => $currentListStyle . '_' . self::$currentCustomList, 'id' => self::$currentCustomList);
+                        } else {
+                            self::$currentCustomList = NULL;
+                        }
+                    }
+                }
+                self::$openTags[$depth] = $nodo['nodeName'];
+                break;
+            case 'li':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                if (self::$openPs) {
+                    if (self::$openLinks) {
+                        self::$WordML .= '</w:hyperlink>';
+                        self::$openLinks = false;
+                    }
+                    if (self::$openBookmark > 0) {
+                        $sRet.= '<w:bookmarkEnd w:id="' . self::$openBookmark . '" />';
+                        self::$openBookmark = 0;
+                    }
+                    self::$WordML .= '</w:p><w:p>';
+                } else {
+                    self::$WordML .= '<w:p>';
+                    self::$openPs = true;
+                }
+                self::$openTags[$depth] = $nodo['nodeName'];
+                self::$WordML .= $this->generateListPr($properties);
+                break;
+            case 'table':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                self::$openTable++;
+                self::$tableGrid[self::$openTable] = array();
+                if (self::$openPs) {
+                    if (self::$openLinks) {
+                        self::$WordML .= '</w:hyperlink>';
+                        self::$openLinks = false;
+                    }
+                    if (self::$openBookmark > 0) {
+                        $sRet.= '<w:bookmarkEnd w:id="' . self::$openBookmark . '" />';
+                        self::$openBookmark = 0;
+                    }
+                    if (self::$openBr) {
+                        self::$WordML .= '<w:r>';
+                        for ($j = 0; $j < self::$openBr; $j++) {
+                            self::$WordML .= '<w:br />';
+                        }
+                        self::$WordML .= '</w:r>';
+                        self::$openBr = 0;
+                    }
+                    self::$WordML .= '</w:p><w:tbl>';
+                    self::$openPs = false;
+                } else {
+                    self::$WordML .= '<w:tbl>';
+                }
+                self::$WordML .= $this->generateTblPr($properties, $nodo['attributes']);
+                self::$openTags[$depth] = $nodo['nodeName'];
+                break;
+            case 'tr':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                array_push(self::$tableGrid[self::$openTable], array());
+                self::$WordML .= '<w:tr>';
+                self::$WordML .= $this->generateTrPr($properties);
+                self::$openTags[$depth] = $nodo['nodeName'];
+                // Hack to circumvent the fact that in WordML it is not posible to give a background color to a whole row
+                self::$rowColor = $properties['background_color'];
+                // Hack to circumvent the fact that in WordML w:trPr has no border property, although it can be set trough table style
+                if (!isset($properties['border_top_color'])) {
+                    $properties['border_top_color'] = '';
+                }
+                if (!isset($properties['border_top_width'])) {
+                    $properties['border_top_width'] = '';
+                }
+                if (!isset($properties['border_top_style'])) {
+                    $properties['border_top_style'] = '';
+                }
+                if (!isset($properties['border_bottom_color'])) {
+                    $properties['border_bottom_color'] = '';
+                }
+                if (!isset($properties['border_bottom_width'])) {
+                    $properties['border_bottom_width'] = '';
+                }
+                if (!isset($properties['border_bottom_style'])) {
+                    $properties['border_bottom_style'] = '';
+                }
+                self::$borderRow = array('top' => array('color' => $properties['border_top_color'],
+                        'width' => $properties['border_top_width'],
+                        'style' => $properties['border_top_style']),
+                    'bottom' => array('color' => $properties['border_bottom_color'],
+                        'width' => $properties['border_bottom_width'],
+                        'style' => $properties['border_bottom_style']),
+                );
+
+                break;
+            case 'th':
+            case 'td':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                $firstRow = $nodo['nodeName'] == 'th' ? true : false;
+
+                //Now we have to deal with posible rowspans coming from previous rows
+                $row = count(self::$tableGrid[self::$openTable]) - 1;
+                $column = count(self::$tableGrid[self::$openTable][$row]);
+                $this->countEmptyColumns($row, $column);
+
+                //Now we have to deal with the current td
+                $colspan = (int) $nodo['attributes']['colspan'];
+                $rowspan = (int) $nodo['attributes']['rowspan'];
+                self::$WordML .= '<w:tc>';
+                for ($k = 0; $k < $colspan; $k++) {
+                    array_push(self::$tableGrid[self::$openTable][count(self::$tableGrid[self::$openTable]) - 1], array($rowspan, $colspan - $k, $properties));
+                }
+                self::$WordML .= $this->generateTcPr($properties, $nodo['attributes'], $colspan, $rowspan, $firstRow);
+                self::$openTags[$depth] = $nodo['nodeName'];
+                break;
+            case 'a':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                if (isset($nodo['attributes']['href']) && $nodo['attributes']['href'] != '') {//FIXME: by the time being we do not parse anchors
+                    $aId = 'rId' . uniqid(mt_rand(999, 9999));
+                    if (self::$openPs) {
+                        if ($nodo['attributes']['href'][0] != '#') {
+                            self::$openLinks = true;
+                            self::$WordML .= '<w:hyperlink r:id="' . $aId . '" w:history="1">';
+                            self::$linkTargets[$aId] = htmlspecialchars($this->parseURL($nodo['attributes']['href']));
+                        } else if ($nodo['attributes']['href'][0] == '#' && $this->parseAnchors) {
+                            self::$openLinks = true;
+                            self::$WordML .= '<w:hyperlink w:anchor="' . substr($nodo['attributes']['href'], 1) . '" w:history="1">';
+                        }
+                    } else {
+                        if ($nodo['attributes']['href'][0] != '#') {
+                            self::$openLinks = true;
+                            self::$WordML .= '<w:p>';
+                            self::$WordML .= $this->generatePPr($properties);
+                            self::$WordML .= '<w:hyperlink r:id="' . $aId . '" w:history="1">';
+                            self::$linkTargets[$aId] = htmlspecialchars($this->parseURL($nodo['attributes']['href']));
+                            self::$openPs = true;
+                        } else if ($nodo['attributes']['href'][0] == '#' && $this->parseAnchors) {
+                            self::$openLinks = true;
+                            self::$WordML .= '<w:hyperlink w:anchor="' . substr($nodo['attributes']['href'], 1) . '" w:history="1">';
+                            self::$openPs = true;
+                        }
+                    }
+                } else if (isset($nodo['attributes']['name']) && $nodo['attributes']['name'] != '' && $this->parseAnchors) {
+                    $tempId = rand(999999999, 9999999999999);
+                    self::$WordML .= '<w:bookmarkStart w:id="' . $tempId . '" w:name="' . $nodo['attributes']['name'] . '" />';
+                    self::$openBookmark = $tempId;
+                }
+                self::$openTags[$depth] = $nodo['nodeName'];
+                break;
+            case 'sub':
+                if ($nodo['nodeName'] == 'sub') {
+                    self::$openScript = 'subscript';
+                }
+            case 'sup':
+                if ($nodo['nodeName'] == 'sup') {
+                    self::$openScript = 'superscript';
+                }
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                self::$openTags[$depth] = $nodo['nodeName'];
+                break;
+            case '#text':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                if (self::$openSelect) {
+                    if (count(self::$selectOptions) < 25) {
+                        if (self::$selectedOption) {
+                            array_unshift(self::$selectOptions, htmlspecialchars($nodo['nodeValue']));
+                        } else {
+                            self::$selectOptions[] = htmlspecialchars($nodo['nodeValue']);
+                        }
+                    } else {
+                        echo 'The 25 limit of items that Word has stablished for a dropdown list has been exceeded' . PHP_EOL;
+                    }
+                } else if (self::$openTextArea) {
+                    self::$textArea = htmlspecialchars($nodo['nodeValue']);
+                } else {
+                    if (self::$openPs) {
+                        self::$WordML .= '<w:r>';
+                    } else {
+                        self::$WordML .= '<w:p>';
+                        // if we are creating the paragraph by hand we have to take care of certain styles
+                        // that are important to keep like inherited justification
+                        $style = array();
+                        if (@$properties['text_align'] != '' || @$properties['text_align'] != 'left') {
+                            $style['text_align'] = $properties['text_align'];
+                        }
+                        if (isset($properties['direction']) && strtolower($properties['direction']) == 'rtl') {
+                            $style['direction'] = 'rtl';
+                        }
+                        if (!empty($style))
+                            self::$WordML .= $this->generatePPr($style);
+                        self::$WordML .= '<w:r>';
+                        self::$openPs = true;
+                    }
+                    self::$WordML .= $this->generateRPr($properties);
+                    if (self::$openBr) {
+                        for ($j = 0; $j < self::$openBr; $j++) {
+                            self::$WordML .= '<w:br />';
+                        }
+                        self::$openBr = 0;
+                    }
+                    self::$WordML .= '<w:t xml:space="preserve">' . htmlspecialchars($nodo['nodeValue']) . '</w:t>';
+                    self::$WordML .= '</w:r>';
+                }
+                self::$openTags[$depth] = $nodo['nodeName'];
+                break;
+            case 'br':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                if (self::$openPs) {
+                    self::$openBr++;
+                } else {
+                    self::$WordML .= '<w:p />';
+                }
+                break;
+            case 'img':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                //We first check if the image has an allowed extension
+                $descrArray = explode('/', $nodo['attributes']['src']);
+                $arrayExtension = explode('.', $this->parseURL($nodo['attributes']['src']));
+                $descr = array_pop($descrArray);
+                $descr = array_shift(explode('?', $descr));
+                $extension = strtolower(array_pop($arrayExtension));
+                $extension = array_shift(explode('?', $extension));
+                $predefinedExtensions = explode(',', PHPDOCX_ALLOWED_IMAGE_EXT);
+                $hiddenExtension = '';
+                if (!in_array($extension, $predefinedExtensions)) {
+                    $extensionId = exif_imagetype($this->parseURL($nodo['attributes']['src']));
+                    $extensionArray = array();
+                    $extensionArray[1] = 'gif';
+                    $extensionArray[2] = 'jpg';
+                    $extensionArray[3] = 'png';
+                    $extensionArray[6] = 'bmp';
+                    $extension = $extensionArray[$extensionId];
+                    $hiddenExtension = $extension;
+                }
+
+
+                if (!in_array($extension, $predefinedExtensions)) {
+                    continue;
+                }
+                $photo = @file_get_contents($this->parseURL($nodo['attributes']['src']));
+                if (!$photo)
+                    continue;
+
+                if (self::$openPs) {
+                    self::$WordML .= '<w:r>';
+                } else {
+                    self::$WordML .= '<w:p>';
+                    self::$WordML .= '<w:r>';
+                    self::$openPs = true;
+                }
+                $imgId = 'rId' . uniqid(mt_rand(999, 9999));
+                $tempName = 'name' . uniqid(mt_rand(999, 9999));
+                //We get the photos to parse their properties
+                //$size = getimagesizefromstring($photo); only works for > 5.4
+                $tempDir = CreateDocx::getTempDir();
+                $photoHandle = fopen($tempDir . '/img' . $imgId . '.' . $extension, "w+");
+                $contents = fwrite($photoHandle, $photo);
+                fclose($photoHandle);
+                $size = getimagesize($tempDir . '/img' . $imgId . '.' . $extension);
+                unlink($tempDir . '/img' . $imgId . '.' . $extension);
+                if ($this->downloadImages) {
+                    self::$zipDocx->addContent('word/media/img' . $imgId . '.' . $extension, $photo);
+                }
+                //Check if the size is defined in the attributes or in the CSS styles
+                $imageSize = array();
+                if (isset($nodo['attributes']['width'])) {
+                    $imageSize['width'] = $nodo['attributes']['width'];
+                }
+                if (isset($nodo['attributes']['height'])) {
+                    $imageSize['height'] = $nodo['attributes']['height'];
+                }
+                if (isset($properties['width']) && $properties['width'] != 'auto') {
+                    $properties['width'] = str_replace(' ', '', $properties['width']);
+                    $imageSize['width'] = $this->CSSUnits2Pixels($properties['width'], $properties['font_size']);
+                }
+                if (isset($properties['height']) && $properties['height'] != 'auto') {
+                    $properties['height'] = str_replace(' ', '', $properties['height']);
+                    $imageSize['height'] = $this->CSSUnits2Pixels($properties['height'], $properties['font_size']);
+                }
+
+                $c = $this->getImageDimensions($size, $imageSize);
+                $cx = $c[0];
+                $cy = $c[1];
+                self::$WordML .= $this->generateImageRPr($properties, $cy);
+
+                self::$openTags[$depth] = $nodo['nodeName'];
+
+
+
+                //Now we will manage the image borders if any
+                if (isset($properties['border_top_style']) && $properties['border_top_style'] != 'none') {
+                    $imageBorderWidth = $properties['border_top_width'] * 9600;
+                    $imageBorderStyle = self::$imageBorderStyles[$properties['border_top_style']];
+                    $imageBorderColor = $this->wordMLColor($properties['border_top_color']);
+                } else {
+                    $imageBorderWidth = 0;
+                    $imageBorderStyle = '';
+                    $imageBorderColor = '';
+                }
+                //We now take care of paddings and margins
+                $distance = array();
+                foreach (self::$borders as $key => $value) {
+                    $distance[$value] = $this->imageMargins($properties['margin_' . $value], $properties['padding_' . $value], $properties['font_size']);
+                }
+                //Positioning
+                if (isset($properties['float']) && ($properties['float'] == 'left' || $properties['float'] == 'right')) {
+                    $docPr = rand(99999, 99999999);
+                    self::$WordML .= '<w:drawing><wp:anchor distT="' . $distance['top'] . '" distB="' . $distance['bottom'] . '" distL="' . $distance['left'] . '" distR="' . $distance['right'] . '" simplePos="0" relativeHeight="251658240" behindDoc="0" locked="0" layoutInCell="1" allowOverlap="0"><wp:simplePos x="0" y="0" />';
+                    self::$WordML .= '<wp:positionH relativeFrom="column"><wp:align>' . $properties['float'] . '</wp:align></wp:positionH>';
+                    self::$WordML .= '<wp:positionV relativeFrom="line"><wp:posOffset>40000</wp:posOffset></wp:positionV>';
+                    self::$WordML .= '<wp:extent cx="' . $cx . '" cy="' . $cy . '" /><wp:wrapSquare wrapText="bothSides" /><wp:docPr id="' . $docPr . '" name="' . $tempName . '" descr="' . rawurlencode($descr) . '" />';
+                    self::$WordML .= '<wp:cNvGraphicFramePr><a:graphicFrameLocks xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" noChangeAspect="1" /></wp:cNvGraphicFramePr><a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">';
+                    self::$WordML .= '<a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="0" name="' . rawurlencode($descr) . '"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill>';
+                    if ($this->downloadImages) {
+                        self::$WordML .= '<a:blip r:embed="' . $imgId . '" cstate="print"/>';
+                    } else {
+                        self::$WordML .= '<a:blip r:link="' . $imgId . '" cstate="print"/>';
+                    }
+                    self::$WordML .= '<a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="' . $cx . '" cy="' . $cy . '" /></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom>';
+                    self::$WordML .= $this->imageBorders($imageBorderWidth, $imageBorderStyle, $imageBorderColor);
+                    self::$WordML .= '</pic:spPr></pic:pic></a:graphicData></a:graphic></wp:anchor></w:drawing>';
+                } else {
+                    self::$WordML .= '<w:drawing><wp:inline distT="' . $distance['top'] . '" distB="' . $distance['bottom'] . '" distL="' . $distance['left'] . '" distR="' . $distance['right'] . '"><wp:extent cx="' . $cx . '" cy="' . $cy . '" />';
+                    self::$WordML .= '<wp:docPr id="' . rand(99999, 99999999) . '" name="' . $tempName . '" descr="' . rawurlencode($descr) . '" /><wp:cNvGraphicFramePr><a:graphicFrameLocks xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" noChangeAspect="1" /></wp:cNvGraphicFramePr>';
+                    self::$WordML .= '<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">';
+                    self::$WordML .= '<pic:nvPicPr><pic:cNvPr id="0" name="' . rawurlencode($descr) . '"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill>';
+                    if ($this->downloadImages) {
+                        self::$WordML .= '<a:blip r:embed="' . $imgId . '" cstate="print"/>';
+                    } else {
+                        self::$WordML .= '<a:blip r:link="' . $imgId . '" cstate="print"/>';
+                    }
+                    self::$WordML .= '<a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="' . $cx . '" cy="' . $cy . '" /></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom>';
+                    self::$WordML .= $this->imageBorders($imageBorderWidth, $imageBorderStyle, $imageBorderColor);
+                    self::$WordML .= '</pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing>';
+                }
+                self::$WordML .= '</w:r>';
+                if (empty($hiddenExtension)) {
+                    self::$linkImages[$imgId] = $this->parseURL($nodo['attributes']['src']);
+                } else {
+                    self::$linkImages[$imgId] = $this->parseURL($nodo['attributes']['src']) . '.' . $hiddenExtension;
+                }
+                break;
+            case 'hr':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                if (self::$openPs) {
+                    self::$WordML .= '<w:r><w:pict><v:rect id="_x0000_i1026" style="width:0;height:1.5pt" o:hralign="center" o:hrstd="t" o:hr="t" fillcolor="#aca899" stroked="f" /></w:pict></w:r>';
+                } else {
+                    self::$WordML .= '<w:p><w:r><w:pict><v:rect id="_x0000_i1026" style="width:0;height:1.5pt" o:hralign="center" o:hrstd="t" o:hr="t" fillcolor="#aca899" stroked="f" /></w:pict></w:r></w:p>';
+                }
+                break;
+            case 'input':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                if (isset($nodo['attributes']['type']) && ($nodo['attributes']['type'] == 'text'
+                    || $nodo['attributes']['type'] == 'password')) {
+                    if (self::$openPs) {
+                        //do not do anything
+                    } else {
+                        self::$WordML .= '<w:p>';
+                        // if we are creating the paragraph by hand we have to take care of certain styles
+                        // that are important to keep like inherited justification
+                        $style = array();
+                        if (@$properties['text_align'] != '' || @$properties['text_align'] != 'left') {
+                            $style['text_align'] = $properties['text_align'];
+                        }
+                        if (!empty($style))
+                            self::$WordML .= $this->generatePPr($style);
+                        self::$openPs = true;
+                    }
+                    //we check if there is a br open
+                    if (self::$openBr) {
+                        self::$WordML .= '<w:rPr>';
+                        for ($j = 0; $j < self::$openBr; $j++) {
+                            self::$WordML .= '<w:br />';
+                        }
+                        self::$openBr = 0;
+                        self::$WordML .= '</w:rPr>';
+                    }
+                    //Now we insert the corresponding XML
+                    $bookmarkId = rand(99999, 9999999);
+                    $uniqueName = uniqid(mt_rand(999, 9999));
+                    self::$WordML .= '<w:r><w:fldChar w:fldCharType="begin"><w:ffData><w:name w:val="Texto' . $uniqueName . '"/><w:enabled/><w:calcOnExit w:val="0"/><w:textInput/></w:ffData></w:fldChar></w:r><w:bookmarkStart w:id="' . $bookmarkId . '" w:name="Texto' . $uniqueName . '"/><w:r><w:instrText xml:space="preserve"> FORMTEXT </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t xml:space="preserve"> </w:t></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t xml:space="preserve">';
+                    if (isset($nodo['attributes']['value']) && $nodo['attributes']['value'] != '') {
+                        self::$WordML .= $nodo['attributes']['value'];
+                    } else {
+                        if (isset($nodo['attributes']['size']) && $nodo['attributes']['size'] > 0) {
+                            $size = $nodo['attributes']['size'];
+                        } else {
+                            $size = 18;
+                        }
+                        for ($k = 0; $k <= $size; $k++) {
+                            self::$WordML .=' '; //blank characters for Word
+                        }
+                    }
+                    self::$WordML .='</w:t></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t xml:space="preserve"> </w:t></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t xml:space="preserve"> </w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r><w:bookmarkEnd w:id="' . $bookmarkId . '"/>';
+                } else if (isset($nodo['attributes']['type']) && ($nodo['attributes']['type'] == 'checkbox' || $nodo['attributes']['type'] == 'radio')) {
+                    if (self::$openPs) {
+                        //do not do anything
+                    } else {
+                        self::$WordML .= '<w:p>';
+                        // if we are creating the paragraph by hand we have to take care of certain styles
+                        // that are important to keep like inherited justification
+                        $style = array();
+                        if (@$properties['text_align'] != '' || @$properties['text_align'] != 'left') {
+                            $style['text_align'] = $properties['text_align'];
+                        }
+                        if (!empty($style))
+                            self::$WordML .= $this->generatePPr($style);
+                        self::$openPs = true;
+                    }
+                    //Now we insert the corresponding XML
+                    $bookmarkId = rand(99999, 9999999);
+                    $uniqueName = uniqid(mt_rand(999, 9999));
+                    if (isset($nodo['attributes']['checked']) && $nodo['attributes']['checked']) {
+                        $selected = 1;
+                    } else {
+                        $selected = 0;
+                    }
+                    //we check if there is a br open
+                    if (self::$openBr) {
+                        self::$WordML .= '<w:rPr>';
+                        for ($j = 0; $j < self::$openBr; $j++) {
+                            self::$WordML .= '<w:br />';
+                        }
+                        self::$openBr = 0;
+                        self::$WordML .= '</w:rPr>';
+                    }
+                    self::$WordML .= '<w:r><w:fldChar w:fldCharType="begin"><w:ffData><w:name w:val="cbox' . $uniqueName . '"/><w:enabled/><w:calcOnExit w:val="0"/><w:checkBox><w:sizeAuto/><w:default w:val="' . $selected . '"/></w:checkBox></w:ffData></w:fldChar></w:r><w:bookmarkStart w:id="' . $bookmarkId . '" w:name="cbox' . $uniqueName . '"/><w:r><w:instrText xml:space="preserve"> FORMCHECKBOX </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r><w:bookmarkEnd w:id="' . $bookmarkId . '"/>';
+                }
+                break;
+            case 'select':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                self::$openTags[$depth] = $nodo['nodeName'];
+                self::$selectOptions = array();
+                if (self::$openPs) {
+                    //do not do anything
+                } else {
+                    self::$WordML .= '<w:p>';
+                    // if we are creating the paragraph by hand we have to take care of certain styles
+                    // that are important to keep like inherited justification
+                    $style = array();
+                    if (@$properties['text_align'] != '' || @$properties['text_align'] != 'left') {
+                        $style['text_align'] = $properties['text_align'];
+                    }
+                    if (!empty($style))
+                        self::$WordML .= $this->generatePPr($style);
+                    self::$openPs = true;
+                }
+                break;
+            case 'option':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                self::$openTags[$depth] = $nodo['nodeName'];
+                self::$openSelect = true;
+                if (isset($nodo['attributes']['selected']) && $nodo['attributes']['selected']) {
+                    self::$selectedOption = 1;
+                } else {
+                    self::$selectedOption = 0;
+                }
+                break;
+            case 'textarea':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                self::$openTags[$depth] = $nodo['nodeName'];
+                self::$openTextArea = true;
+                if (self::$openPs) {
+                    //do not do anything
+                } else {
+                    self::$WordML .= '<w:p>';
+                    // if we are creating the paragraph by hand we have to take care of certain styles
+                    // that are important to keep like inherited justification
+                    $style = array();
+                    if (@$properties['text_align'] != '' || @$properties['text_align'] != 'left') {
+                        $style['text_align'] = $properties['text_align'];
+                    }
+                    if (!empty($style))
+                        self::$WordML .= $this->generatePPr($style);
+                    self::$openPs = true;
+                }
+                break;
+            case 'samp':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                self::$openTags[$depth] = $nodo['nodeName'];
+                //we use this tag also for Word footnotes if the attribute title has the
+                //structure phpdocx_footnote_number or phpdocx_endnote_number
+                $title = $nodo['attributes']['title'];
+                $titArray = explode('_', $title);
+                if ($titArray[0] == 'phpdocx') {
+                    if ($titArray[1] == 'footnote') {
+                        self::$WordML .= '<w:r><w:rPr>';
+                        if (isset($properties['font_family']) && $properties['font_family'] != 'serif' && $properties['font_family'] != 'fixed') {
+                            $arrayCSSFonts = explode(',', $properties['font_family']);
+                            $font = trim($arrayCSSFonts[0]);
+                            $font = str_replace('"', '', $font);
+                            self::$WordML .= '<w:rFonts w:ascii="' . $font . '" w:hAnsi="' . $font . '" w:eastAsia="' . $font . '" w:cs="' . $font . '" /> ';
+                        }
+                        if (@$properties['color'] != '' && is_array($properties['color'])) {
+                            $color = $properties['color'];
+                            $color = $this->wordMLColor($color);
+                            self::$WordML .='<w:color w:val="' . $color . '" />';
+                        }
+                        self::$WordML .='<w:vertAlign w:val="superscript" /></w:rPr><w:footnoteReference w:id="' . $titArray[2] . '" /></w:r>';
+                    } else if ($titArray[1] == 'endnote') {
+                        self::$WordML .= '<w:r><w:rPr>';
+                        if (isset($properties['font_family']) && $properties['font_family'] != 'serif') {
+                            $arrayCSSFonts = explode(',', $properties['font_family']);
+                            $font = trim($arrayCSSFonts[0]);
+                            $font = str_replace('"', '', $font);
+                            self::$WordML .= '<w:rFonts w:ascii="' . $font . '" w:hAnsi="' . $font .'" w:eastAsia="' . $font . '" w:cs="' . $font . '" /> ';
+                        }
+                        if (@$properties['color'] != '' && is_array($properties['color'])) {
+                            $color = $properties['color'];
+                            $color = $this->wordMLColor($color);
+                            self::$WordML .='<w:color w:val="' . $color . '" />';
+                        }
+                        self::$WordML .='<w:vertAlign w:val="superscript" /></w:rPr><w:endnoteReference w:id="' . $titArray[2] . ' " /></w:r>';
+                    }
+                }
+                break;
+            case 'close':
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                break;
+            default:
+                self::$WordML .= $this->closePreviousTags($depth, $nodo['nodeName']);
+                self::$openTags[$depth] = $nodo['nodeName'];
+                break;
+        }
+        ++$depth;
+
+        if (isset($properties['display']) && $properties['display'] == 'none') {
+            //do not render that subtree
+        } else {
+
+            if (!empty($nodo['children'])) {
+                foreach ($nodo['children'] as $child) {
+                    $this->_render($child, $depth);
+                }
+            }
+        }
+    }
+
+    /**
+     * This function takes care that all nodes are properly closed
+     *
+     * @access private
+     * @param integer $depth
+     * @param string $currentTag
+     */
+    private function closePreviousTags($depth, $currentTag = '')
+    {
+        $sRet = '';
+
+        $counter = count(self::$openTags);
+        for ($j = $counter; $j >= $depth - 1; $j--) {
+            $tag = array_pop(self::$openTags);
+
+            switch ($tag) {
+                case 'div':
+                    if (!$this->parseDivs)
+                        break;
+                case 'h1':
+                case 'h2':
+                case 'h3':
+                case 'h4':
+                case 'h5':
+                case 'h6':
+                case 'p':
+                case 'dt':
+                case 'dd':
+                case 'caption':
+                case 'li':
+                    if (self::$openPs) {
+                        if (self::$openLinks) {
+                            $sRet.= '</w:hyperlink>';
+                            self::$openLinks = false;
+                        }
+                        if (self::$openBookmark > 0) {
+                            $sRet.= '<w:bookmarkEnd w:id="' . self::$openBookmark . '" />';
+                            self::$openBookmark = 0;
+                        }
+                        $sRet .= '</w:p>';
+                        self::$openPs = false;
+                    }
+                    break;
+                case 'table':
+                    if (self::$openPs) {
+                        if (self::$openLinks) {
+                            $sRet.= '</w:hyperlink>';
+                            self::$openLinks = false;
+                        }
+                        if (self::$openBookmark > 0) {
+                            $sRet.= '<w:bookmarkEnd w:id="' . self::$openBookmark . '" />';
+                            self::$openBookmark = 0;
+                        }
+                        $sRet .= '</w:p></w:tbl>';
+                        self::$openPs = false;
+                    } else {
+                        if (self::$openTable > 1) {
+                            //This is to fix a Word bug that does not allow to close a table and write just after a </w:tc>
+                            $sRet .= '</w:tbl><w:p />';
+                        } else {
+                            $sRet .= '</w:tbl>';
+                        }
+                    }
+
+                    // clean previous gridCol placeholder to prevent adding extra tags when adding more than one table
+                    self::$WordML = str_replace('#<w:gridCol/>#', '', self::$WordML);
+                    
+                    self::$openTable--;
+                    break;
+                case 'tr':
+                    //Before closing a row we should make sure that there are no lacking cells due to a previous rowspan
+                    $row = count(self::$tableGrid[self::$openTable]) - 1;
+                    $column = count(self::$tableGrid[self::$openTable][$row]);
+                    $sRet .= $this->closeTr($row, $column);
+                    if (strpos(self::$WordML, '#<w:gridCol/>#') !== false) {
+                        // get the cell width
+                        list($cellWidth, $cellWidthType) = $this->_wordMLUnits(self::$tableGrid[self::$openTable][$row][$row][2]['width']);
+                        if (!$cellWidth) {
+                            $cellWidth = 1;
+                        }
+
+                        if ($cellWidth == 1) {
+                            self::$WordML = str_replace('#<w:gridCol/>#', '<w:gridCol/>', self::$WordML);
+                        } else {
+                            self::$WordML = str_replace('#<w:gridCol/>#', '<w:gridCol w:w="'.$cellWidth.'"/>#<w:gridCol/>#', self::$WordML);
+                        }
+                    }
+                    //We now may close the tr tag
+                    $sRet .= '</w:tr>';
+                    break;
+                case 'td':
+                case 'th':
+                    if (self::$openPs) {
+                        if (self::$openLinks) {
+                            $sRet.= '</w:hyperlink>';
+                            self::$openLinks = false;
+                        }
+                        if (self::$openBookmark > 0) {
+                            $sRet.= '<w:bookmarkEnd w:id="' . self::$openBookmark . '" />';
+                            self::$openBookmark = 0;
+                        }
+                        $sRet .= '</w:p>';
+                        if (self::$openBr) {
+                            for ($p = 0; $p < self::$openBr; $p++) {
+                                $sRet .= '<w:p />';
+                            }
+                            self::$openBr = 0;
+                        }
+                        $sRet .= '</w:tc>';
+                        self::$openPs = false;
+                    } else {
+                        if (self::$openBr) {
+                            for ($p = 0; $p < self::$openBr; $p++) {
+                                $sRet .= '<w:p />';
+                            }
+                            self::$openBr = 0;
+                        }
+                        $sRet .= '</w:tc>';
+                    }
+                    break;
+                case 'a':
+                    if (self::$openLinks) {
+                        $sRet.= '</w:hyperlink>';
+                        self::$openLinks = false;
+                    }
+                    if (self::$openBookmark > 0) {
+                        $sRet.= '<w:bookmarkEnd w:id="' . self::$openBookmark . '" />';
+                        self::$openBookmark = 0;
+                    }
+                    break;
+                case 'sub':
+                case 'sup':
+                    self::$openScript = '';
+                    break;
+                case '#text':
+                    if ($currentTag == 'close' && !self::$openSelect && !self::$openTextArea) {
+                        if (self::$openLinks) {
+                            $sRet.= '</w:hyperlink>';
+                            self::$openLinks = false;
+                        }
+                        if (self::$openBookmark > 0) {
+                            $sRet.= '<w:bookmarkEnd w:id="' . self::$openBookmark . '" />';
+                            self::$openBookmark = 0;
+                        }
+                        $sRet .= '</w:p>';
+                        self::$openPs = false;
+                    }
+                    break;
+                case 'select':
+                    self::$openSelect = false;
+                    $dropdownId = uniqid(mt_rand(999, 9999));
+                    $bookmarkId = rand(99999, 99999999);
+                    //Now we have to write the whole wordML
+                    $sRet .= '<w:bookmarkStart w:id="' . $bookmarkId . '" w:name="d_' . $dropdownId . '"/><w:r><w:fldChar w:fldCharType="begin"><w:ffData><w:name w:val="d_' . $dropdownId . '"/><w:enabled/><w:calcOnExit w:val="0"/><w:ddList>';
+                    foreach (self::$selectOptions as $key => $value) {
+                        $sRet .= '<w:listEntry w:val="' . $value . '"/>';
+                    }
+                    $sRet .= '</w:ddList></w:ffData></w:fldChar></w:r><w:r><w:instrText xml:space="preserve"> FORMDROPDOWN </w:instrText></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r><w:bookmarkEnd w:id="' . $bookmarkId . '"/>';
+                    if ($currentTag == 'close' && self::$openPs) {
+                        $sRet .= '</w:p>';
+                        self::$openPs = false;
+                    }
+                    break;
+                case 'option':
+                    self::$openSelect = false;
+                    break;
+                case 'textarea':
+                    self::$openTextArea = false;
+                    $bookmarkId = rand(99999, 9999999);
+                    $uniqueName = uniqid(mt_rand(999, 9999));
+                    $sRet .= '<w:r><w:fldChar w:fldCharType="begin"><w:ffData><w:name w:val="Texto' . $uniqueName . '"/><w:enabled/><w:calcOnExit w:val="0"/><w:textInput/></w:ffData></w:fldChar></w:r><w:bookmarkStart w:id="' . $bookmarkId . '" w:name="Texto' . $uniqueName . '"/><w:r><w:instrText xml:space="preserve"> FORMTEXT </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t xml:space="preserve"> </w:t></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t xml:space="preserve">';
+                    if (self::$textArea != '') {
+                        $sRet .= self::$textArea;
+                    } else {
+                        if (isset($nodo['attributes']['size']) && $nodo['attributes']['size'] > 0) {
+                            $size = $nodo['attributes']['size'];
+                        } else {
+                            $size = 18;
+                        }
+                        for ($k = 0; $k <= $size; $k++) {
+                            $sRet .= ' '; //blank characters for Word
+                        }
+                    }
+                    $sRet .= '</w:t></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t xml:space="preserve"> </w:t></w:r><w:r><w:rPr><w:noProof/></w:rPr><w:t xml:space="preserve"> </w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r><w:bookmarkEnd w:id="' . $bookmarkId . '"/>';
+                    if ($currentTag == 'close' && self::$openPs) {
+                        $sRet .= '</w:p>';
+                        self::$openPs = false;
+                    }
+                    break;
+                default:
+                    if ($currentTag == 'close') {
+                        if (self::$openLinks) {
+                            $sRet.= '</w:hyperlink>';
+                            self::$openLinks = false;
+                        }
+                        if (self::$openBookmark > 0) {
+                            $sRet.= '<w:bookmarkEnd w:id="' . self::$openBookmark . '" />';
+                            self::$openBookmark = 0;
+                        }
+                        if (self::$openPs) {
+                            $sRet .= '</w:p >';
+                            if (self::$openBr) {
+                                $sRet .= '<w:p />';
+                                self::$openBr = false;
+                            }
+                            self::$openPs = false;
+                        }
+                    }
+            }
+        }
+
+        return($sRet);
+    }
+
+    /**
+     * This function returns the default style for paragraphs inside a list
+     *
+     * @access private
+     * @return string
+     */
+    private function listStyle()
+    {
+        return 'ListParagraphPHPDOCX';
+    }
+
+    /**
+     * This function returns the default types of lists
+     *
+     * @access private
+     * @param array $type
+     * @return string
+     */
+    private function listType($type = array(1, 2))
+    {
+        $counter = count(self::$openTags);
+        for ($j = $counter; $j >= ($this->_level - 1); $j--) {
+            if (@self::$openTags[$j] == 'ul') {
+                $num = $type[0];
+                break;
+            } else if (@self::$openTags[$j] == 'ol') {
+                $num = $type[1];
+                break;
+            }
+        }
+        if (isset($num)) {
+            return $num;
+        } else {
+            return $type[0];
+        }
+    }
+
+    /**
+     * This function returns the WordML formatting for a paragraph
+     * Support:
+     * w:pStyle,
+     * w:keepNext (page-break-after="avoid"),
+     * w:keepLines (page-break-inside="avoid"),
+     * w:pageBreakBefore (page-break-before="always"),
+     * w:widowControl (page-break-before="avoid"),
+     * w:pBdr (border-[top|left|bottom|right]-style!="none")(border-[top|left|bottom|right]-color)(border-[top|left|bottom|right]-width)(border!="none"),
+     * w:shd (background-color)(background),
+     * w:bidi (attribute dir="rtl"),
+     * w:spacing ([margin|padding]-top)([margin|padding]-bottom)(font-size)(line-height),
+     * w:ind ([margin|padding]-left)([margin|padding]-right)(font-size)(text-indent),
+     * w:jc (text-align),
+     * w:textDirection (attribute dir="rtl"),
+     * w:textAlignment (vertical-align!="baseline")(font-size),
+     * w:outlineLvl
+     *
+     * @access private
+     * @param array $properties
+     * @param array $level
+     * @return string
+     */
+    private function generatePPr($properties, $level = '', $attributes = array(), $nodeName = false)
+    {
+        $stringPPr = '<w:pPr>';
+        $sTempStyle = $this->generateWordStyle($nodeName, $attributes);
+        if ($sTempStyle) {
+            $stringPPr .= '<w:pStyle w:val="' . $sTempStyle . '"/>';
+        }
+
+        if (isset($properties['page_break_after']) && $properties['page_break_after'] == 'avoid') {
+            $stringPPr .= '<w:keepNext w:val="on" />';
+        }
+        if (isset($properties['page_break_inside']) && $properties['page_break_inside'] == 'avoid') {
+            $stringPPr .= '<w:keepLines w:val="on" />';
+        }
+        if (isset($properties['page_break_before']) && $properties['page_break_before'] == 'always') {
+            $stringPPr .= '<w:pageBreakBefore w:val="on" />';
+        }
+        if (isset($properties['float']) && ($properties['float'] == 'left' || $properties['float'] == 'right') && $this->parseFloats) {
+            $distance = array();
+            foreach (self::$borders as $key => $value) {
+                $distance[$value] = $this->imageMargins($properties['margin_' . $value], $properties['padding_' . $value], $properties['font_size']);
+            }
+            $stringPPr .= '<w:framePr w:w="' . ($distance['right'] - $distance['left']) . '" w:h="' . ($distance['top'] - $distance['bottom']) . '" w:vSpace="' . $distance['top'] . '" w:hSpace="' . $distance['right'] . '" w:wrap="around" w:hAnchor="text" w:vAnchor="text" w:xAlign="' . $properties['float'] . '" w:yAlign="inside" />';
+        }
+        if (isset($properties['page_break_before']) && $properties['page_break_before'] == 'avoid') {
+            $stringPPr .= '<w:widowControl w:val="off" />';
+        } else {
+            $stringPPr .= '<w:widowControl w:val="on" />';
+        }
+        if (!$this->strictWordStyles) {
+            $stringPPr .= '<w:pBdr>';
+            foreach (self::$borders as $key => $value) {
+                if (isset($properties['border_' . $value . '_style']) && $properties['border_' . $value . '_style'] != 'none') {
+                    $stringPPr .= '<w:' . $value . ' w:val="' . $this->getBorderStyles($properties['border_' . $value . '_style']) . '"  w:color="' . $this->wordMLColor($properties['border_' . $value . '_color']) . '" w:sz="' . $this->wordMLLineWidth(isset($properties['border_' . $value . '_width']) ? $properties['border_' . $value . '_width'] : '') . '" />';
+                }
+            }
+            $stringPPr .= '</w:pBdr>';
+            if (isset($properties['background_color']) && is_array($properties['background_color'])) {
+                $color = $properties['background_color'];
+                $color = $this->wordMLColor($color);
+                $stringPPr .='<w:shd w:val="clear"  w:color="auto" w:fill="' . $color . '" />';
+            }
+        }
+        //w:wordWrap //css3
+        if ((isset($attributes['dir']) && strtolower($attributes['dir']) == 'rtl') ||
+                (isset($properties['direction']) && strtolower($properties['direction']) == 'rtl')) {
+            $stringPPr .= '<w:bidi w:val="1" />';
+        }
+        if (!$this->strictWordStyles) {
+            $stringPPr .= $this->pPrSpacing($properties);
+            $stringPPr .= $this->pPrIndent($properties);
+
+            if (isset($properties['text_align'])) {
+                $textAlign = self::$text_align[$properties['text_align']];
+                if (empty($textAlign)) {
+                    $textAlign = 'left';
+                }
+                $stringPPr .= '<w:jc w:val="' . $textAlign . '" />';
+            }
+        }
+        if (isset($attributes['dir']) && array_key_exists($attributes['dir'], self::$text_direction)) {
+            $stringPPr .= '<w:textDirection w:val="' . self::$text_direction[$attributes['dir']] . '" />';
+        }
+        if (!$this->strictWordStyles) {
+            if (isset($properties['vertical_align']) && $properties['vertical_align'] != 'baseline') {
+                $stringPPr .='<w:textAlignment w:val="' . $this->_verticalAlign($properties['vertical_align']) . '" />';
+            }
+        }
+        if (is_numeric($level)) {
+            $stringPPr .= $this->setHeading($level);
+        }
+
+        $stringPPr .= '</w:pPr>';
+        return $stringPPr;
+    }
+
+    /**
+     * This function returns the WordML formatting for a run of text
+     * Support:
+     * w:rFonts (font-family!="serif"),
+     * w:b (font-weight="[bold|bolder]"),
+     * w:i (font-style=["italic|oblique"),
+     * w:caps (text-transform="uppercase"),
+     * w:smallCaps (font-variant="small-caps"),
+     * w:strike (text-decoration="line-through"),
+     * w:color (color),
+     * w:position (vertical-align!="baseline")(font-size),
+     * w:sz (font-size),
+     * w:u (text-decoration="underline")
+     *
+     * @access private
+     * @param array $properties
+     * @return string
+     */
+    private function generateRPr($properties, $level = '', $attributes = array(), $nodeName = false)
+    {
+        $stringRPr = '<w:rPr>';
+        $sTempStyle = $this->generateWordStyle($nodeName, $attributes);
+        if ($sTempStyle) {
+            $stringRPr .= '<w:rStyle w:val="' . $sTempStyle . '"/>';
+        }
+        if (!$this->strictWordStyles) {
+            if (isset($properties['font_family']) && $properties['font_family'] != 'serif') {
+                $arrayCSSFonts = explode(',', $properties['font_family']);
+                $font = trim($arrayCSSFonts[0]);
+                $font = str_replace('"', '', $font);
+                $stringRPr .= '<w:rFonts w:ascii="' . $font . '" w:hAnsi="' . $font . '" w:eastAsia="' . $font . '" w:cs="' . $font . '" /> ';
+            }
+        }
+        if (@$properties['font_weight'] == 'bold' || @$properties['font_weight'] == 'bolder') {
+            $stringRPr .='<w:b /><w:bCs />';
+        }
+        if (@$properties['font_style'] == 'italic' || @$properties['font_style'] == 'oblique') {
+            $stringRPr .='<w:i /><w:iCs />';
+        }
+        if (isset($properties['text_transform']) && $properties['text_transform'] == 'uppercase') {
+            $stringRPr .='<w:caps />';
+        }
+        if (isset($properties['font_variant']) && $properties['font_variant'] == 'small-caps') {
+            $stringRPr .='<w:smallCaps />';
+        }
+        if (isset($properties['text_decoration']) && $properties['text_decoration'] == 'line-through') {
+            $stringRPr .='<w:strike />';
+        }
+        if (!$this->strictWordStyles) {
+            if (@$properties['color'] != '' && is_array($properties['color'])) {
+                $color = $properties['color'];
+                $color = $this->wordMLColor($color);
+                $stringRPr .='<w:color w:val="' . $color . '" />';
+            }
+            if (isset($properties['vertical_align']) && $properties['vertical_align'] != 'baseline') {
+                $stringRPr .='<w:position w:val="' . $this->_rprPosition($properties['vertical_align'], $properties['font_size']) . '" />';
+            }
+            if (@$properties['font_size'] != '') {
+                $stringRPr .='<w:sz w:val="' . (int) round($properties['font_size'] * 2) . '" />';
+                $stringRPr .='<w:szCs w:val="' . (int) round($properties['font_size'] * 2) . '" />';
+            }
+            /* The higlights in Word have their own simple type: ST_HighlightColor
+             * if (isset($properties['background_color']) && is_array($properties['background_color'])) {
+             * $color = $this->wordMLNamedColor($properties['background_color']);
+             * $stringRPr .='<w:highlight w:val="' . $color . '" />';
+              } */
+        }
+        if ((self::$openLinks && @$properties['text_decoration'] != 'none') || @$properties['text_decoration'] == 'underline') {
+            $stringRPr .='<w:u w:val="single" />';
+        }
+        if (!$this->strictWordStyles) {
+            //w:bdr
+            if (@$properties['background_color'] != '' && is_array($properties['background_color'])) {
+                $color = $properties['background_color'];
+                $color = $this->wordMLColor($color);
+                $stringRPr .='<w:shd w:val="clear" w:color="auto" w:fill="' . $color . '" />';
+            }
+        }
+        if (self::$openScript != '') {
+            $stringRPr .='<w:vertAlign w:val="' . self::$openScript . '" />';
+        }
+        //w:rtl
+        if (isset($properties['direction']) && strtolower($properties['direction']) == 'rtl') {
+            $stringRPr .='<w:rtl w:val="1" />';
+        }
+        //w:em //text-emphasis (css 3)
+        //w:oMath
+        $stringRPr .= '</w:rPr>';
+        return $stringRPr;
+    }
+
+    /**
+     * This function returns the WordML formatting for a table
+     * Support:
+     * w:tblStyle (border),
+     * w:bidiVisual (attribute dir="rtl"),
+     * w:tblW (width),
+     * w:jc (attribute align),
+     * w:tblCellSpacing ([attribute cellspacing|border-spacing]),
+     * w:tblInd (text-indent),
+     * w:tblBorders (border_width)(border-[top|left|bottom|right]-style)(border-[top|left|bottom|right]-color)(border-[top|left|bottom|right]-width),
+     * w:shd (background)(background-color),
+     *
+     * @access private
+     * @param array $properties
+     * @param integer $border
+     * @return string
+     */
+    private function generateTblPr($properties, $attributes)
+    {
+        $stringTblPr = '<w:tblPr>';
+        $sTempStyle = $this->generateWordStyle('table', $attributes);
+        if (empty($sTempStyle)) {
+            if (isset($attributes['border']) && ((int) $attributes['border']) >= 1) {
+                $stringTblPr .= '<w:tblStyle w:val="TableGridPHPDOCX" />';
+            } else {
+                $stringTblPr .= '<w:tblStyle w:val="NormalTablePHPDOCX" />';
+            }
+        } else {
+            $stringTblPr .= '<w:tblStyle w:val="' . $sTempStyle . '"/>';
+        }
+        if (isset($properties['float']) && ($properties['float'] == 'left' || $properties['float'] == 'right') && $this->parseFloats) {
+            $distance = array();
+            foreach (self::$borders as $key => $value) {
+                $distance[$value] = $this->imageMargins($properties['margin_' . $value], $properties['padding_' . $value], $properties['font_size']);
+            }
+            $stringTblPr .= '<w:tblpPr w:leftFromText="' . $distance['left'] . '" w:rightFromText="' . $distance['right'] . '" w:topFromText="' . $distance['top'] . '" w:bottomFromText="' . $distance['bottom'] . '" w:horzAnchor="text" w:vertAnchor="text" w:tblpXSpec="' . $properties['float'] . '" w:tblpYSpec="inside" />';
+        }
+        if ((isset($attributes['dir']) && strtolower($attributes['dir']) == 'rtl') ||
+                (isset($properties['direction']) && strtolower($properties['direction']) == 'rtl')) {
+            $stringTblPr .= '<w:bidiVisual w:val="1" />';
+        }
+
+        //TODO OpenOffice needs $tableWidth > 0; else paints a table with double page width; don't work <w:tblW w:w="0" w:type="auto"/>
+        if (!empty($properties['width'])) {
+            list($tableWidth, $tableWidthType) = $this->_wordMLUnits($properties['width']);
+            $stringTblPr .= '<w:tblW w:w="' . (int) ceil($tableWidth) . '" w:type="' . (empty($tableWidth) ? 'auto' : $tableWidthType) . '" />';
+        }
+        if (!$this->strictWordStyles) {
+            if (!empty($attributes['align'])) {
+                $stringTblPr .= '<w:jc w:val="' . $attributes['align'] . '" />';
+            }
+            if ((!empty($attributes['cellspacing']) || !empty($properties['border_spacing'])) && isset($properties['border_collapse']) && $properties['border_collapse'] != 'collapse') {
+                $temp = trim(empty($properties['border_spacing']) ? (empty($attributes['cellspacing']) ? 0 : $attributes['cellspacing']) : $properties['border_spacing']);
+                //border_spacing -> 1 or 2 values (horizontal, vertical); using only first (horizontal) //TODO calculate media (border_spacing="30px 10%")
+                if (strpos($temp, ' ') !== false)
+                    $temp = substr($temp, 0, strpos($temp, ' '));
+                $temp = $this->_wordMLUnits($temp);
+                $stringTblPr .= '<w:tblCellSpacing w:w="' . $temp[0] . '" w:type="' . (empty($temp[0]) ? 'auto' : $temp[1]) . '" />';
+            }
+            if (isset($properties['margin_left'])) {
+                $temp = $this->_wordMLUnits($properties['margin_left']);
+                $stringTblPr .= '<w:tblInd w:w="' . $temp[0] . '" w:type="' . (empty($temp[0]) ? 'auto' : $temp[1]) . '" />';
+            }
+            if ($this->tableStyle == '') {
+                if (!empty($properties['border_width']) ||
+                        !empty($properties['border_top_width']) ||
+                        !empty($properties['border_right_width']) ||
+                        !empty($properties['border_bottom_width']) ||
+                        !empty($properties['border_left_width'])) {
+                    $stringTblPr .= '<w:tblBorders>';
+                    foreach (self::$borders as $key => $value) {
+                        if (isset($properties['border_' . $value . '_style']) && $properties['border_' . $value . '_color'] != 'none' && $properties['border_' . $value . '_width'] != NULL) {
+                            $stringTblPr .= '<w:' . $value . ' w:val="' . $this->getBorderStyles($properties['border_' . $value . '_style']) . '"  w:color="' . $this->wordMLColor($properties['border_' . $value . '_color']) . '" w:sz="' . $this->wordMLLineWidth(isset($properties['border_' . $value . '_width']) ? $properties['border_' . $value . '_width'] : '') . '" />';
+                        }
+                    }
+                    $stringTblPr .= '</w:tblBorders>';
+                }
+                if (isset($properties['background_color']) && is_array($properties['background_color'])) {
+                    $color = $properties['background_color'];
+                    $color = $this->wordMLColor($color);
+                    $stringTblPr .='<w:shd w:val="clear" w:color="auto" w:fill="' . $color . '" />';
+                } else if (isset(self::$rowColor) && is_array(self::$rowColor)) {
+                    $color = self::$rowColor;
+                    $color = $this->wordMLColor($color);
+                    $stringTblPr .='<w:shd w:val="clear" w:color="auto" w:fill="' . $color . '" />';
+                }
+            }
+            //w:tblLayout
+            //w:tblCellMar
+        }
+        $stringTblPr .= '</w:tblPr>';
+        $stringTblPr .= '<w:tblGrid>#<w:gridCol/>#</w:tblGrid>';
+        return $stringTblPr;
+    }
+
+    /**
+     * This function returns the WordML formatting for a table row
+     * Support:
+     * w:trHeight (height),
+     * w:tblHeader (display="table-header-group"),
+     * w:jc (text_align)
+     *
+     * @access private
+     * @param array $properties
+     * @return string
+     */
+    private function generateTrPr($properties)
+    {
+        $stringTrPr = '<w:trPr>';
+        //w:gridBefore
+        //w:gridAfter
+        //w:wBefore
+        //w:wAfter
+        if (isset($properties['page_break_inside']) && $properties['page_break_inside'] == 'avoid') {
+            $stringTrPr .= '<w:cantSplit />';
+        }
+        if (!empty($properties['height'])) {
+            $temp = $this->_wordMLUnits($properties['height']);
+            $stringTrPr .= '<w:trHeight w:val="' . $temp[0] . '" w:hRule="atLeast" />';
+        }
+        if (isset($properties['display']) && $properties['display'] == 'table-header-group') {
+            $stringTrPr .='<w:tblHeader />';
+        }
+        //the trPr jc property is commented because it overrides the global table align properties!!!
+        /* if (!$this->strictWordStyles) {
+          //w:tblCellSpacing
+          if (isset($properties['text_align'])) {
+          $textAlign = self::$text_align[$properties['text_align']];
+          if (empty($textAlign)) {
+          $textAlign = 'left';
+          }
+          $stringTrPr .= '<w:jc w:val="' . $textAlign . '" />';
+          }
+          } */
+        $stringTrPr .= '</w:trPr>';
+        return $stringTrPr;
+    }
+
+    /**
+     * This function returns the WordML formatting for a table cell
+     * Support:
+     * w:tcW (width),
+     * w:gridSpan (attribute colspan),
+     * w:vMerge (attribute rowspan),
+     * w:tcBorders (border-[top|left|bottom|right]-style!="none")(border-[top|left|bottom|right]-color)(border-[top|left|bottom|right]-width)(border),
+     * w:shd (background-color)(background),
+     * w:vAlign (vertical-align)
+     *
+     * @access private
+     * @param array $properties
+     * @param integer $colspan
+     * @param integer $rowspan
+     * @param boolean $firstRow
+     * @return string
+     */
+    private function generateTcPr($properties, $attributes, $colspan, $rowspan, $firstRow)
+    {
+        $stringTcPr = '<w:tcPr>';
+        if (@$properties['width'] != '') {
+            list($cellWidth, $cellWidthType) = $this->_wordMLUnits($properties['width']);
+            if ($cellWidth != 0 || $cellWidth != '') {
+                $stringTcPr .= '<w:tcW w:w="' . $cellWidth . '" w:type="' . (empty($cellWidth) ? 'auto' : $cellWidthType) . '" />';
+            }
+        }
+        if ($colspan > 1) {
+            $stringTcPr .= '<w:gridSpan w:val="' . $colspan . '" />';
+        }
+        //w:hMerge
+        if ($rowspan > 1) {
+            $stringTcPr .= '<w:vMerge w:val="restart" />';
+        }
+        if (!$this->strictWordStyles) {
+            if ($this->tableStyle == '') {
+                $sTemp = '';
+                foreach (self::$borders as $key => $value) {
+                    if (!empty($properties['border_' . $value . '_width']) && @$properties['border_' . $value . '_style'] != 'none') {
+                        $sTemp .= '<w:' . $value . ' w:val="' . $this->getBorderStyles(isset($properties['border_' . $value . '_style']) ? $properties['border_' . $value . '_style'] : false) . '"  w:color="' . (isset($properties['border_' . $value . '_color']) ? $this->wordMLColor($properties['border_' . $value . '_color']) : 0) . '" w:sz="' . $this->wordMLLineWidth(isset($properties['border_' . $value . '_width']) ? $properties['border_' . $value . '_width'] : false) . '" />';
+                    } else if (!empty(self::$borderRow[$value]['width']) && @self::$borderRow[$value]['width'] != 'none') {
+                        $sTemp .= '<w:' . $value . ' w:val="' . $this->getBorderStyles(isset(self::$borderRow[$value]['style']) ? self::$borderRow[$value]['style'] : false) . '"  w:color="' . (isset(self::$borderRow[$value]['color']) ? $this->wordMLColor(self::$borderRow[$value]['color']) : 0) . '" w:sz="' . $this->wordMLLineWidth(isset(self::$borderRow[$value]['width']) ? self::$borderRow[$value]['width'] : false) . '" />';
+                    }
+                }
+                if (!empty($sTemp))
+                    $stringTcPr .= '<w:tcBorders>' . $sTemp . '</w:tcBorders>';
+
+                if (isset($properties['background_color']) && is_array($properties['background_color'])) {
+                    $color = $properties['background_color'];
+                    $color = $this->wordMLColor($color);
+                    $stringTcPr .='<w:shd w:val="clear" w:color="auto" w:fill="' . $color . '" />';
+                } else if (isset(self::$rowColor) && is_array(self::$rowColor)) {
+                    $color = self::$rowColor;
+                    $color = $this->wordMLColor($color);
+                    $stringTcPr .='<w:shd w:val="clear" w:color="auto" w:fill="' . $color . '" />';
+                }
+            }
+            //w:noWrap
+            $stringTcPr .= $this->tcPrSpacing($properties);
+            if (isset($attributes['dir']) && array_key_exists($attributes['dir'], self::$text_direction)) {
+                $stringTcPr .= '<w:textDirection w:val="' . self::$text_direction[$attributes['dir']] . '" />';
+            }
+            //w:tcFitText
+            if (isset($properties['vertical_align']) && $properties['vertical_align'] != 'baseline') {
+                $stringTcPr .= '<w:vAlign w:val="' . $this->_verticalAlign($properties['vertical_align']) . '"/>';
+            }
+        }
+        $stringTcPr .= '</w:tcPr>';
+        return $stringTcPr;
+    }
+
+    /**
+     * This function returns the WordML formatting for a list
+     * Support:
+     * w:pStyle,
+     * w:numPr (tag [ol|ul]),
+     * w:shd (background-color)(background),
+     * w:spacing ([margin|padding]-top)([margin|padding]-bottom)(font-size)(line-height),
+     * w:contextualSpacing,
+     * w:jc (text-align)
+     *
+     * @todo openoffice don't change bullets size
+     * @access private
+     * @param array $properties
+     * @return string
+     */
+    private function generateListPr($properties)
+    {
+        $stringListPr = '<w:pPr>';
+        if (isset($properties['list_style_type']) && $properties['list_style_type'] == 'none') {
+            //We do not include numberings
+        } else {
+            // $stringListPr .= '<w:pStyle w:val="'.$this->listStyle().'"/>'; It does not seem necessary because the spacing is properly handled by the parser
+            $stringListPr .= '<w:numPr><w:ilvl w:val="';
+            $this->countTags = array_count_values(self::$openTags);
+            $stringListPr .= max((@$this->countTags['ul'] + @$this->countTags['ol'] - 1), 0);
+            $stringListPr .= '"/><w:numId w:val="';
+            if (!empty(self::$currentCustomList)) {
+                $stringListPr .= self::$currentCustomList;
+            } else {
+                $stringListPr .= $this->listType(array(CreateDocx::$numUL, CreateDocx::$numOL));
+            }
+            $stringListPr .= '"/></w:numPr>';
+        }
+        if (!$this->strictWordStyles) {
+            if (isset($properties['background_color']) && is_array($properties['background_color'])) {
+                $color = $properties['background_color'];
+                $color = $this->wordMLColor($color);
+                $stringListPr .='<w:shd w:val="clear"  w:color="auto" w:fill="' . $color . '" />';
+            }
+            $stringListPr .= $this->pPrSpacing($properties);
+        }
+        if (isset($properties['list_style_type']) && $properties['list_style_type'] == 'none') {
+            $stringListPr .= $this->pPrIndent($properties);
+        }
+        //$stringListPr .= '<w:contextualSpacing />'; It does not seem necessary because the spacing is properly handled by the parser
+        if (!$this->strictWordStyles) {
+            if (isset($properties['text_align'])) {
+                $textAlign = self::$text_align[$properties['text_align']];
+                if (empty($textAlign)) {
+                    $textAlign = 'left';
+                }
+                $stringListPr .= '<w:jc w:val="' . $textAlign . '" />';
+            }
+        }
+        $stringListPr .= '<w:rPr>';
+
+        if (!$this->strictWordStyles) {
+            if (isset($properties['font_family']) && $properties['font_family'] != 'serif') {
+                $arrayCSSFonts = explode(',', $properties['font_family']);
+                $font = trim($arrayCSSFonts[0]);
+                $font = str_replace('"', '', $font);
+                $stringListPr .= '<w:rFonts w:ascii="' . $font . '" w:hAnsi="' . $font . '" w:eastAsia="' . $font . '" w:cs="' . $font . '" /> ';
+            }
+        }
+        if (@$properties['font_weight'] == 'bold' || @$properties['font_weight'] == 'bolder') {
+            $stringListPr .='<w:b /><w:bCs />';
+        }
+        if (@$properties['font_style'] == 'italic' || @$properties['font_style'] == 'oblique') {
+            $stringListPr .='<w:i /><w:iCs />';
+        }
+        if (!$this->strictWordStyles) {
+            if (@$properties['color'] != '' && is_array($properties['color'])) {
+                $color = $properties['color'];
+                $color = $this->wordMLColor($color);
+                $stringListPr .='<w:color w:val="' . $color . '" />';
+            }
+            if (@$properties['font_size'] != '') {
+                $stringListPr .='<w:sz w:val="' . (int) round($properties['font_size'] * 2) . '" />';
+                $stringListPr .='<w:szCs w:val="' . (int) round($properties['font_size'] * 2) . '" />';
+            }
+            if (isset($properties['background_color']) && is_array($properties['background_color'])) {
+                $color = $this->wordMLNamedColor($properties['background_color']);
+                $stringListPr .='<w:highlight w:val="' . $color . '" />';
+            }
+        }
+        $stringListPr .= '</w:rPr>';
+        $stringListPr .= '</w:pPr>';
+
+        return $stringListPr;
+    }
+
+    /**
+     * This function returns the applicable Word style if any
+     * wordStyles = array('#id|.class|<tag>' => 'style1', '#id|.class|<tag>' => 'style2', [...])
+     * @access private
+     * @param string $tag
+     * @param array $attributes
+     * @return string
+     */
+    private function generateWordStyle($tag, $attributes)
+    {
+        $sTempStyle = false;
+        if (!empty($this->wordStyles)) {
+            $attId = empty($attributes['id']) ? '' : $attributes['id'];
+            $attClass = empty($attributes['class']) ? array() : $attributes['class'];
+            $attTag = $tag;
+            //First we check if there is a Word Style for the tag
+            if (!empty($this->wordStyles['<' . $attTag . '>'])) {
+                $sTempStyle = $this->wordStyles['<' . $attTag . '>'];
+            }
+            //Now we check for the classes
+            foreach ($attClass as $key => $value) {
+                if (!empty($this->wordStyles['.' . $value])) {
+                    $sTempStyle = $this->wordStyles['.' . $value];
+                }
+            }
+            //And now for the id
+            if (!empty($this->wordStyles['#' . $attId])) {
+                $sTempStyle = $this->wordStyles['#' . $attId];
+            }
+        }
+        return $sTempStyle;
+    }
+
+    /**
+     * This function is used to take care of rowspans and colspans
+     *
+     * @access private
+     * @param integer $row
+     * @param integer $column
+     * @return integer
+     */
+    private function countEmptyColumns($row, $column)
+    {
+        if (isset(self::$tableGrid[self::$openTable][$row - 1][$column]) && self::$tableGrid[self::$openTable][$row - 1][$column][0] > 1) {
+            $merge = array(self::$tableGrid[self::$openTable][$row - 1][$column][0], self::$tableGrid[self::$openTable][$row - 1][$column][1]);
+            if ($merge[0] > 1) {
+                self::$WordML .= '<w:tc><w:tcPr><w:gridSpan  w:val="' . $merge[1] . '" /><w:vMerge w:val="continue" />';
+                //Now we have to take care of inherited tc borders
+                $properties = self::$tableGrid[self::$openTable][$row - 1][$column][2];
+                $sTemp = '';
+                foreach (self::$borders as $key => $value) {
+                    if (!empty($properties['border_' . $value . '_width']) && @$properties['border_' . $value . '_style'] != 'none') {
+                        $sTemp .= '<w:' . $value . ' w:val="' . $this->getBorderStyles(isset($properties['border_' . $value . '_style']) ? $properties['border_' . $value . '_style'] : false) . '"  w:color="' . (isset($properties['border_' . $value . '_color']) ? $this->wordMLColor($properties['border_' . $value . '_color']) : 0) . '" w:sz="' . $this->wordMLLineWidth(isset($properties['border_' . $value . '_width']) ? $properties['border_' . $value . '_width'] : false) . '" />';
+                    } else if (!empty(self::$borderRow[$value]['width']) && @self::$borderRow[$value]['width'] != 'none') {
+                        $sTemp .= '<w:' . $value . ' w:val="' . $this->getBorderStyles(isset(self::$borderRow[$value]['style']) ? self::$borderRow[$value]['style'] : false) . '"  w:color="' . (isset(self::$borderRow[$value]['color']) ? $this->wordMLColor(self::$borderRow[$value]['color']) : 0) . '" w:sz="' . $this->wordMLLineWidth(isset(self::$borderRow[$value]['width']) ? self::$borderRow[$value]['width'] : false) . '" />';
+                    }
+                }
+                if (!empty($sTemp))
+                    self::$WordML .= '<w:tcBorders>' . $sTemp . '</w:tcBorders>';
+                self::$WordML .= '</w:tcPr><w:p /></w:tc>';
+                for ($k = 0; $k < $merge[1]; $k++) {
+                    array_push(self::$tableGrid[self::$openTable][count(self::$tableGrid[self::$openTable]) - 1], array(self::$tableGrid[self::$openTable][$row - 1][$column][0] - 1, $merge[1] - $k, $properties));
+                }
+            }
+            $this->countEmptyColumns($row, $column + $merge[1]);
+        }
+    }
+
+    /**
+     * This function is used to make sure that all table rows have the same grid
+     *
+     * @access private
+     * @param integer $row
+     * @param integer $column
+     * @return integer
+     */
+    private function closeTr($row, $column, $colString = '')
+    {
+        if (isset(self::$tableGrid[self::$openTable][$row - 1][$column]) && self::$tableGrid[self::$openTable][$row - 1][$column][0] > 1) {
+            $merge = array(self::$tableGrid[self::$openTable][$row - 1][$column][0], self::$tableGrid[self::$openTable][$row - 1][$column][1]);
+            if ($merge[0] > 1) {
+                $colString .= '<w:tc><w:tcPr><w:gridSpan  w:val="' . $merge[1] . '" /><w:vMerge w:val="continue" />';
+                //Now we have to take care of inherited tc borders
+                $properties = self::$tableGrid[self::$openTable][$row - 1][$column][2];
+                $sTemp = '';
+                foreach (self::$borders as $key => $value) {
+                    if (!empty($properties['border_' . $value . '_width']) && @$properties['border_' . $value . '_style'] != 'none') {
+                        $sTemp .= '<w:' . $value . ' w:val="' . $this->getBorderStyles(isset($properties['border_' . $value . '_style']) ? $properties['border_' . $value . '_style'] : false) . '"  w:color="' . (isset($properties['border_' . $value . '_color']) ? $this->wordMLColor($properties['border_' . $value . '_color']) : 0) . '" w:sz="' . $this->wordMLLineWidth(isset($properties['border_' . $value . '_width']) ? $properties['border_' . $value . '_width'] : false) . '" />';
+                    } else if (!empty(self::$borderRow[$value]['width']) && @self::$borderRow[$value]['width'] != 'none') {
+                        $sTemp .= '<w:' . $value . ' w:val="' . $this->getBorderStyles(isset(self::$borderRow[$value]['style']) ? self::$borderRow[$value]['style'] : false) . '"  w:color="' . (isset(self::$borderRow[$value]['color']) ? $this->wordMLColor(self::$borderRow[$value]['color']) : 0) . '" w:sz="' . $this->wordMLLineWidth(isset(self::$borderRow[$value]['width']) ? self::$borderRow[$value]['width'] : false) . '" />';
+                    }
+                }
+                if (!empty($sTemp))
+                    $colString .= '<w:tcBorders>' . $sTemp . '</w:tcBorders>';
+                $colString .= '</w:tcPr><w:p /></w:tc>';
+                for ($k = 0; $k < $merge[1]; $k++) {
+                    array_push(self::$tableGrid[self::$openTable][count(self::$tableGrid[self::$openTable]) - 1], array(self::$tableGrid[self::$openTable][$row - 1][$column][0] - 1, $merge[1] - $k, $properties));
+                }
+            }
+
+            $colString = $this->closeTr($row, $column + $merge[1], $colString);
+        }
+        return $colString;
+    }
+
+    /**
+     * This function is used to make sure that the url has the desired format
+     *
+     * @access private
+     * @param string $url
+     * @return string
+     */
+    private function parseURL($url)
+    {
+        $urlParts = explode('//', $url);
+        if ($urlParts[0] == 'http:' || $urlParts[0] == 'https:' || $urlParts[0] == 'file:') {
+            return $url;
+        } else if (($urlParts[0] == '' && count($urlParts) > 0)) {
+            return 'http:' . $url;
+        } else {
+            if ($url[0] == '/') {
+                $url = substr($url, 1);
+            }
+        }
+        return $this->baseURL . $url;
+    }
+
+    /**
+     * This function returns the parent element HTML tag
+     *
+     * @access private
+     * @return string
+     */
+    private function getParentHTMLElementTag($depth)
+    {
+        if (isset(self::$openTags[$depth - 1])) {
+            $HTMLTag = self::$openTags[$depth - 1];
+        } else {
+            $HTMLTag = '';
+        }
+        return $HTMLTag;
+    }
+
+    /**
+     * This function is used to determine the spacing before and after a paragraph
+     *
+     * @access private
+     * @return string
+     */
+    private function pPrSpacing($properties)
+    {
+        $before = 0;
+        $after = 0;
+        $line = 240;
+        //let us look at the margin top
+        if (!empty($properties['margin_top'])) {
+            $temp = $this->_wordMLUnits($properties['margin_top'], $properties['font_size']);
+            $before += (int) round($temp[0]);
+        }
+        //let us look now at the padding top
+        if (!empty($properties['padding_top'])) {
+            $temp = $this->_wordMLUnits($properties['padding_top'], $properties['font_size']);
+            $before += (int) round($temp[0]);
+        }
+        //let us look at the margin bottom
+        if (!empty($properties['margin_bottom'])) {
+            $temp = $this->_wordMLUnits($properties['margin_bottom'], $properties['font_size']);
+            $after += (int) round($temp[0]);
+        }
+        //let us look now at the padding bottom
+        if (!empty($properties['padding_bottom'])) {
+            $temp = $this->_wordMLUnits($properties['padding_bottom'], $properties['font_size']);
+            $after += (int) round($temp[0]);
+        }
+
+        $before = max(0, $before);
+        $after = max(0, $after);
+
+        //we now check the line height property
+
+        if (isset($properties['line_height'])) {
+            if (isset($properties['font_size']) && $properties['font_size'] != 0) {
+                $lineHeight = ( (float) $properties['line_height']) / ((float) $properties['font_size']);
+                $line = (int) round($lineHeight * 200);
+            } else {
+                $lineHeight = ( (float) $properties['line_height']) / 12;
+                $line = (int) round($lineHeight * 200);
+            }
+        }
+
+        $spacing = '<w:spacing w:before="' . $before . '" w:after="' . $after . '" ';
+        $spacing .= 'w:line="' . $line . '" w:lineRule="auto"';
+        $spacing .= ' />';
+        return $spacing;
+    }
+
+    /**
+     * This function is used to determine the spacing before and after a cell
+     *
+     * @access private
+     * @return string
+     */
+    private function tcPrSpacing($properties)
+    {
+        $top = $left = $bottom = $right = array(0, 'auto');
+
+        if (!empty($properties['margin_top'])) {
+            $top = $this->_wordMLUnits($properties['margin_top'], $properties['font_size']);
+        }
+        if (!empty($properties['padding_top'])) {
+            $temp = $this->_wordMLUnits($properties['padding_top'], $properties['font_size']);
+            if ($temp[0] > $top[0])
+                $top = $temp;
+        }
+
+        if (!empty($properties['margin_bottom'])) {
+            $bottom = $this->_wordMLUnits($properties['margin_bottom'], $properties['font_size']);
+        }
+        //let us look now at the padding bottom
+        if (!empty($properties['padding_bottom'])) {
+            $temp = $this->_wordMLUnits($properties['padding_bottom'], $properties['font_size']);
+            if ($temp[0] > $bottom[0])
+                $bottom = $temp;
+        }
+
+        $spacing = '<w:tcMar>';
+        $spacing .= '<w:top w:w="' . $top[0] . '" w:type="' . $top[1] . '"/>';
+        //$spacing .= '<w:left w:w="" w:type=""/>';
+        $spacing .= '<w:bottom w:w="' . $bottom[0] . '" w:type="' . $bottom[1] . '"/>';
+        //$spacing .= '<w:right w:w="" w:type=""/>';
+        $spacing .= '</w:tcMar>';
+        return $spacing;
+    }
+
+    /**
+     * This function is used to determine the left and right indent of the paragraph
+     *
+     * @access private
+     * @return string
+     */
+    private function pPrIndent($properties)
+    {
+        $left = 0;
+        $right = 0;
+        $firstLineIndent = 0;
+        //let us look at the margin left
+        if (!empty($properties['margin_left'])) {
+            $temp = $this->_wordMLUnits($properties['margin_left'], $properties['font_size']);
+            $left += (int) round($temp[0]);
+        }
+        //let us look now at the padding left
+        if (!empty($properties['padding_left'])) {
+            $temp = $this->_wordMLUnits($properties['padding_left'], $properties['font_size']);
+            $left += (int) round($temp[0]);
+        }
+        //let us look at the margin right
+        if (!empty($properties['margin_right'])) {
+            $temp = $this->_wordMLUnits($properties['margin_right'], $properties['font_size']);
+            $right += (int) round($temp[0]);
+        }
+        //let us look now at the padding right
+        if (!empty($properties['padding_right'])) {
+            $temp = $this->_wordMLUnits($properties['padding_right'], $properties['font_size']);
+            $right += (int) round($temp[0]);
+        }
+        if (!empty($properties['text_indent'])) {
+            $temp = $this->_wordMLUnits($properties['text_indent'], $properties['font_size']);
+            $firstLineIndent = (int) round($temp[0]);
+        }
+
+        $indent = '<w:ind w:left="' . $left . '" w:right="' . $right . '" ';
+        if ($firstLineIndent != 0) {
+            $indent .= 'w:firstLine="' . $firstLineIndent . '" ';
+        }
+        $indent .= '/>';
+        return $indent;
+    }
+
+    /**
+     * This function converts the paragraph into a heading
+     *
+     * @access private
+     * @return string
+     */
+    private function setHeading($level)
+    {
+        $heading = '<w:outlineLvl w:val="' . ($level - 1) . '"/>';
+        return $heading;
+    }
+
+    /**
+     * This function returns the width of a line in eigths of a point (the measure used in WordML)
+     *
+     * @access private
+     * @param integer $size
+     * @return integer
+     */
+    private function wordMLLineWidth($size)
+    {
+        return (int) round($size * 5 / 0.75);
+    }
+
+    /**
+     * This function returns the colour as is used by WordML
+     *
+     * @access private
+     * @param array $color
+     * @return string
+     */
+    private function wordMLColor($color)
+    {
+        if (strtolower($color['hex']) == 'transparent') {
+            return '';
+        } else {
+            return strtoupper(str_replace('#', '', $color['hex']));
+        }
+    }
+
+    /**
+     * This function returns the colour name as is used by WordML in highlighted text
+     * black	Black Highlighting Color
+     * blue	Blue Highlighting Color
+     * cyan	Cyan Highlighting Color
+     * green	Green Highlighting Color
+     * magenta	Magenta Highlighting Color
+     * red	Red Highlighting Color
+     * yellow	Yellow Highlighting Color
+     * white	White Highlighting Color
+     * darkBlue	Dark Blue Highlighting Color
+     * darkCyan	Dark Cyan Highlighting Color
+     * darkGreen	Dark Green Highlighting Color
+     * darkMagenta	Dark Magenta Highlighting Color
+     * darkRed	Dark Red Highlighting Color
+     * darkYellow	Dark Yellow Highlighting Color
+     * darkGray	Dark Gray Highlighting Color
+     * lightGray	Light Gray Highlighting Color
+     * none	No Text Highlighting
+     *
+     * @access private
+     * @param string $color
+     * @return string
+     */
+    private function wordMLNamedColor($color)
+    {
+        $color = strtoupper(str_replace('#', '', $color["hex"]));
+        $wordMLColors = array('000000' => 'black', '0000ff' => 'blue', '00ffff' => 'cyan', '00ff00' => 'green', 'ff00ff' => 'magenta', 'ff0000' => 'red',
+            'ffff00' => 'yellow', 'ffffff' => 'white', '00008b' => 'darkBlue', '008b8b' => 'darkCyan', '006400' => 'darkGreen', '8b008b' => 'darkMagenta',
+            '8b0000' => 'darkRed', '808000' => 'darkYellow', 'a9a9a9' => 'darkGray', 'd3d3d3' => 'lightGray', '' => 'none');
+
+        if (isset($wordMLColors[$color]))
+            return($wordMLColors[$color]); //exact color
+
+
+
+            
+//return closest color
+        $hex24 = 16777215;
+        $retCol = '000000';
+        $red_color = hexdec(substr($color, 0, 2));
+        $green_color = hexdec(substr($color, 2, 4));
+        $blue_color = hexdec(substr($color, 4));
+        foreach ($wordMLColors as $key => $val) {
+            $red = $red_color - hexdec(substr($key, 0, 2));
+            $green = $green_color - hexdec(substr($key, 2, 4));
+            $blue = $blue_color - hexdec(substr($key, 4));
+
+            $dist = $red * $red + $green * $green + $blue * $blue; //distance between colors
+
+            if ($dist <= $hex24) {
+                $hex24 = $dist;
+                $retCol = $key;
+            }
+        }
+
+        return $wordMLColors[$retCol];
+
+
+
+        //return strtoupper(str_replace('#', '', $color["hex"]));
+    }
+
+    /**
+     * This function returns the border style if it is correct CSS, else it returns nil
+     *
+     * @access private
+     * @param string $borderStyle
+     * @return string
+     */
+    private function getBorderStyles($borderStyle)
+    {
+        if (!empty($borderStyle) && array_key_exists($borderStyle, self::$borderStyles)) {
+            return self::$borderStyles[$borderStyle];
+        } else {
+            return 'nil';
+        }
+    }
+
+    /**
+     * This function returns the border style of an embeded image
+     *
+     * @access private
+     * @param int $borderWidth
+     * @param string $borderStyle
+     * @return string
+     */
+    private function imageBorders($borderWidth, $borderStyle, $borderColor)
+    {
+
+        if ($borderWidth == 0) {
+            $borderXML = '<a:ln w="0"><a:noFill/></a:ln>';
+        } else {
+            $borderXML = '<a:ln w="' . $borderWidth . '">
+                            <a:solidFill>
+                                <a:srgbClr val="' . $borderColor . '" />
+                            </a:solidFill>
+                            <a:prstDash val="' . self::$imageBorderStyles[$borderStyle] . '" />
+                        </a:ln>';
+        }
+
+        return $borderXML;
+    }
+
+    /**
+     * This function returns the image dimensions
+     *
+     * @access private
+     * @param array $size
+     * @param array $attributes
+     * @return array
+     */
+    private function getImageDimensions($size, $attributes)
+    {
+        $width = $size[0];
+        $height = $size[1];
+        if (isset($attributes['width']) && is_numeric($attributes['width']) && $attributes['width'] > 1) {
+            $cx = $attributes['width'] * 7200;
+        } else if (empty($attributes['width']) && isset($attributes['height']) && is_numeric($attributes['height']) && $attributes['height'] > 1) {
+            $cx = (int) ceil($width * $attributes['height'] / $height) * 7200;
+        } else {
+            $cx = $width * 7200;
+        }
+        if (isset($attributes['height']) && is_numeric($attributes['height']) && $attributes['height'] > 1) {
+            $cy = $attributes['height'] * 7200;
+        } else if (empty($attributes['height']) && isset($attributes['width']) && is_numeric($attributes['width']) && $attributes['width'] > 1) {
+            $cy = (int) ceil($height * $attributes['width'] / $width) * 7200;
+        } else {
+            $cy = $height * 7200;
+        }
+
+        return array($cx, $cy);
+    }
+
+    /**
+     * This function returns the margin for the image
+     *
+     * @access private
+     * @param string $margin
+     * @param string $padding
+     * @return string
+     */
+    private function imageMargins($margin, $padding, $fontSize)
+    {
+
+        $distance = 0;
+
+        //let us look at the margin
+        if ($margin != 0) {
+            $temp = $this->_wordMLUnits($margin, $fontSize);
+            $distance += (int) round($temp[0]);
+        }
+
+        //let us look at the padding
+        if ($padding != 0) {
+            $temp = $this->_wordMLUnits($padding, $fontSize);
+            $distance += (int) round($temp[0]);
+        }
+
+        return (int) round($distance * 635 * 0.75); //we are multypling by the scaling factor between twips and emus. The factor of 0.75 is ours to keep the extra scaling ratio we use on images
+    }
+
+    /**
+     * This function repairs the problem of empty cells in a table
+     *
+     * @access private
+     * @return string
+     */
+    private function repairWordML($data)
+    {
+        //This is to fix the problem with empty cells in a table (a Word bug)
+        $data = str_replace('</w:tcPr></w:tc>', '</w:tcPr><w:p /></w:tc>', $data);
+        //We also clean extra line feeds generated by the parser after <br /> tags that may give problems with the rendering of WordML
+        $data = preg_replace('/<w:br \/><w:t xml:space="preserve">[\n\r]+/', '<w:br /><w:t xml:space="preserve">', $data);
+        //can not put two tables together
+        $data = preg_replace('/<\/w:tbl><w:tbl>/i', '</w:tbl><w:p /><w:tbl>', $data);
+        // remove extra #<w:gridCol/>#
+        $data = str_replace('#<w:gridCol/>#', '', $data);
+
+        return $data;
+    }
+
+    /**
+     * Translates HTML units to Word ML units
+     *
+     * @access private
+     * @param string $sHtmlUnit Units in HTML format
+     * @param string $fontSize Font size, if applicable
+     * @return array
+     */
+    private function _wordMLUnits($sHtmlUnit, $fontSize = false)
+    {
+        if (!preg_match('/^(-?\d*\.?\d*)(%|em|pt|px)?$/i', trim($sHtmlUnit), $match))
+            return(array(0, 'dxa'));
+
+        $match[1] = (strpos($match[1], '.') === 0 ? '0' : '') . $match[1];
+        $match[2] = empty($match[2]) ? '' : $match[2];
+
+        //if($match[2] != 'em' && $match[2] != 'px' && !empty($fontSize)) $match[2] = 'pt';
+
+        switch ($match[2]) {
+            case '%': //in WordML the precentage is given in fiftieths of a percent
+                $widthType = 'pct';
+                $width = 50 * $match[1];
+                break;
+            case 'em':
+                $widthType = 'dxa';
+                $width = 20 * $match[1] * $fontSize;
+                break;
+            case 'pt': //in WordML the width is given in twentieths of a point
+                $widthType = 'dxa';
+                $width = 20 * $match[1];
+                break;
+            case 'px': //a pixel is around 3/4 of a point
+            default: //if no unit we asume is given in pixels
+                $widthType = 'dxa';
+                $width = 15 * $match[1];
+        }
+
+        return(array($width, $widthType));
+    }
+
+    /**
+     * Translates CSS units to pixels
+     *
+     * @access private
+     * @param string $value CSS property value
+     * @param string $fontSize 
+     * @return array
+     */
+    private function CSSUnits2Pixels($value, $fontSize = 12)
+    {
+        if (!preg_match('/^(-?\d*\.?\d*)(%|em|pt|px)?$/i', trim($value), $match))
+            return;
+
+        $match[1] = (strpos($match[1], '.') === 0 ? '0' : '') . $match[1];
+        $match[2] = empty($match[2]) ? '' : $match[2];
+
+        switch ($match[2]) {
+            case '%':
+                return;
+            case 'em':
+                $pixels = ceil($match[1] / 0.75) * $fontSize;
+                break;
+            case 'pt': //in WordML the width is given in twentieths of a point
+                $pixels = ceil($match[1] / 0.75);
+                break;
+            case 'px': //a pixel is around 3/4 of a point
+            default: //if no unit we asume is given in pixels
+                $pixels = $match[1];
+        }
+
+        return $pixels;
+    }
+
+    /**
+     * Parse image vertical align property
+     *
+     * @access private
+     * @param array $properties
+     * @return array
+     */
+    private function generateImageRPr($properties, $height = 0)
+    {
+        //Notice: the position is given in half-points
+        //get the height of the image in points
+        $ptHeight = ceil(0.58 * $height / 7200);
+        if (preg_match('/^(-?\d*\.?\d*)(%|em|pt|px)?$/i', trim($properties['vertical_align']), $match)) {
+            $match[1] = (strpos($match[1], '.') === 0 ? '0' : '') . $match[1];
+            $match[2] = empty($match[2]) ? '' : $match[2];
+
+            switch ($match[2]) {
+                case '%':
+                    $position = ceil(2 * $match[1] * $ptHeight / 100);
+                case 'em':
+                    $position = ceil(2 * $match[1] * $properties['font_size']);
+                    break;
+                case 'pt':
+                    $position = ceil(2 * $match[1]);
+                    break;
+                case 'px': //a pixel is around 3/4 of a point
+                default: //if no unit we asume is given in pixels
+                    $position = ceil(2 * $match[1] * 0.75);
+            }
+        } else if (array_key_exists($properties['vertical_align'], self::$imageVertAlignProps)) {
+            if ($properties['vertical_align'] == 'middle') {
+                $position = - 1 * ceil($ptHeight - 0.75 * $properties['font_size']);
+            } else {
+                $position = - 2 * ceil($ptHeight - 0.75 * $properties['font_size']);
+            }
+        } else {
+            return;
+        }
+        return '<w:rPr><w:position w:val="' . $position . '"/></w:rPr>';
+    }
+
+    /**
+     * Vertical position
+     *
+     * @access private
+     * @param string $valign Vertical align
+     * @param string $fontSize Font size, if applicable
+     * @return array
+     */
+    private function _rprPosition($valign, $font_size)
+    {
+        $measureUnit = substr($valign, -2);
+        $quantity = (int) substr($valign, 0, -2); //TODO: parse other posible non-numerical values like top.
+        if ($valign == 'middle') {
+            $measureUnit = 'em';
+            $quantity = -0.5;
+        }
+        if ($valign == 'super') {
+            $measureUnit = 'em';
+            $quantity = 0.75;
+        }
+        if ($valign == 'sub') {
+            $measureUnit = 'em';
+            $quantity = -0.75;
+        }
+        if ($measureUnit == 'em') {
+            $vertDisplacement = (int) round($quantity * 0.5 * $font_size);
+        } else if ($measureUnit == 'px') {
+            $vertDisplacement = (int) round($quantity * 0.5 * 0.75);
+        } else {
+            $vertDisplacement = (int) round($quantity * 0.5);
+        }
+        return($vertDisplacement);
+    }
+
+    /**
+     * Vertical align
+     *
+     * @access private
+     * @param string $valign Vertical align
+     * @return string
+     */
+    private function _verticalAlign($valign = 'baseline')
+    {
+        $temp = $valign;
+        switch ($temp) {
+            case 'super':
+            case 'top':
+            case 'text-top':
+                $temp = 'top';
+                break;
+            case 'middle':
+                $temp = 'center';
+                break;
+            case 'sub':
+            case 'baseline':
+            case 'bottom':
+            case 'text-bottom':
+            default:
+                $temp = 'bottom';
+        }
+
+        return($temp);
+    }
+
+}
