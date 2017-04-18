@@ -82,7 +82,9 @@ var signFile = function(contentBase64,thumbprint, callback)
             oSigner.then(function(Signer) {
                 resolve(SignedData.signCades(Signer.getObject(), SignedData.CADESCOM_CADES_BES, true, SignedData.CAPICOM_ENCODE_BASE64));
             }.bind(this));
-        }.bind(this));
+        }.bind(this)).catch(function(err) {
+           console.log(err);
+        });
     }.bind(this));
 
     signatureMessage.then(function(signatureMessage) {

@@ -280,10 +280,64 @@ ini_set('display_errors', 1);
 
     public function test2Action()
     {
-        $fileName = 'w.jpg';
-        //header('Content-Type: image/png');
+        
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+        
+        header('Content-Type: text/html; charset=UTF-8');
+        $value = '<p>На основании решения контрольного органа в сфере закупок <em>«указать реквизиты решения»</em> выдано предписание, согласно которому <em>«указать кому и какие действия предписаны».</em></p><p><img src="' . $_SERVER['DOCUMENT_ROOT'] . '/files/generated_complaints/user_169/2017.png"/></p><p>В силу пункта 2 части 22 статьи 99 Закона о контрактной системе предписания об устранении нарушений законодательства Российской Федерации и иных нормативных правовых актов о контрактной системе, выданные контрольным органом в сфере закупок обязательны для исполнения.</p><p>х.</p><p><br></p>';
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/public/phpdocx/classes/CreateDocx.inc';
+        $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/public/js/docx_generator/docx_templates/documentation_phpword.docx");
+        
+   $data['applicant_fio'] = ' "ООО ПСК ""СТРОЙПРОЕКТ"""';
+$data['applicant_fio2'] = ' Болквадзе Мамука Фридонович';
+$data['applicant_address'] = ' ГОРОД САНКТ-ПЕТЕРБУРГ,,,,ПРОСПЕКТ СЕВЕРНЫЙ,ДОМ 93,ЛИТЕР А,ПОМЕЩЕНИЕ 6Н';
+$data['applicant_phone'] = ' 34545';
+$data['applicant_position'] = ' Генеральный директор';
+$data['applicant_email'] = ' f-ree-z@inbox.ru';
+$data['tip_zakupki'] = ' Электронный аукцион';
+$data['ufas'] = ' Управление Федеральной антимонопольной службы по Санкт-Петербургу';
+$data['dovod'] = ' <p>132</p><br>';
+$data['zakaz_phone'] = ' +7 (812) 5710767';
+$data['zakaz_kontaktnoe_lico'] = ' Иванова Светлана Федоровна';
+$data['zakaz_kontaktnoe_name1'] = ' ';
+$data['zakaz_kontaktnoe_name2'] = '  «САНКТ-ПЕТЕРБУРГСКОЕ ГОСУДАРСТВЕННОЕ КАЗЕННОЕ УЧРЕЖДЕНИЕ "ЖИЛИЩНОЕ  АГЕНТСТВО АДМИРАЛТЕЙСКОГО РАЙОНА САНКТ-ПЕТЕРБУРГА"»';
+$data['kontakt'] = ' Название организации:';
+$data['zakaz_address'] = ' Российская Федерация, 190000, Санкт-Петербург, НАБ КАНАЛА ГРИБОЕДОВА, 83, ОФИС';
+$data['zakaz_mesto'] = '  «САНКТ-ПЕТЕРБУРГСКОЕ ГОСУДАРСТВЕННОЕ КАЗЕННОЕ УЧРЕЖДЕНИЕ "ЖИЛИЩНОЕ АГЕНТСТВО А ДМИРАЛТЕЙСКОГО РАЙОНА САНКТ-ПЕТЕРБУРГА"»';
+$data['organiz_fio1'] = ' АДМИНИСТРАЦИЯ АДМИРАЛТЕЙСКОГО РАЙОНА САНКТ-ПЕТЕРБУРГА';
+$data['organiz_fio2'] = ' Плескач Екатерина Николаевна';
+$data['organiz_phone'] = ' 7-812-5769715';
+$data['organiz_mesto'] = ' Российская Федерация, 190005, Санкт-Петербург, Измайловский, 10';
+$data['organiz_address'] = ' 190005, Санкт-Петербург Город, Измайловский Проспект, дом 10';
+$data['izveshchenie'] = ' 0172200003617000019';
+$data['zakupka_name'] = ' Выполнение работ по комплексному благоустройству дворов, не входящих в состав  общего имущества многоквартирных домов Адмиралтейского района Санкт-Петербурга, в 2017 году';
+$data['zayavitel'] = ' "ООО ПСК ""СТРОЙПРОЕКТ"""';
+        
+        foreach ($data as $key => $value) {
+            if ($key == 'dovod') {
+                /*preg_match_all('/<img.*?src\s*=(.*?)>/', $value, $out);
+                if (count($out[1])) {
+                    foreach ($out[1] as $key1 => $image) {
+                        $explode = explode(" ", $image);
+                        $image = trim($explode[0], '"');
 
-        $this->create_thumbnail($_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/" . $fileName, 'true', 700, 500);
+                        $file_name = time() + rand();
+
+                        if(substr_count($image, 'data:image'))
+                            $value = str_replace($out[0][$key1], '<img src="' . $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/" . $this->save_base64_image($image, time() + rand(), $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/") . '"><br/>', $value);
+                    }
+                }*/
+
+                $docx->replaceVariableByHTML($key, 'block', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));
+            } else
+                $docx->replaceVariableByHTML($key, 'inline', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));
+        }
+        
+        $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
+        $name = 'complaint_' . time() . '.docx';
+        
+        $docx->createDocx($baseLocation . $name);
     }
 
     /*function save_base64_image($base64_image_string, $output_file_without_extentnion, $path_with_end_slash = "")
@@ -337,6 +391,9 @@ ini_set('display_errors', 1);
 
     public function saveHtmlFileAction()
     {
+        //error_reporting(E_ALL);
+        //ini_set('display_errors', 1);
+        
         $name = false;
         $format = 1;
         $recall = 0;
@@ -349,58 +406,73 @@ ini_set('display_errors', 1);
                 if (!file_exists($baseLocation)) {
                     mkdir($baseLocation, 0777, true);
                 }
-                if (empty($recall)) {
-                    $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
-                    if ($unformatted == 'unformatted_') {
-                        $format = 0;
-                    }
-                    $name = 'complaint_' . $unformatted . time() . '.docx';
-                    $data = json_decode($this->request->getPost('doc'));
+                 
+                try
+                    {
+                        if (empty($recall)) {
+                            $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
+                            if ($unformatted == 'unformatted_') {
+                                $format = 0;
+                            }
+                            $name = 'complaint_' . $unformatted . time() . '.docx';
+                            $data = json_decode($this->request->getPost('doc'));
+                            
+                            require_once $_SERVER['DOCUMENT_ROOT'] . '/public/phpdocx/classes/CreateDocx.inc';
+                            $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/public/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
+                            
+                            foreach ($data as $key => $value) {
+                                if ($key == 'dovod') {
+                                    /*preg_match_all('/<img.*?src\s*=(.*?)>/', $value, $out);
+                                    if (count($out[1])) {
+                                        foreach ($out[1] as $key1 => $image) {
+                                            $explode = explode(" ", $image);
+                                            $image = trim($explode[0], '"');
 
-                    require_once $_SERVER['DOCUMENT_ROOT'] . '/public/phpdocx/classes/CreateDocx.inc';
-                    $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/public/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
+                                            $file_name = time() + rand();
 
-                    foreach ($data as $key => $value) {
-                        if ($key == 'dovod') {
-                            /*preg_match_all('/<img.*?src\s*=(.*?)>/', $value, $out);
-                            if (count($out[1])) {
-                                foreach ($out[1] as $key1 => $image) {
-                                    $explode = explode(" ", $image);
-                                    $image = trim($explode[0], '"');
+                                            if(substr_count($image, 'data:image'))
+                                                $value = str_replace($out[0][$key1], '<img src="' . $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/" . $this->save_base64_image($image, time() + rand(), $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/") . '"><br/>', $value);
+                                        }
+                                    }*/
 
-                                    $file_name = time() + rand();
+                                    if(trim($value)=='') $value='  ';
+                                    $docx->replaceVariableByHTML($key, 'block', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));
+                                } else
+                                    if(trim($value)=='') $value='  ';
+                                    $docx->replaceVariableByHTML($key, 'inline', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));                                
+                            }
 
-                                    if(substr_count($image, 'data:image'))
-                                        $value = str_replace($out[0][$key1], '<img src="' . $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/" . $this->save_base64_image($image, time() + rand(), $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/") . '"><br/>', $value);
-                                }
-                            }*/
+                            //$templateProcessor->saveAs($baseLocation . $name);
+                            $docx->createDocx($baseLocation . $name);
 
-                            $docx->replaceVariableByHTML($key, 'block', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));
-                        } else
-                            $docx->replaceVariableByHTML($key, 'inline', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));
-                    }
+                            //$file->moveTo($baseLocation . $name);
+ 
+                        } else {
+                            $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
+                            $name = 'recall_' . $unformatted . time() . '.docx';
+                            $recall = 1;
 
-                    //$templateProcessor->saveAs($baseLocation . $name);
-                    $docx->createDocx($baseLocation . $name);
+                            $data = json_decode($this->request->getPost('doc'));
+                            require_once $_SERVER['DOCUMENT_ROOT'] . '/public/phpdocx/classes/CreateDocx.inc';
+                            $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/public/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
 
-                    //$file->moveTo($baseLocation . $name);
-                } else {
-                    $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
-                    $name = 'recall_' . $unformatted . time() . '.docx';
-                    $recall = 1;
+                            foreach ($data as $key => $value) {
+                                if(trim($value)=='') $value='  ';
+                                $docx->replaceVariableByHTML($key, 'block', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => false));
+                            }
 
-                    $data = json_decode($this->request->getPost('doc'));
-                    require_once $_SERVER['DOCUMENT_ROOT'] . '/public/phpdocx/classes/CreateDocx.inc';
-                    $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/public/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
-
-                    foreach ($data as $key => $value) {
-                        $docx->replaceVariableByHTML($key, 'block', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => false));
-                    }
-
-                    $docx->createDocx($baseLocation . $name);
-
-                    //$file->moveTo($baseLocation . $name);
+                            $docx->createDocx($baseLocation . $name);
+                            //$file->moveTo($baseLocation . $name);
+                        }
+                
                 }
+                catch(\Exception $e)
+                {
+                    print_R('ok=');
+                    print_R($e);
+                    die;
+                }
+                
             }
             $docx = new DocxFiles();
             if (!empty($recall)) {

@@ -793,7 +793,7 @@ function saveComplaintToDocxFile() {
         custom_text_unformatted += $(elem).text() + "<br>";
     });
     
-    if ($("#operator_etp").is(":checked")) {
+    /*if ($("#operator_etp").is(":checked")) {
         $file_to_load = "operator_etp_phpword.docx";
     } else {
         if (compare_dates(procedura.info.okonchanie)) {
@@ -802,8 +802,9 @@ function saveComplaintToDocxFile() {
             //$file_to_load = "decline.docx";
             $file_to_load = "decline_phpword.docx";
         }
-    }
-    
+    }*/
+    $file_to_load = "documentation_phpword.docx";
+    console.log(auction);
     doc = {
         "applicant_fio": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : applicant.applicant_info.fio_applicant,
         "applicant_fio2": applicant.applicant_info.fio_applicant,
@@ -863,7 +864,7 @@ function saveComplaintToDocxFile() {
      
 
 /////////unformated     
-    doc = {
+   /* doc = {
         "applicant_fio": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : applicant.applicant_info.fio_applicant,
         "applicant_fio2": applicant.applicant_info.fio_applicant,
         "applicant_address": applicant.applicant_info.address,
@@ -913,7 +914,7 @@ function saveComplaintToDocxFile() {
         },
         error: function () {
         }
-    });
+    });*/
         
     return true;
 }
