@@ -1390,6 +1390,8 @@ class ComplaintController extends ControllerBase
 
     public function sendComplaintToUfasAction()
     {
+        $status = 'ok';
+
         $compId = $this->request->getPost('complId');
         $file = DocxFiles::findFirst(array(
             "complaint_id = {$compId} AND format = 1"
@@ -1431,11 +1433,15 @@ class ComplaintController extends ControllerBase
 4. Локально - при помощи БЕСПЛАТНОЙ программы http://cryptoarm.ru/bitrix/redirect.php?event1=download&event2=cryptoarm5&goto=http://www.trusted.ru/wp-content/uploads/trusteddesktop.exe<br/>';
 
 
-        $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content);
+        try {
+            $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content);
+        } catch (\Exception $e) {
+            $status = 'error';
+        }
 
 
         echo json_encode(array(
-            'status' => 'ok',
+            'status' => $status,
             'complaint' => array(
                 'auction_id' => $complaint->auction_id,
             )
