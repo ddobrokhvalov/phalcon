@@ -43,7 +43,7 @@ var ufasValidator = {
            this.done(field_selector);
         }
         var field_selector = '#number';
-        if (!validator.numeric($(field_selector).val(), 2, 2)) {
+        if (!validator.numericaddufas($(field_selector).val(), 2, 2)) {
            this.showError(field_selector, 'Ошибка! Налоговый номер состоит из 2 цифр');
            this.result = false;
         } else {
