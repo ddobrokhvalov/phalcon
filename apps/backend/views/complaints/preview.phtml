@@ -201,7 +201,7 @@
                 <h4 class="modal-title">Отправить сообщение</h4>
             </div>
             <div class="modal-body">
-                <form action="/admins/sendMessage">
+                <form>
                     <div class="form-group">
                         <label for="message-subject" class="control-label">Тема:</label>
                         <input type="text" class="form-control" id="message-subject">
@@ -214,7 +214,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                <button type="button" onclick="send_message($('#message-subject').val(), $('#message-text').val())" class="btn btn-primary">Отправить</button>
+                <button type="button" onclick="send_message($('#message-subject').val(), $('#message-text').val()); return false;" class="btn btn-primary">Отправить</button>
             </div>
         </div>
     </div>
