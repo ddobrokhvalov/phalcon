@@ -677,6 +677,29 @@ class ComplaintsController extends ControllerBase
         return $this->response->redirect('/admin/complaints/edit/' . $complaint_id);
     }
 
+    public function sendMessageAction(){
+        $from = $this->user->id;
+        $toids = $this->request->getPost("toids");
+        $subject = $this->request->getPost("subject");
+        $body = $this->request->getPost("body");
+        
+        if(count($toids) && $from){
+            foreach ($toids as $to){
+                $message = new Messages();
+                $message->from_uid = $from;
+                $message->to_uid = $to;
+                $message->subject = $subject;
+                $message->body = $body;
+                $message->time = date('Y-m-d H:i:s');
+                $message->save();
+            }
+        }
+        $this->view->disable();
+        $this->flashSession->success('Сообщение отправлено');
+        $data = "ok";
+        echo json_encode($data);
+    }
+    
     private function checkDateEndSendApp($dateOff, &$result = false)
     {
         $dateOff = strtotime($dateOff);

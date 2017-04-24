@@ -1410,7 +1410,7 @@ function send_message_from_preview(subject, body){
     });
     if (id_array.length) {
         $.ajax({
-            url: "/sendMessage",
+            url: "/admin/complaints/sendMessage",
             type:'POST',
             data: { toids: id_array, subject: subject, body: body },
             dataType: 'json',
