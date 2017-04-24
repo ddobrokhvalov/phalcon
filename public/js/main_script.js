@@ -1400,6 +1400,28 @@ function send_message(subject, body){
     }
 }
 
+function send_message_from_preview(subject, body){
+    var id_array = [];
+    $('.admin-lt-holder .lt-content-main').each(function(){
+        var id = $(this).find('div.psevdo-checked #user-id').val();
+        if (id != undefined) {
+            id_array.push(id);
+        }
+    });
+    if (id_array.length) {
+        $.ajax({
+            url: "/sendMessage",
+            type:'POST',
+            data: { toids: id_array, subject: subject, body: body },
+            dataType: 'json',
+            success: function(data){
+                $('.modal-send-message-lg').modal('hide');
+                window.location.reload(true);
+            }
+        });
+    }
+}
+
 function delete_admins(){
     var id_array = [];
     $('.admin-lt-holder .lt-content-main').each(function(){
