@@ -1,7 +1,7 @@
 var arrCheck = new Array();
 jQuery(document).ready(function ($) {
 
-    if (bowser.firefox || bowser.chrome || bowser.name == 'Yandex Browser') {
+    if (bowser.chrome || bowser.name == 'Yandex Browser') {
         /*if (bowser.firefox && bowser.version < 51)
             showStyledPopupMessageWithButtons(
                 "#pop-browser-alert",
