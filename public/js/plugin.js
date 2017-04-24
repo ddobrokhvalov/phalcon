@@ -2,14 +2,14 @@ var arrCheck = new Array();
 jQuery(document).ready(function ($) {
 
     if (bowser.firefox || bowser.chrome || bowser.name == 'Yandex Browser') {
-        if (bowser.firefox && bowser.version < 51)
+        /*if (bowser.firefox && bowser.version < 51)
             showStyledPopupMessageWithButtons(
                 "#pop-browser-alert",
                 "Обратите внимание",
                 "Для корректной работы системы обновите браузер 'Mozilla Firefox' до последней версии. <a href='https://download.mozilla.org/?product=firefox-stub&os=win&lang=ru'>Скачать</a>",
                 "alert('ok')"
             );
-        else if (bowser.chrome && bowser.version < 56)
+        else*/ if (bowser.chrome && bowser.version < 56)
             showStyledPopupMessageWithButtons(
                 "#pop-browser-alert",
                 "Обратите внимание",
@@ -67,7 +67,6 @@ jQuery(document).ready(function ($) {
             "#pop-browser-alert",
             "Обратите внимание",
             '<form>Для работы с системой необходимо использовать один из перечисленных браузеров:<br/>\
-        - Mozilla FireFox<br/>\
         - Chrome<br/>\
         - Yandex браузер<br/></form>',
             "alert('ok')"
