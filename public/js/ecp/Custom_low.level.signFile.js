@@ -84,6 +84,7 @@ var signFile = function(contentBase64,thumbprint, callback)
             }.bind(this));
         }.bind(this)).catch(function(err) {
            console.log(err);
+            $('.error-compl').css({'display': 'flex'});
         });
     }.bind(this));
 
