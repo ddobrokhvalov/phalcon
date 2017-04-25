@@ -228,10 +228,10 @@ var complaint = {
         $('#complaint_name').removeClass('c-inp-done');
         $('#complaint_name').removeClass('c-inp-error');
         this.complainName = $('#complaint_name').val();
-        if (!validator.text(this.complainName, 3, 255)) {
+        /*if (!validator.text(this.complainName, 3, 255)) {
             this.showError('#complaint_name', 'Ошибка! Полное наименование должно быть от 3 до 255 символов', 'before');
             return false;
-        }
+        }*/
         // if (!checkComplaintName(this.complainName)) {
         //     return false;
         // }
@@ -579,6 +579,7 @@ var auction = {
             $('#notice_button').css('display', 'none');
             $('#result_container').append('<b class="msg_status_parser">Данные Получены!</b>');
             auction.setData();
+            $('#complaint_name').val('жалоба на закупку №'+auction_id);
             $('.complaint-main-container').show();
             $('.more-information-block').show();
             $('.category-tamplate').show();
