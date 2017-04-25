@@ -105,10 +105,9 @@
                         if(isset($form))
                         {
                             $errors_email = $form->getMessagesFor("email");
+                            $error_email = $errors_email[0];
                             if(count($errors_email))
-                                foreach ($errors_email as $message) {
-                                    echo "<div class='c-inp-err-t' style='display: block;'>".$message, "</div>";
-                                }
+                                echo "<div class='c-inp-err-t' style='display: block;'>".$error_email, "</div>";
                         }
                         ?>
                         <?php echo Phalcon\Tag::textField(array('email', 'value' => $applicant->email, 'data-name' => 'position-fio', 'class' => (count($errors_email)?' c-inp-error':''), 'id'=>'entity-email')); ?>
