@@ -38,6 +38,7 @@
 
                     <label for="entity-short">
                         <div>Краткое наименование</div>
+                        <?php echo Phalcon\Tag::textField(array('name_short', 'size' => 32, 'value' => $applicant->name_short, 'data-name' => 'kratkoe-name', 'class' => 'upper-text'.(count($errors_name_short)?' c-inp-error':''), 'id'=>'entity-short')); ?>
                         <?php
                         if(isset($form))
                         {
@@ -49,7 +50,6 @@
                         }
 
                         ?>
-                        <?php echo Phalcon\Tag::textField(array('name_short', 'size' => 32, 'value' => $applicant->name_short, 'data-name' => 'kratkoe-name', 'class' => 'upper-text'.(count($errors_name_short)?' c-inp-error':''), 'id'=>'entity-short')); ?>
                     </label>
 
                     <label for="entity-inn">
@@ -66,6 +66,7 @@
 
                     <label for="entity-address">
                         <div>Почтовый адрес</div>
+                        <?php echo Phalcon\Tag::textField(array('post', 'size' => 74, 'value' => $applicant->post, 'data-name' => 'post', 'class' => (count($errors_post)?' c-inp-error':''), 'id'=>'post-address')); ?>
                         <?php
                         if(isset($form))
                         {
@@ -76,7 +77,6 @@
                                 }
                         }
                         ?>
-                        <?php echo Phalcon\Tag::textField(array('post', 'size' => 74, 'value' => $applicant->post, 'data-name' => 'post', 'class' => (count($errors_post)?' c-inp-error':''), 'id'=>'post-address')); ?>
                     </label>
 
                     <label for="entity-address">
@@ -102,6 +102,7 @@
 
                     <label for="entity-email">
                         <div>E-mail</div>
+                        <?php echo Phalcon\Tag::textField(array('email', 'value' => $applicant->email, 'data-name' => 'position-fio', 'class' => (count($errors_email)?' c-inp-error':''), 'id'=>'entity-email')); ?>
                         <?php
                         if(isset($form))
                         {
@@ -111,7 +112,6 @@
                                 echo "<div class='c-inp-err-t' style='display: block;'>".$error_email, "</div>";
                         }
                         ?>
-                        <?php echo Phalcon\Tag::textField(array('email', 'value' => $applicant->email, 'data-name' => 'position-fio', 'class' => (count($errors_email)?' c-inp-error':''), 'id'=>'entity-email')); ?>
                     </label>
 
                     <div class="file-attachment tab1">
