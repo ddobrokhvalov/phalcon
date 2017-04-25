@@ -242,12 +242,14 @@ class ApplicantController extends ControllerBase
                 foreach ($form->getMessages() as $message) {
                     $this->flashSession->error($message);
                 }
+
                 return $this->dispatcher->forward(array(
-                    'module' => 'backend',
-                    'controller' => 'applicants',
+                    //'module' => 'backend',
+                    'controller' => 'applicant',
                     'action' => 'edit',
                     'params' => ['id' => $id]
                 ));
+
                 return $this->forward('admin/applicants/edit/' . $id);
             }
             foreach ($data as $field => $value) {

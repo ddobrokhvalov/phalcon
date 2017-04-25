@@ -1,4 +1,5 @@
 <?php
+
 namespace Multiple\Frontend\Form;
 
 use Phalcon\Forms\Form;
@@ -12,10 +13,9 @@ use Phalcon\Validation\Validator\StringLength;
 
 class ApplicantForm extends Form
 {
-
     public function initialize($entity = null, $options = array())
     {
-        if (!isset($options['edit']) && !isset($options['add'])){
+        if (!isset($options['edit']) && !isset($options['add'])) {
             $element = new Text("id");
             $this->add($element->setLabel("Id"));
 
@@ -81,6 +81,21 @@ class ApplicantForm extends Form
             );
             $this->add($inn);
         }
+        if (isset($options['type']) && $options['type'] == 'urlico') {
+            $inn = new Text('post');
+            $inn->setLabel('Почтовый адрес');
+            $inn->setFilters(array('striptags', 'string'));
+            $inn->addValidators(
+                array(
+                    new PresenceOf(
+                        array(
+                            'message' => 'Почтовый адрес обязательно'
+                        )
+                    )
+                )
+            );
+            $this->add($inn);
+        }
         //
         if (isset($options['type']) && $options['type'] == 'urlico') {
             $kpp = new Text('kpp');
@@ -116,13 +131,13 @@ class ApplicantForm extends Form
         //
         if (isset($options['type']) && $options['type'] == 'urlico') {
             $position = new Text('position');
-            $position->setLabel('Должность заявителя');
+            $position->setLabel('Должность владельца ЭП');
             $position->setFilters(array('striptags', 'string'));
             $position->addValidators(
                 array(
                     new PresenceOf(
                         array(
-                            'message' => 'Должность заявителя обязательно'
+                            'message' => 'Должность владельца ЭП обязательно'
                         )
                     )
                 )
@@ -132,13 +147,13 @@ class ApplicantForm extends Form
         //
         if (isset($options['type']) && ($options['type'] == 'urlico' || $options['type'] == 'fizlico')) {
             $fio_applicant = new Text('fio_applicant');
-            $fio_applicant->setLabel('ФИО заявителя');
+            $fio_applicant->setLabel('ФИО владельца ЭП');
             $fio_applicant->setFilters(array('striptags', 'string'));
             $fio_applicant->addValidators(
                 array(
                     new PresenceOf(
                         array(
-                            'message' => 'ФИО заявителя заявителя обязательно'
+                            'message' => 'ФИО владельца ЭП обязательно'
                         )
                     )
                 )
@@ -177,35 +192,46 @@ class ApplicantForm extends Form
             );
             $this->add($telefone);
         }
-       ///
-       if (isset($options['type']) && ($options['type'] == 'urlico' || $options['type'] == 'fizlico')) {
-           $telefone = new Text('email');
-           $telefone->setLabel('Контактный факс, телефон');
-           $telefone->setFilters(array('striptags', 'string'));
-           $telefone->addValidators(
-               array(
-                   new PresenceOf(
-                       array(
-                           'message' => 'Контактный факс, телефон обязательно'
-                       )
-                   )
-               )
-           );
-           $this->add($telefone);
-           ///
-           $email = new Text('email');
-           $email->setLabel('email');
-           $email->setFilters(array('striptags', 'string'));
-           $email->addValidators(
-               array(
-                   new PresenceOf(
-                       array(
-                           'message' => 'Email обязательно'
-                       )
-                   )
-               )
-           );
-           $this->add($email);
-       }
+        ///
+        if (isset($options['type']) && ($options['type'] == 'urlico' || $options['type'] == 'fizlico')) {
+            $telefone = new Text('email');
+            $telefone->setLabel('Контактный факс, телефон');
+            $telefone->setFilters(array('striptags', 'string'));
+            $telefone->addValidators(
+                array(
+                    new PresenceOf(
+                        array(
+                            'message' => 'Контактный факс, телефон обязательно'
+                        )
+                    )
+                )
+            );
+            $this->add($telefone);
+            ///
+            $email = new Text('email');
+            $email->setLabel('email');
+            $email->setFilters(array('striptags', 'string'));
+            $email->addValidators(
+                array(
+                    new PresenceOf(
+                        array(
+                            'message' => 'Email обязательно'
+                        )
+                    )
+                )
+            );
+
+            $email->addValidators(
+                array(
+                    new Email(
+                        array(
+                            'message' => 'Email введен некорректно'
+                        )
+                    )
+                )
+            );
+
+            $this->add($email);
+        }
     }
 }

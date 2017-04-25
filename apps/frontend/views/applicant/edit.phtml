@@ -13,6 +13,7 @@
                 <div onclick="applicant.setIp();" data-tabsLabel="individual-entrepreneur" {%if applicant.type=="ip" %}class="active-tabs-label"{%endif%}>Индивидуальный предприниматель</div>
                 <div onclick="applicant.setFizlico();" data-tabsLabel="physical-face"  {%if applicant.type=="fizlico" %}class="active-tabs-label"{%endif%}>Физическое лицо</div>
             </div>
+
             {% if applicant.type == 'urlico' %}
             <div data-tabs="legal-entity" class="tabs-content {%if applicant.type=="urlico" %}active-tabs-content{%endif%}">
             <form action="/applicant/save" method="POST" enctype="multipart/form-data" id="urlico">
@@ -33,24 +34,49 @@
                 </div>
                     {{hidden_field('id', 'value':applicant.id)}}
                     {{hidden_field('type', 'value':'urlico')}}
+
                     <label for="entity-short">
                         <div>Краткое наименование</div>
-                        {{text_field("name_short", "value":applicant.name_short, "data-name":"kratkoe-name", "class":"upper-text",  "id":"entity-short")}}
+                        <?php
+                        if(isset($form))
+                        {
+                            $errors_name_short = $form->getMessagesFor("name_short");
+                            if(count($errors_name_short))
+                                foreach ($errors_name_short as $message) {
+                                    echo "<div class='c-inp-err-t' style='display: block;'>".$message, "</div>";
+                                }
+                        }
+
+                        ?>
+                        <?php echo Phalcon\Tag::textField(array('name_short', 'size' => 32, 'value' => $applicant->name_short, 'data-name' => 'kratkoe-name', 'class' => 'upper-text'.(count($errors_name_short)?' c-inp-error':''), 'id'=>'entity-short')); ?>
                     </label>
+
                     <label for="entity-inn">
                         <div>ИНН</div>
                         <input type="text" name="inn" value="{{applicant.inn}}" id="entity-inn" data-name="number" readonly>
                     </label>
-                    <label for="entity-address">
-                        <div>Почтовый адрес</div>
-                        {{text_field('post', 'value':applicant.post, "id":"post-address", "data-name":"post")}}
-                    </label>
+
                     {% if applicant.type != 'ip' %}
                         <label for="entity-kpp">
                             <div>КПП</div>
                             {{numeric_field('kpp', 'value':applicant.kpp, "id":"entity-kpp")}}
                         </label>
                     {% endif %}
+
+                    <label for="entity-address">
+                        <div>Почтовый адрес</div>
+                        <?php
+                        if(isset($form))
+                        {
+                            $errors_post = $form->getMessagesFor("post");
+                            if(count($errors_post))
+                                foreach ($errors_post as $message) {
+                                    echo "<div class='c-inp-err-t' style='display: block;'>".$message, "</div>";
+                                }
+                        }
+                        ?>
+                        <?php echo Phalcon\Tag::textField(array('post', 'size' => 74, 'value' => $applicant->post, 'data-name' => 'post', 'class' => (count($errors_post)?' c-inp-error':''), 'id'=>'post-address')); ?>
+                    </label>
 
                     <label for="entity-address">
                         <div>Адрес местонахождения</div>
@@ -72,10 +98,22 @@
                         <div>Контактный факс, телефон</div>
                         {{text_field('telefone', 'value':applicant.telefone, "id":"entity-phone",  "data-name":"number")}}
                     </label>
+
                     <label for="entity-email">
                         <div>E-mail</div>
-                        {{text_field('email', 'value':applicant.email, "id":"entity-email", "data-name":"position-fio" )}}
+                        <?php
+                        if(isset($form))
+                        {
+                            $errors_email = $form->getMessagesFor("email");
+                            if(count($errors_email))
+                                foreach ($errors_email as $message) {
+                                    echo "<div class='c-inp-err-t' style='display: block;'>".$message, "</div>";
+                                }
+                        }
+                        ?>
+                        <?php echo Phalcon\Tag::textField(array('email', 'value' => $applicant->email, 'data-name' => 'position-fio', 'class' => (count($errors_email)?' c-inp-error':''), 'id'=>'entity-email')); ?>
                     </label>
+
                     <div class="file-attachment tab1">
                         <div class="file-wrapper"  style="margin-bottom: 20px; height: 30px">
                             <div class="text-above">Прикрепить файлы</div>
