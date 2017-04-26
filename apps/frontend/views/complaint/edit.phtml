@@ -228,14 +228,25 @@
                                                 }
                                                 var html = '';
                                                 var upload_file = jQuery('.upload_f');
+                                                console.log(upload_file);
                                                 for(var i = 0; i < upload_file.length; i++){
                                                     for(var j = 0; j < jQuery(upload_file[i])[0].files.length; j++){
                                                         var file_data = jQuery(upload_file[i])[0].files[j]['name'].split('.');
                                                         var file_type = file_data[file_data.length - 1];
                                                         var file_size = jQuery(upload_file[i])[0].files[j]['size'] / 1024;
-                                                        var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery(upload_file[i])[0].files[j]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div class="delete-file" data-remclass="' + jQuery(upload_file[i]).attr("data-filedid") + '" title="Удалить файл"></div><div style="clear:both;"></div></div>';
+                                                        
+                                                        if(file_size > 3096)
+                                                            showStyledPopupMessageWithButtons(
+                                                                "#pop-confirm-change-complaint-status",
+                                                                "Слишком большой файл",
+                                                                "Один или более файлов не были загружены. Поддерживаемые типы файлов: pdf, tiff, jpg, jpeg, bmp, png, doc, docx, txt, rtf, xls, xlsx, rar, zip <br/>Требования к размеру:<br/>- каждый файл не более 3 Мб, <br/>- общий размер фалов не более 15 Мб.",
+                                                                ""
+                                                            );
+                                                        else
+                                                            var html = html + '<div id="attached-file-' + i + '" class="attached-file-row"><div class="file-icon ' + get_class_by_file_type(file_type) + '"></div><div class="file-link">' + jQuery(upload_file[i])[0].files[j]['name'] + ' (' + file_size.toFixed(2) + ' Кб)</div><div class="delete-file" data-remclass="' + jQuery(upload_file[i]).attr("data-filedid") + '" title="Удалить файл"></div><div style="clear:both;"></div></div>';
                                                     }
                                                 }
+                                                
                                                 jQuery('.attached-files-wrap').html(html);
                                             });
                                             jQuery('body').on('click','.delete-file', function(){
@@ -718,3 +729,14 @@
         <p class="pop-done-txt" style="padding: 0 26px 30px">Возникла ошибка при подписании жалобы.</p>
     </div>
 </article>
+<div id="pop-confirm-change-complaint-status" class="modal_div">
+    <h2></h2>
+    <div class="pop-done-txt">
+        <div class="popup-content"></div>
+        <div class="action-buttons" style="width:210px;">
+            <div class="popup-button cnc popup-close">Ок</div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div class="modal-close"></div>
+</div>
