@@ -2,14 +2,15 @@ $(document).ready(function () {
     //SAVE
     $('#send_yfas, .send_to_ufas').on('click', function(){
         if (!$('#send_yfas').hasClass('skyColor')) return false;
-        $('.confirm-compl-popup').css({'display': 'flex'});
-    });
-
-    $('.compl-send').on('click', function(){
+        
         if($('#dayofsendufas').val() == 1)
            $('.dayofsendufas-popup').css({'display': 'flex'}); 
         else
-            sendToUfas();
+            $('.confirm-compl-popup').css({'display': 'flex'});
+    });
+
+    $('.compl-send').on('click', function(){
+        sendToUfas();
     })
 
 
