@@ -6,7 +6,10 @@ $(document).ready(function () {
     });
 
     $('.compl-send').on('click', function(){
-        sendToUfas();
+        if($('#dayofsendufas').val() == 1)
+           $('.dayofsendufas-popup').css({'display': 'flex'}); 
+        else
+            sendToUfas();
     })
 
 

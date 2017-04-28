@@ -7,6 +7,7 @@ use Multiple\Frontend\Models\Applicant;
 use Multiple\Frontend\Models\Category;
 use Multiple\Frontend\Models\Complaint;
 use Multiple\Frontend\Models\ComplaintMovingHistory;
+use Multiple\Backend\Models\Log as LogModel;
 use Multiple\Frontend\Models\Question;
 use Multiple\Frontend\Models\UsersArguments;
 use Multiple\Frontend\Models\DocxFiles;
@@ -161,6 +162,8 @@ class ComplaintController extends ControllerBase
         $this->view->arr_users_arg = $arr_users_arg;
         $this->view->categories_id = implode(',', $categories_id);
         $this->view->arguments_id = implode(',', $arguments_id);
+       
+
         //$this->view->complaint_text_order = $complaint->complaint_text_order;
 
         $files_html = [];
@@ -186,6 +189,11 @@ class ComplaintController extends ControllerBase
             $this->view->edit_now = TRUE;
             $ufas = Ufas::find();
             $this->view->ufas = $ufas;
+
+            $dayofsendufas = LogModel::findFirst("customer_email = '{$this->user->email}' and type='Отправка в УФАС' and additionally= '{$complaint->auction_id}'");
+
+            $this->view->dayofsendufas=(strtotime($dayofsendufas->date) > strtotime("-1 day"))?1:0;
+            $this->view->dateofsendufas=$dayofsendufas->date;
         } else {
             $this->view->edit_now = FALSE;
         }
@@ -254,28 +262,43 @@ class ComplaintController extends ControllerBase
     {
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
-        header('Content-Type: text/html; charset=UTF-8');
-        $value = '<p>На основании решения контрольного органа в сфере закупок <em>«указать реквизиты решения»</em> выдано предписание, согласно которому <em>«указать кому и какие действия предписаны».</em></p><p><img src="' . $_SERVER['DOCUMENT_ROOT'] . '/files/generated_complaints/user_169/2017.png"/></p><p>В силу пункта 2 части 22 статьи 99 Закона о контрактной системе предписания об устранении нарушений законодательства Российской Федерации и иных нормативных правовых актов о контрактной системе, выданные контрольным органом в сфере закупок обязательны для исполнения.</p><p>х.</p><p><br></p>';
-        require_once $_SERVER['DOCUMENT_ROOT'] . '/public/phpdocx/classes/CreateDocx.inc';
-        $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/public/js/docx_generator/docx_templates/documentation_phpword.docx");
-        //$docx->setEncodeUTF8(true);
 
-        /*preg_match_all('/<img.*?src\s*=(.*?)>/', $value, $out);
-        if (count($out[1])) {
-            foreach ($out[1] as $image) {
-                $explode = explode(" ", $image);
+        $signature = 'complaint_1493127933.docx';
+        $signFileOriginName = 'complaint_1493127933.docx.sig';
+        $baseLocation = $_SERVER['DOCUMENT_ROOT'].'/files/generated_complaints/user_' . $this->user->id . '/';
+        // unlink($baseLocation . $signFileOriginName.'sig');
 
-                $image = trim($explode[0], '"');
-                $file_name = time() + rand();
+        $file = file_get_contents($baseLocation . $signFileOriginName);
+        $sendData = array(
+            "method" => 'Signature.verifyMessageSignature',
+            "id" => 1,
+            "params" => array(
+                "signature" => $signature,
+                "message" => base64_encode($file)
+            )
+        );
 
-                $value = str_replace("", '<img src="' . $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_169/" . $this->save_base64_image($image, time() + rand(), $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_169/") . '" width="35" height="35" style="vertical-align: middle">', $value);
-            }
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, 'http://185.20.225.233/api/v1/json');
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($sendData));
+        $out = curl_exec($curl);
+
+        print_R($out);
+        die;
+
+        //file_put_contents($baseLocation . $signFileOriginName . '.sig', base64_decode($signature));
+        /*if(preg_match('/recall/', $signFileOriginName)){
+
+            $this->SendToUfas(array(
+                '../public/'.$baseLocation.$signFileOriginName.'.sig',
+                '../public/'.$baseLocation.$signFileOriginName,
+            ));
         }*/
 
-        $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
-        $name = 'complaint_' . time() . '.docx';
-        $docx->replaceVariableByHTML('dovod', 'block', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));
-        $docx->createDocx($baseLocation . $name);
+        echo 'done';
+        exit;
     }
 
     public function test2Action()
@@ -1374,7 +1397,7 @@ class ComplaintController extends ControllerBase
         exit;
     }
 
-    private function SendToUfas($files, $ufasEmail, $subject, $content)
+    private function SendToUfas($files, $ufasEmail, $subject, $content, $additionally=null)
     {
         $message = $this->mailer->createMessage()
             ->to($ufasEmail)
@@ -1384,7 +1407,7 @@ class ComplaintController extends ControllerBase
         foreach ($files as $key) {
             $message->attachment($key);
         }
-        Log::addAdminLog("Отправка в УФАС", $content, $this->user, null, 'пользователь');
+        Log::addAdminLog("Отправка в УФАС", $content, $this->user, $additionally, 'пользователь');
         $message->send();
     }
 
@@ -1433,7 +1456,7 @@ class ComplaintController extends ControllerBase
 4. Локально - при помощи БЕСПЛАТНОЙ программы http://cryptoarm.ru/bitrix/redirect.php?event1=download&event2=cryptoarm5&goto=http://www.trusted.ru/wp-content/uploads/trusteddesktop.exe<br/>';
 
         try {
-            $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content);
+            $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content, $complaint->auction_id);
             $status = 'ok';
         } catch (\Exception $e) {
             $status = 'error';

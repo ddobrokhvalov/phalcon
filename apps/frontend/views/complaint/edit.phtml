@@ -157,6 +157,8 @@
                 <input type="hidden" name="applicant_id" id="applicant_id" value="">
                 <input type="hidden" name="complaint_id" id="complaint_id" value="{{complaint.id}}">
                 <input type="hidden" name="update-complaint-id" id="update-complaint-id" value="{{ complaint.id }}">
+                <input type="hidden" name="dayofsendufas" id="dayofsendufas" value="{{ dayofsendufas }}">
+                <input type="hidden" name="dateofsendufas" id="dateofsendufas" value="{{ dateofsendufas }}">
                 <div class="c-jadd2 complaint-main-container" style="display: block !important;">
                     <div class="c-jadd2-f">
                         <span class="c-jadd2-f-z">Сокращенное имя жалобы (для идентификации внутри системы)</span>
@@ -705,6 +707,17 @@
         <div class="admin-popup-close"></div>
         <h6 style="font-size: 25px">Отправка в УФАС</h6>
         <p class="pop-done-txt" style="padding: 0 26px 30px">Вы точно хотите отправить жалобу в Уфас?</p>
+        <div class="popupBtn compl-send">Отправить</div>
+        <div class="popupBtn cancel-recall">нет</div>
+    </div>
+</article>
+
+<article class="admin-popup-wrap dayofsendufas-popup" style="display:none;">
+    <div class="admin-popup-bg"></div>
+    <div class="admin-popup-content index-main-popup">
+        <div class="admin-popup-close"></div>
+        <h6 style="font-size: 25px">Отправка в УФАС</h6>
+        <p class="pop-done-txt" style="padding: 0 26px 30px">{{ dateofsendufas }} Вы уже подавали жалобу на эту закупку. Уверены, что хотите отправить еще одну?</p>
         <div class="popupBtn compl-send">Отправить</div>
         <div class="popupBtn cancel-recall">нет</div>
     </div>
