@@ -167,8 +167,8 @@ var argObjSend = {
         //this.complaint_text = data[0].innerText;
         this.complaint_descr = data.find('.argTextCome').html();
         this.complaint_comment = data.find('.argCommentCome').text();
-        $('.argDescrBox_descr').html("<span>Комментарий юриста:</span>"+this.complaint_descr);
-        $('.argDescrBox_comment').html("<span>Описание:</span>"+this.complaint_comment);
+        $('.argDescrBox_descr').html("<span>Описание:</span>"+this.complaint_descr);
+        $('.argDescrBox_comment').html("<span>Комментарий юриста:</span>"+this.complaint_comment);
     }
 };
 var readyDataCatArg;
