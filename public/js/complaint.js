@@ -84,6 +84,11 @@ $(document).ready(function () {
         evt.preventDefault();
         stopSaveCompl();
     });
+    
+    $('#complaint_browse').on('click', function (evt) {
+        evt.preventDefault();
+        browseComplaintToDocxFile();
+    });
     $('#back_complaint_save').click(function (evt) {
         evt.preventDefault();
         if (complaint.prepareData())
@@ -920,6 +925,68 @@ function saveComplaintToDocxFile() {
     return true;
 }
 
+function browseComplaintToDocxFile() {
+
+    var custom_text = "";
+    var custom_text_unformatted = "";
+    var compId = compId;
+
+    $(".edit-textarea.cke_editable").each(function (index, elem) {
+        custom_text += $(elem).html() + "<br>";
+        custom_text_unformatted += $(elem).text() + "<br>";
+    });
+    
+    $file_to_load = "documentation_phpword.docx";
+
+    doc = {
+        "applicant_fio": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : applicant.applicant_info.fio_applicant,
+        "applicant_fio2": applicant.applicant_info.fio_applicant,
+        "applicant_address": applicant.applicant_info.address,
+        "applicant_phone": applicant.applicant_info.telefone,
+        "applicant_position": applicant.applicant_info.position,
+        "applicant_email": applicant.applicant_info.email,
+        "tip_zakupki": zakupka.info.type,
+        "ufas": $('.ui-selectmenu-text').text(),
+        "dovod": custom_text,
+        "zakaz_phone": (auction.responseData.zakazchik[0] && auction.responseData.zakazchik[0].tel) ? auction.responseData.zakazchik[0].tel : auction.responseData.contact.tel,
+        "zakaz_kontaktnoe_lico": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].kontaktnoe_lico,
+        "zakaz_kontaktnoe_name1": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.name : '',
+        "zakaz_kontaktnoe_name2": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.dolg_lico : auction.responseData.zakazchik[0].name,
+        "kontakt": auction.responseData.zakazchik[0] == null ? 'Контактное лицо:' : 'Название организации:',
+        "zakaz_address": (auction.responseData.zakazchik[0] && auction.responseData.zakazchik[0].pochtovy_adres) ? auction.responseData.zakazchik[0].pochtovy_adres: auction.responseData.contact.pochtovy_adres,
+        "zakaz_mesto": auction.responseData.zakazchik[0] == null ? auction.responseData.contact.mesto_nahogdeniya : auction.responseData.zakazchik[0].name,
+        "organiz_fio1": auction.responseData.contact.name,
+        "organiz_fio2": auction.responseData.contact.dolg_lico,
+        "organiz_phone": auction.responseData.contact.tel,
+        "organiz_mesto": auction.responseData.contact.mesto_nahogdeniya,
+        "organiz_address": auction.responseData.contact.pochtovy_adres,
+        "izveshchenie": $("#auction_id").val(),
+        "zakupka_name": auction.responseData.info.object_zakupki,
+        "zayavitel": applicant.applicant_info.type == "urlico" ? applicant.applicant_info.name_short : "Заявитель"
+    };
+
+    var data = new FormData();
+    data.append('doc', JSON.stringify(doc));
+    data.append('complaint_name', $('#complaint_name').val());
+    data.append('complaint_id', $("#complaint_id").val());
+    data.append('file_to_load', $file_to_load);
+
+    $.ajax({
+        url: "/complaint/browsesave",
+        dataType: 'json',
+        method: 'POST',
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+           if(response.status="success")
+            window.location.replace(response.url,'_blank'); 
+        }
+    });
+       
+    return true;
+}
+
 function saveComplaintToDocxFile_old() {
     var loadFile = function (url, callback) {
         JSZipUtils.getBinaryContent(url, callback);
@@ -932,7 +999,7 @@ function saveComplaintToDocxFile_old() {
         custom_text += replaceWordTags($(elem).html() + "<br>", $(elem).attr("id"));
         custom_text_unformatted += replaceWordTags($(elem).text() + "<br>", $(elem).attr("id"));
     });
-console.log(custom_text);
+
     if ($("#operator_etp").is(":checked")) {
         $file_to_load = "operator_etp.docx";
     } else {

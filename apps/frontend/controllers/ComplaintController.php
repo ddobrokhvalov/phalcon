@@ -303,7 +303,6 @@ class ComplaintController extends ControllerBase
 
     public function test2Action()
     {
-
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
 
@@ -386,6 +385,39 @@ class ComplaintController extends ControllerBase
         return $output_file_with_extentnion;
     }*/
 
+    public function browsesaveAction()
+    {
+        $name = false;
+
+        if ($this->request->getPost('doc')) {
+            $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
+            if (strlen($this->request->getPost('doc'))) {
+                if (!file_exists($baseLocation)) {
+                    mkdir($baseLocation, 0777, true);
+                }
+
+                $name = 'complaint_browse' . $this->request->getPost('complaint_id') . '.docx';
+                $data = json_decode($this->request->getPost('doc'));
+
+                require_once $_SERVER['DOCUMENT_ROOT'] . '/phpdocx/classes/CreateDocx.inc';
+                $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
+
+                foreach ($data as $key => $value) {
+                    if ($key == 'dovod') {
+                        if (trim($value) == '') $value = '  ';
+                        $docx->replaceVariableByHTML($key, 'block', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));
+                    } else
+                        if (trim($value) == '') $value = '  ';
+                    $docx->replaceVariableByHTML($key, 'inline', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));
+                }
+                $docx->createDocx($baseLocation . $name);
+
+            }
+        }
+        echo json_encode(['status'=>'success', 'url'=>'/complaint/browse/']);
+        exit;
+    }
+
     public function browseAction($id)
     {
         $dir = 'files/generated_complaints/user_' . $this->user->id . '/';
@@ -401,14 +433,18 @@ class ComplaintController extends ControllerBase
             if (!in_array($value, array('.', '..'))) {
                 $type = explode('.', $value);
                 $type = array_reverse($type);
-                if (!in_array($type[0], $file_read)) {
+
+                if(!substr_count($value, 'browse'))
                     continue;
-                }
+                /*if (!in_array($type[0], $file_read)) {
+                    continue;
+                }*/
                 $file = $value;
             }
         }
         //$this->setMenu();
         //$this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src='.'http%3A%2F%2Fufa.ru%2Fcomplaint_1488558920.docx';
+ 
         $this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src=https://fasonline.ru/' . $dir . $file;
     }
 
@@ -1036,7 +1072,6 @@ class ComplaintController extends ControllerBase
 
     public function recallAction($id)
     {
-
         if ($id == '0') {
             $data = $this->request->getPost();
             $data = json_decode($data['complaints']);
