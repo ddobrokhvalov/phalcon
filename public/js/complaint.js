@@ -980,7 +980,7 @@ function browseComplaintToDocxFile() {
         contentType: false,
         success: function(response) {
            if(response.status="success")
-            window.location.replace(response.url,'_blank'); 
+            window.open(response.url,'_blank');
         }
     });
        
