@@ -419,7 +419,7 @@ class ComplaintController extends ControllerBase
 
     public function browseAction($id)
     {
-        $dir = 'public/files/generated_complaints/user_' . $this->user->id . '/';
+        $dir = 'files/generated_complaints/user_' . $this->user->id . '/';
         //$sorted = scandir($dir);
         $file_read = array('docx');
 
@@ -444,7 +444,7 @@ class ComplaintController extends ControllerBase
         //$this->setMenu();
         //$this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src='.'http%3A%2F%2Fufa.ru%2Fcomplaint_1488558920.docx';
 
-        $this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src=https://fasonline.ru/' . $dir . $file;
+        $this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src=https://fasonline.ru/public/' . $dir . $file;
     }
 
     public function saveHtmlFileAction()
