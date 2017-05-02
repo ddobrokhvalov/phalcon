@@ -399,8 +399,8 @@ class ComplaintController extends ControllerBase
                 $name = 'complaint_browse' . $this->request->getPost('complaint_id') . '.docx';
                 $data = json_decode($this->request->getPost('doc'));
 
-                require_once $_SERVER['DOCUMENT_ROOT'] . '/phpdocx/classes/CreateDocx.inc';
-                $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
+                require_once $_SERVER['DOCUMENT_ROOT'] . '/public/phpdocx/classes/CreateDocx.inc';
+                $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/public/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
 
                 foreach ($data as $key => $value) {
                     if ($key == 'dovod') {
@@ -444,7 +444,7 @@ class ComplaintController extends ControllerBase
         }
         //$this->setMenu();
         //$this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src='.'http%3A%2F%2Fufa.ru%2Fcomplaint_1488558920.docx';
- 
+
         $this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src=https://fasonline.ru/' . $dir . $file;
     }
 
