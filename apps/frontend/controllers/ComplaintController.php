@@ -396,7 +396,7 @@ class ComplaintController extends ControllerBase
                     mkdir($baseLocation, 0777, true);
                 }
 
-                $name = $this->request->getPost('complaint_id') . '.docx';
+                $name = 'complaint_browse' . $this->request->getPost('complaint_id') . '.docx';
                 $data = json_decode($this->request->getPost('doc'));
 
                 require_once $_SERVER['DOCUMENT_ROOT'] . '/public/phpdocx/classes/CreateDocx.inc';
