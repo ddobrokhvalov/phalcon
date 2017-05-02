@@ -411,7 +411,6 @@ class ComplaintController extends ControllerBase
                     $docx->replaceVariableByHTML($key, 'inline', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));
                 }
                 $docx->createDocx($baseLocation . $name);
-
             }
         }
         echo json_encode(['status'=>'success', 'url'=>'/complaint/browse/']);
@@ -420,7 +419,7 @@ class ComplaintController extends ControllerBase
 
     public function browseAction($id)
     {
-        $dir = 'files/generated_complaints/user_' . $this->user->id . '/';
+        $dir = 'public/files/generated_complaints/user_' . $this->user->id . '/';
         //$sorted = scandir($dir);
         $file_read = array('docx');
 
