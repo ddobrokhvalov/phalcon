@@ -425,4 +425,19 @@ class ApplicantController extends ControllerBase
         echo json_encode($response);
         die();
     }
+
+    public function getEgrulInfoAction()
+    {
+        $url = $_POST['url'];
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        //curl_setopt($curl, CURLOPT_POST, true);
+        //curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($sendData));
+        $out = curl_exec($curl);
+
+        header('Content-type: application/json');
+        echo $out;
+        die();
+    }
 }

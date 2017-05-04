@@ -27,6 +27,45 @@ $(document).ready(function () {
         $('.ecp_text').val(field);
 
         $('.content').removeClass('hiddenClass');
+
+
+        if ($('.tabcontent-ur #entity-inn').val()) {
+            var url = 'https://ru.rus.company/интеграция/компании/?инн=' + $('.tabcontent-ur #entity-inn').val();
+
+            $.ajax({
+                type: 'POST',
+                data: 'url=' + url,
+                url: '/applicant/getEgrulInfo',
+                success: function (response) {
+                    if (response.length) {
+                        var url = 'https://ru.rus.company/интеграция/компании/' + response[0].id + '/';
+
+                        $.ajax({
+                            type: 'POST',
+                            data: 'url=' + url,
+                            url: '/applicant/getEgrulInfo',
+                            success: function (response) {
+
+                           
+                                if (!!response.id) {
+                                    $('.tabcontent-ur #entity-address').val(response.address.fullHouseAddress);
+                                    $('.tabcontent-ur #post-address').val(response.address.fullHouseAddress);
+                                }
+                            },
+                            error: function (msg) {
+                                console.log(msg);
+                            }
+
+                        });
+                    }
+                },
+                error: function (msg) {
+                    console.log(msg);
+                }
+
+            });
+        }
+
     });
 
 
@@ -52,13 +91,13 @@ $(document).ready(function () {
 
     $("#add_applicant, .add_applicant").on('click', function (event) {
         var checkinn = false;
-        $('input[name="inn"]').each(function(){
-            if($(this).val()){
+        $('input[name="inn"]').each(function () {
+            if ($(this).val()) {
                 checkinn = $(this).val();
             }
         });
         applicant.checkInn(checkinn);
-        if(!applicant.save) return false;
+        if (!applicant.save) return false;
         event.preventDefault();
         if ($(".modal-dialog.modal-sm").height() != null && $(".modal-dialog.modal-sm").height() > 0) {
             return false;
@@ -167,53 +206,53 @@ var applicant = {
         $('.tabcontent-ur #entity-kpp').val((kpp) ? kpp : '');
         $('.tabcontent-ur #entity-address').val((street) ? street : '');
         $('.tabcontent-ur #entity-position').val((position) ? position : '');
-        $('.tabcontent-ur #entity-fio-z').val((fio) ? fio : '' );
-        $('.tabcontent-ur #entity-email').val((email) ? email : ''  );
+        $('.tabcontent-ur #entity-fio-z').val((fio) ? fio : '');
+        $('.tabcontent-ur #entity-email').val((email) ? email : '');
     },
 
-    getPosition: function(data){
-       var position = data.match(/[\s\,]T=([«»a-zA-Zа-яА-Я\s]+)/i );
-       if(position) return position[1];
-       return false;
-    },
-
-    getName: function(data){
-        var name = data.match(/[\s\,]O=([«»a-zA-Zа-яА-Я\s\"\']+)/i );
-        if(name) return name[1];
+    getPosition: function (data) {
+        var position = data.match(/[\s\,]T=([«»a-zA-Zа-яА-Я\s]+)/i);
+        if (position) return position[1];
         return false;
     },
 
-    getInn: function(data) {
+    getName: function (data) {
+        var name = data.match(/[\s\,]O=([«»a-zA-Zа-яА-Я\s\"\']+)/i);
+        if (name) return name[1];
+        return false;
+    },
+
+    getInn: function (data) {
         var inn = data.match(/[\s\,]?INN=([\d]+)[\/,\,\s]?/i);
         if (!inn) inn = data.match(/[\s\,]?ИНН=([\d]+)[\/,\,\s]?/i);
-        if(inn) return inn[1];
+        if (inn) return inn[1];
         return false;
     },
 
-    getStreet: function(data){
+    getStreet: function (data) {
         var street = data.match(/[\s\,]?STREET=[\"]?([«»a-zA-Zа-яА-Я\s\"\'\.\,\d\/\-]+)([\"]|[\,])/);
-        if(street){
+        if (street) {
             return street[1].replace(/\"/g, '');
         }
         return false;
     },
 
-    getFio: function(data){
-        var fio = data.match(/[\s\,]CN=([a-zA-Zа-яА-Я\s]+)[\/,\,\s]?/i );
-        if(fio) return fio[1];
+    getFio: function (data) {
+        var fio = data.match(/[\s\,]CN=([a-zA-Zа-яА-Я\s]+)[\/,\,\s]?/i);
+        if (fio) return fio[1];
         return false;
     },
 
-    getEmail: function(data){
-        var email = data.match(/[\s\,]E=([\w@\-\.]+)[\/,\,\s]?/i );
-        if(email) return email[1];
+    getEmail: function (data) {
+        var email = data.match(/[\s\,]E=([\w@\-\.]+)[\/,\,\s]?/i);
+        if (email) return email[1];
         return false;
     },
 
-    getKpp: function(data){
+    getKpp: function (data) {
         var kpp = data.match(/[\s\,]?КПП=([\d]+)[\/,\,\s]?/i);
         if (!kpp) kpp = data.match(/[\s\,]?KPP=([\d]+)[\/,\,\s]?/i);
-        if(kpp) return kpp[1];
+        if (kpp) return kpp[1];
         return false;
     },
 
@@ -248,26 +287,26 @@ var applicant = {
         var email = this.getEmail(selectedCertif.SubjectName);
 
 
-        $('.tabcontent-in #entity-email').val((email) ? email : '' );
+        $('.tabcontent-in #entity-email').val((email) ? email : '');
         $('.tabcontent-in #entity-inn').val((inn) ? inn : '');
         $('.tabcontent-in #entity-address').val((street) ? street : '');
-        $('.tabcontent-in #entity-fio-z').val((fio) ? fio : '' );
-        if(!name){
+        $('.tabcontent-in #entity-fio-z').val((fio) ? fio : '');
+        if (!name) {
             $('.tabcontent-in #entity-short').val('ИП ' + fio);
-        } else{
+        } else {
             $('.tabcontent-in #entity-short').val(name);
         }
 
-        if(this.edit_mode == false){
+        if (this.edit_mode == false) {
             this.inn = inn;
             this.checkInn(inn);
         }
     },
     checkInn: function (inn) {
         /*if (!validator.numeric($('#czvr3').val(), 10, 10)) {
-            applicantValidator.showError('#czvr3', 'Ошибка! ИНН состоит из 10 цифр');
-            return false;
-        }*/
+         applicantValidator.showError('#czvr3', 'Ошибка! ИНН состоит из 10 цифр');
+         return false;
+         }*/
         $.ajax({
             type: 'POST',
             url: '/applicant/checkinn',
@@ -551,14 +590,14 @@ var applicantValidator = {
                 } else {
                     this.done(field_selector);
                 }
-                // var field_selector = '.active-tabs-content #post-address';
-                // if (!validator.post($(field_selector).val())) {
-                //     this.showError(field_selector, 'Ошибка! Неверный почтовый индекс');
-                //     this.result = false;
-                // } else {
-                //     this.done(field_selector);
-                // }
-                // break;
+            // var field_selector = '.active-tabs-content #post-address';
+            // if (!validator.post($(field_selector).val())) {
+            //     this.showError(field_selector, 'Ошибка! Неверный почтовый индекс');
+            //     this.result = false;
+            // } else {
+            //     this.done(field_selector);
+            // }
+            // break;
             default:
                 this.result = false;
                 break;
