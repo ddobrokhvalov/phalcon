@@ -1441,8 +1441,9 @@ class ComplaintController extends ControllerBase
         foreach ($files as $key) {
             $message->attachment($key);
         }
-        Log::addAdminLog("Отправка в УФАС", $content, $this->user, $additionally, 'пользователь');
+
         $message->send();
+        Log::addAdminLog("Отправка в УФАС", $content, $this->user, $additionally, 'пользователь');
     }
 
     public function sendComplaintToUfasAction()
@@ -1493,6 +1494,8 @@ class ComplaintController extends ControllerBase
             $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content, $complaint->auction_id);
             $status = 'ok';
         } catch (\Exception $e) {
+            print_R($e);
+            die;
             $status = 'error';
         }
 
