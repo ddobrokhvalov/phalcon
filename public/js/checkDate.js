@@ -29,6 +29,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (res) {
                 $('.confirm-compl-popup').css({'display': 'none'});
+                $('.dayofsendufas-popup').css({'display': 'none'}); 
                 if (res.status == 0) {
                     if (res.rule == 1 || res.rule == 2) {
                         $('.send-suc').css({'display': 'none'});
