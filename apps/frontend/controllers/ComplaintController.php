@@ -190,7 +190,13 @@ class ComplaintController extends ControllerBase
             $ufas = Ufas::find();
             $this->view->ufas = $ufas;
 
-            $dayofsendufas = LogModel::findFirst("customer_email = '{$this->user->email}' and type='Отправка в УФАС' and additionally= '{$complaint->auction_id}'");
+            $dayofsendufas = LogModel::findFirst(
+                [
+                    "customer_email = '{$this->user->email}' and type='Отправка в УФАС' and additionally= '{$complaint->auction_id}'",
+                    "order" => "id DESC",
+                    "limit" => 1,
+                ]
+            );
 
             $this->view->dayofsendufas=(strtotime($dayofsendufas->date) > strtotime("-1 day"))?1:0;
             $this->view->dateofsendufas=$dayofsendufas->date;
