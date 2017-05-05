@@ -1500,9 +1500,14 @@ class ComplaintController extends ControllerBase
             $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content, $complaint->auction_id);
             $status = 'ok';
         } catch (\Exception $e) {
-            print_R($e);
-            die;
             $status = 'error';
+
+            $message = $this->mailer->createMessage()
+                ->to($this->adminsEmails['ufas'])
+                ->subject('Ошибка при отправке в УФАС')
+                ->content('Жалоба №'.$complaint->id);
+            $message->send();
+            Log::addAdminLog("Ошибка при отправке в УФАС", $content, $this->user, $complaint->auction_id, 'пользователь');
         }
 
         echo json_encode(array(
