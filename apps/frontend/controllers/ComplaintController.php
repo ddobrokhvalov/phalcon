@@ -1519,8 +1519,7 @@ class ComplaintController extends ControllerBase
             $message->send();
             Log::addAdminLog("Ошибка при отправке в УФАС", $content, $this->user, $complaint->auction_id, 'пользователь');
         }
-
-
+		
         echo json_encode(array(
             'status' => $status,
             'complaint' => array(
