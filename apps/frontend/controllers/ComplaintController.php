@@ -1501,9 +1501,9 @@ class ComplaintController extends ControllerBase
         }
 		catch(\Swift_TransportException $e){
 			$status = 'error';
-			Log::addAdminLog("Ошибка при отправке в УФАС", $content, $this->user, $complaint->auction_id, 'пользователь');
+			Log::addAdminLog('Ошибка при отправке в УФАС  №'.$complaint->id, $e->getMessage(), $this->user, $complaint->auction_id, 'пользователь');
 			$message = $this->mailer->createMessage()
-				->to('wdb@mail.ru')
+				->to($this->adminsEmails['ufas'])
 				->subject('Ошибка при отправке в УФАС  №'.$complaint->id)
 				->content($e->getMessage());
 			$message->send();
@@ -1514,7 +1514,7 @@ class ComplaintController extends ControllerBase
 
             $message = $this->mailer->createMessage()
                 ->to($this->adminsEmails['ufas'])
-                ->subject('Ошибка при отправке в УФАС')
+				->subject('Ошибка при отправке в УФАС  №'.$complaint->id)
                 ->content('Жалоба №'.$complaint->id);
             $message->send();
             Log::addAdminLog("Ошибка при отправке в УФАС", $content, $this->user, $complaint->auction_id, 'пользователь');
