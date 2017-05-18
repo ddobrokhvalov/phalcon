@@ -37,7 +37,7 @@ $(document).ready(function() {
         $('.argComp').removeClass('argComp-descr');
         $('.btn-div-showArgDescr').removeClass('hideArgDescr').text('Просмотреть').hide();
     });
-    $('.btn-div').click(function() {
+    $('.btn-div').click(function(evt) {
         $(this).hide();
         $(".c-jd2-f-edit-h, .c-jd2-f-edit, .c-jadd2-f-z").show();
         $('.c-jd2-f-save input').show();
@@ -47,6 +47,11 @@ $(document).ready(function() {
             argObjSend.complaint_text.replace(/Описание:/, ''),
             argObjReqType
         );
+        //сохраняем жалобу
+        signSavedComplaint = false;
+        evt.preventDefault();
+        stopSaveCompl();
+        
         $('.admin-popup-wrap').fadeOut();
     });
     $('.steps-line span').hover(function() {
