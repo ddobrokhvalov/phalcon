@@ -1499,7 +1499,7 @@ class ComplaintController extends ControllerBase
             $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content, $complaint->auction_id);
             $status = 'ok';
         }
-		catch(\Swift_TransportException $e){
+		/*catch(\Swift_TransportException $e){
 			$status = 'error';
 			Log::addAdminLog('Ошибка при отправке в УФАС  №'.$complaint->id, $e->getMessage(), $this->user, $complaint->auction_id, 'пользователь');
 			$message = $this->mailer->createMessage()
@@ -1508,7 +1508,7 @@ class ComplaintController extends ControllerBase
 				->content($e->getMessage());
 			$message->send();
 
-		}
+		}*/
         catch (\Exception $e) {
             $status = 'error';
 
