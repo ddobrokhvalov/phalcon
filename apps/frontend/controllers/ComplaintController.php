@@ -1,5 +1,4 @@
 <?php
-
 namespace Multiple\Frontend\Controllers;
 
 use Multiple\Frontend\Models\ApplicantECP;
@@ -1454,7 +1453,7 @@ class ComplaintController extends ControllerBase
 
     public function sendComplaintToUfasAction()
     {
-        $status = 'ok';
+		$status = 'ok';
 
         $compId = $this->request->getPost('complId');
         $file = DocxFiles::findFirst(array(
@@ -1500,16 +1499,16 @@ class ComplaintController extends ControllerBase
             $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content, $complaint->auction_id);
             $status = 'ok';
         }
-		/*catch(\Swift_TransportException $e){
+		catch(\Swift_TransportException $e){
 			$status = 'error';
 			Log::addAdminLog("Ошибка при отправке в УФАС", $content, $this->user, $complaint->auction_id, 'пользователь');
 			$message = $this->mailer->createMessage()
 				->to('wdb@mail.ru')
-				->subject('Ошибка при отправке в УФАС  №'.$complaint->id.)
+				->subject('Ошибка при отправке в УФАС  №'.$complaint->id)
 				->content($e->getMessage());
 			$message->send();
 
-		}*/
+		}
         catch (\Exception $e) {
             $status = 'error';
 
