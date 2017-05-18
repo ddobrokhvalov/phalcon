@@ -1,8 +1,8 @@
 var countSend = 0;
 $(document).ready(function () {
-     $('.loading_save').css({'display':'inline-block'});
-
+    
     $('.podpisatEp').on('click', function () {
+        $('.loading_save').css({'display':'inline-block'});
         if(countSend == 0) {
             countSend++;
             $.ajax({
