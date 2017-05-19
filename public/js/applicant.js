@@ -33,7 +33,7 @@ $(document).ready(function () {
 
             if($('.tabcontent-ur #entity-inn').val().substr(0, 1) == 0)
             {
-                inn = "0"+parseInt($('.tabcontent-ur #entity-inn').val());
+                inn = parseInt($('.tabcontent-ur #entity-inn').val());
                 //$('.tabcontent-ur #entity-inn').val(inn);
             }
             else
