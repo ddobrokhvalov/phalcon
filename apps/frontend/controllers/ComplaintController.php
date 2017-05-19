@@ -162,7 +162,7 @@ class ComplaintController extends ControllerBase
         $this->view->arr_users_arg = $arr_users_arg;
         $this->view->categories_id = implode(',', $categories_id);
         $this->view->arguments_id = implode(',', $arguments_id);
-       
+
 
         //$this->view->complaint_text_order = $complaint->complaint_text_order;
 
@@ -370,7 +370,7 @@ class ComplaintController extends ControllerBase
 
     /*function save_base64_image($base64_image_string, $output_file_without_extentnion, $path_with_end_slash = "")
     {
-        //usage:  if( substr( $img_src, 0, 5 ) === "data:" ) {  $filename=save_base64_image($base64_image_string, $output_file_without_extentnion, getcwd() . "/application/assets/pins/$user_id/"); }      
+        //usage:  if( substr( $img_src, 0, 5 ) === "data:" ) {  $filename=save_base64_image($base64_image_string, $output_file_without_extentnion, getcwd() . "/application/assets/pins/$user_id/"); }
         //
         //data is like:    data:image/png;base64,asdfasdfasdf
         $splited = explode(',', substr($base64_image_string, 5), 2);
@@ -1499,7 +1499,18 @@ class ComplaintController extends ControllerBase
         try {
             $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content, $complaint->auction_id);
             $status = 'ok';
-        } catch (\Exception $e) {
+        }
+		catch(\Swift_TransportException $e){
+			$status = 'error';
+			Log::addAdminLog("Ошибка при отправке в УФАС", $content, $this->user, $complaint->auction_id, 'пользователь');
+			$message = $this->mailer->createMessage()
+				->to('wdb@mail.ru')
+				->subject('Ошибка при отправке в УФАС  №'.$complaint->id.)
+				->content($e->getMessage());
+			$message->send();
+
+		}
+        catch (\Exception $e) {
             $status = 'error';
 
             $message = $this->mailer->createMessage()
@@ -1626,10 +1637,10 @@ class ComplaintController extends ControllerBase
         $thumb_aspect = $width / $height; //отношение ширины к высоте аватарки
 
         if ($src_aspect <= $thumb_aspect) {
-            //узкий вариант (фиксированная ширина)      
+            //узкий вариант (фиксированная ширина)
             $scale = $width / $size[0];
             $new_size = array($width, $width / $src_aspect);
-            $src_pos = array(0, ($size[1] * $scale - $height) / $scale / 2); //Ищем расстояние по высоте от края картинки до начала картины после обрезки   
+            $src_pos = array(0, ($size[1] * $scale - $height) / $scale / 2); //Ищем расстояние по высоте от края картинки до начала картины после обрезки
         } else if ($src_aspect > $thumb_aspect) {
             //широкий вариант (фиксированная высота)
             $scale = $height / $size[1];
