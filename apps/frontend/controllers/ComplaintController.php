@@ -1,4 +1,5 @@
 <?php
+
 namespace Multiple\Frontend\Controllers;
 
 use Multiple\Frontend\Models\ApplicantECP;
@@ -1453,7 +1454,7 @@ class ComplaintController extends ControllerBase
 
     public function sendComplaintToUfasAction()
     {
-		$status = 'ok';
+        $status = 'ok';
 
         $compId = $this->request->getPost('complId');
         $file = DocxFiles::findFirst(array(
@@ -1498,23 +1499,12 @@ class ComplaintController extends ControllerBase
         try {
             $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content, $complaint->auction_id);
             $status = 'ok';
-        }
-		catch(\Swift_TransportException $e){
-			$status = 'error';
-			Log::addAdminLog('Ошибка при отправке в УФАС  №'.$complaint->id, $e->getMessage(), $this->user, $complaint->auction_id, 'пользователь');
-			$message = $this->mailer->createMessage()
-				->to($this->adminsEmails['ufas'])
-				->subject('Ошибка при отправке в УФАС  №'.$complaint->id)
-				->content($e->getMessage());
-			$message->send();
-
-		}
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $status = 'error';
 
             $message = $this->mailer->createMessage()
                 ->to($this->adminsEmails['ufas'])
-				->subject('Ошибка при отправке в УФАС  №'.$complaint->id)
+                ->subject('Ошибка при отправке в УФАС')
                 ->content('Жалоба №'.$complaint->id);
             $message->send();
             Log::addAdminLog("Ошибка при отправке в УФАС", $content, $this->user, $complaint->auction_id, 'пользователь');
