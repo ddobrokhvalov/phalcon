@@ -1505,7 +1505,7 @@ class ComplaintController extends ControllerBase
 			Log::addAdminLog("Ошибка при отправке в УФАС", $content, $this->user, $complaint->auction_id, 'пользователь');
 			$message = $this->mailer->createMessage()
 				->to('wdb@mail.ru')
-				->subject('Ошибка при отправке в УФАС  №'.$complaint->id.)
+				->subject('Ошибка при отправке в УФАС  №'.$complaint->id)
 				->content($e->getMessage());
 			$message->send();
 
