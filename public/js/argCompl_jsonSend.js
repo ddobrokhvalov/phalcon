@@ -48,9 +48,9 @@ $(document).ready(function() {
             argObjReqType
         );
         //сохраняем жалобу
-        signSavedComplaint = false;
-        evt.preventDefault();
-        stopSaveCompl();
+        //signSavedComplaint = false;
+        //evt.preventDefault();
+        //stopSaveCompl();
         
         $('.admin-popup-wrap').fadeOut();
     });
