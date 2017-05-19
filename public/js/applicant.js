@@ -30,7 +30,17 @@ $(document).ready(function () {
 
 
         if ($('.tabcontent-ur #entity-inn').val()) {
-            var url = 'https://ru.rus.company/интеграция/компании/?инн=' + $('.tabcontent-ur #entity-inn').val();
+
+            if($('.tabcontent-ur #entity-inn').val().substr(0, 1) == 0)
+            {
+                inn = "0"+parseInt($('.tabcontent-ur #entity-inn').val());
+                //$('.tabcontent-ur #entity-inn').val(inn);
+            }
+            else
+                inn = $('.tabcontent-ur #entity-inn').val();
+
+            alert(inn);
+            var url = 'https://ru.rus.company/интеграция/компании/?инн=' + inn;
 
             $.ajax({
                 type: 'POST',
@@ -46,7 +56,6 @@ $(document).ready(function () {
                             url: '/applicant/getEgrulInfo',
                             success: function (response) {
 
-                           
                                 if (!!response.id) {
                                     $('.tabcontent-ur #entity-address').val(response.address.fullHouseAddress);
                                     $('.tabcontent-ur #post-address').val(response.address.fullHouseAddress);
@@ -55,19 +64,15 @@ $(document).ready(function () {
                             error: function (msg) {
                                 console.log(msg);
                             }
-
                         });
                     }
                 },
                 error: function (msg) {
                     console.log(msg);
                 }
-
             });
         }
-
     });
-
 
     $('.applicantCertificate__add').click(function () {
         $('.addAppCertificate-main').fadeIn().css('display', 'flex');
