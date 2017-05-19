@@ -8,7 +8,7 @@ $(document).ready(function () {
         $('.addAppCertificate-main2').fadeOut().css('display', 'none');
 
         var userData = selectedCertif.SubjectName;
-
+        //console.log(userData);
         if (userData.indexOf('OGRN=') != -1 || userData.indexOf('ОГРН=') != -1) {
             applicant.parseUrLico(selectedCertif);
         }
@@ -39,7 +39,6 @@ $(document).ready(function () {
             else
                 inn = $('.tabcontent-ur #entity-inn').val();
 
-            alert(inn);
             var url = 'https://ru.rus.company/интеграция/компании/?инн=' + inn;
 
             $.ajax({
