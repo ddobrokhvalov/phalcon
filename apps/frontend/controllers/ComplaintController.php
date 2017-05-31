@@ -1449,6 +1449,21 @@ class ComplaintController extends ControllerBase
         }
 
         $message->send();
+		
+		
+		/**
+		*отладка отправки письма
+		$message = $this->mailer->createMessage()
+            ->to("ddobrokhvalov@gmail.com")
+            ->bcc($this->adminsEmails['ufas'])
+            ->subject($subject)
+            ->content($content);
+        foreach ($files as $key) {
+            $message->attachment($key);
+        }*/
+
+        $message->send();
+		
         Log::addAdminLog("Отправка в УФАС", $content, $this->user, $additionally, 'пользователь');
     }
 
