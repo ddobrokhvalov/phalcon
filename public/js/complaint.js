@@ -1293,7 +1293,7 @@ function checkTextBeforeSave() {
     var assoc_wrong_ck_formatting = {};
     var search_tags = ['li', 'span', 'font', 'strong', 'em', 'u'];
     var docx_generator_allowed = true;
-    var list_formatting_detected = false;
+    var list_formatting_detected = true;
 
     $(".edit-textarea.cke_editable").each(function (index, elem) {
         $(search_tags).each(function (s_tag_index, s_tag_value) {
@@ -1303,6 +1303,7 @@ function checkTextBeforeSave() {
                     return value != s_tag_value;
                 });
                 $(find_search_tags).each(function (f_s_index, f_s_value) {
+					console.log(s_tag_value);
                     if (s_tag_value == 'li') {
                         if ($(inner_elem).html().search('<' + f_s_value + '>') >= 0) {
                             docx_generator_allowed = false;
@@ -1310,7 +1311,7 @@ function checkTextBeforeSave() {
                                 wrong_ck_formatting.push($(inner_elem).html());
                                 assoc_wrong_ck_formatting[s_tag_value] = $(inner_elem).html();
                             }
-                            list_formatting_detected = true;
+                            list_formatting_detected = false;
                             showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Форматирование внутри списка недопустимо");
                             return false;
                         }
@@ -1322,7 +1323,7 @@ function checkTextBeforeSave() {
                                 wrong_ck_formatting.push($(inner_elem).html());
                                 assoc_wrong_ck_formatting[s_tag_value] = $(inner_elem).html();
                             }
-                            list_formatting_detected = true;
+                            list_formatting_detected = false;
                             showStyledPopupMessage("#pop-before-ask-question", "Ошибка", "Текст "+$(inner_elem).html()+" должен быть заменен в соответствии с указаниями");
                             return false;
                         }
@@ -1330,8 +1331,9 @@ function checkTextBeforeSave() {
                     else 
                     {
                         if ($(inner_elem).html()[0] != '<' && !$(inner_elem).html().startsWith('<' + f_s_value) && $(inner_elem).html().search('<' + f_s_value + '>') > 0) {
-                            docx_generator_allowed = false;
-                            if ($.inArray($(inner_elem).html(), wrong_ck_formatting) == -1) {
+                            //docx_generator_allowed = false;
+                            if ($.inArray($(inner_elem).html(), wrong_ck_formatting) > -1) {
+								docx_generator_allowed = false;
                                 wrong_ck_formatting.push($(inner_elem).html());
                                 assoc_wrong_ck_formatting[s_tag_value] = $(inner_elem).html();
                             }
