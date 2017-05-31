@@ -27,17 +27,22 @@ $(document).ready(function () {
         $('.ecp_text').val(field);
 
         $('.content').removeClass('hiddenClass');
+		
 
 
         if ($('.tabcontent-ur #entity-inn').val()) {
-
-            if($('.tabcontent-ur #entity-inn').val().substr(0, 1) == 0)
+			
+			//отладка обрезки нулей в начале ИНН
+			//$('.tabcontent-ur #entity-inn').val("000"+$('.tabcontent-ur #entity-inn').val());
+            
+			if($('.tabcontent-ur #entity-inn').val().substr(0, 1) == 0)
             {
                 inn = parseInt($('.tabcontent-ur #entity-inn').val());
-                //$('.tabcontent-ur #entity-inn').val(inn);
+                $('.tabcontent-ur #entity-inn').val(inn);
             }
-            else
+            else{
                 inn = $('.tabcontent-ur #entity-inn').val();
+			}
 
             var url = 'https://ru.rus.company/интеграция/компании/?инн=' + inn;
 
