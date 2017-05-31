@@ -526,6 +526,7 @@ var auction = {
             url: '/purchase/get',
             data: 'auction_id=' + auction_id,
             success: function (msg) {
+				console.log(msg);
                 var data = $.parseJSON(msg);
                 zakupka.info.type = data.info.type;
                 procedura.info.okonchanie = data.procedura.okonchanie_podachi;
