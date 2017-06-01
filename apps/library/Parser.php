@@ -24,15 +24,17 @@ class Parser
         $auction['info']['zakupku_osushestvlyaet'] = trim($xpath->evaluate('string(//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Закупку осуществляет") or contains(text(),"Размещение осуществляет")]/following-sibling::td[1]/text()[1])'));
         if ($xpath->query('//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Закупку осуществляет") or contains(text(),"Размещение осуществляет")]/following-sibling::td[1]/a')) {
             $zakupku_osushestvlyaet_url = trim($xpath->evaluate('string(//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Закупку осуществляет") or contains(text(),"Размещение осуществляет")]/following-sibling::td[1]/a/@href)'));
-            //echo "$zakupku_osushestvlyaet_url\n";
+            $zakupku_osushestvlyaet_url = strstr($zakupku_osushestvlyaet_url, "http://")?$zakupku_osushestvlyaet_url:"http://www.zakupki.gov.ru".$zakupku_osushestvlyaet_url;
+			//echo "$zakupku_osushestvlyaet_url\n";
             $inn_data = $this->getUrl($zakupku_osushestvlyaet_url);
-            //file_put_contents('inn_data.html', $inn_data);
+            //file_put_contents('/var/www/fas-online/fas/apps/library/inn_data.html', $inn_data);
 
             //echo "$inn_data\n";
             $doc2 = new \DOMDocument();
             $doc2->loadHTML('<?xml encoding="UTF-8">' . $inn_data);
             $xpath2 = new \DOMXpath($doc2);
-            $auction['info']['zakupku_osushestvlyaet_inn'] = trim($xpath2->evaluate('string(//table[@class="noticeTable"]//td/span[text()="ИНН"]/../following-sibling::td[1]/span/text())'));
+			$auction['info']['zakupku_osushestvlyaet_inn'] = trim($xpath2->evaluate('string(//h2[text()="Регистрационные данные организации"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"ИНН")]/following-sibling::td[1]/text()[1])'));
+            //$auction['info']['zakupku_osushestvlyaet_inn'] = trim($xpath2->evaluate('string(//table[@class="noticeTable"]//td/span[text()="ИНН"]/../following-sibling::td[1]/span/text())'));
             //$auction['info']['zakupku_osushestvlyaet_inn'] = trim($xpath2->evaluate('string(//table[@class="noticeTable"]//td/span[text()="ИНН"]/text())'));
             //$auction['info']['zakupku_osushestvlyaet_inn'] = trim($xpath2->evaluate('string(//title/text())'));
         }
