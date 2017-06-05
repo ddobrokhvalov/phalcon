@@ -1380,13 +1380,30 @@ function changeComplaintButtonsBackground() {
 
 function send_message(subject, body){
     var id_array = [];
+	
     $('.admin-lt-holder .lt-content-main').each(function(){
         var id = $(this).find('div.psevdo-checked #user-id').val();
         if (id != undefined) {
             id_array.push(id);
         }
     });
-    if (id_array.length) {
+    if (id_array.length > 1) {
+		console.log(id_array);
+		id_array.forEach(function(item, i, id_array) {
+			$.ajax({
+				url: "sendMessage",
+				type:'POST',
+				data: { toids: [item], subject: subject, body: body },
+				dataType: 'json',
+				success: function(data){
+					if(i == id_array.length-1){
+						$('.modal-send-message-lg').modal('hide');
+						window.location.reload(true);
+					}
+				}
+			});
+		});
+	}else if(id_array.length){
         $.ajax({
             url: "sendMessage",
             type:'POST',
@@ -1410,7 +1427,7 @@ function send_message_from_preview(subject, body){
     });
     if (id_array.length) {
         $.ajax({
-            url: "/admin/complaints/sendMessage",
+            url: "/admin/user/sendMessage",
             type:'POST',
             data: { toids: id_array, subject: subject, body: body },
             dataType: 'json',
