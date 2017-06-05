@@ -28,6 +28,7 @@ class ApplicantsController  extends ControllerBase
         $applicant = Applicant::find(array(
             "order" => "id desc"
         ));
+		
         $paginator = new Paginator(array(
             "data"  => $applicant,
             "limit" => $item_per_page,

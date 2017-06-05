@@ -474,7 +474,13 @@ var applicantValidator = {
                     this.showError(field_selector, 'Ошибка! Контактный факс, телефон должен быть от 5 до 100 символов');
                     this.result = false;
                 } else {
-                    this.done(field_selector);
+					var reg_phone = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
+					if(reg_phone.test($(field_selector).val())){
+						this.done(field_selector);
+					}else{
+						this.showError(field_selector, 'Ошибка! Формат номера телефона не верный');
+						this.result = false;
+					}
                 }
                 var field_selector = '.tabcontent-ur #entity-email';
                 if (!validator.email($(field_selector).val())) {
@@ -539,7 +545,13 @@ var applicantValidator = {
                     this.showError(field_selector, 'Ошибка! Контактный факс, телефон должен быть от 5 до 100 символов');
                     this.result = false;
                 } else {
-                    this.done(field_selector);
+                    var reg_phone = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
+					if(reg_phone.test($(field_selector).val())){
+						this.done(field_selector);
+					}else{
+						this.showError(field_selector, 'Ошибка! Формат номера телефона не верный');
+						this.result = false;
+					}
                 }
                 var field_selector = '.tabcontent-in #entity-email';
                 if (!validator.email($(field_selector).val())) {
@@ -583,7 +595,13 @@ var applicantValidator = {
                     this.showError(field_selector, 'Ошибка! Контактный факс, телефон должен быть от 5 до 100 символов');
                     this.result = false;
                 } else {
-                    this.done(field_selector);
+                    var reg_phone = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
+					if(reg_phone.test($(field_selector).val())){
+						this.done(field_selector);
+					}else{
+						this.showError(field_selector, 'Ошибка! Формат номера телефона не верный');
+						this.result = false;
+					}
                 }
                 var field_selector = '.active-tabs-content #entity-email';
                 if (!validator.email($(field_selector).val())) {

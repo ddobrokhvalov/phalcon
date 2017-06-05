@@ -128,12 +128,12 @@
         <div data-tabs="individual-entrepreneur" class="tabs-content tabcontent-in {%if applicant.type=="ip" %}active-tabs-content{%endif%}">
             <form action="/admin/applicants/save" method="POST" enctype="multipart/form-data" id="ip">
                 {{hidden_field('id', 'value':applicant.id)}}
+				{{hidden_field('name_short', 'value':applicant.name_short)}}
                 {{hidden_field('type', 'value':'ip')}}
 <!--                <label for="entity-textarea">-->
 <!--                    <div>Полное наименование</div>-->
 <!--                    {{text_area('name_full', 'value':applicant.name_full, 'id':'entity-textarea')}}-->
 <!--                </label>-->
-
                 <label for="entity-inn">
                     <div>ИНН</div>
                     {{numeric_field('inn', 'value':applicant.inn, "id":"entity-inn", "data-name":"number")}}
@@ -199,6 +199,7 @@
         <div data-tabs="physical-face" class="tabs-content tabcontent-ph {%if applicant.type=="fizlico" %}active-tabs-content{%endif%}">
             <form action="/admin/applicants/save" method="POST" enctype="multipart/form-data" id="fizlico">
                 {{hidden_field('id', 'value':applicant.id)}}
+				{{hidden_field('name_short', 'value':applicant.name_short)}}
                 {{hidden_field('type', 'value':'fizlico')}}
                 <label for="entity-fio-z">
                     <div>ФИО заявителя</div>
