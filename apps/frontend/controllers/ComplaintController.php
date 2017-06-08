@@ -263,6 +263,37 @@ class ComplaintController extends ControllerBase
             $this->view->action_edit = true;
         unset($data);
     }
+	
+	public function changeTarifAction(){
+		
+		$complaint = new Complaint();
+		$tarifs = $complaint->getTarifs(true);
+		$this->view->tarifs = $tarifs;
+		$this->view->month_steps = array(1=>1, 2=>3, 3=>6, 4=>12);
+		$this->view->month_steps2 = array(1=>1, 4=>3, 7=>6, 10=>12);
+		$this->view->month_steps3 = array(1=>1, 4=>2, 7=>3, 10=>4);
+		/*print_r("<pre>");
+		print_r($tarifs);
+		print_r("</pre>");*/
+		//exit;		
+		$this->setMenu();
+	}
+	
+	public function paymentTarifAction(){
+		
+		$complaint = new Complaint();
+		$tarifs = $complaint->getTarifs(true);
+		$this->view->tarifs = $tarifs;
+		$this->view->month_steps = array(1=>1, 2=>3, 3=>6, 4=>12);
+		$this->view->month_steps2 = array(1=>1, 4=>3, 7=>6, 10=>12);
+		$this->view->month_steps3 = array(1=>1, 4=>2, 7=>3, 10=>4);
+		$user_applicants = Applicant::findByUserId($this->user->id);
+		/*print_r("<pre>");
+		print_r($user_applicants);
+		print_r("</pre>");*/
+		//exit;		
+		$this->setMenu();
+	}
 
     public function test1Action()
     {
