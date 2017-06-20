@@ -16,8 +16,8 @@
     </div>
     <h1>{{edituser.email}}</h1>
     <div class="admin-change-access">
-        <span>Тариф пробный до 12.02.2016</span>
-        <div class="change-access">Изменить тариф</div>
+        <span>Тариф {{user_tarif['tarif_name']}}</span>
+        <a href="/admin/user/changetarif/{{edituser.id}}"><div class="change-access">Изменить тариф</div></a>
     </div>
     <div class="block-user-editing">
         <form action="/admin/user/save" method="post" id="user-form">
@@ -192,6 +192,40 @@
             </div>
         </div>
     </div>
+	<div class="appllicant-page complaints-list">
+        <div class="user-top-lt">
+            <span>Счета пользователя {{edituser.email}}</span>
+        </div>
+		<div class="admin-lt-holder">
+			<div class="admin-lt-content"  id="sort-table-2">
+				<table class="orders_table">
+					<tr class="lt-content-top">
+						<th><span>Счет</span></th>
+						<th><span>Номер счета</span></th>
+						<th><span>Заявитель</span></th>
+						<th sort-field="sort-tarif_price"><span class="sortable">Сумма</span></th>
+						<th sort-field="sort-order_date"><span class="sortable">Дата</span></th>
+						<th sort-field="sort-invoce_payment"><span class="sortable">Состояние</span></th>
+					</tr>
+					{% for tarif_order in page.items %}
+					<tr sort-tarif_price="{{tarif_order.tarif_price}}" sort-order_date="{{tarif_order.order_date}}" sort-invoce_payment="{{tarif_order.invoce_payment}}" class="lt-content-main">
+						<td><a href="/admin/order/view/{{tarif_order.id}}" target="_blank">Услуги по предоставлению доступа к системе "ФАС-Онлайн". Тариф "{{tarif_order.tarif_name}}" на {{tarif_order.tarif_count}}</a></td>
+						<td>{{ tarif_order.user_id }}/{{ tarif_order.order_number }}</td>
+						<td>{{tarif_order.name_short}} ИНН {{tarif_order.inn}}</td>
+						<td>{{ tarif_order.tarif_price }}</td>
+						<td>{{ tarif_order.order_date }}</td>
+						<td>
+							<select rel="{{tarif_order.id}}" rel2="{{tarif_order.user_id}}" class="order_payment_select">
+								<option value="0" {% if not tarif_order.invoce_payment %}selected="selected"{% endif %}>не оплачен</option>
+								<option value="1" {% if tarif_order.invoce_payment %}selected="selected"{% endif %}>оплачен</option>
+							</select>
+						</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="modal fade confirm-deletion-admin-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-sm">

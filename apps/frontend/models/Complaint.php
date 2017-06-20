@@ -40,7 +40,7 @@ class Complaint extends Model
     }
 
 
-    public function findUserComplaints($user_id, $status, $applicant_id = false, $search = false)
+    public function findUserComplaints($user_id, $status, $applicant_id = false, $search = false, $date_from = false)
     {
         $db = $this->getDi()->getShared('db');
         $sql = "SELECT c.*, ap.name_short as apname FROM complaint as c
@@ -54,6 +54,9 @@ class Complaint extends Model
         if ($status) {
             $sql .= " AND c.status = '$status'";
         }
+		if($date_from){
+			$sql .= " AND c.date >= '$date_from'";
+		}
         if($applicant_id && $applicant_id != 'All'){
             $temp = explode(',' , $applicant_id);
             foreach($temp as $key => $val){
@@ -324,5 +327,34 @@ class Complaint extends Model
 
         return $this->save();
     }
+	
+	public function getTarifs($priced = false){
+		$db = $this->getDi()->getShared('db');
+		$sql = "select * from tarifs";
+		if($priced){
+			$sql .= " where tarif_price > 0";
+		}
+		$result = $db->query($sql);
+         return $result->fetchAll();
+	}
+	
+	public function getTarifById($tarif_id){
+		$db = $this->getDi()->getShared('db');
+		$sql = "select * from tarifs where id = $tarif_id";
+		$result = $db->query($sql);
+        return $result->fetchAll();
+	}
+	
+	public function saveOrder($data){
+		$db = $this->getDi()->getShared('db');
+		print_r("<pre>");
+		print_r($db);
+		print_r("</pre>");
+		if(isset($_SESSION["order_id"])){
+			$sql = "update ";
+		}else{
+			$sql = "insert ";
+		}
+	}
 
 }

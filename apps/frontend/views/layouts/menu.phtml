@@ -210,6 +210,14 @@
                             Добро пожаловать<br>
                             {{ user.email }}
                         </div>
+						<div class="ch-r-s-i-usr">
+                            <div class="{% if user_tarif['tarif_price'] == 0 %}blue{% elseif user_tarif['tarif_type'] == 'complaint' %}green{% else %}red{% endif %}">Тариф "{{ user_tarif['tarif_name'] }}"</div>
+							{% if user_tarif['tarif_type'] == 'complaint' %}
+								осталось {{sub_count}}.
+							{% else %}
+								тариф действует до {{sub_count}}.
+							{% endif %}
+                        </div>
                         <div class="ch-r-s-i-mail">
                             <input id="cr1" type="checkbox" name="notifications" hidden  {% if user.notifications == 1%} checked  {% endif %}  value="1"  >
                             <label for="cr1">Получать уведомления на e-mail</label>

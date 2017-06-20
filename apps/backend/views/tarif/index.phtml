@@ -1,0 +1,25 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - ТАРИФЫ{% endblock %}
+{% block body %}
+{{flashSession.output()}}
+<div class="admin-main-wrap user-list">
+    <h1>Список тарифов</h1>
+    <a href="/admin/tarif/add" class="admin-add userAdd">Добавить тариф</a>
+	<div class="admin-lt-holder">
+		<div class="admin-lt-content" id="sort-table">
+            <ul class="lt-content-top">
+                <li sort-field="sort-tarif_name"><span class="sortable">Тариф</span></li>
+                <li sort-field="sort-tarif_type"><span class="sortable">Тип</span></li>
+                <li sort-field="sort-tarif_price"><span class="sortable">Стоимость</span></li>
+            </ul>
+            {% for tarif in page.items %}
+            <ul sort-tarif_name="{{tarif.tarif_name}}" sort-tarif_type="{{tarif.tarif_type}}" sort-tarif_price="{{tarif.tarif_price}}" class="lt-content-main {% if user.status == 0 %} hidden-arg {% endif %}" detail-url="{{url('admin/tarif/edit/' ~ tarif.id)}}">
+                <li><nobr>{{tarif.tarif_name}}</nobr></li>
+                <li><nobr>{% if tarif.tarif_type == 'month' %}помесячно{% else %}по количеству жалоб{% endif %}</nobr></li>
+                <li><nobr>{{ tarif.tarif_price }}</nobr></li>
+            </ul>
+            {% endfor %}
+        </div>
+	</div>	
+</div>
+{% endblock %}

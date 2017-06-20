@@ -125,7 +125,166 @@ $(document).ready(function () {
             obj.remove();
         }, 500);
     });
-
+	
+	$(".changetarif_btn").click(function(){
+		var tarif_id = $(this).attr("rel");
+		var tarif_range = $(".tarif_range_"+tarif_id).val();
+		document.location = "/complaint/paymenttarif/?id="+tarif_id+"&r="+tarif_range;
+	});
+	
+	$("#find_inn").keydown(function(event){
+		var find_inn = $(this).val();
+		if(event.keyCode == 13){
+			var url = 'https://ru.rus.company/интеграция/компании/?инн=' + find_inn;
+			$(".right .descr").hide();
+			$(".right .inn_error").hide();
+			$(".right .check").html("");
+			$(".right .check").show();
+			$("#find_inn").removeClass("active");
+			$.ajax({
+				type: 'POST',
+				data: 'url=' + url,
+				url: '/applicant/getEgrulInfo',
+				success: function (response) {
+					if (response.length) {
+						$("#find_inn").addClass("active");
+						for (var i = 0; i < response.length; i++) {
+							var url = 'https://ru.rus.company/интеграция/компании/' + response[0].id + '/';
+							$.ajax({
+								type: 'POST',
+								data: 'url=' + url,
+								url: '/applicant/getEgrulInfo',
+								success: function (response) {
+									if (!!response.id) {
+										var element_check = '<div>\
+											<input class="app_check right_app_check" type="checkbox" value="'+response.id+'" id="right_id'+response.id+'">\
+											<label for="right_id'+response.id+'">'+response.shortName+'</label>\
+											</div>';
+											//console.log(element_check);
+										$(".right .check").append(element_check);
+										//$('.tabcontent-ur #entity-address').val(response.address.fullHouseAddress);
+										//$('.tabcontent-ur #post-address').val(response.address.fullHouseAddress);
+										$(".right_app_check").on("click", function(){
+											//console.log(".right_app_check click");
+											$("#download_payment").addClass("disable");
+											$("#create_other_payment").remove();
+											if($(this).is(":checked")){
+												//console.log(":checked");
+												$(".left_app_check").removeAttr('checked');
+												$(".right_app_check").not(this).removeAttr('checked');
+												$("#create_payment").removeClass("disable");
+											}else{
+												//console.log("not :checked");
+												$("#create_payment").addClass("disable");
+											}
+										});
+									}else{
+										$(".right .check").html("");
+										$(".right .check").hide();
+										$(".right .inn_error").show();
+									}
+								},
+								error: function (msg) {
+									console.log(msg);
+									$(".right .check").html("");
+									$(".right .check").hide();
+									$(".right .inn_error").show();
+								}
+							});
+						}
+						
+					}else{
+						$(".right .check").html("");
+						$(".right .check").hide();
+						$(".right .inn_error").show();
+					}
+				},
+				error: function (msg) {
+					console.log(msg);
+					$(".right .check").html("");
+					$(".right .check").hide();
+					$(".right .inn_error").show();
+					
+				}
+			});
+		}
+		//console.log(event.keyCode);
+	});
+	
+	$(".left_app_check").click(function(){
+		$("#download_payment").addClass("disable");
+		$("#create_other_payment").remove();
+		if($(this).is(":checked")){
+			$(".right_app_check").removeAttr('checked');
+			$(".left_app_check").not(this).removeAttr('checked');
+			$("#create_payment").removeClass("disable");
+		}else{
+			$("#create_payment").addClass("disable");
+		}
+	});
+	
+	$("#create_payment").click(function(){
+		if($(".app_check:checked").size() == 1 && !$(this).hasClass("disable")){
+			var side = "left";
+			if($(".app_check:checked").hasClass("left_app_check")){
+				side = "left";
+			}
+			if($(".app_check:checked").hasClass("right_app_check")){
+				side = "right";
+			}
+			$.ajax({
+				dataType: 'json',
+				type: 'POST',
+				data: {
+						'action':'create_payment',
+						'app_id':$(".app_check:checked").val(),
+						'side':side
+						},
+				url: document.location+"",
+				success: function (response) {
+					if(response.status == 'ok'){
+						$("#download_payment").removeClass("disable");
+						//$(".change_applicant .left").remove();
+						//$(".change_applicant .right").remove();
+						//$("#create_payment").remove();
+						$("#create_payment").addClass("disable");
+						$(".change_applicant .button").append('<button id="create_other_payment" class="btn">Сформировать другой счет</button>');
+						$("#create_other_payment").on("click", function(){
+							$.ajax({
+									
+									type: 'POST',
+									data: {
+											'action':'create_other_payment',
+											},
+									url: document.location+"",
+									success: function (response) {
+										document.location = "/complaint/changetarif";
+									},
+									error: function (msg) {
+										console.log(msg);	
+									}
+							});
+						});
+					}else{
+						$("#create_other_payment").remove();
+						$("#download_payment").addClass("disable");
+					}
+				},
+				error: function (msg) {
+					console.log(msg);
+					
+				}
+			});
+		}
+	});
+	$("#download_payment").click(function(){
+		if(!$(this).hasClass("disable")){
+			win = window.open("/complaint/paymentdownload", "Счет")
+		}
+	});
+	
+	
+	
     // $('#complaint_name').focusout(function () {
     //     var cmpl_name = $(this).val();
     //     checkComplaintName(cmpl_name);

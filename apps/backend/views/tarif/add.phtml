@@ -1,0 +1,50 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - РЕДАКТИРОВАНИЕ ТАРИФА{% endblock %}
+{% block body %}
+{{flashSession.output()}}
+<div class="admin-main-wrap user-list">
+	<div class="bread-crumbs-holder">
+        <a href="/admin/tarif/index">Вернуться к списку тарифов</a>
+    </div>
+    <h1>Редактирование тарифа</h1>
+    <div class="block-user-editing">
+        <form action="/admin/tarif/create" method="post" id="user-form">
+			{{hidden_field('id', 'value':'')}}
+			<div class="left-block-editing">
+				<label for="tarif_name">
+                    <p>Название тарифа</p>
+                    {{text_field('tarif_name', 'value':params['tarif_name'], 'id':'tarif_name')}}
+                </label>
+				<label for="tarif_anounce">
+                    <p>Краткое описание</p>
+                    {{text_field('tarif_anounce', 'value':params['tarif_anounce'], 'id':'tarif_anounce')}}
+                </label>
+				<label for="tarif_type">
+                    <p>Тип тарифа</p>
+                    <select id="tarif_type" name="tarif_type">
+						<option value="complaint" {% if params['tarif_type'] == 'complaint' %}selected="selected"{% endif %}>оплата за каждую жалобу</option>
+						<option value="month" {% if params['tarif_type'] == 'month' %}selected="selected"{% endif %}>оплата помесячно</option>
+					</select>
+                </label>
+				<label for="tarif_price">
+                    <p>Стоимость единицы</p>
+                    {{numeric_field('tarif_price', 'value':params['tarif_price'], 'id':'tarif_price')}}
+                </label>
+				<label for="tarif_discount">
+                    <p>Уменьшение стоимости</p>
+                    {{numeric_field('tarif_discount', 'value':params['tarif_discount'], 'id':'tarif_discount')}}
+                </label>
+			</div>
+			<div class="right-block-editing">
+				<label for="tarif_description">
+                    <p>Подробное описание</p>
+                    {{text_area('tarif_description', 'value':params['tarif_description'], 'id':'tarif_description')}}
+                </label>
+			</div>
+            <div class="delete-or-save">
+                <button>Сохранить изменения</button>
+            </div>
+		</form>
+	</div>
+</div>
+{% endblock %}

@@ -96,7 +96,7 @@ class Complaint extends Model
         return false;
     }
 
-    public function findUserComplaints($user_id, $status,$applicant_id =false)
+    public function findUserComplaints($user_id, $status, $applicant_id = false, $from_date = false)
     {
         $db = $this->getDi()->getShared('db');
         $sql = "SELECT c.*, ap.name_short as apname FROM complaint as c
@@ -109,6 +109,9 @@ class Complaint extends Model
         if($applicant_id && $applicant_id != 'All'){
             $sql .= " AND ap.id = $applicant_id";
         }
+		if($from_date){
+			$sql .= " AND c.date >= '$from_date'";
+		}
 
         $sql .= 'ORDER BY c.date DESC';
         $result = $db->query($sql);
@@ -374,5 +377,19 @@ class Complaint extends Model
 
         return $this->save();
     }
+	
+	public function getUserTarif($user_id){
+		$db = $this->getDi()->getShared('db');
+	}
+	
+	public function getTarifs($priced = false){
+		$db = $this->getDi()->getShared('db');
+		$sql = "select * from tarifs";
+		if($priced){
+			$sql .= " where tarif_price > 0";
+		}
+		$result = $db->query($sql);
+         return $result->fetchAll();
+	}
 
 }

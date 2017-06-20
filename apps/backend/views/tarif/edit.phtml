@@ -1,0 +1,78 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - РЕДАКТИРОВАНИЕ ТАРИФА{% endblock %}
+{% block body %}
+{{flashSession.output()}}
+<div class="admin-main-wrap user-list">
+	<div class="bread-crumbs-holder">
+        <a href="/admin/tarif/index">Вернуться к списку тарифов</a>
+    </div>
+    <h1>Редактирование тарифа</h1>
+    <div class="block-user-editing">
+        <form action="/admin/tarif/save" method="post" id="user-form">
+			{{hidden_field('id', 'value':edittarif.id)}}
+			<div class="left-block-editing">
+				<label for="tarif_name">
+                    <p>Название тарифа</p>
+                    {{text_field('tarif_name', 'value':edittarif.tarif_name, 'id':'tarif_name')}}
+                </label>
+				<label for="tarif_anounce">
+                    <p>Краткое описание</p>
+                    {{text_field('tarif_anounce', 'value':edittarif.tarif_anounce, 'id':'tarif_anounce')}}
+                </label>
+				<label for="tarif_type">
+                    <p>Тип тарифа</p>
+                    <select id="tarif_type" name="tarif_type">
+						<option value="complaint" {% if edittarif.tarif_type == 'complaint' %}selected="selected"{% endif %}>оплата за каждую жалобу</option>
+						<option value="month" {% if edittarif.tarif_type == 'month' %}selected="selected"{% endif %}>оплата помесячно</option>
+					</select>
+                </label>
+				<label for="tarif_price">
+                    <p>Стоимость единицы</p>
+                    {{numeric_field('tarif_price', 'value':edittarif.tarif_price, 'id':'tarif_price')}}
+                </label>
+				<label for="tarif_discount">
+                    <p>Уменьшение стоимости</p>
+                    {{numeric_field('tarif_discount', 'value':edittarif.tarif_discount, 'id':'tarif_discount')}}
+                </label>
+			</div>
+			<div class="right-block-editing">
+				<label for="tarif_description">
+                    <p>Подробное описание</p>
+                    {{text_area('tarif_description', 'value':edittarif.tarif_description, 'id':'tarif_description')}}
+                </label>
+			</div>
+            <div class="delete-or-save">
+                <button class="delete" onclick="">Удалить тариф</button>
+                <button>Сохранить изменения</button>
+            </div>
+		</form>
+	</div>
+</div>
+
+<div class="modal fade confirm-deletion-admin-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Удалить тариф?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <a type="button" href="/admin/tarif/del/{{edittarif.id}}" class="btn btn-primary">Удалить</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $(".delete").click(function(evt){
+            evt.preventDefault();
+            $('.confirm-deletion-admin-lg').modal('show');
+        });
+    });
+
+
+</script>
+
+{% endblock %}

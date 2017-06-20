@@ -3178,6 +3178,7 @@ a:focus {
   width: 11px;
   height: 10px;
   background: url("../images/good-bad-icons.png") no-repeat -16px 0;
+  display: inline-block;
 }
 /* line 209, ../sass/_user_list.scss */
 .good-bad.must {
@@ -3277,7 +3278,7 @@ a:focus {
   text-decoration: underline;
 }
 /* line 71, ../sass/_admin_page.scss */
-.block-user-editing input {
+.block-user-editing input, .block-user-editing select {
   padding: 0 16px;
   width: 100%;
   font: 16px/55px 'Open Sans', sans-serif;
@@ -3945,6 +3946,18 @@ span.revert-bg {
   padding: 16px;
   width: 100%;
   height: 123px;
+  font: 16px/28px 'Open Sans', sans-serif;
+  border: 1px solid #d5d9e0;
+  border-radius: 2px;
+  resize: none;
+}
+.right-block-editing label[for="tarif_description"] textarea {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 16px;
+  width: 100%;
+  height: 515px;
   font: 16px/28px 'Open Sans', sans-serif;
   border: 1px solid #d5d9e0;
   border-radius: 2px;
@@ -5933,6 +5946,40 @@ body#backend-login {
   text-align: center;
   text-decoration: underline;
 }
+.tarif_out{
+	font-size: 20px;
+}
+
+.orders_table th{
+	padding: 5px 10px;
+}
+.orders_table td{
+	padding: 5px 10px;
+	border-bottom: 1px solid #e0e3ea;
+}
+.admin-lt-content .blue{
+	color: #00aeef;
+}
+.admin-lt-content .green{
+	color: #29d3b2;
+}
+.admin-lt-content .red{
+	color: #f26d7d;
+}
+
+.ch-r-s-i-usr .blue{
+	margin-top: 25px;
+	color: #00aeef;
+}
+.ch-r-s-i-usr .green{
+	margin-top: 25px;
+	color: #29d3b2;
+}
+.ch-r-s-i-usr .red{
+	margin-top: 25px;
+	color: #f26d7d;
+}
+
 /* line 8, ../sass/_wantReg.scss */
 .wantReg:hover {
   text-decoration: underline !important;

@@ -9,6 +9,8 @@ use Multiple\Backend\Models\Messages;
 use Multiple\Backend\Models\Applicant;
 use Multiple\Backend\Models\Complaint;
 use Multiple\Backend\Models\Permission;
+use Multiple\Backend\Models\Tarif;
+use Multiple\Backend\Models\TarifOrder;
 use Multiple\Library\PaginatorBuilder;
 use Multiple\Backend\Validator\UserValidator;
 use Phalcon\Validation\Validator\PresenceOf;
@@ -256,6 +258,32 @@ class UserController extends ControllerBase
                 $this->flashSession->error("Пользователь не найден");
                 return $this->forward("user/index");
             }
+			
+			$user_tarif = Tarif::findFirstById($user->tarif_id);
+			$this->view->user_tarif = $user_tarif->toArray();
+			
+			$tarifs_obj = new Tarif();
+			$tarifs = $tarifs_obj->getTarifs(true);
+						
+			$tarif_orders = TarifOrder::find(array(
+								'conditions' => "user_id=:id:",
+								'bind' => array(
+									'id' => $id
+								),
+								"order" => "id desc"
+							));
+			$paginator = new Paginator(array(
+                "data" => $tarif_orders,
+                "limit" => 999999,
+                "page" => 1
+            ));
+			$pages = $paginator->getPaginate();
+			$this->view->page = $pages;
+			/*print_r("<pre>");
+			print_r($tarif_orders);
+			print_r("</pre>");
+			exit;*/
+			
             //$appl = new Applicant();
             //$this->view->applicants = $appl->findByUserId($id);
             $complaints = new Complaint();
@@ -266,6 +294,49 @@ class UserController extends ControllerBase
             $this->setMenu();
         }
     }
+	public function changeTarifAction($id)
+    {
+		$perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'user', 'edit')) {
+           $this->view->pick("access/denied");
+           $this->setMenu();
+        } else {
+            $user = User::findFirstById($id);
+            if (!$user) {
+                $this->flashSession->error("Пользователь не найден");
+                return $this->forward("user/index");
+            }
+			
+			$user_tarif = Tarif::findFirstById($user->tarif_id);
+			$this->view->user_tarif = $user_tarif->toArray();
+			
+			$tarifs_obj = new Tarif();
+			$tarifs = $tarifs_obj->getTarifs(true);
+			$this->view->tarifs = $tarifs;			
+			/*print_r("<pre>");
+			print_r($tarifs);
+			print_r("</pre>");*/
+			//exit;
+			if($this->request->getPost("tarif_id")){
+				$tarif_id = $this->request->getPost("tarif_id");
+				$user->tarif_id = $tarif_id;
+				$user->tarif_date_activate = date("Y-m-d H:i:s");
+				$user->tarif_count = $this->request->getPost("tarif_count");
+				$user->tarif_active = 1;
+				$user->saveTarif();
+				header("Location: /admin/user/edit/".$id);
+			}
+			
+            //$appl = new Applicant();
+            //$this->view->applicants = $appl->findByUserId($id);
+            $complaints = new Complaint();
+            $applicants = new Applicant();
+            $this->view->complaints = $complaints->findUserComplaints($id, false);
+            $this->view->applicants = $applicants->findByUserIdWithAdditionalInfo($id);
+            $this->view->edituser = $user;
+            $this->setMenu();
+        }
+	}
     
     public function delAction($id)
     {

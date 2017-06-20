@@ -1,0 +1,38 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - СМЕНИТЬ ТАРИФ ПОЛЬЗОВАТЕЛЯ{% endblock %}
+{% block body %}
+<script type="text/javascript" src="/js/input_mask.js"></script>
+<script>
+    $(document).ready(function() {
+
+    });
+</script>
+<div class="admin-main-wrap user-page">
+    <div class="bread-crumbs-holder">
+        <a href="/admin/user/index">Вернуться к списку пользователей</a>
+    </div>
+    <h1>{{edituser.email}}</h1>
+    <div class="admin-change-access">
+        <span>Тариф {{user_tarif['tarif_name']}}</span>
+    </div>
+	<div class="block-user-editing">
+        <form method="post" id="user-form">
+			<label for="change_tarif">
+				<p>Выбрать тариф</p>
+				<select name="tarif_id" id="change_tarif">
+					{% for tarif in tarifs%}
+						<option value="{{tarif['id']}}" {% if edituser.tarif_id == tarif['id'] %}selected="selected"{% endif %}>{{tarif['tarif_name']}} {% if tarif['tarif_description'] %}({{tarif['tarif_description']}}){% endif %}</option>
+					{% endfor %}
+				</select>
+			</label>
+			<label for="tarif_count">
+				<p>Количество жалоб или месяцев (в зависимости от тарифа)</p>
+				{{text_field('tarif_count', 'value':edituser.tarif_count, 'id':'tarif_count')}}
+			</label>
+			<div class="delete-or-save">
+                <button>Сохранить изменения</button>
+            </div>
+		</form>
+	</div>
+</div>
+{% endblock %}

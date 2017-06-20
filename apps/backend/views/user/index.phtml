@@ -59,20 +59,20 @@
         <div class="admin-lt-content" id="sort-table">
             <ul class="lt-content-top">
                 <li sort-field="sort-fio"><span class="sortable">Как обращаться</span></li>
-                <li sort-field="sort-phone"><span class="sortable">Телефон</span></li>
+                <li sort-field="sort-mobile_phone"><span class="sortable">Телефон</span></li>
                 <li sort-field="sort-applicants"><span class="sortable">Заявители</span></li>
                 <li sort-field="sort-complaints"><span class="sortable">Жалобы</span></li>
                 <li sort-field="sort-time-to"><span class="sortable">Подписка до</span></li>
                 <li sort-field="sort-rate"><span class="sortable">Тариф</span></li>
             </ul>
             {% for user in page.items %}
-            <ul sort-fio="{{user.conversion}} " sort-phone="{{user.phone}}" sort-applicants="35" sort-complaints="29" sort-time-to="22.01.2016" class="lt-content-main {% if user.status == 0 %} hidden-arg {% endif %}" detail-url="{{url('admin/user/edit/' ~ user.id)}}">
+            <ul sort-fio="{{user.conversion}} " sort-mobile_phone="{{user.mobile_phone}}" sort-applicants="{{user.users_applicants}}" sort-complaints="{{user.users_complaints}}" sort-time-to="22.01.2016" class="lt-content-main {% if user.status == 0 %} hidden-arg {% endif %}" detail-url="{{url('admin/user/edit/' ~ user.id)}}">
                 <li><div class="lt-psevdo-check">{{hidden_field('user-id', 'value':user.id)}}</div>{% if user.conversion != '' %} {{user.conversion}} {% else %} Не заполнено поле {% endif %}</li>
                 <li>{{user.mobile_phone}}</li>
                 <li>{{ user.users_applicants }}</li>
                 <li>{{ user.users_complaints }}</li>
-                <li>22.01.2016</li>
-                <li><div class="good-bad extended"></div></li>
+                <li>{{ user.sub_count }}</li>
+                <li><span class="{% if user.user_tarif.tarif_price == 0 %}blue{% elseif user.user_tarif.tarif_type == 'complaint' %}green{% else %}red{% endif %}">{{user.user_tarif.tarif_name}}</span>{% if user.tarif_active %} <div class="good-bad extended"></div>{% endif %}</li>
             </ul>
             {% endfor %}
         </div>

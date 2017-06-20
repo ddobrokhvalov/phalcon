@@ -1,0 +1,100 @@
+﻿<script src="/js/order_ajax.js"></script>
+<script src="/js/ecp/es6-promise.min.js" type="text/javascript"></script>
+<script src="/js/ecp/cades.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    Cades.prototype.isChromiumBased = function () {
+        var retVal_chrome = navigator.userAgent.match(/chrome/i);
+        var isOpera = navigator.userAgent.match(/opr/i);
+        return (retVal_chrome != null && retVal_chrome.length > 0) || isOpera != null;
+    };
+</script>
+<script src="/js/ecp/Custom_low.level.signFile.js" type="text/javascript"></script>
+<script type="application/javascript" src="/js/docx_generator/js/docxtemplater.v2.js"></script>
+<script type="application/javascript" src="/js/docx_generator/js/jszip-utils.js"></script>
+<script src="/js/bowser.min.js"></script>
+<script src="/js/plugin.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="/js/docx_generator/js/jszip-utils-ie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="/js/checkPlugin.js"></script>
+<script type="text/javascript" src="/js/RecallComplaint.js"></script>
+<script type="text/javascript" src="/js/checkDate.js"></script>
+<link rel="stylesheet" href="/css/mystyle.css">
+
+<div class="content">
+    <div class="wrapper wrap-with-menuPanel">
+        <div class="c-content">
+            <div class="mybox">
+        		<p class="top-descr">Вы выбрали тариф "{{changed_tarif['tarif_name']}}". Доступно {{tarif_count}}, {{tarif_price_one}} / {% if(changed_tarif['tarif_type']=='complaint' ) %}1 жалоба{% else %}месяц{% endif %}</p>
+        		<h2>Сумма к оплате {{tarif_price}} <span class="rub"></span></h2>
+        		<p class="title">Безналичный перевод для юридических лиц и ИП</p>
+        		<div class="calculations">
+        			<div class="box not">
+        				<p>Банковская карта</p>
+        				<ul>
+        					<li><a href="#"><img src="/images/mir.jpg" alt=""></a></li>
+        					<li><a href="#"><img src="/images/visa.jpg" alt=""></a></li>
+        					<li><a href="#"><img src="/images/mastercard.jpg" alt=""></a></li>
+        					<li><a href="#"><img src="/images/maestro.jpg" alt=""></a></li>
+        					<li><a href="#"><img src="/images/pay.jpg" alt=""></a></li>
+        				</ul>
+        			</div>
+        			<div class="box not">
+        				<p>Электронные деньги</p>
+        				<ul>
+        					<li><a href="#"><img src="/images/yandex.jpg" alt=""></a></li>
+        					<li><a href="#"><img src="/images/webmoney.jpg" alt=""></a></li>
+        					<li><a href="#"><img src="/images/qiwi.jpg" alt=""></a></li>
+        				</ul>
+        			</div>
+        			<div class="box not">
+        				<p>Наличные через терминал</p>
+        				<ul>
+        					<li><a href="#"><img src="/images/comepay.jpg" alt=""></a></li>
+        					<li><a href="#"><img src="/images/svyaznoj.jpg" alt=""></a></li>
+        					<li><a href="#"><img src="/images/evroset.jpg" alt=""></a></li>
+        				</ul>
+        			</div>
+        		</div>
+        		<div class="block change_applicant">
+        			<div class="left">
+        				<p>Выберите заявителя</p>
+        				<div class="left-check check">
+        					{% for user_applicant in user_applicants %}
+								<div>
+									<input type="checkbox" class="app_check left_app_check" value="{{user_applicant['id']}}" id="id{{user_applicant['id']}}">
+									<label for="id{{user_applicant['id']}}">{{user_applicant['name_short']}}</label>
+								</div>
+							{% endfor %}
+        				</div>
+        			</div>
+        			<div class="right">
+        				<p>или введите ИНН</p>
+        				<input type="text" id="find_inn">
+        				<p class="descr">ИНН - цифровой код, упорядочивающий учёт налогоплательщиков в Российской Федерации. Присваивается налоговой записи как юридических, так и физических лиц в Федеральной Налоговой Службе</p>
+						<div class="inn_error" style="display:none;">
+							Неверный ИНН
+						</div>
+						<div class="check" style="display:none;">
+							
+						</div>
+        			</div>
+        			<div class="button">
+        				<button id="create_payment" class="btn disable">Сформировать счет</button>
+        				<button id="download_payment" class="btn disable">Скачать счет</button>
+        			</div>
+        		</div>
+        	</div>
+			<script type="text/javascript">
+				$(document).ready(function(){
+					
+				});
+			</script>
+        </div>
+    </div>
+</div>
+<script>
+    var currentPage = 'complaint/paymenttarif';
+</script>
+
+

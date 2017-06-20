@@ -1,0 +1,870 @@
+@font-face {
+  font-family: Icon;
+  src: url(../fonts/icon.woff);
+}
+@font-face {
+  font-family: 'Open Sans Italic';
+  src: url(../fonts/opensansitalic.woff);
+}
+.content {
+  width: 99%!important;
+}
+.mybox {
+  font: 16px 'Open Sans Regular';
+  padding: 30px;
+  /* Block bottom */
+  /* Tarif */
+}
+.mybox button {
+  outline: none!important;
+}
+.mybox .btn {
+  background: #00aeef;
+  border-radius: 6px;
+  border: none;
+  color: #fefefe;
+  font: 700 0.875em 'Open Sans';
+  opacity: 1;
+  padding: 15px 25px 13px;
+  text-transform: uppercase;
+  transition: opacity .3s;
+}
+.mybox .btn:hover {
+  color: #fefefe;
+  opacity: .7;
+}
+.mybox .btn:focus {
+  color: #fefefe;
+}
+.mybox .top-descr {
+  font: 400 0.75em 'Open Sans';
+  margin: 0;
+  text-transform: uppercase;
+}
+.mybox h2 {
+  color: #29d3b2;
+  font: 300 3em 'Open Sans';
+  margin: 0 0 20px;
+}
+.mybox h2 .rub:after {
+  content: '\e900';
+  font: .85em Icon;
+}
+.mybox .title {
+  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.18);
+  font: 300 1.875em/1 'Open Sans';
+  margin: 0 2px 20px;
+  padding: 35px 20px;
+}
+.mybox .calculations {
+  margin-bottom: 35px;
+  overflow: hidden;
+  padding: 5px 2px;
+}
+.mybox .calculations .box {
+  border: 1px solid #ebebeb;
+  box-shadow: none;
+  float: left;
+  margin-right: 2%;
+  padding: 30px 0 20px;
+  transition: box-shadow 0.3s;
+  width: 32%;
+}
+.mybox .calculations .box p {
+  color: #222427;
+  font: 300 1.25em 'Open Sans';
+  margin: 0 0 40px 20px;
+}
+.mybox .calculations .box ul {
+  margin-left: 10px;
+  overflow: hidden;
+}
+.mybox .calculations .box ul li {
+  float: left;
+  margin-right: 10px;
+}
+.mybox .calculations .box:hover {
+  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.18);
+}
+.mybox .calculations div:last-child {
+  margin-right: 0!important;
+}
+.mybox .calculations .not {
+  position: relative;
+}
+.mybox .calculations .not p {
+  opacity: .2;
+}
+.mybox .calculations .not ul {
+  opacity: .2;
+}
+.mybox .calculations .not:hover {
+  box-shadow: none;
+}
+.mybox .calculations .not:before {
+  background: url(../images/rectangle.png) left center no-repeat;
+  bottom: 35px;
+  color: #fefefe;
+  content: 'Временно недоступно';
+  font: 600 0.625em/1 'Open Sans';
+  padding: 12px 32px 12px 13px;
+  position: absolute;
+  text-transform: uppercase;
+  z-index: 10;
+}
+.mybox .block {
+  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.18);
+  margin: 0 3px;
+  padding: 30px 20px 20px;
+  /* Card */
+  /* Buy */
+}
+.mybox .block .left p,
+.mybox .block .right p {
+  font: 300 1.375em/1 'Open Sans';
+  margin-bottom: 25px;
+}
+.mybox .block .left {
+  display: inline-block;
+  margin-bottom: 30px;
+  width: 49%;
+}
+.mybox .block .left-check {
+  border: 1px solid #d4d7df;
+  border-radius: 3px;
+  height: 300px;
+}
+.mybox .block .check {
+  overflow-y: scroll;
+  padding-right: 30px;
+}
+.mybox .block .check div {
+  border-top: 1px solid #ededed;
+  padding: 15px 15px 12px;
+}
+.mybox .block .check div label {
+  font: 300 1.125em 'Open Sans';
+}
+.mybox .block .check div:first-child {
+  border: none;
+}
+.mybox .block .check::-webkit-scrollbar {
+  background: #f7f8fa;
+  width: 10px;
+}
+.mybox .block .check::-webkit-scrollbar-thumb {
+  background: url(../images/scroll-arrows.png) center no-repeat, #cacdd5;
+}
+.mybox .block .right {
+  display: inline-block;
+  margin-bottom: 30px;
+  padding-left: 30px;
+  vertical-align: top;
+  width: 48%;
+}
+.mybox .block .right input[type='text'] {
+  border: 1px solid #d4d7df;
+  border-radius: 3px;
+  color: #34383e;
+  font: 400 1em/1 'Open Sans';
+  margin-bottom: 30px;
+  padding: 15px;
+  width: 100%;
+}
+.mybox .block .right .descr {
+  color: rgba(52, 56, 62, 0.502);
+  font: italic 300 0.875em/1.429 'Open Sans';
+  padding-right: 30%;
+}
+.mybox .block .right .inn_error {
+	color: rgba(52, 56, 62, 0.602);
+	font: italic 300 0.875em/1.429 'Open Sans';
+	padding-right: 30%;
+}
+.mybox .block .right .active {
+  background: url(../images/icon-jl-done.png) 97% center no-repeat;
+  border-color: #29d3b2!important;
+  box-shadow: 0 0 7px 0 #c1dfda;
+  position: relative;
+}
+.mybox .block .right .check {
+  border-bottom: 1px solid #ededed;
+  border-top: 1px solid #ededed;
+  height: 216px;
+}
+.mybox .block .button {
+  border-top: 3px solid #ebebeb;
+  padding: 20px 0 0;
+  text-align: center;
+}
+.mybox .block .button button {
+  display: inline-block;
+  margin: 0 7px;
+}
+.mybox .block .disable {
+  background: #d4d7df;
+  border-radius: 6px;
+  border: none;
+  color: #fefefe;
+  cursor: default;
+  font: 700 0.875em 'Open Sans';
+  padding: 15px 25px 13px;
+  text-transform: uppercase;
+}
+.mybox .block .card {
+  background: url(../images/card.jpg) center top no-repeat;
+  margin: 0 auto;
+  min-height: 265px;
+  overflow: hidden;
+  position: relative;
+  width: 500px;
+}
+.mybox .block .card input {
+  border: 1px solid #c0c0bf;
+  color: #34383e;
+  font: 400 1em 'Open Sans';
+  left: 40px;
+  padding: 6px 10px;
+  position: absolute;
+}
+.mybox .block .card input:focus {
+  box-shadow: inset 0 0 0 2px #ffcc00;
+}
+.mybox .block .card input::placeholder {
+  color: #999;
+}
+.mybox .block .card input::-webkit-input-placeholder {
+  color: #999;
+}
+.mybox .block .card input::-ms-input-placeholder {
+  color: #999;
+}
+.mybox .block .card input:-ms-input-placeholder {
+  color: #999;
+}
+.mybox .block .card input:focus::placeholder {
+  color: transparent;
+}
+.mybox .block .card input:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+.mybox .block .card input:focus::-ms-input-placeholder {
+  color: transparent;
+}
+.mybox .block .card input:focus:-ms-input-placeholder {
+  color: transparent;
+}
+.mybox .block .card .number-card {
+  top: 95px;
+  width: 300px;
+}
+.mybox .block .card .month-card {
+  top: 159px;
+  width: 50px;
+}
+.mybox .block .card .year-card {
+  left: 114px;
+  top: 159px;
+  width: 50px;
+}
+.mybox .block .card .cvc {
+  left: 378px;
+  top: 136px;
+  width: 70px;
+}
+.mybox .block .card .mail {
+  border: 1px solid #d4d7df;
+  border-radius: 3px;
+  left: 21px;
+  margin: 270px 0 20px;
+  padding: 18px 15px 10px;
+  position: relative;
+  width: 455px;
+}
+.mybox .block .card .mail:focus {
+  box-shadow: none;
+}
+.mybox .block .card .mail::placeholder {
+  color: #34383e;
+}
+.mybox .block .card .mail::-webkit-input-placeholder {
+  color: #34383e;
+}
+.mybox .block .card .mail::-ms-input-placeholder {
+  color: #34383e;
+}
+.mybox .block .card .mail:-ms-input-placeholder {
+  color: #34383e;
+}
+.mybox .block .card button {
+  float: right;
+  margin-right: 20px;
+}
+.mybox .block .select {
+  font: 400 1em/1 'Open Sans';
+  position: relative;
+}
+.mybox .block .select select {
+  background: url(../images/arrow-to-down.png) no-repeat 97% center;
+  border: 1px solid #d4d7df;
+  border-radius: 3px;
+  box-sizing: border-box;
+  color: #34383e;
+  cursor: pointer;
+  margin: 0 20px 10px 0;
+  outline: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  padding: 15px;
+  width: 450px;
+}
+.mybox .block .select .price {
+  color: rgba(52, 56, 62, 0.6);
+  left: 330px;
+  position: absolute;
+  top: 16px;
+}
+.mybox .block .select .price:after {
+  content: '\e900';
+  font: .9em Icon;
+}
+.mybox .block .buy {
+  max-width: 600px;
+  overflow: hidden;
+}
+.mybox .block .buy p {
+  color: #34383e;
+  font: 400 1em 'Open Sans';
+  display: inline-block;
+  width: 170px;
+}
+.mybox .block .buy select {
+  background: url(../images/arrow-to-down.png) no-repeat 97% center;
+  border: 1px solid #d4d7df;
+  border-radius: 3px;
+  box-sizing: border-box;
+  color: #34383e;
+  cursor: pointer;
+  margin: 0 20px 20px 0;
+  outline: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  padding: 15px;
+  width: 400px;
+}
+.mybox .block .buy input {
+  border: 1px solid #d4d7df;
+  border-radius: 3px;
+  box-sizing: border-box;
+  color: #34383e;
+  margin: 0 20px 20px 0;
+  outline: none;
+  padding: 15px;
+  width: 400px;
+}
+.mybox .block .buy button {
+  float: right;
+  margin: 0 25px 10px 0;
+}
+.mybox .tarif {
+  background: #e5f7fd;
+  margin-bottom: 30px;
+  overflow: hidden;
+  padding: 30px 25px;
+}
+.mybox .tarif .left {
+  float: left;
+  width: 50%;
+}
+.mybox .tarif .left p {
+  color: #222427;
+  font: 400 0.75em 'Open Sans';
+  text-transform: uppercase;
+}
+.mybox .tarif .left h3 {
+  color: #00aeef;
+  font: 300 3em 'Open Sans';
+  margin-bottom: 30px;
+}
+.mybox .tarif .right {
+  float: right;
+  width: 50%;
+}
+.mybox .tarif .right p {
+  color: #303030;
+  font: 300 italic 0.875em/1.857 'Open Sans';
+  margin-top: 30px;
+}
+.mybox .participant {
+  overflow: hidden;
+  width: 100%;
+}
+.mybox .participant > div {
+  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.18);
+  min-height: 530px;
+  padding: 20px;
+  width: 47%;
+}
+.mybox .participant > div .status {
+  font: 300 0.75em/1 'Open Sans';
+  text-align: center;
+  text-transform: uppercase;
+}
+.mybox .participant > div div {
+  overflow: hidden;
+}
+.mybox .participant > div div .price {
+  font: 300 1.5em 'Open Sans';
+  float: left;
+}
+.mybox .participant > div div .trafic {
+  font: 300 1em 'Open Sans';
+  float: right;
+  padding-top: 10px;
+}
+.mybox .participant > div div span:after {
+  content: '\e900';
+  font: .85em Icon;
+}
+.mybox .participant > div h3 {
+  font: 300 3em 'Open Sans';
+  text-align: center;
+}
+.mybox .participant > div input[type='range'] {
+  -webkit-appearance: none;
+  height: 35px;
+  margin: 0 auto 35px;
+  position: relative;
+}
+.mybox .participant > div input[type='range']:after {
+  color: #d2d2d2;
+  font: 400 0.75em 'Open Sans';
+  position: absolute;
+  right: -45px;
+  top: 2px;
+}
+.mybox .participant > div input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+}
+.mybox .participant > div input[type='range']::-moz-range-track {
+  background: transparent;
+}
+.mybox .participant > div input[type='range']::-moz-range-thumb {
+  border-radius: 50%;
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+}
+.mybox .participant > div button {
+  display: table;
+  margin: 0 auto 35px;
+}
+.mybox .participant > div ul {
+  display: table;
+  margin: 0 auto;
+}
+.mybox .participant > div ul li {
+  color: #303030;
+  font: 0.875em 'Open Sans Italic';
+  margin-bottom: 5px;
+}
+.mybox .participant > div ul li:before {
+  font: .85em Icon;
+  content: '\e901';
+  left: -7px;
+  position: relative;
+}
+.mybox .participant .left {
+  border-top: 5px solid #29d3b2;
+  float: left;
+  margin: 9px 0 9px 4px;
+}
+.mybox .participant .left .status {
+  color: #29d3b2;
+}
+.mybox .participant .left div .price {
+  color: #29d3b2;
+}
+.mybox .participant .left div .trafic {
+  color: #3f3f3f;
+}
+.mybox .participant .left h3 {
+  color: #29d3b2;
+}
+.mybox .participant .left input[type='range'] {
+  background: url(../images/range.jpg) center bottom no-repeat;
+  padding: 0 5px 12px;
+  width: 191px;
+}
+.mybox .participant .left input[type='range']:after {
+  content: 'жалоб';
+}
+.mybox .participant .left input[type='range']::-webkit-slider-thumb {
+  background: #29d3b2;
+}
+.mybox .participant .left input[type='range']::-moz-range-track {
+  background: transparent;
+}
+.mybox .participant .left input[type='range']::-moz-range-thumb {
+  background: #29d3b2;
+}
+.mybox .participant .left button {
+  background: #29d3b2;
+}
+.mybox .participant .right {
+  float: right;
+  border-top: 5px solid #f26d7d;
+  margin: 9px 4px 9px 0;
+}
+.mybox .participant .right .status {
+  color: #f26d7d;
+}
+.mybox .participant .right h3 {
+  color: #f26d7d;
+}
+.mybox .participant .right .price {
+  color: #f26d7d;
+}
+.mybox .participant .right input[type='range'] {
+  background: url(../images/range-month.jpg) 7px bottom no-repeat;
+  padding: 0 5px 11px;
+  position: relative;
+  width: 240px;
+}
+.mybox .participant .right input[type='range']:after {
+  content: 'месяцев';
+  right: -15px;
+}
+.mybox .participant .right input[type='range']::-webkit-slider-thumb {
+  background: #f26d7d;
+}
+.mybox .participant .right input[type='range']::-moz-range-track {
+  background: transparent;
+}
+.mybox .participant .right input[type='range']::-moz-range-thumb {
+  background: #f26d7d;
+}
+.mybox .participant .right button {
+  background: #f26d7d;
+}
+.mybox .history {
+  border: 1px solid #ebebeb;
+  overflow: hidden;
+  padding: 30px 30px 0;
+}
+.mybox .history h3 {
+  color: #4b4c51;
+  font: 300 2em 'Open Sans';
+  margin: 0 0 30px;
+}
+.mybox .history h4 {
+  color: #bebebe;
+  font: 400 0.9em 'Open Sans';
+  margin: 0 0 5px;
+  text-transform: uppercase;
+}
+.mybox .history p {
+  color: #36373b;
+  font: 400 1em 'Open Sans';
+  margin-bottom: 30px;
+}
+.mybox .history .left {
+  float: left;
+  width: 49%;
+}
+.mybox .history .right {
+  float: left;
+  width: 49%;
+}
+.mybox .history .jl-status {
+  font: 600 1em 'Open Sans';
+  display: block;
+  margin: 18px 0 30px;
+}
+.mybox .history .pdf {
+  color: #353537;
+  display: block;
+  font: 400 1em 'Open Sans';
+  margin: 10px 0;
+}
+.mybox .history .pdf:before {
+  content: '\e902';
+  color: #f55150;
+  font: 1.3em Icon;
+  margin-right: 5px;
+  position: relative;
+  top: 1px;
+}
+.mybox .history a:hover {
+  opacity: .7;
+  text-decoration: none;
+}
+/* Adaptive */
+@media screen and (max-width: 1080px) {
+  .wrapper {
+    padding-left: 40px;
+    width: 100%!important;
+  }
+  .cfooter {
+    padding-left: 50px!important;
+  }
+  .mybox .calculations {
+    text-align: center;
+  }
+  .mybox .calculations .box {
+    float: none;
+    display: inline-block;
+    margin: 10px;
+    text-align: left;
+    width: 45%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .ch-left {
+    background-position: 35px 34px!important;
+    height: auto!important;
+    padding: 35px 20px 20px 65px!important;
+    width: 215px!important;
+  }
+  .ch-right {
+    display: table;
+    height: auto!important;
+    margin: 0 auto;
+    top: -2px;
+  }
+  .c-header {
+    height: auto!important;
+  }
+  .mybox .calculations .box {
+    margin: 0 0 20px;
+    width: 70%;
+  }
+  .mybox .block .left {
+    width: 100%;
+  }
+  .mybox .block .right {
+    width: 100%;
+  }
+  .mybox .participant .left,
+  .mybox .participant .right {
+    float: none;
+    margin: 9px auto 20px;
+    min-height: auto;
+    width: 80%;
+  }
+}
+@media screen and (max-width: 700px) {
+  .ch-left {
+    background-position: 35px 8px!important;
+    padding: 10px 20px 10px 65px!important;
+  }
+  .ch-right {
+    margin-top: 13px;
+  }
+  .ch-right .ch-r-mail {
+    height: 17px!important;
+    margin-bottom: 10px;
+  }
+  .ch-right .ch-r-mail span {
+    top: -7px !important;
+  }
+  .ch-right .ch-r-sett {
+    height: 17px!important;
+    margin-bottom: 10px;
+  }
+  .ch-right .ch-r-logout {
+    height: 20px!important;
+    margin-bottom: 10px;
+  }
+  .ch-right .ch-r-name {
+    line-height: 1!important;
+    margin-right: 20px!important;
+  }
+  .mybox h2 {
+    font-size: 2.5em;
+  }
+  .mybox .block .card {
+    background-size: 350px 185px;
+    width: 325px;
+  }
+  .mybox .block .card input {
+    font-size: .7em;
+    left: 7px;
+    padding: 3px 5px;
+  }
+  .mybox .block .card .number-card {
+    top: 70px;
+    width: 225px;
+  }
+  .mybox .block .card .month-card {
+    top: 110px;
+    width: 45px;
+  }
+  .mybox .block .card .year-card {
+    left: 65px;
+    top: 110px;
+    width: 45px;
+  }
+  .mybox .block .card .cvc {
+    left: 250px;
+    top: 95px;
+    width: 45px;
+  }
+  .mybox .block .card .mail {
+    left: 0;
+    margin-top: 200px;
+    width: 100%;
+  }
+  .mybox .block .card button {
+    margin-right: 0;
+  }
+  .mybox .history .left {
+    float: none;
+    width: 100%;
+  }
+  .mybox .history .right {
+    float: none;
+    margin: 0 auto 30px;
+    width: 100%;
+  }
+}
+@media screen and (max-width: 650px) {
+  .ch-left {
+    float: none!important;
+    margin: 0 auto;
+  }
+  .ch-right {
+    float: none!important;
+    margin-left: 40px;
+  }
+  .ch-right .ch-r-name {
+    margin-bottom: 10px;
+  }
+  .mybox .block .select select {
+    width: 100%;
+  }
+  .mybox .block .select .price {
+    left: 70%;
+  }
+  .mybox .block .buy select {
+    width: 100%;
+  }
+  .mybox .block .buy input {
+    width: 100%;
+  }
+  .mybox .tarif .left {
+    float: none;
+    width: 100%;
+  }
+  .mybox .tarif .left h3 {
+    margin: 0;
+  }
+  .mybox .tarif .right {
+    float: none;
+    margin-top: -25px;
+    width: 100%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .mybox h2 {
+    font-size: 1.9em;
+  }
+  .mybox .calculations .box {
+    width: 100%;
+  }
+  .mybox .block .button button {
+    margin-bottom: 20px;
+  }
+  .mybox .participant .left,
+  .mybox .participant .right {
+    width: 98%;
+  }
+}
+@media screen and (max-width: 520px) {
+  .mybox .block .card {
+    background-size: 260px 138px;
+    width: 240px;
+  }
+  .mybox .block .card input {
+    padding: 1px 2px;
+  }
+  .mybox .block .card .number-card {
+    top: 65px;
+    width: 160px;
+  }
+  .mybox .block .card .month-card {
+    top: 89px;
+    width: 40px;
+  }
+  .mybox .block .card .year-card {
+    left: 52px;
+    top: 89px;
+    width: 40px;
+  }
+  .mybox .block .card .cvc {
+    left: 185px;
+    top: 70px;
+    width: 40px;
+  }
+  .mybox .block .card .mail {
+    font-size: 1.2em;
+    margin-top: 150px;
+    padding: 10px 7px;
+  }
+}
+@media screen and (max-width: 510px) {
+  input[type='checkbox'] + label {
+    line-height: 1!important;
+  }
+  input[type='checkbox'] + label:before {
+    top: 0!important;
+  }
+  .c-c-sort {
+    position: relative;
+    top: -18px;
+  }
+  .c-cs-btns a {
+    line-height: 25px!important;
+  }
+}
+@media screen and (max-width: 480px) {
+  .mybox {
+    padding: 30px 0 30px 10px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .mybox .block {
+    padding: 20px 5px;
+  }
+  .mybox .block .right {
+    padding-left: 0;
+  }
+  .mybox .participant > div h3 {
+    font-size: 2.5em;
+  }
+  .mybox .participant > div div .price {
+    font-size: 1.2em;
+  }
+  .mybox .participant > div div .trafic {
+    padding-top: 4px;
+  }
+  .mybox .participant .left input[type='range']:after {
+    right: -20px;
+    top: -11px;
+  }
+  .mybox .participant .right input[type='range']:after {
+    right: 15px;
+    top: -11px;
+  }
+  .mybox .history {
+    padding: 10px;
+  }
+}

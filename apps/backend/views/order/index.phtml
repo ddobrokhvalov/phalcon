@@ -1,0 +1,71 @@
+{% extends "base-template.phtml" %}
+{% block title %}ФАС ОНЛАЙН - ТАРИФЫ{% endblock %}
+{% block body %}
+{{flashSession.output()}}
+<div class="admin-main-wrap user-list">
+    <h1>Список счетов</h1>
+	<div class="admin-lt-holder">
+		<div class="admin-lt-content" id="sort-table">
+            <table class="orders_table">
+				<tr class="lt-content-top">
+					<th><span>Счет</span></th>
+					<th><span>Номер счета</span></th>
+					<th><span>Заявитель</span></th>
+					<th sort-field="sort-tarif_price"><span class="sortable">Сумма</span></th>
+					<th sort-field="sort-order_date"><span class="sortable">Дата</span></th>
+					<th sort-field="sort-invoce_payment"><span class="sortable">Состояние</span></th>
+				</tr>
+				{% for tarif_order in page.items %}
+				<tr sort-tarif_price="{{tarif_order.tarif_price}}" sort-order_date="{{tarif_order.order_date}}" sort-invoce_payment="{{tarif_order.invoce_payment}}" class="lt-content-main">
+					<td><a href="/admin/order/view/{{tarif_order.id}}" target="_blank">Услуги по предоставлению доступа к системе "ФАС-Онлайн". Тариф "{{tarif_order.tarif_name}}" на {{tarif_order.tarif_count}}</a></td>
+					<td>{{ tarif_order.user_id }}/{{ tarif_order.order_number }}</td>
+					<td>{{tarif_order.name_short}} ИНН {{tarif_order.inn}}</td>
+					<td>{{ tarif_order.tarif_price }}</td>
+					<td>{{ tarif_order.order_date }}</td>
+					<td>
+						<select rel="{{tarif_order.id}}" rel2="{{tarif_order.user_id}}" class="order_payment_select">
+							<option value="0" {% if not tarif_order.invoce_payment %}selected="selected"{% endif %}>не оплачен</option>
+							<option value="1" {% if tarif_order.invoce_payment %}selected="selected"{% endif %}>оплачен</option>
+						</select>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+        </div>
+	</div>	
+	
+	{% if page.total_items > item_per_page %}
+    <div class="admin-table-footer">
+        {% if page.current * item_per_page < page.total_items %}
+            {% set cnt = page.total_items - (page.current * item_per_page) %}
+            <a href="#" onclick="$('#next_items').submit()">Еще <span>{{ cnt > item_per_page ? 20 : cnt}} счетов</span></a><!--todo: -->
+            {% else %}
+                <div></div>
+        {% endif %}
+        <a href="/admin/order/index?all-portions-items=all_items">Показать все счета (<span>{{page.total_items}}</span>)</a>
+    </div>
+    <form id="next_items" method="post">
+        {{hidden_field('next-portions-items', 'value':20)}}
+    </form>
+    {% endif %}
+    <div class="admin-pagination-box">
+        {% if page.current>1 %}{{ link_to("admin/order/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
+        <ul>
+        {% for page_item in paginator_builder %}
+        <li>
+            {% if page_item['type'] == 'page' %}
+            {{ link_to("admin/order/index?page=" ~ page_item['num'], page_item['num']) }}
+            {% elseif page_item['type'] == 'delimer' %}
+            <span>...</span>
+            {% elseif page_item['type'] == 'current' %}
+            <span class="active-pag-page">{{page_item['num']}}</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+        </ul>
+        {% if page.total_pages > page.current %}{{ link_to("admin/order/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
+    </div>
+	
+</div>
+
+{% endblock %}

@@ -18,6 +18,10 @@ class User extends Model
     public $activity;
     public $users_applicants;
     public $users_complaints;
+    public $tarif_id;
+    public $tarif_date_activate;
+    public $tarif_count;
+    public $tarif_active;
 
     public function initialize()
     {
@@ -31,6 +35,17 @@ class User extends Model
     public function afterFetch() {
         $complaints = new Complaint();
         $applicants = new Applicant();
+		//$tarif = new Tarif();
+		$this->user_tarif = Tarif::findFirstById($this->tarif_id);
+		$this->user_tarif->tarif_name = mb_substr($this->user_tarif->tarif_name, 0, 1, mb_detect_encoding($this->user_tarif->tarif_name));
+		if($this->user_tarif->tarif_type == "complaint"){
+			$this->users_complaints_tarif = count($complaints->findUserComplaints($this->id, false, false, $this->tarif_date_activate));
+			$this->users_complaints_av = $this->tarif_count - $this->users_complaints_tarif;
+			if($this->users_complaints_av < 0) $this->users_complaints_av = 0;
+			$this->sub_count = $this->users_complaints_av . " жалоб";
+		}else{
+			$this->sub_count = date("d.m.Y", strtotime($this->tarif_date_activate . " +".$this->tarif_count." months"));
+		}
         $this->users_complaints = count($complaints->findUserComplaints($this->id, false));
         $this->users_applicants = count($applicants->findByUserIdWithAdditionalInfo($this->id));
     }
@@ -54,4 +69,24 @@ class User extends Model
         $applicant = new Applicant();
         return $applicant->getAllStatuses($index);
     }
+	
+	public function saveActive(){
+		if($this->id){
+			$db = $this->getDi()->getShared('db');
+			$sql = "update user set tarif_active = ".$this->tarif_active.", tarif_date_activate = '".date("Y-m-d H:i:s")."' where id = ".$this->id;
+			$db->query($sql);
+		}
+	}
+	public function saveTarif(){
+		if($this->id){
+			$db = $this->getDi()->getShared('db');
+			$sql = "update user 
+					set tarif_id = ".$this->tarif_id.", 
+						tarif_count = ".$this->tarif_count.",
+						tarif_date_activate = '".$this->tarif_date_activate."', 
+						tarif_active = ".$this->tarif_active." 
+					where id = ".$this->id;
+			$db->query($sql);
+		}
+	}
 }

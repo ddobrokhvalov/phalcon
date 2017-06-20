@@ -48,7 +48,7 @@ class ControllerBase extends Controller
                     )
                 )
             );
-
+			
         }else{
             header( 'Location: http://'.$_SERVER['HTTP_HOST'] );
             exit;
@@ -73,6 +73,24 @@ class ControllerBase extends Controller
              $this->flashSession->error('Вы не залогинены в системе');
              return $this->response->redirect('/');
         }
+		
+		$user = User::findFirstById($this->user->id);
+		$complaints = new Complaint();
+		$user_tarif = $complaints->getTarifById($user->tarif_id);
+		$user_tarif = $user_tarif[0];
+		
+		if($user_tarif['tarif_type'] == "complaint"){
+			$users_complaints_tarif = count($complaints->findUserComplaints($user->id, false, false, $user->tarif_date_activate));
+			$users_complaints_av = $user->tarif_count - $users_complaints_tarif;
+			if($users_complaints_av < 0) $users_complaints_av = 0;
+			$sub_count = $users_complaints_av . " жалоб";
+		}else{
+			$sub_count = date("d.m.Y", strtotime($user->tarif_date_activate . " +".$user->tarif_count." months"));
+		}
+		
+		$this->view->sub_count = $sub_count;
+		$this->view->user_tarif = $user_tarif;
+		
         $applicant = new Applicant();
         $userApplicants = $applicant->findByUserId($this->user->id);
         $messages = [];

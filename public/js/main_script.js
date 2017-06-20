@@ -474,6 +474,22 @@ jQuery(document).ready(function($) {
     $('.argComp .current-option').click(function() {
         $(this).find('div').toggleClass('transDiv');
     });
+	
+	$(".order_payment_select").change(function(){
+		var order_id = $(this).attr('rel');
+		var user_id = $(this).attr('rel2');
+		var order_payment = $(this).val();
+		$.ajax({
+            url: "/admin/order/index",
+            type:'POST',
+            data: { user_id: user_id, order_id: order_id, order_payment: order_payment },
+            success: function(data){
+                //showStyledPopupMessage("#pop-before-ask-question", "Уведомление", "Файл успешно удален");
+                //$("#delete-file-row-" + file_id).remove();
+            },
+        });
+	});
+	
 });
 var userPageLtContentLi = 0;
 //status block

@@ -56,6 +56,13 @@ class Applicant extends Model
 
         return $result;
     }
+	
+	public function getApplicantsByUserId($user_id){
+		$db = $this->getDi()->getShared('db');
+		$sql = "select * from applicant where user_id = $user_id";
+		$result = $db->query($sql);
+		return $result->fetchAll();
+	}
 
     public function saveFiles($files)
     {

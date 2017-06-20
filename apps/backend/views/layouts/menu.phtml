@@ -53,6 +53,12 @@
                 <label for="lm-ufas"><input type="checkbox" id="lm-ufas"></label>
                 <a href="/admin/ufas/index">Данные УФАС<span>{{menuItemsCount['Ufas']}}</span></a>
             </li>
+			<li{% if cur_controller == 'tarif' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
+                <a href="/admin/tarif/index">Тарифы<span></span></a>
+            </li>
+			<li{% if cur_controller == 'order' and cur_action == 'index' %} class="lm-menu-active"{% endif %}>
+                <a href="/admin/order/index">Счета<span></span></a>
+            </li>
         </ul>
         <div class="lm-search-title" style="font-size: 0px;">
             <p style="color:#222427;">Поиск по выбранному</p>

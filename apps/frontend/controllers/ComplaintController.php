@@ -6,6 +6,7 @@ use Multiple\Frontend\Models\ApplicantECP;
 use Multiple\Frontend\Models\Applicant;
 use Multiple\Frontend\Models\Category;
 use Multiple\Frontend\Models\Complaint;
+use Multiple\Frontend\Models\TarifOrder;
 use Multiple\Frontend\Models\ComplaintMovingHistory;
 use Multiple\Backend\Models\Log as LogModel;
 use Multiple\Frontend\Models\Question;
@@ -28,6 +29,12 @@ use Phalcon\Mvc\Url;
 use Multiple\Library\Translit;
 use Multiple\Frontend\Models\User;
 use Multiple\Library\Calendar\Calendar;
+//use Multiple\Library\Mpdf\mPDF;
+
+//define('MPDF_PATH',realpath(dirname(__FILE__)."/../../library/Mpdf/"));
+//print_r(MPDF_PATH."/mpdf.php");
+//set_include_path(get_include_path() . PATH_SEPARATOR . MPDF_PATH);
+
 
 
 class ComplaintController extends ControllerBase
@@ -265,6 +272,10 @@ class ComplaintController extends ControllerBase
     }
 	
 	public function changeTarifAction(){
+	
+		if(isset($_SESSION["order_id"])){
+			unset($_SESSION["order_id"]);
+		}
 		
 		$complaint = new Complaint();
 		$tarifs = $complaint->getTarifs(true);
@@ -272,10 +283,18 @@ class ComplaintController extends ControllerBase
 		$this->view->month_steps = array(1=>1, 2=>3, 3=>6, 4=>12);
 		$this->view->month_steps2 = array(1=>1, 4=>3, 7=>6, 10=>12);
 		$this->view->month_steps3 = array(1=>1, 4=>2, 7=>3, 10=>4);
+		/*
+		$this->user->tarif_id
+		$this->user->tarif_date_activate 0000-00-00 00:00:00
+		$this->user->tarif_count
+		$this->user->tarif_active
+		*/
+		$user_tarif = $complaint->getTarifById($this->user->tarif_id);
+		$this->view->user_tarif = $user_tarif[0];
 		/*print_r("<pre>");
-		print_r($tarifs);
-		print_r("</pre>");*/
-		//exit;		
+		print_r($user_tarif);
+		print_r("</pre>");
+		exit;		*/
 		$this->setMenu();
 	}
 	
@@ -287,14 +306,177 @@ class ComplaintController extends ControllerBase
 		$this->view->month_steps = array(1=>1, 2=>3, 3=>6, 4=>12);
 		$this->view->month_steps2 = array(1=>1, 4=>3, 7=>6, 10=>12);
 		$this->view->month_steps3 = array(1=>1, 4=>2, 7=>3, 10=>4);
-		$user_applicants = Applicant::findByUserId($this->user->id);
+		$user_applicants = Applicant::getApplicantsByUserId($this->user->id);
+		$this->view->user_applicants = $user_applicants;
+		
+		$tarif_id = intval($this->request->get("id"));
+		$tarif_range = intval($this->request->get("r"));
+		if($tarif_id && $tarif_range){
+			$month_steps2 = array(1=>1, 4=>3, 7=>6, 10=>12);
+			$month_steps3 = array(1=>1, 4=>2, 7=>3, 10=>4);
+			$changed_tarif = $complaint->getTarifById($tarif_id);
+			if(count($changed_tarif)){
+				$changed_tarif = $changed_tarif[0];
+				if($changed_tarif["tarif_type"] == "complaint"){
+					$tarif_count = $tarif_range." жалоб";
+					$tarif_price_one = $changed_tarif["tarif_price"]-$changed_tarif["tarif_discount"]*($tarif_count-1);
+				}else{
+					$tarif_count = $month_steps2[$tarif_range]." месяцев";
+					$tarif_price_one = $changed_tarif["tarif_price"]-$changed_tarif["tarif_discount"]*($month_steps3[$tarif_range]-1);
+					if($tarif_count == 12) $tarif_price_one = 1250;
+				}
+				$tarif_price = $tarif_count*$tarif_price_one;
+				$this->view->tarif_count = $tarif_count;
+				$this->view->tarif_price_one = $tarif_price_one;
+				$this->view->tarif_price = $tarif_price;
+				$this->view->changed_tarif = $changed_tarif;
+				$applicant = false;
+				
+				if($this->request->getPost('action') && $this->request->getPost('action') == "create_other_payment"){
+					unset($_SESSION["order_id"]);
+				}
+				
+				if($this->request->getPost('action') && $this->request->getPost('action') == "create_payment"){
+					$side = $this->request->getPost('side');
+					$app_id = $this->request->getPost('app_id');
+					if($side == "right"){
+						$response = array("status"=>"ok");
+						$url = "https://ru.rus.company/интеграция/компании/".$app_id."/";
+						$curl = curl_init();
+						curl_setopt($curl, CURLOPT_URL, $url);
+						curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+						//curl_setopt($curl, CURLOPT_POST, true);
+						//curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($sendData));
+						$out = curl_exec($curl);
+						$out = json_decode($out);
+						$applicant = array("address"=>$out->address->fullAddress,
+											"email"=>$this->user->email,
+											"fid"=>array(),
+											//"fio_applicant"=>$out[""],
+											//"fio_contact_person"=>$out[""],
+											"id"=>$out->id,
+											"inn"=>$out->inn,
+											"kpp"=>$out->kpp,
+											"name_full"=>$out->name,
+											"name_short"=>$out->shortName,
+											//"position"=>$out[""],
+											"post"=>$out->address->fullHouseAddress,
+											"telefone"=>$this->user->mobile_phone,
+											"type"=>"urlico",
+											"user_id"=>$this->user->id);
+						//$response["applicant"] = $applicant;
+					}elseif($side == "left"){
+						$response = array("status"=>"ok");
+						$_applicant = Applicant::findFirstById($app_id);
+						$applicant = array("address"=>$_applicant->address,
+											"email"=>$_applicant->email,
+											"fid"=>array(),
+											"fio_applicant"=>$_applicant->fio_applicant,
+											"fio_contact_person"=>$_applicant->fio_contact_person,
+											"id"=>$_applicant->id,
+											"inn"=>$_applicant->inn,
+											"kpp"=>$_applicant->kpp,
+											"name_full"=>$_applicant->name_full,
+											"name_short"=>$_applicant->name_short,
+											//"position"=>$_applicant->position,
+											"post"=>$_applicant->post,
+											"telefone"=>$_applicant->telefone,
+											"type"=>$_applicant->type,
+											"user_id"=>$_applicant->user_id);
+						
+					}else{
+						$response = array("status"=>"error");
+					}
+					
+					$response["applicant"] = $applicant;
+					if($applicant){
+						$response["POST"] = $this->request->getPost();
+						$fields = array(
+							"user_id"=>$applicant["user_id"],
+							"applicant_id"=>$applicant["id"],
+							"applicant_type"=>$applicant["type"],
+							"applicant_side"=>($side=="left"?"in":"out"),
+							"address"=>$applicant["address"],
+							"post_address"=>$applicant["post"],
+							"name_full"=>$applicant["name_full"]?$applicant["name_full"]:$applicant["name_short"],
+							"name_short"=>$applicant["name_short"],
+							"inn"=>$applicant["inn"],
+							"kpp"=>$applicant["kpp"],
+							"phone"=>$applicant["telefone"],
+							"email"=>$applicant["email"],
+							"tarif_count"=>$tarif_count,
+							"tarif_price_one"=>$tarif_price_one,
+							"tarif_price"=>$tarif_price,
+							"tarif_id"=>$changed_tarif["id"],
+							"tarif_name"=>$changed_tarif["tarif_name"],
+						);
+						$response["fields"] = $fields;
+						
+						if(isset($_SESSION["order_id"])){
+							
+							//$tarif_order = TarifOrder::findFirstById($_SESSION["order_id"]);
+							
+							if(!$tarif_order){
+								$tarif_order = new TarifOrder();
+							}
+							
+							$tarif_order->saveTarifOrder($fields);
+							$_SESSION["order_id"] = $tarif_order->id;
+						}else{
+							$tarif_order = new TarifOrder();
+							$tarif_order->saveTarifOrder($fields);
+							$_SESSION["order_id"] = $tarif_order->id;
+							//$sql = "insert ";
+						}
+						$user = User::findFirstById($this->user->id);
+						$user->tarif_id = $changed_tarif["id"];
+						$user->tarif_date_activate = date("Y-m-d H:i:s");
+						$user->tarif_count = intval($tarif_count);
+						$user->tarif_active = 0;
+						$user->save();
+						
+						//$complaint->saveOrder($fields);
+					}
+					echo json_encode($response);
+					exit;
+				}
+				
+			}else{
+				$this->view->error = "Error";
+			}
+		}else{
+			$this->view->error = "Error";
+		}
 		/*print_r("<pre>");
 		print_r($user_applicants);
-		print_r("</pre>");*/
-		//exit;		
+		print_r("</pre>");
+		exit;		*/
 		$this->setMenu();
 	}
-
+	
+	public function paymentDownloadAction(){
+		if($_SESSION["order_id"]){
+			$order_id = $_SESSION["order_id"];
+			$tarif_order = TarifOrder::findFirstById($order_id);
+				$error = false;
+			if($tarif_order){
+				$tarif_order = $tarif_order->toArray();
+				if($tarif_order["user_id"] == $this->user->id){
+					
+				}else{
+					$tarif_order = false;
+					$error = "not_user_order";
+				}
+			}else{
+				$error = "not_order_exists";
+			}
+		}else{
+			$error = "not_order_id";
+		}
+		include($_SERVER["DOCUMENT_ROOT"]."/include/payment_download.php");
+		exit;
+	}
+	
     public function test1Action()
     {
         error_reporting(E_ALL);
@@ -772,7 +954,31 @@ class ComplaintController extends ControllerBase
         $category = new Category();
         $arguments = $category->getArguments();
         $ufas = Ufas::find();
-
+		
+		$complaint = new Complaint();
+		$user_tarif = $complaint->getTarifById($this->user->tarif_id);
+		$user_tarif = $user_tarif[0];
+		$complaints = $complaint->findUserComplaints($this->user->id, 0, false, false, $this->user->tarif_date_activate);
+		
+		$tarif_out = false;
+		
+		if($user_tarif["tarif_price"] == 0 && count($complaints)){
+			$tarif_out = true;
+		}elseif($user_tarif["tarif_type"] == "complaint" && count($complaints) >= $this->user->tarif_count){
+			$tarif_out = true;
+		}elseif($user_tarif["tarif_type"] == "month" && date("Y-m-d H:i:s") >= date("Y-m-d H:i:s", strtotime($this->user->tarif_date_activate." +".$this->user->tarif_count." months")) ){
+			$tarif_out = true;
+		}
+		
+		$tarif_not_active = false;
+		if(!$this->user->tarif_active){
+			$tarif_not_active = true;
+		}
+		
+		$this->view->tarif_not_active = $tarif_not_active;
+		$this->view->tarif_out = $tarif_out;
+		$this->view->user_tarif = $user_tarif;
+		
         $this->view->edit_mode = 0;
         $this->view->ufas = $ufas;
         $this->view->checkUser = $this->checkUser();
