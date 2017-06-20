@@ -3,9 +3,9 @@
         <div class="mhlogo">
             <a href="#"></a>
         </div>
-        <a href="tel:+88001009386" class="mh-phone">8 (800) 100-93-86</a>
-        <a href="mailto:info@fasonline.ru" class="mh-mail">info@fasonline.ru</a>
-        {% if is_logged_in %}
+		<a href="tel:+88001009386" class="mh-phone">8 (800) 100-93-86</a>
+		<a href="mailto:info@fasonline.ru" class="mh-mail">info@fasonline.ru</a>
+		             {% if is_logged_in %}
             <a href="/complaint/index" class="already-logged-in">Вход в систему</a>
         {% else %}
             <a href="#pop-login" class="mh-login open_modal">Вход в систему</a>
@@ -19,27 +19,30 @@
     {{flashSession.output()}}
         <h1>
             Подай жалобу в ФАС легко!<br>
-            <span>Интеллектуальный сервис с базой доводов для подачи жалоб в УФАС на закупки по 44-ФЗ!</span>
-        </h1>
+            <span>Интеллектуальный сервис с базой доводов для подачи жалоб в УФАС на закупки по 44-ФЗ</span><br>
+					      							</h1>
+															
         <div class="ms1-str">
             <div class="ms1-s-b">
                 <div class="ms1-s-b-i">
                     <img src="images/icon-ms1-1.png" alt="">
                 </div>
-                Регистрация
+                Полная<br>
+				автоматизация
             </div>
             <div class="ms1-s-b">
                 <div class="ms1-s-b-i">
                     <img src="images/icon-ms1-2.png" alt="">
                 </div>
-                Подготовка<br>
-                жалобы
+                Готовые<br>
+                доводы
             </div>
             <div class="ms1-s-b">
                 <div class="ms1-s-b-i">
                     <img src="images/icon-ms1-3.png" alt="">
                 </div>
-                ЭП в браузере
+                Подписание<br>
+				в браузере
             </div>
             <div class="ms1-s-b">
                 <div class="ms1-s-b-i">
@@ -48,8 +51,7 @@
                 Мониторинг<br>
                 статуса
             </div>
-        </div>
-    </div>
+				  </div>
 </div>
 
 <div class="mstripe-2">
@@ -159,7 +161,7 @@
             </div>
         </div>
     </div>
-</div>
+	</div>
 
 <!--<div class="mstripe-4">-->
 <!--    <div class="ms4-btm-tar"></div>-->
@@ -171,24 +173,25 @@
 <div class="mstripe-4">
     <div class="ms4-btm-shd"></div>
     <div class="wrapper">
-        <h2>
-            Бесплатное тестирование до 1 мая 2017 года
+
+				<h2 id="₽">
+						        Условия и тарифы для любых потребностей 
             <span>
-                Пока мы делаем самую лучшую в РФ систему ведения жалоб, наслаждайтесь бета версией
+                Попробуйте, первая жалоба бесплатно 
             </span><br>
-            <a href="#pop-callback" class="open_modal">Заказать звонок</a>
-        </h2>
+				<a href="#pop-callback" class="open_modal">Заказать звонок</a>
+			                  </h2>
 
 
                 <div class="tariffs_box">
                     <div class="tariffs_item t-i-b">
-                        <div class="problem_frequency">— Жалуюсь иногда</div>
+                        <div class="problem_frequency">— Не жалуюсь, но хочу попробовать</div>
                         <h3>Ябеда</h3>
                         <div class="tariff_price_box">
                             <div class="tariff_price">Бесплатно</div>
                         </div>
                         <ul>
-                            <li>1 жалоба в год</li>
+                            <li>1 жалоба</li>
                             <li>1 заявитель</li>
                             <li>помощь юриста</li>
                             <li>постоянная техподдержка</li>
@@ -226,7 +229,7 @@
                         <ul>
                             <li>оплата помесячно</li>
                             <li>5 заявителей</li>
-                            <li>жалобы без огранчений</li>
+                            <li>жалобы без ограничений</li>
                             <li>помощь юриста</li>
                             <li>постоянная техподдержка</li>
                             <li>база доводов</li>
