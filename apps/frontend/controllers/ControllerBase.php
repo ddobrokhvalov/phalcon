@@ -80,7 +80,11 @@ class ControllerBase extends Controller
 		$user_tarif = $user_tarif[0];
 		
 		if($user_tarif['tarif_type'] == "complaint"){
-			$users_complaints_tarif = count($complaints->findUserComplaints($user->id, false, false, $user->tarif_date_activate));
+			if($user->tarif_date_activate == "0000-00-00 00:00:00"){
+				$user->tarif_date_activate = "1970-01-01 23:59:59";
+			}
+			$users_complaints_tarif = count($complaints->findUserComplaints($user->id, false, false, false, $user->tarif_date_activate));
+			
 			$users_complaints_av = $user->tarif_count - $users_complaints_tarif;
 			if($users_complaints_av < 0) $users_complaints_av = 0;
 			$sub_count = $users_complaints_av . " жалоб";
