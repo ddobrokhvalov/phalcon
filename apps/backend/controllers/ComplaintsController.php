@@ -188,6 +188,10 @@ class ComplaintsController extends ControllerBase
         } else {
             $files_html = [];
             $complaint = Complaint::findFirstById($id);
+			/*print_r("<pre>");
+			print_r($complaint);
+			print_r("</pre>");
+			exit;*/
             if ($complaint->fid) {
                 $file_ids = unserialize($complaint->fid);
                 if (count($file_ids)) {
@@ -228,10 +232,11 @@ class ComplaintsController extends ControllerBase
             foreach ($arguments as $argument) {
                 $user_arguments .= $argument->text . '</br>';
             }
-
-            $user = User::findFirst(array(
-                "id={$complaint->user_id}"
-            ));
+			if($complaint->user_id){
+				$user = User::findFirst(array(
+					"id={$complaint->user_id}"
+				));
+			}
 
             if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'index') && $this->user->id != 1) {
                 $this->view->allow_answer = 0;
@@ -265,25 +270,35 @@ class ComplaintsController extends ControllerBase
         } else {
             $complaint_id = $this->request->getPost("id");
             if ((isset($_GET['is_array']) && $complaint_id && count($complaint_id)) || (isset($_POST['is_array']) && $complaint_id && count($complaint_id))) {
-                $complaints = Complaint::find(
+                /*$complaints = Complaint::find(
                     array(
                         'id IN ({ids:array})',
                         'bind' => array(
                             'ids' => $complaint_id
                         )
                     )
-                )->delete();
+                );//->delete();*/
+				foreach($complaint_id as $compl_id){
+					$complaint = Complaint::findFirstById($compl_id);
+					$complaint->deleted = 1;
+					$complaint->save();
+				}
+				
+				
                 $this->flashSession->success('Жалобы удалены');
                 $data = "ok";
             } elseif ($complaint_id) {
-                $complaint = Complaint::find(
+                /*$complaint = Complaint::find(
                     array(
                         'id = :id:',
                         'bind' => array(
                             'id' => $complaint_id
                         )
                     )
-                )->delete();
+                );//->delete();*/
+				$complaint = Complaint::findFirstById($complaint_id);
+				$complaint->deleted = 1;
+				$complaint->save();
                 $this->flashSession->success('Жалоба удалена');
                 $data = 'ok';
             }

@@ -30,6 +30,7 @@
 					<p>У вас {% if(user_tarif['tarif_price'] == 0) %}бесплатный {% endif %}тариф "{{user_tarif['tarif_name']}}"<br> </p>
 				</div>
 				<p class="tarif_out">Тариф не активен. Если вы уже произвели оплату - дождитесь перечисления средств.</p>
+				{% if tarif_orders %}<p class="tarif_out"><a href="/complaint/paymentdownload" target="_blank">Скачать счет</a></p>{% endif %}
 			{% else %}
 				<div class="c-cnt-pagename">
 					Добавление жалобы

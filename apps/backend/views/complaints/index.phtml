@@ -41,7 +41,7 @@
             </ul>
             {% for complaint in page.items %}
             <ul class="lt-content-main {% if complaint.status == 'submitted' %}podana{% elseif complaint.status == 'archive' %}alr-archive{% endif %}" sort-number="{{complaint.auction_id}}" sort-date="{{complaint.date|strtotime}}" sort-questions="{{complaint.getCountQuestions(complaint.Question, true)}}" sort-status="{{complaint.status}}" detail-url="{{url('admin/complaints/preview/' ~ complaint.id)}}">
-                <li><div class="lt-psevdo-check">{{hidden_field('complaint-id', 'value':complaint.id)}}</div></li>
+                <li>{% if complaint.deleted == 0 %}<div class="lt-psevdo-check">{{hidden_field('complaint-id', 'value':complaint.id)}}</div>{% endif %}</li>
                 {% if complaint.complaint_name | length > 155 %}
                 <li style="padding-top:20px;padding-left:35px;">{{ truncate(complaint.complaint_name, 0, 155) }}</li>
                 {% else %}
@@ -51,6 +51,7 @@
                 <li>{{ date('d.m.Y', complaint.date|strtotime) }}</li>
                 <li style="font-size:12px; line-height: 18px;padding-top:25px;"><a href="/admin/applicants/info/{{ complaint.Applicant.id }}">{{ complaint.Applicant.name_short }}</a></li>
                 <li class='with-dropdown' style="line-height: 15px !important; font-size:12px !important;">
+				{% if complaint.deleted == 0 %}
                     <div class="dropdown">
                       <div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{complaint.getComplaintStatus(complaint.status)}}
@@ -66,6 +67,13 @@
                         <li>{{complaint.getAllStatuses(6)}}</li>
                       </ul>
                     </div>
+				{% else %}
+					<div class="dropdown">
+						<div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span data-status="deleted" class="jl-status jl-deleted">Удалена</span>
+						</div>
+					</div>
+				{% endif %}
                 </li>
             </ul>
             {% endfor %}

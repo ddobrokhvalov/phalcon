@@ -134,7 +134,7 @@ class ControllerBase extends Controller
         $this->view->applicants = $userApplicants;
         $complaint = new Complaint();
         $applicant_id = $this->session->get('applicant');
-        $result = $complaint->findCountUserComplaints($this->user->id, $applicant_id['applicant_id']);
+        $result = $complaint->findCountUserComplaints($this->user->id, $applicant_id['applicant_id'], true);
         $this->view->complaints_num = $result['complaints_num'];
         $this->view->total = $result['total'];
         $this->view->user = $this->user;

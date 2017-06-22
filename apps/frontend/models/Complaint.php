@@ -28,6 +28,7 @@ class Complaint extends Model
     public $ufas_id;
     public $date_submit;
     public $user_id;
+	public $deleted;
 
     public function initialize()
     {
@@ -40,7 +41,7 @@ class Complaint extends Model
     }
 
 
-    public function findUserComplaints($user_id, $status, $applicant_id = false, $search = false, $date_from = false)
+    public function findUserComplaints($user_id, $status, $applicant_id = false, $search = false, $date_from = false, $not_deleted=false)
     {
         $db = $this->getDi()->getShared('db');
         $sql = "SELECT c.*, ap.name_short as apname FROM complaint as c
@@ -49,13 +50,16 @@ class Complaint extends Model
          WHERE u.id =$user_id  "; //todo: do we really need LEFT JOIN if the filter on the last RIGHT table? It will return something ONLY if u.id is not NULL!
 
         if($search){
-            $sql .= "AND (c.complaint_name LIKE '%{$search}%' OR c.auction_id LIKE '%{$search}%')";
+            $sql .= " AND (c.complaint_name LIKE '%{$search}%' OR c.auction_id LIKE '%{$search}%')";
         }
         if ($status) {
             $sql .= " AND c.status = '$status'";
         }
 		if($date_from){
 			$sql .= " AND c.date >= '$date_from'";
+		}
+		if($not_deleted){
+			$sql .= " AND c.deleted = 0";
 		}
         if($applicant_id && $applicant_id != 'All'){
             $temp = explode(',' , $applicant_id);
@@ -69,7 +73,7 @@ class Complaint extends Model
                 $sql .= " AND ap.id IN($temp)";
             }
         }
-        $sql .= 'ORDER BY c.date DESC';
+        $sql .= ' ORDER BY c.date DESC';
         $result = $db->query($sql);
         return $result->fetchAll();
 
@@ -95,7 +99,7 @@ class Complaint extends Model
 
     }
 
-    public function findCountUserComplaints($user_id, $applicant_id = 'All')
+    public function findCountUserComplaints($user_id, $applicant_id = 'All', $not_deleted = false)
     {
         $db = $this->getDi()->getShared('db');
         $sql = "SELECT COUNT(c.id) as num, c.status  FROM complaint as c
@@ -109,6 +113,9 @@ class Complaint extends Model
             }
             $sql .= ' AND ap.id IN('.$applicant_id.') ';
         }
+		if($not_deleted){
+			$sql .= ' AND c.deleted = 0 ';
+		}
         $sql .= ' GROUP BY c.status ';
         $result = $db->query($sql);
         $result = $result->fetchAll();
@@ -234,8 +241,12 @@ class Complaint extends Model
                 }
             } elseif ($status == 'delete') {
                // $stat = "удалена";
-                ComplaintMovingHistory::delete_history($id);
-                $complaint->delete();
+                //ComplaintMovingHistory::delete_history($id);
+                //$complaint->delete();
+				$complaintmovinghistory = new ComplaintMovingHistory();
+                $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => "deleted"]);
+				$complaint->deleted = 1;
+				$complaint->save();
             } elseif ($status == 'copy') {
                // $stat = "скопирована";
                 $newComplaint = new Complaint();

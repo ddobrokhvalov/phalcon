@@ -75,4 +75,14 @@ class TarifOrder extends Model
         return $this->save();
     }
 	
+	public function getTarifOrders($user_id, $tarif_id, $tarif_count){
+		$db = $this->getDi()->getShared('db');
+		$sql = "select * from tarif_order
+				where user_id = $user_id and tarif_id = $tarif_id and tarif_count like '".$tarif_count."%'
+				order by order_date desc";
+		$result = $db->query($sql);
+		$last_records = $result->fetchAll();
+		return $last_records;
+	}
+	
 }

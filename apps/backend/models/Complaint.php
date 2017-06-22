@@ -31,6 +31,7 @@ class Complaint extends Model
     public $fid;
     public $date_submit;
     public $user_id;
+	public $deleted;
 
     public function initialize()
     {
@@ -113,7 +114,7 @@ class Complaint extends Model
 			$sql .= " AND c.date >= '$from_date'";
 		}
 
-        $sql .= 'ORDER BY c.date DESC';
+        $sql .= ' ORDER BY c.date DESC';
         $result = $db->query($sql);
         return $result->fetchAll();
 

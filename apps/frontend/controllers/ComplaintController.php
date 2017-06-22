@@ -63,7 +63,7 @@ class ComplaintController extends ControllerBase
         if (isset($_GET['status']))
             $status = $_GET['status'];
 
-        $complaints = $complaint->findUserComplaints($this->user->id, $status, $this->applicant_id, $search);
+        $complaints = $complaint->findUserComplaints($this->user->id, $status, $this->applicant_id, $search, false, true);
         #$this->view->complaints = $complaints;
         $this->view->status = $status;
         $paginator = new Paginator(array(
@@ -973,6 +973,15 @@ class ComplaintController extends ControllerBase
 		$tarif_not_active = false;
 		if(!$this->user->tarif_active){
 			$tarif_not_active = true;
+						
+			$tarif_order = new TarifOrder();
+			$tarif_orders = $tarif_order->getTarifOrders($this->user->id, $this->user->tarif_id, $this->user->tarif_count);
+			
+			if($tarif_orders){
+				$tarif_orders = $tarif_orders[0];
+				$this->view->tarif_orders = $tarif_orders;
+				$_SESSION["order_id"] = $tarif_orders["id"];
+			}
 		}
 		
 		$this->view->tarif_not_active = $tarif_not_active;
@@ -992,7 +1001,9 @@ class ComplaintController extends ControllerBase
             return $this->forward('complaint/index');
 
         if ($complaint != false) {
-            $complaint->delete();
+            //$complaint->delete();
+			$complaint->deleted = 1;
+			$complaint->save();
         }
         $this->flashSession->success('Жалоба успешно удалена');
         return $this->response->redirect('/complaint/index');

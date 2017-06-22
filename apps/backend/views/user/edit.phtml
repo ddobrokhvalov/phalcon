@@ -158,7 +158,7 @@
                 {% for complaint in complaints %}
                 <ul class="j-user-info lt-content-main {{ edituser.getComplaintColor(complaint['status'])}}" sort-name="{{complaint['complaint_name']}}" sort-number="{{complaint['auction_id']}}" sort-applicant="{{complaint['apname']}}" sort-date="{{complaint['date']|strtotime}}" sort-status="{{complaint['status']}}">
                     <li>
-                        <div class="lt-psevdo-check">{{hidden_field('complaint-id', 'value':complaint['id'])}}</div>
+                        {% if complaint['deleted'] == 0 %}<div class="lt-psevdo-check">{{hidden_field('complaint-id', 'value':complaint['id'])}}</div>{% endif %}
                         <a href="/admin/complaints/preview/{{complaint['id']}}">{{complaint['complaint_name']}}</a>
                     </li>
                     <li>{{complaint['auction_id']}}</li>
@@ -171,21 +171,29 @@
                         <div class="close-status-list">Сменить статус</div>
                     </li>-->
                     <li class='with-dropdown'>
-                        <div class="dropdown">
-                          <div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{edituser.getComplaintStatus(complaint['status'], TRUE)}}
-                          </div>
-                          <ul class="dropdown-menu" aria-labelledby="dLabel">
-                            <li class="header-dropdown">Сменить статус<span class="caret"></span></li>
-                            <li>{{edituser.getAllStatuses(0)}}</li>
-                            <li>{{edituser.getAllStatuses(1)}}</li>
-                            <li>{{edituser.getAllStatuses(2)}}</li>
-                            <li>{{edituser.getAllStatuses(3)}}</li>
-                            <li>{{edituser.getAllStatuses(4)}}</li>
-                            <li>{{edituser.getAllStatuses(5)}}</li>
-                            <li>{{edituser.getAllStatuses(6)}}</li>
-                          </ul>
-                        </div>
+						{% if complaint['deleted'] == 0 %}
+							<div class="dropdown">
+							  <div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								{{edituser.getComplaintStatus(complaint['status'], TRUE)}}
+							  </div>
+							  <ul class="dropdown-menu" aria-labelledby="dLabel">
+								<li class="header-dropdown">Сменить статус<span class="caret"></span></li>
+								<li>{{edituser.getAllStatuses(0)}}</li>
+								<li>{{edituser.getAllStatuses(1)}}</li>
+								<li>{{edituser.getAllStatuses(2)}}</li>
+								<li>{{edituser.getAllStatuses(3)}}</li>
+								<li>{{edituser.getAllStatuses(4)}}</li>
+								<li>{{edituser.getAllStatuses(5)}}</li>
+								<li>{{edituser.getAllStatuses(6)}}</li>
+							  </ul>
+							</div>
+						{% else %}
+							<div class="dropdown">
+								<div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span data-status="deleted" class="jl-status jl-deleted" title="Удалена">У</span>
+								</div>
+							</div>
+						{% endif %}
                     </li>
                 </ul>
                 {% endfor %}
