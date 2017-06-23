@@ -478,7 +478,7 @@ var applicantValidator = {
 					if(reg_phone.test($(field_selector).val())){
 						this.done(field_selector);
 					}else{
-						this.showError(field_selector, 'Ошибка! Формат номера телефона не верный. Верный форматы: +7-123-123-12-12, 8-123-123-12-12.');
+						this.showError(field_selector, 'Ошибка! Формат номера телефона не верный. Верные форматы: +7 (123) 123-1212, 8 (123) 123-1212.');
 						this.result = false;
 					}
                 }
@@ -549,7 +549,7 @@ var applicantValidator = {
 					if(reg_phone.test($(field_selector).val())){
 						this.done(field_selector);
 					}else{
-						this.showError(field_selector, 'Ошибка! Формат номера телефона не верный. Верный форматы: +7-123-123-12-12, 8-123-123-12-12.');
+						this.showError(field_selector, 'Ошибка! Формат номера телефона не верный. Верные форматы: +7 (123) 123-1212, 8 (123) 123-1212.');
 						this.result = false;
 					}
                 }
@@ -599,7 +599,7 @@ var applicantValidator = {
 					if(reg_phone.test($(field_selector).val())){
 						this.done(field_selector);
 					}else{
-						this.showError(field_selector, 'Ошибка! Формат номера телефона не верный. Верный форматы: +7-123-123-12-12, 8-123-123-12-12.');
+						this.showError(field_selector, 'Ошибка! Формат номера телефона не верный. Верные форматы: +7 (123) 123-1212, 8 (123) 123-1212.');
 						this.result = false;
 					}
                 }
