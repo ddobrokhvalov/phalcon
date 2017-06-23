@@ -632,7 +632,7 @@ class ComplaintController extends ControllerBase
                 $docx->createDocx($baseLocation . $name);
             }
         }
-        echo json_encode(['status'=>'success', 'url'=>'/complaint/browse/']);
+        echo json_encode(['status'=>'success', 'url'=>'/complaint/browse/'.$this->request->getPost('complaint_id')]);
         exit;
     }
 
@@ -660,10 +660,14 @@ class ComplaintController extends ControllerBase
                 $file = $value;
             }
         }
+		$name = 'complaint_browse' . $id . '.docx';
         //$this->setMenu();
         //$this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src='.'http%3A%2F%2Fufa.ru%2Fcomplaint_1488558920.docx';
 
-        $this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src=https://fasonline.ru/public/' . $dir . $file;
+        $this->view->url = 'https://view.officeapps.live.com/op/view.aspx?src=https://fasonline.ru/public/' . $dir . $name;
+		$this->view->url = 'https://docs.google.com/viewer?url=https://fasonline.ru/public/' . $dir . $name.'&module=files&embedded=true';
+		//$this->view->url = 'https://sheet.zoho.com/sheet/view.do?url=https://fasonline.ru/public/' . $dir . $name;
+		
     }
 
     public function saveHtmlFileAction()
