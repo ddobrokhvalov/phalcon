@@ -16,7 +16,7 @@
     <div style="padding:0px; margin:0px; font-size:12px;line-height: 14px; padding-left:20px;" class="edit-notification-box">
         <a href="/admin/user/edit/{{user.id}}">{{user.email}}</a>
 
-        <a href="/admin/applicants/info/{{applicant.id}}">{{applicant.name_short}}</a>
+        <a href="/admin/applicants/info/{{applicant.id}}">{% if applicant.type == 'urlico' %}{{applicant.name_short}}{% else %}{{applicant.fio_applicant}}{% endif %}</a>
     </div>
     <div class="edit-notification-box">
         <a href="#" data-toggle="modal" id="show-send-massage-dialog">Cообщение</a>
