@@ -38,8 +38,8 @@ class ControllerBase extends Controller
             $_SERVER['REQUEST_URI'] == '/help/sendMailFromContact') {
             if(!$user_id) $user_id = true;
         }
-
-        if ($user_id) {
+		
+		if ($user_id) {
             $this->user = User::findFirst(
                 array(
                     "id = :id:",

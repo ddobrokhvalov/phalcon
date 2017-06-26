@@ -275,7 +275,7 @@
         <input type="password" id="poplog-inp2" required="required" name="password">
         <input type="submit" value="Войти">
         <div class="link-login">
-            <span> <a href="#pop-start" class="open_modal" onclick="$('#pop-login').hide()">Регистрация нового пользователя</a><a href="#pop-recovery" class="open_modal" onclick="$('#pop-login').hide()">Забыли пароль?</a></span>
+            <span> <a href="/?register" class="" onclick="return true;">Регистрация нового пользователя</a><a href="#pop-recovery" class="open_modal" onclick="$('#pop-login').hide()">Забыли пароль?</a></span>
         </div>
     </form>
     <div class="modal-close"></div>
@@ -294,7 +294,7 @@
 </div>
 
 <!-- popup start -->
- <div id="pop-start" class="modal_div">
+ <div id="pop-start" class="modal_div" {% if register %}style="display:block;"{% endif %}>
     <h2>Регистрация</h2>
     <form class="reg-new-user" method="POST">
 <!--        <label for="popstrt-inp1">Ваше имя</label>-->
