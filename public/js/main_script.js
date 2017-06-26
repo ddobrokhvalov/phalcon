@@ -149,7 +149,7 @@ jQuery(document).ready(function($) {
             return false;
         } else if (evt.currentTarget != undefined && typeof evt.currentTarget.classList == "object" && evt.currentTarget.classList.contains('show-message-popup')) {
             // $('#message-text').val(evt.currentTarget.children[1].innerHTML);
-            $('#message-textNew').text(evt.currentTarget.children[1].innerHTML);
+            $('#message-textNew').html(evt.currentTarget.children[1].innerHTML);
             $('.showDopMessPopup').fadeIn(400).css('display', 'flex');
 
             if(evt.currentTarget.children[0].children[0].children[1].value == ''){

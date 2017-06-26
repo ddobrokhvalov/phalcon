@@ -1,6 +1,6 @@
 $(document).ready(function () {
     initialize();
-    $('.select_all_complaint').click(function () {
+    $('.content .select_all_complaint').click(function () {
         console.log(this)
         if ($(this).is(':checked')) {
             indexComplaint.selectAll();
@@ -8,6 +8,9 @@ $(document).ready(function () {
             indexComplaint.deSelectAll();
         }
     });
+	$('#chsort .select_all_complaint').click(function () {
+		$('.content .select_all_complaint').click();
+	});
 
     $('.complaint-checkbox').click(function () {
         if ($(this).is(':checked')) {
@@ -25,7 +28,7 @@ $(document).ready(function () {
         }
     });
     
-    $('.content .change-status[value="delete"]').on('click', function () {
+    $('.change-status[value="delete"]').on('click', function () {
         var status = $(this).attr("value");
 
         if(!$(this).hasClass("button_copy_deactive")){

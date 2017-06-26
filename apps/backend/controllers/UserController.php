@@ -446,7 +446,7 @@ class UserController extends ControllerBase
         $toids = $this->request->getPost("toids");
         $subject = $this->request->getPost("subject");
         $body = $this->request->getPost("body");
-        
+        $body = nl2br($body);
         if(count($toids) && $from){
             foreach ($toids as $to){
                 $message = new Messages();
@@ -478,7 +478,7 @@ class UserController extends ControllerBase
                 'subject' => $subject,
             ))
                 ->bcc(implode(',',$arr_emails ))
-                ->subject('Сообщение в системе ФАС-Онлайн');
+                ->subject($subject /*'Сообщение в системе ФАС-Онлайн'*/);
             $message->send();
         }
 

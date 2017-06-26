@@ -236,6 +236,13 @@ class ComplaintsController extends ControllerBase
 				$user = User::findFirst(array(
 					"id={$complaint->user_id}"
 				));
+			}else{
+				$applicant = Applicant::findFirst(array(
+					"id={$complaint->applicant_id}"
+				));
+				$user = User::findFirst(array(
+					"id={$applicant->user_id}"
+				));
 			}
 
             if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'index') && $this->user->id != 1) {
