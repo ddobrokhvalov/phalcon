@@ -279,6 +279,10 @@ class Complaint extends Model
                 $newComplaint->status = 'draft';
                 $newComplaint->fid = serialize(array());
                 $newComplaint->save();
+				
+				//$user_arg = new UsersArguments();
+				//$user_arg->copyUsersArguments($id, $newComplaint->id);
+				
                 return $newComplaint->id;
             } elseif ($status == 'recalled' && $complaint->status == 'submitted'){
                 $complaintmovinghistory = new ComplaintMovingHistory();

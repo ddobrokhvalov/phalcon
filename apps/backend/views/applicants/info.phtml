@@ -46,6 +46,7 @@
             <div class="lt-head-btns">
                 <div data-toggle="modal" onclick="complaints_to_archive()">В архив</div>
                 <div data-toggle="modal" data-target=".confirm-deletion-complaints-lg">Удалить</div>
+				<a href="/admin/complaints/add?select_user_id={{applicant.user_id}}&select_applicant_id={{applicant.id}}"><div id="add-button" class="">Добавить</div></a>
             </div>
             <div class="modal fade confirm-deletion-complaints-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
               <div class="modal-dialog modal-sm">

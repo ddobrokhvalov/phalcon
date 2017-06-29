@@ -20,10 +20,19 @@ use Multiple\Library\Parser;
 use Multiple\Backend\Models\Ufas;
 use Multiple\Backend\Models\User;
 use Multiple\Library\Translit;
+use Multiple\Backend\Models\Arguments;
+use Multiple\Backend\Models\ArgumentsCategory;
+use  Phalcon\Mvc\Model\Query\Builder;
 
 class ComplaintsController extends ControllerBase
 {
-
+	
+	const STEP_ONE = 1;
+    const STEP_TWO = 2;
+    const STEP_THREE = 3;
+    const STEP_FOUR = 4;
+    const STEP_SEARCH = 6;
+	
     public function indexAction()
     {
         $perm = new Permission();
@@ -395,7 +404,13 @@ class ComplaintsController extends ControllerBase
                                 break;
                             default:
                                 Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
-                                @Complaint::changeStatus($status, array($id));
+                                if($status == "copy"){
+									$new_complaint_id = Complaint::changeStatus($status, array($id));
+									$user_arg = new UsersArguments();
+									$user_arg->copyUsersArguments($id, $new_complaint_id);
+								}else{
+									@Complaint::changeStatus($status, array($id));
+								}
                                 //$this->flashSession->success('Статус изменен');
                                 break;
                         }
@@ -409,7 +424,13 @@ class ComplaintsController extends ControllerBase
                 } else {
                     $complaint = Complaint::findFirstById($complaint_id);
                     Log::addAdminLog("Статус жалобы", "Статус жалобы {$complaint->complaint_name} изменен", $this->user);
-                    @Complaint::changeStatus($status, array($complaint_id));
+					if($status == "copy"){
+						$new_complaint_id = Complaint::changeStatus($status, array($complaint_id));
+						$user_arg = new UsersArguments();
+						$user_arg->copyUsersArguments($complaint_id, $new_complaint_id);
+					}else{
+						@Complaint::changeStatus($status, array($complaint_id));
+					}
                     //$this->flashSession->success('Статус изменен');
                 }
                 if ($status == 'copy') {
@@ -732,4 +753,603 @@ class ComplaintsController extends ControllerBase
         }
         return 0;
     }
+	public function addAction()
+    {
+        $this->setMenu();
+        $category = new Category();
+        $arguments = $category->getArguments2();
+        $ufas = Ufas::find();
+		
+		$users = User::find(array("order" => "email ASC"));
+		$this->view->users = $users;
+		
+		if($_GET["select_user_id"]){
+			$selested_user = User::findFirstById($_GET["select_user_id"]);
+			$this->view->selested_user = $selested_user;
+			$user_applicants = Applicant::findByUserId($selested_user->id);
+			$this->view->user_applicants = $user_applicants;
+			if($_GET["select_applicant_id"]){
+				$selected_applicant = Applicant::findFirstById($_GET["select_applicant_id"]);
+				$this->view->selected_applicant = $selected_applicant;
+			}
+		}
+		
+		/*print_r("<pre>");
+		print_r($ufas);
+		print_r("</pre>");
+		exit;*/
+		
+		/*$complaint = new Complaint();
+		$user_tarif = $complaint->getTarifById($this->user->tarif_id);
+		$user_tarif = $user_tarif[0];
+		$complaints = $complaint->findUserComplaints($this->user->id, 0, false, false, $this->user->tarif_date_activate);
+		
+		$tarif_out = false;
+		
+		if($user_tarif["tarif_price"] == 0 && count($complaints)){
+			$tarif_out = true;
+		}elseif($user_tarif["tarif_type"] == "complaint" && count($complaints) >= $this->user->tarif_count){
+			$tarif_out = true;
+		}elseif($user_tarif["tarif_type"] == "month" && date("Y-m-d H:i:s") >= date("Y-m-d H:i:s", strtotime($this->user->tarif_date_activate." +".$this->user->tarif_count." months")) ){
+			$tarif_out = true;
+		}
+		
+		$tarif_not_active = false;
+		if(!$this->user->tarif_active){
+			$tarif_not_active = true;
+						
+			$tarif_order = new TarifOrder();
+			$tarif_orders = $tarif_order->getTarifOrders($this->user->id, $this->user->tarif_id, $this->user->tarif_count);
+			
+			if($tarif_orders){
+				$tarif_orders = $tarif_orders[0];
+				$this->view->tarif_orders = $tarif_orders;
+				$_SESSION["order_id"] = $tarif_orders["id"];
+			}
+		}*/
+		
+		/*$this->view->tarif_not_active = $tarif_not_active;
+		$this->view->tarif_out = $tarif_out;
+		$this->view->user_tarif = $user_tarif;*/
+		
+        $this->view->edit_mode = 0;
+        $this->view->ufas = $ufas;
+        //$this->view->checkUser = $this->checkUser();
+        $this->view->arguments = $arguments;
+    }
+	
+	/* ADD COMPLICANT */
+    public function ajaxStepsAddComplaintAction()
+    {
+        try {
+            $data = array();
+            $result = array(
+                "cat_arguments" => array(),
+                "arguments" => array(),
+                "date" => 0
+            );
+            $CurrentStep = $this->request->get('step');
+            $data['type'] = $this->request->getPost('type');
+            $data['dateOff'] = $this->request->getPost('dateoff');
+
+            //1 - пользователь выбрал обязательный довод  // 0 - не выбрал
+            $data['checkRequired'] = $this->request->getPost('checkrequired');
+
+            if (!$CurrentStep || !is_numeric($CurrentStep)) throw new Exception('bad step');
+            if (!$data['type'] || !$this->checkTypePurchase($data['type'])) throw new Exception('bad type');
+            if (!$data['dateOff'] || trim($data['dateOff']) == '') throw new Exception('bad date');
+
+            // 0 - не просрочено // 1 - просрочено
+            $data['checkDate'] = $this->checkDateEndSendApp2($data['dateOff'], $result);
+
+            switch ($CurrentStep) {
+                case self::STEP_ONE:
+                    $cat = new ArgumentsCategory();
+                    $cat_arguments = $cat->getCategoryNotEmpty($data['type'], $data['checkDate'], $data['checkRequired']);
+                    $temp_name = array();
+
+                    foreach ($cat_arguments as $cat) {
+                        if (!in_array($cat->lvl1, $temp_name)) {
+                            $temp_name[] = $cat->lvl1;
+                            $result['cat_arguments'][] = array(
+                                'id' => $cat->lvl1_id,
+                                'name' => $cat->lvl1,
+                                'required' => $cat->lvl1_required,
+                                'parent_id' => 0
+                            );
+                        }
+                    }
+                    echo json_encode($result);
+                    break;
+                case self::STEP_TWO:
+                    $parent_id = $this->request->getPost('id');
+                    if (!$parent_id || !is_numeric($parent_id)) throw new Exception('bad data');
+
+                    $cat = new ArgumentsCategory();
+                    $cat_arguments = $cat->getCategoryNotEmpty($data['type'], $data['checkDate'], $data['checkRequired']);
+                    $temp_name = array();
+
+                    foreach ($cat_arguments as $cat) {
+                        if ($cat->lvl1_id == $parent_id) {
+                            if (!in_array($cat->lvl2, $temp_name)) {
+                                $temp_name[] = $cat->lvl2;
+                                $result["cat_arguments"][] = array(
+                                    "id" => $cat->lvl2_id,
+                                    "name" => $cat->lvl2,
+                                    'required' => $cat->lvl2_required,
+                                    "parent_id" => $cat->lvl1_id,
+                                );
+                            }
+                        }
+                    }
+                    echo json_encode($result);
+                    break;
+                case self::STEP_THREE:
+                    $id = $this->request->getPost('id');
+
+                    if (!$id || !is_numeric($id)) throw new Exception('bad data');
+                    $parent_id = ArgumentsCategory::findFirst($id);
+                    if (!$parent_id) throw new Exception('no cat');
+
+                    //Получить не пустые категории (в которых есть доводы)
+                    $cat_arguments = new Builder();
+                    $cat_arguments->getDistinct();
+                    $cat_arguments->addFrom('Multiple\Backend\Models\ArgumentsCategory', 'ArgumentsCategory');
+                    $cat_arguments->rightJoin('Multiple\Backend\Models\Arguments', "ArgumentsCategory.id = category_id AND type LIKE '%{$data['type']}%'");
+                    $cat_arguments->where("parent_id = {$id}");
+                    if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) {
+                        $cat_arguments->andWhere("ArgumentsCategory.required = 1");
+                        $cat_arguments->andWhere("Multiple\Backend\Models\Arguments.required = 1");
+                    } else if ($data['checkDate'] == 0) {
+                        $cat_arguments->andWhere("ArgumentsCategory.required = 0");
+                        $cat_arguments->andWhere("Multiple\Backend\Models\Arguments.required = 0");
+                    }
+                    $cat_arguments->groupBy('ArgumentsCategory.id');
+                    $cat_arguments = $cat_arguments->getQuery()->execute();
+
+                    //Если категорий нет, то получаем доводы и добавляем их в результирующий массив $result
+                    if (count($cat_arguments) == 0) {
+                        $arguments = Arguments::query();
+                        $arguments->where("category_id = {$id}");
+                        $this->showRequiredOrNotRequired($arguments, $data);
+                        $arguments->andWhere("type LIKE '%{$data['type']}%'");
+                        $arguments = $arguments->execute();
+                        $this->setArgumentsInResult($arguments, $data['type'], $result);
+                    } else {
+                        foreach ($cat_arguments as $cat) {
+                            $result['cat_arguments'][] = array(
+                                'id' => $cat->id,
+                                'name' => $cat->name,
+                                'required' => $cat->required,
+                                'parent_id' => $cat->parent_id,
+                            );
+                        }
+                    }
+                    echo json_encode($result);
+                    break;
+                case self::STEP_FOUR:
+                    $id = $this->request->getPost('id');
+                    if (!$id || !is_numeric($id)) throw new Exception('bad data');
+
+                    $arguments = Arguments::query();
+                    $arguments->where("category_id = {$id}");
+                    $this->showRequiredOrNotRequired($arguments, $data);
+                    $arguments->andWhere("type LIKE '%{$data['type']}%'");
+                    $arguments = $arguments->execute();
+
+                    $this->setArgumentsInResult($arguments, $data['type'], $result);
+                    echo json_encode($result);
+                    break;
+                case self::STEP_SEARCH:
+                    $search = $this->request->getPost('search');
+                    $search = (!empty($search)) ? trim($search) : '';
+
+                    if (empty($search)) {
+                        echo json_encode($result);
+                        exit;
+                    }
+
+                    $arguments = Arguments::query();
+                    $arguments->where('name LIKE :name:', array('name' => '%' . $search . '%'));
+                    $this->showRequiredOrNotRequired($arguments, $data);
+                    $arguments->andWhere("type LIKE '%{$data['type']}%'");
+                    $arguments = $arguments->execute();
+
+                    $this->setArgumentsInResult($arguments, $data['type'], $result);
+                    echo json_encode($result);
+                    break;
+            }
+        } catch (Exception $e) {
+            echo json_encode(array(
+                "error" => $e->getMessage()
+            ));
+        }
+        exit;
+    }
+	
+	private function checkTypePurchase($type)
+    {
+        $checkType = false;
+        switch ($type) {
+            case 'electr_auction':
+                $checkType = true;
+                break;
+            case 'concurs':
+                $checkType = true;
+                break;
+            case 'kotirovok':
+                $checkType = true;
+                break;
+            case 'offer':
+                $checkType = true;
+                break;
+        }
+        return $checkType;
+    }
+	
+	private function checkDateEndSendApp2($dateOff, &$result = false)
+    {
+        $dateOff = strtotime($dateOff);
+        $nowTime = strtotime("now");
+
+        if ($nowTime > $dateOff) {
+            if ($result) {
+                $result['date'] = 1;
+            }
+            return 1;
+        }
+        return 0;
+    }
+	
+	private function showRequiredOrNotRequired($arguments, $data)
+    {
+        if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) $arguments->andWhere("required = 1");
+        if ($data['checkDate'] == 0) $arguments->andWhere("required = 0");
+    }
+	
+	private function setArgumentsInResult($arguments, $type, &$result)
+    {
+        foreach ($arguments as $argument) {
+            $result['arguments'][] = array(
+                'id' => $argument->id,
+                'text' => $argument->text,
+                'name' => $argument->name,
+                'category_id' => $argument->category_id,
+                'comment' => $argument->comment,
+                'required' => $argument->required,
+                'type' => ($argument->type != '') ? explode(',', $argument->type) : array()
+            );
+        }
+    }
+	
+	public function createAction()
+    {
+        if (!$this->request->isPost()) {
+            echo 'error';
+            exit;
+        }
+        $users_arguments_ = [];
+        $data = $this->request->getPost();
+        $data['auctionData'] = explode('&', $data['auctionData']);
+        $users_arguments = explode('_?_', $data['arguments_data']);
+
+        $ufas_id = null;
+        if (isset($data['ufas_id']) && is_numeric($data['ufas_id'])) {
+            $ufas_id = Ufas::findFirst(array(
+                "number={$data['ufas_id']}"
+            ));
+            if ($ufas_id) $ufas_id = $ufas_id->id;
+        }
+        $data['ufas_id'] = $ufas_id;
+
+
+        unset($users_arguments[count($users_arguments) - 1]);
+        foreach ($users_arguments as $key => $row) {
+            $users_arguments[$key] = explode('?|||?', $row);
+        }
+        foreach ($users_arguments as $key => &$row) {
+            //$cnt = count($row);
+            foreach ($row as $data_) {
+                $data_ = explode('===', $data_);
+                $users_arguments_[$key][$data_[0]] = $data_[1];
+                /*if (isset($users_arguments_[$key]['argument_id']) && $users_arguments_[$key]['argument_id'] == 'just_text') {
+                    $data['complaint_text'] = $data_[1];
+                    $data['complaint_text_order'] = $users_arguments_[$key]['order'];
+                }*/
+            }
+            /*for ($ind = 0; $ind < $cnt; $ind++) {
+                unset($row[$ind]);
+            }*/
+            //$users_arguments[$key] = explode('?|||?', $row);
+        }
+        foreach ($data['auctionData'] as $value) {
+            $value = explode('=', $value);
+            $data["{$value[0]}"] = $value[1];
+        }
+        $complaint = new Complaint();
+        $complaint->addComplaint($data);
+		if ($complaint->save() == false) {
+			foreach ($complaint->getMessages() as $message) {
+                $this->flashSession->error($message);
+            }
+            return $this->response->redirect('/admin/complaints/add?select_user_id='.$_GET["select_user_id"].'&select_applicant_id='.$_GET["select_applicant_id"]);
+		}else{
+			$allow = TRUE;
+			
+			// Save users arguments.
+			foreach ($users_arguments_ as $argument) {
+                if ($argument['argument_id'] != 'just_text') {
+                    $u_arg = new UsersArguments();
+                    $u_arg->complaint_id = $complaint->id;
+                    $u_arg->argument_id = $argument['argument_id'];
+                    $u_arg->argument_order = $argument['order'];
+                    $u_arg->text = $argument['argument_text'];
+                    $u_arg->argument_category_id = $argument['category_id'];
+                    $u_arg->save();
+                }
+            }
+			
+			// Check all files with needed rules.
+            if ($this->request->hasFiles() == true) {
+                $files_model = new Files();
+                if (!$files_model->checkAllFiles($this->request)) {
+                    $allow = FALSE;
+                }
+            }
+			
+			if ($allow) {
+                $saved_files = array();
+                if ($this->request->hasFiles() == true) {
+                    $baseLocation = 'files/complaints/';
+                    foreach ($this->request->getUploadedFiles() as $file) {
+                        if (strlen($file->getName())) {
+                            $applicant_file = new Files();
+                            $name = explode('.', $file->getName())[0] . '_' . time() . '.' . explode('.', $file->getName())[1];
+                            //$name = iconv("UTF-8", "cp1251", $name);
+                            $applicant_file->file_path = Translit::rusToEng($name);
+                            $applicant_file->file_size = round($file->getSize() / 1024, 2);
+                            $applicant_file->file_type = $file->getType();
+                            $applicant_file->save();
+                            $saved_files[] = $applicant_file->id;
+                            //Move the file into the application
+                            $file->moveTo($baseLocation . Translit::rusToEng($name));
+                        }
+                    }
+                }
+                $complaint->fid = serialize($saved_files);
+				$complaint->save();
+			}
+		
+			echo json_encode(array(
+					'complaint' => array(
+						'id' => $complaint->id
+					)
+				));
+		}
+        /*if ($complaint->save() == false) {
+            //$this->flashSession->error('Не выбран заявитель');
+            foreach ($complaint->getMessages() as $message) {
+                $this->flashSession->error($message);
+            }
+            return $this->response->redirect('/complaint/add');
+            //$response = array('result' => 'error', 'message' => 'Ошибка при попытке сохранения жалобы');
+        } else {
+            $allow = TRUE;
+
+            // Save users arguments.
+            foreach ($users_arguments_ as $argument) {
+                if ($argument['argument_id'] != 'just_text') {
+                    $u_arg = new UsersArguments();
+                    $u_arg->complaint_id = $complaint->id;
+                    $u_arg->argument_id = $argument['argument_id'];
+                    $u_arg->argument_order = $argument['order'];
+                    $u_arg->text = $argument['argument_text'];
+                    $u_arg->argument_category_id = $argument['category_id'];
+                    $u_arg->save();
+                }
+            }
+
+            // Check all files with needed rules.
+            if ($this->request->hasFiles() == true) {
+                $files_model = new Files();
+                if (!$files_model->checkAllFiles($this->request)) {
+                    $allow = FALSE;
+                }
+            }
+            if ($allow) {
+                $saved_files = array();
+                if ($this->request->hasFiles() == true) {
+                    $baseLocation = 'files/complaints/';
+                    foreach ($this->request->getUploadedFiles() as $file) {
+                        if (strlen($file->getName())) {
+                            $applicant_file = new Files();
+                            $name = explode('.', $file->getName())[0] . '_' . time() . '.' . explode('.', $file->getName())[1];
+                            //$name = iconv("UTF-8", "cp1251", $name);
+                            $applicant_file->file_path = Translit::rusToEng($name);
+                            $applicant_file->file_size = round($file->getSize() / 1024, 2);
+                            $applicant_file->file_type = $file->getType();
+                            $applicant_file->save();
+                            $saved_files[] = $applicant_file->id;
+                            //Move the file into the application
+                            $file->moveTo($baseLocation . Translit::rusToEng($name));
+                        }
+                    }
+                }
+                $complaint->fid = serialize($saved_files);
+                //$this->flashSession->error($applicant->fid);
+                $complaint->user_id = $data["user_id"];
+                $complaint->save();
+                $docx_s = DocxFiles::find("complaint_name = '{$complaint->complaint_name}'");
+                foreach ($docx_s as $docx) {
+                    $docx->complaint_id = $complaint->id;
+                    $docx->save();
+                }
+            }
+            Log::addAdminLog("Создание жалобы", "Добавлена жалоба {$complaint->id}", $this->user, null, 'пользователь');
+            $this->flashSession->success('Жалоба сохранена');
+            echo json_encode(array(
+                'complaint' => array(
+                    'id' => $complaint->id
+                )
+            ));
+            exit;
+            //return $this->response->redirect('complaint/edit/' . $complaint->id . '?action=edit');
+            //$response = array('result' => 'success', 'id' => $complaint->id);
+        }*/
+        /*header('Content-type: application/json');
+        echo json_encode($response);
+        exit;*/
+		exit;
+    }
+	
+	public function saveHtmlFileAction()
+    {
+        //error_reporting(E_ALL);
+        //ini_set('display_errors', 1);
+
+        $name = false;
+        $format = 1;
+        $recall = 0;
+        $recall = $this->request->get('recall');
+
+        if ($this->request->getPost('doc')) {
+            $baseLocation = 'files/generated_complaints/user_' . $this->user->id . '/';
+            if (strlen($this->request->getPost('doc'))) {
+                if (!file_exists($baseLocation)) {
+                    mkdir($baseLocation, 0777, true);
+                }
+
+                try {
+                    if (empty($recall)) {
+                        $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
+                        if ($unformatted == 'unformatted_') {
+                            $format = 0;
+                        }
+                        $name = 'complaint_' . $unformatted . time() . '.docx';
+                        $data = json_decode($this->request->getPost('doc'));
+
+                        require_once $_SERVER['DOCUMENT_ROOT'] . '/public/phpdocx/classes/CreateDocx.inc';
+                        $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/public/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
+
+                        foreach ($data as $key => $value) {
+                            if ($key == 'dovod') {
+                                /*preg_match_all('/<img.*?src\s*=(.*?)>/', $value, $out);
+                                if (count($out[1])) {
+                                    foreach ($out[1] as $key1 => $image) {
+                                        $explode = explode(" ", $image);
+                                        $image = trim($explode[0], '"');
+
+                                        $file_name = time() + rand();
+
+                                        if(substr_count($image, 'data:image'))
+                                            $value = str_replace($out[0][$key1], '<img src="' . $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/" . $this->save_base64_image($image, time() + rand(), $_SERVER['DOCUMENT_ROOT'] . "/files/generated_complaints/user_" . $this->user->id . "/") . '"><br/>', $value);
+                                    }
+                                }*/
+
+                                if (trim($value) == '') $value = '  ';
+                                $docx->replaceVariableByHTML($key, 'block', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));
+                            } else
+                                if (trim($value) == '') $value = '  ';
+                            $docx->replaceVariableByHTML($key, 'inline', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => true));
+                        }
+
+                        //$templateProcessor->saveAs($baseLocation . $name);
+                        $docx->createDocx($baseLocation . $name);
+
+                        //$file->moveTo($baseLocation . $name);
+
+                    } else {
+                        $unformatted = isset($_GET['unformatted']) ? 'unformatted_' : '';
+                        $name = 'recall_' . $unformatted . time() . '.docx';
+                        $recall = 1;
+
+                        $data = json_decode($this->request->getPost('doc'));
+                        require_once $_SERVER['DOCUMENT_ROOT'] . '/public/phpdocx/classes/CreateDocx.inc';
+                        $docx = new \CreateDocxFromTemplate($_SERVER['DOCUMENT_ROOT'] . "/public/js/docx_generator/docx_templates/" . $this->request->getPost('file_to_load'));
+
+                        foreach ($data as $key => $value) {
+                            if (trim($value) == '') $value = '  ';
+                            $docx->replaceVariableByHTML($key, 'block', $value, array('isFile' => false, 'parseDivsAsPs' => true, 'downloadImages' => false));
+                        }
+
+                        $docx->createDocx($baseLocation . $name);
+                        //$file->moveTo($baseLocation . $name);
+                    }
+
+                } catch (\Exception $e) {
+                    print_R('ok=');
+                    print_R($e);
+                    die;
+                }
+
+            }
+            $docx = new DocxFiles();
+            if (!empty($recall)) {
+                $docx->complaint_id = $this->request->get('complaint_id');
+            }
+            $docx->docx_file_name = $name;
+
+
+            $tempCompPost = $this->request->getPost('complaint_id');
+            $tempCompGet = $this->request->getQuery('complaint_id');
+            if (is_numeric($tempCompPost)) {
+                $compl_id = $tempCompPost;
+            } elseif (is_numeric($tempCompGet)) {
+                $compl_id = $tempCompGet;
+            }
+
+            $docx->complaint_name = $this->request->getPost('complaint_name');
+            if (isset($compl_id) && $compl_id != 'undefined') {
+                $delete_docx = DocxFiles::find("complaint_id = $compl_id");
+                if (count($delete_docx) >= 2) {
+                    foreach ($delete_docx as $del_docx) {
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name);
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name . '.sig');
+                        $del_docx->delete();
+                    }
+                } else {
+                    $delete_docx = DocxFiles::find("complaint_id = $compl_id AND recall = 1");
+                    foreach ($delete_docx as $del_docx) {
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name);
+                        $del = @unlink($baseLocation . $del_docx->docx_file_name . '.sig');
+                        $del_docx->delete();
+                    }
+                }
+            }
+            $docx->created_at = date('Y-m-d H:i:s');
+            $docx->recall = $recall;
+            $docx->format = $format;
+            $docx->complaint_id = $compl_id;
+            $docx->user_id = $this->user->id;
+            $docx->save();
+        }
+        $this->view->disable();
+        if ($name) {
+            $thumbprint = 0;
+            if (isset($_POST['applicant_id'])) {
+                $applicant_id = $_POST['applicant_id'];
+                //"activ = 1 AND applicant_id = $applicant_id "
+
+                $thumbprint = ApplicantECP::findFirst(array(
+                    "conditions" => "activ = ?1 AND applicant_id = ?2",
+                    "bind" => [
+                        1 => 1,
+                        2 => $applicant_id,
+                    ],
+                    'order' => 'id DESC'
+                ));
+                $thumbprint = $thumbprint->thumbprint;
+            }
+            $data = file_get_contents($baseLocation . $name);
+            $File_data = base64_encode($data);
+            echo json_encode([$File_data, $thumbprint, $name]);
+        } else {
+            echo 'error';
+        }
+        die();
+        //0190300004615000296
+        //  skyColor
+    }
+	
+	
 }
