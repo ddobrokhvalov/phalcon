@@ -38,7 +38,7 @@ class Parser
             //$auction['info']['zakupku_osushestvlyaet_inn'] = trim($xpath2->evaluate('string(//table[@class="noticeTable"]//td/span[text()="ИНН"]/text())'));
             //$auction['info']['zakupku_osushestvlyaet_inn'] = trim($xpath2->evaluate('string(//title/text())'));
         }
-        $auction['info']['object_zakupki'] = trim($xpath->evaluate('string(//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Объект закупки")]/following-sibling::td[1]/span[@id="notice_orderName"]/text())'));
+        $auction['info']['object_zakupki'] = trim($xpath->evaluate('string(//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Объект закупки")]/following-sibling::td[1]/text()[1])'));
 
 //        $auction['contact']['name'] = trim($xpath->evaluate('string(//h2[text()="Контактная информация"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Наименование организации")]/following-sibling::td[1]/text())'));
         $auction['contact']['name'] = trim($xpath->evaluate('string(//h2[text()="Общая информация о закупке"]/following-sibling::div[1]/table[1]//tr/td[contains(text(),"Закупку осуществляет") or contains(text(),"Размещение осуществляет")]/following-sibling::td[1]/a/text())'));
@@ -338,4 +338,32 @@ class Parser
         //echo "many try!!!";#todo:json error here
         return FALSE;
     }
+	
+	function getUrl2($url){
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_AUTOREFERER, true);
+		curl_setopt($ch, CURLOPT_DNS_USE_GLOBAL_CACHE, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_ENCODING, 'gzip,deflate');
+		$headers = array(
+                "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language" => "ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3",
+                //'X-Requested-With: XMLHttpRequest'
+            );
+		$h = array();
+		foreach ($headers as $k => $v) {
+			$h[] = $k . ': ' . $v;
+		}
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $h);
+		$res = curl_exec($ch);
+		curl_close($ch);
+		if ($res !== FALSE){
+			return $res;
+		}
+		return FALSE;
+	}
 }
