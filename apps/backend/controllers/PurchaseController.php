@@ -105,7 +105,7 @@ class PurchaseController extends Controller
 												'okonchanie_podachi'=>$xml_data->procedureInfo->end->__toString(),
 												'okonchanie_rassmotreniya'=>$xml_data->procedureInfo->scoring->__toString(),
 												'poryadok_podachi'=>"",//"Участник закупки вправе подать заявку на участие в аукционе в любое время, с момента размещения извещения о его проведении в единой информационной системе до предусмотренных документацией о таком аукционе даты и времени окончания срока подачи заявок на участие в аукционе."
-												'vremya_provedeniya'=>"Время аукциона не определено",//"09:50"
+												'vremya_provedeniya'=>"",//"09:50"
 												'vskrytie_konvertov'=>$xml_data->procedureInfo->opening->__toString(),
 												),
 								'zakazchik'=>array(
