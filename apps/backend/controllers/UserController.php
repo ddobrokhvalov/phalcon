@@ -123,6 +123,7 @@ class UserController extends ControllerBase
 
         $id = $this->request->getPost("id", "int");
         $user = User::findFirstById($id);
+		
         if (!$user)
             return $this->forward("user/index");
 
@@ -138,16 +139,32 @@ class UserController extends ControllerBase
         $data['notifications'] = isset($notifications) ? 1 : 0;
         $validation = new UserValidator();
         $messages = $validation->validate($data);
+		
+		$user->phone = empty($data['phone']) ? $user->phone : $data['phone'];
+		$user->email = empty($data['email']) ? $user->email : $data['email'];
+		$user->conversion = empty($data['conversion']) ? $user->conversion : $data['conversion'];
+		$user->mobile_phone = empty($data['mobile_phone']) ? $user->mobile_phone : $data['mobile_phone'];
+		$user->admin_comment = empty($data['admin_comment']) ? $user->admin_comment : $data['admin_comment'];
+		$user->password = empty($data['password']) ? $user->password : $data['password'];
+		$user->notifications = empty($data['notifications']) ? 0 : 1;
+		/*print_r("<pre>");
+		print_r($user);
+		print_r("</pre>");
+		return;*/
+		$user_update = new User();
+		$data['id'] = $id;
+		$update_result = $user_update->updateUser($data);
         if (count($messages)) {
             foreach ($messages as $message)
                 $this->flashSession->error($message);
-        } elseif ($user->save($data, array_keys($data)) == false) {
-            foreach ($user->getMessages() as $message)
-                $this->flashSession->error($message);
+        } elseif (/*$user->save($data, array_keys($data)) == false*/$update_result == false) {
+            foreach ($user_update->getMessages() as $message)
+                $user_update->flashSession->error($message);
         } else {
             Log::addAdminLog("Редактирование пользователя", "Пользователь {$user->firstname} {$user->lastname} изменен", $this->user);
             $this->flashSession->success("Изменения сохранены");
         }
+		
         
         return $this->dispatcher->forward(array(
             'module' => 'backend',

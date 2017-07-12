@@ -70,6 +70,34 @@ class User extends Model
         return $applicant->getAllStatuses($index);
     }
 	
+	public function updateUser($data){
+		
+		if($data["id"]){
+			$id = $data["id"];
+			unset($data["id"]);
+			$db = $this->getDi()->getShared('db');
+			if(count($data)){
+				$sql = "update user set ";
+				$fields = array();
+				foreach($data as $key=>$val){
+					if($val){
+						$fields[] = $key." = '".$val."'";
+					}
+				}
+				
+				if(count($fields)){
+					$fields = implode(", ", $fields);
+					$sql .= $fields." where id = ".$id;
+					/*print_r("<pre>");
+					print_r($sql);
+					print_r("</pre>");*/
+					return $db->query($sql);
+				}
+			}
+		}
+		return false;
+	}
+	
 	public function saveActive(){
 		if($this->id){
 			$db = $this->getDi()->getShared('db');
