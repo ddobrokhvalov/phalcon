@@ -135,7 +135,7 @@ class ApplicantController extends ControllerBase
                     $applicant->type = 'fizlico';
                     $applicant->name_full = '';
                     $applicant->name_short = '';
-                    $applicant->inn = '';
+                    $applicant->inn = $_POST['entity-inn'];
                     $applicant->kpp = '';
                     $applicant->fid = '';
                     $applicant->address = '';

@@ -13,8 +13,8 @@ $temp_conf = new ConfigIni(APP_PATH."/../apps/frontend/config/config.ini");
 
 $mail = $temp_conf->mailer->toArray();
 $adminsEmail = $temp_conf->adminsEmails->toArray();
-var_dump($mail);
-var_dump($adminsEmail);
+//var_dump($mail);
+//var_dump($adminsEmail);
 
 include_once(dirname(__FILE__)."/lib/lib_abstract.php");
 
@@ -49,7 +49,7 @@ include_once(dirname(__FILE__)."/lib/lib_abstract.php");
 	$mailer->send();*/
 	
 
-
+$statuses = array("submitted"=>"Подана", "under_consideration"=>"На рассмотрении");
 
 $complaints_sql = "select comp.id, comp.complaint_name, comp.auction_id, comp.purchases_name, comp.date_submit, comp.applicant_id, comp.user_id, 
 							ap.type, ap.name_full, ap.name_short, ap.inn, ap.fio_applicant, comp.status, ap.user_id as ap_user_id
@@ -58,6 +58,8 @@ $complaints_sql = "select comp.id, comp.complaint_name, comp.auction_id, comp.pu
 					where (comp.status = 'submitted' OR comp.status = 'under_consideration') and comp.date_submit is not NULL";
 $complaints = db::sql_select($complaints_sql);
 //var_dump($complaints);
+
+$success_text = '<strong>Успешные изменения статусов:</strong><br/>';
 
 foreach($complaints as $comp){
 	$zayavitel = trim($comp["name_short"]);
@@ -74,8 +76,8 @@ foreach($complaints as $comp){
 							where ic.purchaseNumber = :purchaseNumber
 							order by ic.versionNumber asc, ich.versionNumber asc";
 	$imported_comps = db::sql_select($imported_comp_sql, array("purchaseNumber"=>$comp["auction_id"]));
+	$imported_comps2 = array();
 	if(count($imported_comps)){
-		$imported_comps2 = array();
 		foreach($imported_comps as $imported_comp){
 			$lico = trim(preg_replace(array('/Общество с ограниченной ответственностью|Акционерное общество|ООО|ИП\s|АО\s/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $imported_comp['applicantNewfullName']));
 			$lico = trim(preg_replace('/\s+/ui', ' ', $lico));
@@ -93,42 +95,77 @@ foreach($complaints as $comp){
 				}
 			}
 		}
-		if(count($imported_comps2)){
-			var_dump($comp);
-			var_dump($imported_comps2);
-			foreach($imported_comps2 as $imported_comp2){
-				if($imported_comp2["complaintResult"] == "COMPLAINT_VIOLATIONS" || $imported_comp2["complaintResult"] == "COMPLAINT_PARTLY_VALID"){
-					$sql_update_status = "update complaint set status = 'justified' where id = ".$comp["id"];
-					$arr_moving_history = array("complaint_id"=>$comp["id"], "old_status"=>$comp["status"], "new_status"=>"justified");
-					$arr_message = array("to_uid"=>$comp["user_id"]?$comp["user_id"]:$comp["ap_user_id"], 
-											"subject"=>"Изменение статуса жалобы", 
-											"body"=>"Статус вашей жалобы на закупку №".$comp["auction_id"]." был изменен на 'Обоснована'",
-											"time"=>date('Y-m-d H:i:s'),
-											"stat_comp"=>"justified",
-											"is_read"=>0,
-											"is_deleted"=>0,
-											"comp_id"=>$comp["id"],
-											"history_id"=>0);
-				}
-				if($imported_comp2["complaintResult"] == "COMPLAINT_NO_VIOLATIONS"){
-					$sql_update_status = "update complaint set status = 'unfounded' where id = ".$comp["id"];
-					$arr_moving_history = array("complaint_id"=>$comp["id"], "old_status"=>$comp["status"], "new_status"=>"unfounded");
-					$arr_message = array("to_uid"=>$comp["user_id"]?$comp["user_id"]:$comp["ap_user_id"], 
-											"subject"=>"Изменение статуса жалобы", 
-											"body"=>"Статус вашей жалобы на закупку №".$comp["auction_id"]." был изменен на 'Необоснована'",
-											"time"=>date('Y-m-d H:i:s'),
-											"stat_comp"=>"unfounded",
-											"is_read"=>0,
-											"is_deleted"=>0,
-											"comp_id"=>$comp["id"],
-											"history_id"=>0);
-				}
-				db::sql_query($sql_update_status);
-				db::insert_record("complaint_moving_history", $arr_moving_history);
-				$history_id = db::last_insert_id("complaint_moving_history");
-				$arr_message["history_id"] = $history_id;
-				db::insert_record("messages", $arr_message);
-			}
-		}
 	}
+	
+	if(count($imported_comps2)){
+		var_dump($comp);
+		var_dump($imported_comps2);
+		$new_status = false;
+		foreach($imported_comps2 as $imported_comp2){
+			if($imported_comp2["complaintResult"] == "COMPLAINT_VIOLATIONS" || $imported_comp2["complaintResult"] == "COMPLAINT_PARTLY_VALID"){
+				$sql_update_status = "update complaint set status = 'justified' where id = ".$comp["id"];
+				$arr_moving_history = array("complaint_id"=>$comp["id"], "old_status"=>$comp["status"], "new_status"=>"justified");
+				$arr_message = array("to_uid"=>$comp["user_id"]?$comp["user_id"]:$comp["ap_user_id"], 
+										"subject"=>"Изменение статуса жалобы", 
+										"body"=>"Статус вашей жалобы на закупку №".$comp["auction_id"]." был изменен на 'Обоснована'",
+										"time"=>date('Y-m-d H:i:s'),
+										"stat_comp"=>"justified",
+										"is_read"=>0,
+										"is_deleted"=>0,
+										"comp_id"=>$comp["id"],
+										"history_id"=>0);
+				$new_status = "Признана обоснованной";
+			}
+			if($imported_comp2["complaintResult"] == "COMPLAINT_NO_VIOLATIONS"){
+				$sql_update_status = "update complaint set status = 'unfounded' where id = ".$comp["id"];
+				$arr_moving_history = array("complaint_id"=>$comp["id"], "old_status"=>$comp["status"], "new_status"=>"unfounded");
+				$arr_message = array("to_uid"=>$comp["user_id"]?$comp["user_id"]:$comp["ap_user_id"], 
+										"subject"=>"Изменение статуса жалобы", 
+										"body"=>"Статус вашей жалобы на закупку №".$comp["auction_id"]." был изменен на 'Необоснована'",
+										"time"=>date('Y-m-d H:i:s'),
+										"stat_comp"=>"unfounded",
+										"is_read"=>0,
+										"is_deleted"=>0,
+										"comp_id"=>$comp["id"],
+										"history_id"=>0);
+				$new_status = "Признана необоснованной";
+			}
+			db::sql_query($sql_update_status);
+			db::insert_record("complaint_moving_history", $arr_moving_history);
+			$history_id = db::last_insert_id("complaint_moving_history");
+			$arr_message["history_id"] = $history_id;
+			db::insert_record("messages", $arr_message);
+		}
+		
+		if($new_status){
+			$success_text .= '**Результат рассмотрения: ' . $new_status . "<br/>";
+		}else{
+			$success_text .= 'Cтатус жалобы не изменен: ' . $statuses[$comp["status"]] . "<br/>";
+		}
+		
+	}else{
+		$success_text .= 'Cтатус жалобы не изменен: ' . $statuses[$comp["status"]] . "<br/>";
+	}
+	
+	$success_text .= ' | ID жалобы: ' . $comp['id'] . "<br/>";
+	$success_text .= ' | Название жалобы: ' . $comp['complaint_name'] . "<br/>";
+	$success_text .= ' | Номер извещения жалобы: ' . $comp['auction_id'] . "<br/>";
+	$success_text .= ' | Имя заявителя: ' . $comp['name_short'] . "<br/>";
+	$success_text .= ' | Дата подачи жалобы: ' . $comp['date_submit'] . "<br/>";
+	$success_text .= ' | Ссылка: <a href="http://fas-online.ru/complaint/edit/'.$comp['id'].'">Перейти к жалобе</a>';
+	$success_text .= ' | Время работы парсера: ' . date('Y-m-d H:i:s') . "<br/>";
+	$success_text .= '<br/>';
+	$success_text .= '<br/>';
+	$success_text .= '---------------------------------<br/>';
+	
 }
+
+$vlibMimeMail = new vlibMimeMail();
+$vlibMimeMail->to("office@gos-partner.ru");
+$vlibMimeMail->cc($adminsEmail["ufas"]);
+$vlibMimeMail->cc("info@fasonline.ru");
+$vlibMimeMail->bcc("ddobrokhvalov@gmail.com");
+$vlibMimeMail->from($config['from']['email'], $config['from']['name']);
+$vlibMimeMail->subject("Результат парсинга данных");
+$vlibMimeMail->htmlBody($success_text);
+$vlibMimeMail->send();

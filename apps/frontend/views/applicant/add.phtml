@@ -241,6 +241,9 @@
                 <form action="/applicant/create" enctype="multipart/form-data" method="POST">
                     {{hidden_field('type', 'value':'fizlico')}}
                     {{hidden_field('for_user_id', 'value':for_user_id)}}
+					{{hidden_field('entity-inn', 'value':'')}}
+					<input type="hidden" value="0" name="ecp" class="ecp_ur">
+                    <input type="hidden" value="0" name="ecp_text" class="ecp_text">
                     <label for="entity-fio-z">
                         <div>ФИО заявителя</div>
                         <input type="text" name="fio" id="entity-fio-z" style="width: 480px;">

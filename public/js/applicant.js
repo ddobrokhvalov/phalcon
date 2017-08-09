@@ -12,12 +12,16 @@ $(document).ready(function () {
         if (userData.indexOf('OGRN=') != -1 || userData.indexOf('ОГРН=') != -1) {
             applicant.parseUrLico(selectedCertif);
         }
-        if (userData.indexOf('OGRNIP=') != -1) {
+        if (userData.indexOf('OGRNIP=') != -1 || userData.indexOf('ОГРНИП=') != -1) {
             applicant.parseIp(selectedCertif);
         }
-        if (userData.indexOf('ОГРНИП=') != -1) {
+        /*if (userData.indexOf('ОГРНИП=') != -1) {
             applicant.parseIp(selectedCertif);
-        }
+        }*/
+		if(userData.indexOf('OGRN=') == -1 && userData.indexOf('ОГРН=') == -1 && userData.indexOf('OGRNIP=') == -1 && userData.indexOf('ОГРНИП=') == -1 &&
+			(userData.indexOf('INN=') != -1 || userData.indexOf('ИНН=') != -1) ){
+			applicant.parseFiz(selectedCertif);
+		}
 
         var str = selectedCertif.ValidFromDate;
         str = str.toString().substr(0, 10);
@@ -105,17 +109,26 @@ $(document).ready(function () {
                 checkinn = $(this).val();
             }
         });
-        applicant.checkInn(checkinn);
+		if(applicant.type == 'fizlico'){
+			applicant.save = true;
+			checkinn = $(".tabcontent-ph #entity-inn").val();
+			applicant.checkInn(checkinn);
+		}else{
+			applicant.checkInn(checkinn);
+		}
         if (!applicant.save) return false;
+		
         event.preventDefault();
         if ($(".modal-dialog.modal-sm").height() != null && $(".modal-dialog.modal-sm").height() > 0) {
             return false;
         }
         applicantValidator.start();
+		console.log(applicantValidator);
         if (applicantValidator.result) {
             //$('#applicant_form').submit();
             $(this).parent().submit();
         } else {
+			console.log(applicant.type);
             event.preventDefault();
             return false;
         }
@@ -245,6 +258,27 @@ var applicant = {
         }
         return false;
     },
+	getAddr: function (data) {
+        var street = data.match(/[\s\,]?STREET=[\"]?([«»a-zA-Zа-яА-Я\s\"\'\.\,\d\/\-]+)([\"]|[\,])/);
+		var city = data.match(/[\s\,]?L=[\"]?([«»a-zA-Zа-яА-Я\s\"\'\.\,\d\/\-]+)([\"]|[\,])/);
+		var ret = "";
+		if (city) {
+            ret = ret + city[1].replace(/\"/g, '');
+			if (street) {
+				ret = ret + ", " + street[1].replace(/\"/g, '');
+			}
+        }else{
+			if (street) {
+				ret = ret + street[1].replace(/\"/g, '');
+			}
+		}
+		
+		if(ret){
+			return ret;
+		}
+		
+        return false;
+    },
 
     getFio: function (data) {
         var fio = data.match(/[\s\,]CN=([a-zA-Zа-яА-Я\s]+)[\/,\,\s]?/i);
@@ -311,6 +345,29 @@ var applicant = {
             this.checkInn(inn);
         }
     },
+	
+	parseFiz: function (selectedCertif) {
+		$('.tabs-ur').css('visibility', 'hidden');
+        $('.tabs-ip').css('visibility', 'hidden');
+		$('.tabcontent-ur').css('display', 'none');
+        $('.tabcontent-ph').css('display', 'block');
+        $('.tabcontent-in').css('display', 'none');
+		this.setFizlico();
+		
+		
+        var street = this.getStreet(selectedCertif.SubjectName);
+        var addr = this.getAddr(selectedCertif.SubjectName);
+        var inn = this.getInn(selectedCertif.SubjectName);
+		console.log(inn);
+		$('.tabcontent-ph #entity-inn').val((inn) ? inn : '');
+		$('.tabcontent-ph #entity-fio-z').val((selectedCertif.UserName) ? selectedCertif.UserName : '');
+		$('.tabcontent-ph #entity-address').val((addr) ? addr : '');
+		//$('.tabs-content tabcontent-ph #entity-phone').val();
+		$('.tabcontent-ph #post-address').val((addr) ? addr : '');
+		$('.tabcontent-ph #entity-email').val((selectedCertif.UserEmail) ? selectedCertif.UserEmail : '');
+		$('.tabcontent-ph #entity-fio-k').val((selectedCertif.UserName) ? selectedCertif.UserName : '');
+		
+	},
     checkInn: function (inn) {
         /*if (!validator.numeric($('#czvr3').val(), 10, 10)) {
          applicantValidator.showError('#czvr3', 'Ошибка! ИНН состоит из 10 цифр');
@@ -576,47 +633,61 @@ var applicantValidator = {
                 // }
                 break;
             case 'fizlico':
-                var field_selector = '.active-tabs-content #entity-fio-z';
+				this.result = true;
+				//console.log("1");
+                var field_selector = '.tabcontent-ph #entity-fio-z';
                 if (!validator.text($(field_selector).val(), 3, 255)) {
                     this.showError(field_selector, 'Ошибка! ФИО заявителя должно быть от 3 до 255 символов');
                     this.result = false;
+					//console.log("2");
                 } else {
                     this.done(field_selector);
+					//console.log("3");
                 }
-                var field_selector = '.active-tabs-content #entity-address';
+                var field_selector = '.tabcontent-ph #entity-address';
                 if (!validator.text($(field_selector).val(), 3, 255)) {
                     this.showError(field_selector, 'Ошибка! Адрес местонахождения должен быть от 3 до 255 символов');
                     this.result = false;
+					//console.log("4");
                 } else {
                     this.done(field_selector);
+					//console.log("5");
                 }
-                var field_selector = '.active-tabs-content #entity-phone';
+                var field_selector = '.tabcontent-ph #entity-phone';
                 if (!validator.text($(field_selector).val(), 5, 100)) {
                     this.showError(field_selector, 'Ошибка! Контактный факс, телефон должен быть от 5 до 100 символов');
                     this.result = false;
+					//console.log("6");
                 } else {
                     var reg_phone = /^((8|\+7)[\- ]?)(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
 					if(reg_phone.test($(field_selector).val())){
 						this.done(field_selector);
+						//console.log("7");
 					}else{
 						this.showError(field_selector, 'Ошибка! Формат номера телефона не верный. Верные форматы: +7 (123) 123-1212, 8 (123) 123-1212.');
 						this.result = false;
+						//console.log("8");
 					}
                 }
-                var field_selector = '.active-tabs-content #entity-email';
+                var field_selector = '.tabcontent-ph #entity-email';
                 if (!validator.email($(field_selector).val())) {
                     this.showError(field_selector, 'Ошибка! Неверный E-mail');
                     this.result = false;
+					//console.log("9");
                 } else {
                     this.done(field_selector);
+					//console.log("10");
                 }
-                var field_selector = '.active-tabs-content #entity-fio-k';
+                var field_selector = '.tabcontent-ph #entity-fio-k';
                 if (!validator.text($(field_selector).val(), 3, 100)) {
                     this.showError(field_selector, 'Ошибка! ФИО контактного лица должно быть от 3 до 100 символов');
                     this.result = false;
+					//console.log("11");
                 } else {
                     this.done(field_selector);
+					//console.log("12");
                 }
+				break;
             // var field_selector = '.active-tabs-content #post-address';
             // if (!validator.post($(field_selector).val())) {
             //     this.showError(field_selector, 'Ошибка! Неверный почтовый индекс');

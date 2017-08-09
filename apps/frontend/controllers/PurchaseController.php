@@ -83,13 +83,13 @@ class PurchaseController extends Controller
 			}else{
 				$data = array(
 								'contact'=>array(
-												'dolg_lico'=>$xml_data->responsibleOrg->contactPerson->__toString(),
-												'email'=>$xml_data->responsibleOrg->contactEmail->__toString(),
-												'fax'=>$xml_data->responsibleOrg->contactPhone->__toString(),
-												'mesto_nahogdeniya'=>$xml_data->responsibleOrg->factAddress->__toString(),
-												'name'=>$xml_data->responsibleOrg->fullName->__toString(),
-												'pochtovy_adres'=>$xml_data->responsibleOrg->factAddress->__toString(),
-												'tel'=>$xml_data->responsibleOrg->contactPhone->__toString(),
+												'dolg_lico'=>$xml_data->customer->contactPerson->__toString(),
+												'email'=>$xml_data->customer->contactEmail->__toString(),
+												'fax'=>$xml_data->customer->phone->__toString(),
+												'mesto_nahogdeniya'=>$xml_data->customer->factualAddress->__toString(),
+												'name'=>$xml_data->customer->fullname->__toString(),
+												'pochtovy_adres'=>$xml_data->customer->factualAddress->__toString(),
+												'tel'=>$xml_data->customer->phone->__toString(),
 												),
 								'info'=>array(
 												'object_zakupki'=>$xml_data->purchaseObject->__toString(),

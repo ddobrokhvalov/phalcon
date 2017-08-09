@@ -1691,7 +1691,14 @@ class ComplaintController extends ControllerBase
 
     private function SendToUfas($files, $ufasEmail, $subject, $content, $additionally=null)
     {
-        $message = $this->mailer->createMessage()
+		//include_once($_SERVER["DOCUMENT_ROOT"]."/include/lib/mail/vlibMimeMail.php");
+		//$mailer = new vlibMimeMail();
+		/*$mailer->to("ddobrokhvalov@gmail.com");
+		$mailer->subject("Проверка");
+		$mailer->htmlBody("<p>Проверка</p><p>Проверка</p><p>Проверка</p>");
+		$mailer->send();*/		
+		
+		$message = $this->mailer->createMessage()
             ->to($ufasEmail)
             ->bcc($this->adminsEmails['ufas'])
             ->subject($subject)
@@ -1700,7 +1707,9 @@ class ComplaintController extends ControllerBase
             $message->attachment($key);
         }
 
-        $message->send();
+        $mess_res = $message->send();
+		
+		//$mess_res = mail($ufasEmail, $subject, $content);
 		
 		
 		/**
@@ -1715,45 +1724,59 @@ class ComplaintController extends ControllerBase
         }
 
         $message->send();*/
-		
-        Log::addAdminLog("Отправка в УФАС", $content, $this->user, $additionally, 'пользователь');
+		if($mess_res){
+			Log::addAdminLog("Отправка в УФАС", $content, $this->user, $additionally, 'пользователь');
+		}else{
+			Log::addAdminLog("Ошибка при отправке в УФАС 2", $content, $this->user, $additionally, 'пользователь');
+		}
+		return $mess_res;
     }
 
     public function sendComplaintToUfasAction()
     {
-        $status = 'ok';
+        //mail("ddobrokhvalov@gmail.com", "test test test", "test test test");
+		$status = 'ok';
 
         $compId = $this->request->getPost('complId');
         $file = DocxFiles::findFirst(array(
-            "complaint_id = {$compId} AND format = 1"
+            "complaint_id = {$compId} AND format = 1 order by docx_id desc"
         ));
-
-        $complaint = new Complaint();
-        $complaint->changeStatus('submitted', array($compId), $this->user->id);
+		//$complaint = new Complaint();
+        //$complaint->changeStatus('submitted', array($compId), $this->user->id);
         $complaint = Complaint::findFirst($compId);
-
-        $appFiles = Applicant::findFirst($complaint->applicant_id);
-        $appFiles = unserialize($appFiles->fid);
+		
+		//$appFiles = Applicant::findFirst($complaint->applicant_id);
+        //$appFiles = unserialize($appFiles->fid);
 
         $attached = array(
             '../public/files/generated_complaints/user_' . $this->user->id . '/' . $file->docx_file_name . '.sig',
             '../public/files/generated_complaints/user_' . $this->user->id . '/' . $file->docx_file_name
         );
-
-        $compFiles = unserialize($complaint->fid);
+		
+		//$attached = array();
+		
+		/*$docxfiles = new DocxFiles();
+		$docx_files = $docxfiles->getFileByComplaintId($compId);
+		if($docx_files){
+			$attached = array(
+				'../public/files/generated_complaints/user_' . $this->user->id . '/' . $docx_files['docx_file_name'] . '.sig',
+				'../public/files/generated_complaints/user_' . $this->user->id . '/' . $docx_files['docx_file_name']
+			);
+		}*/
+		
+		$compFiles = unserialize($complaint->fid);
         foreach ($compFiles as $compfile) {
             $tempFile = Files::findFirst($compfile);
             $attached[] = '../public/files/complaints/' . $tempFile->file_path;
         }
-
-        foreach ($appFiles as $file) {
+		
+		/*foreach ($appFiles as $file) {
             $tempFile = Files::findFirst($file);
             $attached[] = '../public/files/applicant/' . $tempFile->file_path;
-        }
-
-        $ufas = Ufas::findFirst($complaint->ufas_id);
-
-         $content ='Добрый день. <br/>
+        }*/
+		$ufas = Ufas::findFirst($complaint->ufas_id);
+		
+		 $content ='Добрый день. <br/>
 Направляем вам жалобу в соответствии со ст. 105 ФЗ № 44.<br/>
 Жалоба в формате «docx» подписана квалифицированной <b>отсоединенной подписью</b>, которая создается отдельно от подписываемого файла.<br/><br/>
 Файл подписи в формате «docx.sig».<br/><br/>
@@ -1761,8 +1784,15 @@ class ComplaintController extends ControllerBase
 Для проверки выбрать раздел "отсоединенная, в формате <b>«PKCS#7»</b>, загрузить 2 файла (файл жалобы «docx» и файл подписи «docx.sig»), после чего нажать «проверить».<br/>';
 
         try {
-            $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content, $complaint->auction_id);
-            $status = 'ok';
+			$ufas->email = "ddobrokhvalov@gmail.com";
+			$mess_res = $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content, $complaint->auction_id);
+			if($mess_res){
+				$status = 'ok';
+				$complaint = new Complaint();
+				$complaint->changeStatus('submitted', array($compId), $this->user->id);
+			}else{
+				$status = 'error';
+			}
         }
 		catch(\Swift_TransportException $e){
 			$status = 'error';
@@ -1780,7 +1810,7 @@ class ComplaintController extends ControllerBase
             $message = $this->mailer->createMessage()
                 ->to($this->adminsEmails['ufas'])
                 ->subject('Ошибка при отправке в УФАС')
-                ->content('Жалоба №'.$complaint->id);
+                ->content('Жалоба №'.$complaint->id.". ".$e->getMessage());
             $message->send();
             Log::addAdminLog("Ошибка при отправке в УФАС", $content, $this->user, $complaint->auction_id, 'пользователь');
         }

@@ -489,6 +489,7 @@ var complaint = {
                             createDocx(compID);
                             setTimeout(function () {
                                 location.reload();
+								//location.href = '/complaint/index?status=draft';
                             }, 1000);
                         }
                     });

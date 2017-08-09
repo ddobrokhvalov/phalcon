@@ -108,6 +108,7 @@ var userCertificates = false;
 var selectedCertif = false;
 function setCertItem(num){
     selectedCertif = userCertificates[num];
+	console.log(selectedCertif);
 }
 function  hideWaitPopup(){
     clearTimeout(timer_id);
