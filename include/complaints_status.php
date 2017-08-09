@@ -139,24 +139,25 @@ foreach($complaints as $comp){
 		
 		if($new_status){
 			$success_text .= '**Результат рассмотрения: ' . $new_status . "<br/>";
+			$success_text .= ' | ID жалобы: ' . $comp['id'] . "<br/>";
+			$success_text .= ' | Название жалобы: ' . $comp['complaint_name'] . "<br/>";
+			$success_text .= ' | Номер извещения жалобы: ' . $comp['auction_id'] . "<br/>";
+			$success_text .= ' | Имя заявителя: ' . $comp['name_short'] . "<br/>";
+			$success_text .= ' | Дата подачи жалобы: ' . $comp['date_submit'] . "<br/>";
+			$success_text .= ' | Ссылка: <a href="http://fas-online.ru/complaint/edit/'.$comp['id'].'">Перейти к жалобе</a>';
+			$success_text .= ' | Время работы парсера: ' . date('Y-m-d H:i:s') . "<br/>";
+			$success_text .= '<br/>';
+			$success_text .= '<br/>';
+			$success_text .= '---------------------------------<br/>';
 		}else{
-			$success_text .= 'Cтатус жалобы не изменен: ' . $statuses[$comp["status"]] . "<br/>";
+			//$success_text .= 'Cтатус жалобы не изменен: ' . $statuses[$comp["status"]] . "<br/>";
 		}
 		
 	}else{
-		$success_text .= 'Cтатус жалобы не изменен: ' . $statuses[$comp["status"]] . "<br/>";
+		//$success_text .= 'Cтатус жалобы не изменен: ' . $statuses[$comp["status"]] . "<br/>";
 	}
 	
-	$success_text .= ' | ID жалобы: ' . $comp['id'] . "<br/>";
-	$success_text .= ' | Название жалобы: ' . $comp['complaint_name'] . "<br/>";
-	$success_text .= ' | Номер извещения жалобы: ' . $comp['auction_id'] . "<br/>";
-	$success_text .= ' | Имя заявителя: ' . $comp['name_short'] . "<br/>";
-	$success_text .= ' | Дата подачи жалобы: ' . $comp['date_submit'] . "<br/>";
-	$success_text .= ' | Ссылка: <a href="http://fas-online.ru/complaint/edit/'.$comp['id'].'">Перейти к жалобе</a>';
-	$success_text .= ' | Время работы парсера: ' . date('Y-m-d H:i:s') . "<br/>";
-	$success_text .= '<br/>';
-	$success_text .= '<br/>';
-	$success_text .= '---------------------------------<br/>';
+	
 	
 }
 
