@@ -77,7 +77,34 @@ class ComplaintController extends ControllerBase
         } else {
             $url = '/complaint/index';
         }
-
+		$user_arr = $this->user->toArray();
+		/*print_r("<pre>");
+		print_r($user_arr);
+		print_r("</pre>");
+		Array
+(
+    [id] => 169
+    [email] => test@mail.ru
+    [password] => 7c222fb2927d828af22f592134e8932480637c0d
+    [status] => 1
+    [date_registration] => 2017-02-06 15:50:40
+    [firstname] => 
+    [lastname] => 
+    [patronymic] => 
+    [conversion] => Тест
+    [phone] => 
+    [mobile_phone] => 
+    [notifications] => 0
+    [admin_comment] => 
+    [hashreg] => 
+    [hashrecovery] => 
+    [tarif_id] => 2
+    [tarif_date_activate] => 2017-06-29 16:27:41
+    [tarif_count] => 99
+    [tarif_active] => 1
+)
+		exit;*/
+		$this->view->user_phone = $user_arr['mobile_phone']?$user_arr['mobile_phone']:"";
         $this->view->searchurl = $url;
         $this->view->searhparam = $search;
         $this->view->page = $pages;

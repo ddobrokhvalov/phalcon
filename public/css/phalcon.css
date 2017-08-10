@@ -3016,7 +3016,22 @@ input[type="radio"]:checked + label {
     font-size: 18px;
     font-weight: 600 !important;
     height: 66px;
-    margin: 10px 80px 0;
+	margin: 10px 80px 0;
+    padding: 0 50px;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    width: 250px;
+}
+#pop-change_password_done input[type="submit"] {
+    background: #00aeef none repeat scroll 0 0;
+    border: 0 none;
+    border-radius: 5px;
+    color: #fff !important;
+    float: none;
+	margin: 0px 225px 30px;
+    font-size: 18px;
+    font-weight: 600 !important;
+    height: 66px;
     padding: 0 50px;
     text-decoration: none !important;
     text-transform: uppercase;

@@ -255,7 +255,7 @@
                                 <input type="text" id="usri1" name="mobile_phone" required value="{{user.mobile_phone}}">
                             </label>
                         </div>
-                        <div class="ch-r-s-inf-f userData" >
+                        <!--<div class="ch-r-s-inf-f userData" >
                             <span>Сменить пароль</span>
                             <label for="usri1">
                                 <span>Старый пароль</span>
@@ -274,10 +274,50 @@
                             </label>
                             <input type="submit" value="Сохранить">
                             <input type="hidden" id="current_path" name="current_path" value="">
-                        </div>
+                        </div>-->
+						<div class="ch-r-s-inf-f userData" >
+							<span class="change_password_link">Сменить пароль</span>
+							<input type="submit" value="Сохранить">
+                            <input type="hidden" id="current_path" name="current_path" value="">
+						</div>
                     </form>
                 </div>
             </div>
+			
+			<div id="pop-change_password" class="modal_div">
+				<h2>Смена пароля</h2>
+				<form method="POST" id="edit-user-pass">
+					<div class="ch-r-s-inf-f userData" >
+						<label for="usri1">
+							<span>Старый пароль</span>
+							<p class="c-inp-err-t"></p>
+							<input type="password" id="usri1" name="old_password">
+						</label>
+						<label for="usri2">
+							<span>Новый пароль</span>
+							<p class="c-inp-err-t"></p>
+							<input type="password" id="usri2" name="new_password">
+						</label>
+						<label for="usri3">
+							<span>Новый пароль еще раз</span>
+							<p class="c-inp-err-t"></p>
+							<input type="password" id="usri3" name="new_password_confirm">
+						</label>
+						<input type="submit" value="Сохранить">
+						<input type="hidden" id="current_path" name="current_path" value="">
+					</div>
+				</form>
+				<div class="modal-close"></div>
+			</div>
+			
+			<div id="pop-change_password_done" class="modal_div">
+				<h2>Смена пароля</h2>
+				<div class="pop-done-txt">
+					Пароль успешно сохранен
+				</div>
+				<input type="submit" value="Закрыть" id="change_password_done_close">
+				<div class="modal-close"></div>
+			</div>
 
             <div class="ch-r-mail-dd">
                 <div class="ch-r-mail-dd-z">

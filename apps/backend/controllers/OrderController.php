@@ -37,13 +37,20 @@ class OrderController extends ControllerBase
 					if($this->request->getPost('order_payment')){
 						$user->tarif_active = 1;
 						$order->invoce_payment = 1;
+						$message = $this->mailer->createMessage()
+								->to($user->email)
+								->bcc("ddobrokhvalov@gmail.com")
+								->subject("Оплата счета получена.")
+								->content("Оплата счета получена. Доступ к полному функционалу сервиса открыт.");
+						$message->send();
 					}else{
 						$user->tarif_active = 0;
 						$order->invoce_payment = 0;
 					}
-					print_r("<pre>");
+					/*print_r("<pre>");
 					print_r($user->toArray());
-					print_r("</pre>");
+					print_r("</pre>");*/
+					
 					$user->saveActive();
 					$order->save();
 					echo json_encode(array("status"=>"ok"));

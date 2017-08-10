@@ -13,6 +13,7 @@ $(document).ready(function () {
             data: {date: input},
             success: function (infoComplaint) {
                 console.log(infoComplaint);
+				
                 if (infoComplaint) {
                     var loadFile = function (url, callback) {
                         window.JSZipUtils.getBinaryContent(url, callback);
@@ -22,6 +23,7 @@ $(document).ready(function () {
                             console.log("eee");
                             throw e;
                         }
+						
                         doc = new Docxgen(content);
                         auction_id = infoComplaint.auction_id;
                         doc.setData({
@@ -36,7 +38,9 @@ $(document).ready(function () {
                                 'ufas_name': infoComplaint.ufas_name
                             }
                         );
+						
                         doc.render();
+						
                         out = doc.getZip().generate({type: "blob"});
                         var data = new FormData();
                         data.append('file', out);

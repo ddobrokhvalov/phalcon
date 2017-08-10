@@ -56,6 +56,14 @@ class UsersController extends Controller
                     throw new FieldException('Неправильный старый пароль', 'old_password');
                 }
             }
+			
+			if (!empty($data['old_password'] && empty($data['new_password']))) {
+				throw new FieldException('Неправильный новый пароль', 'new_password');
+			}
+			
+			if (!empty($data['old_password'] && empty($data['new_password_confirm']))) {
+				throw new FieldException('Неправильное подтверждние пароля', 'new_password_confirm');
+			}
 
             $message = $this->mailer->createMessageFromView('../views/emails/new_password', array(
                 'host'      => $this->request->getHttpHost(),
@@ -65,6 +73,42 @@ class UsersController extends Controller
                 ->subject('Восстановление пароля в системе ФАС-Онлайн');
             $message->send();
             
+            echo json_encode(array('status' => 'ok'));
+        } catch (MessageException $messages){
+            $temp_arr = array();
+            foreach ($messages->getArrErrors() as $message) {
+                $temp_arr[$message->getField()][] = $message->getMessage();
+            }
+            echo json_encode(array('error' => $temp_arr));
+        } catch (FieldException $e){
+            echo json_encode(array('error' => array( ($e->getField()=='password'?'new_password':$e->getField()) => $e->getMessage())));
+        } finally{
+            $user->phone = empty($data['phone']) ? $user->phone : $data['phone'];
+            $user->conversion = empty($data['conversion']) ? $user->conversion : $data['conversion'];
+            $user->mobile_phone = empty($data['mobile_phone']) ? $user->mobile_phone : $data['mobile_phone'];
+            $user->notifications = empty($data['notifications']) ? 0 : 1;
+            $user->update();
+            exit;
+        }
+    }
+	
+	public function changeSettingsAction()
+    {
+        try {
+            $data = $this->request->getPost();
+            $user = User::findFirstById($this->session->get('auth')['id']);
+            $data['current_path'] = str_replace('public//', '', $data['current_path']);
+            
+            if (!$user) throw new FieldException('not user', 'user');
+            
+            foreach ($data as $key => $value){
+                $data[$key] =  $this->filter->sanitize($value, 'trim');
+            }
+
+            if (!empty($data['current_path']) || $data['current_path'] == '/login/start') {
+                $data['current_path'] = '/complaint/index';
+            }
+
             echo json_encode(array('status' => 'ok'));
         } catch (MessageException $messages){
             $temp_arr = array();

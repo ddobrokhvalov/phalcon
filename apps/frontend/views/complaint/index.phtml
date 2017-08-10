@@ -256,10 +256,20 @@
     <form method="post">
         <label class="fontNormal" for="poplog-inp1">Введите номер извещения (заказа)</label>
         <div class="c-inp-err-t"></div>
+		<input type="hidden" id="user_phone" name="user_phone" value="{{ user_phone }}" required="required">
         <input type="text" id="poplog-inp1" required="required" name="auction_id" placeholder="Введите номер извещения 19 цифр" maxlength="19"> <!-- pattern="^[0]{1}[\d]{18}$" -->
         <input type="submit" value="Заказать">
     </form>
     <div class="modal-close"></div>
+</div>
+
+<div id="pop-empty-phone" class="modal_div">
+	<h2>Ошибка</h2>
+	<div class="pop-done-txt">
+        Ваш запрос не отправлен.<br>
+		У пользователя не заполнен телефон.
+    </div>
+	<div class="modal-close"></div>
 </div>
 
 <div id="pop-done" class="modal_div">

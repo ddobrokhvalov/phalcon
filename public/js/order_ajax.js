@@ -1,6 +1,12 @@
 $(document).ready(function () {
     $('#pop-order form').on('submit', function(){
         var form = $(this);
+		if(!$("#pop-order #user_phone").val()){
+			$("#pop-order").hide();
+			$("#pop-empty-phone").show();
+			$("#pop-empty-phone").css("opacity", 1);
+			return false;
+		}
         $.ajax({
             type: 'POST',
             url: '/order/order',
