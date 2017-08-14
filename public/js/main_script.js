@@ -490,6 +490,21 @@ jQuery(document).ready(function($) {
         });
 	});
 	
+	$(".incoming_number_button").click(function(){
+		var compl_id = $(this).attr("rel");
+		var incoming_number = $("#incoming_number_"+compl_id).val();
+		$.ajax({
+            type: "POST",
+            url: '/admin/complaints/activecomplaints',
+            //dataType: 'json',
+            async: false,
+            cache: false,
+            data: {action: 'set_incoming_number', complaint_id: compl_id, incoming_number: incoming_number},
+            success: function (data) {
+			}
+		});
+	});
+	
 });
 var userPageLtContentLi = 0;
 //status block

@@ -507,7 +507,7 @@
     {% for argument in arguments  %}
         {% for template in argument['templates']  %}
             {% if arr_users_arg[template.id] is defined %}
-            templates[{{template.id}}] = '{{arr_users_arg[template.id]}}';
+            templates[{{template.id}}] = '{{arr_users_arg[template.id]|slashes}}';
         {% else %}
         templates[{{template.id}}] = '{{template.text}}';
         {% endif %}

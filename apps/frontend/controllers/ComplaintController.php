@@ -173,7 +173,7 @@ class ComplaintController extends ControllerBase
             $text = $argument->text;
             $categories_id[] = $argument->argument_category_id;
             $arguments_id[] = $argument->argument_id;
-            $text = preg_replace('/[\r\n\t]/', '', $text);
+            //$text = preg_replace('/[\r\n\t]/', '', $text);
             $text = str_replace("'", '"', $text);
             $arr_users_arg[$argument->argument_id] = $text;
 
@@ -189,7 +189,10 @@ class ComplaintController extends ControllerBase
             );
             ++$argument_order;
         }
-
+		/*print_r("<pre>");
+		print_r($arr_users_arg);
+		print_r("</pre>");
+		exit;*/
         if (!empty($arr_sub_cat)) {
             $this->view->arr_sub_cat = $arr_sub_cat;
         }
@@ -1176,7 +1179,7 @@ class ComplaintController extends ControllerBase
             $users_arguments[$key] = explode('?|||?', $row);
         }
 
-        foreach ($users_arguments as $key => &$row) {
+        foreach ($users_arguments as $key => $row) {
             foreach ($row as $data_) {
                 $data_ = explode('===', $data_);
 

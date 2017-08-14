@@ -562,6 +562,7 @@ var currTextArea = 0;
 var argument = {
     argumentList: [],
     addArgument: function (id, cat_id, complaint_text, objReq) {
+		//console.log(templates[id]);
         regFlags = objReq;
         complaint_text = complaint_text || "";
         //templates["just_text"] = "Вы можете ввести свой текст здесь";

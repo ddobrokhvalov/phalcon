@@ -2,22 +2,8 @@
 {% block title %}ФАС ОНЛАЙН - Жалобы{% endblock %}
 {% block body %}
 <div class="admin-main-wrap complaints-list">
-    <h1>Список жалоб</h1>
-	<div class="active_complaints_container"><a href="/admin/complaints/activecomplaints" class="active_complaints_link">Активные жалобы</a></div>
+    <h1>Список активных жалоб</h1>
     <div class="admin-lt-holder">
-        <div class="admin-lt-head">
-            <div class="select-all">
-                <div></div>Выбрать все
-            </div>
-            <div class="lt-head-btns">
-                <div class="btn disabled-btn copy-complaint" onclick="changeStatusInComplaintList('copy')">Копировать</div>
-                <div class="btn disabled-btn recall-complaint" onclick="changeStatusInComplaintList('recalled')">Отозвать</div>
-                <div class="btn disabled-btn archive-complaint" onclick="changeStatusInComplaintList('archive')">В архив</div>
-                <div class="btn disabled-btn un-archive-complaint" onclick="changeStatusInComplaintList('activate')">Активировать</div>
-                <div id="delete-button" class="disabled-btn">Удалить</div>
-				<a href="/admin/complaints/add"><div id="add-button" class="">Добавить</div></a>
-            </div>
-        </div>
         <div class="modal fade confirm-deletion-complaint-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
           <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -34,52 +20,31 @@
         </div>
         <div class="admin-lt-content" id="sort-table">
             <ul class="lt-content-top">
-                <li></li>
-                <li><span>Название жалобы</span></li>
-                <li sort-field="sort-number"><span class="sortable">№</span></li>
+				<li></li>
+				<li style="display: none;"></li>
+                <li sort-field="sort-number"><span class="sortable">№ закупки</span></li>
                 <li sort-field="sort-date"><span class="sortable">Дата</span></li>
                 <li sort-field="sort-questions"><span class="sortable">Заявитель</span></li>
-                <li sort-field="sort-status"><span class="sortable">Статус</span></li>
+                <li sort-field="sort-status"></li>
             </ul>
             {% for complaint in page.items %}
             <ul class="lt-content-main {% if complaint.status == 'submitted' %}podana{% elseif complaint.status == 'archive' %}alr-archive{% endif %}" sort-number="{{complaint.auction_id}}" sort-date="{{complaint.date|strtotime}}" sort-questions="{{complaint.getCountQuestions(complaint.Question, true)}}" sort-status="{{complaint.status}}" detail-url="{{url('admin/complaints/preview/' ~ complaint.id)}}">
-                <li>{% if complaint.deleted == 0 %}<div class="lt-psevdo-check">{{hidden_field('complaint-id', 'value':complaint.id)}}</div>{% endif %}</li>
-                {% if complaint.complaint_name | length > 155 %}
-                <li style="padding-top:20px;padding-left:35px;">{{ truncate(complaint.complaint_name, 0, 155) }}</li>
-                {% else %}
-                <li style="padding-top:25px;padding-left:35px;">{{ complaint.complaint_name }}</li>
-                {% endif %}
-                <li>{{ complaint.auction_id }}</li>
-                <li>{{ date('d.m.Y', complaint.date|strtotime) }}</li>
+                <li></li>
+                <li style="display: none;"></li>
+				<li>{{ complaint.auction_id }}</li>
+                <li>{{ complaint.date_submit}}</li>
                 <li style="font-size:12px; line-height: 18px;padding-top:25px;">
 					<a href="/admin/applicants/info/{{ complaint.Applicant.id }}">{% if complaint.Applicant.type == 'urlico' %}{{ complaint.Applicant.name_short }}{% else %}{{ complaint.Applicant.fio_applicant }}{% endif %}</a>
 				</li>
                 <li class='with-dropdown' style="line-height: 15px !important; font-size:12px !important;">
-				{% if complaint.deleted == 0 %}
-                    <div class="dropdown">
-                      <div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{complaint.getComplaintStatus(complaint.status)}}
-                      </div>
-                      <ul class="dropdown-menu" aria-labelledby="dLabel">
-                        <li class="header-dropdown">Сменить статус<span class="caret"></span></li>
-                        <li>{{complaint.getAllStatuses(0)}}</li>
-                        <li>{{complaint.getAllStatuses(1)}}</li>
-                        <li>{{complaint.getAllStatuses(2)}}</li>
-                        <li>{{complaint.getAllStatuses(3)}}</li>
-                        <li>{{complaint.getAllStatuses(4)}}</li>
-                        <li>{{complaint.getAllStatuses(5)}}</li>
-                        <li>{{complaint.getAllStatuses(6)}}</li>
-                      </ul>
-                    </div>
-				{% else %}
-					<div class="dropdown">
-						<div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<span data-status="deleted" class="jl-status jl-deleted">Удалена</span>
-						</div>
-					</div>
-				{% endif %}
+					
                 </li>
             </ul>
+			<div class="incoming_number_container">
+				<label for="incoming_number_{{complaint.id}}">Входящий номер: </label>
+				<input type="text" value="{{complaint.incoming_number}}" id="incoming_number_{{complaint.id}}" class="incoming_number" name="incoming_number_{{complaint.id}}">
+				<input rel="{{complaint.id}}" type="button" value="Применить" id="incoming_number_button_{{complaint.id}}" class="incoming_number_button">
+			</div>
             {% endfor %}
         </div>
     </div>
@@ -91,19 +56,19 @@
                 {% else %}
                     <div></div>
             {% endif %}
-            <a href="/admin/complaints/index?all-portions-items=all_items">Показать все жалобы (<span>{{page.total_items}}</span>)</a><!--todo: -->
+            <a href="/admin/complaints/activecomplaints?all-portions-items=all_items">Показать все жалобы (<span>{{page.total_items}}</span>)</a><!--todo: -->
         </div>
         <form id="next_items" method="post">
             {{hidden_field('next-portions-items', 'value':20)}}
         </form>
     {% endif %}
     <div class="admin-pagination-box">
-        {% if page.current>1 %}{{ link_to("admin/complaints/index?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
+        {% if page.current>1 %}{{ link_to("admin/complaints/activecomplaints?page=" ~ page.before, 'Предыдущие', 'id' : 'admin-pag-prev') }}{% endif %}
         <ul>
             {% for page_item in paginator_builder %}
             <li>
                 {% if page_item['type'] == 'page' %}
-                {{ link_to("admin/complaints/index?page=" ~ page_item['num'], page_item['num']) }}
+                {{ link_to("admin/complaints/activecomplaints?page=" ~ page_item['num'], page_item['num']) }}
                 {% elseif page_item['type'] == 'delimer' %}
                 <span>...</span>
                 {% elseif page_item['type'] == 'current' %}
@@ -112,7 +77,7 @@
             </li>
             {% endfor %}
         </ul>
-        {% if page.total_pages > page.current %}{{ link_to("admin/complaints/index?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
+        {% if page.total_pages > page.current %}{{ link_to("admin/complaints/activecomplaints?page=" ~ page.next, 'Следующие', 'id' : 'admin-pag-next') }}{% endif %}
     </div>
     {% if scroll_to_down %}
         <script type="text/javascript">

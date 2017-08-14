@@ -568,7 +568,8 @@
                 {% for template in argument['templates']  %}
                     {% if arr_users_arg[template.id] is defined%}
                         {% if arr_users_arg[template.id] != '' %}
-                            templates[{{template.id}}] = '{{arr_users_arg[template.id]}}';
+                            templates[{{template.id}}] = '{{arr_users_arg[template.id]|slashes}}';
+							//console.log(templates[{{template.id}}]);
                         {% endif %}
                     {% else %}
                         {% if template.text != '' %}
@@ -593,8 +594,9 @@
                 /*$('.argument_text_container').append('<span id="argument_text_container_' + value + '" class="atx argument_text_container_' + value + '">' + $('#template_' + value).html() + ' <a class="remove-argument" value="' + value + '"  ></a></span>');*/
                 $(".category-container input#jd2cbb" + value).prop('checked', true);
                 var cat = $(".category-container input#jd2cbb" + value).attr("category");
+				
                 if(Object.keys(arr_sub).length){
-                    argument.addArgument(value, cat, arr_sub[cat], $('.category-container #jd2cbb' + value ).attr("data-req"));
+					argument.addArgument(value, cat, arr_sub[cat], $('.category-container #jd2cbb' + value ).attr("data-req"));
                 } else {
                     argument.addArgument(value, cat);
                 }

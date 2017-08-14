@@ -71,6 +71,58 @@ class ComplaintsController extends ControllerBase
             $this->setMenu();
         }
     }
+	
+	public function activeComplaintsAction()
+    {
+        $perm = new Permission();
+        if (!$perm->actionIsAllowed($this->user->id, 'complaints', 'index')) {
+            $this->view->pick("access/denied");
+            $this->setMenu();
+        } else {
+			if($this->request->getPost("action") && $this->request->getPost("action") == "set_incoming_number"){
+				$post_data = $this->request->getPost();
+				$complaint = Complaint::findFirstById($post_data["complaint_id"]);
+				if($complaint){
+					$complaint->incoming_number = $post_data["incoming_number"];
+					$complaint->save();
+					$result = array("status"=>"ok", "text"=>"Входящий номер обновлен");
+				}else{
+					$result = array("status"=>"error", "text"=>"Жалоба не найдена");
+				}
+				echo json_encode($result);
+				exit;
+			}
+            setlocale(LC_ALL, 'ru_RU.UTF-8');
+            $search = $this->request->get('search');
+            $search = preg_replace("/[^a-zA-ZА-Яа-я0-9\s]/u", "", $search);
+            $next_items = $this->request->getPost('next-portions-items');
+            if (!isset($next_items)) {
+                $next_items = 0;
+            }
+            $item_per_page = 20 + $next_items;
+            $numberPage = isset($_GET['page']) ? $_GET['page'] : 1;
+            $show_all_items = $this->request->get('all-portions-items');
+            if (isset($show_all_items) && $show_all_items == 'all_items') {
+                $item_per_page = 99999;
+            }
+            $complaints = Complaint::find(array(
+                "conditions" => "(complaint_name LIKE '%{$search}%' OR auction_id LIKE '%{$search}%') and status = 'submitted'",
+                "order" => "date DESC"
+            ));
+
+            $paginator = new Paginator(array(
+                "data" => $complaints,
+                "limit" => $item_per_page,
+                "page" => $numberPage
+            ));
+            $pages = $paginator->getPaginate();
+            $this->view->page = $pages;
+            $this->view->item_per_page = $item_per_page;
+            $this->view->scroll_to_down = $next_items > 0 ? TRUE : FALSE;
+            $this->view->paginator_builder = PaginatorBuilder::buildPaginationArray($numberPage, $pages->total_pages);
+            $this->setMenu();
+        }
+    }
 
     public function editAction($id)
     {
@@ -249,9 +301,11 @@ class ComplaintsController extends ControllerBase
 				$applicant = Applicant::findFirst(array(
 					"id={$complaint->applicant_id}"
 				));
-				$user = User::findFirst(array(
-					"id={$applicant->user_id}"
-				));
+				if($applicant){
+					$user = User::findFirst(array(
+						"id={$applicant->user_id}"
+					));
+				}
 			}
 
             if (!$perm->actionIsAllowed($this->user->id, 'lawyer', 'index') && $this->user->id != 1) {

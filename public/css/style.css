@@ -2263,6 +2263,53 @@ a:focus {
   margin-bottom: 0;
   border-bottom: 1px solid #e0e3ea;
 }
+
+.active_complaints_link{
+	display: block;
+	margin-bottom: 29px;
+    outline: none;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 50px;
+    letter-spacing: 1px;
+    color: #ffffff;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 6px;
+    background-color: #00aeef;
+	width: 210px;
+    text-align: center;
+}
+.active_complaints_link:hover{
+	text-decoration: none;
+	font-size: 14px;
+    font-weight: 600;
+	color: #ffffff;
+}
+.incoming_number_container {
+    float: right;
+    margin-top: -55px;
+}
+.incoming_number{
+	padding: 0 11px;
+	box-sizing: border-box;
+	font: 14px/34px 'Open Sans', sans-serif;
+	color: #222427;
+    border: 1px solid #d4d7df;
+    border-radius: 2px;
+}
+.incoming_number_button{
+	outline: none;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 30px;
+    letter-spacing: 1px;
+    color: #ffffff;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 6px;
+    background-color: #00aeef;
+}
 /* line 132, ../sass/_admin_list.scss */
 .admin-lt-content ul:not(:first-child) li:first-child {
   padding-left: 0;

@@ -32,6 +32,7 @@ class Complaint extends Model
     public $date_submit;
     public $user_id;
 	public $deleted;
+	public $incoming_number;
 
     public function initialize()
     {
