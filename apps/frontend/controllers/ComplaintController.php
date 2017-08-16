@@ -1775,8 +1775,13 @@ class ComplaintController extends ControllerBase
         //$complaint->changeStatus('submitted', array($compId), $this->user->id);
         $complaint = Complaint::findFirst($compId);
 		
-		//$appFiles = Applicant::findFirst($complaint->applicant_id);
-        //$appFiles = unserialize($appFiles->fid);
+		$appFiles = array();
+		if($complaint->applicant_id){
+			$appFiles = Applicant::findFirst($complaint->applicant_id);
+			if($appFiles){
+				$appFiles = unserialize($appFiles->fid);
+			}
+		}
 
         $attached = array(
             '../public/files/generated_complaints/user_' . $this->user->id . '/' . $file->docx_file_name . '.sig',
@@ -1799,11 +1804,14 @@ class ComplaintController extends ControllerBase
             $tempFile = Files::findFirst($compfile);
             $attached[] = '../public/files/complaints/' . $tempFile->file_path;
         }
-		
-		/*foreach ($appFiles as $file) {
+		$add_content = "";
+		foreach ($appFiles as $file) {
             $tempFile = Files::findFirst($file);
-            $attached[] = '../public/files/applicant/' . $tempFile->file_path;
-        }*/
+			if(file_exists($_SERVER["DOCUMENT_ROOT"].'/public/files/applicant/'.$tempFile->file_path)){
+				$attached[] = '../public/files/applicant/' . $tempFile->file_path;
+			}
+			//$add_content .= '; '.$_SERVER["DOCUMENT_ROOT"].'/public/files/applicant/'.$tempFile->file_path;
+        }
 		$ufas = Ufas::findFirst($complaint->ufas_id);
 		
 		 $content ='Добрый день. <br/>
@@ -1811,10 +1819,10 @@ class ComplaintController extends ControllerBase
 Жалоба в формате «docx» подписана квалифицированной <b>отсоединенной подписью</b>, которая создается отдельно от подписываемого файла.<br/><br/>
 Файл подписи в формате «docx.sig».<br/><br/>
 Действительность подписи можно проверить на сайте Правительства РФ «ГОСУСЛУГИ» - https://www.gosuslugi.ru/pgu/eds/.<br/> 
-Для проверки выбрать раздел "отсоединенная, в формате <b>«PKCS#7»</b>, загрузить 2 файла (файл жалобы «docx» и файл подписи «docx.sig»), после чего нажать «проверить».<br/>';
+Для проверки выбрать раздел "отсоединенная, в формате <b>«PKCS#7»</b>, загрузить 2 файла (файл жалобы «docx» и файл подписи «docx.sig»), после чего нажать «проверить».<br/>'.$add_content;
 
         try {
-			//$ufas->email = "ddobrokhvalov@gmail.com";
+			$ufas->email = "ddobrokhvalov@gmail.com";
 			$mess_res = $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content, $complaint->auction_id);
 			if($mess_res){
 				$status = 'ok';
