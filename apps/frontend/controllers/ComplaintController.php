@@ -1822,7 +1822,7 @@ class ComplaintController extends ControllerBase
 Для проверки выбрать раздел "отсоединенная, в формате <b>«PKCS#7»</b>, загрузить 2 файла (файл жалобы «docx» и файл подписи «docx.sig»), после чего нажать «проверить».<br/>'.$add_content;
 
         try {
-			$ufas->email = "ddobrokhvalov@gmail.com";
+			//$ufas->email = "ddobrokhvalov@gmail.com";
 			$mess_res = $this->SendToUfas($attached, $ufas->email, 'Жалоба 44-ФЗ', $content, $complaint->auction_id);
 			if($mess_res){
 				$status = 'ok';
