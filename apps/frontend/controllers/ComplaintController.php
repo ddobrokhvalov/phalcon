@@ -288,7 +288,26 @@ class ComplaintController extends ControllerBase
                 $this->view->comp_inn = $ufas_name->number;
             }
         }
-
+		
+		$imported_data = $complaint->findImportedResult();
+		$compl_arr = $complaint->toArray();
+		
+		
+		
+		if(count($imported_data)){
+			$imported_data = array_reverse($imported_data);
+			$imported_data = $imported_data[0];
+			$imported_data["regDate"] = date("d.m.Y", strtotime($imported_data["regDate"]));
+			$imported_data["planDecisionDate"] = date("d.m.Y H:i", strtotime($imported_data["planDecisionDate"]));
+			$imported_data["attachments"] = json_decode($imported_data["attachments"]);
+			$imported_data["decisionattachments"] = json_decode($imported_data["decisionattachments"]);
+			$imported_data["icc_attachments"] = json_decode($imported_data["icc_attachments"]);
+			/*print_r("<pre>");
+			print_r($imported_data);
+			print_r("</pre>");*/
+			//exit;
+			$this->view->imported_data = $imported_data;
+		}
 
         if (is_null($complaint->date_start)) $complaint->date_start = $complaint->nachalo_podachi;
         $this->view->date_end = $this->checkDateEndSendApp($complaint->okonchanie_podachi);

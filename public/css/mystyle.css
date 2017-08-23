@@ -607,6 +607,30 @@
   opacity: .7;
   text-decoration: none;
 }
+
+.history_content{
+	width: 100%!important;
+	clear: both;
+	float:none;
+}
+
+.history_content .wrapper{
+	width: 100%;
+	clear: both;
+	float:none;
+	margin: 0;
+}
+
+.history_content .wrapper .c-content{
+	padding: 0;
+	float:none;
+	min-height: 0;
+}
+
+.history_content .wrapper .c-content .mybox{
+	padding: 0 0 30px;
+}
+
 /* Adaptive */
 @media screen and (max-width: 1080px) {
   .wrapper {

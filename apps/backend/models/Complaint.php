@@ -336,32 +336,34 @@ class Complaint extends Model
 
                 $comp = new Complaint();
                 $user_id = $comp->getComplaintOwner( $complaint->id );
-                $message = new Messages();
-                $message->to_uid = $user_id;
-                $message->subject = "Изменение статуса жалобы";
-                $message->body = "Статус вашей жалобы был изменен на '{$stat}' администратором.";
-                $message->time = date('Y-m-d H:i:s');
-                $message->is_read = 0;
-                $message->is_deleted = 0;
-                $message->stat_comp = $status;
-                $message->comp_id = $id;
-                $message->history_id = $history_id;
-                $message->save();
+				if($user_id){
+					$message = new Messages();
+					$message->to_uid = $user_id;
+					$message->subject = "Изменение статуса жалобы";
+					$message->body = "Статус вашей жалобы был изменен на '{$stat}' администратором.";
+					$message->time = date('Y-m-d H:i:s');
+					$message->is_read = 0;
+					$message->is_deleted = 0;
+					$message->stat_comp = $status;
+					$message->comp_id = $id;
+					$message->history_id = $history_id;
+					$message->save();
 
-                $user = User::findFirst(array("id={$user_id}"));
-                if($user && $user->notifications == 1) {
-                    $message = $this->mailer->createMessageFromView('../views/emails/status', array(
-                        'status' => $message_text,
-                        'host' => $this->request->getHttpHost(),
-                        'conversion' => $user->conversion,
-                        'auction_id' => $complaint->auction_id,
-                        'comp_id' => $complaint->id,
-                        'comp_name' => $complaint->complaint_name
-                    ))
-                        ->to($user->email)
-                        ->subject('Изменение статуса жалобы в системе ФАС-Онлайн');
-                    $message->send();
-                }
+					$user = User::findFirst(array("id={$user_id}"));
+					if($user && $user->notifications == 1) {
+						$message = $this->mailer->createMessageFromView('../views/emails/status', array(
+							'status' => $message_text,
+							'host' => $this->request->getHttpHost(),
+							'conversion' => $user->conversion,
+							'auction_id' => $complaint->auction_id,
+							'comp_id' => $complaint->id,
+							'comp_name' => $complaint->complaint_name
+						))
+							->to($user->email)
+							->subject('Изменение статуса жалобы в системе ФАС-Онлайн');
+						$message->send();
+					}
+				}
             }
         }
     }

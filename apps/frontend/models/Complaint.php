@@ -9,6 +9,7 @@ class Complaint extends Model
 {
     public $id;
     public $applicant_id;
+	public $auction_id;
     public $type;
     public $purchases_made;
     public $purchases_name;
@@ -289,7 +290,7 @@ class Complaint extends Model
                 $complaintmovinghistory->save(['complaint_id' => $id, 'old_status' => $complaint->status, 'new_status' => $status]);
                 $complaint->status = $status;
                 if($complaint->status == 'submitted'){
-                    $complaint->date_submit = date('d.m.Y');
+                    $complaint->date_submit = date('d.m.Y H:i:s');
                 }
 
                 $complaint->save();
@@ -359,14 +360,80 @@ class Complaint extends Model
 	
 	public function saveOrder($data){
 		$db = $this->getDi()->getShared('db');
-		print_r("<pre>");
-		print_r($db);
-		print_r("</pre>");
 		if(isset($_SESSION["order_id"])){
 			$sql = "update ";
 		}else{
 			$sql = "insert ";
 		}
+	}
+	
+	public function findImportedResult(){
+		$db = $this->getDi()->getShared('db');
+		
+		$applicant = Applicant::findFirstById($this->applicant_id);
+		
+		$zayavitel = trim($applicant->name_short);
+		$zayavitel = trim(preg_replace(array('/ООО|Общество с ограниченной ответственностью|Акционерное общество|ООО|ИП\s|АО\s/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $zayavitel));
+		$zayavitel = trim(preg_replace('/\s+/ui', ' ', $zayavitel));
+		
+		$imported_comp_sql = "select ic.id, ic.complaintNumber, ic.regNumber, ic.docNumber, ic.versionNumber, 
+									ic.regDate, ic.createDate, ic.createUser, ic.planDecisionDate, ic.noticenumber, ic.noticeacceptDate, 
+									ic.decisionPlace, ic.considerationKOfullName, 
+									ic.applicantType, ic.organizationName, ic.applicantNewfullName, ic.applicantNewcode, ic.applicantNewsingularName, 
+									ic.purchaseNumber, ic.purchaseCode, ic.purchaseName,
+									ich.id as ch_id, ich.versionNumber as ich_version, ich.complaintResult, 
+									ic.attachments, ich.decisionattachments, ic.printFormurl, 
+									icc.id as icc_id, icc.complaintNumber as icc_complaintNumber, icc.registrationKOfullName as icc_registrationKOfullName, icc.regDate as icc_regDate, icc.printFormurl as icc_printFormurl, icc.attachments as icc_attachments
+							from imported_complaint ic
+							left join imported_checkresult ich on ich.complaintNumber = ic.complaintNumber and ich.purchaseNumber = ic.purchaseNumber
+							left join imported_complaint_cancel icc on icc.complaintNumber = ic.complaintNumber 
+																		and icc.registrationKOfullName = ic.registrationKOfullName 
+																		and icc.regDate = ic.regDate
+																		and icc.attachments = ic.attachments
+							where ic.purchaseNumber = '".$this->auction_id."'
+							order by ic.versionNumber asc, ich.versionNumber asc";
+		$imported_comps = $db->query($imported_comp_sql);
+		$imported_comps = $imported_comps->fetchAll();
+		
+		$imported_comps2 = array();
+		foreach($imported_comps as $imported_comp){
+			$lico = trim(preg_replace(array('/Общество с ограниченной ответственностью|Акционерное общество|ООО|ИП\s|АО\s/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $imported_comp['applicantNewfullName']));
+			$lico = trim(preg_replace('/\s+/ui', ' ', $lico));
+			if($applicant->type == "ip" || $applicant->type == "fizlico"){
+				$zayavitel_arr = explode(" ", $zayavitel);
+				$lico_arr = explode(" ", $lico);
+				if(mb_stristr($zayavitel, $lico, false, "utf-8") || 
+					(count($zayavitel_arr) == 3 && count($lico_arr) == 3 
+						&& mb_stristr($zayavitel_arr[0], $lico_arr[0], false, "utf-8") && mb_stristr($zayavitel_arr[1], $lico_arr[1], false, "utf-8") && mb_stristr($zayavitel_arr[2], $lico_arr[2], false, "utf-8")
+					)
+				){
+					$date_submit = date("Y-m-d H:i:s", strtotime($comp["date_submit"]));
+					$date_submit_plus3 = date("Y-m-d H:i:s", strtotime($comp["date_submit"]." + 5 days"));
+					$regdate = date("Y-m-d H:i:s", strtotime($imported_comp["regDate"]));
+					$imported_comp["zayavitel"] = $zayavitel;
+					$imported_comp["lico"] = $lico;
+					$imported_comp["zayavitel_arr"] = $zayavitel_arr;
+					$imported_comp["lico_arr"] = $lico_arr;
+					if($regdate >= $date_submit && $regdate <= $date_submit_plus3){
+						$imported_comps2[] = $imported_comp;
+					}
+					
+				}
+			}else{
+				if(mb_stristr($zayavitel, $lico, false, "utf-8")){
+					$date_submit = date("Y-m-d H:i:s", strtotime($comp["date_submit"]));
+					$date_submit_plus3 = date("Y-m-d H:i:s", strtotime($comp["date_submit"]." + 5 days"));
+					$regdate = date("Y-m-d H:i:s", strtotime($imported_comp["regDate"]));
+					$imported_comp["zayavitel"] = $zayavitel;
+					$imported_comp["lico"] = $lico;
+					if($regdate >= $date_submit && $regdate <= $date_submit_plus3){
+						$imported_comps2[] = $imported_comp;
+					}
+					
+				}
+			}
+		}
+		return $imported_comps2;
 	}
 
 }

@@ -25,11 +25,12 @@
                 <li sort-field="sort-number"><span class="sortable">№ закупки</span></li>
                 <li sort-field="sort-date"><span class="sortable">Дата</span></li>
                 <li sort-field="sort-questions"><span class="sortable">Заявитель</span></li>
-                <li sort-field="sort-status"></li>
+				<li sort-field="sort-status"><span class="sortable">Статус</span></li>
+                <li>Входящий номер:</li>
             </ul>
             {% for complaint in page.items %}
             <ul class="lt-content-main {% if complaint.status == 'submitted' %}podana{% elseif complaint.status == 'archive' %}alr-archive{% endif %}" sort-number="{{complaint.auction_id}}" sort-date="{{complaint.date|strtotime}}" sort-questions="{{complaint.getCountQuestions(complaint.Question, true)}}" sort-status="{{complaint.status}}" detail-url="{{url('admin/complaints/preview/' ~ complaint.id)}}">
-                <li></li>
+                <li style="display: none;">{% if complaint.deleted == 0 %}<div class="lt-psevdo-check">{{hidden_field('complaint-id', 'value':complaint.id)}}</div>{% endif %}</li>
                 <li style="display: none;"></li>
 				<li>{{ complaint.auction_id }}</li>
                 <li>{{ complaint.date_submit}}</li>
@@ -37,11 +38,34 @@
 					<a href="/admin/applicants/info/{{ complaint.Applicant.id }}">{% if complaint.Applicant.type == 'urlico' %}{{ complaint.Applicant.name_short }}{% else %}{{ complaint.Applicant.fio_applicant }}{% endif %}</a>
 				</li>
                 <li class='with-dropdown' style="line-height: 15px !important; font-size:12px !important;">
-					
+					{% if complaint.deleted == 0 %}
+						<div class="dropdown">
+						  <div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							{{complaint.getComplaintStatus(complaint.status)}}
+						  </div>
+						  <ul class="dropdown-menu" aria-labelledby="dLabel">
+							<li class="header-dropdown">Сменить статус<span class="caret"></span></li>
+							<li>{{complaint.getAllStatuses(0)}}</li>
+							<li>{{complaint.getAllStatuses(1)}}</li>
+							<li>{{complaint.getAllStatuses(2)}}</li>
+							<li>{{complaint.getAllStatuses(3)}}</li>
+							<li>{{complaint.getAllStatuses(4)}}</li>
+							<li>{{complaint.getAllStatuses(5)}}</li>
+							<li>{{complaint.getAllStatuses(6)}}</li>
+						  </ul>
+						</div>
+					{% else %}
+						<div class="dropdown">
+							<div id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span data-status="deleted" class="jl-status jl-deleted">Удалена</span>
+							</div>
+						</div>
+					{% endif %}
                 </li>
+				<li></li>
             </ul>
 			<div class="incoming_number_container">
-				<label for="incoming_number_{{complaint.id}}">Входящий номер: </label>
+				<!--<label for="incoming_number_{{complaint.id}}">Входящий номер: </label>-->
 				<input type="text" value="{{complaint.incoming_number}}" id="incoming_number_{{complaint.id}}" class="incoming_number" name="incoming_number_{{complaint.id}}">
 				<input rel="{{complaint.id}}" type="button" value="Применить" id="incoming_number_button_{{complaint.id}}" class="incoming_number_button">
 			</div>
