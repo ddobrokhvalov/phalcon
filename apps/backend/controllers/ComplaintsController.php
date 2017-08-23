@@ -875,151 +875,151 @@ class ComplaintsController extends ControllerBase
 	/* ADD COMPLICANT */
     public function ajaxStepsAddComplaintAction()
     {
-        try {
-            $data = array();
-            $result = array(
-                "cat_arguments" => array(),
-                "arguments" => array(),
-                "date" => 0
-            );
-            $CurrentStep = $this->request->get('step');
-            $data['type'] = $this->request->getPost('type');
-            $data['dateOff'] = $this->request->getPost('dateoff');
+		try{
+			$data = array();
+			$result = array(
+				"cat_arguments" => array(),
+				"arguments" => array(),
+				"date" => 0
+			);
+			$CurrentStep = $this->request->get('step');
+			$data['type'] = $this->request->getPost('type');
+			$data['dateOff'] = $this->request->getPost('dateoff');
+			
+			//1 - пользователь выбрал обязательный довод  // 0 - не выбрал
+			$data['checkRequired'] = $this->request->getPost('checkrequired');
 
-            //1 - пользователь выбрал обязательный довод  // 0 - не выбрал
-            $data['checkRequired'] = $this->request->getPost('checkrequired');
+			if (!$CurrentStep || !is_numeric($CurrentStep)) throw new Exception('bad step');
+			if (!$data['type'] || !$this->checkTypePurchase($data['type'])) throw new Exception('bad type');
+			if (!$data['dateOff'] || trim($data['dateOff']) == '') throw new Exception('bad date');
 
-            if (!$CurrentStep || !is_numeric($CurrentStep)) throw new Exception('bad step');
-            if (!$data['type'] || !$this->checkTypePurchase($data['type'])) throw new Exception('bad type');
-            if (!$data['dateOff'] || trim($data['dateOff']) == '') throw new Exception('bad date');
+			// 0 - не просрочено // 1 - просрочено
+			$data['checkDate'] = $this->checkDateEndSendApp2($data['dateOff'], $result);
 
-            // 0 - не просрочено // 1 - просрочено
-            $data['checkDate'] = $this->checkDateEndSendApp2($data['dateOff'], $result);
+			switch($CurrentStep){
+				case self::STEP_ONE:
+					$cat = new ArgumentsCategory();
+					$cat_arguments = $cat->getCategoryNotEmpty($data['type'], $data['checkDate'], $data['checkRequired']);
+					$temp_name = array();
 
-            switch ($CurrentStep) {
-                case self::STEP_ONE:
-                    $cat = new ArgumentsCategory();
-                    $cat_arguments = $cat->getCategoryNotEmpty($data['type'], $data['checkDate'], $data['checkRequired']);
-                    $temp_name = array();
+					foreach($cat_arguments as $cat){
+						if(!in_array($cat->lvl1, $temp_name)){
+							$temp_name[] = $cat->lvl1;
+							$result['cat_arguments'][] = array(
+								'id' => $cat->lvl1_id,
+								'name' => $cat->lvl1,
+								'required' => $cat->lvl1_required,
+								'parent_id' => 0
+							);
+						}
+					}
+					echo json_encode($result);
+					break;
+				case self::STEP_TWO:
+					$parent_id = $this->request->getPost('id');
+					if (!$parent_id || !is_numeric($parent_id)) throw new Exception('bad data');
 
-                    foreach ($cat_arguments as $cat) {
-                        if (!in_array($cat->lvl1, $temp_name)) {
-                            $temp_name[] = $cat->lvl1;
-                            $result['cat_arguments'][] = array(
-                                'id' => $cat->lvl1_id,
-                                'name' => $cat->lvl1,
-                                'required' => $cat->lvl1_required,
-                                'parent_id' => 0
-                            );
-                        }
-                    }
-                    echo json_encode($result);
-                    break;
-                case self::STEP_TWO:
-                    $parent_id = $this->request->getPost('id');
-                    if (!$parent_id || !is_numeric($parent_id)) throw new Exception('bad data');
+					$cat = new ArgumentsCategory();
+					$cat_arguments = $cat->getCategoryNotEmpty($data['type'], $data['checkDate'], $data['checkRequired']);
+					$temp_name = array();
 
-                    $cat = new ArgumentsCategory();
-                    $cat_arguments = $cat->getCategoryNotEmpty($data['type'], $data['checkDate'], $data['checkRequired']);
-                    $temp_name = array();
+					foreach($cat_arguments as $cat){
+						if($cat->lvl1_id == $parent_id){
+							if(!in_array($cat->lvl2, $temp_name)){
+								$temp_name[] = $cat->lvl2;
+								$result["cat_arguments"][] = array(
+									"id" => $cat->lvl2_id,
+									"name" => $cat->lvl2,
+									'required' => $cat->lvl2_required,
+									"parent_id" => $cat->lvl1_id,
+								);
+							}
+						}
+					}
+					echo json_encode($result);
+					break;
+				case self::STEP_THREE:
+					$id = $this->request->getPost('id');
 
-                    foreach ($cat_arguments as $cat) {
-                        if ($cat->lvl1_id == $parent_id) {
-                            if (!in_array($cat->lvl2, $temp_name)) {
-                                $temp_name[] = $cat->lvl2;
-                                $result["cat_arguments"][] = array(
-                                    "id" => $cat->lvl2_id,
-                                    "name" => $cat->lvl2,
-                                    'required' => $cat->lvl2_required,
-                                    "parent_id" => $cat->lvl1_id,
-                                );
-                            }
-                        }
-                    }
-                    echo json_encode($result);
-                    break;
-                case self::STEP_THREE:
-                    $id = $this->request->getPost('id');
+					if (!$id || !is_numeric($id)) throw new Exception('bad data');
+					$parent_id = ArgumentsCategory::findFirst($id);
+					if (!$parent_id) throw new Exception('no cat');
 
-                    if (!$id || !is_numeric($id)) throw new Exception('bad data');
-                    $parent_id = ArgumentsCategory::findFirst($id);
-                    if (!$parent_id) throw new Exception('no cat');
+					//Получить не пустые категории (в которых есть доводы)
+					$cat_arguments = new Builder();
+					$cat_arguments->getDistinct();
+					$cat_arguments->addFrom('Multiple\Backend\Models\ArgumentsCategory', 'ArgumentsCategory');
+					$cat_arguments->rightJoin('Multiple\Backend\Models\Arguments', "ArgumentsCategory.id = category_id AND type LIKE '%{$data['type']}%'");
+					$cat_arguments->where("parent_id = {$id}");
+					if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) {
+						$cat_arguments->andWhere("ArgumentsCategory.required = 1");
+						$cat_arguments->andWhere("Multiple\Backend\Models\Arguments.required = 1");
+					}elseif ($data['checkDate'] == 0){
+						$cat_arguments->andWhere("ArgumentsCategory.required = 0");
+						$cat_arguments->andWhere("Multiple\Backend\Models\Arguments.required = 0");
+					}
+					$cat_arguments->groupBy('ArgumentsCategory.id');
+					$cat_arguments = $cat_arguments->getQuery()->execute();
 
-                    //Получить не пустые категории (в которых есть доводы)
-                    $cat_arguments = new Builder();
-                    $cat_arguments->getDistinct();
-                    $cat_arguments->addFrom('Multiple\Backend\Models\ArgumentsCategory', 'ArgumentsCategory');
-                    $cat_arguments->rightJoin('Multiple\Backend\Models\Arguments', "ArgumentsCategory.id = category_id AND type LIKE '%{$data['type']}%'");
-                    $cat_arguments->where("parent_id = {$id}");
-                    if ($data['checkDate'] == 1 && $data['checkRequired'] == 0) {
-                        $cat_arguments->andWhere("ArgumentsCategory.required = 1");
-                        $cat_arguments->andWhere("Multiple\Backend\Models\Arguments.required = 1");
-                    } else if ($data['checkDate'] == 0) {
-                        $cat_arguments->andWhere("ArgumentsCategory.required = 0");
-                        $cat_arguments->andWhere("Multiple\Backend\Models\Arguments.required = 0");
-                    }
-                    $cat_arguments->groupBy('ArgumentsCategory.id');
-                    $cat_arguments = $cat_arguments->getQuery()->execute();
+					//Если категорий нет, то получаем доводы и добавляем их в результирующий массив $result
+					if(count($cat_arguments) == 0){
+						$arguments = Arguments::query();
+						$arguments->where("category_id = {$id}");
+						$this->showRequiredOrNotRequired($arguments, $data);
+						$arguments->andWhere("type LIKE '%{$data['type']}%'");
+						$arguments = $arguments->execute();
+						$this->setArgumentsInResult($arguments, $data['type'], $result);
+                    }else{
+						foreach ($cat_arguments as $cat) {
+							$result['cat_arguments'][] = array(
+								'id' => $cat->id,
+								'name' => $cat->name,
+								'required' => $cat->required,
+								'parent_id' => $cat->parent_id,
+							);
+						}
+					}
+					echo json_encode($result);
+					break;
+				case self::STEP_FOUR:
+					$id = $this->request->getPost('id');
+					if(!$id || !is_numeric($id)) throw new Exception('bad data');
 
-                    //Если категорий нет, то получаем доводы и добавляем их в результирующий массив $result
-                    if (count($cat_arguments) == 0) {
-                        $arguments = Arguments::query();
-                        $arguments->where("category_id = {$id}");
-                        $this->showRequiredOrNotRequired($arguments, $data);
-                        $arguments->andWhere("type LIKE '%{$data['type']}%'");
-                        $arguments = $arguments->execute();
-                        $this->setArgumentsInResult($arguments, $data['type'], $result);
-                    } else {
-                        foreach ($cat_arguments as $cat) {
-                            $result['cat_arguments'][] = array(
-                                'id' => $cat->id,
-                                'name' => $cat->name,
-                                'required' => $cat->required,
-                                'parent_id' => $cat->parent_id,
-                            );
-                        }
-                    }
-                    echo json_encode($result);
-                    break;
-                case self::STEP_FOUR:
-                    $id = $this->request->getPost('id');
-                    if (!$id || !is_numeric($id)) throw new Exception('bad data');
+					$arguments = Arguments::query();
+					$arguments->where("category_id = {$id}");
+					$this->showRequiredOrNotRequired($arguments, $data);
+					$arguments->andWhere("type LIKE '%{$data['type']}%'");
+					$arguments = $arguments->execute();
 
-                    $arguments = Arguments::query();
-                    $arguments->where("category_id = {$id}");
-                    $this->showRequiredOrNotRequired($arguments, $data);
-                    $arguments->andWhere("type LIKE '%{$data['type']}%'");
-                    $arguments = $arguments->execute();
+					$this->setArgumentsInResult($arguments, $data['type'], $result);
+					echo json_encode($result);
+					break;
+				case self::STEP_SEARCH:
+					$search = $this->request->getPost('search');
+					$search = (!empty($search)) ? trim($search) : '';
 
-                    $this->setArgumentsInResult($arguments, $data['type'], $result);
-                    echo json_encode($result);
-                    break;
-                case self::STEP_SEARCH:
-                    $search = $this->request->getPost('search');
-                    $search = (!empty($search)) ? trim($search) : '';
+					if(empty($search)){
+						echo json_encode($result);
+						exit;
+					}
 
-                    if (empty($search)) {
-                        echo json_encode($result);
-                        exit;
-                    }
+					$arguments = Arguments::query();
+					$arguments->where('name LIKE :name:', array('name' => '%' . $search . '%'));
+					$this->showRequiredOrNotRequired($arguments, $data);
+					$arguments->andWhere("type LIKE '%{$data['type']}%'");
+					$arguments = $arguments->execute();
 
-                    $arguments = Arguments::query();
-                    $arguments->where('name LIKE :name:', array('name' => '%' . $search . '%'));
-                    $this->showRequiredOrNotRequired($arguments, $data);
-                    $arguments->andWhere("type LIKE '%{$data['type']}%'");
-                    $arguments = $arguments->execute();
-
-                    $this->setArgumentsInResult($arguments, $data['type'], $result);
-                    echo json_encode($result);
-                    break;
-            }
-        } catch (Exception $e) {
-            echo json_encode(array(
-                "error" => $e->getMessage()
-            ));
-        }
-        exit;
-    }
+					$this->setArgumentsInResult($arguments, $data['type'], $result);
+					echo json_encode($result);
+					break;
+			}
+		}catch (Exception $e){
+			echo json_encode(array(
+				"error" => $e->getMessage()
+			));
+		}
+		exit;
+	}
 	
 	private function checkTypePurchase($type)
     {
