@@ -402,6 +402,16 @@ class Complaint extends Model
 			if($applicant->type == "ip" || $applicant->type == "fizlico"){
 				$zayavitel_arr = explode(" ", $zayavitel);
 				$lico_arr = explode(" ", $lico);
+				
+				if(count($lico_arr) == 3){
+					$lico_arr[1] = mb_substr($lico_arr[1], 0, 1, "utf-8");
+					$lico_arr[2] = mb_substr($lico_arr[2], 0, 1, "utf-8");
+				}
+				if(count($lico_arr) == 2){
+					$lico_arr[2] = mb_substr($lico_arr[1], 1, 1, "utf-8");
+					$lico_arr[1] = mb_substr($lico_arr[1], 0, 1, "utf-8");
+				}
+				
 				if(mb_stristr($zayavitel, $lico, false, "utf-8") || 
 					(count($zayavitel_arr) == 3 && count($lico_arr) == 3 
 						&& mb_stristr($zayavitel_arr[0], $lico_arr[0], false, "utf-8") && mb_stristr($zayavitel_arr[1], $lico_arr[1], false, "utf-8") && mb_stristr($zayavitel_arr[2], $lico_arr[2], false, "utf-8")
