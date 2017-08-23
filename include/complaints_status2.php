@@ -81,23 +81,64 @@ foreach($complaints as $comp){
 		foreach($imported_comps as $imported_comp){
 			$lico = trim(preg_replace(array('/Общество с ограниченной ответственностью|Акционерное общество|ООО|ИП\s|АО\s/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $imported_comp['applicantNewfullName']));
 			$lico = trim(preg_replace('/\s+/ui', ' ', $lico));
-			//var_dump($zayavitel);
-			//var_dump($lico);
-			if(mb_stristr($zayavitel, $lico, false, "utf-8")){
-				$date_submit = date("Y-m-d H:i:s", strtotime($comp["date_submit"]));
-				$date_submit_plus3 = date("Y-m-d H:i:s", strtotime($comp["date_submit"]." + 5 days"));
-				$regdate = date("Y-m-d H:i:s", strtotime($imported_comp["regDate"]));
-				/*var_dump($date_submit);
-				var_dump($date_submit_plus3);
-				var_dump($regdate);*/
-				if($regdate >= $date_submit && $regdate <= $date_submit_plus3 && !$imported_comp["ch_id"] && !$imported_comp["ich_version"] && !$imported_comp["complaintResult"]){
-					$imported_comps2[] = array("complaintNumber"=>$imported_comp["complaintNumber"], 
-												"regDate"=>$imported_comp["regDate"],
-												"applicantNewfullName"=>$imported_comp["applicantNewfullName"],
-												"purchaseNumber"=>$imported_comp["purchaseNumber"],
-												"planDecisionDate"=>$imported_comp["planDecisionDate"],
-												"noticenumber"=>$imported_comp["noticenumber"],
-												"noticeacceptDate"=>$imported_comp["noticeacceptDate"]);
+			/*var_dump($comp["id"]);
+			var_dump($comp["type"]);
+			var_dump($imported_comp["id"]);
+			var_dump($imported_comp["ch_id"]);
+			var_dump($zayavitel);
+			var_dump($lico);*/
+			$zayavitel_arr = explode(" ", $zayavitel);
+			$lico_arr = explode(" ", $lico);
+			if(count($lico_arr) == 3){
+				$lico_arr[1] = mb_substr($lico_arr[1], 0, 1, "utf-8");
+				$lico_arr[2] = mb_substr($lico_arr[2], 0, 1, "utf-8");
+			}
+			if(count($lico_arr) == 2){
+				$lico_arr[2] = mb_substr($lico_arr[1], 1, 1, "utf-8");
+				$lico_arr[1] = mb_substr($lico_arr[1], 0, 1, "utf-8");
+			}
+			//var_dump($zayavitel_arr);
+			//var_dump($lico_arr);
+			if($comp["type"] == "ip" || $comp["type"] == "fizlico"){
+				if(mb_stristr($zayavitel, $lico, false, "utf-8") || 
+					(
+						count($zayavitel_arr) == 3 && count($lico_arr) == 3 
+						&& mb_stristr($zayavitel_arr[0], $lico_arr[0], false, "utf-8") && mb_stristr($zayavitel_arr[1], $lico_arr[1], false, "utf-8") && mb_stristr($zayavitel_arr[2], $lico_arr[2], false, "utf-8")
+					)
+				){
+					$date_submit = date("Y-m-d H:i:s", strtotime($comp["date_submit"]));
+					$date_submit_plus3 = date("Y-m-d H:i:s", strtotime($comp["date_submit"]." + 5 days"));
+					$regdate = date("Y-m-d H:i:s", strtotime($imported_comp["regDate"]));
+					//var_dump($date_submit);
+					//var_dump($date_submit_plus3);
+					//var_dump($regdate);
+					if($regdate >= $date_submit && $regdate <= $date_submit_plus3 && !$imported_comp["ch_id"] && !$imported_comp["ich_version"] && !$imported_comp["complaintResult"]){
+						$imported_comps2[] = array("complaintNumber"=>$imported_comp["complaintNumber"], 
+													"regDate"=>$imported_comp["regDate"],
+													"applicantNewfullName"=>$imported_comp["applicantNewfullName"],
+													"purchaseNumber"=>$imported_comp["purchaseNumber"],
+													"planDecisionDate"=>$imported_comp["planDecisionDate"],
+													"noticenumber"=>$imported_comp["noticenumber"],
+													"noticeacceptDate"=>$imported_comp["noticeacceptDate"]);
+					}
+				}
+			}else{
+				if(mb_stristr($zayavitel, $lico, false, "utf-8")){
+					$date_submit = date("Y-m-d H:i:s", strtotime($comp["date_submit"]));
+					$date_submit_plus3 = date("Y-m-d H:i:s", strtotime($comp["date_submit"]." + 5 days"));
+					$regdate = date("Y-m-d H:i:s", strtotime($imported_comp["regDate"]));
+					/*var_dump($date_submit);
+					var_dump($date_submit_plus3);
+					var_dump($regdate);*/
+					if($regdate >= $date_submit && $regdate <= $date_submit_plus3 && !$imported_comp["ch_id"] && !$imported_comp["ich_version"] && !$imported_comp["complaintResult"]){
+						$imported_comps2[] = array("complaintNumber"=>$imported_comp["complaintNumber"], 
+													"regDate"=>$imported_comp["regDate"],
+													"applicantNewfullName"=>$imported_comp["applicantNewfullName"],
+													"purchaseNumber"=>$imported_comp["purchaseNumber"],
+													"planDecisionDate"=>$imported_comp["planDecisionDate"],
+													"noticenumber"=>$imported_comp["noticenumber"],
+													"noticeacceptDate"=>$imported_comp["noticeacceptDate"]);
+					}
 				}
 			}
 		}
