@@ -69,13 +69,13 @@ foreach($complaints as $comp){
 	$imported_comp_sql = "select ic.id, ic.complaintNumber, ic.regNumber, ic.docNumber, ic.versionNumber, 
 									ic.regDate, ic.createDate, ic.createUser, 
 									ic.applicantType, ic.organizationName, ic.applicantNewfullName, ic.applicantNewcode, ic.applicantNewsingularName, 
-									ic.purchaseNumber, ic.purchaseCode, ic.purchaseName,
+									ic.purchaseNumber, ic.purchaseCode, ic.purchaseName, ic.returnInfobase, ic.returnInfodecision,
 									ich.id as ch_id, ich.versionNumber as ich_version, ich.complaintResult, ic.planDecisionDate, ic.noticenumber, ic.noticeacceptDate
 							from imported_complaint ic
 							left join imported_checkresult ich on ich.complaintNumber = ic.complaintNumber and ich.purchaseNumber = ic.purchaseNumber
 							where ic.purchaseNumber = :purchaseNumber
 							order by ic.versionNumber asc, ich.versionNumber asc";
-	$imported_comps = db::sql_select($imported_comp_sql, array("purchaseNumber"=>$comp["auction_id"]));
+	$imported_comps = db::sql_select($imported_comp_sql, array("purchaseNumber"=>trim($comp["auction_id"])));
 	$imported_comps2 = array();
 	if(count($imported_comps)){
 		foreach($imported_comps as $imported_comp){
@@ -112,7 +112,7 @@ foreach($complaints as $comp){
 					//var_dump($date_submit);
 					//var_dump($date_submit_plus3);
 					//var_dump($regdate);
-					if($regdate >= $date_submit && $regdate <= $date_submit_plus3 && !$imported_comp["ch_id"] && !$imported_comp["ich_version"] && !$imported_comp["complaintResult"]){
+					if($regdate >= $date_submit && $regdate <= $date_submit_plus3 && !$imported_comp["ch_id"] && !$imported_comp["ich_version"] && !$imported_comp["complaintResult"] && !$imported_comp["returnInfobase"]){
 						$imported_comps2[] = array("complaintNumber"=>$imported_comp["complaintNumber"], 
 													"regDate"=>$imported_comp["regDate"],
 													"applicantNewfullName"=>$imported_comp["applicantNewfullName"],
@@ -130,7 +130,7 @@ foreach($complaints as $comp){
 					/*var_dump($date_submit);
 					var_dump($date_submit_plus3);
 					var_dump($regdate);*/
-					if($regdate >= $date_submit && $regdate <= $date_submit_plus3 && !$imported_comp["ch_id"] && !$imported_comp["ich_version"] && !$imported_comp["complaintResult"]){
+					if($regdate >= $date_submit && $regdate <= $date_submit_plus3 && !$imported_comp["ch_id"] && !$imported_comp["ich_version"] && !$imported_comp["complaintResult"] && !$imported_comp["returnInfobase"]){
 						$imported_comps2[] = array("complaintNumber"=>$imported_comp["complaintNumber"], 
 													"regDate"=>$imported_comp["regDate"],
 													"applicantNewfullName"=>$imported_comp["applicantNewfullName"],

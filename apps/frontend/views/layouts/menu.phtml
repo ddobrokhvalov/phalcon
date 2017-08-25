@@ -78,6 +78,14 @@
                         {% endif %}
                     </a>
                 </li>
+				<li>
+                    <a class="{% if menu_status == 'returned' %} lm-link-active {% endif %}" href="/complaint/index?status=returned">
+                        Возвращенные
+                        {% if complaints_num['returned'] is defined %}
+                        <span>{{ complaints_num['returned'] }}</span>
+                        {% endif %}
+                    </a>
+                </li>
                 <li>
                     <a class="{% if menu_status == 'archive' %} lm-link-active {% endif %}" href="/complaint/index?status=archive">
                         Архив

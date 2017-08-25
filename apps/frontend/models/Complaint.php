@@ -380,7 +380,7 @@ class Complaint extends Model
 									ic.regDate, ic.createDate, ic.createUser, ic.planDecisionDate, ic.noticenumber, ic.noticeacceptDate, 
 									ic.decisionPlace, ic.considerationKOfullName, 
 									ic.applicantType, ic.organizationName, ic.applicantNewfullName, ic.applicantNewcode, ic.applicantNewsingularName, 
-									ic.purchaseNumber, ic.purchaseCode, ic.purchaseName,
+									ic.purchaseNumber, ic.purchaseCode, ic.purchaseName, ic.returnInfobase, ic.returnInfodecision, 
 									ich.id as ch_id, ich.versionNumber as ich_version, ich.complaintResult, 
 									ic.attachments, ich.decisionattachments, ic.printFormurl, 
 									icc.id as icc_id, icc.complaintNumber as icc_complaintNumber, icc.registrationKOfullName as icc_registrationKOfullName, icc.regDate as icc_regDate, icc.printFormurl as icc_printFormurl, icc.attachments as icc_attachments
@@ -390,7 +390,7 @@ class Complaint extends Model
 																		and icc.registrationKOfullName = ic.registrationKOfullName 
 																		and icc.regDate = ic.regDate
 																		and icc.attachments = ic.attachments
-							where ic.purchaseNumber = '".$this->auction_id."'
+							where ic.purchaseNumber = '".trim($this->auction_id)."'
 							order by ic.versionNumber asc, ich.versionNumber asc";
 		$imported_comps = $db->query($imported_comp_sql);
 		$imported_comps = $imported_comps->fetchAll();

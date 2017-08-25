@@ -93,6 +93,9 @@
                             {% if complaint['status'] == 'recalled' %}
                             <span class="jl-status jl-fail">Отозвана</span>
                             {% endif %}
+							{% if complaint['status'] == 'returned' %}
+								<span class="jl-status jl-fail">Возвращена</span>
+							{% endif %}
                             {% if complaint['status'] == 'archive' %}
                             <span class="jl-status jl-archive">Архив</span>
                             {% endif %}

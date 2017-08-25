@@ -67,6 +67,9 @@
                         {% if complaint.status == 'recalled' %}
                         <span class="jl-status jl-fail">Отозвана</span>
                         {% endif %}
+						{% if complaint.status == 'returned' %}
+                        <span class="jl-status jl-fail">Возвращена</span>
+                        {% endif %}
                         {% if complaint.status == 'archive' %}
                         <span class="jl-status jl-archive">Архив</span>
                         {% endif %}
@@ -177,6 +180,8 @@
 										{% elseif !imported_data['complaintResult'] %}
 											{% if imported_data['icc_id'] %}
 												<span class="jl-status jl-fail">Отозвана</span>
+											{% elseif imported_data['returnInfobase'] %}
+												<span class="jl-status jl-fail">Возвращена</span>
 											{% else %}
 												<span class="jl-status jl-rassmotr">На рассмотрении</span>
 											{% endif %}
@@ -186,6 +191,8 @@
 											<span class="jl-status jl-podana">Подана</span>
 										{% elseif complaint.status == 'recalled' %}
 											<span class="jl-status jl-fail">Отозвана</span>
+										{% elseif complaint.status == 'returned' %}
+											<span class="jl-status jl-fail">Возвращена</span>
 										{% elseif complaint.status == 'archive' %}
 											<span class="jl-status jl-archive">Архив</span>
 										{% elseif complaint.status == 'draft' %}

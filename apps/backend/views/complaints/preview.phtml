@@ -81,6 +81,81 @@
         </div>
         <div class="c-jadd-spoiler"><span>Показать подробно</span></div>
     </div>
+	
+	<link rel="stylesheet" href="/public/css/mystyle.css">
+	{% if complaint.status != 'draft' %}
+		<div class="back_history_content">		
+			<div class="content history_content">
+				<div class="wrapper wrap-with-menuPanel">
+					<div class="c-content">
+						<div class="mybox">
+							<div class="history">
+								<div class="left">
+									<h3>История жалобы</h3>
+									{% if complaint.date_submit %}
+									<h4>Дата отправления в УФАС</h4>
+									{% endif %}
+									<p>{{ complaint.date_submit }}</p>
+									{% if imported_data %}
+										<h4>Дата регистрации</h4>
+										<p>{{ imported_data['regDate'] }}</p>
+										<h4>Дата рассмотрения</h4>
+										<p>{{ imported_data['planDecisionDate'] }}</p>
+									{% endif %}
+								</div>
+								<div class="right">
+									{% if imported_data %}
+										{% if imported_data['complaintResult'] == 'COMPLAINT_VIOLATIONS' or imported_data['complaintResult'] == 'COMPLAINT_PARTLY_VALID' %}
+											<span class="jl-status jl-done">Обоснована</span>
+										{% elseif imported_data['complaintResult'] == 'COMPLAINT_NO_VIOLATIONS' %}
+											<span class="jl-status jl-notdone">Необоснована</span>
+										{% elseif !imported_data['complaintResult'] %}
+											{% if imported_data['icc_id'] %}
+												<span class="jl-status jl-fail">Отозвана</span>
+											{% elseif imported_data['returnInfobase'] %}
+												<span class="jl-status jl-fail">Возвращена</span>
+											{% else %}
+												<span class="jl-status jl-rassmotr">На рассмотрении</span>
+											{% endif %}
+										{% endif %}
+									{% else %}
+										{% if complaint.status == 'submitted' %}
+											<span class="jl-status jl-podana">Подана</span>
+										{% elseif complaint.status == 'recalled' %}
+											<span class="jl-status jl-fail">Отозвана</span>
+										{% elseif complaint.status == 'returned' %}
+											<span class="jl-status jl-fail">Возвращена</span>
+										{% elseif complaint.status == 'archive' %}
+											<span class="jl-status jl-archive">Архив</span>
+										{% elseif complaint.status == 'draft' %}
+											<span class="jl-status jl-chernov">Черновик</span>
+										{% endif %}
+									{% endif %}
+									{% if imported_data %}
+										<h4>Место рассмотрения</h4>
+										<p>
+											{{ imported_data['considerationKOfullName'] }}<br>
+											{{ imported_data['decisionPlace'] }}
+										</p>
+										<h4>Вложенные файлы</h4>
+										{% for attachment in imported_data['attachments'] %}
+											<a class='pdf' href="{{ attachment.url }}" target="_blank" title="{{ attachment.docDescription }}">{{ attachment.fileName }}</a>
+										{% endfor %}
+										{% for attachment in imported_data['decisionattachments'] %}
+											<a class='pdf' href="{{ attachment.url }}" target="_blank" title="{{ attachment.docDescription }}">{{ attachment.fileName }}</a>
+										{% endfor %}
+										<br>
+										<!--<p>Жалоба в ЕИС <a href="#">0842300004017000050</a></p>-->
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	
     <div class="complaints-content">
         <h2>{{complaint.complaint_name}}</h2>
         <div class="attached-files">

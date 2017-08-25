@@ -171,6 +171,10 @@ class Complaint extends Model
                 if ($short)
                     return '<span data-status="recalled" class="jl-status jl-status-short jl-fail"></span>';
                 return '<span data-status="recalled" class="jl-status jl-fail">Отозвана</span>';
+			case 'returned':
+                if ($short)
+                    return '<span data-status="returned" class="jl-status jl-status-short jl-fail"></span>';
+                return '<span data-status="returned" class="jl-status jl-fail">Возвращена</span>';
             case 'archive':
                 if ($short)
                     return '<span data-status="archive" class="jl-status jl-status-short jl-archive"></span>';
@@ -189,6 +193,7 @@ class Complaint extends Model
             '4' => 'submitted',
             '5' => 'recalled',
             '6' => 'archive',
+			'7' => 'returned',
         );
         return $this->getComplaintStatus($statuses[$index]);
     }
@@ -398,6 +403,85 @@ class Complaint extends Model
 		}
 		$result = $db->query($sql);
          return $result->fetchAll();
+	}
+	
+	public function findImportedResult(){
+		$db = $this->getDi()->getShared('db');
+		
+		$applicant = Applicant::findFirstById($this->applicant_id);
+		
+		$zayavitel = trim($applicant->name_short);
+		$zayavitel = trim(preg_replace(array('/ООО|Общество с ограниченной ответственностью|Акционерное общество|ООО|ИП\s|АО\s/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $zayavitel));
+		$zayavitel = trim(preg_replace('/\s+/ui', ' ', $zayavitel));
+		
+		$imported_comp_sql = "select ic.id, ic.complaintNumber, ic.regNumber, ic.docNumber, ic.versionNumber, 
+									ic.regDate, ic.createDate, ic.createUser, ic.planDecisionDate, ic.noticenumber, ic.noticeacceptDate, 
+									ic.decisionPlace, ic.considerationKOfullName, 
+									ic.applicantType, ic.organizationName, ic.applicantNewfullName, ic.applicantNewcode, ic.applicantNewsingularName, 
+									ic.purchaseNumber, ic.purchaseCode, ic.purchaseName, ic.returnInfobase, ic.returnInfodecision, 
+									ich.id as ch_id, ich.versionNumber as ich_version, ich.complaintResult, 
+									ic.attachments, ich.decisionattachments, ic.printFormurl, 
+									icc.id as icc_id, icc.complaintNumber as icc_complaintNumber, icc.registrationKOfullName as icc_registrationKOfullName, icc.regDate as icc_regDate, icc.printFormurl as icc_printFormurl, icc.attachments as icc_attachments
+							from imported_complaint ic
+							left join imported_checkresult ich on ich.complaintNumber = ic.complaintNumber and ich.purchaseNumber = ic.purchaseNumber
+							left join imported_complaint_cancel icc on icc.complaintNumber = ic.complaintNumber 
+																		and icc.registrationKOfullName = ic.registrationKOfullName 
+																		and icc.regDate = ic.regDate
+																		and icc.attachments = ic.attachments
+							where ic.purchaseNumber = '".trim($this->auction_id)."'
+							order by ic.versionNumber asc, ich.versionNumber asc";
+		$imported_comps = $db->query($imported_comp_sql);
+		$imported_comps = $imported_comps->fetchAll();
+		
+		$imported_comps2 = array();
+		foreach($imported_comps as $imported_comp){
+			$lico = trim(preg_replace(array('/Общество с ограниченной ответственностью|Акционерное общество|ООО|ИП\s|АО\s/ui', '/[^а-яёa-z0-9 ]+/ui'), array('', ''), $imported_comp['applicantNewfullName']));
+			$lico = trim(preg_replace('/\s+/ui', ' ', $lico));
+			if($applicant->type == "ip" || $applicant->type == "fizlico"){
+				$zayavitel_arr = explode(" ", $zayavitel);
+				$lico_arr = explode(" ", $lico);
+				
+				if(count($lico_arr) == 3){
+					$lico_arr[1] = mb_substr($lico_arr[1], 0, 1, "utf-8");
+					$lico_arr[2] = mb_substr($lico_arr[2], 0, 1, "utf-8");
+				}
+				if(count($lico_arr) == 2){
+					$lico_arr[2] = mb_substr($lico_arr[1], 1, 1, "utf-8");
+					$lico_arr[1] = mb_substr($lico_arr[1], 0, 1, "utf-8");
+				}
+				
+				if(mb_stristr($zayavitel, $lico, false, "utf-8") || 
+					(count($zayavitel_arr) == 3 && count($lico_arr) == 3 
+						&& mb_stristr($zayavitel_arr[0], $lico_arr[0], false, "utf-8") && mb_stristr($zayavitel_arr[1], $lico_arr[1], false, "utf-8") && mb_stristr($zayavitel_arr[2], $lico_arr[2], false, "utf-8")
+					)
+				){
+					$date_submit = date("Y-m-d H:i:s", strtotime($comp["date_submit"]));
+					$date_submit_plus3 = date("Y-m-d H:i:s", strtotime($comp["date_submit"]." + 5 days"));
+					$regdate = date("Y-m-d H:i:s", strtotime($imported_comp["regDate"]));
+					$imported_comp["zayavitel"] = $zayavitel;
+					$imported_comp["lico"] = $lico;
+					$imported_comp["zayavitel_arr"] = $zayavitel_arr;
+					$imported_comp["lico_arr"] = $lico_arr;
+					if($regdate >= $date_submit && $regdate <= $date_submit_plus3){
+						$imported_comps2[] = $imported_comp;
+					}
+					
+				}
+			}else{
+				if(mb_stristr($zayavitel, $lico, false, "utf-8")){
+					$date_submit = date("Y-m-d H:i:s", strtotime($comp["date_submit"]));
+					$date_submit_plus3 = date("Y-m-d H:i:s", strtotime($comp["date_submit"]." + 5 days"));
+					$regdate = date("Y-m-d H:i:s", strtotime($imported_comp["regDate"]));
+					$imported_comp["zayavitel"] = $zayavitel;
+					$imported_comp["lico"] = $lico;
+					if($regdate >= $date_submit && $regdate <= $date_submit_plus3){
+						$imported_comps2[] = $imported_comp;
+					}
+					
+				}
+			}
+		}
+		return $imported_comps2;
 	}
 
 }

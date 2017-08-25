@@ -292,8 +292,6 @@ class ComplaintController extends ControllerBase
 		$imported_data = $complaint->findImportedResult();
 		$compl_arr = $complaint->toArray();
 		
-		
-		
 		if(count($imported_data)){
 			$imported_data = array_reverse($imported_data);
 			$imported_data = $imported_data[0];
@@ -302,10 +300,12 @@ class ComplaintController extends ControllerBase
 			$imported_data["attachments"] = json_decode($imported_data["attachments"]);
 			$imported_data["decisionattachments"] = json_decode($imported_data["decisionattachments"]);
 			$imported_data["icc_attachments"] = json_decode($imported_data["icc_attachments"]);
-			/*print_r("<pre>");
-			print_r($imported_data);
-			print_r("</pre>");*/
-			//exit;
+			if($_GET["debug"]){
+				print_r("<pre>");
+				print_r($imported_data);
+				print_r("</pre>");
+				exit;
+			}
 			$this->view->imported_data = $imported_data;
 		}
 
