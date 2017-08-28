@@ -455,13 +455,16 @@ class Complaint extends Model
 						&& mb_stristr($zayavitel_arr[0], $lico_arr[0], false, "utf-8") && mb_stristr($zayavitel_arr[1], $lico_arr[1], false, "utf-8") && mb_stristr($zayavitel_arr[2], $lico_arr[2], false, "utf-8")
 					)
 				){
-					$date_submit = date("Y-m-d H:i:s", strtotime($comp["date_submit"]));
-					$date_submit_plus3 = date("Y-m-d H:i:s", strtotime($comp["date_submit"]." + 5 days"));
+					$date_submit = date("Y-m-d H:i:s", strtotime($this->date_submit));
+					$date_submit_plus3 = date("Y-m-d H:i:s", strtotime($this->date_submit." + 5 days"));
 					$regdate = date("Y-m-d H:i:s", strtotime($imported_comp["regDate"]));
 					$imported_comp["zayavitel"] = $zayavitel;
 					$imported_comp["lico"] = $lico;
 					$imported_comp["zayavitel_arr"] = $zayavitel_arr;
 					$imported_comp["lico_arr"] = $lico_arr;
+					$imported_comp["date_submit"] = $date_submit;
+					$imported_comp["date_submit_plus3"] = $date_submit_plus3;
+					$imported_comp["regdate"] = $regdate;
 					if($regdate >= $date_submit && $regdate <= $date_submit_plus3){
 						$imported_comps2[] = $imported_comp;
 					}
@@ -469,11 +472,14 @@ class Complaint extends Model
 				}
 			}else{
 				if(mb_stristr($zayavitel, $lico, false, "utf-8")){
-					$date_submit = date("Y-m-d H:i:s", strtotime($comp["date_submit"]));
-					$date_submit_plus3 = date("Y-m-d H:i:s", strtotime($comp["date_submit"]." + 5 days"));
+					$date_submit = date("Y-m-d H:i:s", strtotime($this->date_submit));
+					$date_submit_plus3 = date("Y-m-d H:i:s", strtotime($this->date_submit." + 5 days"));
 					$regdate = date("Y-m-d H:i:s", strtotime($imported_comp["regDate"]));
 					$imported_comp["zayavitel"] = $zayavitel;
 					$imported_comp["lico"] = $lico;
+					$imported_comp["date_submit"] = $date_submit;
+					$imported_comp["date_submit_plus3"] = $date_submit_plus3;
+					$imported_comp["regdate"] = $regdate;
 					if($regdate >= $date_submit && $regdate <= $date_submit_plus3){
 						$imported_comps2[] = $imported_comp;
 					}
