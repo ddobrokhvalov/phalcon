@@ -73,7 +73,7 @@ foreach($complaints as $comp){
 									ic.purchaseNumber, ic.purchaseCode, ic.purchaseName, ic.returnInfobase, ic.returnInfodecision,
 									ich.id as ch_id, ich.versionNumber as ich_version, ich.complaintResult
 							from imported_complaint ic
-							inner join imported_checkresult ich on ich.complaintNumber = ic.complaintNumber and ich.purchaseNumber = ic.purchaseNumber
+							inner join imported_checkresult ich on ich.complaintNumber = ic.complaintNumber and ich.purchaseNumber = ic.purchaseNumber and ich.decisionDate > ic.regDate
 							where ic.purchaseNumber = :purchaseNumber
 							order by ic.versionNumber asc, ich.versionNumber asc";
 	$imported_comps = db::sql_select($imported_comp_sql, array("purchaseNumber"=>trim($comp["auction_id"])));
@@ -217,7 +217,7 @@ foreach($complaints as $comp){
 									ic.purchaseNumber, ic.purchaseCode, ic.purchaseName, ic.returnInfobase, ic.returnInfodecision,
 									ich.id as ch_id, ich.versionNumber as ich_version, ich.complaintResult, ic.planDecisionDate, ic.noticenumber, ic.noticeacceptDate
 							from imported_complaint ic
-							left join imported_checkresult ich on ich.complaintNumber = ic.complaintNumber and ich.purchaseNumber = ic.purchaseNumber
+							left join imported_checkresult ich on ich.complaintNumber = ic.complaintNumber and ich.purchaseNumber = ic.purchaseNumber and ich.decisionDate > ic.regDate
 							where ic.purchaseNumber = :purchaseNumber
 							order by ic.versionNumber asc, ich.versionNumber asc";
 	$imported_comps = db::sql_select($imported_comp_sql, array("purchaseNumber"=>trim($comp["auction_id"])));
@@ -362,7 +362,7 @@ foreach($complaints as $comp){
 									ic.purchaseNumber, ic.purchaseCode, ic.purchaseName, ic.returnInfobase, ic.returnInfodecision,
 									ich.id as ch_id, ich.versionNumber as ich_version, ich.complaintResult, ic.planDecisionDate, ic.noticenumber, ic.noticeacceptDate
 							from imported_complaint ic
-							left join imported_checkresult ich on ich.complaintNumber = ic.complaintNumber and ich.purchaseNumber = ic.purchaseNumber
+							left join imported_checkresult ich on ich.complaintNumber = ic.complaintNumber and ich.purchaseNumber = ic.purchaseNumber and ich.decisionDate > ic.regDate
 							where ic.purchaseNumber = :purchaseNumber
 							order by ic.versionNumber asc, ich.versionNumber asc";
 	$imported_comps = db::sql_select($imported_comp_sql, array("purchaseNumber"=>trim($comp["auction_id"])));
