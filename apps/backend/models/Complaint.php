@@ -423,7 +423,7 @@ class Complaint extends Model
 									ic.attachments, ich.decisionattachments, ic.printFormurl, 
 									icc.id as icc_id, icc.complaintNumber as icc_complaintNumber, icc.registrationKOfullName as icc_registrationKOfullName, icc.regDate as icc_regDate, icc.printFormurl as icc_printFormurl, icc.attachments as icc_attachments
 							from imported_complaint ic
-							left join imported_checkresult ich on ich.complaintNumber = ic.complaintNumber and ich.purchaseNumber = ic.purchaseNumber
+							left join imported_checkresult ich on ich.complaintNumber = ic.complaintNumber and ich.purchaseNumber = ic.purchaseNumber and ich.decisionDate > ic.regDate
 							left join imported_complaint_cancel icc on icc.complaintNumber = ic.complaintNumber 
 																		and icc.registrationKOfullName = ic.registrationKOfullName 
 																		and icc.regDate = ic.regDate
